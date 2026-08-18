@@ -13,6 +13,17 @@ let state = {
   postSearch: ''
 };
 
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+window.escapeHtml = escapeHtml;
+
 // Initialize CMS on load
 document.addEventListener('DOMContentLoaded', () => {
   fetchAllData();
@@ -58,10 +69,11 @@ function switchTab(tabName) {
 // Fetch all initial data
 async function fetchAllData() {
   try {
+    const t = Date.now();
     const [bRes, vRes, pRes] = await Promise.all([
-      fetch('/api/billboards.php').then(r => r.json()),
-      fetch('/api/videos.php').then(r => r.json()),
-      fetch('/api/posts.php').then(r => r.json())
+      fetch(`/api/billboards.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()),
+      fetch(`/api/videos.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()),
+      fetch(`/api/posts.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json())
     ]);
 
     if (bRes.success) {
@@ -216,8 +228,8 @@ function editBillboard(id) {
   if (!b) return;
 
   document.getElementById('billboard-id').value = b.id;
-  document.getElementById('billboard-title-input').value = b.title || '';
-  document.getElementById('billboard-category-input').value = b.category || '';
+  const catInput = document.getElementById('billboard-category-input');
+  if (catInput) catInput.value = b.category || '';
   document.getElementById('billboard-order-input').value = b.order || 1;
   document.getElementById('billboard-subtitle-input').value = b.subtitle || '';
   document.getElementById('billboard-media-input').value = b.mediaUrl || '';
@@ -241,11 +253,12 @@ async function handleSaveBillboard(e) {
   e.preventDefault();
   const id = document.getElementById('billboard-id').value;
   const isEdit = Boolean(id);
+  const catInput = document.getElementById('billboard-category-input');
 
   const payload = {
     id: id,
     title: document.getElementById('billboard-title-input').value,
-    category: document.getElementById('billboard-category-input').value,
+    category: (catInput ? catInput.value.trim() : '') || '',
     order: parseInt(document.getElementById('billboard-order-input').value) || 1,
     subtitle: document.getElementById('billboard-subtitle-input').value,
     mediaUrl: document.getElementById('billboard-media-input').value,
@@ -411,12 +424,14 @@ function editVideo(id) {
 
 function autoFetchYtThumb(val) {
   let ytId = val.trim();
-  const match = ytId.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i);
+  const match = ytId.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts|live)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i);
   if (match) ytId = match[1];
 
   if (ytId.length === 11) {
     const thumbUrl = `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`;
-    document.getElementById('video-thumbnail-input').value = thumbUrl;
+    if (!document.getElementById('video-thumbnail-input').value) {
+      document.getElementById('video-thumbnail-input').value = thumbUrl;
+    }
     const preview = document.getElementById('video-thumb-preview');
     preview.innerHTML = `<img src="${thumbUrl}" class="w-full h-full object-cover">`;
     preview.classList.remove('hidden');
@@ -428,17 +443,26 @@ async function handleSaveVideo(e) {
   const id = document.getElementById('video-id').value;
   const isEdit = Boolean(id);
 
+  let rawYt = document.getElementById('video-youtube-input').value.trim();
+  const ytMatch = rawYt.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts|live)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i);
+  const cleanYt = ytMatch ? ytMatch[1] : rawYt;
+
+  let thumb = document.getElementById('video-thumbnail-input').value.trim();
+  if (!thumb && cleanYt && cleanYt.length === 11) {
+    thumb = `https://img.youtube.com/vi/${cleanYt}/maxresdefault.jpg`;
+  }
+
   const payload = {
     id: id,
     title: document.getElementById('video-title-input').value,
-    category: document.getElementById('video-category-input').value,
-    youtubeId: document.getElementById('video-youtube-input').value,
-    doctor: document.getElementById('video-doctor-input').value,
-    hospital: document.getElementById('video-hospital-input').value,
-    duration: document.getElementById('video-duration-input').value,
-    views: document.getElementById('video-views-input').value,
+    category: document.getElementById('video-category-input').value || '심장 & 혈관',
+    youtubeId: cleanYt,
+    doctor: document.getElementById('video-doctor-input').value || '의학 리포트',
+    hospital: document.getElementById('video-hospital-input').value || 'Englewood Health Center for Korean Health',
+    duration: document.getElementById('video-duration-input').value || '05:00',
+    views: document.getElementById('video-views-input').value || '1.2만회',
     order: parseInt(document.getElementById('video-order-input').value) || 1,
-    thumbnail: document.getElementById('video-thumbnail-input').value,
+    thumbnail: thumb,
     videoUrl: document.getElementById('video-fileurl-input').value,
     summary: document.getElementById('video-summary-input').value,
     active: document.getElementById('video-active-input').checked
@@ -486,15 +510,15 @@ async function deleteVideo(id) {
 function renderPosts() {
   const catFilters = document.getElementById('post-category-filters');
   const catList = document.getElementById('post-categories-datalist');
-  const cats = ['전체', ...(state.categories.news || [])];
+  const cats = Array.from(new Set(['전체', ...(state.categories.news || [])]));
 
   catFilters.innerHTML = cats.map(c => `
-    <button onclick="setPostFilter('${c}')" class="px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
+    <button onclick="setPostFilter('${c}')" class="px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
       state.postFilter === c ? 'bg-emerald-600 text-white shadow-sm' : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white'
     }">${c}</button>
   `).join('');
 
-  catList.innerHTML = (state.categories.news || []).map(c => `<option value="${c}"></option>`).join('');
+  catList.innerHTML = (state.categories.news || []).filter(c => c !== '전체').map(c => `<option value="${c}"></option>`).join('');
 
   const container = document.getElementById('posts-grid');
   let filtered = state.posts;
@@ -545,8 +569,14 @@ function renderPosts() {
       </div>
 
       <div class="px-5 pb-5 pt-2 flex items-center justify-between border-t border-slate-700/40">
-        <span class="text-[11px] text-slate-400 font-mono truncate max-w-[120px]">/${p.slug || ''}</span>
+        <a href="/blog/${p.slug || p.id}" target="_blank" class="text-[11px] text-blue-400 hover:text-blue-300 font-mono truncate max-w-[120px] flex items-center gap-1 hover:underline">
+          <span>/${p.slug || ''}</span>
+          <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+        </a>
         <div class="flex items-center gap-2">
+          <a href="/blog/${p.slug || p.id}" target="_blank" class="px-2.5 py-1.5 bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 rounded-xl text-xs font-semibold flex items-center gap-1 transition-all">
+            <span>보기 ↗</span>
+          </a>
           <button onclick="editPost('${p.id}')" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-white rounded-xl text-xs font-semibold flex items-center gap-1 transition-all">
             <i class="fa-solid fa-pen-to-square"></i>
             <span>수정</span>
@@ -571,12 +601,17 @@ function handlePostSearch(q) {
   renderPosts();
 }
 
+// State for multiple images in current post modal
+let currentPostImages = [];
+
 function openPostModal() {
   document.getElementById('form-post').reset();
   document.getElementById('post-id').value = '';
   document.getElementById('post-date-input').value = new Date().toISOString().split('T')[0];
   document.getElementById('modal-post-title').innerHTML = '<i class="fa-solid fa-pen-nib text-emerald-400"></i> <span>새 건강 뉴스 기사 작성</span>';
-  document.getElementById('post-cover-preview').classList.add('hidden');
+  
+  currentPostImages = [];
+  renderPostImagesGrid();
   document.getElementById('modal-post').classList.remove('hidden');
 }
 
@@ -589,7 +624,6 @@ function editPost(id) {
   document.getElementById('post-category-input').value = p.category || '';
   document.getElementById('post-date-input').value = p.date || '';
   document.getElementById('post-author-input').value = p.author || '편집부';
-  document.getElementById('post-cover-input').value = p.coverImage || '';
   document.getElementById('post-videourl-input').value = p.videoUrl || '';
   document.getElementById('post-excerpt-input').value = p.excerpt || '';
   document.getElementById('post-summarypoints-input').value = Array.isArray(p.summaryPoints) ? p.summaryPoints.join('\n') : (p.summaryPoints || '');
@@ -597,16 +631,151 @@ function editPost(id) {
   document.getElementById('post-topstory-input').checked = Boolean(p.isTopStory);
   document.getElementById('post-liveupdate-input').checked = Boolean(p.isLiveUpdate);
 
-  const preview = document.getElementById('post-cover-preview');
-  if (p.coverImage) {
-    preview.innerHTML = `<img src="${p.coverImage}" class="w-full h-full object-cover">`;
-    preview.classList.remove('hidden');
-  } else {
-    preview.classList.add('hidden');
+  // Initialize multiple images from post
+  let imgs = [];
+  if (Array.isArray(p.images) && p.images.length > 0) {
+    imgs = [...p.images];
+  } else if (p.coverImage) {
+    imgs = [p.coverImage];
   }
+  currentPostImages = imgs;
+  renderPostImagesGrid();
 
   document.getElementById('modal-post-title').innerHTML = '<i class="fa-solid fa-pen-to-square text-emerald-400"></i> <span>건강 뉴스 기사 수정</span>';
   document.getElementById('modal-post').classList.remove('hidden');
+}
+
+function renderPostImagesGrid() {
+  const grid = document.getElementById('post-images-manager-grid');
+  if (!grid) return;
+
+  if (currentPostImages.length === 0) {
+    grid.innerHTML = `
+      <div class="col-span-full py-6 text-center text-slate-500 text-xs bg-slate-900/60 rounded-2xl border border-slate-800 border-dashed">
+        <i class="fa-regular fa-image text-lg mb-1 block"></i>
+        <span>등록된 사진이 없습니다. 상단 [사진 일괄 추가] 또는 [URL 추가] 버튼을 눌러 사진을 등록하세요.</span>
+      </div>
+    `;
+    const coverInput = document.getElementById('post-cover-input');
+    if (coverInput) coverInput.value = '';
+    return;
+  }
+
+  // Set the 1st image as coverImage
+  const coverInput = document.getElementById('post-cover-input');
+  if (coverInput) coverInput.value = currentPostImages[0] || '';
+
+  grid.innerHTML = currentPostImages.map((url, idx) => {
+    const isFirst = idx === 0;
+    const isLast = idx === currentPostImages.length - 1;
+
+    return `
+      <div class="relative group bg-slate-900 rounded-2xl border overflow-hidden shadow-md flex flex-col justify-between transition-all ${
+        isFirst ? 'border-emerald-500/80 ring-2 ring-emerald-500/30' : 'border-slate-800 hover:border-slate-700'
+      }">
+        <div class="relative aspect-4/3 bg-slate-950 overflow-hidden">
+          <img src="${escapeHtml(url)}" alt="기사 사진 #${idx + 1}" class="w-full h-full object-cover">
+          
+          <!-- Badge -->
+          <div class="absolute top-2 left-2">
+            ${isFirst ? `
+              <span class="bg-emerald-600 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full shadow-md flex items-center gap-1">
+                <i class="fa-solid fa-star text-[9px]"></i> 1번째: 대표 썸네일
+              </span>
+            ` : `
+              <span class="bg-blue-600/90 text-white text-[10px] font-semibold px-2 py-0.5 rounded-full shadow-md">
+                ${idx + 1}번째: 본문 사진
+              </span>
+            `}
+          </div>
+
+          <!-- Delete Action -->
+          <button type="button" onclick="removePostImage(${idx})" 
+            class="absolute top-2 right-2 w-6 h-6 rounded-full bg-red-600/90 hover:bg-red-600 text-white flex items-center justify-center text-[10px] shadow-md transition-all hover:scale-110 cursor-pointer"
+            title="사진 삭제">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <!-- Controls (Reorder) -->
+        <div class="p-2 bg-slate-950/80 flex items-center justify-between gap-1 border-t border-slate-800 text-[11px]">
+          <span class="text-slate-400 font-mono text-[10px] truncate max-w-[70px]" title="${escapeHtml(url)}">
+            사진 #${idx + 1}
+          </span>
+          <div class="flex items-center gap-1">
+            ${!isFirst ? `
+              <button type="button" onclick="movePostImage(${idx}, -1)" 
+                class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-md text-[10px] transition-all cursor-pointer"
+                title="앞으로 이동 (대표 썸네일 지정)">
+                ◀ 앞으로
+              </button>
+            ` : ''}
+            ${!isLast ? `
+              <button type="button" onclick="movePostImage(${idx}, 1)" 
+                class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-md text-[10px] transition-all cursor-pointer"
+                title="뒤로 이동">
+                뒤로 ▶
+              </button>
+            ` : ''}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+async function uploadMultiplePostImages(input) {
+  if (!input.files || input.files.length === 0) return;
+  const files = Array.from(input.files);
+  showToast(`${files.length}개의 사진 업로드를 시작합니다...`);
+
+  for (let i = 0; i < files.length; i++) {
+    const formData = new FormData();
+    formData.append('file', files[i]);
+    try {
+      const res = await fetch('/api/upload.php', { method: 'POST', body: formData });
+      const data = await res.json();
+      if (data.success && data.url) {
+        currentPostImages.push(data.url);
+      }
+    } catch (e) {
+      console.error('Upload failed for file:', files[i].name, e);
+    }
+  }
+
+  showToast(`${files.length}개 사진 등록 완료!`);
+  input.value = '';
+  renderPostImagesGrid();
+}
+
+function addPostImageUrlManual() {
+  const input = document.getElementById('post-add-image-url-input');
+  if (!input) return;
+  const url = input.value.trim();
+  if (!url) {
+    showToast('이미지 URL을 입력해주세요.', false);
+    return;
+  }
+  currentPostImages.push(url);
+  input.value = '';
+  showToast('사진이 목록에 추가되었습니다.');
+  renderPostImagesGrid();
+}
+
+function removePostImage(index) {
+  if (index >= 0 && index < currentPostImages.length) {
+    currentPostImages.splice(index, 1);
+    renderPostImagesGrid();
+  }
+}
+
+function movePostImage(index, direction) {
+  const targetIndex = index + direction;
+  if (targetIndex < 0 || targetIndex >= currentPostImages.length) return;
+  const temp = currentPostImages[index];
+  currentPostImages[index] = currentPostImages[targetIndex];
+  currentPostImages[targetIndex] = temp;
+  renderPostImagesGrid();
 }
 
 async function handleSavePost(e) {
@@ -614,13 +783,19 @@ async function handleSavePost(e) {
   const id = document.getElementById('post-id').value;
   const isEdit = Boolean(id);
 
+  if (currentPostImages.length === 0) {
+    showToast('최소 1개 이상의 기사 사진을 등록해주세요.', false);
+    return;
+  }
+
   const payload = {
     id: id,
     title: document.getElementById('post-title-input').value,
     category: document.getElementById('post-category-input').value,
     date: document.getElementById('post-date-input').value,
     author: document.getElementById('post-author-input').value,
-    coverImage: document.getElementById('post-cover-input').value,
+    coverImage: currentPostImages[0] || '',
+    images: currentPostImages,
     videoUrl: document.getElementById('post-videourl-input').value,
     excerpt: document.getElementById('post-excerpt-input').value,
     summaryPoints: document.getElementById('post-summarypoints-input').value,
@@ -822,5 +997,47 @@ function setupDropzone() {
 }
 
 function closeModal(id) {
-  document.getElementById(id).classList.add('hidden');
+  const modal = document.getElementById(id);
+  if (modal) {
+    modal.classList.add('hidden');
+  }
 }
+
+// Ensure all handlers are globally reachable on window
+window.switchTab = switchTab;
+window.fetchAllData = fetchAllData;
+window.handleLogout = handleLogout;
+window.openBillboardModal = openBillboardModal;
+window.editBillboard = editBillboard;
+window.deleteBillboard = deleteBillboard;
+window.handleSaveBillboard = handleSaveBillboard;
+window.openVideoModal = openVideoModal;
+window.editVideo = editVideo;
+window.deleteVideo = deleteVideo;
+window.handleSaveVideo = handleSaveVideo;
+window.openPostModal = openPostModal;
+window.editPost = editPost;
+window.deletePost = deletePost;
+window.handleSavePost = handleSavePost;
+window.renderPostImagesGrid = renderPostImagesGrid;
+window.uploadMultiplePostImages = uploadMultiplePostImages;
+window.addPostImageUrlManual = addPostImageUrlManual;
+window.removePostImage = removePostImage;
+window.movePostImage = movePostImage;
+window.closeModal = closeModal;
+window.showToast = showToast;
+window.uploadFieldFile = uploadFieldFile;
+window.handleDirectFileUpload = handleDirectFileUpload;
+window.setPostFilter = setPostFilter;
+window.handlePostSearch = handlePostSearch;
+
+// Global backdrop click-to-close handler
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.modal-backdrop').forEach(modal => {
+    modal.addEventListener('click', e => {
+      if (e.target === modal) {
+        closeModal(modal.id);
+      }
+    });
+  });
+});

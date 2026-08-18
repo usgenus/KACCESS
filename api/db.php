@@ -19,6 +19,8 @@ function get_db_data() {
         ];
     }
 
+    // Clear PHP stat cache so we always read fresh content.json
+    clearstatcache(true, DATA_FILE);
     $content = file_get_contents(DATA_FILE);
     $data = json_decode($content, true);
     if (!$data || !is_array($data)) {
@@ -35,15 +37,22 @@ function get_db_data() {
 function save_db_data($data) {
     $dir = dirname(DATA_FILE);
     if (!is_dir($dir)) {
-        mkdir($dir, 0755, true);
+        @mkdir($dir, 0777, true);
+        @chmod($dir, 0777);
     }
     $json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-    return file_put_contents(DATA_FILE, $json, LOCK_EX) !== false;
+    $res = file_put_contents(DATA_FILE, $json, LOCK_EX) !== false;
+    @chmod(DATA_FILE, 0666);
+    clearstatcache(true, DATA_FILE);
+    return $res;
 }
 
 function send_json($data, $status = 200) {
     http_response_code($status);
     header('Content-Type: application/json; charset=utf-8');
+    header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+    header('Pragma: no-cache');
+    header('Expires: 0');
     header('Access-Control-Allow-Origin: *');
     header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
     header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');

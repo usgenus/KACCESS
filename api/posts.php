@@ -116,6 +116,21 @@ if ($method === 'POST') {
         $summaryPoints = array_filter(array_map('trim', explode("\n", $summaryPoints)));
     }
 
+    // Process multiple images
+    $images = $input['images'] ?? [];
+    if (is_string($images)) {
+        $images = array_filter(array_map('trim', explode("\n", $images)));
+    }
+    if (!is_array($images)) {
+        $images = [];
+    }
+    $coverImage = trim($input['coverImage'] ?? '');
+    if (!empty($images)) {
+        $coverImage = $images[0];
+    } elseif ($coverImage) {
+        $images = [$coverImage];
+    }
+
     $newItem = [
         'id' => $newId,
         'slug' => $slug,
@@ -125,7 +140,8 @@ if ($method === 'POST') {
         'isTopStory' => !empty($input['isTopStory']),
         'isLiveUpdate' => !empty($input['isLiveUpdate']),
         'excerpt' => trim($input['excerpt'] ?? ''),
-        'coverImage' => trim($input['coverImage'] ?? ''),
+        'coverImage' => $coverImage,
+        'images' => $images,
         'videoUrl' => trim($input['videoUrl'] ?? ''),
         'readTime' => trim($input['readTime'] ?? '3분'),
         'author' => trim($input['author'] ?? '편집부'),
@@ -186,7 +202,25 @@ if ($method === 'PUT') {
             if (isset($input['isTopStory'])) $item['isTopStory'] = (bool)$input['isTopStory'];
             if (isset($input['isLiveUpdate'])) $item['isLiveUpdate'] = (bool)$input['isLiveUpdate'];
             if (isset($input['excerpt'])) $item['excerpt'] = trim($input['excerpt']);
-            if (isset($input['coverImage'])) $item['coverImage'] = trim($input['coverImage']);
+            
+            // Multiple images handling on update
+            if (isset($input['images'])) {
+                $imgs = $input['images'];
+                if (is_string($imgs)) {
+                    $imgs = array_filter(array_map('trim', explode("\n", $imgs)));
+                }
+                if (is_array($imgs)) {
+                    $item['images'] = array_values($imgs);
+                    if (!empty($item['images'])) {
+                        $item['coverImage'] = $item['images'][0];
+                    }
+                }
+            }
+            if (isset($input['coverImage']) && (!isset($item['images']) || empty($item['images']))) {
+                $item['coverImage'] = trim($input['coverImage']);
+                $item['images'] = [$item['coverImage']];
+            }
+
             if (isset($input['videoUrl'])) $item['videoUrl'] = trim($input['videoUrl']);
             if (isset($input['readTime'])) $item['readTime'] = trim($input['readTime']);
             if (isset($input['author'])) $item['author'] = trim($input['author']);

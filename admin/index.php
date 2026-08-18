@@ -16,7 +16,7 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="/admin/admin.css">
+  <link rel="stylesheet" href="/admin/admin.css?v=<?= time() ?>">
   <script>
     tailwind.config = {
       theme: {
@@ -45,16 +45,16 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
   <header class="bg-slate-900/90 border-b border-slate-800 backdrop-blur-md sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <a href="/admin/" class="flex items-center gap-2.5 group">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-red-600 to-blue-600 flex items-center justify-center text-xl shadow-md group-hover:scale-105 transition-transform">
-            🏥
+        <a href="/admin/" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-slate-950 border border-slate-700/80 flex items-center justify-center p-1.5 shadow-md group-hover:scale-105 transition-transform text-white">
+            <img src="/logo-icon.svg" alt="NJAP Logo" class="w-full h-full object-contain filter invert brightness-200">
           </div>
           <div>
             <div class="font-extrabold text-base tracking-tight text-white flex items-center gap-2">
               NJ Access Center
               <span class="text-[10px] bg-red-600/90 text-white font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">CMS 2.0</span>
             </div>
-            <p class="text-[11px] text-slate-400">포털 실시간 통합 콘텐츠 관리</p>
+            <p class="text-[11px] text-slate-400">포털 실시간 통합 콘텐츠 관리 · NJAP</p>
           </div>
         </a>
       </div>
@@ -374,7 +374,7 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
   <!-- ========================================================= -->
   <!-- MODAL: BILLBOARD ADD / EDIT -->
   <!-- ========================================================= -->
-  <div id="modal-billboard" class="modal-backdrop hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+  <div id="modal-billboard" class="modal-backdrop hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm items-center justify-center p-4 overflow-y-auto">
     <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl space-y-5 my-8 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b border-slate-800 pb-4">
         <h3 id="modal-billboard-title" class="text-lg font-bold text-white flex items-center gap-2">
@@ -396,15 +396,14 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label class="block font-bold text-slate-300 mb-1.5">카테고리 뱃지 문구 (Category / Badge) *</label>
-            <input type="text" id="billboard-category-input" name="category" required
-              class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500"
-              placeholder="예: SPECIAL CAMPAIGN, MEDICARE UPDATE">
-          </div>
-          <div>
             <label class="block font-bold text-slate-300 mb-1.5">노출 순서 (Display Order)</label>
             <input type="number" id="billboard-order-input" name="order" value="1" min="1" max="100"
               class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-300 mb-1.5">버튼 표시 문구 (Button Text)</label>
+            <input type="text" id="billboard-linktext-input" name="linkText" value="자세히 보기 →"
+              class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500">
           </div>
         </div>
 
@@ -464,7 +463,7 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
   <!-- ========================================================= -->
   <!-- MODAL: MEDICAL VIDEO ADD / EDIT -->
   <!-- ========================================================= -->
-  <div id="modal-video" class="modal-backdrop hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+  <div id="modal-video" class="modal-backdrop hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm items-center justify-center p-4 overflow-y-auto">
     <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl space-y-5 my-8 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b border-slate-800 pb-4">
         <h3 id="modal-video-title" class="text-lg font-bold text-white flex items-center gap-2">
@@ -565,10 +564,10 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
         </div>
 
         <div>
-          <label class="block font-bold text-slate-300 mb-1.5">영상 요약 및 설명 (Main Text / Summary) *</label>
-          <textarea id="video-summary-input" name="summary" rows="3" required
+          <label class="block font-bold text-slate-300 mb-1.5">영상 요약 및 설명 (Main Text / Summary)</label>
+          <textarea id="video-summary-input" name="summary" rows="3"
             class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-red-500 leading-relaxed"
-            placeholder="비디오 설명 및 핵심 포인트를 입력하세요."></textarea>
+            placeholder="비디오 설명 및 핵심 포인트를 입력하세요. (선택 사항)"></textarea>
         </div>
 
         <div class="flex items-center gap-2 pt-2">
@@ -587,7 +586,7 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
   <!-- ========================================================= -->
   <!-- MODAL: NEWS / BLOG POST ADD / EDIT -->
   <!-- ========================================================= -->
-  <div id="modal-post" class="modal-backdrop hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+  <div id="modal-post" class="modal-backdrop hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm items-center justify-center p-4 overflow-y-auto">
     <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-3xl w-full p-6 sm:p-8 shadow-2xl space-y-5 my-8 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b border-slate-800 pb-4">
         <h3 id="modal-post-title" class="text-lg font-bold text-white flex items-center gap-2">
@@ -627,28 +626,47 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
           </div>
         </div>
 
-        <!-- Cover Image & Video Upload -->
+        <!-- Multi-Images Upload Manager & Video -->
         <div class="bg-slate-950/60 p-4 rounded-2xl border border-slate-800 space-y-3">
-          <label class="block font-bold text-slate-200">기사 대표 커버 이미지 (Cover Image) & 영상</label>
-          <div class="flex gap-2">
-            <input type="text" id="post-cover-input" name="coverImage" required
-              class="flex-1 bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-emerald-500"
-              placeholder="이미지 URL (https://... 또는 /uploads/...)">
-            <label class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2 rounded-xl cursor-pointer transition-all flex items-center gap-1.5 whitespace-nowrap">
-              <i class="fa-solid fa-arrow-up-from-bracket"></i>
-              <span>이미지 업로드</span>
-              <input type="file" class="hidden" accept="image/*" onchange="uploadFieldFile(this, 'post-cover-input', 'post-cover-preview')">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <label class="block font-bold text-slate-200 text-xs sm:text-sm">기사 다중 사진 관리 (Multiple Images)</label>
+              <p class="text-[11px] text-slate-400 mt-0.5">
+                <span class="text-emerald-400 font-bold">1번째 사진</span>은 대표 썸네일(Hero 커버 &amp; 목록 카드)로 자동 사용되며, <span class="text-blue-400 font-bold">2번째 이후 사진</span>들은 기사 본문 내 갤러리로 자동 배치됩니다.
+              </p>
+            </div>
+            <label class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-3.5 py-2 rounded-xl cursor-pointer transition-all flex items-center justify-center gap-1.5 whitespace-nowrap text-xs shadow-md self-start sm:self-auto">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+              <span>사진 일괄 추가</span>
+              <input type="file" class="hidden" accept="image/*" multiple onchange="uploadMultiplePostImages(this)">
             </label>
           </div>
-          <div id="post-cover-preview" class="relative h-36 rounded-xl overflow-hidden bg-slate-800 border border-slate-700 hidden"></div>
 
-          <div>
+          <!-- Direct URL Add input -->
+          <div class="flex gap-2">
+            <input type="text" id="post-add-image-url-input"
+              class="flex-1 bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-emerald-500"
+              placeholder="이미지 URL 직접 입력 후 [+ URL 추가] (https://... 또는 /uploads/...)">
+            <button type="button" onclick="addPostImageUrlManual()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold px-3.5 py-2 rounded-xl border border-slate-700 transition-all flex items-center gap-1 text-xs whitespace-nowrap">
+              <i class="fa-solid fa-plus"></i> URL 추가
+            </button>
+          </div>
+
+          <!-- Multi-Image Visual Gallery & Order Manager -->
+          <div id="post-images-manager-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 pt-1">
+            <!-- Dynamically populated image cards with Thumbnail badge, Reorder arrows, and Delete button -->
+          </div>
+
+          <input type="hidden" id="post-cover-input" name="coverImage">
+
+          <!-- Optional Video Attachment -->
+          <div class="pt-2 border-t border-slate-800/80">
             <label class="block text-slate-400 mb-1">첨부 비디오 URL (선택 사항: MP4 또는 유튜브 링크)</label>
             <div class="flex gap-2">
               <input type="text" id="post-videourl-input" name="videoUrl"
                 class="flex-1 bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-emerald-500"
-                placeholder="동영상 URL">
-              <label class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold px-3 py-2 rounded-xl cursor-pointer transition-all flex items-center gap-1 text-xs">
+                placeholder="동영상 URL (예: https://www.youtube.com/watch?v=... 또는 /uploads/videos/...)">
+              <label class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold px-3 py-2 rounded-xl cursor-pointer transition-all flex items-center gap-1 text-xs whitespace-nowrap">
                 <i class="fa-solid fa-video"></i>
                 <span>비디오 업로드</span>
                 <input type="file" class="hidden" accept="video/*" onchange="uploadFieldFile(this, 'post-videourl-input')">
@@ -703,6 +721,6 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
     <div class="flex-1 text-xs font-semibold" id="toast-msg">작업이 완료되었습니다.</div>
   </div>
 
-  <script src="/admin/admin.js"></script>
+  <script src="/admin/admin.js?v=<?= time() ?>"></script>
 </body>
 </html>

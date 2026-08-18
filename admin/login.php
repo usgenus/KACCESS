@@ -39,11 +39,11 @@ if (!empty($_SESSION['cms_logged_in']) && $_SESSION['cms_logged_in'] === true) {
   <div class="w-full max-w-md">
     <!-- Header Box -->
     <div class="text-center mb-8">
-      <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-tr from-red-600 to-blue-600 text-white shadow-xl shadow-red-900/30 mb-4 ring-4 ring-white/10">
-        <span class="text-3xl">🏥</span>
+      <div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-slate-950/90 border border-slate-700/80 text-white shadow-2xl mb-4 p-3.5 ring-4 ring-blue-500/20">
+        <img src="/logo-icon.svg" alt="NJAP Logo" class="w-full h-full object-contain filter invert brightness-200">
       </div>
       <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">NJ Access Center</h1>
-      <p class="text-sm text-slate-400 mt-1">의료 포털 통합 콘텐츠 관리 시스템 (CMS)</p>
+      <p class="text-sm text-slate-400 mt-1">의료 포털 통합 콘텐츠 관리 시스템 · NJAP</p>
     </div>
 
     <!-- Login Card -->

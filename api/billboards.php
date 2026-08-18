@@ -25,7 +25,7 @@ if ($method === 'GET') {
     $activeOnly = isset($_GET['active_only']) && $_GET['active_only'] == '1';
     $result = [];
     foreach ($billboards as $item) {
-        if ($activeOnly && empty($item['active'])) {
+        if ($activeOnly && isset($item['active']) && ($item['active'] === false || $item['active'] === 0 || $item['active'] === '0' || $item['active'] === 'false')) {
             continue;
         }
         $result[] = $item;

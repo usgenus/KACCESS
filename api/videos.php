@@ -13,8 +13,11 @@ $videos = $db['videos'] ?? [];
 // Helper to extract YouTube ID from URL or return string
 function extract_youtube_id($urlOrId) {
     $urlOrId = trim($urlOrId);
-    if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i', $urlOrId, $match)) {
+    if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts|live)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i', $urlOrId, $match)) {
         return $match[1];
+    }
+    if (preg_match('/^[a-zA-Z0-9_-]{11}$/', $urlOrId)) {
+        return $urlOrId;
     }
     return $urlOrId;
 }
@@ -45,7 +48,7 @@ if ($method === 'GET') {
         $result[] = $item;
     }
 
-    // Sort by order
+    // Sort by order ascending
     usort($result, function($a, $b) {
         return ($a['order'] ?? 0) <=> ($b['order'] ?? 0);
     });
@@ -77,7 +80,6 @@ if ($method === 'POST') {
     $videoUrl = trim($input['videoUrl'] ?? '');
 
     $newId = 'v_' . time() . '_' . substr(md5(uniqid()), 0, 4);
-    $order = count($videos) + 1;
 
     $thumbnail = trim($input['thumbnail'] ?? '');
     if (!$thumbnail && $ytId) {
@@ -97,12 +99,21 @@ if ($method === 'POST') {
         'date' => trim($input['date'] ?? date('Y.m.d')),
         'summary' => trim($input['summary'] ?? ''),
         'thumbnail' => $thumbnail,
-        'order' => (int)($input['order'] ?? $order),
+        'order' => isset($input['order']) ? (int)$input['order'] : 1,
         'active' => isset($input['active']) ? (bool)$input['active'] : true,
         'createdAt' => date('Y-m-d H:i:s')
     ];
 
-    $videos[] = $newItem;
+    // If order is 1 (default for newly uploaded video), increment order of existing items
+    if ($newItem['order'] === 1) {
+        foreach ($videos as &$existing) {
+            $existing['order'] = ($existing['order'] ?? 1) + 1;
+        }
+        array_unshift($videos, $newItem);
+    } else {
+        $videos[] = $newItem;
+    }
+
     $db['videos'] = $videos;
 
     // Update categories

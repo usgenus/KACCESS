@@ -59,6 +59,40 @@
   ],
   "videos": [
     {
+      "id": "v_test_sync",
+      "youtubeId": "NJznfHuJLRQ",
+      "videoUrl": "",
+      "title": "[실시간 검증] 뉴저지 한인 시니어 혈관 건강 & 뇌졸중 전조증상 골든타임 특강",
+      "doctor": "신경과 전문의 리포트",
+      "hospital": "Englewood Health Center for Korean Health",
+      "category": "뇌신경 질환",
+      "views": "15.8만회",
+      "duration": "08:45",
+      "date": "2026.08.18",
+      "summary": "뇌졸중 경고 신호 및 골든타임 4.5시간의 중요성, 미국 병원 응급실 이송 시 필수 대처법 종합 해설.",
+      "thumbnail": "https://img.youtube.com/vi/NJznfHuJLRQ/maxresdefault.jpg",
+      "order": 1,
+      "active": true,
+      "createdAt": "2026-08-18 03:20:00"
+    },
+    {
+      "id": "v_1787021673_aec9",
+      "youtubeId": "84uvxJruMXM",
+      "videoUrl": "",
+      "title": "당뇨병 초기 증상 5가지 — 혈당 관리 핵심 가이드",
+      "doctor": "내분비내과 전문의",
+      "hospital": "Englewood Health Center",
+      "category": "만성질환 관리",
+      "views": "1.2만회",
+      "duration": "05:00",
+      "date": "2026.08.18",
+      "summary": "당뇨 조기 발견 및 식습관 개선 가이드",
+      "thumbnail": "https://img.youtube.com/vi/84uvxJruMXM/maxresdefault.jpg",
+      "order": 1,
+      "active": true,
+      "createdAt": "2026-08-18 02:54:33"
+    },
+    {
       "id": "v1",
       "youtubeId": "84uvxJruMXM",
       "videoUrl": "",
@@ -149,7 +183,7 @@
       "isTopStory": true,
       "isLiveUpdate": false,
       "excerpt": "루핀 제약, 이물질 혼입 가능성으로 프레드니솔론 안약 250만 여 병 자진 리콜",
-      "coverImage": "https://images.unsplash.com/photo-1628771065117-74ccb5690668?w=1200&q=80&auto=format",
+      "coverImage": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&q=80&auto=format",
       "videoUrl": "",
       "readTime": "2분",
       "author": "편집부",
@@ -160,7 +194,39 @@
         "처방약 복용 시 주의 사항 및 환불·교환 절차 안내"
       ],
       "status": "published",
-      "createdAt": "2026-08-04 09:30:00"
+      "createdAt": "2026-08-04 09:30:00",
+      "images": [
+        "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&q=80&auto=format",
+        "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=1000&q=80&auto=format",
+        "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=1000&q=80&auto=format"
+      ]
+    },
+    {
+      "id": "p_test_sync",
+      "slug": "senior-health-support-2026",
+      "title": "2026년 뉴저지 한인 시니어 건강보험 지원 확대 공식 발표",
+      "category": "Medicare & ACA",
+      "date": "2026-08-18",
+      "isTopStory": false,
+      "isLiveUpdate": true,
+      "excerpt": "뉴저지 주정부 및 주요 의료기관, 한인 고령층 대상 건강보험 혜택 및 무료 통역 서비스 전격 확대",
+      "coverImage": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&q=80&auto=format",
+      "videoUrl": "",
+      "readTime": "3분",
+      "author": "편집부",
+      "content": "2026년 하반기부터 뉴저지 거주 한인 시니어를 위한 메디케어 및 ACA 건강보험 지원 프로그램이 대폭 강화됩니다. 특히 한국어 의료 통역 및 병원비 감면 혜택 신청 절차가 간소화됩니다.",
+      "summaryPoints": [
+        "한국어 1:1 건강보험 자격 진단 지원",
+        "병원비 감면(Charity Care) 신청 간소화",
+        "한인 전문의 연계 네트워크 확대"
+      ],
+      "status": "published",
+      "createdAt": "2026-08-18 03:20:00",
+      "images": [
+        "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&q=80&auto=format",
+        "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=1000&q=80&auto=format",
+        "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=1000&q=80&auto=format"
+      ]
     },
     {
       "id": "p2",
@@ -182,7 +248,10 @@
         "가족 및 주치의와 데이터 실시간 공유"
       ],
       "status": "published",
-      "createdAt": "2026-08-02 11:20:00"
+      "createdAt": "2026-08-02 11:20:00",
+      "images": [
+        "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&q=80&auto=format"
+      ]
     },
     {
       "id": "p3",
@@ -204,7 +273,10 @@
         "주 3회 이상의 복합 유산소 및 저항성 운동 권장"
       ],
       "status": "published",
-      "createdAt": "2026-08-02 14:15:00"
+      "createdAt": "2026-08-02 14:15:00",
+      "images": [
+        "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1200&q=80&auto=format"
+      ]
     },
     {
       "id": "p4",
@@ -226,7 +298,10 @@
         "복용 환자 건강 이상 발생 시 보고 경로"
       ],
       "status": "published",
-      "createdAt": "2026-07-30 08:45:00"
+      "createdAt": "2026-07-30 08:45:00",
+      "images": [
+        "https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?w=1200&q=80&auto=format"
+      ]
     },
     {
       "id": "p5",
@@ -248,7 +323,10 @@
         "처방 자격 요건 및 사전 승인(Prior Auth) 가이드"
       ],
       "status": "published",
-      "createdAt": "2026-07-30 16:30:00"
+      "createdAt": "2026-07-30 16:30:00",
+      "images": [
+        "https://images.unsplash.com/photo-1607874963930-2edecc67a25a?w=1200&q=80&auto=format"
+      ]
     },
     {
       "id": "p6",
@@ -270,7 +348,10 @@
         "수면의 질을 높이는 5대 생활 습관"
       ],
       "status": "published",
-      "createdAt": "2026-07-29 10:10:00"
+      "createdAt": "2026-07-29 10:10:00",
+      "images": [
+        "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=1200&q=80&auto=format"
+      ]
     },
     {
       "id": "p7",
@@ -292,7 +373,10 @@
         "관절에 무리를 주지 않는 점진적 저항 운동법"
       ],
       "status": "published",
-      "createdAt": "2026-07-29 15:40:00"
+      "createdAt": "2026-07-29 15:40:00",
+      "images": [
+        "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1200&q=80&auto=format"
+      ]
     },
     {
       "id": "p8",
@@ -314,12 +398,37 @@
         "한국어 통역 지원 서비스 신청 방법"
       ],
       "status": "published",
-      "createdAt": "2026-07-26 11:00:00"
+      "createdAt": "2026-07-26 11:00:00",
+      "images": [
+        "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&q=80&auto=format"
+      ]
     }
   ],
   "categories": {
-    "news": ["전체", "FDA 리콜", "Health & Wellness", "Medicare & ACA", "보건 정책 & 리포트", "병원 소식"],
-    "videos": ["전체", "심장 & 혈관", "뇌신경 질환", "암 예방 & 검진", "관절 & 정형외과", "만성질환 관리", "한인 건강 특강"],
-    "billboards": ["SPECIAL CAMPAIGN", "MEDICARE UPDATE", "PATIENT SUPPORT", "HEALTH WEBINAR", "NOTICE", "EMERGENCY"]
+    "news": [
+      "전체",
+      "FDA 리콜",
+      "Health & Wellness",
+      "Medicare & ACA",
+      "보건 정책 & 리포트",
+      "병원 소식"
+    ],
+    "videos": [
+      "전체",
+      "심장 & 혈관",
+      "뇌신경 질환",
+      "암 예방 & 검진",
+      "관절 & 정형외과",
+      "만성질환 관리",
+      "한인 건강 특강"
+    ],
+    "billboards": [
+      "SPECIAL CAMPAIGN",
+      "MEDICARE UPDATE",
+      "PATIENT SUPPORT",
+      "HEALTH WEBINAR",
+      "NOTICE",
+      "EMERGENCY"
+    ]
   }
 }

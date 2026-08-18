@@ -1,31 +1,30 @@
-Options -Indexes
-
-# Enable URL Rewriting
+<IfModule mod_rewrite.c>
 RewriteEngine On
+RewriteBase /
 
-# DirectoryIndex priorities
-DirectoryIndex index.php index.html
-
-# Admin portal clean URL
-RewriteRule ^admin/?$ /admin/index.php [L]
+# Admin clean URL
+RewriteRule ^admin/?$ admin/index.php [L]
 
 # Protect data folder
 RewriteRule ^data/.*$ - [F,L]
 
-# If the request is for an existing file or directory, serve it directly
+# If requested file or directory exists, serve it
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
-# Clean URL rewrites: /medicare → /medicare.html
-RewriteRule ^medicare$ /medicare.html [L]
-RewriteRule ^blog$ /blog.html [L]
-RewriteRule ^tool$ /tool.html [L]
-RewriteRule ^about$ /about.html [L]
-RewriteRule ^404$ /404.html [L]
+# Clean URL rewrites
+RewriteRule ^medicare/?$ medicare.html [L]
+RewriteRule ^blog/?$ blog.html [L]
+RewriteRule ^tool/?$ tool.html [L]
+RewriteRule ^about/?$ about.html [L]
+RewriteRule ^404/?$ 404.html [L]
 
-# Blog sub-pages
-RewriteRule ^blog/([^/]+)$ /blog/$1.html [L]
+# Dynamic blog post fallback for CMS uploaded articles
+RewriteCond %{DOCUMENT_ROOT}/blog/$1.html -f
+RewriteRule ^blog/([^/]+)/?$ blog/$1.html [L]
 
-# 404 fallback
+RewriteRule ^blog/([^/]+)/?$ blog-post.php?slug=$1 [L]
+</IfModule>
+
 ErrorDocument 404 /404.html

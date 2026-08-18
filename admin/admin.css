@@ -56,8 +56,18 @@
   overflow: hidden;
 }
 
-/* Modal animation */
+/* Modal display & animation rules */
+.modal-backdrop.hidden,
+.hidden {
+  display: none !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
 .modal-backdrop:not(.hidden) {
+  display: flex !important;
+  pointer-events: auto !important;
+  visibility: visible !important;
   animation: fadeIn 0.2s ease-out forwards;
 }
 
