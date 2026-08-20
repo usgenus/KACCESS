@@ -12,7 +12,7 @@ if (!empty($_SESSION['cms_logged_in']) && $_SESSION['cms_logged_in'] === true) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NJ Access Center CMS 관리자 로그인</title>
+  <title>Healthcare Access Portal CMS 관리자 로그인</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -42,7 +42,7 @@ if (!empty($_SESSION['cms_logged_in']) && $_SESSION['cms_logged_in'] === true) {
       <div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-slate-950/90 border border-slate-700/80 text-white shadow-2xl mb-4 p-3.5 ring-4 ring-blue-500/20">
         <img src="/logo-icon.svg" alt="NJAP Logo" class="w-full h-full object-contain filter invert brightness-200">
       </div>
-      <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">NJ Access Center</h1>
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Healthcare Access Portal</h1>
       <p class="text-sm text-slate-400 mt-1">의료 포털 통합 콘텐츠 관리 시스템 · NJAP</p>
     </div>
 
@@ -101,7 +101,7 @@ if (!empty($_SESSION['cms_logged_in']) && $_SESSION['cms_logged_in'] === true) {
     </div>
 
     <p class="text-center text-[11px] text-slate-500 mt-6">
-      © 2026 NJ Access Center Portal CMS Engine. All rights reserved.
+      © 2026 Healthcare Access Portal Portal CMS Engine. All rights reserved.
     </p>
   </div>
 

@@ -23,6 +23,36 @@ function make_slug($text) {
     return $slug;
 }
 
+function sanitize_summary_points($summaryPoints) {
+    if (empty($summaryPoints)) return [];
+    if (is_string($summaryPoints)) {
+        $trimmed = trim($summaryPoints);
+        if (strpos($trimmed, '[') === 0 || strpos($trimmed, '{') === 0) {
+            $decoded = json_decode($trimmed, true);
+            if (is_array($decoded)) {
+                return sanitize_summary_points($decoded);
+            }
+        }
+        $summaryPoints = explode("\n", $summaryPoints);
+    }
+    if (is_array($summaryPoints)) {
+        $clean = [];
+        foreach ($summaryPoints as $pt) {
+            if (is_array($pt)) {
+                $pt = implode(' ', array_filter($pt, 'is_string'));
+            }
+            if (is_string($pt)) {
+                $t = trim($pt);
+                if ($t !== '' && $t !== '[object Object]' && strpos($t, '[object Object]') === false) {
+                    $clean[] = $t;
+                }
+            }
+        }
+        return array_values($clean);
+    }
+    return [];
+}
+
 // GET: List or Single Post
 if ($method === 'GET') {
     // Single post by slug or id
@@ -67,11 +97,16 @@ if ($method === 'GET') {
         return $t2 <=> $t1;
     });
 
+    // Always include these default categories (merged with any custom ones from DB)
+    $defaultCats = ['의료칼럼', 'FDA 리콜', 'Health & Wellness', 'Medicare & ACA', '보건 정책 & 메디케어 리포트', '보건 정책 & 리포트', '병원 소식', '건강 뉴스'];
+    $dbCats = $db['categories']['news'] ?? [];
+    $allCats = array_values(array_unique(array_merge($defaultCats, $dbCats)));
+
     send_json([
         'success' => true,
         'data' => $result,
         'total' => count($result),
-        'categories' => $db['categories']['news'] ?? []
+        'categories' => $allCats
     ]);
 }
 
@@ -111,10 +146,7 @@ if ($method === 'POST') {
         $counter++;
     }
 
-    $summaryPoints = $input['summaryPoints'] ?? [];
-    if (is_string($summaryPoints)) {
-        $summaryPoints = array_filter(array_map('trim', explode("\n", $summaryPoints)));
-    }
+    $summaryPoints = sanitize_summary_points($input['summaryPoints'] ?? []);
 
     // Process multiple images
     $images = $input['images'] ?? [];
@@ -137,8 +169,10 @@ if ($method === 'POST') {
         'title' => $title,
         'category' => trim($input['category'] ?? 'Health & Wellness'),
         'date' => trim($input['date'] ?? date('Y-m-d')),
-        'isTopStory' => !empty($input['isTopStory']),
-        'isLiveUpdate' => !empty($input['isLiveUpdate']),
+        'isTopStory' => !empty($input['isTopStory']) && $input['isTopStory'] !== 'false' && $input['isTopStory'] !== false,
+        'isLiveUpdate' => !empty($input['isLiveUpdate']) && $input['isLiveUpdate'] !== 'false' && $input['isLiveUpdate'] !== false,
+        'isDoctorColumn' => !empty($input['isDoctorColumn']) && $input['isDoctorColumn'] !== 'false' && $input['isDoctorColumn'] !== false,
+        'isPolicyReport' => !empty($input['isPolicyReport']) && $input['isPolicyReport'] !== 'false' && $input['isPolicyReport'] !== false,
         'excerpt' => trim($input['excerpt'] ?? ''),
         'coverImage' => $coverImage,
         'images' => $images,
@@ -194,13 +228,23 @@ if ($method === 'PUT') {
     }
 
     foreach ($posts as &$item) {
-        if ($item['id'] === $id) {
+        if ((string)$item['id'] === (string)$id || (isset($item['slug']) && (string)$item['slug'] === (string)$id)) {
             if (isset($input['title'])) $item['title'] = trim($input['title']);
             if (isset($input['slug']) && trim($input['slug'])) $item['slug'] = trim($input['slug']);
             if (isset($input['category'])) $item['category'] = trim($input['category']);
             if (isset($input['date'])) $item['date'] = trim($input['date']);
-            if (isset($input['isTopStory'])) $item['isTopStory'] = (bool)$input['isTopStory'];
-            if (isset($input['isLiveUpdate'])) $item['isLiveUpdate'] = (bool)$input['isLiveUpdate'];
+            if (isset($input['isTopStory'])) {
+                $item['isTopStory'] = ($input['isTopStory'] === true || $input['isTopStory'] === 'true' || $input['isTopStory'] === 1 || $input['isTopStory'] === '1');
+            }
+            if (isset($input['isLiveUpdate'])) {
+                $item['isLiveUpdate'] = ($input['isLiveUpdate'] === true || $input['isLiveUpdate'] === 'true' || $input['isLiveUpdate'] === 1 || $input['isLiveUpdate'] === '1');
+            }
+            if (isset($input['isDoctorColumn'])) {
+                $item['isDoctorColumn'] = ($input['isDoctorColumn'] === true || $input['isDoctorColumn'] === 'true' || $input['isDoctorColumn'] === 1 || $input['isDoctorColumn'] === '1');
+            }
+            if (isset($input['isPolicyReport'])) {
+                $item['isPolicyReport'] = ($input['isPolicyReport'] === true || $input['isPolicyReport'] === 'true' || $input['isPolicyReport'] === 1 || $input['isPolicyReport'] === '1');
+            }
             if (isset($input['excerpt'])) $item['excerpt'] = trim($input['excerpt']);
             
             // Multiple images handling on update
@@ -226,11 +270,7 @@ if ($method === 'PUT') {
             if (isset($input['author'])) $item['author'] = trim($input['author']);
             if (isset($input['content'])) $item['content'] = trim($input['content']);
             if (isset($input['summaryPoints'])) {
-                $pts = $input['summaryPoints'];
-                if (is_string($pts)) {
-                    $pts = array_filter(array_map('trim', explode("\n", $pts)));
-                }
-                $item['summaryPoints'] = $pts;
+                $item['summaryPoints'] = sanitize_summary_points($input['summaryPoints']);
             }
             if (isset($input['status'])) $item['status'] = trim($input['status']);
             $item['updatedAt'] = date('Y-m-d H:i:s');
@@ -257,9 +297,11 @@ if ($method === 'DELETE') {
 
     $newPosts = [];
     $found = false;
+    $deletedId = null;
     foreach ($posts as $item) {
-        if ($item['id'] === $id) {
+        if ((string)$item['id'] === (string)$id || (isset($item['slug']) && (string)$item['slug'] === (string)$id)) {
             $found = true;
+            $deletedId = $item['id'];
         } else {
             $newPosts[] = $item;
         }
@@ -269,7 +311,19 @@ if ($method === 'DELETE') {
         send_json(['success' => false, 'error' => '기사를 찾을 수 없습니다.'], 404);
     }
 
+    // 1. Delete from Supabase first (primary source of truth)
+    $supabase = get_supabase();
+    if ($supabase->isConfigured() && $deletedId) {
+        try {
+            $supabase->delete('posts', $deletedId, 'id');
+        } catch (Exception $e) {
+            error_log('Supabase delete error: ' . $e->getMessage());
+        }
+    }
+
+    // 2. Update and save via unified storage layer
     $db['posts'] = $newPosts;
     save_db_data($db);
+
     send_json(['success' => true, 'message' => '기사가 삭제되었습니다.']);
 }

@@ -1,6 +1,17 @@
+DirectoryIndex index.php index.html
+
+<IfModule mod_headers.c>
+  Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0"
+  Header set Pragma "no-cache"
+  Header set Expires 0
+</IfModule>
+
 <IfModule mod_rewrite.c>
 RewriteEngine On
 RewriteBase /
+
+# Redirect index.html to /
+RewriteRule ^index\.html$ / [R=301,L]
 
 # Admin clean URL
 RewriteRule ^admin/?$ admin/index.php [L]
@@ -8,23 +19,24 @@ RewriteRule ^admin/?$ admin/index.php [L]
 # Protect data folder
 RewriteRule ^data/.*$ - [F,L]
 
-# If requested file or directory exists, serve it
-RewriteCond %{REQUEST_FILENAME} -f [OR]
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^ - [L]
+# Auto-recovery for uploaded images and videos if missing on disk
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^uploads/(images|videos)/(.+)$ api/media.php?file=$2 [L]
 
 # Clean URL rewrites
 RewriteRule ^medicare/?$ medicare.html [L]
-RewriteRule ^blog/?$ blog.html [L]
+RewriteRule ^blog/?$ blog.php [L]
 RewriteRule ^tool/?$ tool.html [L]
 RewriteRule ^about/?$ about.html [L]
 RewriteRule ^404/?$ 404.html [L]
 
-# Dynamic blog post fallback for CMS uploaded articles
-RewriteCond %{DOCUMENT_ROOT}/blog/$1.html -f
-RewriteRule ^blog/([^/]+)/?$ blog/$1.html [L]
-
+# Dynamic blog post handler (MUST BE BEFORE static file/dir checks)
 RewriteRule ^blog/([^/]+)/?$ blog-post.php?slug=$1 [L]
+
+# If requested file or directory exists, serve it
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
 </IfModule>
 
 ErrorDocument 404 /404.html

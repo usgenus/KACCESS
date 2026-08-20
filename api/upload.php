@@ -1,4 +1,9 @@
 <?php
+/**
+ * Healthcare Access Portal - Persistent File Upload & Media Library Handler
+ * Stores all uploads in Hostinger Persistent Storage (outside public_html)
+ * and mirrors into public_html for instant CDN delivery.
+ */
 require_once __DIR__ . '/db.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
@@ -11,46 +16,42 @@ require_auth();
 
 $action = $_GET['action'] ?? '';
 
-// GET: List uploaded files for Media Library
+// GET: List uploaded files for Media Library (Merges Persistent Storage and Local Mirror)
 if ($method === 'GET' && $action === 'list') {
     $type = $_GET['type'] ?? 'all'; // 'images', 'videos', or 'all'
-    $files = [];
+    $filesMap = [];
 
-    $imgDir = __DIR__ . '/../uploads/images';
-    $vidDir = __DIR__ . '/../uploads/videos';
-
-    if (($type === 'all' || $type === 'images') && is_dir($imgDir)) {
-        foreach (scandir($imgDir) as $f) {
+    // Helper to scan a directory
+    $scanFolder = function($dir, $fileType, $urlPrefix) use (&$filesMap) {
+        if (!is_dir($dir)) return;
+        foreach (scandir($dir) as $f) {
             if ($f === '.' || $f === '..' || $f === '.htaccess') continue;
-            $path = $imgDir . '/' . $f;
+            $path = $dir . '/' . $f;
             if (is_file($path)) {
-                $files[] = [
-                    'name' => $f,
-                    'type' => 'image',
-                    'url' => '/uploads/images/' . $f,
-                    'size' => filesize($path),
-                    'mtime' => filemtime($path)
-                ];
+                if (!isset($filesMap[$f])) {
+                    $filesMap[$f] = [
+                        'name' => $f,
+                        'type' => $fileType,
+                        'url' => $urlPrefix . '/' . $f,
+                        'size' => filesize($path),
+                        'mtime' => filemtime($path)
+                    ];
+                }
             }
         }
+    };
+
+    if ($type === 'all' || $type === 'images') {
+        $scanFolder(PERSISTENT_IMAGES_DIR, 'image', '/uploads/images');
+        $scanFolder(LOCAL_IMAGES_DIR, 'image', '/uploads/images');
     }
 
-    if (($type === 'all' || $type === 'videos') && is_dir($vidDir)) {
-        foreach (scandir($vidDir) as $f) {
-            if ($f === '.' || $f === '..' || $f === '.htaccess') continue;
-            $path = $vidDir . '/' . $f;
-            if (is_file($path)) {
-                $files[] = [
-                    'name' => $f,
-                    'type' => 'video',
-                    'url' => '/uploads/videos/' . $f,
-                    'size' => filesize($path),
-                    'mtime' => filemtime($path)
-                ];
-            }
-        }
+    if ($type === 'all' || $type === 'videos') {
+        $scanFolder(PERSISTENT_VIDEOS_DIR, 'video', '/uploads/videos');
+        $scanFolder(LOCAL_VIDEOS_DIR, 'video', '/uploads/videos');
     }
 
+    $files = array_values($filesMap);
     usort($files, function($a, $b) {
         return $b['mtime'] <=> $a['mtime'];
     });
@@ -58,7 +59,7 @@ if ($method === 'GET' && $action === 'list') {
     send_json(['success' => true, 'files' => $files]);
 }
 
-// DELETE: Remove an uploaded file
+// DELETE: Remove an uploaded file from both Persistent and Local stores
 if ($method === 'DELETE' || ($method === 'POST' && $action === 'delete')) {
     $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
     $url = trim($input['url'] ?? ($_GET['url'] ?? ''));
@@ -66,21 +67,25 @@ if ($method === 'DELETE' || ($method === 'POST' && $action === 'delete')) {
         send_json(['success' => false, 'error' => '삭제할 파일 URL이 필요합니다.'], 400);
     }
 
-    // sanitize path
-    $url = ltrim($url, '/');
-    if (strpos($url, 'uploads/') !== 0) {
-        send_json(['success' => false, 'error' => '올바르지 않은 파일 경로입니다.'], 400);
+    $filename = basename($url);
+    $subDir = (strpos($url, '/videos/') !== false) ? 'videos' : 'images';
+
+    $pPath = ($subDir === 'videos' ? PERSISTENT_VIDEOS_DIR : PERSISTENT_IMAGES_DIR) . '/' . $filename;
+    $lPath = ($subDir === 'videos' ? LOCAL_VIDEOS_DIR : LOCAL_IMAGES_DIR) . '/' . $filename;
+
+    if (file_exists($pPath)) @unlink($pPath);
+    if (file_exists($lPath)) @unlink($lPath);
+
+    // Remove from persistent media store
+    if (file_exists(PERSISTENT_MEDIA_STORE)) {
+        $store = json_decode(@file_get_contents(PERSISTENT_MEDIA_STORE), true) ?: [];
+        if (isset($store[$filename])) {
+            unset($store[$filename]);
+            @file_put_contents(PERSISTENT_MEDIA_STORE, json_encode($store, JSON_UNESCAPED_SLASHES));
+        }
     }
 
-    $fullPath = realpath(__DIR__ . '/../' . $url);
-    $baseUploads = realpath(__DIR__ . '/../uploads');
-
-    if ($fullPath && strpos($fullPath, $baseUploads) === 0 && file_exists($fullPath)) {
-        unlink($fullPath);
-        send_json(['success' => true, 'message' => '파일이 삭제되었습니다.']);
-    } else {
-        send_json(['success' => false, 'error' => '파일을 찾을 수 없습니다.'], 404);
-    }
+    send_json(['success' => true, 'message' => '파일이 삭제되었습니다.']);
 }
 
 // POST: Upload File
@@ -108,31 +113,67 @@ if ($method === 'POST') {
     }
 
     $targetSubdir = $isImage ? 'images' : 'videos';
-    $targetDir = __DIR__ . '/../uploads/' . $targetSubdir;
-
-    if (!is_dir($targetDir)) {
-        mkdir($targetDir, 0755, true);
-    }
 
     // Generate safe clean filename
     $rawBase = pathinfo($filename, PATHINFO_FILENAME);
     $cleanBase = preg_replace('/[^a-zA-Z0-9_\-]/', '_', $rawBase);
     $safeName = $targetSubdir . '_' . date('Ymd_His') . '_' . substr(md5(uniqid()), 0, 6) . '.' . $ext;
-    $targetPath = $targetDir . '/' . $safeName;
 
-    if (!move_uploaded_file($file['tmp_name'], $targetPath)) {
-        send_json(['success' => false, 'error' => '파일 저장에 실패했습니다. 권한을 확인해주세요.'], 500);
+    $pTargetDir = $isImage ? PERSISTENT_IMAGES_DIR : PERSISTENT_VIDEOS_DIR;
+    $lTargetDir = $isImage ? LOCAL_IMAGES_DIR : LOCAL_VIDEOS_DIR;
+
+    if (!is_dir($pTargetDir)) { @mkdir($pTargetDir, 0777, true); @chmod($pTargetDir, 0777); }
+    if (!is_dir($lTargetDir)) { @mkdir($lTargetDir, 0777, true); @chmod($lTargetDir, 0777); }
+
+    $pTargetPath = $pTargetDir . '/' . $safeName;
+    $lTargetPath = $lTargetDir . '/' . $safeName;
+
+    // 1. Move to Persistent Directory (Protected outside public_html)
+    if (!move_uploaded_file($file['tmp_name'], $pTargetPath)) {
+        // Fallback to local
+        if (!copy($file['tmp_name'], $lTargetPath)) {
+            send_json(['success' => false, 'error' => '파일 저장에 실패했습니다. 권한을 확인해주세요.'], 500);
+        }
+    }
+    @chmod($pTargetPath, 0666);
+
+    // 2. Mirror into Local public_html for instant direct web access
+    if (file_exists($pTargetPath) && !file_exists($lTargetPath)) {
+        @copy($pTargetPath, $lTargetPath);
+        @chmod($lTargetPath, 0666);
     }
 
+    // 3. Persistent Media Store Backup
     $relativeUrl = '/uploads/' . $targetSubdir . '/' . $safeName;
+    $dataUrl = '';
+    $sourceFile = file_exists($pTargetPath) ? $pTargetPath : $lTargetPath;
+
+    if ($isImage && file_exists($sourceFile)) {
+        $mime = mime_content_type($sourceFile) ?: ('image/' . ($ext === 'svg' ? 'svg+xml' : $ext));
+        $fileBytes = file_get_contents($sourceFile);
+        $dataUrl = 'data:' . $mime . ';base64,' . base64_encode($fileBytes);
+
+        // Save into persistent media_store.json
+        $pStore = file_exists(PERSISTENT_MEDIA_STORE) ? (json_decode(@file_get_contents(PERSISTENT_MEDIA_STORE), true) ?: []) : [];
+        $pStore[$safeName] = $dataUrl;
+        @file_put_contents(PERSISTENT_MEDIA_STORE, json_encode($pStore, JSON_UNESCAPED_SLASHES));
+        @chmod(PERSISTENT_MEDIA_STORE, 0666);
+
+        // Also update local store
+        $lStore = file_exists(LOCAL_MEDIA_STORE) ? (json_decode(@file_get_contents(LOCAL_MEDIA_STORE), true) ?: []) : [];
+        $lStore[$safeName] = $dataUrl;
+        @file_put_contents(LOCAL_MEDIA_STORE, json_encode($lStore, JSON_UNESCAPED_SLASHES));
+        @chmod(LOCAL_MEDIA_STORE, 0666);
+    }
 
     send_json([
         'success' => true,
-        'message' => '업로드가 완료되었습니다.',
+        'message' => '업로드가 안전하게 완료되었습니다.',
         'url' => $relativeUrl,
+        'dataUrl' => $dataUrl,
         'name' => $safeName,
         'type' => $isImage ? 'image' : 'video',
-        'size' => filesize($targetPath)
+        'size' => filesize($sourceFile)
     ]);
 }
 

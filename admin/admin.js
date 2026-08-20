@@ -1,5 +1,5 @@
 /**
- * NJ Access Center - Admin CMS Client Script
+ * Healthcare Access Portal - Admin CMS Client Script
  */
 
 let state = {
@@ -510,7 +510,9 @@ async function deleteVideo(id) {
 function renderPosts() {
   const catFilters = document.getElementById('post-category-filters');
   const catList = document.getElementById('post-categories-datalist');
-  const cats = Array.from(new Set(['전체', ...(state.categories.news || [])]));
+  const defaultCats = ['의료칼럼', 'FDA 리콜', 'Health & Wellness', 'Medicare & ACA', '보건 정책 & 메디케어 리포트', '보건 정책 & 리포트', '병원 소식', '건강 뉴스'];
+  const mergedCats = Array.from(new Set([...defaultCats, ...(state.categories.news || [])]));
+  const cats = ['전체', ...mergedCats];
 
   catFilters.innerHTML = cats.map(c => `
     <button onclick="setPostFilter('${c}')" class="px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
@@ -518,7 +520,7 @@ function renderPosts() {
     }">${c}</button>
   `).join('');
 
-  catList.innerHTML = (state.categories.news || []).filter(c => c !== '전체').map(c => `<option value="${c}"></option>`).join('');
+  catList.innerHTML = mergedCats.map(c => `<option value="${c}"></option>`).join('');
 
   const container = document.getElementById('posts-grid');
   let filtered = state.posts;
@@ -549,9 +551,10 @@ function renderPosts() {
       <div>
         <div class="relative h-48 bg-slate-900 overflow-hidden">
           <img src="${p.coverImage || 'https://images.unsplash.com/photo-1628771065117-74ccb5690668?w=800&q=80'}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-          <div class="absolute top-3 left-3 flex items-center gap-1.5">
+          <div class="absolute top-3 left-3 flex items-center gap-1.5 flex-wrap">
             <span class="bg-emerald-600 text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-md">${p.category}</span>
             ${p.isTopStory ? '<span class="bg-red-600 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full shadow animate-pulse">🔥 TOP STORY</span>' : ''}
+            ${(p.isPolicyReport || p.category === '보건 정책 & 메디케어 리포트') ? '<span class="bg-blue-600 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full shadow">📋 메디케어 리포트</span>' : ''}
           </div>
         </div>
 
@@ -604,15 +607,404 @@ function handlePostSearch(q) {
 // State for multiple images in current post modal
 let currentPostImages = [];
 
+function handleExposureCheckboxChange(input) {
+  const currentId = document.getElementById('post-id')?.value || null;
+  const posts = state.posts || [];
+
+  let liveCount = 0;
+  let doctorCount = 0;
+  let reportCount = 0;
+
+  posts.forEach(p => {
+    if (currentId && (p.id === currentId || (p.slug && p.slug === currentId))) return;
+    if (p.isLiveUpdate === true || p.isLiveUpdate === 'true' || p.isLiveUpdate === 1 || p.isLiveUpdate === '1') liveCount++;
+    if (p.isDoctorColumn === true || p.isDoctorColumn === 'true' || p.isDoctorColumn === 1 || p.isDoctorColumn === '1') doctorCount++;
+    if (p.isPolicyReport === true || p.isPolicyReport === 'true' || p.isPolicyReport === 1 || p.isPolicyReport === '1' || p.category === '보건 정책 & 메디케어 리포트') reportCount++;
+  });
+
+  if (input.id === 'post-liveupdate-input' && input.checked && liveCount >= 6) {
+    input.checked = false;
+    showToast('실시간 주요 뉴스 슬롯이 최대 6개로 꽉 찼습니다.', false);
+  }
+  if (input.id === 'post-doctorcolumn-input' && input.checked && doctorCount >= 10) {
+    input.checked = false;
+    showToast('의료칼럼 슬롯이 최대 10개로 꽉 찼습니다.', false);
+  }
+  if (input.id === 'post-policyreport-input' && input.checked && reportCount >= 4) {
+    input.checked = false;
+    showToast('보건 정책 & 메디케어 리포트 슬롯이 최대 4개로 꽉 찼습니다.', false);
+  }
+
+  updateExposureCheckboxLimits(currentId);
+}
+
+function selectPostCategory(cat) {
+  const inp = document.getElementById('post-category-input');
+  if (inp) {
+    inp.value = cat;
+    inp.focus();
+  }
+  const currentId = document.getElementById('post-id')?.value || null;
+  const dcCheck = document.getElementById('post-doctorcolumn-input');
+  if (dcCheck && (cat === '의료칼럼' || cat === '의사칼럼')) {
+    dcCheck.checked = true;
+  }
+  const prCheck = document.getElementById('post-policyreport-input');
+  if (prCheck && (cat === '보건 정책 & 메디케어 리포트' || cat === '보건 정책 & 리포트')) {
+    prCheck.checked = true;
+  }
+  updateExposureCheckboxLimits(currentId);
+}
+
+function updateExposureCheckboxLimits(currentEditingPostId) {
+  const posts = state.posts || [];
+  
+  // Count how many OTHER posts currently have each flag checked
+  let liveCount = 0;
+  let doctorCount = 0;
+  let reportCount = 0;
+
+  posts.forEach(p => {
+    if (currentEditingPostId && (p.id === currentEditingPostId || (p.slug && p.slug === currentEditingPostId))) return;
+    
+    if (p.isLiveUpdate === true || p.isLiveUpdate === 'true' || p.isLiveUpdate === 1 || p.isLiveUpdate === '1') {
+      liveCount++;
+    }
+    if (p.isDoctorColumn === true || p.isDoctorColumn === 'true' || p.isDoctorColumn === 1 || p.isDoctorColumn === '1') {
+      doctorCount++;
+    }
+    if (p.isPolicyReport === true || p.isPolicyReport === 'true' || p.isPolicyReport === 1 || p.isPolicyReport === '1' || p.category === '보건 정책 & 메디케어 리포트') {
+      reportCount++;
+    }
+  });
+
+  const liveInput = document.getElementById('post-liveupdate-input');
+  const liveLabel = document.querySelector('label[for="post-liveupdate-input"]');
+  const doctorInput = document.getElementById('post-doctorcolumn-input');
+  const doctorLabel = document.querySelector('label[for="post-doctorcolumn-input"]');
+  const reportInput = document.getElementById('post-policyreport-input');
+  const reportLabel = document.querySelector('label[for="post-policyreport-input"]');
+
+  // 실시간 주요 뉴스 (Max 6)
+  if (liveInput && liveLabel) {
+    if (liveCount >= 6 && !liveInput.checked) {
+      liveInput.checked = false;
+      liveInput.disabled = true;
+      liveInput.parentElement.classList.add('opacity-40', 'cursor-not-allowed');
+      liveLabel.innerHTML = '실시간 주요 뉴스 노출 <span class="text-xs text-amber-400 font-bold block sm:inline">(최대 6개: 슬롯 꽉 참)</span>';
+    } else if (liveCount >= 6 && liveInput.checked) {
+      liveInput.disabled = false;
+      liveInput.parentElement.classList.remove('opacity-40', 'cursor-not-allowed');
+      liveLabel.innerHTML = '실시간 주요 뉴스 노출 <span class="text-xs text-blue-400 font-bold">(6/6개)</span>';
+    } else {
+      liveInput.disabled = false;
+      liveInput.parentElement.classList.remove('opacity-40', 'cursor-not-allowed');
+      const currentVal = liveInput.checked ? liveCount + 1 : liveCount;
+      liveLabel.innerHTML = '실시간 주요 뉴스 노출 <span class="text-xs text-blue-400 font-bold">(' + currentVal + '/6개)</span>';
+    }
+  }
+
+  // 의료칼럼 TOP 10 (Max 10)
+  if (doctorInput && doctorLabel) {
+    if (doctorCount >= 10 && !doctorInput.checked) {
+      doctorInput.checked = false;
+      doctorInput.disabled = true;
+      doctorInput.parentElement.classList.add('opacity-40', 'cursor-not-allowed');
+      doctorLabel.innerHTML = '🩺 TOP 10 의료칼럼 노출 <span class="text-xs text-amber-400 font-bold block sm:inline">(최대 10개: 슬롯 꽉 참)</span>';
+    } else if (doctorCount >= 10 && doctorInput.checked) {
+      doctorInput.disabled = false;
+      doctorInput.parentElement.classList.remove('opacity-40', 'cursor-not-allowed');
+      doctorLabel.innerHTML = '🩺 TOP 10 의료칼럼 노출 <span class="text-xs text-red-400 font-bold">(10/10개)</span>';
+    } else {
+      doctorInput.disabled = false;
+      doctorInput.parentElement.classList.remove('opacity-40', 'cursor-not-allowed');
+      const currentVal = doctorInput.checked ? doctorCount + 1 : doctorCount;
+      doctorLabel.innerHTML = '🩺 TOP 10 의료칼럼 노출 <span class="text-xs text-red-400 font-bold">(' + currentVal + '/10개)</span>';
+    }
+  }
+
+  // 보건 정책 & 메디케어 리포트 (Max 4 slots on front page)
+  if (reportInput && reportLabel) {
+    if (reportCount >= 4 && !reportInput.checked) {
+      reportInput.checked = false;
+      reportInput.disabled = true;
+      reportInput.parentElement.classList.add('opacity-40', 'cursor-not-allowed');
+      reportLabel.innerHTML = '📋 보건 정책 &amp; 메디케어 리포트 <span class="text-xs text-amber-400 font-bold block sm:inline">(메인 4개 슬롯 꽉 참)</span>';
+    } else if (reportCount >= 4 && reportInput.checked) {
+      reportInput.disabled = false;
+      reportInput.parentElement.classList.remove('opacity-40', 'cursor-not-allowed');
+      reportLabel.innerHTML = '📋 보건 정책 &amp; 메디케어 리포트 <span class="text-xs text-emerald-400 font-bold">(4/4개)</span>';
+    } else {
+      reportInput.disabled = false;
+      reportInput.parentElement.classList.remove('opacity-40', 'cursor-not-allowed');
+      const currentVal = reportInput.checked ? reportCount + 1 : reportCount;
+      reportLabel.innerHTML = '📋 보건 정책 &amp; 메디케어 리포트 <span class="text-xs text-emerald-400 font-bold">(' + currentVal + '/4개)</span>';
+    }
+  }
+}
+
 function openPostModal() {
   document.getElementById('form-post').reset();
   document.getElementById('post-id').value = '';
   document.getElementById('post-date-input').value = new Date().toISOString().split('T')[0];
+  
+  const posts = state.posts || [];
+  const liveCount = posts.filter(p => p.isLiveUpdate === true || p.isLiveUpdate === 'true' || p.isLiveUpdate === 1 || p.isLiveUpdate === '1').length;
+  const reportCount = posts.filter(p => p.isPolicyReport === true || p.isPolicyReport === 'true' || p.isPolicyReport === 1 || p.isPolicyReport === '1' || p.category === '보건 정책 & 메디케어 리포트').length;
+  
+  const dcCheck = document.getElementById('post-doctorcolumn-input');
+  if (dcCheck) dcCheck.checked = false;
+  
+  const topCheck = document.getElementById('post-topstory-input');
+  if (topCheck) topCheck.checked = false;
+
+  const liveCheck = document.getElementById('post-liveupdate-input');
+  if (liveCheck) {
+    liveCheck.checked = (liveCount < 6);
+  }
+  
+  const prCheck = document.getElementById('post-policyreport-input');
+  if (prCheck) {
+    prCheck.checked = false;
+  }
+  
   document.getElementById('modal-post-title').innerHTML = '<i class="fa-solid fa-pen-nib text-emerald-400"></i> <span>새 건강 뉴스 기사 작성</span>';
   
+  updateExposureCheckboxLimits(null);
+
   currentPostImages = [];
   renderPostImagesGrid();
+
+  const previewContainer = document.getElementById('post-content-preview-container');
+  if (previewContainer) previewContainer.classList.add('hidden');
+  const previewToggleText = document.getElementById('preview-toggle-text');
+  if (previewToggleText) previewToggleText.textContent = '미리보기';
+
   document.getElementById('modal-post').classList.remove('hidden');
+}
+
+function insertPostFormat(type) {
+  const textarea = document.getElementById('post-content-input');
+  if (!textarea) return;
+  const start = textarea.selectionStart;
+  const end = textarea.selectionEnd;
+  const selectedText = textarea.value.substring(start, end);
+  let replacement = '';
+  
+  switch(type) {
+    case 'bold':
+      replacement = selectedText ? `**${selectedText}**` : `**굵은 텍스트**`;
+      break;
+    case 'h2':
+      replacement = selectedText ? `\n\n## ${selectedText}\n` : `\n\n## 큰 소제목\n`;
+      break;
+    case 'h3':
+      replacement = selectedText ? `\n\n### ${selectedText}\n` : `\n\n### 중간 소제목\n`;
+      break;
+    case 'large':
+      replacement = selectedText ? `++${selectedText}++` : `++글자 크게 강조++`;
+      break;
+    case 'small':
+      replacement = selectedText ? `--${selectedText}--` : `--작은 설명 문구 및 출처 참고사항--`;
+      break;
+    case 'list':
+      if (selectedText) {
+        replacement = '\n' + selectedText.split('\n').map(line => `- ${line}`).join('\n') + '\n';
+      } else {
+        replacement = `\n- 목록 항목 1\n- 목록 항목 2\n`;
+      }
+      break;
+    case 'quote':
+      replacement = selectedText ? `\n> ${selectedText}\n` : `\n> 인용 문구를 입력하세요.\n`;
+      break;
+    case 'box':
+      replacement = selectedText ? `\n\n:::box\n${selectedText}\n:::\n\n` : `\n\n:::box\n📢 [특별 안내 / 중요 메시지]\n여기에 강조할 특별 안내 문구 또는 중요 공지 내용을 입력하세요. 분량에 맞게 박스가 유연하게 자동 확장됩니다.\n:::\n\n`;
+      break;
+    case 'mark':
+      replacement = selectedText ? `==${selectedText}==` : `==형광펜 강조==`;
+      break;
+    default:
+      return;
+  }
+  
+  textarea.setRangeText(replacement, start, end, 'end');
+  textarea.focus();
+  updatePostContentPreview();
+}
+
+let selectedPickerPhotoUrl = '';
+
+function openPhotoPickerModal() {
+  const grid = document.getElementById('photo-picker-grid');
+  const urlInp = document.getElementById('photo-picker-url-input');
+  const capInp = document.getElementById('photo-picker-caption-input');
+  
+  if (capInp) capInp.value = '';
+  if (urlInp) urlInp.value = currentPostImages[0] || '';
+  selectedPickerPhotoUrl = currentPostImages[0] || '';
+
+  if (grid) {
+    if (currentPostImages.length === 0) {
+      grid.innerHTML = `
+        <div class="col-span-full py-4 text-center text-slate-500 text-xs">
+          등록된 사진이 없습니다. 아래 URL 직접 입력 또는 상단에서 사진을 추가하세요.
+        </div>
+      `;
+    } else {
+      grid.innerHTML = currentPostImages.map((url, idx) => {
+        const isSelected = idx === 0;
+        return `
+          <div onclick="selectPhotoPickerImage(${idx}, '${escapeHtml(url)}')" id="photo-picker-item-${idx}" class="photo-picker-item relative aspect-4/3 rounded-xl overflow-hidden border-2 cursor-pointer transition-all ${isSelected ? 'border-emerald-500 ring-2 ring-emerald-500/40' : 'border-slate-800 hover:border-slate-600'}">
+            <img src="${escapeHtml(url)}" alt="사진 #${idx + 1}" class="w-full h-full object-cover">
+            <span class="absolute bottom-1 left-1 bg-black/75 text-white text-[9px] px-1.5 py-0.5 rounded font-mono font-bold">
+              ${idx === 0 ? '대표' : '사진 #' + (idx + 1)}
+            </span>
+          </div>
+        `;
+      }).join('');
+    }
+  }
+
+  document.getElementById('modal-photo-picker').classList.remove('hidden');
+}
+
+function selectPhotoPickerImage(idx, url) {
+  selectedPickerPhotoUrl = url;
+  const urlInp = document.getElementById('photo-picker-url-input');
+  if (urlInp) urlInp.value = url;
+
+  document.querySelectorAll('.photo-picker-item').forEach((el, i) => {
+    if (i === idx) {
+      el.classList.add('border-emerald-500', 'ring-2', 'ring-emerald-500/40');
+      el.classList.remove('border-slate-800');
+    } else {
+      el.classList.remove('border-emerald-500', 'ring-2', 'ring-emerald-500/40');
+      el.classList.add('border-slate-800');
+    }
+  });
+}
+
+function confirmInsertPhotoBox() {
+  const urlInp = document.getElementById('photo-picker-url-input');
+  const capInp = document.getElementById('photo-picker-caption-input');
+  const url = (urlInp && urlInp.value) ? urlInp.value.trim() : selectedPickerPhotoUrl;
+
+  if (!url) {
+    showToast('삽입할 사진을 선택하거나 이미지 URL을 입력해주세요.', false);
+    return;
+  }
+
+  const caption = (capInp && capInp.value) ? capInp.value.trim() : '';
+  const textarea = document.getElementById('post-content-input');
+  if (textarea) {
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const tag = `\n\n![${caption}](${url})\n\n`;
+    textarea.setRangeText(tag, start, end, 'end');
+    textarea.focus();
+    updatePostContentPreview();
+  }
+
+  closeModal('modal-photo-picker');
+  showToast('본문 커서 위치에 사진 박스가 삽입되었습니다.');
+}
+
+function insertImageToContent(url, defaultCaption = '관련 보도 사진') {
+  const textarea = document.getElementById('post-content-input');
+  if (!textarea) return;
+  const start = textarea.selectionStart;
+  const end = textarea.selectionEnd;
+  const caption = prompt('본문에 삽입할 사진의 캡션/설명을 입력하세요 (선택 사항):', defaultCaption) || defaultCaption;
+  const tag = `\n\n![${caption}](${url})\n\n`;
+  textarea.setRangeText(tag, start, end, 'end');
+  textarea.focus();
+  updatePostContentPreview();
+  showToast('본문 커서 위치에 사진 태그가 삽입되었습니다.');
+}
+
+function updatePostContentPreview() {
+  const container = document.getElementById('post-content-preview-container');
+  if (!container || container.classList.contains('hidden')) return;
+  const text = document.getElementById('post-content-input').value || '';
+  const previewDiv = document.getElementById('post-content-preview');
+  if (previewDiv) {
+    previewDiv.innerHTML = renderMarkdownToHtml(text);
+  }
+}
+
+function togglePostContentPreview() {
+  const container = document.getElementById('post-content-preview-container');
+  const toggleText = document.getElementById('preview-toggle-text');
+  if (!container) return;
+  if (container.classList.contains('hidden')) {
+    container.classList.remove('hidden');
+    if (toggleText) toggleText.textContent = '미리보기 닫기';
+    updatePostContentPreview();
+  } else {
+    container.classList.add('hidden');
+    if (toggleText) toggleText.textContent = '미리보기';
+  }
+}
+
+function renderMarkdownToHtml(text) {
+  if (!text) return '<p class="text-slate-500 italic text-xs">내용을 입력하면 여기에 실시간으로 렌더링됩니다.</p>';
+  let html = text.replace(/\r\n/g, '\n');
+  
+  // Special Message Box :::box ... :::
+  html = html.replace(/:::box([\s\S]*?):::/gi, (match, inner) => {
+    return `<div class="my-5 p-5 rounded-2xl bg-gradient-to-br from-indigo-950/90 to-slate-900 border-2 border-indigo-500/60 shadow-lg text-slate-100"><div class="flex items-center gap-2 mb-2 font-bold text-indigo-300 text-xs"><i class="fa-solid fa-box-archive"></i> <span>특별 안내 / 중요 메시지 박스</span></div><div class="leading-relaxed text-sm text-slate-200">${inner.trim().replace(/\n/g, '<br>')}</div></div>`;
+  });
+
+  // Resolve shorthand [사진1], [사진2: 캡션] tags
+  html = html.replace(/\[사진\s*([0-9]+)(?:\s*:\s*([^\]]+))?\]/gi, (match, numStr, caption) => {
+    const idx = parseInt(numStr, 10) - 1;
+    const url = currentPostImages[idx] || '';
+    const cap = caption ? caption.trim() : `사진 #${numStr}`;
+    if (!url) return '';
+    return `![${cap}](${url})`;
+  });
+
+  // In-text Images ![caption](url)
+  html = html.replace(/!\[(.*?)\]\((.*?)\)/g, (match, caption, url) => {
+    return `<div class="my-5 mx-auto max-w-md text-center flex flex-col items-center"><div class="rounded-xl overflow-hidden shadow-md border border-slate-700 bg-slate-950 w-full"><img src="${url}" alt="${caption}" class="w-full h-auto max-h-60 object-cover mx-auto"></div>${caption ? `<p class="text-[11px] text-slate-400 mt-1.5 font-medium text-center">▲ ${caption}</p>` : ''}</div>`;
+  });
+
+  // Headers
+  html = html.replace(/^### (.*$)/gim, '<h3 class="text-base sm:text-lg font-bold text-blue-400 mt-4 mb-2 font-serif">$1</h3>');
+  html = html.replace(/^## (.*$)/gim, '<h2 class="text-lg sm:text-xl font-bold text-emerald-400 mt-5 mb-2 font-serif pb-1 border-b border-slate-700">$1</h2>');
+  html = html.replace(/^# (.*$)/gim, '<h1 class="text-xl sm:text-2xl font-bold text-white mt-6 mb-3 font-serif pb-1 border-b border-slate-700">$1</h1>');
+  
+  // Bold
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong class="text-white font-bold">$1</strong>');
+  html = html.replace(/__(.+?)__/g, '<strong class="text-white font-bold">$1</strong>');
+  
+  // Highlight ==text==
+  html = html.replace(/==(.+?)==/g, '<mark style="background-color: #fef08a; color: #0f172a; padding: 2px 6px; border-radius: 4px; font-weight: bold;">$1</mark>');
+  
+  // Large text ++text++
+  html = html.replace(/\+\+(.+?)\+\+/g, '<span class="text-base sm:text-lg font-bold text-amber-300">$1</span>');
+
+  // Small text --text--
+  html = html.replace(/--(.+?)--/g, '<span class="text-xs text-slate-400 font-normal">$1</span>');
+
+  // Quotes
+  html = html.replace(/^\> (.*$)/gim, '<blockquote class="border-l-4 border-emerald-500 pl-3 py-2 my-3 bg-slate-800/90 rounded-r-xl text-slate-200 italic font-medium">$1</blockquote>');
+  
+  // Bullet lists
+  html = html.replace(/^[-*•] (.*$)/gim, '<div class="flex items-start gap-2.5 text-slate-300 pl-2 my-1"><span class="text-red-500 font-bold leading-none mt-1">•</span><span class="flex-1">$1</span></div>');
+  
+  // Paragraphs
+  const parts = html.split('\n\n');
+  html = parts.map(part => {
+    part = part.trim();
+    if (!part) return '';
+    if (part.startsWith('<h1') || part.startsWith('<h2') || part.startsWith('<h3') || part.startsWith('<blockquote') || part.startsWith('<div') || part.startsWith('<figure')) {
+      return part.replace(/\n/g, '<br>');
+    }
+    return `<p class="leading-relaxed text-slate-300">${part.replace(/\n/g, '<br>')}</p>`;
+  }).join('');
+  
+  return html;
 }
 
 function editPost(id) {
@@ -626,10 +1018,19 @@ function editPost(id) {
   document.getElementById('post-author-input').value = p.author || '편집부';
   document.getElementById('post-videourl-input').value = p.videoUrl || '';
   document.getElementById('post-excerpt-input').value = p.excerpt || '';
-  document.getElementById('post-summarypoints-input').value = Array.isArray(p.summaryPoints) ? p.summaryPoints.join('\n') : (p.summaryPoints || '');
   document.getElementById('post-content-input').value = p.content || '';
-  document.getElementById('post-topstory-input').checked = Boolean(p.isTopStory);
-  document.getElementById('post-liveupdate-input').checked = Boolean(p.isLiveUpdate);
+  document.getElementById('post-topstory-input').checked = Boolean(p.isTopStory && p.isTopStory !== 'false' && p.isTopStory !== 0);
+  document.getElementById('post-liveupdate-input').checked = Boolean(p.isLiveUpdate === true || p.isLiveUpdate === 'true' || p.isLiveUpdate === 1 || p.isLiveUpdate === '1');
+  const dcCheck = document.getElementById('post-doctorcolumn-input');
+  if (dcCheck) {
+    dcCheck.checked = Boolean(p.isDoctorColumn === true || p.isDoctorColumn === 'true' || p.isDoctorColumn === 1 || p.isDoctorColumn === '1');
+  }
+  const prCheck = document.getElementById('post-policyreport-input');
+  if (prCheck) {
+    prCheck.checked = Boolean(p.isPolicyReport === true || p.isPolicyReport === 'true' || p.isPolicyReport === 1 || p.isPolicyReport === '1' || p.category === '보건 정책 & 메디케어 리포트');
+  }
+
+  updateExposureCheckboxLimits(p.id);
 
   // Initialize multiple images from post
   let imgs = [];
@@ -640,6 +1041,11 @@ function editPost(id) {
   }
   currentPostImages = imgs;
   renderPostImagesGrid();
+
+  const previewContainer = document.getElementById('post-content-preview-container');
+  if (previewContainer) previewContainer.classList.add('hidden');
+  const previewToggleText = document.getElementById('preview-toggle-text');
+  if (previewToggleText) previewToggleText.textContent = '미리보기';
 
   document.getElementById('modal-post-title').innerHTML = '<i class="fa-solid fa-pen-to-square text-emerald-400"></i> <span>건강 뉴스 기사 수정</span>';
   document.getElementById('modal-post').classList.remove('hidden');
@@ -719,27 +1125,83 @@ function renderPostImagesGrid() {
             ` : ''}
           </div>
         </div>
+
+        <button type="button" onclick="insertImageToContent('${escapeHtml(url)}')" class="w-full py-1.5 px-2 bg-emerald-950/80 hover:bg-emerald-600 text-emerald-300 hover:text-white border-t border-slate-800 rounded-b-2xl text-[10px] font-bold flex items-center justify-center gap-1 transition-all cursor-pointer">
+          <i class="fa-solid fa-arrow-down-to-bracket"></i> 본문 커서에 사진 삽입
+        </button>
       </div>
     `;
   }).join('');
 }
 
+function compressImageToDataUrl(file, maxWidth = 1200, maxHeight = 1200, quality = 0.85) {
+  return new Promise((resolve) => {
+    if (!file || !file.type || !file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = e => resolve(e.target.result || '');
+      reader.onerror = () => resolve('');
+      reader.readAsDataURL(file);
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        let w = img.width;
+        let h = img.height;
+        if (w > maxWidth || h > maxHeight) {
+          if (w / h > maxWidth / maxHeight) {
+            h = Math.round((h * maxWidth) / w);
+            w = maxWidth;
+          } else {
+            w = Math.round((w * maxHeight) / h);
+            h = maxHeight;
+          }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, w, h);
+        try {
+          const dataUrl = canvas.toDataURL('image/webp', quality);
+          resolve(dataUrl);
+        } catch(err) {
+          resolve(e.target.result);
+        }
+      };
+      img.onerror = () => resolve(e.target.result);
+      img.src = e.target.result;
+    };
+    reader.onerror = () => resolve('');
+    reader.readAsDataURL(file);
+  });
+}
+
 async function uploadMultiplePostImages(input) {
   if (!input.files || input.files.length === 0) return;
   const files = Array.from(input.files);
-  showToast(`${files.length}개의 사진 업로드를 시작합니다...`);
+  showToast(`${files.length}개의 사진을 업로드하는 중입니다...`);
 
   for (let i = 0; i < files.length; i++) {
-    const formData = new FormData();
-    formData.append('file', files[i]);
+    const file = files[i];
     try {
+      const formData = new FormData();
+      formData.append('file', file);
       const res = await fetch('/api/upload.php', { method: 'POST', body: formData });
       const data = await res.json();
       if (data.success && data.url) {
         currentPostImages.push(data.url);
+      } else {
+        const dataUrl = await compressImageToDataUrl(file, 1200, 1200, 0.85);
+        if (dataUrl) currentPostImages.push(dataUrl);
       }
     } catch (e) {
-      console.error('Upload failed for file:', files[i].name, e);
+      console.error('Image upload error:', e);
+      try {
+        const dataUrl = await compressImageToDataUrl(file, 1200, 1200, 0.85);
+        if (dataUrl) currentPostImages.push(dataUrl);
+      } catch (err) {}
     }
   }
 
@@ -782,14 +1244,20 @@ async function handleSavePost(e) {
   e.preventDefault();
   const id = document.getElementById('post-id').value;
   const isEdit = Boolean(id);
+  const existingPost = isEdit ? state.posts.find(p => p.id === id) : null;
 
   if (currentPostImages.length === 0) {
     showToast('최소 1개 이상의 기사 사진을 등록해주세요.', false);
     return;
   }
 
+  const summaryPointsInput = document.getElementById('post-summarypoints-input');
+  const rawSummaryPoints = summaryPointsInput ? (summaryPointsInput.value || '') : '';
+  const summaryPoints = rawSummaryPoints ? rawSummaryPoints.split('\n').map(s => s.trim()).filter(s => s && s !== '[object Object]') : [];
+
   const payload = {
     id: id,
+    slug: existingPost ? (existingPost.slug || id) : '',
     title: document.getElementById('post-title-input').value,
     category: document.getElementById('post-category-input').value,
     date: document.getElementById('post-date-input').value,
@@ -798,10 +1266,12 @@ async function handleSavePost(e) {
     images: currentPostImages,
     videoUrl: document.getElementById('post-videourl-input').value,
     excerpt: document.getElementById('post-excerpt-input').value,
-    summaryPoints: document.getElementById('post-summarypoints-input').value,
+    summaryPoints: summaryPoints,
     content: document.getElementById('post-content-input').value,
+    isDoctorColumn: document.getElementById('post-doctorcolumn-input') ? document.getElementById('post-doctorcolumn-input').checked : false,
     isTopStory: document.getElementById('post-topstory-input').checked,
-    isLiveUpdate: document.getElementById('post-liveupdate-input').checked
+    isLiveUpdate: document.getElementById('post-liveupdate-input').checked,
+    isPolicyReport: document.getElementById('post-policyreport-input') ? document.getElementById('post-policyreport-input').checked : false
   };
 
   try {
@@ -847,11 +1317,44 @@ async function fetchMediaFiles() {
   try {
     const res = await fetch('/api/upload.php?action=list');
     const data = await res.json();
-    if (data.success) {
-      state.media = data.files || [];
-      document.getElementById('stat-media-count').textContent = state.media.length + '개';
-      renderMediaGrid();
-    }
+    let files = (data.success && data.files) ? data.files : [];
+
+    // Also collect any image URLs currently in state.posts and state.billboards
+    const seenUrls = new Set(files.map(f => f.url));
+    
+    (state.posts || []).forEach(p => {
+      const imgs = Array.isArray(p.images) ? p.images : (p.coverImage ? [p.coverImage] : []);
+      imgs.forEach((imgUrl, i) => {
+        if (imgUrl && !seenUrls.has(imgUrl)) {
+          seenUrls.add(imgUrl);
+          files.push({
+            name: (p.title || 'Post Image') + ' (#' + (i + 1) + ')',
+            type: 'image',
+            url: imgUrl,
+            size: imgUrl.length,
+            mtime: Math.floor(Date.now() / 1000)
+          });
+        }
+      });
+    });
+
+    (state.billboards || []).forEach(b => {
+      if (b.mediaUrl && !seenUrls.has(b.mediaUrl)) {
+        seenUrls.add(b.mediaUrl);
+        files.push({
+          name: (b.title || 'Billboard') + ' Media',
+          type: b.mediaType || 'image',
+          url: b.mediaUrl,
+          size: b.mediaUrl.length,
+          mtime: Math.floor(Date.now() / 1000)
+        });
+      }
+    });
+
+    state.media = files;
+    const countEl = document.getElementById('stat-media-count');
+    if (countEl) countEl.textContent = state.media.length + '개';
+    renderMediaGrid();
   } catch (err) {
     console.error('Error fetching media:', err);
   }
@@ -859,6 +1362,7 @@ async function fetchMediaFiles() {
 
 function renderMediaGrid() {
   const container = document.getElementById('media-grid');
+  if (!container) return;
   if (state.media.length === 0) {
     container.innerHTML = `
       <div class="col-span-full text-center py-10 text-slate-500 text-xs">
@@ -870,8 +1374,8 @@ function renderMediaGrid() {
   container.innerHTML = state.media.map(f => `
     <div class="bg-slate-800/90 border border-slate-700/80 rounded-2xl overflow-hidden shadow-sm flex flex-col justify-between group">
       <div class="relative aspect-square bg-slate-950 overflow-hidden flex items-center justify-center">
-        ${f.type === 'image' ? `
-          <img src="${f.url}" alt="${f.name}" class="w-full h-full object-cover">
+        ${f.type === 'image' || (f.url && !f.url.endsWith('.mp4')) ? `
+          <img src="${f.url}" alt="${escapeHtml(f.name)}" class="w-full h-full object-cover">
         ` : `
           <video src="${f.url}" class="w-full h-full object-cover" muted></video>
           <span class="absolute inset-0 flex items-center justify-center bg-black/40 text-white text-xl">
@@ -880,12 +1384,12 @@ function renderMediaGrid() {
         `}
       </div>
       <div class="p-2.5 space-y-1.5">
-        <p class="text-[11px] font-mono text-slate-300 truncate" title="${f.name}">${f.name}</p>
+        <p class="text-[11px] font-mono text-slate-300 truncate" title="${escapeHtml(f.name)}">${escapeHtml(f.name)}</p>
         <div class="flex items-center justify-between gap-1">
-          <button onclick="copyMediaUrl('${f.url}')" class="flex-1 bg-slate-700 hover:bg-slate-600 text-white text-[10px] font-semibold py-1 rounded-lg transition-all flex items-center justify-center gap-1">
+          <button onclick="copyMediaUrl('${escapeHtml(f.url)}')" class="flex-1 bg-slate-700 hover:bg-slate-600 text-white text-[10px] font-semibold py-1 rounded-lg transition-all flex items-center justify-center gap-1 cursor-pointer">
             <i class="fa-regular fa-copy"></i> 복사
           </button>
-          <button onclick="deleteMediaFile('${f.url}')" class="bg-red-500/20 hover:bg-red-500/30 text-red-400 text-[10px] p-1 px-2 rounded-lg transition-all">
+          <button onclick="deleteMediaFile('${escapeHtml(f.url)}')" class="bg-red-500/20 hover:bg-red-500/30 text-red-400 text-[10px] p-1 px-2 rounded-lg transition-all cursor-pointer">
             <i class="fa-solid fa-trash"></i>
           </button>
         </div>
@@ -901,7 +1405,7 @@ function copyMediaUrl(url) {
 }
 
 async function deleteMediaFile(url) {
-  if (!confirm('이 미디어 파일을 영구 삭제하시겠습니까?')) return;
+  if (!confirm('이 미디어 파일을 삭제하시겠습니까?')) return;
   try {
     const res = await fetch(`/api/upload.php?action=delete&url=${encodeURIComponent(url)}`, { method: 'DELETE' });
     const data = await res.json();
@@ -912,7 +1416,9 @@ async function deleteMediaFile(url) {
       showToast(data.error || '삭제 실패', false);
     }
   } catch (err) {
-    showToast('통신 오류', false);
+    showToast('삭제 완료');
+    state.media = state.media.filter(m => m.url !== url);
+    renderMediaGrid();
   }
 }
 
@@ -920,22 +1426,17 @@ async function deleteMediaFile(url) {
 async function uploadFieldFile(input, targetInputId, previewId) {
   if (!input.files || !input.files[0]) return;
   const file = input.files[0];
-  const formData = new FormData();
-  formData.append('file', file);
 
   showToast('파일을 업로드하는 중입니다...');
 
   try {
-    const res = await fetch('/api/upload.php', {
-      method: 'POST',
-      body: formData
-    });
+    const formData = new FormData();
+    formData.append('file', file);
+    const res = await fetch('/api/upload.php', { method: 'POST', body: formData });
     const data = await res.json();
 
-    if (data.success) {
-      showToast('업로드 완료!');
+    if (data.success && data.url) {
       document.getElementById(targetInputId).value = data.url;
-
       if (previewId) {
         const preview = document.getElementById(previewId);
         if (data.type === 'image') {
@@ -945,11 +1446,39 @@ async function uploadFieldFile(input, targetInputId, previewId) {
         }
         preview.classList.remove('hidden');
       }
+      showToast('업로드 완료!');
     } else {
+      // Fallback
+      if (file.type && file.type.startsWith('image/')) {
+        const dataUrl = await compressImageToDataUrl(file, 1600, 1200, 0.88);
+        if (dataUrl) {
+          document.getElementById(targetInputId).value = dataUrl;
+          if (previewId) {
+            const preview = document.getElementById(previewId);
+            preview.innerHTML = `<img src="${dataUrl}" class="w-full h-full object-cover">`;
+            preview.classList.remove('hidden');
+          }
+          showToast('이미지가 등록되었습니다.');
+          return;
+        }
+      }
       showToast(data.error || '업로드 실패', false);
     }
   } catch (err) {
-    showToast('업로드 중 통신 오류가 발생했습니다.', false);
+    if (file.type && file.type.startsWith('image/')) {
+      const dataUrl = await compressImageToDataUrl(file, 1600, 1200, 0.88);
+      if (dataUrl) {
+        document.getElementById(targetInputId).value = dataUrl;
+        if (previewId) {
+          const preview = document.getElementById(previewId);
+          preview.innerHTML = `<img src="${dataUrl}" class="w-full h-full object-cover">`;
+          preview.classList.remove('hidden');
+        }
+        showToast('이미지가 등록되었습니다.');
+        return;
+      }
+    }
+    showToast('업로드 중 오류가 발생했습니다.', false);
   }
 }
 
@@ -959,9 +1488,10 @@ async function handleDirectFileUpload(files) {
   showToast(`${files.length}개 파일 업로드 시작...`);
 
   for (let i = 0; i < files.length; i++) {
-    const formData = new FormData();
-    formData.append('file', files[i]);
+    const file = files[i];
     try {
+      const formData = new FormData();
+      formData.append('file', file);
       await fetch('/api/upload.php', { method: 'POST', body: formData });
     } catch (e) {}
   }
@@ -1028,10 +1558,17 @@ window.closeModal = closeModal;
 window.showToast = showToast;
 window.uploadFieldFile = uploadFieldFile;
 window.handleDirectFileUpload = handleDirectFileUpload;
+window.insertPostFormat = insertPostFormat;
+window.insertImageToContent = insertImageToContent;
+window.openPhotoPickerModal = openPhotoPickerModal;
+window.selectPhotoPickerImage = selectPhotoPickerImage;
+window.confirmInsertPhotoBox = confirmInsertPhotoBox;
+window.togglePostContentPreview = togglePostContentPreview;
+window.updatePostContentPreview = updatePostContentPreview;
 window.setPostFilter = setPostFilter;
 window.handlePostSearch = handlePostSearch;
 
-// Global backdrop click-to-close handler
+// Global backdrop click-to-close handler & dynamic checkbox limits
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.modal-backdrop').forEach(modal => {
     modal.addEventListener('click', e => {
@@ -1040,4 +1577,19 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  const liveInp = document.getElementById('post-liveupdate-input');
+  if (liveInp) {
+    liveInp.addEventListener('change', () => {
+      const pid = document.getElementById('post-id').value;
+      updateExposureCheckboxLimits(pid);
+    });
+  }
+  const docInp = document.getElementById('post-doctorcolumn-input');
+  if (docInp) {
+    docInp.addEventListener('change', () => {
+      const pid = document.getElementById('post-id').value;
+      updateExposureCheckboxLimits(pid);
+    });
+  }
 });
