@@ -660,11 +660,11 @@
         return p.isLiveUpdate === true || p.isLiveUpdate === 'true' || p.isLiveUpdate === 1 || p.isLiveUpdate === '1';
       }).slice(0, 6);
 
-      // Reports Grid: 4 items (prioritize isPolicyReport or category '보건 정책 & 메디케어 리포트')
+      // Reports Grid: 4 items (prioritize isPolicyReport or category '리콜(Recalls and Food Safety)')
       var explicitReports = allPosts.filter(function(p) {
         if (topStory && String(p.id) === String(topStory.id)) return false;
         return p.isPolicyReport === true || p.isPolicyReport === 'true' || p.isPolicyReport === 1 || p.isPolicyReport === '1' ||
-               p.category === '보건 정책 & 메디케어 리포트' || p.category === '보건 정책 & 리포트';
+               p.category === '리콜(Recalls and Food Safety)' || p.category === '보건 정책 & 메디케어 리포트' || p.category === '보건 정책 & 리포트';
       });
       var otherCandidates = allPosts.filter(function(p) {
         if (topStory && String(p.id) === String(topStory.id)) return false;

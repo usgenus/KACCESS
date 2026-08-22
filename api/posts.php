@@ -98,9 +98,12 @@ if ($method === 'GET') {
     });
 
     // Always include these default categories (merged with any custom ones from DB)
-    $defaultCats = ['의료칼럼', 'FDA 리콜', 'Health & Wellness', 'Medicare & ACA', '보건 정책 & 메디케어 리포트', '보건 정책 & 리포트', '병원 소식', '건강 뉴스'];
+    $defaultCats = ['의료칼럼', 'FDA 리콜', 'Health & Wellness', 'Medicare & ACA', '리콜(Recalls and Food Safety)', '병원 소식', '건강 뉴스'];
     $dbCats = $db['categories']['news'] ?? [];
     $allCats = array_values(array_unique(array_merge($defaultCats, $dbCats)));
+    $allCats = array_values(array_filter($allCats, function($c) {
+        return $c !== '보건 정책 & 메디케어 리포트' && $c !== '보건 정책 & 리포트';
+    }));
 
     send_json([
         'success' => true,

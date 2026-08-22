@@ -617,8 +617,7 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
               <option value="FDA 리콜">
               <option value="Health &amp; Wellness">
               <option value="Medicare &amp; ACA">
-              <option value="보건 정책 &amp; 메디케어 리포트">
-              <option value="보건 정책 &amp; 리포트">
+              <option value="리콜(Recalls and Food Safety)">
               <option value="병원 소식">
               <option value="건강 뉴스">
             </datalist>
@@ -628,7 +627,7 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
               <button type="button" onclick="selectPostCategory('FDA 리콜')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all cursor-pointer">FDA 리콜</button>
               <button type="button" onclick="selectPostCategory('Health & Wellness')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all cursor-pointer">Health &amp; Wellness</button>
               <button type="button" onclick="selectPostCategory('Medicare & ACA')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all cursor-pointer">Medicare &amp; ACA</button>
-              <button type="button" onclick="selectPostCategory('보건 정책 & 메디케어 리포트')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all cursor-pointer">보건 정책 &amp; 메디케어 리포트</button>
+              <button type="button" onclick="selectPostCategory('리콜(Recalls and Food Safety)')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all cursor-pointer">리콜(Recalls and Food Safety)</button>
             </div>
           </div>
           <div>
@@ -771,7 +770,7 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
           </div>
           <div class="flex items-center gap-2">
             <input type="checkbox" id="post-policyreport-input" name="isPolicyReport" onchange="handleExposureCheckboxChange(this)" class="w-4 h-4 rounded text-emerald-500 bg-slate-800 border-slate-700 cursor-pointer">
-            <label for="post-policyreport-input" class="font-bold text-emerald-400 text-xs sm:text-sm cursor-pointer select-none">📋 보건 정책 &amp; 메디케어 리포트</label>
+            <label for="post-policyreport-input" class="font-bold text-emerald-400 text-xs sm:text-sm cursor-pointer select-none">📋 리콜(Recalls and Food Safety)</label>
           </div>
         </div>
 

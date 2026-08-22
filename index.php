@@ -70,10 +70,11 @@ $latestNews = array_values(array_filter($posts, function($p) use ($topStory) {
 }));
 $latestNews = array_slice($latestNews, 0, 6);
 
-// 3. Policy & Medicare Reports: (4 slots strictly: prioritize isPolicyReport or category '보건 정책 & 메디케어 리포트')
+// 3. Recalls & Food Safety / Reports: (4 slots strictly: prioritize isPolicyReport or category '리콜(Recalls and Food Safety)')
 $explicitReports = array_values(array_filter($posts, function($p) use ($topStory) {
     if ($topStory && (string)$p['id'] === (string)$topStory['id']) return false;
     $isReport = (!empty($p['isPolicyReport']) && $p['isPolicyReport'] !== 'false' && $p['isPolicyReport'] !== false && $p['isPolicyReport'] !== 0 && $p['isPolicyReport'] !== '0')
+        || (($p['category'] ?? '') === '리콜(Recalls and Food Safety)')
         || (($p['category'] ?? '') === '보건 정책 & 메디케어 리포트')
         || (($p['category'] ?? '') === '보건 정책 & 리포트');
     return $isReport;
@@ -565,10 +566,10 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
           </div>
         </section>
 
-        <!-- 4. Health Policy & Medicare Reports -->
+        <!-- 4. Recalls and Food Safety -->
         <section>
           <div class="flex items-center justify-between mb-4 pb-2 border-b-2 border-gray-900">
-            <h2 class="font-extrabold text-xl text-gray-950 uppercase tracking-wider">보건 정책 &amp; 메디케어 리포트</h2>
+            <h2 class="font-extrabold text-xl text-gray-950 uppercase tracking-wider">리콜(Recalls and Food Safety)</h2>
             <a class="text-xs font-bold text-brand-blue hover:underline" href="/blog">전체보기 →</a>
           </div>
           <div id="homepage-reports-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">

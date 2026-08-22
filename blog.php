@@ -7,9 +7,12 @@ require_once __DIR__ . '/api/db.php';
 
 $db = get_db_data();
 $posts = $db['posts'] ?? [];
-$defaultCats = ['전체', '의료칼럼', 'FDA 리콜', 'Health & Wellness', 'Medicare & ACA', '보건 정책 & 메디케어 리포트', '보건 정책 & 리포트', '병원 소식'];
+$defaultCats = ['전체', '의료칼럼', 'FDA 리콜', 'Health & Wellness', 'Medicare & ACA', '리콜(Recalls and Food Safety)', '병원 소식'];
 $dbCats = $db['categories']['news'] ?? [];
 $categories = array_values(array_unique(array_merge($defaultCats, $dbCats)));
+$categories = array_values(array_filter($categories, function($c) {
+    return $c !== '보건 정책 & 메디케어 리포트' && $c !== '보건 정책 & 리포트';
+}));
 
 // Filter published posts
 $publishedPosts = array_values(array_filter($posts, function($p) {

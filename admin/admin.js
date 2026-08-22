@@ -510,8 +510,9 @@ async function deleteVideo(id) {
 function renderPosts() {
   const catFilters = document.getElementById('post-category-filters');
   const catList = document.getElementById('post-categories-datalist');
-  const defaultCats = ['의료칼럼', 'FDA 리콜', 'Health & Wellness', 'Medicare & ACA', '보건 정책 & 메디케어 리포트', '보건 정책 & 리포트', '병원 소식', '건강 뉴스'];
-  const mergedCats = Array.from(new Set([...defaultCats, ...(state.categories.news || [])]));
+  const defaultCats = ['의료칼럼', 'FDA 리콜', 'Health & Wellness', 'Medicare & ACA', '리콜(Recalls and Food Safety)', '병원 소식', '건강 뉴스'];
+  const rawDbCats = (state.categories.news || []).filter(c => c !== '보건 정책 & 메디케어 리포트' && c !== '보건 정책 & 리포트');
+  const mergedCats = Array.from(new Set([...defaultCats, ...rawDbCats]));
   const cats = ['전체', ...mergedCats];
 
   catFilters.innerHTML = cats.map(c => `
@@ -546,15 +547,29 @@ function renderPosts() {
     return;
   }
 
-  container.innerHTML = filtered.map(p => `
+  container.innerHTML = filtered.map(p => {
+    const isTop = Boolean(p.isTopStory && p.isTopStory !== 'false' && p.isTopStory !== 0);
+    const isLive = Boolean(p.isLiveUpdate === true || p.isLiveUpdate === 'true' || p.isLiveUpdate === 1 || p.isLiveUpdate === '1');
+    const isDoc = Boolean(p.isDoctorColumn === true || p.isDoctorColumn === 'true' || p.isDoctorColumn === 1 || p.isDoctorColumn === '1');
+    const isRep = Boolean(p.isPolicyReport === true || p.isPolicyReport === 'true' || p.isPolicyReport === 1 || p.isPolicyReport === '1' || p.category === '리콜(Recalls and Food Safety)' || p.category === '보건 정책 & 메디케어 리포트' || p.category === '보건 정책 & 리포트');
+
+    return `
     <div class="bg-slate-800/90 border border-slate-700/90 rounded-3xl overflow-hidden shadow-lg flex flex-col justify-between group">
       <div>
         <div class="relative h-48 bg-slate-900 overflow-hidden">
           <img src="${p.coverImage || 'https://images.unsplash.com/photo-1628771065117-74ccb5690668?w=800&q=80'}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-          <div class="absolute top-3 left-3 flex items-center gap-1.5 flex-wrap">
-            <span class="bg-emerald-600 text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-md">${p.category}</span>
-            ${p.isTopStory ? '<span class="bg-red-600 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full shadow animate-pulse">🔥 TOP STORY</span>' : ''}
-            ${(p.isPolicyReport || p.category === '보건 정책 & 메디케어 리포트') ? '<span class="bg-blue-600 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full shadow">📋 메디케어 리포트</span>' : ''}
+          
+          <!-- Category pill (Top-Left) -->
+          <div class="absolute top-2.5 left-2.5">
+            <span class="bg-slate-900/90 backdrop-blur-md text-white text-[11px] font-extrabold px-3 py-1 rounded-full border border-slate-700 shadow-md">${p.category}</span>
+          </div>
+
+          <!-- Section Exposure Badges (Top-Right / Wrap) -->
+          <div class="absolute top-2.5 right-2.5 flex flex-col items-end gap-1">
+            ${isTop ? '<span class="bg-red-600/95 backdrop-blur-md text-white text-[10px] font-black px-2 py-0.5 rounded-lg shadow-md border border-red-400/60 animate-pulse flex items-center gap-1">🔥 TOP STORY</span>' : ''}
+            ${isLive ? '<span class="bg-blue-600/95 backdrop-blur-md text-white text-[10px] font-bold px-2 py-0.5 rounded-lg shadow-md border border-blue-400/60 flex items-center gap-1">⚡ 실시간 뉴스</span>' : ''}
+            ${isDoc ? '<span class="bg-rose-600/95 backdrop-blur-md text-white text-[10px] font-bold px-2 py-0.5 rounded-lg shadow-md border border-rose-400/60 flex items-center gap-1">🩺 의료칼럼</span>' : ''}
+            ${isRep ? '<span class="bg-emerald-600/95 backdrop-blur-md text-white text-[10px] font-bold px-2 py-0.5 rounded-lg shadow-md border border-emerald-400/60 flex items-center gap-1">📋 리콜(Recalls)</span>' : ''}
           </div>
         </div>
 
@@ -568,6 +583,16 @@ function renderPosts() {
           </div>
           <h3 class="text-sm font-bold text-white leading-snug line-clamp-2">${p.title}</h3>
           <p class="text-xs text-slate-300 line-clamp-2">${p.excerpt || ''}</p>
+
+          <!-- Exposure Status Indicators Row -->
+          <div class="flex flex-wrap items-center gap-1 pt-2 border-t border-slate-700/50 text-[10px]">
+            <span class="text-slate-400 font-bold mr-0.5">홈 노출:</span>
+            ${isTop ? '<span class="text-amber-300 bg-amber-950/80 border border-amber-500/40 px-1.5 py-0.5 rounded font-bold">🔥 헤드라인</span>' : ''}
+            ${isLive ? '<span class="text-blue-300 bg-blue-950/80 border border-blue-500/40 px-1.5 py-0.5 rounded font-bold">⚡ 주요뉴스</span>' : ''}
+            ${isDoc ? '<span class="text-rose-300 bg-rose-950/80 border border-rose-500/40 px-1.5 py-0.5 rounded font-bold">🩺 의료칼럼</span>' : ''}
+            ${isRep ? '<span class="text-emerald-300 bg-emerald-950/80 border border-emerald-500/40 px-1.5 py-0.5 rounded font-bold">📋 리콜/리포트</span>' : ''}
+            ${(!isTop && !isLive && !isDoc && !isRep) ? '<span class="text-slate-500 bg-slate-900/60 px-1.5 py-0.5 rounded">홈 미노출 (블로그 전용)</span>' : ''}
+          </div>
         </div>
       </div>
 
@@ -591,7 +616,8 @@ function renderPosts() {
         </div>
       </div>
     </div>
-  `).join('');
+  `;
+  }).join('');
 }
 
 function setPostFilter(cat) {
@@ -619,7 +645,7 @@ function handleExposureCheckboxChange(input) {
     if (currentId && (p.id === currentId || (p.slug && p.slug === currentId))) return;
     if (p.isLiveUpdate === true || p.isLiveUpdate === 'true' || p.isLiveUpdate === 1 || p.isLiveUpdate === '1') liveCount++;
     if (p.isDoctorColumn === true || p.isDoctorColumn === 'true' || p.isDoctorColumn === 1 || p.isDoctorColumn === '1') doctorCount++;
-    if (p.isPolicyReport === true || p.isPolicyReport === 'true' || p.isPolicyReport === 1 || p.isPolicyReport === '1' || p.category === '보건 정책 & 메디케어 리포트') reportCount++;
+    if (p.isPolicyReport === true || p.isPolicyReport === 'true' || p.isPolicyReport === 1 || p.isPolicyReport === '1' || p.category === '리콜(Recalls and Food Safety)' || p.category === '보건 정책 & 메디케어 리포트') reportCount++;
   });
 
   if (input.id === 'post-liveupdate-input' && input.checked && liveCount >= 6) {
@@ -632,7 +658,7 @@ function handleExposureCheckboxChange(input) {
   }
   if (input.id === 'post-policyreport-input' && input.checked && reportCount >= 4) {
     input.checked = false;
-    showToast('보건 정책 & 메디케어 리포트 슬롯이 최대 4개로 꽉 찼습니다.', false);
+    showToast('리콜(Recalls and Food Safety) 슬롯이 최대 4개로 꽉 찼습니다.', false);
   }
 
   updateExposureCheckboxLimits(currentId);
@@ -650,7 +676,7 @@ function selectPostCategory(cat) {
     dcCheck.checked = true;
   }
   const prCheck = document.getElementById('post-policyreport-input');
-  if (prCheck && (cat === '보건 정책 & 메디케어 리포트' || cat === '보건 정책 & 리포트')) {
+  if (prCheck && (cat === '리콜(Recalls and Food Safety)' || cat === '보건 정책 & 메디케어 리포트' || cat === '보건 정책 & 리포트')) {
     prCheck.checked = true;
   }
   updateExposureCheckboxLimits(currentId);
@@ -673,7 +699,7 @@ function updateExposureCheckboxLimits(currentEditingPostId) {
     if (p.isDoctorColumn === true || p.isDoctorColumn === 'true' || p.isDoctorColumn === 1 || p.isDoctorColumn === '1') {
       doctorCount++;
     }
-    if (p.isPolicyReport === true || p.isPolicyReport === 'true' || p.isPolicyReport === 1 || p.isPolicyReport === '1' || p.category === '보건 정책 & 메디케어 리포트') {
+    if (p.isPolicyReport === true || p.isPolicyReport === 'true' || p.isPolicyReport === 1 || p.isPolicyReport === '1' || p.category === '리콜(Recalls and Food Safety)' || p.category === '보건 정책 & 메디케어 리포트') {
       reportCount++;
     }
   });
@@ -723,22 +749,22 @@ function updateExposureCheckboxLimits(currentEditingPostId) {
     }
   }
 
-  // 보건 정책 & 메디케어 리포트 (Max 4 slots on front page)
+  // 리콜(Recalls and Food Safety) (Max 4 slots on front page)
   if (reportInput && reportLabel) {
     if (reportCount >= 4 && !reportInput.checked) {
       reportInput.checked = false;
       reportInput.disabled = true;
       reportInput.parentElement.classList.add('opacity-40', 'cursor-not-allowed');
-      reportLabel.innerHTML = '📋 보건 정책 &amp; 메디케어 리포트 <span class="text-xs text-amber-400 font-bold block sm:inline">(메인 4개 슬롯 꽉 참)</span>';
+      reportLabel.innerHTML = '📋 리콜(Recalls and Food Safety) <span class="text-xs text-amber-400 font-bold block sm:inline">(메인 4개 슬롯 꽉 참)</span>';
     } else if (reportCount >= 4 && reportInput.checked) {
       reportInput.disabled = false;
       reportInput.parentElement.classList.remove('opacity-40', 'cursor-not-allowed');
-      reportLabel.innerHTML = '📋 보건 정책 &amp; 메디케어 리포트 <span class="text-xs text-emerald-400 font-bold">(4/4개)</span>';
+      reportLabel.innerHTML = '📋 리콜(Recalls and Food Safety) <span class="text-xs text-emerald-400 font-bold">(4/4개)</span>';
     } else {
       reportInput.disabled = false;
       reportInput.parentElement.classList.remove('opacity-40', 'cursor-not-allowed');
       const currentVal = reportInput.checked ? reportCount + 1 : reportCount;
-      reportLabel.innerHTML = '📋 보건 정책 &amp; 메디케어 리포트 <span class="text-xs text-emerald-400 font-bold">(' + currentVal + '/4개)</span>';
+      reportLabel.innerHTML = '📋 리콜(Recalls and Food Safety) <span class="text-xs text-emerald-400 font-bold">(' + currentVal + '/4개)</span>';
     }
   }
 }
@@ -750,7 +776,7 @@ function openPostModal() {
   
   const posts = state.posts || [];
   const liveCount = posts.filter(p => p.isLiveUpdate === true || p.isLiveUpdate === 'true' || p.isLiveUpdate === 1 || p.isLiveUpdate === '1').length;
-  const reportCount = posts.filter(p => p.isPolicyReport === true || p.isPolicyReport === 'true' || p.isPolicyReport === 1 || p.isPolicyReport === '1' || p.category === '보건 정책 & 메디케어 리포트').length;
+  const reportCount = posts.filter(p => p.isPolicyReport === true || p.isPolicyReport === 'true' || p.isPolicyReport === 1 || p.isPolicyReport === '1' || p.category === '리콜(Recalls and Food Safety)' || p.category === '보건 정책 & 메디케어 리포트').length;
   
   const dcCheck = document.getElementById('post-doctorcolumn-input');
   if (dcCheck) dcCheck.checked = false;
@@ -1027,7 +1053,7 @@ function editPost(id) {
   }
   const prCheck = document.getElementById('post-policyreport-input');
   if (prCheck) {
-    prCheck.checked = Boolean(p.isPolicyReport === true || p.isPolicyReport === 'true' || p.isPolicyReport === 1 || p.isPolicyReport === '1' || p.category === '보건 정책 & 메디케어 리포트');
+    prCheck.checked = Boolean(p.isPolicyReport === true || p.isPolicyReport === 'true' || p.isPolicyReport === 1 || p.isPolicyReport === '1' || p.category === '리콜(Recalls and Food Safety)' || p.category === '보건 정책 & 메디케어 리포트');
   }
 
   updateExposureCheckboxLimits(p.id);

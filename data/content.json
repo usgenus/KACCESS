@@ -248,7 +248,8 @@
       "summaryPoints": [],
       "status": "published",
       "createdAt": "2026-08-20 14:48:59",
-      "updatedAt": "2026-08-20 22:19:26"
+      "updatedAt": "2026-08-20 22:29:05",
+      "isPolicyReport": true
     },
     {
       "id": "p_1787235347_eca7",
@@ -313,11 +314,7 @@
       "readTime": "3분",
       "author": "편집부",
       "content": "2026년 하반기부터 뉴저지 거주 한인 시니어를 위한 메디케어 및 ACA 건강보험 지원 프로그램이 대폭 강화됩니다. 특히 한국어 의료 통역 및 병원비 감면 혜택 신청 절차가 간소화됩니다.",
-      "summaryPoints": [
-        "한국어 1:1 건강보험 자격 진단 지원",
-        "병원비 감면(Charity Care) 신청 간소화",
-        "한인 전문의 연계 네트워크 확대"
-      ],
+      "summaryPoints": [],
       "status": "published",
       "images": [
         "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=1000&q=80&auto=format",
@@ -326,7 +323,8 @@
       ],
       "createdAt": "2026-08-18T03:20:00+00:00",
       "isDoctorColumn": true,
-      "updatedAt": "2026-08-20 13:56:46"
+      "updatedAt": "2026-08-20 22:29:27",
+      "isPolicyReport": true
     },
     {
       "id": "p1",
@@ -342,9 +340,7 @@
       "readTime": "2분",
       "author": "편집부",
       "content": "미국 식품의약국(FDA)은 최근 루핀 제약(Lupin Pharmaceuticals)이 제조한 프레드니솔론 아세테이트 점안액",
-      "summaryPoints": [
-        "공식 당국 승인 안전 가이드라인 적용 및 자진 리콜 조치"
-      ],
+      "summaryPoints": [],
       "status": "published",
       "images": [
         "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=1200&q=80&auto=format",
@@ -352,7 +348,8 @@
       ],
       "createdAt": "2026-08-04T09:30:00+00:00",
       "isDoctorColumn": false,
-      "updatedAt": "2026-08-20 14:08:19"
+      "updatedAt": "2026-08-20 22:29:32",
+      "isPolicyReport": true
     },
     {
       "id": "p3",
@@ -368,18 +365,15 @@
       "readTime": "3분",
       "author": "편집부",
       "content": "의학계의 패러다임이 단순한 수명 연장(Lifespan)에서 건강수명(Healthspan) 증진으로 빠르게 전환되고 있습니다. 규칙적인 근력 운동, 혈관 건강 관���, 당분 섭취 제한이 핵심 지침으로 제시되었습니다.",
-      "summaryPoints": [
-        "유병 기간을 줄이고 활력 있는 노후 목표",
-        "심혈관 건강 및 당뇨 예방 수칙",
-        "주 3회 이상의 복합 유산소 및 저항성 운동 권장"
-      ],
+      "summaryPoints": [],
       "status": "published",
       "images": [
         "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1200&q=80&auto=format"
       ],
       "createdAt": "2026-08-02T14:15:00+00:00",
-      "updatedAt": "2026-08-19 23:14:15",
-      "isDoctorColumn": false
+      "updatedAt": "2026-08-20 22:29:37",
+      "isDoctorColumn": false,
+      "isPolicyReport": true
     },
     {
       "id": "p2",
@@ -544,7 +538,7 @@
       "FDA 리콜",
       "Health & Wellness",
       "Medicare & ACA",
-      "보건 정책 & 리포트",
+      "리콜(Recalls and Food Safety)",
       "병원 소식",
       "건강 뉴스",
       "전체",
