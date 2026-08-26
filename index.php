@@ -219,6 +219,17 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
       transform: scale(1.06) !important;
     }
 
+    /* Billboard 1 Vignette Effect */
+    .billboard1-vignette {
+      background: radial-gradient(
+        ellipse at center,
+        transparent 45%,
+        rgba(0,0,0,0.28) 75%,
+        rgba(0,0,0,0.55) 100%
+      );
+      pointer-events: none;
+    }
+
     /* Section Slide-In Animation */
     .reveal-section {
       opacity: 0;
@@ -377,6 +388,7 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
                 <?php endif; ?>
                 <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/15 pointer-events-none"></div>
                 <div class="absolute inset-0 bg-gradient-to-r from-black/75 via-transparent to-black/25 pointer-events-none"></div>
+                <div class="absolute inset-0 billboard1-vignette"></div>
               </div>
 
               <div class="absolute inset-0 flex items-end">
