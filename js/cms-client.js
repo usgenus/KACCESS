@@ -492,7 +492,7 @@
     }).join('');
 
     container.innerHTML = [
-      '<div class="relative w-full overflow-hidden bg-slate-950 select-none rounded-3xl" style="aspect-ratio:1920/566;min-height:230px;width:100%;max-height:480px;overflow:hidden;" onmouseenter="window.cmsPauseBillboard2()" onmouseleave="window.cmsResumeBillboard2()">',
+      '<div class="relative w-full overflow-hidden bg-slate-950 select-none" style="aspect-ratio:1920/566;min-height:230px;width:100%;max-height:480px;overflow:hidden;" onmouseenter="window.cmsPauseBillboard2()" onmouseleave="window.cmsResumeBillboard2()">',
       '  <a href="' + escapeHtml(targetLink) + '" class="block relative w-full h-full cursor-pointer" title="' + escapeHtml(b.title) + '">',
       '    <div class="w-full h-full relative" style="overflow:hidden;min-height:230px;">',
       '      <div id="bb2-media-slot" class="w-full h-full" style="min-height:230px;"></div>',
@@ -503,19 +503,19 @@
       '      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-4 sm:pb-6 flex items-end justify-between gap-4">',
       '        <div class="max-w-3xl space-y-1 sm:space-y-2">',
       '          <div class="flex items-center gap-2">',
-      '            <span class="bg-indigo-600 text-white text-[10px] sm:text-xs font-extrabold px-3 py-0.5 sm:py-1 rounded-full uppercase tracking-wider shadow">' + escapeHtml(b.subtitle || b.category || 'SPECIAL CAMPAIGN') + '</span>',
+      '            <span class="bg-red-600 text-white text-[10px] sm:text-xs font-extrabold px-3 py-0.5 sm:py-1 rounded-full uppercase tracking-wider shadow">' + escapeHtml(b.subtitle || b.category || 'SPECIAL CAMPAIGN') + '</span>',
       '            <span class="text-xs font-mono text-white/80 bg-black/60 px-2.5 py-0.5 rounded-full border border-white/15">' + (currentBillboard2Index+1) + ' / ' + billboards2.length + '</span>',
       '          </div>',
       '          <h3 class="font-extrabold text-base sm:text-2xl md:text-3xl text-white tracking-tight leading-snug drop-shadow-md line-clamp-1 sm:line-clamp-2">' + escapeHtml(b.title) + '</h3>',
       '        </div>',
       '        <div class="flex items-center gap-2 shrink-0">',
-      '          <span class="inline-flex items-center gap-1.5 bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-extrabold text-xs sm:text-sm px-3.5 py-1.5 sm:px-5 sm:py-2.5 rounded-xl shadow-xl"><span>' + escapeHtml(b.linkText || '자세히 보기') + '</span><span>→</span></span>',
+      '          <span class="inline-flex items-center gap-1.5 bg-gradient-to-r from-red-600 to-brand-blue text-white font-extrabold text-xs sm:text-sm px-3.5 py-1.5 sm:px-5 sm:py-2.5 rounded-xl shadow-xl"><span>' + escapeHtml(b.linkText || '자세히 보기') + '</span><span>→</span></span>',
       '        </div>',
       '      </div>',
       '    </div>',
       '  </a>',
-      '  <button onclick="event.stopPropagation();event.preventDefault();window.cmsPrevBillboard2();" class="absolute left-3 sm:left-8 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-indigo-600 text-white backdrop-blur-md border border-white/20 flex items-center justify-center text-lg sm:text-3xl transition-all duration-200 z-20 hover:scale-110 shadow-2xl cursor-pointer" aria-label="Previous Slide">&#8249;</button>',
-      '  <button onclick="event.stopPropagation();event.preventDefault();window.cmsNextBillboard2();" class="absolute right-3 sm:right-8 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-indigo-600 text-white backdrop-blur-md border border-white/20 flex items-center justify-center text-lg sm:text-3xl transition-all duration-200 z-20 hover:scale-110 shadow-2xl cursor-pointer" aria-label="Next Slide">&#8250;</button>',
+      '  <button onclick="event.stopPropagation();event.preventDefault();window.cmsPrevBillboard2();" class="absolute left-3 sm:left-8 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-red-600 text-white backdrop-blur-md border border-white/20 flex items-center justify-center text-lg sm:text-3xl transition-all duration-200 z-20 hover:scale-110 shadow-2xl cursor-pointer" aria-label="Previous Slide">&#8249;</button>',
+      '  <button onclick="event.stopPropagation();event.preventDefault();window.cmsNextBillboard2();" class="absolute right-3 sm:right-8 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-red-600 text-white backdrop-blur-md border border-white/20 flex items-center justify-center text-lg sm:text-3xl transition-all duration-200 z-20 hover:scale-110 shadow-2xl cursor-pointer" aria-label="Next Slide">&#8250;</button>',
       '  <div class="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">' + dotsHtml + '</div>',
       '</div>'
     ].join('');

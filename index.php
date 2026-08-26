@@ -631,21 +631,21 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
           </div>
         </section>
 
-        <!-- 4.5. Billboard 2 Section (Right Above One-Stop Coverage & Patient Services Center) -->
-        <section id="gallery-billboard2-section" class="w-full font-sans bg-slate-950 rounded-3xl overflow-hidden shadow-xl border border-white/10 relative">
+        <!-- 4.5. 100vw Panoramic Billboard 2 Section (Right Above One-Stop Coverage & Patient Services Center) -->
+        <section id="gallery-billboard2-section" class="w-full font-sans bg-slate-950 mb-8" style="width:100vw; max-width:100vw; position:relative; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw;">
           <div id="gallery-billboard2-container" class="w-full relative group">
             <?php if (!empty($activeBillboards2)): 
               $b2 = $activeBillboards2[0];
-              $isVid2 = ($b2['mediaType'] ?? '') === 'video' || (isset($b2['mediaUrl']) && (str_ends_with($b2['mediaUrl'], '.mp4') || str_ends_with($b2['mediaUrl'], '.webm') || str_ends_with($b2['mediaUrl'], '.mov')));
+              $isVid2 = ($b2['mediaType'] ?? '') === 'video' || (isset($b2['mediaUrl']) && (str_ends_with($b2['mediaUrl'], '.mp4') || str_ends_with($b2['mediaUrl'], '.webm')));
             ?>
             <div class="relative w-full overflow-hidden bg-slate-950 select-none group" style="aspect-ratio: 1920 / 566; min-height: 230px; width: 100%; max-height: 480px;">
-              <a href="<?= htmlspecialchars($b2['linkUrl'] ?? '/tool') ?>" class="block relative w-full h-full cursor-pointer" title="<?= htmlspecialchars($b2['title'] ?? '') ?>">
+              <a href="<?= htmlspecialchars($b2['linkUrl'] ?? '/about#contact') ?>" class="block relative w-full h-full cursor-pointer" title="<?= htmlspecialchars($b2['title'] ?? '') ?>">
                 <div class="w-full h-full relative overflow-hidden" style="min-height: 230px;">
                   <?php if ($isVid2): ?>
                     <video src="<?= htmlspecialchars($b2['mediaUrl']) ?>" class="w-full h-full object-cover" autoplay muted loop playsinline></video>
                   <?php else: ?>
                     <img id="billboard2-active-img" 
-                      src="<?= htmlspecialchars($b2['mediaUrl'] ?: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=2000&q=85&auto=format') ?>" 
+                      src="<?= htmlspecialchars($b2['mediaUrl'] ?: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=2000&q=85&auto=format') ?>" 
                       alt="<?= htmlspecialchars($b2['title'] ?? '') ?>" 
                       class="w-full h-full object-cover transform scale-100 group-hover:scale-103 transition-transform duration-1000 ease-out">
                   <?php endif; ?>
@@ -657,7 +657,7 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
                   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-4 sm:pb-6 flex items-end justify-between gap-4">
                     <div class="max-w-3xl space-y-1 sm:space-y-2">
                       <div class="flex items-center gap-2">
-                        <span class="bg-indigo-600 text-white text-[10px] sm:text-xs font-extrabold px-3 py-0.5 sm:py-1 rounded-full uppercase tracking-wider shadow">
+                        <span class="bg-red-600 text-white text-[10px] sm:text-xs font-extrabold px-3 py-0.5 sm:py-1 rounded-full uppercase tracking-wider shadow">
                           <?= htmlspecialchars(!empty($b2['subtitle']) ? $b2['subtitle'] : ($b2['category'] ?? 'SPECIAL CAMPAIGN')) ?>
                         </span>
                         <span class="text-xs font-mono text-white/80 bg-black/60 px-2.5 py-0.5 rounded-full border border-white/15">
@@ -670,7 +670,7 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
                     </div>
 
                     <div class="flex items-center gap-2 shrink-0">
-                      <span class="inline-flex items-center gap-1.5 bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-extrabold text-xs sm:text-sm px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl shadow-xl">
+                      <span class="inline-flex items-center gap-1.5 bg-gradient-to-r from-red-600 to-brand-blue text-white font-extrabold text-xs sm:text-sm px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl shadow-xl">
                         <span><?= htmlspecialchars($b2['linkText'] ?? '자세히 보기') ?></span>
                         <span>→</span>
                       </span>
@@ -680,13 +680,13 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
               </a>
 
               <button onclick="event.stopPropagation(); event.preventDefault(); window.cmsPrevBillboard2();" 
-                class="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-indigo-600 text-white backdrop-blur-md border border-white/20 flex items-center justify-center text-xl sm:text-3xl transition-all duration-200 z-20 hover:scale-110 shadow-2xl cursor-pointer"
+                class="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-red-600 text-white backdrop-blur-md border border-white/20 flex items-center justify-center text-xl sm:text-3xl transition-all duration-200 z-20 hover:scale-110 shadow-2xl cursor-pointer"
                 aria-label="Previous Slide">
                 ‹
               </button>
 
               <button onclick="event.stopPropagation(); event.preventDefault(); window.cmsNextBillboard2();" 
-                class="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-indigo-600 text-white backdrop-blur-md border border-white/20 flex items-center justify-center text-xl sm:text-3xl transition-all duration-200 z-20 hover:scale-110 shadow-2xl cursor-pointer"
+                class="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-red-600 text-white backdrop-blur-md border border-white/20 flex items-center justify-center text-xl sm:text-3xl transition-all duration-200 z-20 hover:scale-110 shadow-2xl cursor-pointer"
                 aria-label="Next Slide">
                 ›
               </button>
