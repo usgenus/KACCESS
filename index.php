@@ -989,7 +989,7 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
       }
     });
   </script>
-  <script src="/js/cms-client.js?v=3.5.0"></script>
-  <script src="/js/fixes.js?v=1.2"></script>
+  <script src="/js/cms-client.js?v=<?= time() ?>"></script>
+  <script src="/js/fixes.js?v=<?= time() ?>"></script>
 </body>
 </html>
