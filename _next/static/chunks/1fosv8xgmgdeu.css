@@ -422,6 +422,7 @@ footer {
   html,
   :host {
     -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
     tab-size: 4;
     font-feature-settings: normal;
     font-variation-settings: normal;
@@ -527,7 +528,6 @@ footer {
   iframe,
   embed,
   object {
-    vertical-align: middle;
     display: block
   }
 
@@ -3967,6 +3967,7 @@ footer {
 
   .line-clamp-2 {
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     display: -webkit-box;
     overflow: hidden
@@ -3974,6 +3975,7 @@ footer {
 
   .line-clamp-3 {
     -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     display: -webkit-box;
     overflow: hidden

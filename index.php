@@ -694,7 +694,9 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
               <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
                 <?php foreach ($activeBillboards2 as $idx => $dummy): ?>
                   <button onclick="event.stopPropagation(); event.preventDefault(); window.cmsGoBillboard2(<?= $idx ?>);" 
-                    class="transition-all duration-300 <?= $idx === 0 ? 'w-6 h-1.5 sm:w-8 sm:h-2 bg-white rounded-full shadow-lg ring-1 ring-white/50' : 'w-2 h-1.5 sm:w-2.5 sm:h-2 bg-white/40 hover:bg-white/80 rounded-full' ?>">
+                    class="transition-all duration-300 <?= $idx === 0 ? 'w-6 h-1.5 sm:w-8 sm:h-2 bg-white rounded-full shadow-lg ring-1 ring-white/50' : 'w-2 h-1.5 sm:w-2.5 sm:h-2 bg-white/40 hover:bg-white/80 rounded-full' ?>"
+                    aria-label="Slide <?= $idx + 1 ?>"
+                    title="Slide <?= $idx + 1 ?>">
                   </button>
                 <?php endforeach; ?>
               </div>
