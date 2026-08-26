@@ -157,7 +157,7 @@
 
     // Also watch for CMS-rendered billboard
     var container = document.getElementById('gallery-billboard-container');
-    if (container) {
+    if (container && window.MutationObserver) {
       var mo = new MutationObserver(function() {
         container.querySelectorAll('img, video').forEach(function(m) { m.classList.add('bb-img'); });
       });
@@ -166,35 +166,10 @@
   }
 
   // ─────────────────────────────────────────────────────────────
-  // 5. VIDEO AUTOPLAY FIX — prevent YouTube iframes from autoplaying
-  //    Replaces any iframe with autoplay=1 with a thumbnail on load
+  // 5. VIDEO AUTOPLAY FIX (Handled natively by cms-client.js)
   // ─────────────────────────────────────────────────────────────
   function fixVideoAutoplay() {
-    // Watch for iframes being added with autoplay=1 by the CMS renderer
-    var playerBox = document.getElementById('medical-video-player-box');
-    if (!playerBox) return;
-
-    // If there's already an iframe with autoplay on page load, replace it
-    var iframe = playerBox.querySelector('iframe');
-    if (iframe) {
-      var src = iframe.src || '';
-      if (src.indexOf('autoplay=1') !== -1 && !playerBox.dataset.userPlay) {
-        // Extract ytId and replace with thumbnail
-        var m = src.match(/embed\/([\w-]{11})/);
-        if (m) {
-          var ytId = m[1];
-          var thumb = 'https://img.youtube.com/vi/' + ytId + '/maxresdefault.jpg';
-          playerBox.innerHTML = [
-            '<div class="relative w-full h-full group cursor-pointer" onclick="',
-            'this.parentElement.innerHTML=\'<iframe class=\\"w-full h-full border-0\\" src=\\"https://www.youtube.com/embed/' + ytId + '?autoplay=1&rel=0\\" allow=\\"accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture\\" allowfullscreen></iframe>\'">',
-            '<img src="' + thumb + '" class="w-full h-full object-cover">',
-            '<div class="absolute inset-0 flex items-center justify-center">',
-            '<div class="w-16 h-16 rounded-full bg-red-600 text-white flex items-center justify-center text-2xl shadow-2xl">&#9654;</div>',
-            '</div></div>'
-          ].join('');
-        }
-      }
-    }
+    // Delegated to cms-client.js for modern interactive playback
   }
 
   // ─────────────────────────────────────────────────────────────

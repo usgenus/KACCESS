@@ -632,6 +632,13 @@
   // ---------------------------------------------------------
   // 4. MEDICAL VIDEOS (의학비디오뉴스)
   // ---------------------------------------------------------
+  var videos = [];
+  try { videos = JSON.parse(sessionStorage.getItem('njap_videos') || '[]'); } catch(e) {}
+  var currentVideo = null;
+  var activeVideoCategory = '전체';
+  var currentVideoPage = 1;
+  var VIDEOS_PER_PAGE = 4;
+
   function extractYouTubeId(url) {
     if (!url) return '';
     url = String(url).trim();
@@ -657,6 +664,40 @@
     return { isYoutube: Boolean(ytId), ytId: ytId, directSrc: directSrc, thumb: thumb };
   }
 
+  // Play currently selected video
+  window.cmsPlayCurrentVideo = function() {
+    renderVideoPlayerAndList(true);
+  };
+
+  // Play specific YouTube video
+  window.cmsPlayYoutube = function(ytId) {
+    var playerBox = document.getElementById('medical-video-player-box');
+    if (!playerBox) return;
+    playerBox.innerHTML = '<iframe class="w-full h-full border-0" src="https://www.youtube.com/embed/' + ytId + '?autoplay=1&enablejsapi=1&rel=0&playsinline=1" title="YouTube Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+  };
+
+  window.cmsSetVideoCat = function(c) {
+    activeVideoCategory = c;
+    currentVideoPage = 1;
+    document.querySelectorAll('#medical-videos-categories button').forEach(function(btn) {
+      btn.className = btn.textContent.trim() === c
+        ? 'text-xs font-semibold px-4 py-2 rounded-full transition-all whitespace-nowrap bg-red-600 text-white shadow-sm cursor-pointer'
+        : 'text-xs font-medium px-4 py-2 rounded-full transition-all whitespace-nowrap bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-100 hover:text-slate-900 cursor-pointer';
+    });
+    renderVideoPlayerAndList(false);
+  };
+
+  window.cmsPrevVideoPage = function() { if (currentVideoPage > 1) { currentVideoPage--; renderVideoPlayerAndList(false); } };
+  window.cmsNextVideoPage = function() { currentVideoPage++; renderVideoPlayerAndList(false); };
+  window.cmsSelectVideo = function(id, autoPlay) {
+    currentVideo = videos.find(function(v) { return v.id === id; });
+    renderVideoPlayerAndList(autoPlay === true);
+    var playerBox = document.getElementById('medical-video-player-box');
+    if (playerBox && window.innerWidth < 768) {
+      playerBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
+
   async function initMedicalVideos() {
     try {
       var res = await fetch('/api/videos.php?_t=' + Date.now());
@@ -667,6 +708,18 @@
         if (!currentVideo) currentVideo = videos[0];
       }
     } catch (e) {}
+
+    // Bind category button clicks
+    var catContainer = document.getElementById('medical-videos-categories');
+    if (catContainer) {
+      catContainer.querySelectorAll('button').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          window.cmsSetVideoCat(this.textContent.trim());
+        });
+      });
+    }
+
     renderVideoPlayerAndList(false);
   }
 
@@ -780,42 +833,13 @@
     }
   }
 
-  // Play currently selected video
-  window.cmsPlayCurrentVideo = function() {
-    renderVideoPlayerAndList(true);
-  };
-
-  // Play specific YouTube video
-  window.cmsPlayYoutube = function(ytId) {
-    var playerBox = document.getElementById('medical-video-player-box');
-    if (!playerBox) return;
-    playerBox.innerHTML = '<iframe class="w-full h-full border-0" src="https://www.youtube.com/embed/' + ytId + '?autoplay=1&enablejsapi=1&rel=0&playsinline=1" title="YouTube Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
-  };
-
-  window.cmsSetVideoCat = function(c) {
-    activeVideoCategory = c;
-    currentVideoPage = 1;
-    document.querySelectorAll('#medical-videos-categories button').forEach(function(btn) {
-      btn.className = btn.textContent.trim() === c
-        ? 'text-xs font-semibold px-4 py-2 rounded-full transition-all whitespace-nowrap bg-red-600 text-white shadow-sm cursor-pointer'
-        : 'text-xs font-medium px-4 py-2 rounded-full transition-all whitespace-nowrap bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-100 hover:text-slate-900 cursor-pointer';
-    });
-    renderVideoPlayerAndList(false);
-  };
-  window.cmsPrevVideoPage = function() { if (currentVideoPage > 1) { currentVideoPage--; renderVideoPlayerAndList(false); } };
-  window.cmsNextVideoPage = function() { currentVideoPage++; renderVideoPlayerAndList(false); };
-  window.cmsSelectVideo = function(id, autoPlay) {
-    currentVideo = videos.find(function(v) { return v.id === id; });
-    renderVideoPlayerAndList(autoPlay === true);
-    var playerBox = document.getElementById('medical-video-player-box');
-    if (playerBox && window.innerWidth < 768) {
-      playerBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-  };
-
   // ---------------------------------------------------------
   // 5. BLOG LIVE SEARCH & CATEGORY FILTER
   // ---------------------------------------------------------
+  var posts = [];
+  try { posts = JSON.parse(sessionStorage.getItem('njap_posts') || '[]'); } catch(e) {}
+  var blogActiveCategory = '전체';
+
   async function initBlogInteractivity() {
     var searchInput = document.getElementById('cms-blog-search-input');
     var catContainer = document.getElementById('cms-blog-categories');

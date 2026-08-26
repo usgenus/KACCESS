@@ -35,20 +35,21 @@
   "videos": [
     {
       "id": "v_1787081420_da9d",
-      "youtubeId": "Gdbs0BpS3bw",
+      "youtubeId": "3A_-dF7vAgw",
       "videoUrl": "",
-      "title": "dssts",
-      "doctor": "연합뉴스TV 의학 리포트",
-      "hospital": "Englewood Health Center for Korean Health",
+      "title": "모더나가 완성한 기적의 치료법...인류 구원이라 불리는 암 백신 3상 '대성공' [자막뉴스] / YTN",
+      "doctor": "YTN",
+      "hospital": "YTN",
       "category": "Health & Wellness",
-      "views": "10.2만회",
-      "duration": "05:20",
+      "views": "1.2만회",
+      "duration": "05:00",
       "date": "2026.08.18",
-      "summary": "",
+      "summary": "모더나와 MSD의 맞춤형 암 백신 '인티스메란 오토진'이 흑색종 임상 3상에서 1차 평가지표를 충족했습니다.",
       "thumbnail": "https://img.youtube.com/vi/Gdbs0BpS3bw/maxresdefault.jpg",
-      "order": 2,
+      "order": 1,
       "active": true,
-      "createdAt": "2026-08-18 19:30:20"
+      "createdAt": "2026-08-18 19:30:20",
+      "updatedAt": "2026-08-26 14:58:02"
     },
     {
       "id": "v_1787081406_0974",
