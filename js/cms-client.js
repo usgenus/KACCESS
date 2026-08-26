@@ -12,6 +12,19 @@
   'use strict';
 
   // ---------------------------------------------------------
+  // UTILITY: HTML escape (used throughout all render functions)
+  // ---------------------------------------------------------
+  function escapeHtml(s) {
+    if (s === null || s === undefined) return '';
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  // ---------------------------------------------------------
   // 0. SLIDE-IN ANIMATION STYLES + BILLBOARD HOVER SCALE
   // ---------------------------------------------------------
   (function injectStyles() {
@@ -654,9 +667,12 @@
     if (!ytId) {
       directSrc = v.videoFile || v.videoUrl || v.mediaUrl || '';
     }
-    var thumb = v.thumbnail || v.thumbnailUrl || '';
-    if (!thumb && ytId) {
+    // Always derive thumb from ytId when available (stored thumbnail may have wrong ID)
+    var thumb = '';
+    if (ytId) {
       thumb = 'https://img.youtube.com/vi/' + ytId + '/maxresdefault.jpg';
+    } else {
+      thumb = v.thumbnail || v.thumbnailUrl || '';
     }
     if (!thumb) {
       thumb = 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80';
