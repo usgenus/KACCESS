@@ -788,12 +788,12 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
                     }
                   ?>
                     <?php if ($ytId): 
-                      $vThumb = 'https://img.youtube.com/vi/' . $ytId . '/maxresdefault.jpg';
+                      $vThumb = $mainVideo['thumbnailUrl'] ?: ($mainVideo['thumbnail'] ?: ('https://img.youtube.com/vi/' . $ytId . '/maxresdefault.jpg'));
                     ?>
                       <div class="relative w-full h-full group cursor-pointer" 
-                           onclick="this.innerHTML='<iframe class=\'w-full h-full border-0\' src=\'https://www.youtube.com/embed/<?= $ytId ?>?autoplay=1&rel=0&modestbranding=1\' title=\'<?= htmlspecialchars($mainVideo['title'] ?? '') ?>\' allow=\'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\' allowfullscreen></iframe>'">
-                        <img src="<?= $vThumb ?>" alt="<?= htmlspecialchars($mainVideo['title'] ?? '') ?>" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent"></div>
+                           onclick="if(window.cmsPlayCurrentVideo){window.cmsPlayCurrentVideo();}else{this.innerHTML='<iframe class=\'w-full h-full border-0\' src=\'https://www.youtube.com/embed/<?= $ytId ?>?autoplay=1&enablejsapi=1&rel=0&playsinline=1\' title=\'<?= htmlspecialchars($mainVideo['title'] ?? '') ?>\' allow=\'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\' referrerpolicy=\'strict-origin-when-cross-origin\' allowfullscreen></iframe>';}">
+                        <img src="<?= $vThumb ?>" alt="<?= htmlspecialchars($mainVideo['title'] ?? '') ?>" onerror="if(this.src.indexOf('maxresdefault')!==-1){this.src=this.src.replace('maxresdefault','hqdefault');}else if(this.src.indexOf('hqdefault')!==-1){this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80';}" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-black/20 to-transparent"></div>
                         <div class="absolute inset-0 flex items-center justify-center">
                           <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white text-red-600 flex items-center justify-center text-2xl sm:text-3xl shadow-2xl group-hover:scale-110 group-hover:bg-red-600 group-hover:text-white transition-all duration-300 ring-4 ring-red-500/30">▶</div>
                         </div>
@@ -803,7 +803,7 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
                         </div>
                       </div>
                     <?php else: ?>
-                      <div class="relative w-full h-full group cursor-pointer" onclick="window.cmsSelectVideo('<?= $mainVideo['id'] ?>')">
+                      <div class="relative w-full h-full group cursor-pointer" onclick="if(window.cmsPlayCurrentVideo){window.cmsPlayCurrentVideo();}else{window.cmsSelectVideo('<?= $mainVideo['id'] ?>', true);}">
                         <img src="<?= htmlspecialchars($mainVideo['thumbnailUrl'] ?: ($mainVideo['thumbnail'] ?: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80')) ?>" alt="<?= htmlspecialchars($mainVideo['title'] ?? '') ?>" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
                           <div class="w-16 h-16 rounded-full bg-red-600 text-white flex items-center justify-center text-2xl shadow-2xl">▶</div>

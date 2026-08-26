@@ -630,9 +630,33 @@
   };
 
   // ---------------------------------------------------------
-  // 4. MEDICAL VIDEOS — NO AUTOPLAY ON LOAD
-  //    Thumbnail shown; iframe loaded only when user clicks
+  // 4. MEDICAL VIDEOS (의학비디오뉴스)
   // ---------------------------------------------------------
+  function extractYouTubeId(url) {
+    if (!url) return '';
+    url = String(url).trim();
+    if (/^[a-zA-Z0-9_-]{11}$/.test(url)) return url;
+    var m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|shorts\/|live\/|watch\?.+&v=))([a-zA-Z0-9_-]{11})/);
+    return m ? m[1] : '';
+  }
+
+  function getVideoMediaInfo(v) {
+    if (!v) return { isYoutube: false, ytId: '', directSrc: '', thumb: '' };
+    var ytId = extractYouTubeId(v.youtubeId) || extractYouTubeId(v.youtubeUrl) || extractYouTubeId(v.videoUrl);
+    var directSrc = '';
+    if (!ytId) {
+      directSrc = v.videoFile || v.videoUrl || v.mediaUrl || '';
+    }
+    var thumb = v.thumbnail || v.thumbnailUrl || '';
+    if (!thumb && ytId) {
+      thumb = 'https://img.youtube.com/vi/' + ytId + '/maxresdefault.jpg';
+    }
+    if (!thumb) {
+      thumb = 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80';
+    }
+    return { isYoutube: Boolean(ytId), ytId: ytId, directSrc: directSrc, thumb: thumb };
+  }
+
   async function initMedicalVideos() {
     try {
       var res = await fetch('/api/videos.php?_t=' + Date.now());
@@ -643,10 +667,10 @@
         if (!currentVideo) currentVideo = videos[0];
       }
     } catch (e) {}
-    renderVideoPlayerAndList();
+    renderVideoPlayerAndList(false);
   }
 
-  function renderVideoPlayerAndList() {
+  function renderVideoPlayerAndList(shouldAutoPlay) {
     var playerBox = document.getElementById('medical-video-player-box');
     var infoBox = document.getElementById('medical-video-info-box');
     var playlistBox = document.getElementById('medical-videos-playlist');
@@ -665,36 +689,32 @@
     var cur = currentVideo || filtered[0];
 
     if (cur) {
-      var ytId = cur.youtubeId;
-      if (!ytId && cur.youtubeUrl) {
-        var m = cur.youtubeUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=))([\w-]{11})/);
-        if (m) ytId = m[1];
-      }
+      var info = getVideoMediaInfo(cur);
 
-      if (ytId) {
-        // THUMBNAIL ONLY — click to play
-        var thumb = 'https://img.youtube.com/vi/' + ytId + '/maxresdefault.jpg';
+      if (shouldAutoPlay) {
+        // Immediately start playing
+        if (info.isYoutube) {
+          playerBox.innerHTML = '<iframe class="w-full h-full border-0" src="https://www.youtube.com/embed/' + info.ytId + '?autoplay=1&enablejsapi=1&rel=0&playsinline=1" title="' + escapeHtml(cur.title) + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+        } else if (info.directSrc) {
+          playerBox.innerHTML = '<video class="w-full h-full object-cover bg-black" src="' + info.directSrc + '" controls autoplay playsinline></video>';
+          var vidEl = playerBox.querySelector('video');
+          if (vidEl) {
+            var p = vidEl.play();
+            if (p && p.catch) p.catch(function() {});
+          }
+        }
+      } else {
+        // Thumbnail with Big Red Play Button
         playerBox.innerHTML = [
-          '<div class="relative w-full h-full group cursor-pointer" onclick="window.cmsPlayYoutube(\'' + ytId + '\')">',
-          '  <img src="' + thumb + '" alt="' + escapeHtml(cur.title) + '" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500">',
-          '  <div class="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent"></div>',
+          '<div class="relative w-full h-full group cursor-pointer" onclick="window.cmsPlayCurrentVideo()">',
+          '  <img src="' + info.thumb + '" alt="' + escapeHtml(cur.title) + '" onerror="if(this.src.indexOf(\'maxresdefault\')!==-1){this.src=this.src.replace(\'maxresdefault\',\'hqdefault\');}else if(this.src.indexOf(\'hqdefault\')!==-1){this.src=\'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80\';}" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500">',
+          '  <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-black/20 to-transparent"></div>',
           '  <div class="absolute inset-0 flex items-center justify-center">',
           '    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white text-red-600 flex items-center justify-center text-2xl sm:text-3xl shadow-2xl group-hover:scale-110 group-hover:bg-red-600 group-hover:text-white transition-all duration-300 ring-4 ring-red-500/30">&#9654;</div>',
           '  </div>',
           '  <div class="absolute bottom-4 left-4 right-4 flex items-end justify-between">',
           '    <span class="bg-red-600 text-white text-xs font-bold px-3.5 py-1 rounded-full shadow-sm">' + escapeHtml(cur.category || '의학뉴스') + '</span>',
           '    <span class="bg-white/95 backdrop-blur-sm text-slate-900 text-xs font-mono font-semibold px-2.5 py-1 rounded-md border border-slate-200/80 shadow-sm">&#9201; ' + escapeHtml(cur.duration || '10:00') + '</span>',
-          '  </div>',
-          '</div>'
-        ].join('');
-      } else if (cur.videoFile || cur.videoUrl) {
-        playerBox.innerHTML = '<video class="w-full h-full object-cover bg-black" src="' + (cur.videoFile || cur.videoUrl) + '" controls playsinline></video>';
-      } else {
-        playerBox.innerHTML = [
-          '<div class="relative w-full h-full bg-slate-900 group cursor-pointer" onclick="window.cmsSelectVideo(\'' + cur.id + '\')">',
-          '  <img src="' + (cur.thumbnail || cur.thumbnailUrl || 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80') + '" alt="' + escapeHtml(cur.title) + '" class="w-full h-full object-cover">',
-          '  <div class="absolute inset-0 bg-black/40 flex items-center justify-center">',
-          '    <div class="w-16 h-16 rounded-full bg-red-600 text-white flex items-center justify-center text-2xl shadow-2xl">&#9654;</div>',
           '  </div>',
           '</div>'
         ].join('');
@@ -728,11 +748,12 @@
     if (playlistBox) {
       playlistBox.innerHTML = pageVideos.map(function(v) {
         var isPlaying = cur && cur.id === v.id;
+        var itemInfo = getVideoMediaInfo(v);
         return [
-          '<div onclick="window.cmsSelectVideo(\'' + v.id + '\')" class="flex gap-3.5 p-3 rounded-2xl border transition-all duration-200 cursor-pointer ' + (isPlaying ? 'bg-red-50/70 border-red-300 ring-2 ring-red-400 shadow-sm' : 'bg-white border-slate-200/80 hover:bg-slate-50 hover:border-slate-300') + '">',
+          '<div onclick="window.cmsSelectVideo(\'' + v.id + '\', true)" class="flex gap-3.5 p-3 rounded-2xl border transition-all duration-200 cursor-pointer ' + (isPlaying ? 'bg-red-50/70 border-red-300 ring-2 ring-red-400 shadow-sm' : 'bg-white border-slate-200/80 hover:bg-slate-50 hover:border-slate-300') + '">',
           '  <div class="relative w-28 h-20 sm:w-32 sm:h-20 rounded-xl overflow-hidden shrink-0 bg-black">',
-          '    <img src="' + (v.thumbnail || v.thumbnailUrl || 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&q=80') + '" alt="' + escapeHtml(v.title) + '" class="w-full h-full object-cover">',
-          '    <div class="absolute bottom-1 right-1 bg-black/85 text-white font-mono font-bold text-[10px] px-1.5 py-0.5 rounded">' + escapeHtml(v.duration || '10:00') + '</div>',
+          '    <img src="' + itemInfo.thumb + '" alt="' + escapeHtml(v.title) + '" onerror="if(this.src.indexOf(\'maxresdefault\')!==-1){this.src=this.src.replace(\'maxresdefault\',\'hqdefault\');}else if(this.src.indexOf(\'hqdefault\')!==-1){this.src=\'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&q=80\';}" class="w-full h-full object-cover">',
+          '    <div class="absolute bottom-1 right-1 bg-black/85 text-white font-mono font-bold text-[10px] px-1.5 py-0.5 rounded">&#9201; ' + escapeHtml(v.duration || '10:00') + '</div>',
           '  </div>',
           '  <div class="flex-1 min-w-0 flex flex-col justify-between py-0.5">',
           '    <div>',
@@ -759,11 +780,16 @@
     }
   }
 
-  // Replace thumbnail with autoplay YouTube iframe on user click
+  // Play currently selected video
+  window.cmsPlayCurrentVideo = function() {
+    renderVideoPlayerAndList(true);
+  };
+
+  // Play specific YouTube video
   window.cmsPlayYoutube = function(ytId) {
     var playerBox = document.getElementById('medical-video-player-box');
     if (!playerBox) return;
-    playerBox.innerHTML = '<iframe class="w-full h-full border-0" src="https://www.youtube.com/embed/' + ytId + '?autoplay=1&rel=0&modestbranding=1" title="YouTube Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+    playerBox.innerHTML = '<iframe class="w-full h-full border-0" src="https://www.youtube.com/embed/' + ytId + '?autoplay=1&enablejsapi=1&rel=0&playsinline=1" title="YouTube Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
   };
 
   window.cmsSetVideoCat = function(c) {
@@ -774,13 +800,13 @@
         ? 'text-xs font-semibold px-4 py-2 rounded-full transition-all whitespace-nowrap bg-red-600 text-white shadow-sm cursor-pointer'
         : 'text-xs font-medium px-4 py-2 rounded-full transition-all whitespace-nowrap bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-100 hover:text-slate-900 cursor-pointer';
     });
-    renderVideoPlayerAndList();
+    renderVideoPlayerAndList(false);
   };
-  window.cmsPrevVideoPage = function() { if (currentVideoPage > 1) { currentVideoPage--; renderVideoPlayerAndList(); } };
-  window.cmsNextVideoPage = function() { currentVideoPage++; renderVideoPlayerAndList(); };
-  window.cmsSelectVideo = function(id) {
+  window.cmsPrevVideoPage = function() { if (currentVideoPage > 1) { currentVideoPage--; renderVideoPlayerAndList(false); } };
+  window.cmsNextVideoPage = function() { currentVideoPage++; renderVideoPlayerAndList(false); };
+  window.cmsSelectVideo = function(id, autoPlay) {
     currentVideo = videos.find(function(v) { return v.id === id; });
-    renderVideoPlayerAndList();
+    renderVideoPlayerAndList(autoPlay === true);
     var playerBox = document.getElementById('medical-video-player-box');
     if (playerBox && window.innerWidth < 768) {
       playerBox.scrollIntoView({ behavior: 'smooth', block: 'center' });

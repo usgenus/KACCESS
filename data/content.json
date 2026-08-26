@@ -18,18 +18,18 @@
   ],
   "billboards2": [
     {
-      "id": "b2_1787250001_1001",
-      "title": "뉴저지 한인 맞춤형 종합 헬스케어 & 환자 지원 센터",
-      "subtitle": "원스톱 보험 자격 진단부터 병원 사전접수, 의학 상담까지 종합 지원합니다.",
+      "id": "b2_1787754156_cdbe",
+      "title": "teet",
+      "subtitle": "test",
       "category": "SPECIAL CAMPAIGN",
       "mediaType": "image",
-      "mediaUrl": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=2000&q=85&auto=format",
+      "mediaUrl": "/uploads/images/images_20260826_142233_95ab9d.jpg",
       "videoUrl": "",
       "linkUrl": "/tool",
-      "linkText": "환자 종합 서비스 →",
+      "linkText": "환자도우미 바로가기 →",
       "order": 1,
       "active": true,
-      "createdAt": "2026-08-26 10:00:00"
+      "createdAt": "2026-08-26 14:22:36"
     }
   ],
   "videos": [
@@ -563,6 +563,9 @@
       "MEDICARE UPDATE",
       "PATIENT SUPPORT",
       "HEALTH WEBINAR"
+    ],
+    "billboards2": [
+      "SPECIAL CAMPAIGN"
     ]
   }
 }
