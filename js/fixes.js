@@ -13,6 +13,22 @@
   function injectCSS() {
     var s = document.createElement('style');
     s.textContent = [
+      /* Header Spacer Fix for Mobile & Desktop */
+      '.h-\\[109px\\], .header-spacer, #header-spacer {',
+      '  height: 109px !important;',
+      '  min-height: 109px !important;',
+      '  display: block !important;',
+      '  width: 100% !important;',
+      '}',
+      '.h-\\[45px\\] { height: 45px !important; }',
+
+      /* Mobile Billboard Full Visibility */
+      '@media (max-width: 640px) {',
+      '  #gallery-billboard-section { margin-top: 0 !important; margin-bottom: 1.25rem !important; }',
+      '  #gallery-billboard-container > div { min-height: 230px !important; height: 240px !important; }',
+      '  #gallery-billboard-container video, #gallery-billboard-container img { min-height: 230px !important; height: 100% !important; object-fit: cover !important; }',
+      '}',
+
       /* Slide-in animation */
       '.fx-slide { opacity:0; transform:translateY(30px);',
       '  transition: opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1); }',

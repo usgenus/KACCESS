@@ -19,11 +19,36 @@
     var style = document.createElement('style');
     style.id = 'njap-slidein-style';
     style.textContent = [
+      '.h-\\[109px\\], .header-spacer, #header-spacer {',
+      '  height: 109px !important;',
+      '  min-height: 109px !important;',
+      '  display: block !important;',
+      '  width: 100% !important;',
+      '}',
+      '.h-\\[45px\\] {',
+      '  height: 45px !important;',
+      '}',
       '#gallery-billboard-section, #gallery-billboard-container {',
       '  opacity: 1 !important;',
       '  transform: none !important;',
       '  display: block !important;',
       '  visibility: visible !important;',
+      '}',
+      '@media (max-width: 640px) {',
+      '  #gallery-billboard-section {',
+      '    margin-top: 0 !important;',
+      '    margin-bottom: 1.25rem !important;',
+      '  }',
+      '  #gallery-billboard-container > div {',
+      '    min-height: 230px !important;',
+      '    height: 240px !important;',
+      '  }',
+      '  #gallery-billboard-container video,',
+      '  #gallery-billboard-container img {',
+      '    min-height: 230px !important;',
+      '    height: 100% !important;',
+      '    object-fit: cover !important;',
+      '  }',
       '}',
       '.njap-slide-in {',
       '  opacity: 0;',
@@ -229,10 +254,6 @@
     var isVideo = b.mediaType === 'video' || (b.mediaUrl && (b.mediaUrl.endsWith('.mp4') || b.mediaUrl.endsWith('.webm')));
     var targetLink = b.linkUrl || '/about#contact';
 
-    var mediaHtml = isVideo
-      ? '<video src="' + escapeHtml(b.mediaUrl) + '" class="w-full h-full object-cover billboard-img" muted loop playsinline></video>'
-      : '<img src="' + escapeHtml(b.mediaUrl || 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=2000&q=85&auto=format') + '" alt="' + escapeHtml(b.title) + '" class="w-full h-full object-cover billboard-img">';
-
     var dotsHtml = billboards.map(function(_, i) {
       var cls = i === currentBillboardIndex
         ? 'w-6 h-1.5 sm:w-8 sm:h-2 bg-white rounded-full shadow-lg ring-1 ring-white/50'
@@ -241,10 +262,10 @@
     }).join('');
 
     container.innerHTML = [
-      '<div class="relative w-full overflow-hidden bg-slate-950 select-none" style="aspect-ratio:1920/566;width:100%;max-height:480px;overflow:hidden;" onmouseenter="window.cmsPauseBillboard()" onmouseleave="window.cmsResumeBillboard()">',
+      '<div class="relative w-full overflow-hidden bg-slate-950 select-none" style="aspect-ratio:1920/566;min-height:230px;width:100%;max-height:480px;overflow:hidden;" onmouseenter="window.cmsPauseBillboard()" onmouseleave="window.cmsResumeBillboard()">',
       '  <a href="' + escapeHtml(targetLink) + '" class="block relative w-full h-full cursor-pointer" title="' + escapeHtml(b.title) + '">',
-      '    <div class="w-full h-full relative" style="overflow:hidden;">',
-      '      ' + mediaHtml,
+      '    <div class="w-full h-full relative" style="overflow:hidden;min-height:230px;">',
+      '      <div id="bb-media-slot" class="w-full h-full" style="min-height:230px;"></div>',
       '      <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/15 pointer-events-none"></div>',
       '      <div class="absolute inset-0 bg-gradient-to-r from-black/75 via-transparent to-black/25 pointer-events-none"></div>',
       '    </div>',
@@ -255,20 +276,49 @@
       '            <span class="bg-red-600 text-white text-[10px] sm:text-xs font-extrabold px-3 py-0.5 sm:py-1 rounded-full uppercase tracking-wider shadow">' + escapeHtml(b.category || 'SPECIAL CAMPAIGN') + '</span>',
       '            <span class="text-xs font-mono text-white/80 bg-black/60 px-2.5 py-0.5 rounded-full border border-white/15">' + (currentBillboardIndex+1) + ' / ' + billboards.length + '</span>',
       '          </div>',
-      '          <h3 class="font-extrabold text-base sm:text-2xl md:text-3xl text-white tracking-tight leading-snug drop-shadow-md line-clamp-1">' + escapeHtml(b.title) + '</h3>',
+      '          <h3 class="font-extrabold text-base sm:text-2xl md:text-3xl text-white tracking-tight leading-snug drop-shadow-md line-clamp-1 sm:line-clamp-2">' + escapeHtml(b.title) + '</h3>',
       '          <p class="text-white/85 text-xs sm:text-sm line-clamp-1 max-w-2xl font-normal drop-shadow hidden sm:block">' + escapeHtml(b.subtitle || '') + '</p>',
       '        </div>',
       '        <div class="flex items-center gap-2 shrink-0">',
-      '          <span class="inline-flex items-center gap-1.5 bg-gradient-to-r from-red-600 to-brand-blue text-white font-extrabold text-xs sm:text-sm px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl shadow-xl"><span>' + escapeHtml(b.linkText || '자세히 보기') + '</span><span>→</span></span>',
+      '          <span class="inline-flex items-center gap-1.5 bg-gradient-to-r from-red-600 to-brand-blue text-white font-extrabold text-xs sm:text-sm px-3.5 py-1.5 sm:px-5 sm:py-2.5 rounded-xl shadow-xl"><span>' + escapeHtml(b.linkText || '자세히 보기') + '</span><span>→</span></span>',
       '        </div>',
       '      </div>',
       '    </div>',
       '  </a>',
-      '  <button onclick="event.stopPropagation();event.preventDefault();window.cmsPrevBillboard();" class="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-red-600 text-white backdrop-blur-md border border-white/20 flex items-center justify-center text-xl sm:text-3xl transition-all duration-200 z-20 hover:scale-110 shadow-2xl cursor-pointer" aria-label="Previous Slide">&#8249;</button>',
-      '  <button onclick="event.stopPropagation();event.preventDefault();window.cmsNextBillboard();" class="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-red-600 text-white backdrop-blur-md border border-white/20 flex items-center justify-center text-xl sm:text-3xl transition-all duration-200 z-20 hover:scale-110 shadow-2xl cursor-pointer" aria-label="Next Slide">&#8250;</button>',
-      '  <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">' + dotsHtml + '</div>',
+      '  <button onclick="event.stopPropagation();event.preventDefault();window.cmsPrevBillboard();" class="absolute left-3 sm:left-8 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-red-600 text-white backdrop-blur-md border border-white/20 flex items-center justify-center text-lg sm:text-3xl transition-all duration-200 z-20 hover:scale-110 shadow-2xl cursor-pointer" aria-label="Previous Slide">&#8249;</button>',
+      '  <button onclick="event.stopPropagation();event.preventDefault();window.cmsNextBillboard();" class="absolute right-3 sm:right-8 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-red-600 text-white backdrop-blur-md border border-white/20 flex items-center justify-center text-lg sm:text-3xl transition-all duration-200 z-20 hover:scale-110 shadow-2xl cursor-pointer" aria-label="Next Slide">&#8250;</button>',
+      '  <div class="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">' + dotsHtml + '</div>',
       '</div>'
     ].join('');
+
+    // Build the media element via createElement so the src is set as a
+    // JS property — NOT HTML-entity-encoded — then insert it and play.
+    var slot = container.querySelector('#bb-media-slot');
+    if (slot) {
+      if (isVideo) {
+        var vid = document.createElement('video');
+        vid.src = b.mediaUrl;          // raw URL, no escaping
+        vid.className = 'w-full h-full object-cover billboard-img';
+        vid.autoplay = true;
+        vid.muted = true;              // required for browser autoplay policy
+        vid.loop = true;
+        vid.setAttribute('playsinline', '');
+        vid.setAttribute('webkit-playsinline', '');
+        slot.appendChild(vid);
+        // Play after paint so the element is fully rendered in the DOM
+        requestAnimationFrame(function() {
+          vid.muted = true;
+          var p = vid.play();
+          if (p && p.catch) p.catch(function() {});
+        });
+      } else {
+        var img = document.createElement('img');
+        img.src = b.mediaUrl || 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=2000&q=85&auto=format';
+        img.alt = b.title || '';
+        img.className = 'w-full h-full object-cover billboard-img';
+        slot.appendChild(img);
+      }
+    }
   }
 
   function startBillboardTimer() {

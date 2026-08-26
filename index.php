@@ -151,6 +151,15 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
     .marquee-track:hover {
       animation-play-state: paused;
     }
+    .h-\[109px\], .header-spacer, #header-spacer {
+      height: 109px !important;
+      min-height: 109px !important;
+      display: block !important;
+      width: 100% !important;
+    }
+    .h-\[45px\] {
+      height: 45px !important;
+    }
     #gallery-billboard-section {
       width: 100vw !important;
       max-width: 100vw !important;
@@ -168,6 +177,22 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
       opacity: 1 !important;
       transform: none !important;
       visibility: visible !important;
+    }
+    @media (max-width: 640px) {
+      #gallery-billboard-section {
+        margin-top: 0 !important;
+        margin-bottom: 1.25rem !important;
+      }
+      #gallery-billboard-container > div {
+        min-height: 230px !important;
+        height: 240px !important;
+      }
+      #gallery-billboard-container video,
+      #gallery-billboard-container img {
+        min-height: 230px !important;
+        height: 100% !important;
+        object-fit: cover !important;
+      }
     }
 
     /* Billboard Image Hover Scale */
@@ -268,7 +293,7 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
 <body class="min-h-full flex flex-col bg-brand-light">
 
   <!-- Top Marquee Banner -->
-  <div class="fixed top-0 left-0 right-0 z-50 h-[45px] overflow-hidden flex items-center" style="background:linear-gradient(135deg, #0f3a9e 0%, #5e0f73 100%)">
+  <div class="fixed top-0 left-0 right-0 z-50 overflow-hidden flex items-center" style="height: 45px; background:linear-gradient(135deg, #0f3a9e 0%, #5e0f73 100%)">
     <div class="marquee-track whitespace-nowrap">
       <?php for ($i = 0; $i < 6; $i++): ?>
         <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12">
@@ -318,7 +343,7 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
     </div>
   </nav>
 
-  <div class="h-[109px]"></div>
+  <div class="h-[109px] header-spacer" style="height: 109px; min-height: 109px; width: 100%;"></div>
 
   <main class="flex-1">
     <div class="flex flex-col bg-[#F3F3F5] min-h-screen text-[#111111] font-sans">
@@ -330,9 +355,9 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
             $b = $activeBillboards[0];
             $isVideo = ($b['mediaType'] ?? '') === 'video' || (isset($b['mediaUrl']) && (str_ends_with($b['mediaUrl'], '.mp4') || str_ends_with($b['mediaUrl'], '.webm')));
           ?>
-          <div class="relative w-full overflow-hidden bg-slate-950 select-none group" style="aspect-ratio: 1920 / 566; width: 100%; max-height: 480px;">
+          <div class="relative w-full overflow-hidden bg-slate-950 select-none group" style="aspect-ratio: 1920 / 566; min-height: 230px; width: 100%; max-height: 480px;">
             <a href="<?= htmlspecialchars($b['linkUrl'] ?? '/about#contact') ?>" class="block relative w-full h-full cursor-pointer" title="<?= htmlspecialchars($b['title'] ?? '') ?>">
-              <div class="w-full h-full relative overflow-hidden">
+              <div class="w-full h-full relative overflow-hidden" style="min-height: 230px;">
                 <?php if ($isVideo): ?>
                   <video src="<?= htmlspecialchars($b['mediaUrl']) ?>" class="w-full h-full object-cover" autoplay muted loop playsinline></video>
                 <?php else: ?>
