@@ -61,25 +61,29 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
 
       <!-- Center / Desktop Tabs -->
       <nav class="hidden md:flex items-center gap-1 bg-slate-950/60 p-1.5 rounded-2xl border border-slate-800/80 text-xs font-semibold">
-        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="tab-btn active px-3.5 py-2 rounded-xl transition-all flex items-center gap-2">
+        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="tab-btn active px-3 py-2 rounded-xl transition-all flex items-center gap-1.5">
           <i class="fa-solid fa-chart-pie"></i>
           <span>대시보드</span>
         </button>
-        <button onclick="switchTab('billboard')" id="nav-billboard" class="tab-btn px-3.5 py-2 rounded-xl transition-all flex items-center gap-2">
+        <button onclick="switchTab('billboard')" id="nav-billboard" class="tab-btn px-3 py-2 rounded-xl transition-all flex items-center gap-1.5">
           <i class="fa-solid fa-panorama"></i>
-          <span>갤러리 빌보드 (3~4개)</span>
+          <span>빌보드 1 (상단)</span>
         </button>
-        <button onclick="switchTab('videos')" id="nav-videos" class="tab-btn px-3.5 py-2 rounded-xl transition-all flex items-center gap-2">
+        <button onclick="switchTab('billboard2')" id="nav-billboard2" class="tab-btn px-3 py-2 rounded-xl transition-all flex items-center gap-1.5">
+          <i class="fa-solid fa-images"></i>
+          <span>빌보드 2 (중단)</span>
+        </button>
+        <button onclick="switchTab('videos')" id="nav-videos" class="tab-btn px-3 py-2 rounded-xl transition-all flex items-center gap-1.5">
           <i class="fa-solid fa-play"></i>
-          <span>의학비디오뉴스</span>
+          <span>의학비디오</span>
         </button>
-        <button onclick="switchTab('posts')" id="nav-posts" class="tab-btn px-3.5 py-2 rounded-xl transition-all flex items-center gap-2">
+        <button onclick="switchTab('posts')" id="nav-posts" class="tab-btn px-3 py-2 rounded-xl transition-all flex items-center gap-1.5">
           <i class="fa-solid fa-newspaper"></i>
-          <span>건강 뉴스/블로그</span>
+          <span>건강 뉴스</span>
         </button>
-        <button onclick="switchTab('media')" id="nav-media" class="tab-btn px-3.5 py-2 rounded-xl transition-all flex items-center gap-2">
+        <button onclick="switchTab('media')" id="nav-media" class="tab-btn px-3 py-2 rounded-xl transition-all flex items-center gap-1.5">
           <i class="fa-solid fa-photo-film"></i>
-          <span>미디어 보관함</span>
+          <span>미디어</span>
         </button>
       </nav>
 
@@ -99,7 +103,8 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
     <!-- Mobile Sub Tabs -->
     <div class="md:hidden flex overflow-x-auto px-4 py-2 bg-slate-950/80 border-t border-slate-800/80 gap-2 scrollbar-none text-xs font-semibold">
       <button onclick="switchTab('dashboard')" id="nav-m-dashboard" class="mobile-tab-btn active whitespace-nowrap px-3 py-1.5 rounded-lg">대시보드</button>
-      <button onclick="switchTab('billboard')" id="nav-m-billboard" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg">갤러리 빌보드</button>
+      <button onclick="switchTab('billboard')" id="nav-m-billboard" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg">빌보드 1</button>
+      <button onclick="switchTab('billboard2')" id="nav-m-billboard2" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg">빌보드 2</button>
       <button onclick="switchTab('videos')" id="nav-m-videos" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg">의학비디오</button>
       <button onclick="switchTab('posts')" id="nav-m-posts" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg">건강 뉴스</button>
       <button onclick="switchTab('media')" id="nav-m-media" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg">미디어</button>
@@ -122,23 +127,35 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
           </span>
           <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">환영합니다, 관리자 (hap)님!</h1>
           <p class="text-slate-300 text-sm mt-2 leading-relaxed">
-            뉴저지 한인 의료 정보 포털의 <strong>갤러리 빌보드</strong>, <strong>의학비디오뉴스</strong>, 그리고 <strong>건강 뉴스(블로그)</strong>를 실시간으로 직접 작성하고 수정할 수 있습니다.
+            뉴저지 한인 의료 정보 포털의 <strong>빌보드 1 & 2</strong>, <strong>의학비디오뉴스</strong>, 그리고 <strong>건강 뉴스(블로그)</strong>를 실시간으로 직접 작성하고 수정할 수 있습니다.
           </p>
         </div>
       </div>
 
       <!-- Stat Cards -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         <!-- Stat 1 -->
         <div onclick="switchTab('billboard')" class="bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 hover:border-blue-500/50 rounded-2xl p-5 shadow-sm transition-all cursor-pointer group">
           <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-bold uppercase tracking-wider text-blue-400">갤러리 빌보드</span>
+            <span class="text-xs font-bold uppercase tracking-wider text-blue-400">빌보드 1 (상단)</span>
             <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
               <i class="fa-solid fa-panorama"></i>
             </div>
           </div>
           <div class="text-3xl font-extrabold text-white" id="stat-billboards-count">-</div>
-          <p class="text-xs text-slate-400 mt-1">의학비디오 전면 3~4개 노출 배너</p>
+          <p class="text-xs text-slate-400 mt-1">상단 전면 배너</p>
+        </div>
+
+        <!-- Stat 1.5 -->
+        <div onclick="switchTab('billboard2')" class="bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 hover:border-indigo-500/50 rounded-2xl p-5 shadow-sm transition-all cursor-pointer group">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-400">빌보드 2 (중단)</span>
+            <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+              <i class="fa-solid fa-images"></i>
+            </div>
+          </div>
+          <div class="text-3xl font-extrabold text-white" id="stat-billboards2-count">-</div>
+          <p class="text-xs text-slate-400 mt-1">원스톱 센터 상단 배너</p>
         </div>
 
         <!-- Stat 2 -->
@@ -150,31 +167,31 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
             </div>
           </div>
           <div class="text-3xl font-extrabold text-white" id="stat-videos-count">-</div>
-          <p class="text-xs text-slate-400 mt-1">유튜브 & 직접 업로드 비디오</p>
+          <p class="text-xs text-slate-400 mt-1">유튜브 & 직접 업로드 영상</p>
         </div>
 
         <!-- Stat 3 -->
         <div onclick="switchTab('posts')" class="bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 hover:border-emerald-500/50 rounded-2xl p-5 shadow-sm transition-all cursor-pointer group">
           <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">건강 뉴스 포스트</span>
+            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">건강 뉴스</span>
             <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
               <i class="fa-solid fa-newspaper"></i>
             </div>
           </div>
           <div class="text-3xl font-extrabold text-white" id="stat-posts-count">-</div>
-          <p class="text-xs text-slate-400 mt-1">메인 뉴스 및 블로그 아카이브</p>
+          <p class="text-xs text-slate-400 mt-1">메인 뉴스 및 기사</p>
         </div>
 
         <!-- Stat 4 -->
         <div onclick="switchTab('media')" class="bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 hover:border-purple-500/50 rounded-2xl p-5 shadow-sm transition-all cursor-pointer group">
           <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-bold uppercase tracking-wider text-purple-400">미디어 업로드</span>
+            <span class="text-xs font-bold uppercase tracking-wider text-purple-400">미디어</span>
             <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
               <i class="fa-solid fa-photo-film"></i>
             </div>
           </div>
           <div class="text-3xl font-extrabold text-white" id="stat-media-count">-</div>
-          <p class="text-xs text-slate-400 mt-1">서버에 저장된 이미지/영상 파일</p>
+          <p class="text-xs text-slate-400 mt-1">서버 저장 미디어</p>
         </div>
       </div>
 
@@ -192,7 +209,15 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
             <button onclick="openBillboardModal()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold p-3.5 rounded-2xl transition-all flex items-center justify-between text-xs shadow-md">
               <span class="flex items-center gap-2">
                 <i class="fa-solid fa-plus-circle text-sm"></i>
-                <span>새 갤러리 빌보드 추가</span>
+                <span>새 빌보드 1 추가</span>
+              </span>
+              <span>→</span>
+            </button>
+
+            <button onclick="openBillboard2Modal()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold p-3.5 rounded-2xl transition-all flex items-center justify-between text-xs shadow-md">
+              <span class="flex items-center gap-2">
+                <i class="fa-solid fa-plus-circle text-sm"></i>
+                <span>새 빌보드 2 추가</span>
               </span>
               <span>→</span>
             </button>
@@ -234,27 +259,53 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
     </section>
 
     <!-- ========================================================= -->
-    <!-- TAB 2: GALLERY BILLBOARDS (3~4 Different Billboards) -->
+    <!-- TAB 2: GALLERY BILLBOARDS 1 (Top Panoramic Billboard) -->
     <!-- ========================================================= -->
     <section id="tab-billboard" class="tab-pane hidden space-y-6">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-800/90 border border-slate-700/80 p-6 rounded-3xl">
         <div>
           <div class="flex items-center gap-2">
             <span class="p-2 bg-blue-500/10 text-blue-400 rounded-xl text-lg"><i class="fa-solid fa-panorama"></i></span>
-            <h1 class="text-xl sm:text-2xl font-extrabold text-white">갤러리 빌보드 관리 (Gallery Billboard)</h1>
+            <h1 class="text-xl sm:text-2xl font-extrabold text-white">갤러리 빌보드 1 관리 (Billboard 1)</h1>
           </div>
           <p class="text-xs sm:text-sm text-slate-400 mt-1">
-            홈페이지 <strong>'🎬 의학비디오뉴스' 섹션 바로 앞</strong>에 노출되는 3~4개의 대형 하이라이트 빌보드 배너를 관리합니다.
+            홈페이지 <strong>상단 전면</strong>에 노출되는 대형 하이라이트 빌보드 배너를 관리합니다. (비디오 완독 재생, 이미지 5초 전환)
           </p>
         </div>
         <button onclick="openBillboardModal()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-3 rounded-2xl transition-all flex items-center gap-2 text-xs shadow-lg shadow-blue-600/30 whitespace-nowrap self-start sm:self-auto">
           <i class="fa-solid fa-plus"></i>
-          <span>새 빌보드 추가</span>
+          <span>새 빌보드 1 추가</span>
         </button>
       </div>
 
       <!-- Billboard Grid -->
       <div id="billboards-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- TAB 2.5: BILLBOARD 2 (Above One-stop Patient Services Center) -->
+    <!-- ========================================================= -->
+    <section id="tab-billboard2" class="tab-pane hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-800/90 border border-slate-700/80 p-6 rounded-3xl">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="p-2 bg-indigo-500/10 text-indigo-400 rounded-xl text-lg"><i class="fa-solid fa-images"></i></span>
+            <h1 class="text-xl sm:text-2xl font-extrabold text-white">갤러리 빌보드 2 관리 (Billboard 2)</h1>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-400 mt-1">
+            홈페이지 <strong>'원스톱 의료 접근 & 환자 종합 센터' 바로 위</strong>에 노출되는 두 번째 빌보드 배너를 관리합니다.
+          </p>
+        </div>
+        <button onclick="openBillboard2Modal()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-3 rounded-2xl transition-all flex items-center gap-2 text-xs shadow-lg shadow-indigo-600/30 whitespace-nowrap self-start sm:self-auto">
+          <i class="fa-solid fa-plus"></i>
+          <span>새 빌보드 2 추가</span>
+        </button>
+      </div>
+
+      <!-- Billboard 2 Grid -->
+      <div id="billboards2-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Rendered via JS -->
       </div>
     </section>
@@ -455,6 +506,95 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
         <div class="flex justify-end gap-3 pt-4 border-t border-slate-800">
           <button type="button" onclick="closeModal('modal-billboard')" class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold">취소</button>
           <button type="submit" class="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold shadow-lg shadow-blue-600/30">저장하기</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- MODAL: BILLBOARD 2 ADD / EDIT -->
+  <!-- ========================================================= -->
+  <div id="modal-billboard2" class="modal-backdrop hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl space-y-5 my-8 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+        <h3 id="modal-billboard2-title" class="text-lg font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-images text-indigo-400"></i>
+          <span>갤러리 빌보드 2 등록</span>
+        </h3>
+        <button onclick="closeModal('modal-billboard2')" class="text-slate-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <form id="form-billboard2" onsubmit="handleSaveBillboard2(event)" class="space-y-4 text-xs">
+        <input type="hidden" id="billboard2-id" name="id">
+
+        <div>
+          <label class="block font-bold text-slate-300 mb-1.5">빌보드 2 제목 (Headline) *</label>
+          <input type="text" id="billboard2-title-input" name="title" required
+            class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500"
+            placeholder="예: 뉴저지 한인 맞춤형 종합 헬스케어 & 환자 지원 센터">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block font-bold text-slate-300 mb-1.5">노출 순서 (Display Order)</label>
+            <input type="number" id="billboard2-order-input" name="order" value="1" min="1" max="100"
+              class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-300 mb-1.5">버튼 표시 문구 (Button Text)</label>
+            <input type="text" id="billboard2-linktext-input" name="linkText" value="자세히 보기 →"
+              class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-indigo-500">
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-300 mb-1.5">메인 설명 문구 (Main Text / Subtitle) *</label>
+          <textarea id="billboard2-subtitle-input" name="subtitle" rows="3" required
+            class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-indigo-500 leading-relaxed"
+            placeholder="배너 하단에 들어갈 상세 설명 문구를 입력하세요."></textarea>
+        </div>
+
+        <!-- Media Upload / URL -->
+        <div class="bg-slate-950/60 p-4 rounded-2xl border border-slate-800 space-y-3">
+          <label class="block font-bold text-slate-200">배경 이미지 또는 비디오 업로드 (Image / Video)</label>
+          <div class="flex gap-2">
+            <input type="text" id="billboard2-media-input" name="mediaUrl" required
+              class="flex-1 bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-indigo-500"
+              placeholder="이미지 또는 비디오 URL (https://... 또는 /uploads/...)">
+            <label class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-xl cursor-pointer transition-all flex items-center gap-1.5 whitespace-nowrap">
+              <i class="fa-solid fa-arrow-up-from-bracket"></i>
+              <span>파일 업로드</span>
+              <input type="file" class="hidden" accept="image/*,video/*" onchange="uploadFieldFile(this, 'billboard2-media-input', 'billboard2-media-preview')">
+            </label>
+          </div>
+          <!-- Preview container -->
+          <div id="billboard2-media-preview" class="relative h-36 rounded-xl overflow-hidden bg-slate-800 border border-slate-700 hidden">
+            <!-- image/video preview element inserted here -->
+          </div>
+        </div>
+
+        <!-- CTA Link & Text -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block font-bold text-slate-300 mb-1.5">버튼 클릭 이동 링크 (Link URL)</label>
+            <input type="text" id="billboard2-linkurl-input" name="linkUrl" value="/tool"
+              class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-indigo-500">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-300 mb-1.5">버튼 표시 문구 (Button Text)</label>
+            <input type="text" id="billboard2-linktext-input-2" name="linkText" value="환자도우미 바로가기 →"
+              class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-indigo-500">
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 pt-2">
+          <input type="checkbox" id="billboard2-active-input" name="active" checked class="w-4 h-4 rounded text-indigo-600 bg-slate-800 border-slate-700">
+          <label for="billboard2-active-input" class="font-semibold text-slate-300">활성 상태로 홈페이지에 즉시 노출</label>
+        </div>
+
+        <div class="flex justify-end gap-3 pt-4 border-t border-slate-800">
+          <button type="button" onclick="closeModal('modal-billboard2')" class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold">취소</button>
+          <button type="submit" class="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold shadow-lg shadow-indigo-600/30">저장하기</button>
         </div>
       </form>
     </div>

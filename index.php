@@ -7,6 +7,7 @@ require_once __DIR__ . '/api/db.php';
 
 $db = get_db_data();
 $billboards = $db['billboards'] ?? [];
+$billboards2 = $db['billboards2'] ?? [];
 $videos = $db['videos'] ?? [];
 $posts = $db['posts'] ?? [];
 
@@ -16,6 +17,14 @@ $activeBillboards = array_values(array_filter($billboards, function($b) {
 }));
 if (empty($activeBillboards) && !empty($billboards)) {
     $activeBillboards = $billboards;
+}
+
+// Filter active billboards 2
+$activeBillboards2 = array_values(array_filter($billboards2, function($b) {
+    return !isset($b['active']) || $b['active'] !== false;
+}));
+if (empty($activeBillboards2) && !empty($billboards2)) {
+    $activeBillboards2 = $billboards2;
 }
 
 // Filter published posts and sort by newest first (date then updatedAt/createdAt)
@@ -146,7 +155,7 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
       display: inline-flex !important;
       white-space: nowrap !important;
       will-change: transform;
-      animation: marqueeScroll 25s linear infinite !important;
+      animation: marqueeScroll 35s linear infinite !important;
     }
     .marquee-track:hover {
       animation-play-state: paused;
@@ -297,7 +306,7 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
     <div class="marquee-track whitespace-nowrap">
       <?php for ($i = 0; $i < 6; $i++): ?>
         <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12">
-          <span class="opacity-60 mr-3">✦</span>New Jersey's Leading Korean Healthcare Access &amp; Navigation Portal — 뉴저지 한인 의료 정보 포털<span class="opacity-60 ml-3">✦</span>
+          <span class="opacity-60 mr-3">✦</span>의료접근포탈: &quot;비영리 기관들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot;<span class="opacity-60 ml-3">✦</span>
         </span>
       <?php endfor; ?>
     </div>
@@ -375,7 +384,7 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
                   <div class="max-w-3xl space-y-1 sm:space-y-2">
                     <div class="flex items-center gap-2">
                       <span class="bg-red-600 text-white text-[10px] sm:text-xs font-extrabold px-3 py-0.5 sm:py-1 rounded-full uppercase tracking-wider shadow">
-                        <?= htmlspecialchars($b['category'] ?? 'SPECIAL CAMPAIGN') ?>
+                        <?= htmlspecialchars(!empty($b['subtitle']) ? $b['subtitle'] : ($b['category'] ?? 'SPECIAL CAMPAIGN')) ?>
                       </span>
                       <span class="text-xs font-mono text-white/80 bg-black/60 px-2.5 py-0.5 rounded-full border border-white/15">
                         1 / <?= count($activeBillboards) ?>
@@ -384,9 +393,6 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
                     <h3 class="font-extrabold text-base sm:text-2xl md:text-3xl text-white tracking-tight leading-snug drop-shadow-md group-hover:text-blue-300 transition-colors line-clamp-1">
                       <?= htmlspecialchars($b['title'] ?? '') ?>
                     </h3>
-                    <p class="text-white/85 text-xs sm:text-sm line-clamp-1 max-w-2xl font-normal drop-shadow hidden sm:block">
-                      <?= htmlspecialchars($b['subtitle'] ?? '') ?>
-                    </p>
                   </div>
 
                   <div class="flex items-center gap-2 shrink-0">
@@ -622,6 +628,78 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
                 </article>
               </a>
             <?php endforeach; ?>
+          </div>
+        </section>
+
+        <!-- 4.5. Billboard 2 Section (Right Above One-Stop Coverage & Patient Services Center) -->
+        <section id="gallery-billboard2-section" class="w-full font-sans bg-slate-950 rounded-3xl overflow-hidden shadow-xl border border-white/10 relative">
+          <div id="gallery-billboard2-container" class="w-full relative group">
+            <?php if (!empty($activeBillboards2)): 
+              $b2 = $activeBillboards2[0];
+              $isVid2 = ($b2['mediaType'] ?? '') === 'video' || (isset($b2['mediaUrl']) && (str_ends_with($b2['mediaUrl'], '.mp4') || str_ends_with($b2['mediaUrl'], '.webm') || str_ends_with($b2['mediaUrl'], '.mov')));
+            ?>
+            <div class="relative w-full overflow-hidden bg-slate-950 select-none group" style="aspect-ratio: 1920 / 566; min-height: 230px; width: 100%; max-height: 480px;">
+              <a href="<?= htmlspecialchars($b2['linkUrl'] ?? '/tool') ?>" class="block relative w-full h-full cursor-pointer" title="<?= htmlspecialchars($b2['title'] ?? '') ?>">
+                <div class="w-full h-full relative overflow-hidden" style="min-height: 230px;">
+                  <?php if ($isVid2): ?>
+                    <video src="<?= htmlspecialchars($b2['mediaUrl']) ?>" class="w-full h-full object-cover" autoplay muted loop playsinline></video>
+                  <?php else: ?>
+                    <img id="billboard2-active-img" 
+                      src="<?= htmlspecialchars($b2['mediaUrl'] ?: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=2000&q=85&auto=format') ?>" 
+                      alt="<?= htmlspecialchars($b2['title'] ?? '') ?>" 
+                      class="w-full h-full object-cover transform scale-100 group-hover:scale-103 transition-transform duration-1000 ease-out">
+                  <?php endif; ?>
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/15 pointer-events-none"></div>
+                  <div class="absolute inset-0 bg-gradient-to-r from-black/75 via-transparent to-black/25 pointer-events-none"></div>
+                </div>
+
+                <div class="absolute inset-0 flex items-end">
+                  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-4 sm:pb-6 flex items-end justify-between gap-4">
+                    <div class="max-w-3xl space-y-1 sm:space-y-2">
+                      <div class="flex items-center gap-2">
+                        <span class="bg-indigo-600 text-white text-[10px] sm:text-xs font-extrabold px-3 py-0.5 sm:py-1 rounded-full uppercase tracking-wider shadow">
+                          <?= htmlspecialchars(!empty($b2['subtitle']) ? $b2['subtitle'] : ($b2['category'] ?? 'SPECIAL CAMPAIGN')) ?>
+                        </span>
+                        <span class="text-xs font-mono text-white/80 bg-black/60 px-2.5 py-0.5 rounded-full border border-white/15">
+                          1 / <?= count($activeBillboards2) ?>
+                        </span>
+                      </div>
+                      <h3 class="font-extrabold text-base sm:text-2xl md:text-3xl text-white tracking-tight leading-snug drop-shadow-md group-hover:text-blue-300 transition-colors line-clamp-1">
+                        <?= htmlspecialchars($b2['title'] ?? '') ?>
+                      </h3>
+                    </div>
+
+                    <div class="flex items-center gap-2 shrink-0">
+                      <span class="inline-flex items-center gap-1.5 bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-extrabold text-xs sm:text-sm px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl shadow-xl">
+                        <span><?= htmlspecialchars($b2['linkText'] ?? '자세히 보기') ?></span>
+                        <span>→</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+
+              <button onclick="event.stopPropagation(); event.preventDefault(); window.cmsPrevBillboard2();" 
+                class="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-indigo-600 text-white backdrop-blur-md border border-white/20 flex items-center justify-center text-xl sm:text-3xl transition-all duration-200 z-20 hover:scale-110 shadow-2xl cursor-pointer"
+                aria-label="Previous Slide">
+                ‹
+              </button>
+
+              <button onclick="event.stopPropagation(); event.preventDefault(); window.cmsNextBillboard2();" 
+                class="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-indigo-600 text-white backdrop-blur-md border border-white/20 flex items-center justify-center text-xl sm:text-3xl transition-all duration-200 z-20 hover:scale-110 shadow-2xl cursor-pointer"
+                aria-label="Next Slide">
+                ›
+              </button>
+
+              <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
+                <?php foreach ($activeBillboards2 as $idx => $dummy): ?>
+                  <button onclick="event.stopPropagation(); event.preventDefault(); window.cmsGoBillboard2(<?= $idx ?>);" 
+                    class="transition-all duration-300 <?= $idx === 0 ? 'w-6 h-1.5 sm:w-8 sm:h-2 bg-white rounded-full shadow-lg ring-1 ring-white/50' : 'w-2 h-1.5 sm:w-2.5 sm:h-2 bg-white/40 hover:bg-white/80 rounded-full' ?>">
+                  </button>
+                <?php endforeach; ?>
+              </div>
+            </div>
+            <?php endif; ?>
           </div>
         </section>
 
@@ -911,7 +989,7 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
       }
     });
   </script>
-  <script src="/js/cms-client.js?v=3.2.0"></script>
-  <script src="/js/fixes.js?v=1.0"></script>
+  <script src="/js/cms-client.js?v=3.5.0"></script>
+  <script src="/js/fixes.js?v=1.2"></script>
 </body>
 </html>

@@ -4,10 +4,11 @@
 
 let state = {
   billboards: [],
+  billboards2: [],
   videos: [],
   posts: [],
   media: [],
-  categories: { news: [], videos: [], billboards: [] },
+  categories: { news: [], videos: [], billboards: [], billboards2: [] },
   videoFilter: '전체',
   postFilter: '전체',
   postSearch: ''
@@ -70,16 +71,22 @@ function switchTab(tabName) {
 async function fetchAllData() {
   try {
     const t = Date.now();
-    const [bRes, vRes, pRes] = await Promise.all([
-      fetch(`/api/billboards.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()),
-      fetch(`/api/videos.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()),
-      fetch(`/api/posts.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json())
+    const [bRes, b2Res, vRes, pRes] = await Promise.all([
+      fetch(`/api/billboards.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false })),
+      fetch(`/api/billboards2.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false })),
+      fetch(`/api/videos.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false })),
+      fetch(`/api/posts.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false }))
     ]);
 
     if (bRes.success) {
       state.billboards = bRes.data || [];
       state.categories.billboards = bRes.categories || [];
       renderBillboards();
+    }
+    if (b2Res.success) {
+      state.billboards2 = b2Res.data || [];
+      state.categories.billboards2 = b2Res.categories || [];
+      renderBillboards2();
     }
     if (vRes.success) {
       state.videos = vRes.data || [];
@@ -114,14 +121,25 @@ async function handleLogout() {
 // DASHBOARD
 // =========================================================
 function updateDashboard() {
-  document.getElementById('stat-billboards-count').textContent = state.billboards.length + '개';
-  document.getElementById('stat-videos-count').textContent = state.videos.length + '개';
-  document.getElementById('stat-posts-count').textContent = state.posts.length + '개';
+  const b1El = document.getElementById('stat-billboards-count');
+  if (b1El) b1El.textContent = state.billboards.length + '개';
+
+  const b2El = document.getElementById('stat-billboards2-count');
+  if (b2El) b2El.textContent = state.billboards2.length + '개';
+
+  const vEl = document.getElementById('stat-videos-count');
+  if (vEl) vEl.textContent = state.videos.length + '개';
+
+  const pEl = document.getElementById('stat-posts-count');
+  if (pEl) pEl.textContent = state.posts.length + '개';
   
   // Recent activity list
   const container = document.getElementById('dash-recent-list');
+  if (!container) return;
+
   const recent = [
-    ...state.billboards.map(b => ({ type: 'billboard', title: b.title, tag: '빌보드', date: b.createdAt || '최근' })),
+    ...state.billboards.map(b => ({ type: 'billboard', title: b.title, tag: '빌보드 1', date: b.createdAt || '최근' })),
+    ...state.billboards2.map(b => ({ type: 'billboard2', title: b.title, tag: '빌보드 2', date: b.createdAt || '최근' })),
     ...state.videos.map(v => ({ type: 'video', title: v.title, tag: '의학비디오', date: v.date || '최근' })),
     ...state.posts.map(p => ({ type: 'post', title: p.title, tag: '뉴스', date: p.date || '최근' }))
   ].slice(0, 6);
@@ -136,6 +154,7 @@ function updateDashboard() {
       <div class="flex items-center gap-3 min-w-0">
         <span class="px-2.5 py-1 rounded-lg text-[10px] font-bold ${
           item.type === 'billboard' ? 'bg-blue-500/20 text-blue-300' :
+          item.type === 'billboard2' ? 'bg-indigo-500/20 text-indigo-300' :
           item.type === 'video' ? 'bg-red-500/20 text-red-300' : 'bg-emerald-500/20 text-emerald-300'
         }">${item.tag}</span>
         <h4 class="text-xs font-semibold text-white truncate">${item.title}</h4>
@@ -163,12 +182,14 @@ function renderBillboards() {
     return;
   }
 
-  container.innerHTML = state.billboards.map(b => `
+  container.innerHTML = state.billboards.map(b => {
+    const isVid = b.mediaType === 'video' || (b.mediaUrl && (/\.(mp4|webm|mov|ogg|m4v)($|\?)/i.test(b.mediaUrl) || b.mediaUrl.startsWith('data:video') || b.mediaUrl.includes('/uploads/videos/')));
+    return `
     <div class="bg-slate-800/90 border border-slate-700/90 rounded-3xl overflow-hidden shadow-lg flex flex-col justify-between group">
       <div>
         <div class="relative h-48 bg-slate-900 overflow-hidden">
-          ${b.mediaType === 'video' || (b.mediaUrl && b.mediaUrl.endsWith('.mp4')) ? `
-            <video src="${b.mediaUrl}" class="w-full h-full object-cover" muted autoplay loop></video>
+          ${isVid ? `
+            <video src="${b.mediaUrl}" class="w-full h-full object-cover" muted autoplay loop playsinline></video>
             <span class="absolute top-3 right-3 bg-red-600/90 text-white text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
               <i class="fa-solid fa-video"></i> VIDEO
             </span>
@@ -178,7 +199,7 @@ function renderBillboards() {
           <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
           <div class="absolute top-3 left-3">
             <span class="bg-blue-600 text-white text-[11px] font-extrabold px-3 py-1 rounded-full shadow-md">
-              ${b.category || 'SPECIAL CAMPAIGN'}
+              ${b.subtitle || b.category || 'SPECIAL CAMPAIGN'}
             </span>
           </div>
           <div class="absolute bottom-3 left-3 right-3">
@@ -212,7 +233,7 @@ function renderBillboards() {
         </button>
       </div>
     </div>
-  `).join('');
+  `}).join('');
 }
 
 function openBillboardModal() {
@@ -239,7 +260,12 @@ function editBillboard(id) {
 
   const preview = document.getElementById('billboard-media-preview');
   if (b.mediaUrl) {
-    preview.innerHTML = `<img src="${b.mediaUrl}" class="w-full h-full object-cover">`;
+    const isVid = b.mediaType === 'video' || (/\.(mp4|webm|mov|ogg|m4v)($|\?)/i.test(b.mediaUrl) || b.mediaUrl.startsWith('data:video') || b.mediaUrl.includes('/uploads/videos/'));
+    if (isVid) {
+      preview.innerHTML = `<video src="${b.mediaUrl}" class="w-full h-full object-cover" controls playsinline></video>`;
+    } else {
+      preview.innerHTML = `<img src="${b.mediaUrl}" class="w-full h-full object-cover">`;
+    }
     preview.classList.remove('hidden');
   } else {
     preview.classList.add('hidden');
@@ -254,6 +280,8 @@ async function handleSaveBillboard(e) {
   const id = document.getElementById('billboard-id').value;
   const isEdit = Boolean(id);
   const catInput = document.getElementById('billboard-category-input');
+  const mediaUrl = document.getElementById('billboard-media-input').value.trim();
+  const isVid = /\.(mp4|webm|mov|ogg|m4v)($|\?)/i.test(mediaUrl) || mediaUrl.startsWith('data:video') || mediaUrl.includes('/uploads/videos/');
 
   const payload = {
     id: id,
@@ -261,8 +289,8 @@ async function handleSaveBillboard(e) {
     category: (catInput ? catInput.value.trim() : '') || '',
     order: parseInt(document.getElementById('billboard-order-input').value) || 1,
     subtitle: document.getElementById('billboard-subtitle-input').value,
-    mediaUrl: document.getElementById('billboard-media-input').value,
-    mediaType: document.getElementById('billboard-media-input').value.endsWith('.mp4') ? 'video' : 'image',
+    mediaUrl: mediaUrl,
+    mediaType: isVid ? 'video' : 'image',
     linkUrl: document.getElementById('billboard-linkurl-input').value,
     linkText: document.getElementById('billboard-linktext-input').value,
     active: document.getElementById('billboard-active-input').checked
@@ -295,6 +323,178 @@ async function deleteBillboard(id) {
     const data = await res.json();
     if (data.success) {
       showToast('빌보드가 삭제되었습니다.');
+      fetchAllData();
+    } else {
+      showToast(data.error || '삭제 실패', false);
+    }
+  } catch (err) {
+    showToast('통신 오류', false);
+  }
+}
+
+// =========================================================
+// BILLBOARDS 2 (중단 빌보드 2 - 원스톱 센터 상단)
+// =========================================================
+function renderBillboards2() {
+  const container = document.getElementById('billboards2-grid');
+  if (!container) return;
+
+  if (state.billboards2.length === 0) {
+    container.innerHTML = `
+      <div class="col-span-full text-center py-12 bg-slate-800/40 rounded-3xl border border-slate-700 border-dashed">
+        <div class="text-3xl mb-2">🖼️</div>
+        <h3 class="text-sm font-bold text-white">등록된 빌보드 2가 없습니다.</h3>
+        <p class="text-xs text-slate-400 mt-1">'원스톱 의료 접근 & 환자 종합 센터' 상단에 노출될 배너를 추가하세요.</p>
+        <button onclick="openBillboard2Modal()" class="mt-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-xl text-xs">
+          + 새 빌보드 2 추가
+        </button>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = state.billboards2.map(b => {
+    const isVid = b.mediaType === 'video' || (b.mediaUrl && (/\.(mp4|webm|mov|ogg|m4v)($|\?)/i.test(b.mediaUrl) || b.mediaUrl.startsWith('data:video') || b.mediaUrl.includes('/uploads/videos/')));
+    return `
+    <div class="bg-slate-800/90 border border-slate-700/90 rounded-3xl overflow-hidden shadow-lg flex flex-col justify-between group">
+      <div>
+        <div class="relative h-48 bg-slate-900 overflow-hidden">
+          ${isVid ? `
+            <video src="${b.mediaUrl}" class="w-full h-full object-cover" muted autoplay loop playsinline></video>
+            <span class="absolute top-3 right-3 bg-indigo-600/90 text-white text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
+              <i class="fa-solid fa-video"></i> VIDEO
+            </span>
+          ` : `
+            <img src="${b.mediaUrl || 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80'}" alt="${b.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          `}
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+          <div class="absolute top-3 left-3">
+            <span class="bg-indigo-600 text-white text-[11px] font-extrabold px-3 py-1 rounded-full shadow-md">
+              ${b.subtitle || b.category || 'SPECIAL CAMPAIGN'}
+            </span>
+          </div>
+          <div class="absolute bottom-3 left-3 right-3">
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-0.5">순서 #${b.order || 1}</span>
+            <h3 class="text-base font-extrabold text-white leading-snug line-clamp-1">${b.title}</h3>
+          </div>
+        </div>
+
+        <div class="p-5 space-y-3">
+          <p class="text-xs text-slate-300 leading-relaxed line-clamp-2">${b.subtitle || ''}</p>
+          <div class="flex items-center justify-between text-xs text-slate-400 pt-2 border-t border-slate-700/60">
+            <span class="flex items-center gap-1.5">
+              <i class="fa-solid fa-link text-indigo-400"></i>
+              <span class="truncate max-w-[160px]">${b.linkUrl || '#'}</span>
+            </span>
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${b.active ? 'bg-emerald-500/20 text-emerald-300' : 'bg-slate-700 text-slate-400'}">
+              ${b.active ? '● 노출 중' : '비활성'}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="px-5 pb-5 pt-2 flex items-center justify-end gap-2 border-t border-slate-700/40">
+        <button onclick="editBillboard2('${b.id}')" class="px-3.5 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all">
+          <i class="fa-solid fa-pen-to-square"></i>
+          <span>수정</span>
+        </button>
+        <button onclick="deleteBillboard2('${b.id}')" class="px-3.5 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-300 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all">
+          <i class="fa-solid fa-trash"></i>
+          <span>삭제</span>
+        </button>
+      </div>
+    </div>
+  `}).join('');
+}
+
+function openBillboard2Modal() {
+  document.getElementById('form-billboard2').reset();
+  document.getElementById('billboard2-id').value = '';
+  document.getElementById('modal-billboard2-title').innerHTML = '<i class="fa-solid fa-images text-indigo-400"></i> <span>새 갤러리 빌보드 2 등록</span>';
+  const preview = document.getElementById('billboard2-media-preview');
+  if (preview) preview.classList.add('hidden');
+  document.getElementById('modal-billboard2').classList.remove('hidden');
+}
+
+function editBillboard2(id) {
+  const b = state.billboards2.find(item => item.id === id);
+  if (!b) return;
+
+  document.getElementById('billboard2-id').value = b.id;
+  document.getElementById('billboard2-title-input').value = b.title || '';
+  document.getElementById('billboard2-order-input').value = b.order || 1;
+  document.getElementById('billboard2-subtitle-input').value = b.subtitle || '';
+  document.getElementById('billboard2-media-input').value = b.mediaUrl || '';
+  document.getElementById('billboard2-linkurl-input').value = b.linkUrl || '/tool';
+  const linkTextEl = document.getElementById('billboard2-linktext-input-2') || document.getElementById('billboard2-linktext-input');
+  if (linkTextEl) linkTextEl.value = b.linkText || '환자도우미 바로가기 →';
+  document.getElementById('billboard2-active-input').checked = b.active !== false;
+
+  const preview = document.getElementById('billboard2-media-preview');
+  if (preview) {
+    if (b.mediaUrl) {
+      const isVid = b.mediaType === 'video' || (/\.(mp4|webm|mov|ogg|m4v)($|\?)/i.test(b.mediaUrl) || b.mediaUrl.startsWith('data:video') || b.mediaUrl.includes('/uploads/videos/'));
+      if (isVid) {
+        preview.innerHTML = `<video src="${b.mediaUrl}" class="w-full h-full object-cover" controls playsinline></video>`;
+      } else {
+        preview.innerHTML = `<img src="${b.mediaUrl}" class="w-full h-full object-cover">`;
+      }
+      preview.classList.remove('hidden');
+    } else {
+      preview.classList.add('hidden');
+    }
+  }
+
+  document.getElementById('modal-billboard2-title').innerHTML = '<i class="fa-solid fa-pen-to-square text-indigo-400"></i> <span>갤러리 빌보드 2 수정</span>';
+  document.getElementById('modal-billboard2').classList.remove('hidden');
+}
+
+async function handleSaveBillboard2(e) {
+  e.preventDefault();
+  const id = document.getElementById('billboard2-id').value;
+  const isEdit = Boolean(id);
+  const mediaUrl = document.getElementById('billboard2-media-input').value.trim();
+  const isVid = /\.(mp4|webm|mov|ogg|m4v)($|\?)/i.test(mediaUrl) || mediaUrl.startsWith('data:video') || mediaUrl.includes('/uploads/videos/');
+  const linkTextEl = document.getElementById('billboard2-linktext-input-2') || document.getElementById('billboard2-linktext-input');
+
+  const payload = {
+    id: id,
+    title: document.getElementById('billboard2-title-input').value,
+    category: 'SPECIAL CAMPAIGN',
+    order: parseInt(document.getElementById('billboard2-order-input').value) || 1,
+    subtitle: document.getElementById('billboard2-subtitle-input').value,
+    mediaUrl: mediaUrl,
+    mediaType: isVid ? 'video' : 'image',
+    linkUrl: document.getElementById('billboard2-linkurl-input').value,
+    linkText: linkTextEl ? linkTextEl.value : '자세히 보기 →',
+    active: document.getElementById('billboard2-active-input').checked
+  };
+
+  try {
+    const res = await fetch('/api/billboards2.php', {
+      method: isEdit ? 'PUT' : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      showToast(isEdit ? '빌보드 2가 수정되었습니다.' : '새 빌보드 2가 등록되었습니다.');
+      closeModal('modal-billboard2');
+      fetchAllData();
+    } else {
+      showToast(data.error || '저장에 실패했습니다.', false);
+    }
+  } catch (err) {
+    showToast('서버 오류가 발생했습니다.', false);
+  }
+}
+async function deleteBillboard2(id) {
+  if (!confirm('이 갤러리 빌보드 2를 삭제하시겠습니까?')) return;
+  try {
+    const res = await fetch(`/api/billboards2.php?id=${id}`, { method: 'DELETE' });
+    const data = await res.json();
+    if (data.success) {
+      showToast('빌보드 2가 삭제되었습니다.');
       fetchAllData();
     } else {
       showToast(data.error || '삭제 실패', false);
@@ -1567,6 +1767,12 @@ window.openBillboardModal = openBillboardModal;
 window.editBillboard = editBillboard;
 window.deleteBillboard = deleteBillboard;
 window.handleSaveBillboard = handleSaveBillboard;
+window.renderBillboards = renderBillboards;
+window.openBillboard2Modal = openBillboard2Modal;
+window.editBillboard2 = editBillboard2;
+window.deleteBillboard2 = deleteBillboard2;
+window.handleSaveBillboard2 = handleSaveBillboard2;
+window.renderBillboards2 = renderBillboards2;
 window.openVideoModal = openVideoModal;
 window.editVideo = editVideo;
 window.deleteVideo = deleteVideo;

@@ -10,6 +10,7 @@ echo "🔄 Fetching live data from https://kor2.njaccessportal.com..."
 LIVE_POSTS=$(curl -s "https://kor2.njaccessportal.com/api/posts.php" || echo '{"success":false}')
 LIVE_VIDEOS=$(curl -s "https://kor2.njaccessportal.com/api/videos.php" || echo '{"success":false}')
 LIVE_BILLBOARDS=$(curl -s "https://kor2.njaccessportal.com/api/billboards.php" || echo '{"success":false}')
+LIVE_BILLBOARDS2=$(curl -s "https://kor2.njaccessportal.com/api/billboards2.php" || echo '{"success":false}')
 
 node -e '
 const fs = require("fs");
@@ -19,7 +20,7 @@ let current = {};
 try {
   current = JSON.parse(fs.readFileSync(path, "utf8"));
 } catch(e) {
-  current = { billboards: [], videos: [], posts: [], categories: {} };
+  current = { billboards: [], billboards2: [], videos: [], posts: [], categories: {} };
 }
 
 try {
@@ -46,9 +47,17 @@ try {
   }
 } catch(e) {}
 
+try {
+  const b2 = JSON.parse(process.argv[4]);
+  if (b2 && b2.success && Array.isArray(b2.data) && b2.data.length > 0) {
+    current.billboards2 = b2.data;
+    if (b2.categories) current.categories.billboards2 = b2.categories;
+  }
+} catch(e) {}
+
 fs.writeFileSync(path, JSON.stringify(current, null, 2), "utf8");
 console.log("✅ Live data successfully merged into data/content.json!");
-' "$LIVE_POSTS" "$LIVE_VIDEOS" "$LIVE_BILLBOARDS"
+' "$LIVE_POSTS" "$LIVE_VIDEOS" "$LIVE_BILLBOARDS" "$LIVE_BILLBOARDS2"
 
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 ZIP_FILE="/Users/ejyoon/Desktop/KACCESS_${TIMESTAMP}.zip"

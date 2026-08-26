@@ -48,7 +48,7 @@ $publishedPosts = array_values(array_filter($posts, function($p) {
       display: inline-flex !important;
       white-space: nowrap !important;
       will-change: transform;
-      animation: marqueeScroll 25s linear infinite !important;
+      animation: marqueeScroll 35s linear infinite !important;
     }
     .marquee-track:hover {
       animation-play-state: paused;
@@ -72,9 +72,11 @@ $publishedPosts = array_values(array_filter($posts, function($p) {
   <!-- Top Marquee Banner -->
   <div class="fixed top-0 left-0 right-0 z-50 h-[45px] overflow-hidden flex items-center" style="background:linear-gradient(135deg, #0f3a9e 0%, #5e0f73 100%)">
     <div class="marquee-track whitespace-nowrap">
-      <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12">
-        <span class="opacity-60 mr-3">✦</span>New Jersey's Leading Korean Healthcare Access &amp; Navigation Portal — 뉴저지 한인 의료 정보 포털<span class="opacity-60 ml-3">✦</span>
-      </span>
+      <?php for ($i = 0; $i < 6; $i++): ?>
+        <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12">
+          <span class="opacity-60 mr-3">✦</span>의료접근포탈: &quot;비영리 기관들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot;<span class="opacity-60 ml-3">✦</span>
+        </span>
+      <?php endfor; ?>
     </div>
   </div>
 
@@ -287,7 +289,7 @@ $publishedPosts = array_values(array_filter($posts, function($p) {
       }
     });
   </script>
-  <script src="/js/cms-client.js?v=3.2.0"></script>
-  <script src="/js/fixes.js?v=1.0"></script>
+  <script src="/js/cms-client.js?v=3.5.0"></script>
+  <script src="/js/fixes.js?v=1.2"></script>
 </body>
 </html>

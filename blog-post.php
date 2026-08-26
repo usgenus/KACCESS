@@ -585,7 +585,7 @@ function render_article_content($content, $allImages = [], &$usedImages = []) {
     </div>
   </footer>
 
-  <script src="/js/cms-client.js?v=3.1.0"></script>
+  <script src="/js/cms-client.js?v=3.5.0"></script>
 
   <!-- Interactive Comments Script -->
   <script>
@@ -987,7 +987,7 @@ function render_article_content($content, $allImages = [], &$usedImages = []) {
       document.addEventListener('DOMContentLoaded', loadComments);
     })();
   </script>
-  <script src="/js/cms-client.js?v=3.2.0"></script>
-  <script src="/js/fixes.js?v=1.0"></script>
+  <script src="/js/cms-client.js?v=3.5.0"></script>
+  <script src="/js/fixes.js?v=1.2"></script>
 </body>
 </html>

@@ -1,33 +1,35 @@
 {
   "billboards": [
     {
-      "id": "b_1787233230_36b3",
-      "title": "뉴저지 의료접근포털",
-      "subtitle": "미국 병원가는길 잃어버리지 않도록 도와드립니다.",
+      "id": "b_1787710008_3aec",
+      "title": "의료접근포탈",
+      "subtitle": "NJ Healthcare Access Portal",
       "category": "",
-      "mediaType": "image",
-      "mediaUrl": "/uploads/images/images_20260820_134729_d30261.jpg",
-      "videoUrl": "",
-      "linkUrl": "",
-      "linkText": "",
-      "order": 1,
-      "active": true,
-      "createdAt": "2026-08-20 13:40:30",
-      "updatedAt": "2026-08-20 13:53:25"
-    },
-    {
-      "id": "b_1787233235_a829",
-      "title": "의료접근포털",
-      "subtitle": "미국 병원가는길 잃어버리지 않도록 도와드립니다.",
-      "category": "",
-      "mediaType": "image",
-      "mediaUrl": "/uploads/images/images_20260820_134023_b765c9.jpg",
+      "mediaType": "video",
+      "mediaUrl": "/uploads/videos/videos_20260826_020606_44a044.mp4",
       "videoUrl": "",
       "linkUrl": "/about#contact",
-      "linkText": "",
+      "linkText": "Healthcare Access Portal",
       "order": 1,
       "active": true,
-      "createdAt": "2026-08-20 13:40:35"
+      "createdAt": "2026-08-26 02:06:48",
+      "updatedAt": "2026-08-26 02:44:18"
+    }
+  ],
+  "billboards2": [
+    {
+      "id": "b2_1787250001_1001",
+      "title": "뉴저지 한인 맞춤형 종합 헬스케어 & 환자 지원 센터",
+      "subtitle": "원스톱 보험 자격 진단부터 병원 사전접수, 의학 상담까지 종합 지원합니다.",
+      "category": "SPECIAL CAMPAIGN",
+      "mediaType": "image",
+      "mediaUrl": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=2000&q=85&auto=format",
+      "videoUrl": "",
+      "linkUrl": "/tool",
+      "linkText": "환자 종합 서비스 →",
+      "order": 1,
+      "active": true,
+      "createdAt": "2026-08-26 10:00:00"
     }
   ],
   "videos": [

@@ -158,12 +158,14 @@ function get_db_data($forceCloud = false) {
     // 4. Default Empty Structure
     return [
         'billboards' => [],
+        'billboards2' => [],
         'videos' => [],
         'posts' => [],
         'categories' => [
             'news' => ['전체', '의료칼럼', 'FDA 리콜', 'Health & Wellness', 'Medicare & ACA', '리콜(Recalls and Food Safety)', '병원 소식'],
             'videos' => ['전체', '심장 & 혈관', '뇌신경 질환', '암 예방 & 검진', '관절 & 정형외과', '만성질환 관리'],
-            'billboards' => ['SPECIAL CAMPAIGN', 'MEDICARE UPDATE', 'PATIENT SUPPORT', 'HEALTH WEBINAR']
+            'billboards' => ['SPECIAL CAMPAIGN', 'MEDICARE UPDATE', 'PATIENT SUPPORT', 'HEALTH WEBINAR'],
+            'billboards2' => ['SPECIAL CAMPAIGN', 'MEDICARE UPDATE', 'PATIENT SUPPORT', 'HEALTH WEBINAR']
         ]
     ];
 }
