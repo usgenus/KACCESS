@@ -96,15 +96,14 @@
       transform: scale(1.06) !important;
     }
 
-    /* Billboard 1 Vignette Effect */
+    /* Billboard 1 Vignette Effect — Layer 2: sits above media, below text */
     .billboard1-vignette {
-      background: radial-gradient(
-        ellipse at center,
-        transparent 45%,
-        rgba(0,0,0,0.28) 75%,
-        rgba(0,0,0,0.55) 100%
-      );
-      pointer-events: none;
+      position: absolute !important;
+      inset: 0 !important;
+      pointer-events: none !important;
+      z-index: 3 !important;
+      box-shadow: inset 0 0 110px 30px rgba(0, 0, 0, 0.7) !important;
+      background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.55) 100%) !important;
     }
 
     /* Section Slide-In Animation */
@@ -268,12 +267,13 @@
                     src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1600&amp;q=80&amp;auto=format" 
                     alt="2026년 뉴저지 한인 맞춤형 종합 건강검진 특별 지원" 
                     class="w-full h-full object-cover transform scale-100 group-hover:scale-103 transition-transform duration-1000 ease-out">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/15 pointer-events-none"></div>
-                <div class="absolute inset-0 bg-gradient-to-r from-black/75 via-transparent to-black/25 pointer-events-none"></div>
-                <div class="absolute inset-0 billboard1-vignette"></div>
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent pointer-events-none" style="z-index: 2;"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-black/65 via-transparent to-black/20 pointer-events-none" style="z-index: 2;"></div>
+                <div class="absolute inset-0 billboard1-vignette" style="z-index: 3;"></div>
               </div>
 
-              <div class="absolute inset-0 flex items-end">
+              <!-- Top Layer (Layer 3): Text, Badges, and Action Buttons -->
+              <div class="absolute inset-0 flex items-end" style="z-index: 10;">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-4 sm:pb-6 flex items-end justify-between gap-4">
                   <div class="max-w-3xl space-y-1 sm:space-y-2">
                     <div class="flex items-center gap-2">

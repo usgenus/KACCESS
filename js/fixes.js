@@ -43,6 +43,9 @@
       '#doctor-column-sidebar .dc-item { border-bottom: 1px solid #e5e7eb; }',
       '#doctor-column-sidebar .dc-item:last-child { border-bottom: none; }',
 
+      /* Billboard 1 Vignette Effect — Layer 2: between media and text */
+      '.billboard1-vignette { position: absolute !important; inset: 0 !important; pointer-events: none !important; z-index: 3 !important; box-shadow: inset 0 0 110px 30px rgba(0,0,0,0.7) !important; background: radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,0.55) 100%) !important; }',
+
       /* Mobile menu open state */
       '.mobile-menu-open { max-height: 400px !important; opacity: 1 !important; pointer-events: auto !important; }',
     ].join('\n');
@@ -311,6 +314,33 @@
   }
 
   // ─────────────────────────────────────────────────────────────
+  // 8. TOOL PAGE IFRAME LOADER DISMISSAL & FAILSAFE
+  // ─────────────────────────────────────────────────────────────
+  function fixToolLoader() {
+    var overlay = document.getElementById('tool-loading-overlay') || 
+                  document.querySelector('.w-full.h-\\[calc\\(100vh-109px\\)\\] .absolute.inset-0');
+    var iframe = document.getElementById('tool-ai-frame') || 
+                 document.querySelector('iframe[src*="ai.studio"], iframe[src*="hacgenini"], main iframe');
+
+    function dismissOverlay() {
+      if (overlay) {
+        overlay.style.transition = 'opacity 0.4s ease';
+        overlay.style.opacity = '0';
+        overlay.style.pointerEvents = 'none';
+        setTimeout(function() {
+          if (overlay) overlay.style.display = 'none';
+        }, 400);
+      }
+    }
+
+    if (iframe) {
+      iframe.addEventListener('load', dismissOverlay);
+    }
+    // Dismiss after short timeout so users are never blocked even if iframe load event doesn't bubble
+    setTimeout(dismissOverlay, 1800);
+  }
+
+  // ─────────────────────────────────────────────────────────────
   // INIT
   // ─────────────────────────────────────────────────────────────
   function init() {
@@ -319,6 +349,7 @@
     fixMobileMenu();
     fixBillboardHover();
     fixVideoAutoplay();
+    fixToolLoader();
     setTimeout(fixSlideIn, 200);
   }
 

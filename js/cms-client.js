@@ -290,10 +290,12 @@
       '  <a href="' + escapeHtml(targetLink) + '" class="block relative w-full h-full cursor-pointer" title="' + escapeHtml(b.title) + '">',
       '    <div class="w-full h-full relative" style="overflow:hidden;min-height:230px;">',
       '      <div id="bb-media-slot" class="w-full h-full" style="min-height:230px;"></div>',
-      '      <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/15 pointer-events-none"></div>',
-      '      <div class="absolute inset-0 bg-gradient-to-r from-black/75 via-transparent to-black/25 pointer-events-none"></div>',
+      '      <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent pointer-events-none" style="z-index:2;"></div>',
+      '      <div class="absolute inset-0 bg-gradient-to-r from-black/65 via-transparent to-black/20 pointer-events-none" style="z-index:2;"></div>',
+      '      <div class="absolute inset-0 billboard1-vignette" style="z-index:3;"></div>',
       '    </div>',
-      '    <div class="absolute inset-0 flex items-end">',
+      '    <!-- Top Layer (Layer 3): Text, Badges, and Buttons -->',
+      '    <div class="absolute inset-0 flex items-end" style="z-index:10;">',
       '      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-4 sm:pb-6 flex items-end justify-between gap-4">',
       '        <div class="max-w-3xl space-y-1 sm:space-y-2">',
       '          <div class="flex items-center gap-2">',
@@ -397,35 +399,16 @@
     }
   };
   window.cmsPauseBillboard = function () {
-    clearBillboardTimer();
-    var container = document.getElementById('gallery-billboard-container');
-    if (container) {
-      var vid = container.querySelector('video');
-      if (vid && !vid.paused) {
-        try { vid.pause(); } catch(e) {}
-      }
+    // Only pause slide transition timer for static images; NEVER pause videos on hover
+    var b = billboards[currentBillboardIndex] || billboards[0];
+    if (!isBillboardVideo(b)) {
+      clearBillboardTimer();
     }
   };
   window.cmsResumeBillboard = function () {
     if (billboards.length <= 1) return;
-    var container = document.getElementById('gallery-billboard-container');
-    if (!container) return;
     var b = billboards[currentBillboardIndex] || billboards[0];
-    var isVideo = isBillboardVideo(b);
-    var vid = container.querySelector('video');
-
-    if (isVideo && vid) {
-      if (vid.ended || (isFinite(vid.duration) && vid.duration > 0 && vid.currentTime >= vid.duration - 0.2)) {
-        window.cmsNextBillboard();
-      } else {
-        var p = vid.play();
-        if (p && p.catch) p.catch(function() {});
-        if (isFinite(vid.duration) && vid.duration > 0) {
-          var remaining = Math.max(500, Math.round((vid.duration - vid.currentTime + 1.0) * 1000));
-          scheduleBillboardTimer(remaining);
-        }
-      }
-    } else {
+    if (!isBillboardVideo(b)) {
       scheduleBillboardTimer(BILLBOARD_IMAGE_DURATION);
     }
   };
@@ -609,35 +592,16 @@
     }
   };
   window.cmsPauseBillboard2 = function () {
-    clearBillboard2Timer();
-    var container = document.getElementById('gallery-billboard2-container');
-    if (container) {
-      var vid = container.querySelector('video');
-      if (vid && !vid.paused) {
-        try { vid.pause(); } catch(e) {}
-      }
+    // Only pause slide transition timer for static images; NEVER pause videos on hover
+    var b = billboards2[currentBillboard2Index] || billboards2[0];
+    if (!isBillboardVideo(b)) {
+      clearBillboard2Timer();
     }
   };
   window.cmsResumeBillboard2 = function () {
     if (billboards2.length <= 1) return;
-    var container = document.getElementById('gallery-billboard2-container');
-    if (!container) return;
     var b = billboards2[currentBillboard2Index] || billboards2[0];
-    var isVideo = isBillboardVideo(b);
-    var vid = container.querySelector('video');
-
-    if (isVideo && vid) {
-      if (vid.ended || (isFinite(vid.duration) && vid.duration > 0 && vid.currentTime >= vid.duration - 0.2)) {
-        window.cmsNextBillboard2();
-      } else {
-        var p = vid.play();
-        if (p && p.catch) p.catch(function() {});
-        if (isFinite(vid.duration) && vid.duration > 0) {
-          var remaining = Math.max(500, Math.round((vid.duration - vid.currentTime + 1.0) * 1000));
-          scheduleBillboard2Timer(remaining);
-        }
-      }
-    } else {
+    if (!isBillboardVideo(b)) {
       scheduleBillboard2Timer(BILLBOARD_IMAGE_DURATION);
     }
   };
