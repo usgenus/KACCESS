@@ -789,7 +789,7 @@ function renderPosts() {
     const isTop = Boolean(p.isTopStory && p.isTopStory !== 'false' && p.isTopStory !== 0);
     const isLive = Boolean(p.isLiveUpdate === true || p.isLiveUpdate === 'true' || p.isLiveUpdate === 1 || p.isLiveUpdate === '1');
     const isDoc = Boolean(p.isDoctorColumn === true || p.isDoctorColumn === 'true' || p.isDoctorColumn === 1 || p.isDoctorColumn === '1');
-    const isRep = Boolean(p.isPolicyReport === true || p.isPolicyReport === 'true' || p.isPolicyReport === 1 || p.isPolicyReport === '1' || p.category === '리콜(Recalls and Food Safety)' || p.category === '보건 정책 & 메디케어 리포트' || p.category === '보건 정책 & 리포트');
+    const isRep = Boolean(p.isPolicyReport === true || p.isPolicyReport === 'true' || p.isPolicyReport === 1 || p.isPolicyReport === '1' || (p.isPolicyReport !== false && p.isPolicyReport !== 'false' && (p.category === 'recall(리콜)' || p.category === '리콜(Recalls and Food Safety)' || (p.category && (p.category.includes('리콜') || p.category.toLowerCase().includes('recall'))))));
 
     return `
     <div class="bg-slate-800/90 border border-slate-700/90 rounded-3xl overflow-hidden shadow-lg flex flex-col justify-between group">
@@ -883,7 +883,7 @@ function handleExposureCheckboxChange(input) {
     if (currentId && (p.id === currentId || (p.slug && p.slug === currentId))) return;
     if (p.isLiveUpdate === true || p.isLiveUpdate === 'true' || p.isLiveUpdate === 1 || p.isLiveUpdate === '1') liveCount++;
     if (p.isDoctorColumn === true || p.isDoctorColumn === 'true' || p.isDoctorColumn === 1 || p.isDoctorColumn === '1') doctorCount++;
-    if (p.isPolicyReport === true || p.isPolicyReport === 'true' || p.isPolicyReport === 1 || p.isPolicyReport === '1' || p.category === '리콜(Recalls and Food Safety)' || p.category === '보건 정책 & 메디케어 리포트') reportCount++;
+    if (p.isPolicyReport === true || p.isPolicyReport === 'true' || p.isPolicyReport === 1 || p.isPolicyReport === '1') reportCount++;
   });
 
   if (input.id === 'post-liveupdate-input' && input.checked && liveCount >= 6) {
@@ -937,7 +937,7 @@ function updateExposureCheckboxLimits(currentEditingPostId) {
     if (p.isDoctorColumn === true || p.isDoctorColumn === 'true' || p.isDoctorColumn === 1 || p.isDoctorColumn === '1') {
       doctorCount++;
     }
-    if (p.isPolicyReport === true || p.isPolicyReport === 'true' || p.isPolicyReport === 1 || p.isPolicyReport === '1' || p.category === '리콜(Recalls and Food Safety)' || p.category === '보건 정책 & 메디케어 리포트') {
+    if (p.isPolicyReport === true || p.isPolicyReport === 'true' || p.isPolicyReport === 1 || p.isPolicyReport === '1') {
       reportCount++;
     }
   });
@@ -1014,7 +1014,7 @@ function openPostModal() {
   
   const posts = state.posts || [];
   const liveCount = posts.filter(p => p.isLiveUpdate === true || p.isLiveUpdate === 'true' || p.isLiveUpdate === 1 || p.isLiveUpdate === '1').length;
-  const reportCount = posts.filter(p => p.isPolicyReport === true || p.isPolicyReport === 'true' || p.isPolicyReport === 1 || p.isPolicyReport === '1' || p.category === '리콜(Recalls and Food Safety)' || p.category === '보건 정책 & 메디케어 리포트').length;
+  const reportCount = posts.filter(p => p.isPolicyReport === true || p.isPolicyReport === 'true' || p.isPolicyReport === 1 || p.isPolicyReport === '1').length;
   
   const dcCheck = document.getElementById('post-doctorcolumn-input');
   if (dcCheck) dcCheck.checked = false;
@@ -1291,7 +1291,7 @@ function editPost(id) {
   }
   const prCheck = document.getElementById('post-policyreport-input');
   if (prCheck) {
-    prCheck.checked = Boolean(p.isPolicyReport === true || p.isPolicyReport === 'true' || p.isPolicyReport === 1 || p.isPolicyReport === '1' || p.category === '리콜(Recalls and Food Safety)' || p.category === '보건 정책 & 메디케어 리포트');
+    prCheck.checked = Boolean(p.isPolicyReport === true || p.isPolicyReport === 'true' || p.isPolicyReport === 1 || p.isPolicyReport === '1' || (p.isPolicyReport !== false && p.isPolicyReport !== 'false' && (p.category === 'recall(리콜)' || p.category === '리콜(Recalls and Food Safety)' || (p.category && (p.category.includes('리콜') || p.category.toLowerCase().includes('recall'))))));
   }
 
   updateExposureCheckboxLimits(p.id);

@@ -1031,17 +1031,31 @@
         return p.isLiveUpdate === true || p.isLiveUpdate === 'true' || p.isLiveUpdate === 1 || p.isLiveUpdate === '1';
       }).slice(0, 6);
 
-      // Reports Grid: 4 items (prioritize isPolicyReport or category '리콜(Recalls and Food Safety)')
+      // Reports Grid: 4 items (prioritize isPolicyReport === true, then other recall category posts)
+      function isRecallPost(p) {
+        var cat = (p.category || '').toLowerCase();
+        return p.category === 'recall(리콜)' || p.category === '리콜(Recalls and Food Safety)' || cat.indexOf('recall') !== -1 || cat.indexOf('리콜') !== -1;
+      }
+
       var explicitReports = allPosts.filter(function(p) {
         if (topStory && String(p.id) === String(topStory.id)) return false;
-        return p.isPolicyReport === true || p.isPolicyReport === 'true' || p.isPolicyReport === 1 || p.isPolicyReport === '1' ||
-               p.category === '리콜(Recalls and Food Safety)' || p.category === '보건 정책 & 메디케어 리포트' || p.category === '보건 정책 & 리포트';
+        return p.isPolicyReport === true || p.isPolicyReport === 'true' || p.isPolicyReport === 1 || p.isPolicyReport === '1';
       });
+
+      var recallCandidates = allPosts.filter(function(p) {
+        if (topStory && String(p.id) === String(topStory.id)) return false;
+        if (explicitReports.some(function(er) { return String(er.id) === String(p.id); })) return false;
+        return isRecallPost(p);
+      });
+
       var otherCandidates = allPosts.filter(function(p) {
         if (topStory && String(p.id) === String(topStory.id)) return false;
-        return !explicitReports.some(function(er) { return String(er.id) === String(p.id); });
+        if (explicitReports.some(function(er) { return String(er.id) === String(p.id); })) return false;
+        if (recallCandidates.some(function(rc) { return String(rc.id) === String(p.id); })) return false;
+        return true;
       });
-      var reportNews = explicitReports.concat(otherCandidates).slice(0, 4);
+
+      var reportNews = explicitReports.concat(recallCandidates, otherCandidates).slice(0, 4);
 
       // Live update post
       var livePost = allPosts.find(function(p) {

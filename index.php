@@ -79,23 +79,41 @@ $latestNews = array_values(array_filter($posts, function($p) use ($topStory) {
 }));
 $latestNews = array_slice($latestNews, 0, 6);
 
-// 3. Recalls & Food Safety / Reports: (4 slots strictly: prioritize isPolicyReport or category '리콜(Recalls and Food Safety)')
+// 3. Recalls & Food Safety (4 slots: prioritize isPolicyReport === true, then other recall category posts)
+$isRecallPost = function($p) {
+    $cat = $p['category'] ?? '';
+    $lower = mb_strtolower($cat, 'UTF-8');
+    return $cat === 'recall(리콜)' || $cat === '리콜(Recalls and Food Safety)' || mb_strpos($lower, 'recall') !== false || mb_strpos($lower, '리콜') !== false;
+};
+
+// Explicitly marked by user in CMS with isPolicyReport
 $explicitReports = array_values(array_filter($posts, function($p) use ($topStory) {
     if ($topStory && (string)$p['id'] === (string)$topStory['id']) return false;
-    $isReport = (!empty($p['isPolicyReport']) && $p['isPolicyReport'] !== 'false' && $p['isPolicyReport'] !== false && $p['isPolicyReport'] !== 0 && $p['isPolicyReport'] !== '0')
-        || (($p['category'] ?? '') === '리콜(Recalls and Food Safety)')
-        || (($p['category'] ?? '') === '보건 정책 & 메디케어 리포트')
-        || (($p['category'] ?? '') === '보건 정책 & 리포트');
-    return $isReport;
+    return !empty($p['isPolicyReport']) && $p['isPolicyReport'] !== 'false' && $p['isPolicyReport'] !== false && $p['isPolicyReport'] !== 0 && $p['isPolicyReport'] !== '0';
 }));
-$otherCandidates = array_values(array_filter($posts, function($p) use ($topStory, $explicitReports) {
+
+// Other recall category candidates to fill up to 4
+$recallCandidates = array_values(array_filter($posts, function($p) use ($topStory, $explicitReports, $isRecallPost) {
     if ($topStory && (string)$p['id'] === (string)$topStory['id']) return false;
     foreach ($explicitReports as $er) {
         if ((string)$er['id'] === (string)$p['id']) return false;
     }
+    return $isRecallPost($p);
+}));
+
+// Fallback candidates only if there are fewer than 4 recall posts in total
+$otherCandidates = array_values(array_filter($posts, function($p) use ($topStory, $explicitReports, $recallCandidates) {
+    if ($topStory && (string)$p['id'] === (string)$topStory['id']) return false;
+    foreach ($explicitReports as $er) {
+        if ((string)$er['id'] === (string)$p['id']) return false;
+    }
+    foreach ($recallCandidates as $rc) {
+        if ((string)$rc['id'] === (string)$p['id']) return false;
+    }
     return true;
 }));
-$reportNews = array_slice(array_merge($explicitReports, $otherCandidates), 0, 4);
+
+$reportNews = array_slice(array_merge($explicitReports, $recallCandidates, $otherCandidates), 0, 4);
 
 // Live update headline (Strictly latest post with isLiveUpdate or isTopStory)
 $liveUpdatePost = null;
