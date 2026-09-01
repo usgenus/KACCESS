@@ -86,8 +86,8 @@ function get_db_data($forceCloud = false) {
             $catRows = $supabase->selectAll('categories') ?: [];
             
             $categories = [
-                'news' => ['전체', '의료칼럼', 'FDA 리콜', 'Health & Wellness', 'Medicare & ACA', '리콜(Recalls and Food Safety)', '병원 소식'],
-                'videos' => ['전체', '심장 & 혈관', '뇌신경 질환', '암 예방 & 검진', '관절 & 정형외과', '만성질환 관리'],
+                'news' => ['의료칼럼', 'recall(리콜)', 'health&wellness', '의료보험', '한인건강 특집', '한인커뮤니티 뉴스', '의학뉴스'],
+                'videos' => ['전체', '만성질환 & 당뇨', '심장 & 혈관', '뇌신경 & 치매', '암 예방 & 검진', '감염병 & 백신', '건강검진 & 의료정보'],
                 'billboards' => ['SPECIAL CAMPAIGN', 'MEDICARE UPDATE', 'PATIENT SUPPORT', 'HEALTH WEBINAR']
             ];
             foreach ($catRows as $row) {
@@ -162,8 +162,8 @@ function get_db_data($forceCloud = false) {
         'videos' => [],
         'posts' => [],
         'categories' => [
-            'news' => ['전체', '의료칼럼', 'FDA 리콜', 'Health & Wellness', 'Medicare & ACA', '리콜(Recalls and Food Safety)', '병원 소식'],
-            'videos' => ['전체', '심장 & 혈관', '뇌신경 질환', '암 예방 & 검진', '관절 & 정형외과', '만성질환 관리'],
+            'news' => ['의료칼럼', 'recall(리콜)', 'health&wellness', '의료보험', '한인건강 특집', '한인커뮤니티 뉴스', '의학뉴스'],
+            'videos' => ['전체', '만성질환 & 당뇨', '심장 & 혈관', '뇌신경 & 치매', '암 예방 & 검진', '감염병 & 백신', '건강검진 & 의료정보'],
             'billboards' => ['SPECIAL CAMPAIGN', 'MEDICARE UPDATE', 'PATIENT SUPPORT', 'HEALTH WEBINAR'],
             'billboards2' => ['SPECIAL CAMPAIGN', 'MEDICARE UPDATE', 'PATIENT SUPPORT', 'HEALTH WEBINAR']
         ]

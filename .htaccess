@@ -25,6 +25,9 @@ RewriteRule ^uploads/(images|videos)/(.+)$ api/media.php?file=$2 [L]
 
 # Clean URL rewrites
 RewriteRule ^medicare/?$ medicare.html [L]
+RewriteRule ^matcher/?$ matcher.html [L]
+RewriteRule ^calculator/?$ calculator.html [L]
+RewriteRule ^dictionary/?$ dictionary.html [L]
 RewriteRule ^blog/?$ blog.php [L]
 RewriteRule ^tool/?$ tool.html [L]
 RewriteRule ^about/?$ about.html [L]

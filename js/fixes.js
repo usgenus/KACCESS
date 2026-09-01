@@ -297,21 +297,7 @@
       .catch(function() {});
   }
 
-  // Also add 의사칼럼 category button to the blog filter bar if not present
-  function addDoctorColumnFilter() {
-    var catDiv = document.getElementById('cms-blog-categories');
-    if (!catDiv) return;
-    var exists = false;
-    catDiv.querySelectorAll('button').forEach(function(b) {
-      if (b.textContent.trim() === '의사칼럼') exists = true;
-    });
-    if (!exists) {
-      var btn = document.createElement('button');
-      btn.className = 'text-sm font-sans font-medium px-4 py-1.5 rounded-full border transition-all duration-200 border-brand-border text-brand-muted hover:border-brand-blue hover:text-brand-blue bg-white';
-      btn.textContent = '의사칼럼';
-      catDiv.appendChild(btn);
-    }
-  }
+
 
   // ─────────────────────────────────────────────────────────────
   // 8. TOOL PAGE IFRAME LOADER DISMISSAL & FAILSAFE

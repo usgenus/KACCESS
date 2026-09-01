@@ -7,17 +7,31 @@ require_once __DIR__ . '/api/db.php';
 
 $db = get_db_data();
 $posts = $db['posts'] ?? [];
-$defaultCats = ['전체', '의료칼럼', 'FDA 리콜', 'Health & Wellness', 'Medicare & ACA', '리콜(Recalls and Food Safety)', '병원 소식'];
-$dbCats = $db['categories']['news'] ?? [];
-$categories = array_values(array_unique(array_merge($defaultCats, $dbCats)));
-$categories = array_values(array_filter($categories, function($c) {
-    return $c !== '보건 정책 & 메디케어 리포트' && $c !== '보건 정책 & 리포트';
-}));
+function normalize_news_category($cat) {
+    $c = trim($cat ?? '');
+    if (!$c) return '의료칼럼';
+    $lower = mb_strtolower($c, 'UTF-8');
+    if ($c === '의료칼럼' || $c === '의사칼럼' || mb_strpos($lower, '칼럼') !== false) return '의료칼럼';
+    if ($c === 'recall(리콜)' || $c === 'FDA 리콜' || mb_strpos($lower, 'recall') !== false || mb_strpos($lower, '리콜') !== false) return 'recall(리콜)';
+    if ($c === 'health&wellness' || $c === 'Health & Wellness' || mb_strpos($lower, 'health') !== false || mb_strpos($lower, 'wellness') !== false) return 'health&wellness';
+    if ($c === '의료보험' || $c === 'Medicare & ACA' || mb_strpos($lower, 'medicare') !== false || mb_strpos($lower, '보험') !== false) return '의료보험';
+    if ($c === '한인건강 특집' || mb_strpos($lower, '한인건강') !== false || mb_strpos($lower, '특집') !== false) return '한인건강 특집';
+    if ($c === '한인커뮤니티 뉴스' || mb_strpos($lower, '한인커뮤니티') !== false || mb_strpos($lower, '커뮤니티') !== false) return '한인커뮤니티 뉴스';
+    if ($c === '의학뉴스' || mb_strpos($lower, '의학뉴스') !== false || mb_strpos($lower, '의학') !== false) return '의학뉴스';
+    return in_array($c, ['의료칼럼', 'recall(리콜)', 'health&wellness', '의료보험', '한인건강 특집', '한인커뮤니티 뉴스', '의학뉴스']) ? $c : '의료칼럼';
+}
+
+$categories = ['전체', '의료칼럼', 'recall(리콜)', 'health&wellness', '의료보험', '한인건강 특집', '한인커뮤니티 뉴스', '의학뉴스'];
 
 // Filter published posts
 $publishedPosts = array_values(array_filter($posts, function($p) {
     return ($p['status'] ?? 'published') === 'published';
 }));
+
+foreach ($publishedPosts as &$pRef) {
+    $pRef['category'] = normalize_news_category($pRef['category'] ?? '');
+}
+unset($pRef);
 ?>
 <!DOCTYPE html>
 <html lang="ko" class="h-full antialiased">

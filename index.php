@@ -725,7 +725,7 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
             <p class="text-white/70 text-sm sm:text-base leading-relaxed">보험 자격 진단부터 병원 사전접수, 의학 용어 사전 및 의료비 지원 신청까지 한곳에서 이용하실 수 있습니다.</p>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            <a class="group" href="/tool">
+            <a class="group" href="/matcher">
               <div class="bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl p-5 h-full flex flex-col justify-between transition-all duration-300 group-hover:border-blue-400/50">
                 <div>
                   <div class="flex items-center justify-between mb-4"><span class="text-2xl">🏥</span><span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-white/10 text-white/80">INSURANCE MATCHER</span></div>
@@ -735,7 +735,7 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
                 <div class="text-xs font-bold text-blue-400 group-hover:translate-x-1 transition-transform flex items-center gap-1">서비스 바로가기 →</div>
               </div>
             </a>
-            <a class="group" href="/tool">
+            <a class="group" href="/calculator">
               <div class="bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl p-5 h-full flex flex-col justify-between transition-all duration-300 group-hover:border-blue-400/50">
                 <div>
                   <div class="flex items-center justify-between mb-4"><span class="text-2xl">🧮</span><span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-white/10 text-white/80">CALCULATOR</span></div>
@@ -745,7 +745,7 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
                 <div class="text-xs font-bold text-blue-400 group-hover:translate-x-1 transition-transform flex items-center gap-1">서비스 바로가기 →</div>
               </div>
             </a>
-            <a class="group" href="/tool">
+            <a class="group" href="/dictionary">
               <div class="bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl p-5 h-full flex flex-col justify-between transition-all duration-300 group-hover:border-blue-400/50">
                 <div>
                   <div class="flex items-center justify-between mb-4"><span class="text-2xl">📖</span><span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-white/10 text-white/80">DICTIONARY</span></div>
@@ -782,11 +782,12 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
               </div>
               <div id="medical-videos-categories" class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
                 <button onclick="window.cmsSetVideoCat('전체')" class="text-xs font-semibold px-4 py-2 rounded-full transition-all whitespace-nowrap bg-red-600 text-white shadow-sm cursor-pointer">전체</button>
+                <button onclick="window.cmsSetVideoCat('만성질환 & 당뇨')" class="text-xs font-medium px-4 py-2 rounded-full transition-all whitespace-nowrap bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-100 hover:text-slate-900 cursor-pointer">만성질환 &amp; 당뇨</button>
                 <button onclick="window.cmsSetVideoCat('심장 & 혈관')" class="text-xs font-medium px-4 py-2 rounded-full transition-all whitespace-nowrap bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-100 hover:text-slate-900 cursor-pointer">심장 &amp; 혈관</button>
-                <button onclick="window.cmsSetVideoCat('뇌신경 질환')" class="text-xs font-medium px-4 py-2 rounded-full transition-all whitespace-nowrap bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-100 hover:text-slate-900 cursor-pointer">뇌신경 질환</button>
+                <button onclick="window.cmsSetVideoCat('뇌신경 & 치매')" class="text-xs font-medium px-4 py-2 rounded-full transition-all whitespace-nowrap bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-100 hover:text-slate-900 cursor-pointer">뇌신경 &amp; 치매</button>
                 <button onclick="window.cmsSetVideoCat('암 예방 & 검진')" class="text-xs font-medium px-4 py-2 rounded-full transition-all whitespace-nowrap bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-100 hover:text-slate-900 cursor-pointer">암 예방 &amp; 검진</button>
-                <button onclick="window.cmsSetVideoCat('관절 & 정형외과')" class="text-xs font-medium px-4 py-2 rounded-full transition-all whitespace-nowrap bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-100 hover:text-slate-900 cursor-pointer">관절 &amp; 정형외과</button>
-                <button onclick="window.cmsSetVideoCat('만성질환 관리')" class="text-xs font-medium px-4 py-2 rounded-full transition-all whitespace-nowrap bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-100 hover:text-slate-900 cursor-pointer">만성질환 관리</button>
+                <button onclick="window.cmsSetVideoCat('감염병 & 백신')" class="text-xs font-medium px-4 py-2 rounded-full transition-all whitespace-nowrap bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-100 hover:text-slate-900 cursor-pointer">감염병 &amp; 백신</button>
+                <button onclick="window.cmsSetVideoCat('건강검진 & 의료정보')" class="text-xs font-medium px-4 py-2 rounded-full transition-all whitespace-nowrap bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-100 hover:text-slate-900 cursor-pointer">건강검진 &amp; 의료정보</button>
               </div>
             </div>
 
@@ -831,12 +832,7 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
                   <?php if ($mainVideo): ?>
                     <div class="flex items-center gap-3 text-xs text-slate-500 flex-wrap">
                       <span class="font-bold text-red-600 bg-red-50 border border-red-100 px-2.5 py-0.5 rounded-full"><?= htmlspecialchars($mainVideo['category'] ?: '의학뉴스') ?></span>
-                      <span>·</span>
-                      <span class="font-semibold text-slate-800"><?= htmlspecialchars($mainVideo['speaker'] ?: ($mainVideo['doctor'] ?: '한인 전문의')) ?></span>
-                      <span>·</span>
                       <span class="text-slate-600">⏱ <?= htmlspecialchars($mainVideo['duration'] ?: '10:00') ?></span>
-                      <span>·</span>
-                      <span class="text-slate-600">👁️ <?= htmlspecialchars($mainVideo['views'] ?: '조회수') ?></span>
                     </div>
                     <h3 class="font-extrabold text-xl sm:text-2xl text-slate-900 leading-snug tracking-tight">
                       <?= htmlspecialchars($mainVideo['title'] ?? '') ?>
@@ -879,9 +875,7 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
                           </h4>
                         </div>
                         <div class="flex items-center gap-2 text-[11px] text-slate-500 mt-1.5">
-                          <span class="truncate"><?= htmlspecialchars($v['speaker'] ?: ($v['doctor'] ?: '전문의')) ?></span>
-                          <span>·</span>
-                          <span class="text-slate-700 font-semibold"><?= htmlspecialchars($v['views'] ?: '조회수') ?></span>
+                          <span class="text-slate-500 font-mono">⏱ <?= htmlspecialchars($v['duration'] ?: '10:00') ?></span>
                         </div>
                       </div>
                     </div>
@@ -936,9 +930,9 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
         <div>
           <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">환자도우미</p>
           <ul class="space-y-2.5">
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/tool">보험 자격 진단</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/tool">보조금 계산기</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/tool">의학 용어 사전</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/matcher">보험 자격 진단</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/calculator">보조금 계산기</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/dictionary">의학 용어 사전</a></li>
           </ul>
         </div>
       </div>

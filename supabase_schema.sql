@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS public.categories (
 
 -- Insert Default Categories
 INSERT INTO public.categories (type, items) VALUES
-  ('news', '["전체", "의료칼럼", "FDA 리콜", "Health & Wellness", "Medicare & ACA", "리콜(Recalls and Food Safety)", "병원 소식"]'::jsonb),
+  ('news', '["의료칼럼", "recall(리콜)", "health&wellness", "의료보험", "한인건강 특집", "한인커뮤니티 뉴스", "의학뉴스"]'::jsonb),
   ('videos', '["전체", "심장 & 혈관", "뇌신경 질환", "암 예방 & 검진", "관절 & 정형외과", "만성질환 관리"]'::jsonb),
   ('billboards', '["SPECIAL CAMPAIGN", "MEDICARE UPDATE", "PATIENT SUPPORT", "HEALTH WEBINAR"]'::jsonb)
 ON CONFLICT (type) DO UPDATE SET items = EXCLUDED.items;

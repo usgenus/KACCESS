@@ -1,0 +1,62 @@
+[
+  {
+    "id": "inq_1788228513_11516f",
+    "name": "test2",
+    "email": "turbogoguma@hotmail.com",
+    "phone": "",
+    "category": "일반 문의",
+    "message": "Test",
+    "resolved": false,
+    "createdAt": "2026-09-01 02:08:33",
+    "resolvedAt": null,
+    "ip": "69.124.188.35"
+  },
+  {
+    "id": "inq_1787839076_c38f87",
+    "name": "sksksk",
+    "email": "sksksk@gmail.com",
+    "phone": "13401294-01",
+    "category": "메디케어 상담",
+    "message": "hi,, test",
+    "resolved": true,
+    "createdAt": "2026-08-27 13:57:56",
+    "resolvedAt": "2026-08-27 14:05:19",
+    "ip": "187.14.50.69"
+  },
+  {
+    "id": "inq_1787837364_8fe4be",
+    "name": "테스트사용자",
+    "email": "njaccessportal@gmail.com",
+    "phone": "201-000-1111",
+    "category": "일반 문의",
+    "message": "이메일 도착 및 CMS 연동 정상 작동 테스트입니다.",
+    "resolved": true,
+    "createdAt": "2026-08-27 13:29:24",
+    "resolvedAt": "2026-08-31 19:39:05",
+    "ip": "187.14.50.69"
+  },
+  {
+    "id": "inq_seed_1",
+    "name": "김민수",
+    "email": "minsu.kim.nj@gmail.com",
+    "phone": "201-482-9901",
+    "category": "메디케어 상담",
+    "message": "안녕하세요. 올해 만 65세가 되어 메디케어 Part A와 Part B를 처음 신청하려고 합니다. 뉴저지 버겐카운티 거주 중인데 한국어로 방문 또는 유선 상담이 가능한 일정 안내 부탁드립니다.",
+    "resolved": true,
+    "createdAt": "2026-08-27 08:30:00",
+    "resolvedAt": "2026-08-31 19:39:03",
+    "ip": "127.0.0.1"
+  },
+  {
+    "id": "inq_seed_2",
+    "name": "이지현",
+    "email": "jhlee992@yahoo.com",
+    "phone": "201-774-3310",
+    "category": "ACA 오바마케어",
+    "message": "오바마케어 보조금(Premium Tax Credit) 신청 자격과 관련하여 소득 기준과 뉴저지 겟커버드NJ(Get Covered NJ) 특별 가입 기간 문의드립니다.",
+    "resolved": true,
+    "createdAt": "2026-08-26 14:15:00",
+    "resolvedAt": "2026-08-26 16:40:00",
+    "ip": "127.0.0.1"
+  }
+]

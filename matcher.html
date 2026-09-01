@@ -1,0 +1,233 @@
+
+<!DOCTYPE html><html lang="ko" class="h-full antialiased"><head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="/_next/static/chunks/1fosv8xgmgdeu.css" />
+<title>메디케어 & ACA 맞춤 자격 진단기 | Healthcare Access Portal</title>
+<meta name="description" content="뉴저지 한인 커뮤니티를 위한 의료 접근 및 건강 정보 포털. 메디케어, ACA, 의료 상담을 한국어로 제공합니다."/>
+<link rel="icon" href="/favicon.ico" sizes="256x256" type="image/x-icon"/>
+<style>
+  :root, html, body { font-family: "Pretendard Variable", Pretendard, "Noto Sans KR", sans-serif !important; }
+  .hub-tab-btn { padding: 10px 18px; border-radius: 9999px; font-weight: 700; font-size: 13px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; }
+  .hub-tab-active { background: #2563eb !important; color: #ffffff !important; border: 1.5px solid #93c5fd !important; box-shadow: 0 4px 14px rgba(37,99,235,0.4); }
+  .hub-tab-inactive { background: rgba(255,255,255,0.12) !important; color: #ffffff !important; border: 1px solid rgba(255,255,255,0.25) !important; }
+  .hub-tab-inactive:hover { background: rgba(255,255,255,0.25) !important; color: #ffffff !important; }
+  .tool-card { background: #ffffff; border-radius: 20px; border: 1px solid #e2e8f0; box-shadow: 0 4px 14px rgba(0,0,0,0.05); }
+</style>
+</head>
+<body class="min-h-full flex flex-col bg-slate-50">
+<div class="fixed top-0 left-0 right-0 z-50 h-[45px] overflow-hidden flex items-center" style="background:linear-gradient(135deg, #0f3a9e 0%, #5e0f73 100%)">
+  <div class="marquee-track whitespace-nowrap">
+    <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12">✦ 의료접근포탈: &quot;비영리 기관들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료 전문가들이 제공하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot; ✦</span>
+  </div>
+</div>
+<nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/90 backdrop-blur-sm border-b border-slate-200" style="top:45px">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <a class="flex-shrink-0 group flex items-center gap-2.5" href="/">
+        <div class="w-8 h-8 flex items-center justify-center flex-shrink-0">
+          <img src="/logo-icon.svg" alt="NJAP Logo" class="w-full h-full object-contain"/>
+        </div>
+        <div>
+          <span class="font-serif text-xl text-brand-dark group-hover:text-brand-blue transition-colors duration-200 block">Healthcare Access Portal</span>
+          <span class="block text-[10px] font-sans text-brand-muted leading-tight -mt-0.5">뉴저지 한인 의료 접근 포털</span>
+        </div>
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a class="nav-link pb-0.5" href="/">홈</a>
+        <a class="nav-link pb-0.5" href="/blog">뉴스</a>
+        <a class="nav-link pb-0.5" href="/medicare">메디케어 &amp; ACA</a>
+        <a class="nav-link pb-0.5 text-blue-600 font-bold" href="/tool">환자도우미</a>
+        <a class="nav-link pb-0.5" href="/about">소개</a>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="h-[109px]"></div>
+
+<main class="flex-1 pb-16 bg-slate-50">
+  
+  <!-- Top Header & Tabs with Solid Guaranteed Gradient Background -->
+  <section class="py-10 sm:py-14 border-b border-white/10" style="background: linear-gradient(135deg, #091e42 0%, #1e1b4b 60%, #1e293b 100%) !important; color: #ffffff !important;">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider mb-2" style="background: rgba(59, 130, 246, 0.3) !important; color: #93c5fd !important; border: 1px solid rgba(147, 197, 253, 0.4) !important;">ONE-STOP PATIENT SERVICES</span>
+      <h1 class="font-serif text-3xl sm:text-4xl mb-2 font-bold" style="color: #ffffff !important;">원스톱 의료 접근 &amp; 환자 종합 센터</h1>
+      <p class="text-xs sm:text-sm max-w-2xl leading-relaxed mb-6 font-sans" style="color: rgba(255, 255, 255, 0.85) !important;">보험 자격 진단, 2026 ACA 보조금 계산, 영-한 의학 용어 사전, AI 질문 센터를 자유롭게 이용하세요.</p>
+
+      <!-- 4 Tool Nav Tabs -->
+      <div class="flex flex-wrap gap-2.5 pt-1">
+        <a href="/matcher" class="hub-tab-btn hub-tab-active">
+          <span>🏥</span> 1. 메디케어 &amp; ACA 자격 진단
+        </a>
+        <a href="/calculator" class="hub-tab-btn hub-tab-inactive">
+          <span>🧮</span> 2. ACA 보험료 보조금 계산기
+        </a>
+        <a href="/dictionary" class="hub-tab-btn hub-tab-inactive">
+          <span>📖</span> 3. 영-한 의학 용어 사전
+        </a>
+        <a href="/tool" class="hub-tab-btn hub-tab-inactive">
+          <span>🤖</span> 4. AI 환자 도우미 &amp; 사전접수
+        </a>
+      </div>
+    </div>
+  </section>
+  
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 -mt-5">
+    <div class="tool-card p-6 sm:p-10">
+      <div class="text-center mb-8">
+        <span class="text-xs font-bold text-blue-600 uppercase tracking-widest block mb-1">TOOL 1 · INSURANCE MATCHER</span>
+        <h2 class="font-serif text-2xl sm:text-3xl text-slate-900 mb-2">메디케어 &amp; ACA 맞춤 자격 진단기</h2>
+        <p class="text-xs sm:text-sm text-slate-600">만 나이, 체류 신분, 가구 소득에 따른 가장 유리한 건강보험 프로그램 및 주정부 지원 혜택을 산출합니다.</p>
+      </div>
+
+      <div id="matcher-quiz-box">
+        <div class="flex items-center justify-between mb-6 text-xs text-slate-500 font-medium">
+          <span id="matcher-step-label">진단 단계 1 / 3</span>
+          <div class="w-32 bg-slate-200 h-2 rounded-full overflow-hidden">
+            <div id="matcher-step-bar" class="bg-blue-600 h-full transition-all duration-300" style="width: 33%;"></div>
+          </div>
+        </div>
+
+        <div id="matcher-step-1">
+          <label class="block text-sm font-semibold text-slate-800 mb-2">만 나이를 입력해주세요:</label>
+          <input type="number" id="matcher-age" placeholder="예: 65" class="w-full p-3.5 rounded-xl border border-slate-300 mb-6 text-base outline-none focus:border-blue-500" />
+          <button onclick="gotoMatcherStep(2)" class="btn-primary w-full justify-center py-3.5 text-sm">다음 단계 →</button>
+        </div>
+
+        <div id="matcher-step-2" style="display:none;">
+          <label class="block text-sm font-semibold text-slate-800 mb-2">미국 체류 신분을 선택해주세요:</label>
+          <div class="space-y-2.5 mb-6" id="matcher-status-btns">
+            <button onclick="setMatcherStatus('시민권자', this)" class="w-full text-left p-3.5 rounded-xl border border-slate-200 bg-white text-slate-800 text-sm hover:bg-slate-50">시민권자</button>
+            <button onclick="setMatcherStatus('영주권자 (5년 이상)', this)" class="w-full text-left p-3.5 rounded-xl border border-slate-200 bg-white text-slate-800 text-sm hover:bg-slate-50">영주권자 (5년 이상)</button>
+            <button onclick="setMatcherStatus('합법 비자 (H-1B, E-2, L-1, F-1 OPT 등)', this)" class="w-full text-left p-3.5 rounded-xl border border-slate-200 bg-white text-slate-800 text-sm hover:bg-slate-50">합법 비자 (H-1B, E-2, L-1, F-1 OPT 등)</button>
+            <button onclick="setMatcherStatus('서류미비 / 기타', this)" class="w-full text-left p-3.5 rounded-xl border border-slate-200 bg-white text-slate-800 text-sm hover:bg-slate-50">서류미비 / 기타</button>
+          </div>
+          <div class="flex gap-3">
+            <button onclick="gotoMatcherStep(1)" class="btn-outline text-sm py-3 px-6">이전</button>
+            <button onclick="gotoMatcherStep(3)" id="matcher-btn-step3" class="btn-primary flex-1 justify-center py-3 text-sm" disabled>다음 단계 →</button>
+          </div>
+        </div>
+
+        <div id="matcher-step-3" style="display:none;">
+          <label class="block text-sm font-semibold text-slate-800 mb-2">가구 총 연간 소득 수준을 선택해주세요:</label>
+          <div class="space-y-2.5 mb-6">
+            <button onclick="setMatcherIncome('very_low', this)" class="w-full text-left p-3.5 rounded-xl border border-slate-200 bg-white text-slate-800 text-sm hover:bg-slate-50">저소득층 (1인 연 $21,597 이하 / FPL 138% 이하 - 메디케이드)</button>
+            <button onclick="setMatcherIncome('low', this)" class="w-full text-left p-3.5 rounded-xl border border-slate-200 bg-white text-slate-800 text-sm hover:bg-slate-50">중저소득층 (1인 연 $21,597 ~ $39,125 / FPL 250% 이하 - 실버 CSR)</button>
+            <button onclick="setMatcherIncome('medium', this)" class="w-full text-left p-3.5 rounded-xl border border-slate-200 bg-white text-slate-800 text-sm hover:bg-slate-50">중간소득층 (1인 연 $39,125 ~ $70,000 / APTC 보조금 지원)</button>
+            <button onclick="setMatcherIncome('high', this)" class="w-full text-left p-3.5 rounded-xl border border-slate-200 bg-white text-slate-800 text-sm hover:bg-slate-50">고소득층 (1인 연 $70,000 이상)</button>
+          </div>
+          <div class="flex gap-3">
+            <button onclick="gotoMatcherStep(2)" class="btn-outline text-sm py-3 px-6">이전</button>
+            <button onclick="calcMatcherResult()" id="matcher-btn-calc" class="btn-primary flex-1 justify-center py-3 text-sm" disabled>진단 결과 확인하기 ✨</button>
+          </div>
+        </div>
+
+        <div id="matcher-result-box" style="display:none;" class="text-center py-4">
+          <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 border border-blue-100">💡</div>
+          <h3 class="font-serif text-2xl text-slate-900 mb-3">맞춤 추천 결과</h3>
+          <div id="matcher-result-text" class="p-6 bg-slate-50 rounded-2xl border border-slate-200 text-left mb-6 text-slate-800 leading-relaxed text-sm sm:text-base"></div>
+          <div class="flex flex-col sm:flex-row gap-3 justify-center">
+            <button onclick="resetMatcher()" class="btn-outline text-sm py-3 px-6">다시 진단하기</button>
+            <a href="/calculator" class="btn-primary text-sm py-3 px-6">보조금 계산기로 이동 →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<script>
+  var mAge = 0;
+  var mStatus = "";
+  var mIncome = "";
+
+  function gotoMatcherStep(step) {
+    if (step === 2) {
+      mAge = parseInt(document.getElementById('matcher-age').value, 10);
+      if (!mAge) { alert('만 나이를 입력해주세요.'); return; }
+    }
+    document.getElementById('matcher-step-1').style.display = (step === 1 ? 'block' : 'none');
+    document.getElementById('matcher-step-2').style.display = (step === 2 ? 'block' : 'none');
+    document.getElementById('matcher-step-3').style.display = (step === 3 ? 'block' : 'none');
+    document.getElementById('matcher-result-box').style.display = 'none';
+
+    document.getElementById('matcher-step-label').textContent = '진단 단계 ' + step + ' / 3';
+    document.getElementById('matcher-step-bar').style.width = ((step / 3) * 100) + '%';
+  }
+
+  function setMatcherStatus(status, btn) {
+    mStatus = status;
+    document.querySelectorAll('#matcher-status-btns button').forEach(function(b) {
+      b.className = 'w-full text-left p-3.5 rounded-xl border border-slate-200 bg-white text-slate-800 text-sm hover:bg-slate-50';
+    });
+    btn.className = 'w-full text-left p-3.5 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 font-semibold text-sm';
+    document.getElementById('matcher-btn-step3').disabled = false;
+  }
+
+  function setMatcherIncome(inc, btn) {
+    mIncome = inc;
+    btn.parentNode.querySelectorAll('button').forEach(function(b) {
+      b.className = 'w-full text-left p-3.5 rounded-xl border border-slate-200 bg-white text-slate-800 text-sm hover:bg-slate-50';
+    });
+    btn.className = 'w-full text-left p-3.5 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 font-semibold text-sm';
+    document.getElementById('matcher-btn-calc').disabled = false;
+  }
+
+  function calcMatcherResult() {
+    var res = "";
+    if (mAge >= 65) {
+      if (mIncome === 'low' || mIncome === 'very_low') {
+        res = "메디케어 + 메디케이드(NJ FamilyCare) 이중 자격(Dual Eligible / D-SNP) 또는 뉴저지 주정부 메디케어 저축 프로그램(MSP - Part B 보험료 전액 대납) 및 처방약 보조 프로그램(PAAD) 지원 대상일 가능성이 매우 높습니다.";
+      } else if (mIncome === 'medium') {
+        res = "오리지널 메디케어(Part A & B) + 서플리먼트(Medigap) + Part D 처방약 플랜, 또는 치과/안과/OTC 카드 혜택이 풍부한 메디케어 어드밴티지(Part C)를 비교 선택하시기 바랍니다. 소득에 따라 Senior Gold 처방약 할인 혜택도 가능합니다.";
+      } else {
+        res = "메디케어 기본 보장(Part A & B)과 함께 병원 선택의 자유도가 높은 오리지널 메디케어 + Medigap Plan G 조합이나, 프리미엄 메디케어 어드밴티지(Part C PPO) 플랜을 추천합니다. 고소득자의 경우 Part B/D IRMAA 추가 할증료가 적용될 수 있습니다.";
+      }
+    } else {
+      if (mIncome === 'very_low') {
+        if (mStatus === '시민권자' || mStatus === '영주권자 (5년 이상)') {
+          res = "뉴저지 주 메디케이드 (NJ FamilyCare) 전액 무료 건강보험 신청 대상입니다. 월 보험료 $0 및 본인부담금 $0~$5 수준으로 연중 365일 언제든 신청하실 수 있습니다.";
+        } else if (mStatus === '서류미비 / 기타') {
+          res = "뉴저지 병원비 감면 프로그램(Charity Care)을 통해 급성기 병원 및 응급 진료비를 소득에 따라 50%~100% 주정부 지원으로 감면받으실 수 있습니다. 임산부 및 19세 미만 자녀는 'Cover All Kids'로 체류 신분과 무관하게 무료 메디케이드가 적용됩니다.";
+        } else {
+          res = "GetCoveredNJ 마켓플레이스를 통한 플랜 가입 또는 뉴저지 병원비 감면(Charity Care) 지원 대상입니다.";
+        }
+      } else if (mIncome === 'low') {
+        res = "GetCoveredNJ 마켓플레이스를 통해 연방 세액 공제(APTC) + 뉴저지 주정부 추가 지원금(NJHPS) + 실버 플랜 비용 분담 감면(CSR) 3중 혜택을 받으실 수 있습니다. 실버 플랜 선택 시 디덕터블과 병원 코페이가 획기적으로 낮아집니다.";
+      } else if (mIncome === 'medium') {
+        res = "GetCoveredNJ 마켓플레이스를 통해 연방 세액 공제(APTC) 및 뉴저지 주정부 지원금(NJHPS)을 지원받아 월 보험료를 크게 절감하실 수 있습니다.";
+      } else {
+        res = "GetCoveredNJ 또는 민간 건강보험 플랜 가입 대상입니다. 뉴저지주 의무 가입 규정(Individual Mandate)에 따라 무보험 시 주 세금 보고 시 벌금이 부과되므로 적격 보험 유지가 필수적입니다.";
+      }
+    }
+
+    document.getElementById('matcher-step-1').style.display = 'none';
+    document.getElementById('matcher-step-2').style.display = 'none';
+    document.getElementById('matcher-step-3').style.display = 'none';
+    document.getElementById('matcher-result-text').textContent = res;
+    document.getElementById('matcher-result-box').style.display = 'block';
+  }
+
+  function resetMatcher() {
+    document.getElementById('matcher-age').value = '';
+    mAge = 0; mStatus = ''; mIncome = '';
+    gotoMatcherStep(1);
+  }
+</script>
+
+<footer class="bg-brand-darker text-white mt-auto">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8">
+    <div class="border-t border-white/10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/50">
+      <div>© 2026 Healthcare Access Portal. 뉴저지 한인 커뮤니티를 위한 무료 의료 정보 서비스입니다.</div>
+      <div class="flex gap-4">
+        <a href="/medicare" class="hover:text-white">메디케어 안내</a>
+        <a href="/calculator" class="hover:text-white">보조금 계산기</a>
+        <a href="/dictionary" class="hover:text-white">의학 용어 사전</a>
+        <a href="/about" class="hover:text-white">소개</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="/js/cms-client.js?v=3.6.0"></script>
+<script src="/js/fixes.js?v=1.2"></script>
+</body></html>
+

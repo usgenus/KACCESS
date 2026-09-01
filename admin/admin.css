@@ -75,3 +75,49 @@
   from { opacity: 0; }
   to { opacity: 1; }
 }
+
+/* ========================================================= */
+/* INQUIRIES & FORMS ACCORDION & RESOLVED STYLES            */
+/* ========================================================= */
+.inquiry-card {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.inquiry-card:hover {
+  border-color: rgba(148, 163, 184, 0.4);
+}
+
+/* Resolved state: greys out the whole section */
+.inquiry-card.is-resolved {
+  opacity: 0.55;
+  filter: grayscale(85%);
+  background-color: rgba(15, 23, 42, 0.5) !important;
+  border-color: rgba(51, 65, 85, 0.5) !important;
+}
+
+.inquiry-card.is-resolved:hover {
+  opacity: 0.9;
+  filter: grayscale(20%);
+}
+
+.inquiry-card.is-resolved .inquiry-title-text {
+  text-decoration: line-through;
+  color: #94a3b8 !important;
+}
+
+/* Accordion expand chevron rotation */
+.inquiry-chevron {
+  transition: transform 0.25s ease;
+}
+.inquiry-card.is-expanded .inquiry-chevron {
+  transform: rotate(180deg);
+}
+
+/* Checkbox button hover */
+.btn-resolve-check {
+  transition: all 0.2s ease;
+}
+.btn-resolve-check:hover {
+  transform: scale(1.1);
+}
+

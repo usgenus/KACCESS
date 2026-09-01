@@ -8,10 +8,14 @@ let state = {
   videos: [],
   posts: [],
   media: [],
+  inquiries: [],
   categories: { news: [], videos: [], billboards: [], billboards2: [] },
   videoFilter: '전체',
   postFilter: '전체',
-  postSearch: ''
+  postSearch: '',
+  inquiryFilter: '전체',
+  inquirySearch: '',
+  expandedInquiries: {}
 };
 
 function escapeHtml(str) {
@@ -65,17 +69,21 @@ function switchTab(tabName) {
   if (tabName === 'media') {
     fetchMediaFiles();
   }
+  if (tabName === 'inquiries') {
+    fetchInquiries();
+  }
 }
 
 // Fetch all initial data
 async function fetchAllData() {
   try {
     const t = Date.now();
-    const [bRes, b2Res, vRes, pRes] = await Promise.all([
+    const [bRes, b2Res, vRes, pRes, inqRes] = await Promise.all([
       fetch(`/api/billboards.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false })),
       fetch(`/api/billboards2.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false })),
       fetch(`/api/videos.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false })),
-      fetch(`/api/posts.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false }))
+      fetch(`/api/posts.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false })),
+      fetch(`/api/contact.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false }))
     ]);
 
     if (bRes.success) {
@@ -97,6 +105,10 @@ async function fetchAllData() {
       state.posts = pRes.data || [];
       state.categories.news = pRes.categories || [];
       renderPosts();
+    }
+    if (inqRes && inqRes.success) {
+      state.inquiries = inqRes.data || [];
+      renderInquiries();
     }
 
     updateDashboard();
@@ -132,12 +144,34 @@ function updateDashboard() {
 
   const pEl = document.getElementById('stat-posts-count');
   if (pEl) pEl.textContent = state.posts.length + '개';
+
+  // Inquiries stats & badge
+  const pendingInquiries = state.inquiries.filter(i => !i.resolved);
+  const inqCountEl = document.getElementById('stat-inquiries-count');
+  if (inqCountEl) inqCountEl.textContent = pendingInquiries.length + '건';
+
+  const inqBadgeEl = document.getElementById('stat-inquiries-badge');
+  if (inqBadgeEl) inqBadgeEl.textContent = `전체 ${state.inquiries.length}건`;
+
+  const inqSubEl = document.getElementById('stat-inquiries-sub');
+  if (inqSubEl) inqSubEl.textContent = `대기중 ${pendingInquiries.length}건 / 해결 ${state.inquiries.length - pendingInquiries.length}건`;
+
+  const navBadge = document.getElementById('nav-inquiries-badge');
+  if (navBadge) {
+    if (pendingInquiries.length > 0) {
+      navBadge.textContent = pendingInquiries.length;
+      navBadge.classList.remove('hidden');
+    } else {
+      navBadge.classList.add('hidden');
+    }
+  }
   
   // Recent activity list
   const container = document.getElementById('dash-recent-list');
   if (!container) return;
 
   const recent = [
+    ...state.inquiries.slice(0, 3).map(i => ({ type: 'inquiry', title: `${i.name} (${i.category || '문의'}) - ${i.resolved ? '해결완료' : '접수대기'}`, tag: '온라인문의', date: (i.createdAt || '').substring(0, 16) || '최근' })),
     ...state.billboards.map(b => ({ type: 'billboard', title: b.title, tag: '빌보드 1', date: b.createdAt || '최근' })),
     ...state.billboards2.map(b => ({ type: 'billboard2', title: b.title, tag: '빌보드 2', date: b.createdAt || '최근' })),
     ...state.videos.map(v => ({ type: 'video', title: v.title, tag: '의학비디오', date: v.date || '최근' })),
@@ -153,6 +187,7 @@ function updateDashboard() {
     <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-900/60 border border-slate-700/60">
       <div class="flex items-center gap-3 min-w-0">
         <span class="px-2.5 py-1 rounded-lg text-[10px] font-bold ${
+          item.type === 'inquiry' ? 'bg-amber-500/20 text-amber-300' :
           item.type === 'billboard' ? 'bg-blue-500/20 text-blue-300' :
           item.type === 'billboard2' ? 'bg-indigo-500/20 text-indigo-300' :
           item.type === 'video' ? 'bg-red-500/20 text-red-300' : 'bg-emerald-500/20 text-emerald-300'
@@ -553,9 +588,9 @@ function renderVideos() {
 
         <div class="p-5 space-y-2">
           <div class="text-[11px] text-slate-400 flex items-center gap-2">
-            <span class="font-bold text-blue-400">${v.doctor || '의학 리포트'}</span>
+            <span class="font-bold text-red-400">${v.category || '의학뉴스'}</span>
             <span>·</span>
-            <span>👁️ ${v.views || '1만회'}</span>
+            <span>⏱ ${v.duration || '10:00'}</span>
           </div>
           <h3 class="text-sm font-bold text-white leading-snug line-clamp-2">${v.title}</h3>
           <p class="text-xs text-slate-400 line-clamp-2">${v.summary || ''}</p>
@@ -600,10 +635,7 @@ function editVideo(id) {
   document.getElementById('video-title-input').value = v.title || '';
   document.getElementById('video-category-input').value = v.category || '';
   document.getElementById('video-youtube-input').value = v.youtubeId || '';
-  document.getElementById('video-doctor-input').value = v.doctor || '';
-  document.getElementById('video-hospital-input').value = v.hospital || '';
-  document.getElementById('video-duration-input').value = v.duration || '';
-  document.getElementById('video-views-input').value = v.views || '';
+  document.getElementById('video-duration-input').value = v.duration || '10:00';
   document.getElementById('video-order-input').value = v.order || 1;
   document.getElementById('video-thumbnail-input').value = v.thumbnail || '';
   document.getElementById('video-fileurl-input').value = v.videoUrl || '';
@@ -655,12 +687,9 @@ async function handleSaveVideo(e) {
   const payload = {
     id: id,
     title: document.getElementById('video-title-input').value,
-    category: document.getElementById('video-category-input').value || '심장 & 혈관',
+    category: document.getElementById('video-category-input').value || '만성질환 & 당뇨',
     youtubeId: cleanYt,
-    doctor: document.getElementById('video-doctor-input').value || '의학 리포트',
-    hospital: document.getElementById('video-hospital-input').value || 'Englewood Health Center for Korean Health',
-    duration: document.getElementById('video-duration-input').value || '05:00',
-    views: document.getElementById('video-views-input').value || '1.2만회',
+    duration: document.getElementById('video-duration-input').value || '10:00',
     order: parseInt(document.getElementById('video-order-input').value) || 1,
     thumbnail: thumb,
     videoUrl: document.getElementById('video-fileurl-input').value,
@@ -710,10 +739,8 @@ async function deleteVideo(id) {
 function renderPosts() {
   const catFilters = document.getElementById('post-category-filters');
   const catList = document.getElementById('post-categories-datalist');
-  const defaultCats = ['의료칼럼', 'FDA 리콜', 'Health & Wellness', 'Medicare & ACA', '리콜(Recalls and Food Safety)', '병원 소식', '건강 뉴스'];
-  const rawDbCats = (state.categories.news || []).filter(c => c !== '보건 정책 & 메디케어 리포트' && c !== '보건 정책 & 리포트');
-  const mergedCats = Array.from(new Set([...defaultCats, ...rawDbCats]));
-  const cats = ['전체', ...mergedCats];
+  const defaultCats = ['의료칼럼', 'recall(리콜)', 'health&wellness', '의료보험', '한인건강 특집', '한인커뮤니티 뉴스', '의학뉴스'];
+  const cats = ['전체', ...defaultCats];
 
   catFilters.innerHTML = cats.map(c => `
     <button onclick="setPostFilter('${c}')" class="px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
@@ -721,13 +748,24 @@ function renderPosts() {
     }">${c}</button>
   `).join('');
 
-  catList.innerHTML = mergedCats.map(c => `<option value="${c}"></option>`).join('');
+  catList.innerHTML = defaultCats.map(c => `<option value="${c}"></option>`).join('');
 
   const container = document.getElementById('posts-grid');
   let filtered = state.posts;
 
   if (state.postFilter !== '전체') {
-    filtered = filtered.filter(p => p.category === state.postFilter);
+    filtered = filtered.filter(p => {
+      const pCat = (p.category || '').toLowerCase().replace(/\s+/g, '');
+      const fCat = state.postFilter.toLowerCase().replace(/\s+/g, '');
+      if (fCat === '의료칼럼') return pCat.includes('의료칼럼') || pCat.includes('의사칼럼') || Boolean(p.isDoctorColumn);
+      if (fCat.includes('recall') || fCat.includes('리콜')) return pCat.includes('recall') || pCat.includes('리콜');
+      if (fCat.includes('health') || fCat.includes('wellness')) return pCat.includes('health') || pCat.includes('wellness');
+      if (fCat.includes('의료보험')) return pCat.includes('의료보험') || pCat.includes('medicare') || pCat.includes('aca') || pCat.includes('보험');
+      if (fCat.includes('한인건강')) return pCat.includes('한인건강') || pCat.includes('특집');
+      if (fCat.includes('한인커뮤니티')) return pCat.includes('한인커뮤니티') || pCat.includes('커뮤니티');
+      if (fCat.includes('의학뉴스')) return pCat.includes('의학뉴스') || pCat.includes('의학');
+      return (p.category || '') === state.postFilter;
+    });
   }
   if (state.postSearch) {
     const q = state.postSearch.toLowerCase();
@@ -876,7 +914,7 @@ function selectPostCategory(cat) {
     dcCheck.checked = true;
   }
   const prCheck = document.getElementById('post-policyreport-input');
-  if (prCheck && (cat === '리콜(Recalls and Food Safety)' || cat === '보건 정책 & 메디케어 리포트' || cat === '보건 정책 & 리포트')) {
+  if (prCheck && (cat === 'recall(리콜)' || cat.includes('리콜') || cat.includes('Recalls'))) {
     prCheck.checked = true;
   }
   updateExposureCheckboxLimits(currentId);
@@ -1759,6 +1797,308 @@ function closeModal(id) {
   }
 }
 
+// =========================================================
+// INQUIRIES & FORMS MANAGEMENT (ACCORDION & RESOLVED)
+// =========================================================
+async function fetchInquiries(showNotification = false) {
+  try {
+    const t = Date.now();
+    const res = await fetch(`/api/contact.php?_t=${t}`, { cache: 'no-store' });
+    const data = await res.json();
+    if (data.success) {
+      state.inquiries = data.data || [];
+      renderInquiries();
+      updateDashboard();
+      if (showNotification) showToast('문의 접수 목록을 새로고침했습니다.');
+    } else {
+      if (showNotification) showToast(data.error || '문의 목록을 불러오지 못했습니다.', false);
+    }
+  } catch (err) {
+    console.error('fetchInquiries error:', err);
+    if (showNotification) showToast('네트워크 오류가 발생했습니다.', false);
+  }
+}
+
+function filterInquiries(status) {
+  state.inquiryFilter = status;
+  document.querySelectorAll('.inquiry-filter-btn').forEach(btn => {
+    btn.className = 'inquiry-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-slate-800 text-slate-300 hover:bg-slate-700';
+  });
+  if (status === '전체') {
+    const el = document.getElementById('inq-filter-all');
+    if (el) el.className = 'inquiry-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-amber-500 text-slate-950 shadow-md';
+  } else if (status === '대기중') {
+    const el = document.getElementById('inq-filter-pending');
+    if (el) el.className = 'inquiry-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-amber-500 text-slate-950 shadow-md';
+  } else if (status === '해결') {
+    const el = document.getElementById('inq-filter-resolved');
+    if (el) el.className = 'inquiry-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-emerald-500 text-slate-950 shadow-md';
+  }
+  renderInquiries();
+}
+
+function handleInquirySearch(query) {
+  state.inquirySearch = (query || '').trim().toLowerCase();
+  renderInquiries();
+}
+
+function toggleInquiryAccordion(id) {
+  state.expandedInquiries[id] = !state.expandedInquiries[id];
+  renderInquiries();
+}
+
+async function toggleInquiryResolved(e, id) {
+  if (e) {
+    e.stopPropagation();
+  }
+  try {
+    const res = await fetch('/api/contact.php?action=toggle_resolved', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id })
+    });
+    const data = await res.json();
+    if (data.success) {
+      const idx = state.inquiries.findIndex(item => item.id === id);
+      if (idx !== -1 && data.item) {
+        state.inquiries[idx] = data.item;
+      }
+      renderInquiries();
+      updateDashboard();
+      showToast(data.message || '상태가 변경되었습니다.');
+    } else {
+      showToast(data.error || '상태 변경에 실패했습니다.', false);
+    }
+  } catch (err) {
+    console.error('toggleInquiryResolved error:', err);
+    showToast('서버 통신 중 오류가 발생했습니다.', false);
+  }
+}
+
+async function deleteInquiry(e, id) {
+  if (e) {
+    e.stopPropagation();
+  }
+  const item = state.inquiries.find(i => i.id === id);
+  const name = item ? item.name : '고객';
+  if (!confirm(`'${name}' 님의 문의 내역을 영구히 삭제하시겠습니까?`)) return;
+
+  try {
+    const res = await fetch('/api/contact.php?action=delete', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id })
+    });
+    const data = await res.json();
+    if (data.success) {
+      state.inquiries = state.inquiries.filter(i => i.id !== id);
+      renderInquiries();
+      updateDashboard();
+      showToast('문의 내역이 삭제되었습니다.');
+    } else {
+      showToast(data.error || '삭제에 실패했습니다.', false);
+    }
+  } catch (err) {
+    console.error('deleteInquiry error:', err);
+    showToast('삭제 중 오류가 발생했습니다.', false);
+  }
+}
+
+function renderInquiries() {
+  const container = document.getElementById('inquiries-accordion-list');
+  if (!container) return;
+
+  const totalCount = state.inquiries.length;
+  const pendingCount = state.inquiries.filter(i => !i.resolved).length;
+  const resolvedCount = state.inquiries.filter(i => i.resolved).length;
+
+  const countAll = document.getElementById('count-inq-all');
+  if (countAll) countAll.textContent = totalCount;
+  const countPending = document.getElementById('count-inq-pending');
+  if (countPending) countPending.textContent = pendingCount;
+  const countResolved = document.getElementById('count-inq-resolved');
+  if (countResolved) countResolved.textContent = resolvedCount;
+
+  let filtered = state.inquiries;
+  if (state.inquiryFilter === '대기중') {
+    filtered = filtered.filter(i => !i.resolved);
+  } else if (state.inquiryFilter === '해결') {
+    filtered = filtered.filter(i => i.resolved);
+  }
+
+  if (state.inquirySearch) {
+    const q = state.inquirySearch;
+    filtered = filtered.filter(i => {
+      return (
+        (i.name && i.name.toLowerCase().includes(q)) ||
+        (i.email && i.email.toLowerCase().includes(q)) ||
+        (i.phone && i.phone.toLowerCase().includes(q)) ||
+        (i.category && i.category.toLowerCase().includes(q)) ||
+        (i.message && i.message.toLowerCase().includes(q))
+      );
+    });
+  }
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div class="text-center py-12 bg-slate-800/40 rounded-3xl border border-slate-700 border-dashed">
+        <div class="text-3xl mb-2">📭</div>
+        <h3 class="text-sm font-bold text-white">접수된 문의 내역이 없습니다.</h3>
+        <p class="text-xs text-slate-400 mt-1">홈페이지를 통해 고객 문의가 접수되면 이곳에 실시간으로 표시됩니다.</p>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = filtered.map(inq => {
+    const isResolved = Boolean(inq.resolved);
+    const isExpanded = Boolean(state.expandedInquiries[inq.id]);
+    const cleanMsg = escapeHtml(inq.message || '');
+    const shortMsg = cleanMsg.length > 55 ? cleanMsg.substring(0, 55) + '...' : cleanMsg;
+
+    return `
+    <div class="inquiry-card bg-slate-800/90 border border-slate-700/80 rounded-2xl overflow-hidden shadow-sm ${isResolved ? 'is-resolved' : ''} ${isExpanded ? 'is-expanded border-amber-500/40' : ''}">
+      <!-- Compact Summary Bar (Clickable Accordion Header) -->
+      <div onclick="toggleInquiryAccordion('${inq.id}')" class="p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 cursor-pointer select-none hover:bg-slate-750 transition-colors">
+        
+        <!-- Left: Resolved Checkmark Button + Submitter Info -->
+        <div class="flex items-center gap-3 min-w-0 flex-1">
+          <!-- Checkmark Resolved Button -->
+          <button type="button" onclick="toggleInquiryResolved(event, '${inq.id}')" class="btn-resolve-check shrink-0 p-1 text-xl focus:outline-none" title="${isResolved ? '미해결 상태로 변경' : '해결 완료로 체크'}">
+            ${isResolved
+              ? '<i class="fa-solid fa-circle-check text-emerald-400"></i>'
+              : '<i class="fa-regular fa-circle text-slate-500 hover:text-emerald-400 transition-colors"></i>'
+            }
+          </button>
+
+          <!-- Category Badge -->
+          <span class="px-2.5 py-1 rounded-lg text-[10px] font-bold shrink-0 ${
+            inq.category === '메디케어 상담' ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30' :
+            inq.category === 'ACA 오바마케어' ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30' :
+            inq.category === '의료비 지원' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' :
+            'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+          }">${escapeHtml(inq.category || '문의')}</span>
+
+          <!-- Name -->
+          <span class="inquiry-title-text font-bold text-sm text-white shrink-0">
+            ${escapeHtml(inq.name || '미기재')}
+          </span>
+
+          <!-- Short Message / Contact Snippet on Desktop -->
+          <span class="hidden lg:inline-block text-xs text-slate-400 truncate max-w-md">
+            ${shortMsg}
+          </span>
+        </div>
+
+        <!-- Right: Status Badge + Date + Actions + Chevron -->
+        <div class="flex items-center justify-between md:justify-end gap-3 shrink-0 text-xs">
+          <!-- Contact Quick Info -->
+          <div class="hidden sm:flex items-center gap-3 text-[11px] text-slate-400 mr-2">
+            ${inq.phone ? `<span class="flex items-center gap-1"><i class="fa-solid fa-phone text-[10px] text-slate-500"></i> ${escapeHtml(inq.phone)}</span>` : ''}
+            ${inq.email ? `<span class="flex items-center gap-1"><i class="fa-solid fa-envelope text-[10px] text-slate-500"></i> ${escapeHtml(inq.email)}</span>` : ''}
+          </div>
+
+          <!-- Status Badge -->
+          <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${
+            isResolved
+              ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+              : 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
+          }">
+            ${isResolved ? '<i class="fa-solid fa-check mr-1"></i>해결 완료' : '<i class="fa-solid fa-clock mr-1"></i>대기중'}
+          </span>
+
+          <!-- Submitted Date -->
+          <span class="text-[11px] text-slate-400">${escapeHtml((inq.createdAt || '').substring(0, 16))}</span>
+
+          <!-- Actions Toolbar -->
+          <div class="flex items-center gap-1" onclick="event.stopPropagation()">
+            <!-- Erase / Delete button -->
+            <button type="button" onclick="deleteInquiry(event, '${inq.id}')" class="p-1.5 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors" title="문의 내역 삭제 (Erase)">
+              <i class="fa-solid fa-trash-can text-xs"></i>
+            </button>
+            
+            <!-- Accordion Expand/Collapse button -->
+            <button type="button" onclick="toggleInquiryAccordion('${inq.id}')" class="p-1.5 text-slate-400 hover:text-white rounded-lg transition-transform inquiry-chevron" title="상세 정보 펼치기">
+              <i class="fa-solid fa-chevron-down text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Expanded Accordion Details Panel -->
+      ${isExpanded ? `
+      <div class="border-t border-slate-700/70 bg-slate-900/70 p-5 space-y-4">
+        <!-- Details Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+          <div class="bg-slate-800/80 p-3 rounded-xl border border-slate-700/60">
+            <span class="text-slate-400 text-[11px] block mb-0.5">성함</span>
+            <span class="font-bold text-white text-sm">${escapeHtml(inq.name)}</span>
+          </div>
+          <div class="bg-slate-800/80 p-3 rounded-xl border border-slate-700/60">
+            <span class="text-slate-400 text-[11px] block mb-0.5">이메일 주소</span>
+            <a href="mailto:${escapeHtml(inq.email)}" class="font-bold text-blue-400 hover:underline break-all">${escapeHtml(inq.email || '미기재')}</a>
+          </div>
+          <div class="bg-slate-800/80 p-3 rounded-xl border border-slate-700/60">
+            <span class="text-slate-400 text-[11px] block mb-0.5">연락처</span>
+            <a href="tel:${escapeHtml(inq.phone)}" class="font-bold text-emerald-400 hover:underline">${escapeHtml(inq.phone || '미기재')}</a>
+          </div>
+          <div class="bg-slate-800/80 p-3 rounded-xl border border-slate-700/60">
+            <span class="text-slate-400 text-[11px] block mb-0.5">접수 일시 / 상태</span>
+            <span class="text-slate-200">${escapeHtml(inq.createdAt || '')}</span>
+            ${inq.resolvedAt ? `<span class="block text-[10px] text-emerald-400 mt-0.5">해결완료: ${escapeHtml(inq.resolvedAt.substring(0, 16))}</span>` : ''}
+          </div>
+        </div>
+
+        <!-- Full Message Block -->
+        <div>
+          <span class="text-xs font-bold text-slate-300 mb-1.5 flex items-center gap-1.5">
+            <i class="fa-solid fa-message text-amber-400 text-[11px]"></i>
+            <span>고객 문의 내용</span>
+          </span>
+          <div class="bg-slate-950/80 border-l-4 border-amber-500 rounded-r-2xl p-4 text-xs text-slate-200 leading-relaxed whitespace-pre-wrap selection:bg-amber-500 selection:text-black">
+            ${cleanMsg}
+          </div>
+        </div>
+
+        <!-- Actions Footer inside Accordion -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-800">
+          <div class="flex items-center gap-2">
+            ${inq.email ? `
+              <a href="mailto:${escapeHtml(inq.email)}?subject=${encodeURIComponent('[답변] Healthcare Access Portal 문의 관련 안내 드립니다')}" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-3.5 py-2 rounded-xl text-xs flex items-center gap-1.5 shadow-md">
+                <i class="fa-solid fa-envelope text-[11px]"></i>
+                <span>이메일 답장하기</span>
+              </a>
+            ` : ''}
+            ${inq.phone ? `
+              <a href="tel:${escapeHtml(inq.phone)}" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold px-3.5 py-2 rounded-xl text-xs flex items-center gap-1.5 shadow-sm">
+                <i class="fa-solid fa-phone text-[11px] text-emerald-400"></i>
+                <span>전화 연결</span>
+              </a>
+            ` : ''}
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="toggleInquiryResolved(event, '${inq.id}')" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+              isResolved
+                ? 'bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700'
+                : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-md'
+            }">
+              <i class="fa-solid ${isResolved ? 'fa-arrow-rotate-left' : 'fa-check'}"></i>
+              <span>${isResolved ? '미해결로 복원' : '해결 완료로 체크'}</span>
+            </button>
+            <button type="button" onclick="deleteInquiry(event, '${inq.id}')" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5">
+              <i class="fa-solid fa-trash-can"></i>
+              <span>문의 삭제</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      ` : ''}
+
+    </div>`;
+  }).join('');
+}
+
 // Ensure all handlers are globally reachable on window
 window.switchTab = switchTab;
 window.fetchAllData = fetchAllData;
@@ -1799,6 +2139,14 @@ window.togglePostContentPreview = togglePostContentPreview;
 window.updatePostContentPreview = updatePostContentPreview;
 window.setPostFilter = setPostFilter;
 window.handlePostSearch = handlePostSearch;
+window.fetchInquiries = fetchInquiries;
+window.filterInquiries = filterInquiries;
+window.handleInquirySearch = handleInquirySearch;
+window.toggleInquiryAccordion = toggleInquiryAccordion;
+window.toggleInquiryResolved = toggleInquiryResolved;
+window.deleteInquiry = deleteInquiry;
+window.renderInquiries = renderInquiries;
+
 
 // Global backdrop click-to-close handler & dynamic checkbox limits
 document.addEventListener('DOMContentLoaded', () => {

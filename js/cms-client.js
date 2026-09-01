@@ -757,12 +757,7 @@
         infoBox.innerHTML = [
           '<div class="flex items-center gap-3 text-xs text-slate-500 flex-wrap">',
           '  <span class="font-bold text-red-600 bg-red-50 border border-red-100 px-2.5 py-0.5 rounded-full">' + escapeHtml(cur.category || '의학뉴스') + '</span>',
-          '  <span>·</span>',
-          '  <span class="font-semibold text-slate-800">' + escapeHtml(cur.doctor || cur.speaker || '한인 전문의') + '</span>',
-          '  <span>·</span>',
           '  <span class="text-slate-600">&#9201; ' + escapeHtml(cur.duration || '10:00') + '</span>',
-          '  <span>·</span>',
-          '  <span class="text-slate-600">&#128065;&#65039; ' + escapeHtml(cur.views || '조회수') + '</span>',
           '</div>',
           '<h3 class="font-extrabold text-xl sm:text-2xl text-slate-900 leading-snug tracking-tight">' + escapeHtml(cur.title) + '</h3>',
           '<p class="text-xs sm:text-sm text-slate-600 leading-relaxed pt-1">' + escapeHtml(cur.summary || cur.description || '') + '</p>'
@@ -794,9 +789,7 @@
           '      <h4 class="font-bold text-xs sm:text-sm text-slate-900 leading-snug line-clamp-2' + (isPlaying ? ' text-red-700' : '') + '">' + escapeHtml(v.title) + '</h4>',
           '    </div>',
           '    <div class="flex items-center gap-2 text-[11px] text-slate-500 mt-1.5">',
-          '      <span class="truncate">' + escapeHtml(v.doctor || v.speaker || '의학 전문의') + '</span>',
-          '      <span>·</span>',
-          '      <span class="text-slate-700 font-semibold">' + escapeHtml(v.views || '조회수') + '</span>',
+          '      <span class="text-slate-500 font-mono">&#9201; ' + escapeHtml(v.duration || '10:00') + '</span>',
           '    </div>',
           '  </div>',
           '</div>'
@@ -884,13 +877,31 @@
     if (!blogContainer || posts.length === 0) return;
     var filtered = posts;
     if (blogActiveCategory && blogActiveCategory !== '전체') {
+      var normTarget = blogActiveCategory.trim().toLowerCase().replace(/\s+/g, '');
       filtered = filtered.filter(function(p) {
-        var cat = (p.category || '').trim().toLowerCase();
-        var target = blogActiveCategory.trim().toLowerCase();
-        if (target === '의료칼럼' || target === '의사칼럼') {
-          return cat === '의료칼럼' || cat === '의사칼럼' || Boolean(p.isDoctorColumn);
+        var cat = (p.category || '').trim().toLowerCase().replace(/\s+/g, '');
+        if (normTarget === '의료칼럼') {
+          return cat.includes('의료칼럼') || cat.includes('의사칼럼') || Boolean(p.isDoctorColumn);
         }
-        return cat === target;
+        if (normTarget.includes('recall') || normTarget.includes('리콜')) {
+          return cat.includes('recall') || cat.includes('리콜');
+        }
+        if (normTarget.includes('health') || normTarget.includes('wellness')) {
+          return cat.includes('health') || cat.includes('wellness');
+        }
+        if (normTarget.includes('의료보험')) {
+          return cat.includes('의료보험') || cat.includes('medicare') || cat.includes('aca') || cat.includes('보험');
+        }
+        if (normTarget.includes('한인건강')) {
+          return cat.includes('한인건강') || cat.includes('특집');
+        }
+        if (normTarget.includes('한인커뮤니티')) {
+          return cat.includes('한인커뮤니티') || cat.includes('커뮤니티');
+        }
+        if (normTarget.includes('의학뉴스')) {
+          return cat.includes('의학뉴스') || cat.includes('의학');
+        }
+        return cat === normTarget;
       });
     }
     if (blogSearchQuery) {
@@ -1167,6 +1178,89 @@
   }
 
   // ---------------------------------------------------------
+  // 7.5. CONTACT & INQUIRY FORM AJAX SUBMISSION
+  // ---------------------------------------------------------
+  function initContactForm() {
+    var contactSec = document.getElementById('contact');
+    var form = contactSec ? contactSec.querySelector('form') : document.querySelector('section#contact form, form.space-y-4');
+    if (!form) return;
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      var submitBtn = form.querySelector('button[type="submit"]');
+      var originalBtnText = submitBtn ? submitBtn.innerHTML : '문의 제출하기';
+
+      var nameInp = form.querySelector('input[type="text"]') || form.querySelector('input[placeholder*="홍길동"]');
+      var emailInp = form.querySelector('input[type="email"]');
+      var phoneInp = form.querySelector('input[type="tel"]') || form.querySelector('input[placeholder*="201"]');
+      var categorySelect = form.querySelector('select');
+      var messageTextarea = form.querySelector('textarea');
+
+      var name = nameInp ? nameInp.value.trim() : '';
+      var email = emailInp ? emailInp.value.trim() : '';
+      var phone = phoneInp ? phoneInp.value.trim() : '';
+      var category = categorySelect ? categorySelect.value : '일반 문의';
+      var message = messageTextarea ? messageTextarea.value.trim() : '';
+
+      if (!name || !email || !message) {
+        alert('성함, 이메일, 문의 내용을 모두 입력해 주세요.');
+        return;
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="inline-block animate-spin mr-2">⏳</span> 전송 중...';
+      }
+
+      try {
+        var res = await fetch('/api/contact.php?action=submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            phone: phone,
+            category: category,
+            message: message
+          })
+        });
+        var data = await res.json();
+
+        if (data.success) {
+          form.innerHTML = [
+            '<div class="p-8 text-center space-y-4 bg-emerald-50 border border-emerald-200 rounded-2xl text-emerald-950">',
+            '  <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">✓</div>',
+            '  <h3 class="font-serif text-2xl font-bold text-emerald-950">상담 및 문의가 정상 접수되었습니다</h3>',
+            '  <p class="text-sm font-sans text-emerald-900/80 leading-relaxed max-w-md mx-auto">',
+            '    작성해주신 내용이 상담 센터(<code class="text-emerald-700 font-mono text-xs">njaccessportal@gmail.com</code>)에 즉시 전달되었습니다.<br>',
+            '    담당 상담원이 확인 후 기재해주신 연락처로 빠른 시일 내에 연락드리겠습니다.',
+            '  </p>',
+            '  <div class="pt-3">',
+            '    <button type="button" onclick="location.reload()" class="btn-primary py-2.5 px-6 text-sm">새 문의 작성하기</button>',
+            '  </div>',
+            '</div>'
+          ].join('\n');
+        } else {
+          alert(data.error || '문의 접수 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnText;
+          }
+        }
+      } catch (err) {
+        console.error('Contact submit error:', err);
+        alert('서버 연결 중 오류가 발생했습니다. 잠시 후 다시 시도해 주시거나 상담 전화(njaccessportal@gmail.com)로 문의해 주세요.');
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnText;
+        }
+      }
+    });
+  }
+
+  // ---------------------------------------------------------
   // 8. INITIALIZATION
   // ---------------------------------------------------------
   document.addEventListener('DOMContentLoaded', function() {
@@ -1177,6 +1271,7 @@
     initMedicalVideos();
     initBlogInteractivity();
     initHomepageNews();
+    initContactForm();
     setTimeout(initSlideInAnimations, 150);
   });
 

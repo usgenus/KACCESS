@@ -11,6 +11,7 @@ LIVE_POSTS=$(curl -s "https://kor2.njaccessportal.com/api/posts.php" || echo '{"
 LIVE_VIDEOS=$(curl -s "https://kor2.njaccessportal.com/api/videos.php" || echo '{"success":false}')
 LIVE_BILLBOARDS=$(curl -s "https://kor2.njaccessportal.com/api/billboards.php" || echo '{"success":false}')
 LIVE_BILLBOARDS2=$(curl -s "https://kor2.njaccessportal.com/api/billboards2.php" || echo '{"success":false}')
+LIVE_INQUIRIES=$(curl -s "https://kor2.njaccessportal.com/api/contact.php" || echo '{"success":false}')
 
 node -e '
 const fs = require("fs");
@@ -23,11 +24,26 @@ try {
   current = { billboards: [], billboards2: [], videos: [], posts: [], categories: {} };
 }
 
+const canonicalCats = ["의료칼럼", "recall(리콜)", "health&wellness", "의료보험", "한인건강 특집", "한인커뮤니티 뉴스", "의학뉴스"];
+
+function normalizeCat(c) {
+  if (!c) return "의료칼럼";
+  const lower = c.trim().toLowerCase();
+  if (c === "의료칼럼" || c === "의사칼럼" || lower.includes("칼럼")) return "의료칼럼";
+  if (c === "recall(리콜)" || c === "FDA 리콜" || lower.includes("recall") || lower.includes("리콜")) return "recall(리콜)";
+  if (c === "health&wellness" || c === "Health & Wellness" || lower.includes("health") || lower.includes("wellness")) return "health&wellness";
+  if (c === "의료보험" || c === "Medicare & ACA" || lower.includes("medicare") || lower.includes("보험")) return "의료보험";
+  if (c === "한인건강 특집" || lower.includes("한인건강") || lower.includes("특집")) return "한인건강 특집";
+  if (c === "한인커뮤니티 뉴스" || lower.includes("한인커뮤니티") || lower.includes("커뮤니티")) return "한인커뮤니티 뉴스";
+  if (c === "의학뉴스" || lower.includes("의학뉴스") || lower.includes("의학")) return "의학뉴스";
+  return canonicalCats.includes(c) ? c : "의료칼럼";
+}
+
 try {
   const p = JSON.parse(process.argv[1]);
   if (p && p.success && Array.isArray(p.data) && p.data.length > 0) {
-    current.posts = p.data;
-    if (p.categories) current.categories.news = p.categories;
+    current.posts = p.data.map(item => ({ ...item, category: normalizeCat(item.category) }));
+    current.categories.news = canonicalCats;
   }
 } catch(e) {}
 
@@ -56,8 +72,17 @@ try {
 } catch(e) {}
 
 fs.writeFileSync(path, JSON.stringify(current, null, 2), "utf8");
-console.log("✅ Live data successfully merged into data/content.json!");
-' "$LIVE_POSTS" "$LIVE_VIDEOS" "$LIVE_BILLBOARDS" "$LIVE_BILLBOARDS2"
+console.log("✅ Live content successfully merged into data/content.json!");
+
+// Sync inquiries if live data exists
+try {
+  const inq = JSON.parse(process.argv[5]);
+  if (inq && inq.success && Array.isArray(inq.data) && inq.data.length > 0) {
+    fs.writeFileSync("./data/inquiries.json", JSON.stringify(inq.data, null, 2), "utf8");
+    console.log("✅ Live inquiries successfully synced into data/inquiries.json!");
+  }
+} catch(e) {}
+' "$LIVE_POSTS" "$LIVE_VIDEOS" "$LIVE_BILLBOARDS" "$LIVE_BILLBOARDS2" "$LIVE_INQUIRIES"
 
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 ZIP_FILE="/Users/ejyoon/Desktop/KACCESS_${TIMESTAMP}.zip"

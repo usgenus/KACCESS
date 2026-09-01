@@ -1,4 +1,7 @@
+const fs = require('fs');
+const path = require('path');
 
+const componentBody = `
 (globalThis.TURBOPACK || (globalThis.TURBOPACK = [])).push([
   typeof document === "object" ? document.currentScript : void 0,
   82526,
@@ -821,3 +824,7 @@
     e.s(["default", 0, MedicarePage]);
   }
 ]);
+`;
+
+fs.writeFileSync(path.join(__dirname, '../_next/static/chunks/00_c_064yjnfa.js'), componentBody, 'utf8');
+console.log('Successfully generated clean 00_c_064yjnfa.js');

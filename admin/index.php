@@ -81,6 +81,11 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
           <i class="fa-solid fa-newspaper"></i>
           <span>건강 뉴스</span>
         </button>
+        <button onclick="switchTab('inquiries')" id="nav-inquiries" class="tab-btn px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 relative">
+          <i class="fa-solid fa-inbox text-amber-400"></i>
+          <span>문의/상담</span>
+          <span id="nav-inquiries-badge" class="hidden text-[10px] bg-red-600 text-white font-extrabold px-1.5 py-0.5 rounded-full leading-none animate-pulse">0</span>
+        </button>
         <button onclick="switchTab('media')" id="nav-media" class="tab-btn px-3 py-2 rounded-xl transition-all flex items-center gap-1.5">
           <i class="fa-solid fa-photo-film"></i>
           <span>미디어</span>
@@ -107,6 +112,7 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
       <button onclick="switchTab('billboard2')" id="nav-m-billboard2" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg">빌보드 2</button>
       <button onclick="switchTab('videos')" id="nav-m-videos" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg">의학비디오</button>
       <button onclick="switchTab('posts')" id="nav-m-posts" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg">건강 뉴스</button>
+      <button onclick="switchTab('inquiries')" id="nav-m-inquiries" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-amber-300">문의/상담</button>
       <button onclick="switchTab('media')" id="nav-m-media" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg">미디어</button>
     </div>
   </header>
@@ -133,7 +139,7 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
       </div>
 
       <!-- Stat Cards -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
         <!-- Stat 1 -->
         <div onclick="switchTab('billboard')" class="bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 hover:border-blue-500/50 rounded-2xl p-5 shadow-sm transition-all cursor-pointer group">
           <div class="flex items-center justify-between mb-3">
@@ -167,7 +173,7 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
             </div>
           </div>
           <div class="text-3xl font-extrabold text-white" id="stat-videos-count">-</div>
-          <p class="text-xs text-slate-400 mt-1">유튜브 & 직접 업로드 영상</p>
+          <p class="text-xs text-slate-400 mt-1">유튜브 & 업로드 영상</p>
         </div>
 
         <!-- Stat 3 -->
@@ -180,6 +186,21 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
           </div>
           <div class="text-3xl font-extrabold text-white" id="stat-posts-count">-</div>
           <p class="text-xs text-slate-400 mt-1">메인 뉴스 및 기사</p>
+        </div>
+
+        <!-- Stat 3.5: Inquiries -->
+        <div onclick="switchTab('inquiries')" class="bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 hover:border-amber-500/50 rounded-2xl p-5 shadow-sm transition-all cursor-pointer group relative">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-400">문의 / 상담</span>
+            <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+              <i class="fa-solid fa-inbox"></i>
+            </div>
+          </div>
+          <div class="text-3xl font-extrabold text-white flex items-baseline gap-2">
+            <span id="stat-inquiries-count">-</span>
+            <span id="stat-inquiries-badge" class="text-xs font-bold text-amber-300 bg-amber-500/20 px-2 py-0.5 rounded-full"></span>
+          </div>
+          <p class="text-xs text-slate-400 mt-1" id="stat-inquiries-sub">온라인 폼 접수 내역</p>
         </div>
 
         <!-- Stat 4 -->
@@ -420,6 +441,67 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
       </div>
     </section>
 
+    <!-- ========================================================= -->
+    <!-- TAB 6: CONTACT & INQUIRIES FORM SUBMISSIONS -->
+    <!-- ========================================================= -->
+    <section id="tab-inquiries" class="tab-pane hidden space-y-6">
+      <!-- Header Banner -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-800/90 border border-slate-700/80 p-6 rounded-3xl shadow-sm">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="p-2 bg-amber-500/10 text-amber-400 rounded-xl text-lg"><i class="fa-solid fa-inbox"></i></span>
+            <h1 class="text-xl sm:text-2xl font-extrabold text-white">온라인 문의 및 상담 신청 관리 (Form Section)</h1>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-400 mt-1">
+            홈페이지 <strong>'상담 및 문의하기'</strong>를 통해 접수된 고객 정보와 내용을 실시간으로 확인하고 관리합니다. (이메일 수신: <code class="text-amber-300 font-mono text-xs">njaccessportal@gmail.com</code>)
+          </p>
+        </div>
+        <div class="flex items-center gap-2 self-start sm:self-auto">
+          <button onclick="fetchInquiries(true)" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-4 py-2.5 rounded-2xl transition-all flex items-center gap-2 text-xs font-semibold shadow-sm">
+            <i class="fa-solid fa-rotate text-amber-400"></i>
+            <span>새로고침</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Tips Bar -->
+      <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-400">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-circle-info text-blue-400"></i>
+          <span><strong>사용 팁:</strong> 체크마크(<i class="fa-regular fa-square-check text-emerald-400"></i>)를 누르면 <span class="text-slate-300">해결 완료</span>로 처리되어 회색으로 처리(Grey out)됩니다. 항목을 클릭하면 <strong>아코디언(Accordion)</strong>으로 상세 정보가 펼쳐집니다.</span>
+        </div>
+        <div class="flex items-center gap-3 shrink-0 text-[11px]">
+          <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>대기중 (미해결)</span>
+          <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>해결 완료 (Greyed)</span>
+        </div>
+      </div>
+
+      <!-- Search & Status Filter Bar -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-2 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 scrollbar-none" id="inquiry-filter-buttons">
+          <button onclick="filterInquiries('전체')" id="inq-filter-all" class="inquiry-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-amber-500 text-slate-950 shadow-md">
+            전체 (<span id="count-inq-all">0</span>)
+          </button>
+          <button onclick="filterInquiries('대기중')" id="inq-filter-pending" class="inquiry-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-slate-800 text-slate-300 hover:bg-slate-700">
+            대기중 / 미해결 (<span id="count-inq-pending">0</span>)
+          </button>
+          <button onclick="filterInquiries('해결')" id="inq-filter-resolved" class="inquiry-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold transition-all bg-slate-800 text-slate-300 hover:bg-slate-700">
+            해결 완료 (<span id="count-inq-resolved">0</span>)
+          </button>
+        </div>
+        <div class="relative w-full sm:w-80">
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+          <input type="text" id="inquiry-search-input" oninput="handleInquirySearch(this.value)" placeholder="성함, 이메일, 연락처, 내용 검색..."
+            class="w-full bg-slate-800 border border-slate-700 rounded-xl pl-9 pr-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 transition-all">
+        </div>
+      </div>
+
+      <!-- Inquiries Accordion List Container -->
+      <div id="inquiries-accordion-list" class="space-y-3">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
   </main>
 
   <!-- ========================================================= -->
@@ -641,27 +723,10 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label class="block font-bold text-slate-300 mb-1.5">전문의 / 발표자 (Doctor)</label>
-            <input type="text" id="video-doctor-input" name="doctor" value="연합뉴스TV 의학 리포트"
-              class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-red-500">
-          </div>
-          <div>
-            <label class="block font-bold text-slate-300 mb-1.5">병원 / 기관명 (Hospital)</label>
-            <input type="text" id="video-hospital-input" name="hospital" value="Englewood Health Center for Korean Health"
-              class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-red-500">
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div>
             <label class="block font-bold text-slate-300 mb-1.5">영상 길이 (Duration)</label>
-            <input type="text" id="video-duration-input" name="duration" value="05:20"
-              class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-red-500">
-          </div>
-          <div>
-            <label class="block font-bold text-slate-300 mb-1.5">조회수 표시 (Views)</label>
-            <input type="text" id="video-views-input" name="views" value="10.2만회"
-              class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-red-500">
+            <input type="text" id="video-duration-input" name="duration" value="10:00"
+              class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-red-500"
+              placeholder="예: 10:00">
           </div>
           <div>
             <label class="block font-bold text-slate-300 mb-1.5">노출 순서 (Order)</label>
@@ -750,24 +815,26 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
           <div>
             <label class="block font-bold text-slate-300 mb-1.5">카테고리 (Category) *</label>
             <input type="text" id="post-category-input" name="category" required list="post-categories-datalist"
-              class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500"
-              placeholder="의료칼럼, FDA 리콜, Medicare & ACA 등">
+              class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500 font-semibold"
+              placeholder="카테고리를 선택하세요">
             <datalist id="post-categories-datalist">
               <option value="의료칼럼">
-              <option value="FDA 리콜">
-              <option value="Health &amp; Wellness">
-              <option value="Medicare &amp; ACA">
-              <option value="리콜(Recalls and Food Safety)">
-              <option value="병원 소식">
-              <option value="건강 뉴스">
+              <option value="recall(리콜)">
+              <option value="health&wellness">
+              <option value="의료보험">
+              <option value="한인건강 특집">
+              <option value="한인커뮤니티 뉴스">
+              <option value="의학뉴스">
             </datalist>
             <!-- Quick Category Select Pills -->
             <div class="flex flex-wrap gap-1.5 mt-2">
               <button type="button" onclick="selectPostCategory('의료칼럼')" class="px-2.5 py-1 rounded-lg text-xs font-extrabold bg-red-600/30 text-red-300 border border-red-500/50 hover:bg-red-600 hover:text-white transition-all cursor-pointer">🩺 의료칼럼</button>
-              <button type="button" onclick="selectPostCategory('FDA 리콜')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all cursor-pointer">FDA 리콜</button>
-              <button type="button" onclick="selectPostCategory('Health & Wellness')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all cursor-pointer">Health &amp; Wellness</button>
-              <button type="button" onclick="selectPostCategory('Medicare & ACA')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all cursor-pointer">Medicare &amp; ACA</button>
-              <button type="button" onclick="selectPostCategory('리콜(Recalls and Food Safety)')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all cursor-pointer">리콜(Recalls and Food Safety)</button>
+              <button type="button" onclick="selectPostCategory('recall(리콜)')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all cursor-pointer">⚠️ recall(리콜)</button>
+              <button type="button" onclick="selectPostCategory('health&wellness')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all cursor-pointer">🌿 health&amp;wellness</button>
+              <button type="button" onclick="selectPostCategory('의료보험')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all cursor-pointer">🛡️ 의료보험</button>
+              <button type="button" onclick="selectPostCategory('한인건강 특집')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all cursor-pointer">🇰🇷 한인건강 특집</button>
+              <button type="button" onclick="selectPostCategory('한인커뮤니티 뉴스')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all cursor-pointer">📢 한인커뮤니티 뉴스</button>
+              <button type="button" onclick="selectPostCategory('의학뉴스')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all cursor-pointer">🔬 의학뉴스</button>
             </div>
           </div>
           <div>

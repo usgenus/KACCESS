@@ -10,6 +10,23 @@ if ($method === 'OPTIONS') {
 $db = get_db_data();
 $posts = $db['posts'] ?? [];
 
+// Canonical news categories
+$canonicalCats = ['의료칼럼', 'recall(리콜)', 'health&wellness', '의료보험', '한인건강 특집', '한인커뮤니티 뉴스', '의학뉴스'];
+
+function normalize_news_category($cat) {
+    $c = trim($cat ?? '');
+    if (!$c) return '의료칼럼';
+    $lower = mb_strtolower($c, 'UTF-8');
+    if ($c === '의료칼럼' || $c === '의사칼럼' || mb_strpos($lower, '칼럼') !== false) return '의료칼럼';
+    if ($c === 'recall(리콜)' || $c === 'FDA 리콜' || mb_strpos($lower, 'recall') !== false || mb_strpos($lower, '리콜') !== false) return 'recall(리콜)';
+    if ($c === 'health&wellness' || $c === 'Health & Wellness' || mb_strpos($lower, 'health') !== false || mb_strpos($lower, 'wellness') !== false) return 'health&wellness';
+    if ($c === '의료보험' || $c === 'Medicare & ACA' || mb_strpos($lower, 'medicare') !== false || mb_strpos($lower, '보험') !== false) return '의료보험';
+    if ($c === '한인건강 특집' || mb_strpos($lower, '한인건강') !== false || mb_strpos($lower, '특집') !== false) return '한인건강 특집';
+    if ($c === '한인커뮤니티 뉴스' || mb_strpos($lower, '한인커뮤니티') !== false || mb_strpos($lower, '커뮤니티') !== false) return '한인커뮤니티 뉴스';
+    if ($c === '의학뉴스' || mb_strpos($lower, '의학뉴스') !== false || mb_strpos($lower, '의학') !== false) return '의학뉴스';
+    return in_array($c, ['의료칼럼', 'recall(리콜)', 'health&wellness', '의료보험', '한인건강 특집', '한인커뮤니티 뉴스', '의학뉴스']) ? $c : '의료칼럼';
+}
+
 // Helper to make slug
 function make_slug($text) {
     $slug = preg_replace('~[^\pL\d]+~u', '-', $text);
@@ -97,19 +114,20 @@ if ($method === 'GET') {
         return $t2 <=> $t1;
     });
 
-    // Always include these default categories (merged with any custom ones from DB)
-    $defaultCats = ['의료칼럼', 'FDA 리콜', 'Health & Wellness', 'Medicare & ACA', '리콜(Recalls and Food Safety)', '병원 소식', '건강 뉴스'];
-    $dbCats = $db['categories']['news'] ?? [];
-    $allCats = array_values(array_unique(array_merge($defaultCats, $dbCats)));
-    $allCats = array_values(array_filter($allCats, function($c) {
-        return $c !== '보건 정책 & 메디케어 리포트' && $c !== '보건 정책 & 리포트';
-    }));
+    // Canonical news categories
+    $canonicalCats = ['의료칼럼', 'recall(리콜)', 'health&wellness', '의료보험', '한인건강 특집', '한인커뮤니티 뉴스', '의학뉴스'];
+
+    // Normalize category for all output posts
+    foreach ($result as &$rItem) {
+        $rItem['category'] = normalize_news_category($rItem['category'] ?? '');
+    }
+    unset($rItem);
 
     send_json([
         'success' => true,
         'data' => $result,
         'total' => count($result),
-        'categories' => $allCats
+        'categories' => $canonicalCats
     ]);
 }
 
@@ -170,7 +188,7 @@ if ($method === 'POST') {
         'id' => $newId,
         'slug' => $slug,
         'title' => $title,
-        'category' => trim($input['category'] ?? 'Health & Wellness'),
+        'category' => normalize_news_category($input['category'] ?? '의료칼럼'),
         'date' => trim($input['date'] ?? date('Y-m-d')),
         'isTopStory' => !empty($input['isTopStory']) && $input['isTopStory'] !== 'false' && $input['isTopStory'] !== false,
         'isLiveUpdate' => !empty($input['isLiveUpdate']) && $input['isLiveUpdate'] !== 'false' && $input['isLiveUpdate'] !== false,
@@ -199,14 +217,7 @@ if ($method === 'POST') {
     $db['posts'] = $posts;
 
     // Update categories
-    if (!empty($newItem['category'])) {
-        if (!isset($db['categories']['news'])) {
-            $db['categories']['news'] = [];
-        }
-        if (!in_array($newItem['category'], $db['categories']['news'])) {
-            $db['categories']['news'][] = $newItem['category'];
-        }
-    }
+    $db['categories']['news'] = $canonicalCats;
 
     save_db_data($db);
     send_json(['success' => true, 'message' => '기사가 등록되었습니다.', 'data' => $newItem]);
@@ -234,7 +245,7 @@ if ($method === 'PUT') {
         if ((string)$item['id'] === (string)$id || (isset($item['slug']) && (string)$item['slug'] === (string)$id)) {
             if (isset($input['title'])) $item['title'] = trim($input['title']);
             if (isset($input['slug']) && trim($input['slug'])) $item['slug'] = trim($input['slug']);
-            if (isset($input['category'])) $item['category'] = trim($input['category']);
+            if (isset($input['category'])) $item['category'] = normalize_news_category($input['category']);
             if (isset($input['date'])) $item['date'] = trim($input['date']);
             if (isset($input['isTopStory'])) {
                 $item['isTopStory'] = ($input['isTopStory'] === true || $input['isTopStory'] === 'true' || $input['isTopStory'] === 1 || $input['isTopStory'] === '1');
