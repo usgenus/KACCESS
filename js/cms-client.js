@@ -631,13 +631,15 @@
     if (!ytId) {
       directSrc = v.videoFile || v.videoUrl || v.mediaUrl || '';
     }
-    // Always derive thumb from ytId when available (stored thumbnail may have wrong ID)
-    var thumb = '';
-    if (ytId) {
+    // 1. Prioritize user uploaded thumbnail or custom thumbnail URL
+    var thumb = (v.thumbnail && v.thumbnail.trim()) ? v.thumbnail.trim() : ((v.thumbnailUrl && v.thumbnailUrl.trim()) ? v.thumbnailUrl.trim() : '');
+    
+    // 2. If thumbnail is empty and YouTube ID is present, fallback to YouTube thumbnail
+    if (!thumb && ytId) {
       thumb = 'https://img.youtube.com/vi/' + ytId + '/maxresdefault.jpg';
-    } else {
-      thumb = v.thumbnail || v.thumbnailUrl || '';
     }
+    
+    // 3. Fallback to placeholder if still empty
     if (!thumb) {
       thumb = 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80';
     }

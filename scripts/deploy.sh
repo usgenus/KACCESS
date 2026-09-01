@@ -74,6 +74,26 @@ try {
 fs.writeFileSync(path, JSON.stringify(current, null, 2), "utf8");
 console.log("✅ Live content successfully merged into data/content.json!");
 
+// Download any uploaded media files referenced in content.json if not present locally
+const contentStr = JSON.stringify(current);
+const uploadMatches = contentStr.match(/\/uploads\/(?:images|videos)\/[a-zA-Z0-9_.-]+/g) || [];
+const uniqueUploads = [...new Set(uploadMatches)];
+
+uniqueUploads.forEach(relPath => {
+  const localPath = "." + relPath;
+  const dir = localPath.substring(0, localPath.lastIndexOf("/"));
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+  if (!fs.existsSync(localPath) || fs.statSync(localPath).size === 0) {
+    try {
+      const { execSync } = require("child_process");
+      execSync(`curl -s "https://kor2.njaccessportal.com${relPath}" -o "${localPath}"`);
+      console.log("📥 Downloaded live media file:", relPath);
+    } catch(err) {}
+  }
+});
+
 // Sync inquiries if live data exists
 try {
   const inq = JSON.parse(process.argv[5]);

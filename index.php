@@ -806,11 +806,11 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
                     }
                   ?>
                     <?php if ($ytId): 
-                      $vThumb = $mainVideo['thumbnailUrl'] ?: ($mainVideo['thumbnail'] ?: ('https://img.youtube.com/vi/' . $ytId . '/maxresdefault.jpg'));
+                      $vThumb = !empty($mainVideo['thumbnail']) ? $mainVideo['thumbnail'] : (!empty($mainVideo['thumbnailUrl']) ? $mainVideo['thumbnailUrl'] : ('https://img.youtube.com/vi/' . $ytId . '/maxresdefault.jpg'));
                     ?>
                       <div class="relative w-full h-full group cursor-pointer" 
                            onclick="if(window.cmsPlayCurrentVideo){window.cmsPlayCurrentVideo();}else{this.innerHTML='<iframe class=\'w-full h-full border-0\' src=\'https://www.youtube.com/embed/<?= $ytId ?>?autoplay=1&enablejsapi=1&rel=0&playsinline=1\' title=\'<?= htmlspecialchars($mainVideo['title'] ?? '') ?>\' allow=\'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\' referrerpolicy=\'strict-origin-when-cross-origin\' allowfullscreen></iframe>';}">
-                        <img src="<?= $vThumb ?>" alt="<?= htmlspecialchars($mainVideo['title'] ?? '') ?>" onerror="if(this.src.indexOf('maxresdefault')!==-1){this.src=this.src.replace('maxresdefault','hqdefault');}else if(this.src.indexOf('hqdefault')!==-1){this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80';}" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500">
+                        <img src="<?= htmlspecialchars($vThumb) ?>" alt="<?= htmlspecialchars($mainVideo['title'] ?? '') ?>" onerror="if(this.src.indexOf('maxresdefault')!==-1){this.src=this.src.replace('maxresdefault','hqdefault');}else{this.onerror=null;this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80';}" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-black/20 to-transparent"></div>
                         <div class="absolute inset-0 flex items-center justify-center">
                           <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white text-red-600 flex items-center justify-center text-2xl sm:text-3xl shadow-2xl group-hover:scale-110 group-hover:bg-red-600 group-hover:text-white transition-all duration-300 ring-4 ring-red-500/30">▶</div>
@@ -822,7 +822,7 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
                       </div>
                     <?php else: ?>
                       <div class="relative w-full h-full group cursor-pointer" onclick="if(window.cmsPlayCurrentVideo){window.cmsPlayCurrentVideo();}else{window.cmsSelectVideo('<?= $mainVideo['id'] ?>', true);}">
-                        <img src="<?= htmlspecialchars($mainVideo['thumbnailUrl'] ?: ($mainVideo['thumbnail'] ?: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80')) ?>" alt="<?= htmlspecialchars($mainVideo['title'] ?? '') ?>" class="w-full h-full object-cover">
+                        <img src="<?= htmlspecialchars(!empty($mainVideo['thumbnail']) ? $mainVideo['thumbnail'] : (!empty($mainVideo['thumbnailUrl']) ? $mainVideo['thumbnailUrl'] : 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80')) ?>" alt="<?= htmlspecialchars($mainVideo['title'] ?? '') ?>" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80';" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
                           <div class="w-16 h-16 rounded-full bg-red-600 text-white flex items-center justify-center text-2xl shadow-2xl">▶</div>
                         </div>
@@ -859,11 +859,12 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
                 <div id="medical-videos-playlist" class="space-y-3">
                   <?php foreach ($playlistVideos as $v): 
                     $isPlaying = $mainVideo && $mainVideo['id'] === $v['id'];
+                    $itemThumb = !empty($v['thumbnail']) ? $v['thumbnail'] : (!empty($v['thumbnailUrl']) ? $v['thumbnailUrl'] : (!empty($v['youtubeId']) ? ('https://img.youtube.com/vi/' . $v['youtubeId'] . '/hqdefault.jpg') : 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&q=80'));
                   ?>
                     <div onclick="window.cmsSelectVideo('<?= $v['id'] ?>')" 
                       class="flex gap-3.5 p-3 rounded-2xl border transition-all duration-200 cursor-pointer <?= $isPlaying ? 'bg-red-50/70 border-red-300 ring-2 ring-red-400 shadow-sm' : 'bg-white border-slate-200/80 hover:bg-slate-50 hover:border-slate-300 shadow-xs' ?>">
                       <div class="relative w-28 h-20 sm:w-32 sm:h-20 rounded-xl overflow-hidden shrink-0 bg-black">
-                        <img src="<?= htmlspecialchars($v['thumbnailUrl'] ?: ($v['thumbnail'] ?: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&q=80')) ?>" alt="<?= htmlspecialchars($v['title'] ?? '') ?>" class="w-full h-full object-cover">
+                        <img src="<?= htmlspecialchars($itemThumb) ?>" alt="<?= htmlspecialchars($v['title'] ?? '') ?>" onerror="if(this.src.indexOf('maxresdefault')!==-1){this.src=this.src.replace('maxresdefault','hqdefault');}else{this.onerror=null;this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&q=80';}" class="w-full h-full object-cover">
                         <div class="absolute bottom-1 right-1 bg-black/85 text-white font-mono font-bold text-[10px] px-1.5 py-0.5 rounded">
                           <?= htmlspecialchars($v['duration'] ?: '10:00') ?>
                         </div>

@@ -50,22 +50,22 @@
   ],
   "videos": [
     {
-      "id": "v_1788203510_e579",
-      "youtubeId": "https://img.youtube.com/vi/pEl1jWvgUcI",
+      "id": "v_1788232592_cd06",
+      "youtubeId": "pEl1jWvgUcI",
       "videoUrl": "",
-      "title": "전문의 여름 건강 세미나",
+      "title": "전문의와 함께하는 여름 건강 세미나",
       "doctor": "의학 리포트",
       "hospital": "Englewood Health Center for Korean Health",
       "category": "건강검진 & 의료정보",
       "views": "1.2만회",
       "duration": "10:00",
-      "date": "2026.08.31",
+      "date": "2026.09.01",
       "summary": "",
       "thumbnail": "https://img.youtube.com/vi/pEl1jWvgUcI/maxresdefault.jpg",
       "order": 1,
       "active": true,
-      "createdAt": "2026-08-31 19:11:50",
-      "updatedAt": "2026-09-01 02:38:14"
+      "createdAt": "2026-09-01 03:16:32",
+      "updatedAt": "2026-09-01 03:17:37"
     },
     {
       "id": "v_USO48_378n8",
@@ -85,7 +85,7 @@
       "description": "100세 시대를 위한 만성질환 예방과 관리 | 뇌졸중 · 심근경색 완전 정복!",
       "thumbnail": "https://img.youtube.com/vi/USO48_378n8/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/USO48_378n8/maxresdefault.jpg",
-      "order": 3,
+      "order": 4,
       "active": true,
       "createdAt": "2026-08-31 14:48:40",
       "updatedAt": "2026-08-31 19:09:15"
@@ -102,11 +102,11 @@
       "duration": "10:00",
       "date": "2026.08.31",
       "summary": "",
-      "thumbnail": "/uploads/images/images_20260831_190810_ae157e.png",
-      "order": 4,
+      "thumbnail": "/uploads/images/images_20260901_031832_658afe.png",
+      "order": 5,
       "active": true,
       "createdAt": "2026-08-31 19:08:25",
-      "updatedAt": "2026-08-31 19:09:30"
+      "updatedAt": "2026-09-01 03:18:38"
     },
     {
       "id": "v_1788203012_6572",
@@ -121,7 +121,7 @@
       "date": "2026.08.31",
       "summary": "환자 이야기",
       "thumbnail": "https://img.youtube.com/vi/z0Vmk9QaW98/maxresdefault.jpg",
-      "order": 5,
+      "order": 6,
       "active": true,
       "createdAt": "2026-08-31 19:03:32"
     },
@@ -143,7 +143,7 @@
       "description": "의사들이 말하는 중풍 전조증상과 '4시간 반' 골든타임의 비밀",
       "thumbnail": "https://img.youtube.com/vi/vrExyR0guJo/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/vrExyR0guJo/maxresdefault.jpg",
-      "order": 8,
+      "order": 9,
       "active": true,
       "createdAt": "2026-08-31 14:48:40",
       "updatedAt": "2026-08-31 14:48:40"
@@ -166,7 +166,7 @@
       "description": "의사들이 말하는 심장 혈관 건강 지키는 8가지 방법 (치매 예방까지!) #심장건강 #혈관질환 #고혈압 #당뇨관리 #고지혈증 #건강정보 #예방의학 #장수 #수면무호흡증 #건강식단",
       "thumbnail": "https://img.youtube.com/vi/jJSXVrXI1mE/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/jJSXVrXI1mE/maxresdefault.jpg",
-      "order": 9,
+      "order": 10,
       "active": true,
       "createdAt": "2026-08-31 14:48:40",
       "updatedAt": "2026-08-31 14:48:40"
@@ -189,7 +189,7 @@
       "description": "한국인이 제일 많이 걸리는 암, 갑상선 암의 진실 #갑상선 #갑상선암 #항암치료 #암검진 #생존율",
       "thumbnail": "https://img.youtube.com/vi/3TgEBuofm9k/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/3TgEBuofm9k/maxresdefault.jpg",
-      "order": 10,
+      "order": 11,
       "active": true,
       "createdAt": "2026-08-31 14:48:40",
       "updatedAt": "2026-08-31 14:48:40"
@@ -212,7 +212,7 @@
       "description": "\"이것만 해도 당뇨 90% 막는다?\" 의사가 알려주는 생활 속 비밀 5가지, #당뇨병#당뇨예방#당뇨관리#혈당관리 #꿀잠#숙면 #코르티솔#체중감량#다이어트#정기검진#숨은당#건강식단",
       "thumbnail": "https://img.youtube.com/vi/tpQqEaRX6nY/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/tpQqEaRX6nY/maxresdefault.jpg",
-      "order": 11,
+      "order": 12,
       "active": true,
       "createdAt": "2026-08-31 14:48:40",
       "updatedAt": "2026-08-31 14:48:40"
@@ -235,7 +235,7 @@
       "description": "훈이와 범이 라이브, 건강 100세 시대, 내 몸 지키는 3가지 핵심 전략 심장, 폐, 치매 스폐셜,",
       "thumbnail": "https://img.youtube.com/vi/7IQEE9z9g3w/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/7IQEE9z9g3w/maxresdefault.jpg",
-      "order": 12,
+      "order": 13,
       "active": true,
       "createdAt": "2026-08-31 14:48:41",
       "updatedAt": "2026-08-31 14:48:41"
@@ -258,7 +258,7 @@
       "description": "생명을 살리는 메시지! 전국 폐암 검진의 날 (11월 8일) 대상, 검사 방법 (저선량 CT), 예약 방법 #폐암검진 #폐암 #저선량CT #흡연자 #20갑년 #과거흡연자 #폐건강",
       "thumbnail": "https://img.youtube.com/vi/q2NcAxdEHw4/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/q2NcAxdEHw4/maxresdefault.jpg",
-      "order": 13,
+      "order": 14,
       "active": true,
       "createdAt": "2026-08-31 14:48:41",
       "updatedAt": "2026-08-31 14:48:41"
@@ -281,7 +281,7 @@
       "description": "심장 101, 심장마비, 중풍 예방!  #콜레스테롤 #고지혈증 #콜레스테롤낮추는법 #LDL #HDL #스타틴 #심장병  #혈관건강 #CT칼슘스코어",
       "thumbnail": "https://img.youtube.com/vi/P3RVGPKKIsU/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/P3RVGPKKIsU/maxresdefault.jpg",
-      "order": 14,
+      "order": 15,
       "active": true,
       "createdAt": "2026-08-31 14:48:41",
       "updatedAt": "2026-08-31 14:48:41"
@@ -304,7 +304,7 @@
       "description": "치매 이렇게 시작한다. 치매 101.#치매 #알츠하이머",
       "thumbnail": "https://img.youtube.com/vi/lT4XNvab6D8/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/lT4XNvab6D8/maxresdefault.jpg",
-      "order": 15,
+      "order": 16,
       "active": true,
       "createdAt": "2026-08-31 14:48:41",
       "updatedAt": "2026-08-31 14:48:41"
@@ -327,7 +327,7 @@
       "description": "루미펄스(Lumipulse)테스트, 간단한 피검사만으로 알츠하이머 진단, 美 FDA, 혈액검사법 최초 승인",
       "thumbnail": "https://img.youtube.com/vi/7RRJ4x-1Spo/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/7RRJ4x-1Spo/maxresdefault.jpg",
-      "order": 16,
+      "order": 17,
       "active": true,
       "createdAt": "2026-08-31 14:48:41",
       "updatedAt": "2026-08-31 14:48:41"
@@ -350,7 +350,7 @@
       "description": "위고비, 잽바운드의  치매, 심근경색 예방효과. 새로운 비만치료제 아말린 유도체. GLP-1 Agonist vs 비만수술, 뭐가 더 효과적일까?",
       "thumbnail": "https://img.youtube.com/vi/ONpaoMFESJI/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/ONpaoMFESJI/maxresdefault.jpg",
-      "order": 17,
+      "order": 18,
       "active": true,
       "createdAt": "2026-08-31 14:48:41",
       "updatedAt": "2026-08-31 14:48:41"
@@ -373,7 +373,7 @@
       "description": "혈액 희석제 없이 안전하게! WATCHMAN 시술, “와치맨 시술로 심장 건강 지키세요!”",
       "thumbnail": "https://img.youtube.com/vi/zPjZIgCiwQg/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/zPjZIgCiwQg/maxresdefault.jpg",
-      "order": 18,
+      "order": 19,
       "active": true,
       "createdAt": "2026-08-31 14:48:41",
       "updatedAt": "2026-08-31 14:48:41"
@@ -396,7 +396,7 @@
       "description": "“⚠ 우리 몸속 미세플라스틱, 건강에 미치는 충격적인 영향!” 미세 플라스틱에 점령당한 현대인, 심장, 뇌, 모든 장기가 안전하지 않다.",
       "thumbnail": "https://img.youtube.com/vi/qBE2ZUPAPgQ/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/qBE2ZUPAPgQ/maxresdefault.jpg",
-      "order": 19,
+      "order": 20,
       "active": true,
       "createdAt": "2026-08-31 14:48:41",
       "updatedAt": "2026-08-31 14:48:41"
@@ -419,7 +419,7 @@
       "description": "미국 의료 시스템이 한국 보다 뛰어난 이유 #shorts",
       "thumbnail": "https://img.youtube.com/vi/9elQm8Unqx8/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/9elQm8Unqx8/maxresdefault.jpg",
-      "order": 20,
+      "order": 21,
       "active": true,
       "createdAt": "2026-08-31 14:48:43",
       "updatedAt": "2026-08-31 14:48:43"
@@ -442,7 +442,7 @@
       "description": "암의 공포, 최신 기술로 넘는다. 빠르고 효과적인 암치료, 미국 암 외과, 내과의사 암 세미나, 한국어 번역",
       "thumbnail": "https://img.youtube.com/vi/F0ChLHuO6b4/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/F0ChLHuO6b4/maxresdefault.jpg",
-      "order": 21,
+      "order": 22,
       "active": true,
       "createdAt": "2026-08-31 14:48:43",
       "updatedAt": "2026-08-31 14:48:43"
@@ -465,7 +465,7 @@
       "description": "누구나 의사가 될수있다. 한국의사 vs 미국의사",
       "thumbnail": "https://img.youtube.com/vi/tcZecAn9rQs/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/tcZecAn9rQs/maxresdefault.jpg",
-      "order": 22,
+      "order": 23,
       "active": true,
       "createdAt": "2026-08-31 14:48:43",
       "updatedAt": "2026-08-31 14:48:43"
@@ -488,7 +488,7 @@
       "description": "대장내시경을 대신할 혈액검사로 대장암 조기발견 #대장내시경 , #대장암 #피검사 대장내시경 꼭 해야하나?",
       "thumbnail": "https://img.youtube.com/vi/DINMCNIxyIo/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/DINMCNIxyIo/maxresdefault.jpg",
-      "order": 23,
+      "order": 24,
       "active": true,
       "createdAt": "2026-08-31 14:48:44",
       "updatedAt": "2026-08-31 14:48:44"
@@ -511,7 +511,7 @@
       "description": "OMEGA 3. 믿었던 오메가3의 배신. #오메가3",
       "thumbnail": "https://img.youtube.com/vi/k9lFjP2MkhY/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/k9lFjP2MkhY/maxresdefault.jpg",
-      "order": 24,
+      "order": 25,
       "active": true,
       "createdAt": "2026-08-31 14:48:44",
       "updatedAt": "2026-08-31 14:48:44"
@@ -534,7 +534,7 @@
       "description": "기적의 치매약 레켐비 치매 알츠하이머 정복, 미국, 일본 이어 한국까지 #치매",
       "thumbnail": "https://img.youtube.com/vi/CvdAXJYIgXw/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/CvdAXJYIgXw/maxresdefault.jpg",
-      "order": 25,
+      "order": 26,
       "active": true,
       "createdAt": "2026-08-31 14:48:44",
       "updatedAt": "2026-08-31 14:48:44"
@@ -557,7 +557,7 @@
       "description": "10년 후의 나의 심장 상태를 미리: 칼슘스코어 Calcium Score Test 관상동맥 석회화 검사",
       "thumbnail": "https://img.youtube.com/vi/OvT72_I8phA/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/OvT72_I8phA/maxresdefault.jpg",
-      "order": 26,
+      "order": 27,
       "active": true,
       "createdAt": "2026-08-31 14:48:44",
       "updatedAt": "2026-08-31 14:48:44"
@@ -580,7 +580,7 @@
       "description": "RSV나 마이코플라스마 폐렴이 걸렸을때 치료법, 예방 백신",
       "thumbnail": "https://img.youtube.com/vi/h-pvzFku_t4/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/h-pvzFku_t4/maxresdefault.jpg",
-      "order": 27,
+      "order": 28,
       "active": true,
       "createdAt": "2026-08-31 14:48:44",
       "updatedAt": "2026-08-31 14:48:44"
@@ -603,7 +603,7 @@
       "description": "살 빼는 당뇨 주사제 오젬픽·위고비 VS 젭바운드, 효과와 부작용. 훈이 오젬픽 투약 3개월  후기.",
       "thumbnail": "https://img.youtube.com/vi/AAGjezfOKgs/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/AAGjezfOKgs/maxresdefault.jpg",
-      "order": 28,
+      "order": 29,
       "active": true,
       "createdAt": "2026-08-31 14:48:44",
       "updatedAt": "2026-08-31 14:48:44"
@@ -626,7 +626,7 @@
       "description": "혈압의 모든것, 혈압조절, 혈압약, 혈압약 부작용",
       "thumbnail": "https://img.youtube.com/vi/Nb1WRWaYEIo/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/Nb1WRWaYEIo/maxresdefault.jpg",
-      "order": 29,
+      "order": 30,
       "active": true,
       "createdAt": "2026-08-31 14:48:44",
       "updatedAt": "2026-08-31 14:48:44"
@@ -649,7 +649,7 @@
       "description": "살 빼는 당뇨 주사제 오젬픽·위고비, 효과 있나? 오젬픽 접종 후기",
       "thumbnail": "https://img.youtube.com/vi/1mebfgt6w8s/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/1mebfgt6w8s/maxresdefault.jpg",
-      "order": 30,
+      "order": 31,
       "active": true,
       "createdAt": "2026-08-31 14:48:44",
       "updatedAt": "2026-08-31 14:48:44"
@@ -672,7 +672,7 @@
       "description": "아스파탐  발암가능물질 분류?  제로 다이어트 콜라 계속 먹어도 되나?",
       "thumbnail": "https://img.youtube.com/vi/u4kPFn3MKmc/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/u4kPFn3MKmc/maxresdefault.jpg",
-      "order": 31,
+      "order": 32,
       "active": true,
       "createdAt": "2026-08-31 14:48:44",
       "updatedAt": "2026-08-31 14:48:44"
@@ -695,7 +695,7 @@
       "description": "위내시경 잘 받는 꿀팁,",
       "thumbnail": "https://img.youtube.com/vi/OQijY_cFkzo/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/OQijY_cFkzo/maxresdefault.jpg",
-      "order": 32,
+      "order": 33,
       "active": true,
       "createdAt": "2026-08-31 14:48:44",
       "updatedAt": "2026-08-31 14:48:44"
@@ -718,7 +718,7 @@
       "description": "코로나 끝?  새로운 변이와 증상.  포스트 코로나",
       "thumbnail": "https://img.youtube.com/vi/Lv6MpQV_oc0/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/Lv6MpQV_oc0/maxresdefault.jpg",
-      "order": 33,
+      "order": 34,
       "active": true,
       "createdAt": "2026-08-31 14:48:44",
       "updatedAt": "2026-08-31 14:48:44"
@@ -741,7 +741,7 @@
       "description": "항생제 사용법. 부작용과 내성을 줄이는법",
       "thumbnail": "https://img.youtube.com/vi/V1F2sA12mYA/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/V1F2sA12mYA/maxresdefault.jpg",
-      "order": 34,
+      "order": 35,
       "active": true,
       "createdAt": "2026-08-31 14:48:44",
       "updatedAt": "2026-08-31 14:48:44"
@@ -764,7 +764,7 @@
       "description": "코로나 종식? 전세계 우세종 급속 확산 XBB.1.5 어떤 변이?",
       "thumbnail": "https://img.youtube.com/vi/hWKOhaEp4gE/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/hWKOhaEp4gE/maxresdefault.jpg",
-      "order": 35,
+      "order": 36,
       "active": true,
       "createdAt": "2026-08-31 14:48:45",
       "updatedAt": "2026-08-31 14:48:45"
@@ -787,7 +787,7 @@
       "description": "섬망증",
       "thumbnail": "https://img.youtube.com/vi/gjQ459pEwsE/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/gjQ459pEwsE/maxresdefault.jpg",
-      "order": 36,
+      "order": 37,
       "active": true,
       "createdAt": "2026-08-31 14:48:45",
       "updatedAt": "2026-08-31 14:48:45"
@@ -810,7 +810,7 @@
       "description": "급성 통증과 만성 통증 차이점.  목디스크, 허리통증 치료",
       "thumbnail": "https://img.youtube.com/vi/3zeOJ4e_Ieg/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/3zeOJ4e_Ieg/maxresdefault.jpg",
-      "order": 37,
+      "order": 38,
       "active": true,
       "createdAt": "2026-08-31 14:48:45",
       "updatedAt": "2026-08-31 14:48:45"
@@ -833,7 +833,7 @@
       "description": "대장내시경 꼭 해야하나? 대장내시경 잘 받는 꿀팁, 검사전과 후 #대장내시경 #미국대장내시경",
       "thumbnail": "https://img.youtube.com/vi/7lqXo4iuAy8/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/7lqXo4iuAy8/maxresdefault.jpg",
-      "order": 38,
+      "order": 39,
       "active": true,
       "createdAt": "2026-08-31 14:48:45",
       "updatedAt": "2026-08-31 14:48:45"
@@ -856,7 +856,7 @@
       "description": "독감주사, 모더나, 화이자 개량백신 2가지 백신 당일 접종과 후기",
       "thumbnail": "https://img.youtube.com/vi/qp-8Fqg7GlA/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/qp-8Fqg7GlA/maxresdefault.jpg",
-      "order": 39,
+      "order": 40,
       "active": true,
       "createdAt": "2026-08-31 14:48:45",
       "updatedAt": "2026-08-31 14:48:45"
@@ -879,7 +879,7 @@
       "description": "자폐(아스퍼거 증후군)의 종류와, 증상, 진단, 치료. 이상한 변호사 우영우",
       "thumbnail": "https://img.youtube.com/vi/W-Pgs-iz20Y/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/W-Pgs-iz20Y/maxresdefault.jpg",
-      "order": 40,
+      "order": 41,
       "active": true,
       "createdAt": "2026-08-31 14:48:45",
       "updatedAt": "2026-08-31 14:48:45"
@@ -902,7 +902,7 @@
       "description": "코로나 19 개량 백신 맞을까? 미국과 한국 다른 개량 백신 오미크론 BA.1, BA.4, BA.5.  효과와 부작용 2차 부스터",
       "thumbnail": "https://img.youtube.com/vi/vFScyPQ33lY/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/vFScyPQ33lY/maxresdefault.jpg",
-      "order": 41,
+      "order": 42,
       "active": true,
       "createdAt": "2026-08-31 14:48:45",
       "updatedAt": "2026-08-31 14:48:45"
@@ -925,7 +925,7 @@
       "description": "머리속의 시한폭탄 뇌동맥류, #강수연 '뇌동맥류'",
       "thumbnail": "https://img.youtube.com/vi/AzYVXSnvgEE/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/AzYVXSnvgEE/maxresdefault.jpg",
-      "order": 42,
+      "order": 43,
       "active": true,
       "createdAt": "2026-08-31 14:48:45",
       "updatedAt": "2026-08-31 14:48:45"
@@ -948,7 +948,7 @@
       "description": "여름 뇌졸중의 경고, 뇌졸증의 전조 증상인 미니 스트로크",
       "thumbnail": "https://img.youtube.com/vi/50B1WJmlgq4/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/50B1WJmlgq4/maxresdefault.jpg",
-      "order": 43,
+      "order": 44,
       "active": true,
       "createdAt": "2026-08-31 14:48:45",
       "updatedAt": "2026-08-31 14:48:45"
@@ -971,7 +971,7 @@
       "description": "당뇨병 증상, 진단, 치료약",
       "thumbnail": "https://img.youtube.com/vi/ABlPKGSJPY8/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/ABlPKGSJPY8/maxresdefault.jpg",
-      "order": 44,
+      "order": 45,
       "active": true,
       "createdAt": "2026-08-31 14:48:45",
       "updatedAt": "2026-08-31 14:48:45"
@@ -994,7 +994,7 @@
       "description": "롱코비드, 포스트 코로나 후유증, 병원 가야하는 증상, 치료법",
       "thumbnail": "https://img.youtube.com/vi/5Zu9uh9NG58/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/5Zu9uh9NG58/maxresdefault.jpg",
-      "order": 45,
+      "order": 46,
       "active": true,
       "createdAt": "2026-08-31 14:48:45",
       "updatedAt": "2026-08-31 14:48:45"
@@ -1017,7 +1017,7 @@
       "description": "4차 백신 접종은 누가 맞아야 하나? 하이브리드 면역자 슈퍼면역자(3차 백신접종 돌파감염으로 코로나 걸렸던 사람) 백신 맞아야하나?",
       "thumbnail": "https://img.youtube.com/vi/1hJ9NCicey4/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/1hJ9NCicey4/maxresdefault.jpg",
-      "order": 46,
+      "order": 47,
       "active": true,
       "createdAt": "2026-08-31 14:48:46",
       "updatedAt": "2026-08-31 14:48:46"
@@ -1040,7 +1040,7 @@
       "description": "코로나 절대 안걸리는 면역자, Natural Killer Cell, 네버 코비드족, 슈퍼유전자",
       "thumbnail": "https://img.youtube.com/vi/WHxyC0aJ1So/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/WHxyC0aJ1So/maxresdefault.jpg",
-      "order": 47,
+      "order": 48,
       "active": true,
       "createdAt": "2026-08-31 14:48:46",
       "updatedAt": "2026-08-31 14:48:46"
@@ -1063,7 +1063,7 @@
       "description": "오미크론 하위 변이 BA.2 스텔스 오미크론 확산 기존과 어떻게 다른가, 코로나 재택치료및 상비약.",
       "thumbnail": "https://img.youtube.com/vi/T3ykR2QDCL8/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/T3ykR2QDCL8/maxresdefault.jpg",
-      "order": 48,
+      "order": 49,
       "active": true,
       "createdAt": "2026-08-31 14:48:46",
       "updatedAt": "2026-08-31 14:48:46"
@@ -1086,7 +1086,7 @@
       "description": "코로나 재택치료 상비약 치료제  펩시드 Pepcid 효과와 부작용.",
       "thumbnail": "https://img.youtube.com/vi/5wGT0YkdDG8/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/5wGT0YkdDG8/maxresdefault.jpg",
-      "order": 49,
+      "order": 50,
       "active": true,
       "createdAt": "2026-08-31 14:48:46",
       "updatedAt": "2026-08-31 14:48:46"
@@ -1109,7 +1109,7 @@
       "description": "포스트 코로나 후유증, 코로나 감염후 심장병(심근염 심낭염) ,어떤 증상, 검사, 오미크론 감염 현황",
       "thumbnail": "https://img.youtube.com/vi/vUEOG4fi7Ig/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/vUEOG4fi7Ig/maxresdefault.jpg",
-      "order": 50,
+      "order": 51,
       "active": true,
       "createdAt": "2026-08-31 14:48:46",
       "updatedAt": "2026-08-31 14:48:46"
@@ -1132,7 +1132,7 @@
       "description": "노바백스 안전한가? 부작용? 교차접종? 노바백스의 원리설명",
       "thumbnail": "https://img.youtube.com/vi/i-LxZ1z2IAQ/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/i-LxZ1z2IAQ/maxresdefault.jpg",
-      "order": 51,
+      "order": 52,
       "active": true,
       "createdAt": "2026-08-31 14:48:46",
       "updatedAt": "2026-08-31 14:48:46"
@@ -1155,7 +1155,7 @@
       "description": "팍스로비드 몰누피라비르 부작용 오미크론 코로나 치료제",
       "thumbnail": "https://img.youtube.com/vi/jZC0PMNIp0k/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/jZC0PMNIp0k/maxresdefault.jpg",
-      "order": 52,
+      "order": 53,
       "active": true,
       "createdAt": "2026-08-31 14:48:46",
       "updatedAt": "2026-08-31 14:48:46"
@@ -1178,7 +1178,7 @@
       "description": "오미크론 증상, 백신 부스터는 맞아야 하나?  백신 패스 비교.  오미크론은 가벼운 감기?",
       "thumbnail": "https://img.youtube.com/vi/_f5-IsdSVc4/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/_f5-IsdSVc4/maxresdefault.jpg",
-      "order": 53,
+      "order": 54,
       "active": true,
       "createdAt": "2026-08-31 14:48:46",
       "updatedAt": "2026-08-31 14:48:46"
@@ -1201,7 +1201,7 @@
       "description": "백신 부작용 급성 백혈병?  부스터를 맞으면 안되는 사람과 맞아야 하는 사람.  오미크론과 3차접종 부스터. 모더나 화이자",
       "thumbnail": "https://img.youtube.com/vi/frojCmVRcSk/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/frojCmVRcSk/maxresdefault.jpg",
-      "order": 54,
+      "order": 55,
       "active": true,
       "createdAt": "2026-08-31 14:48:46",
       "updatedAt": "2026-08-31 14:48:46"
@@ -1224,7 +1224,7 @@
       "description": "부스터는 꼭 맞아야 하나? 오미크론, 돌파감염, 부스터 백신, 화이자, 모더나 3차.",
       "thumbnail": "https://img.youtube.com/vi/5DIBDfzLi2A/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/5DIBDfzLi2A/maxresdefault.jpg",
-      "order": 55,
+      "order": 56,
       "active": true,
       "createdAt": "2026-08-31 14:48:46",
       "updatedAt": "2026-08-31 14:48:46"
@@ -1247,7 +1247,7 @@
       "description": "화이자 3차 부스터샷. 모더나 3차 부스터샷 접종후기 및 부작용.  누가 부스터를 맞아야하나?",
       "thumbnail": "https://img.youtube.com/vi/AauI8SPBbyM/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/AauI8SPBbyM/maxresdefault.jpg",
-      "order": 56,
+      "order": 57,
       "active": true,
       "createdAt": "2026-08-31 14:48:46",
       "updatedAt": "2026-08-31 14:48:46"
@@ -1270,7 +1270,7 @@
       "description": "심장병, 암까지 예방한다는 아스피린. 누가 아스피린을 먹으면 되고 먹으면 안되나요?",
       "thumbnail": "https://img.youtube.com/vi/Xi78p1AMK8Y/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/Xi78p1AMK8Y/maxresdefault.jpg",
-      "order": 57,
+      "order": 58,
       "active": true,
       "createdAt": "2026-08-31 14:48:46",
       "updatedAt": "2026-08-31 14:48:46"
@@ -1293,7 +1293,7 @@
       "description": "부스터샷 접종 후기, 모더나 3차 백신 접종, 시간별 증상, 부작용",
       "thumbnail": "https://img.youtube.com/vi/UBA_ERXEhWE/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/UBA_ERXEhWE/maxresdefault.jpg",
-      "order": 58,
+      "order": 59,
       "active": true,
       "createdAt": "2026-08-31 14:48:47",
       "updatedAt": "2026-08-31 14:48:47"
@@ -1316,7 +1316,7 @@
       "description": "모더나? 화이자?  사망이 제일 적은 백신",
       "thumbnail": "https://img.youtube.com/vi/kVV0ruy8NFw/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/kVV0ruy8NFw/maxresdefault.jpg",
-      "order": 59,
+      "order": 60,
       "active": true,
       "createdAt": "2026-08-31 14:48:47",
       "updatedAt": "2026-08-31 14:48:47"
@@ -1339,7 +1339,7 @@
       "description": "코로나로 자연면역 생겼어도 백신 맞아야.  코로나 항체 vs. 백신항체:  모더나, 화이자, 얀센, 항체테스트, 부스터",
       "thumbnail": "https://img.youtube.com/vi/Mr_BQm0NI2A/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/Mr_BQm0NI2A/maxresdefault.jpg",
-      "order": 60,
+      "order": 61,
       "active": true,
       "createdAt": "2026-08-31 14:48:47",
       "updatedAt": "2026-08-31 14:48:47"
@@ -1362,7 +1362,7 @@
       "description": "모더나 백신이 화이자보다 심장염 부작용 발생률 높다?",
       "thumbnail": "https://img.youtube.com/vi/FSqklB1BgAA/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/FSqklB1BgAA/maxresdefault.jpg",
-      "order": 61,
+      "order": 62,
       "active": true,
       "createdAt": "2026-08-31 14:48:47",
       "updatedAt": "2026-08-31 14:48:47"
@@ -1385,7 +1385,7 @@
       "description": "과학적으로 증명된 노년기 삶을 위협하는 치매 예방 12가지",
       "thumbnail": "https://img.youtube.com/vi/E6-1j5LOGYo/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/E6-1j5LOGYo/maxresdefault.jpg",
-      "order": 62,
+      "order": 63,
       "active": true,
       "createdAt": "2026-08-31 14:48:47",
       "updatedAt": "2026-08-31 14:48:47"
@@ -1408,7 +1408,7 @@
       "description": "화이자 부스터샷 접종 후기, 화이자 3차 백신 접종, 24시간 접종 부작용과 대처",
       "thumbnail": "https://img.youtube.com/vi/mjbGY9vDToU/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/mjbGY9vDToU/maxresdefault.jpg",
-      "order": 63,
+      "order": 64,
       "active": true,
       "createdAt": "2026-08-31 14:48:47",
       "updatedAt": "2026-08-31 14:48:47"
@@ -1431,7 +1431,7 @@
       "description": "수면 무호흡증 뇌졸중 심혈관 질환",
       "thumbnail": "https://img.youtube.com/vi/HKeQNsNhwZY/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/HKeQNsNhwZY/maxresdefault.jpg",
-      "order": 64,
+      "order": 65,
       "active": true,
       "createdAt": "2026-08-31 14:48:47",
       "updatedAt": "2026-08-31 14:48:47"
@@ -1454,7 +1454,7 @@
       "description": "백신은 꼭 맞아야하나? 코로나 장기 후유증, 3차 백신 접종 부스터샷은 누가 맞을수 있나?   스테로이드 델타변이",
       "thumbnail": "https://img.youtube.com/vi/nMQ0JNm-ykA/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/nMQ0JNm-ykA/maxresdefault.jpg",
-      "order": 65,
+      "order": 66,
       "active": true,
       "createdAt": "2026-08-31 14:48:47",
       "updatedAt": "2026-08-31 14:48:47"
@@ -1477,7 +1477,7 @@
       "description": "코로나 델타 변이 증상, 심근염 증상과 치료, 및 백신 접종후 먹어야할 진통제, 람다 변이",
       "thumbnail": "https://img.youtube.com/vi/gFhvjbr2iPs/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/gFhvjbr2iPs/maxresdefault.jpg",
-      "order": 66,
+      "order": 67,
       "active": true,
       "createdAt": "2026-08-31 14:48:47",
       "updatedAt": "2026-08-31 14:48:47"
@@ -1500,7 +1500,7 @@
       "description": "mRNA 화이자·모더나 코로나 백신 심근염 우려, 중학생, 고등학생, 청소년 16-24세 부작용",
       "thumbnail": "https://img.youtube.com/vi/dzU0oIfOhlE/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/dzU0oIfOhlE/maxresdefault.jpg",
-      "order": 67,
+      "order": 68,
       "active": true,
       "createdAt": "2026-08-31 14:48:47",
       "updatedAt": "2026-08-31 14:48:47"
@@ -1523,7 +1523,7 @@
       "description": "치매 알츠하이머 치료제 아두카누맙",
       "thumbnail": "https://img.youtube.com/vi/IYQukWQNuNU/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/IYQukWQNuNU/maxresdefault.jpg",
-      "order": 68,
+      "order": 69,
       "active": true,
       "createdAt": "2026-08-31 14:48:47",
       "updatedAt": "2026-08-31 14:48:47"
@@ -1546,7 +1546,7 @@
       "description": "코로나 델타 변이의 무서운 전파력, 화이자 , MRNA 백신교차접종 효과 있나?",
       "thumbnail": "https://img.youtube.com/vi/LaFyM-0XPz8/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/LaFyM-0XPz8/maxresdefault.jpg",
-      "order": 69,
+      "order": 70,
       "active": true,
       "createdAt": "2026-08-31 14:48:47",
       "updatedAt": "2026-08-31 14:48:47"
@@ -1569,7 +1569,7 @@
       "description": "코로나 19 백신 접종 임신 전, 임신 중, 수유부,산모, 임신부, 임산부와 태아 항체와 위험성",
       "thumbnail": "https://img.youtube.com/vi/n3S1yszqDsg/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/n3S1yszqDsg/maxresdefault.jpg",
-      "order": 70,
+      "order": 71,
       "active": true,
       "createdAt": "2026-08-31 14:48:48",
       "updatedAt": "2026-08-31 14:48:48"
@@ -1592,7 +1592,7 @@
       "description": "코로나 백신 교차접종,  백신 효과, 백신 부작용, AZ백신, 화이자, 얀센",
       "thumbnail": "https://img.youtube.com/vi/k8YS9ODl_ws/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/k8YS9ODl_ws/maxresdefault.jpg",
-      "order": 71,
+      "order": 72,
       "active": true,
       "createdAt": "2026-08-31 14:48:48",
       "updatedAt": "2026-08-31 14:48:48"
@@ -1615,7 +1615,7 @@
       "description": "백신을 맞아야 할사람과 맞으면 안되는 사람.",
       "thumbnail": "https://img.youtube.com/vi/7oNkW_LBncs/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/7oNkW_LBncs/maxresdefault.jpg",
-      "order": 72,
+      "order": 73,
       "active": true,
       "createdAt": "2026-08-31 14:48:48",
       "updatedAt": "2026-08-31 14:48:48"
@@ -1638,7 +1638,7 @@
       "description": "코로나19  회복후에도 심장 손상, 심근염, 심낭염, 폐질환 보다 무서운 코로나 증상, 코로나백신을 꼭 맞는게 좋은 사람?",
       "thumbnail": "https://img.youtube.com/vi/E47M5DfKjFI/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/E47M5DfKjFI/maxresdefault.jpg",
-      "order": 73,
+      "order": 74,
       "active": true,
       "createdAt": "2026-08-31 14:48:48",
       "updatedAt": "2026-08-31 14:48:48"
@@ -1661,7 +1661,7 @@
       "description": "코로나19 백신을 맞아야 하는 이유.  코로나 뇌손상, 치매",
       "thumbnail": "https://img.youtube.com/vi/L2ilIVv0alM/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/L2ilIVv0alM/maxresdefault.jpg",
-      "order": 74,
+      "order": 75,
       "active": true,
       "createdAt": "2026-08-31 14:48:48",
       "updatedAt": "2026-08-31 14:48:48"
@@ -1684,7 +1684,7 @@
       "description": "화이자 먹는 경구 코로나 치료제, 코로나 감염, 백신 부작용 혈전, 증상에 따른 대처방법",
       "thumbnail": "https://img.youtube.com/vi/Sah2ZE3PNJY/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/Sah2ZE3PNJY/maxresdefault.jpg",
-      "order": 75,
+      "order": 76,
       "active": true,
       "createdAt": "2026-08-31 14:48:48",
       "updatedAt": "2026-08-31 14:48:48"
@@ -1707,7 +1707,7 @@
       "description": "코로나 혈전이 아스트라제네카 백신 부작용 혈전 보다 더 많다.",
       "thumbnail": "https://img.youtube.com/vi/GF1KyaqwbFU/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/GF1KyaqwbFU/maxresdefault.jpg",
-      "order": 76,
+      "order": 77,
       "active": true,
       "createdAt": "2026-08-31 14:48:48",
       "updatedAt": "2026-08-31 14:48:48"
@@ -1730,7 +1730,7 @@
       "description": "혈전 위험 부작용 3: 아제백신(아스트라제네카, AZ백신)과 얀센(존슨앤존슨) 혈전 초기증상과 치료법, 얀센 접종 중단",
       "thumbnail": "https://img.youtube.com/vi/uaSWUk0WQSo/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/uaSWUk0WQSo/maxresdefault.jpg",
-      "order": 77,
+      "order": 78,
       "active": true,
       "createdAt": "2026-08-31 14:48:48",
       "updatedAt": "2026-08-31 14:48:48"
@@ -1753,7 +1753,7 @@
       "description": "혈전 위험 부작용 2: 아스트라제네카 백신 부작용 혈전이 생기는 이유와 치료법.",
       "thumbnail": "https://img.youtube.com/vi/n3H_l6sYK9w/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/n3H_l6sYK9w/maxresdefault.jpg",
-      "order": 78,
+      "order": 79,
       "active": true,
       "createdAt": "2026-08-31 14:48:48",
       "updatedAt": "2026-08-31 14:48:48"
@@ -1776,7 +1776,7 @@
       "description": "코로나 19 자가 진단법. 이런 증상 있다면 코로나 검사 받으세요. 백신접종 전후에도 유용",
       "thumbnail": "https://img.youtube.com/vi/bd0TvOxnX_I/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/bd0TvOxnX_I/maxresdefault.jpg",
-      "order": 79,
+      "order": 80,
       "active": true,
       "createdAt": "2026-08-31 14:48:48",
       "updatedAt": "2026-08-31 14:48:48"
@@ -1799,7 +1799,7 @@
       "description": "혈전 위험 부작용, 아스트라제네카 백신 맞아도 안전할까?  AZ백신 부작용",
       "thumbnail": "https://img.youtube.com/vi/LDM2Kf8col0/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/LDM2Kf8col0/maxresdefault.jpg",
-      "order": 80,
+      "order": 81,
       "active": true,
       "createdAt": "2026-08-31 14:48:48",
       "updatedAt": "2026-08-31 14:48:48"
@@ -1822,7 +1822,7 @@
       "description": "얀센 백신 ( 존슨앤존슨 ), 아스트라제네카 백신 맞아도 안전할까요?  백신 부작용, 변이 코로나, 모더나, 화이자, az백신",
       "thumbnail": "https://img.youtube.com/vi/p4P0K8rc4XU/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/p4P0K8rc4XU/maxresdefault.jpg",
-      "order": 81,
+      "order": 82,
       "active": true,
       "createdAt": "2026-08-31 14:48:48",
       "updatedAt": "2026-08-31 14:48:48"
@@ -1845,7 +1845,7 @@
       "description": "코로나 백신 부작용 증상에 대처: 타이레놀, 이부프로펜 : 아스트라제네카, 얀센 , 모더나, 화이자, AZ백신",
       "thumbnail": "https://img.youtube.com/vi/hdkEpqKU_Kg/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/hdkEpqKU_Kg/maxresdefault.jpg",
-      "order": 82,
+      "order": 83,
       "active": true,
       "createdAt": "2026-08-31 14:48:49",
       "updatedAt": "2026-08-31 14:48:49"
@@ -1868,7 +1868,7 @@
       "description": "모더나, 화이자, 존슨앤존슨 코로나 백신 접종 신청 등록과 예약",
       "thumbnail": "https://img.youtube.com/vi/yu0Raoj9-5A/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/yu0Raoj9-5A/maxresdefault.jpg",
-      "order": 83,
+      "order": 84,
       "active": true,
       "createdAt": "2026-08-31 14:48:49",
       "updatedAt": "2026-08-31 14:48:49"
@@ -1891,7 +1891,7 @@
       "description": "\"모더나 화이자 백신 둘다 맞았습니다.\" 코로나 백신, 화이자 모더나 2차 접종 후기, 부작용 치료법",
       "thumbnail": "https://img.youtube.com/vi/D6Fjhhpy2tY/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/D6Fjhhpy2tY/maxresdefault.jpg",
-      "order": 84,
+      "order": 85,
       "active": true,
       "createdAt": "2026-08-31 14:48:49",
       "updatedAt": "2026-08-31 14:48:49"
@@ -1914,7 +1914,7 @@
       "description": "\"모더나 화이자 백신 둘다 맞았습니다 - 2부.\" 미국의사들의 코로나 백신 2차 접종 후기.",
       "thumbnail": "https://img.youtube.com/vi/GLZp0wO9540/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/GLZp0wO9540/maxresdefault.jpg",
-      "order": 85,
+      "order": 86,
       "active": true,
       "createdAt": "2026-08-31 14:48:49",
       "updatedAt": "2026-08-31 14:48:49"
@@ -1937,7 +1937,7 @@
       "description": "코로나 변이 바이러스 와 백신 효과.  코로나 백신 사망설 설명, 백신부작용",
       "thumbnail": "https://img.youtube.com/vi/5jsfbqyJSiA/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/5jsfbqyJSiA/maxresdefault.jpg",
-      "order": 86,
+      "order": 87,
       "active": true,
       "createdAt": "2026-08-31 14:48:49",
       "updatedAt": "2026-08-31 14:48:49"
@@ -1960,7 +1960,7 @@
       "description": "\"모더나 화이자 백신 둘다 맞았습니다.\"  화이자 백신 2차 접종완료. 코로나 백신 접종 후기.",
       "thumbnail": "https://img.youtube.com/vi/wOy5gvxSIBs/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/wOy5gvxSIBs/maxresdefault.jpg",
-      "order": 87,
+      "order": 88,
       "active": true,
       "createdAt": "2026-08-31 14:48:49",
       "updatedAt": "2026-08-31 14:48:49"
@@ -1983,7 +1983,7 @@
       "description": "코로나 백신 모더나, 화이자의 대한 오해와 진실 , 잘못된 인식",
       "thumbnail": "https://img.youtube.com/vi/5OjWGYfILe4/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/5OjWGYfILe4/maxresdefault.jpg",
-      "order": 88,
+      "order": 89,
       "active": true,
       "createdAt": "2026-08-31 14:48:49",
       "updatedAt": "2026-08-31 14:48:49"
@@ -2006,7 +2006,7 @@
       "description": "Q & A:  화이자 모더나 코로나 백신 작용 원리, 종류, 효능, 부작용.",
       "thumbnail": "https://img.youtube.com/vi/fF2r-XJNU2Y/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/fF2r-XJNU2Y/maxresdefault.jpg",
-      "order": 89,
+      "order": 90,
       "active": true,
       "createdAt": "2026-08-31 14:48:49",
       "updatedAt": "2026-08-31 14:48:49"
@@ -2029,7 +2029,7 @@
       "description": "\"모더나 화이자 백신 둘다 맞았습니다.\" 코로나 백신 접종 후기.",
       "thumbnail": "https://img.youtube.com/vi/Peyi-TojiMY/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/Peyi-TojiMY/maxresdefault.jpg",
-      "order": 90,
+      "order": 91,
       "active": true,
       "createdAt": "2026-08-31 14:48:49",
       "updatedAt": "2026-08-31 14:48:49"
@@ -2052,7 +2052,7 @@
       "description": "코로나 백신 꼭 맞아야 하나요? 미국의사 훈이와 범이의 백신을 맞아야 하는 이유. 화이자, 모더나",
       "thumbnail": "https://img.youtube.com/vi/I1bCmYh2L04/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/I1bCmYh2L04/maxresdefault.jpg",
-      "order": 91,
+      "order": 92,
       "active": true,
       "createdAt": "2026-08-31 14:48:49",
       "updatedAt": "2026-08-31 14:48:49"
@@ -2075,7 +2075,7 @@
       "description": "화이자 코로나 백신 긴급사용 승인, 효과와 부작용",
       "thumbnail": "https://img.youtube.com/vi/Yl4wjgmX6rU/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/Yl4wjgmX6rU/maxresdefault.jpg",
-      "order": 92,
+      "order": 93,
       "active": true,
       "createdAt": "2026-08-31 14:48:49",
       "updatedAt": "2026-08-31 14:48:49"
@@ -2098,7 +2098,7 @@
       "description": "미국 VS 한국 의료시스템의 차이, 의료보험, 의료 빌링, 재미교포는 어떤 치료를 받는게 제일 좋을까?",
       "thumbnail": "https://img.youtube.com/vi/Km6dMtmkgEs/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/Km6dMtmkgEs/maxresdefault.jpg",
-      "order": 93,
+      "order": 94,
       "active": true,
       "createdAt": "2026-08-31 14:48:49",
       "updatedAt": "2026-08-31 14:48:49"
@@ -2121,7 +2121,7 @@
       "description": "(미국 VS 한국) 종합 건강검진과 주치의 시스템과 검진의 차이",
       "thumbnail": "https://img.youtube.com/vi/GpyTov3JIkE/maxresdefault.jpg",
       "thumbnailUrl": "https://img.youtube.com/vi/GpyTov3JIkE/maxresdefault.jpg",
-      "order": 94,
+      "order": 95,
       "active": true,
       "createdAt": "2026-08-31 14:48:50",
       "updatedAt": "2026-08-31 14:48:50"
