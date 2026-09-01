@@ -1088,7 +1088,7 @@ function insertPostFormat(type) {
       replacement = selectedText ? `==${selectedText}==` : `==형광펜 강조==`;
       break;
     case 'newline':
-      replacement = selectedText ? `\n\n${selectedText}\n\n` : `\n\n`;
+      replacement = selectedText ? `\n${selectedText}` : `\n`;
       break;
     case 'divider':
       replacement = selectedText ? `\n\n---\n${selectedText}\n---\n\n` : `\n\n---\n\n`;
