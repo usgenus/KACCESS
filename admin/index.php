@@ -942,6 +942,12 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
             <button type="button" onclick="insertPostFormat('quote')" title="인용 상자 (> 내용)" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center gap-1">
               <i class="fa-solid fa-quote-left"></i> <span>인용</span>
             </button>
+            <button type="button" onclick="insertPostFormat('newline')" title="다음 줄 / 문단 여백 추가 (Next Line)" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold border border-slate-700 flex items-center gap-1">
+              <i class="fa-solid fa-arrow-turn-down fa-rotate-90"></i> <span>줄바꿈 (Next Line)</span>
+            </button>
+            <button type="button" onclick="insertPostFormat('divider')" title="가로 구분선 삽입 (---)" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold border border-slate-700 flex items-center gap-1">
+              <i class="fa-solid fa-minus"></i> <span>구분선</span>
+            </button>
             <button type="button" onclick="insertPostFormat('box')" title="특별 메시지 / 안내 박스 삽입" class="px-2.5 py-1 rounded-lg bg-indigo-900/60 hover:bg-indigo-800 text-indigo-200 font-bold border border-indigo-700/80 flex items-center gap-1">
               <i class="fa-solid fa-box-archive text-indigo-400"></i> <span>안내 박스</span>
             </button>

@@ -1087,6 +1087,12 @@ function insertPostFormat(type) {
     case 'mark':
       replacement = selectedText ? `==${selectedText}==` : `==형광펜 강조==`;
       break;
+    case 'newline':
+      replacement = selectedText ? `\n\n${selectedText}\n\n` : `\n\n`;
+      break;
+    case 'divider':
+      replacement = selectedText ? `\n\n---\n${selectedText}\n---\n\n` : `\n\n---\n\n`;
+      break;
     default:
       return;
   }
@@ -1254,6 +1260,9 @@ function renderMarkdownToHtml(text) {
   // Quotes
   html = html.replace(/^\> (.*$)/gim, '<blockquote class="border-l-4 border-emerald-500 pl-3 py-2 my-3 bg-slate-800/90 rounded-r-xl text-slate-200 italic font-medium">$1</blockquote>');
   
+  // Horizontal rule / Divider
+  html = html.replace(/^(?:---|___|\*\*\*)$/gim, '<hr class="my-5 border-t border-slate-700">');
+
   // Bullet lists
   html = html.replace(/^[-*•] (.*$)/gim, '<div class="flex items-start gap-2.5 text-slate-300 pl-2 my-1"><span class="text-red-500 font-bold leading-none mt-1">•</span><span class="flex-1">$1</span></div>');
   

@@ -93,7 +93,7 @@ function render_article_content($content, $allImages = [], &$usedImages = []) {
     }
 
     $formatInline = function($str) {
-        $str = strip_tags($str, '<strong><b><em><i><u><mark><big><small><span><a><code><del><strike>');
+        $str = strip_tags($str, '<strong><b><em><i><u><mark><big><small><span><a><code><del><strike><br><hr>');
         
         // Markdown bold **text** or __text__
         $str = preg_replace('~\*\*(.+?)\*\*~s', '<strong class="font-bold text-slate-950">$1</strong>', $str);
@@ -165,7 +165,7 @@ function render_article_content($content, $allImages = [], &$usedImages = []) {
         if (!empty($paraBuffer)) {
             $joined = implode('<br>', $paraBuffer);
             $formatted = $formatInline($joined);
-            $html .= '<p class="leading-relaxed text-slate-800 text-base sm:text-lg mb-5">' . $formatted . '</p>';
+            $html .= '<p class="leading-relaxed text-slate-800 text-base sm:text-lg mb-6">' . $formatted . '</p>';
             $paraBuffer = [];
         }
     };
@@ -205,6 +205,12 @@ function render_article_content($content, $allImages = [], &$usedImages = []) {
             $flushPara();
             $figContent = str_replace(['<DIV_FIG>', '</DIV_FIG>'], '', $trimmed);
             $html .= $figContent;
+        // Horizontal Rule / Divider (--- or *** or ___)
+        if (preg_match('~^(?:---|___|\*\*\*)$~', $trimmed)) {
+            if ($inList) { $html .= '</ul>'; $inList = false; }
+            if ($inQuote) { $flushQuote(); $inQuote = false; }
+            $flushPara();
+            $html .= '<hr class="my-8 border-t-2 border-slate-200">';
             continue;
         }
 
