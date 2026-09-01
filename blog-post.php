@@ -319,6 +319,12 @@ function render_article_content($content, $allImages = [], &$usedImages = []) {
           <a class="nav-link pb-0.5 font-medium text-sm text-slate-700 hover:text-brand-blue" href="/medicare">메디케어 &amp; ACA</a>
           <a class="nav-link pb-0.5 font-medium text-sm text-slate-700 hover:text-brand-blue" href="/tool">환자도우미</a>
           <a class="nav-link pb-0.5 font-medium text-sm text-slate-700 hover:text-brand-blue" href="/about">소개</a>
+<a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-[#FEE500] hover:bg-[#fedc00] text-[#191919] font-bold text-sm py-2.5 px-4 rounded-xl shadow-xs mt-1">
+        <svg class="w-4 h-4 text-[#191919] shrink-0" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 3C6.48 3 2 6.58 2 11c0 2.82 1.83 5.3 4.62 6.67-.18.66-.75 2.76-.87 3.23-.15.58.21.57.45.42.31-.21 3.59-2.45 4.18-2.86.53.08 1.07.14 1.62.14 5.52 0 10-3.58 10-8s-4.48-8-10-8z"/>
+        </svg>
+        <span>카카오톡 1:1 상담하기</span>
+      </a>
         </div>
         <div class="flex items-center gap-3">
           <a href="/admin" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors">CMS 관리자</a>

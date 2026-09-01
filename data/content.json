@@ -51,7 +51,7 @@
   "videos": [
     {
       "id": "v_1788203510_e579",
-      "youtubeId": "pEl1jWvgUcI",
+      "youtubeId": "https://img.youtube.com/vi/pEl1jWvgUcI",
       "videoUrl": "",
       "title": "전문의 여름 건강 세미나",
       "doctor": "의학 리포트",
@@ -64,7 +64,8 @@
       "thumbnail": "https://img.youtube.com/vi/pEl1jWvgUcI/maxresdefault.jpg",
       "order": 1,
       "active": true,
-      "createdAt": "2026-08-31 19:11:50"
+      "createdAt": "2026-08-31 19:11:50",
+      "updatedAt": "2026-09-01 02:38:14"
     },
     {
       "id": "v_USO48_378n8",

@@ -200,10 +200,66 @@
   }
 
   // ─────────────────────────────────────────────────────────────
-  // 7. CLEANUP
+  // 7. KAKAOTALK 1:1 CHAT BUTTON & FLOATING WIDGET
   // ─────────────────────────────────────────────────────────────
+  function injectKakaoChatWidget() {
+    var kakaoUrl = 'http://pf.kakao.com/_hdxmxaX/chat';
 
+    // 1. Top Navbar Button (if not already present)
+    var navContainer = document.querySelector('nav .max-w-7xl .flex.items-center.justify-between');
+    if (navContainer && !document.getElementById('kakao-nav-chat-btn') && !navContainer.querySelector('a[href*="pf.kakao.com"]')) {
+      var rightGroup = navContainer.querySelector('.flex.items-center.gap-4, .flex.items-center.gap-3');
+      if (rightGroup) {
+        var btn = document.createElement('a');
+        btn.id = 'kakao-nav-chat-btn';
+        btn.href = kakaoUrl;
+        btn.target = '_blank';
+        btn.rel = 'noopener noreferrer';
+        btn.className = 'inline-flex items-center gap-1.5 bg-[#FEE500] hover:bg-[#fedc00] active:scale-95 text-[#191919] font-bold text-xs sm:text-sm px-3.5 py-1.5 rounded-full shadow-xs hover:shadow-md transition-all duration-200 cursor-pointer mr-1';
+        btn.title = '카카오톡 채널 1:1 상담 바로가기';
+        btn.innerHTML = [
+          '<svg class="w-4 h-4 text-[#191919] shrink-0" viewBox="0 0 24 24" fill="currentColor">',
+          '  <path d="M12 3C6.48 3 2 6.58 2 11c0 2.82 1.83 5.3 4.62 6.67-.18.66-.75 2.76-.87 3.23-.15.58.21.57.45.42.31-.21 3.59-2.45 4.18-2.86.53.08 1.07.14 1.62.14 5.52 0 10-3.58 10-8s-4.48-8-10-8z"/>',
+          '</svg>',
+          '<span class="font-extrabold whitespace-nowrap">카톡 1:1 상담</span>'
+        ].join('');
+        rightGroup.insertBefore(btn, rightGroup.firstChild);
+      }
+    }
 
+    // 2. Mobile Dropdown Menu Item (if not already present)
+    var mobileDropdown = document.querySelector('nav .md\\:hidden.overflow-hidden, #mobile-menu-dropdown');
+    if (mobileDropdown && !mobileDropdown.querySelector('a[href*="pf.kakao.com"]')) {
+      var mBtn = document.createElement('a');
+      mBtn.className = 'kakao-mobile-menu-btn flex items-center justify-center gap-2 bg-[#FEE500] hover:bg-[#fedc00] text-[#191919] font-bold text-sm py-2.5 px-4 rounded-xl shadow-xs mt-1';
+      mBtn.href = kakaoUrl;
+      mBtn.target = '_blank';
+      mBtn.rel = 'noopener noreferrer';
+      mBtn.innerHTML = [
+        '<svg class="w-4 h-4 text-[#191919] shrink-0" viewBox="0 0 24 24" fill="currentColor">',
+        '  <path d="M12 3C6.48 3 2 6.58 2 11c0 2.82 1.83 5.3 4.62 6.67-.18.66-.75 2.76-.87 3.23-.15.58.21.57.45.42.31-.21 3.59-2.45 4.18-2.86.53.08 1.07.14 1.62.14 5.52 0 10-3.58 10-8s-4.48-8-10-8z"/>',
+        '</svg>',
+        '<span>카카오톡 1:1 상담하기</span>'
+      ].join('');
+      mobileDropdown.appendChild(mBtn);
+    }
+
+    // 3. Floating Bottom-Right Chat Button (if not already present)
+    if (!document.getElementById('kakao-floating-chat')) {
+      var aside = document.createElement('aside');
+      aside.id = 'kakao-floating-chat';
+      aside.className = 'fixed bottom-6 right-6 z-50 flex items-center group';
+      aside.innerHTML = [
+        '<a href="' + kakaoUrl + '" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 bg-[#FEE500] hover:bg-[#fedc00] text-[#191919] font-bold px-4 py-3 sm:px-4.5 sm:py-3.5 rounded-full shadow-lg hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 ring-4 ring-black/5" aria-label="카카오톡 1:1 상담">',
+        '  <svg class="w-6 h-6 text-[#191919] shrink-0" viewBox="0 0 24 24" fill="currentColor">',
+        '    <path d="M12 3C6.48 3 2 6.58 2 11c0 2.82 1.83 5.3 4.62 6.67-.18.66-.75 2.76-.87 3.23-.15.58.21.57.45.42.31-.21 3.59-2.45 4.18-2.86.53.08 1.07.14 1.62.14 5.52 0 10-3.58 10-8s-4.48-8-10-8z"/>',
+        '  </svg>',
+        '  <span class="text-sm font-sans tracking-tight font-extrabold hidden sm:inline-block">카톡 1:1 상담</span>',
+        '</a>'
+      ].join('');
+      document.body.appendChild(aside);
+    }
+  }
 
   // ─────────────────────────────────────────────────────────────
   // 8. TOOL PAGE IFRAME LOADER DISMISSAL & FAILSAFE
@@ -241,6 +297,7 @@
     fixMobileMenu();
     fixBillboardHover();
     fixVideoAutoplay();
+    injectKakaoChatWidget();
     fixToolLoader();
     setTimeout(fixSlideIn, 200);
   }
