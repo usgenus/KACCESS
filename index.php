@@ -300,7 +300,7 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
 <body class="min-h-full flex flex-col bg-brand-light">
 
   <!-- Top Marquee Banner -->
-  <div class="fixed top-0 left-0 right-0 z-50 overflow-hidden flex items-center" style="height: 45px; background:linear-gradient(135deg, #0f3a9e 0%, #5e0f73 100%)">
+  <div class="fixed top-0 left-0 right-0 z-50 overflow-hidden flex items-center" style="height: 45px; background:#000000">
     <div class="marquee-track whitespace-nowrap">
       <?php for ($i = 0; $i < 6; $i++): ?>
         <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12">

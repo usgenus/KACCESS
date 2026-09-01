@@ -51,7 +51,7 @@ function getHeader(title) {
 </style>
 </head>
 <body class="min-h-full flex flex-col bg-slate-50">
-<div class="fixed top-0 left-0 right-0 z-50 h-[45px] overflow-hidden flex items-center" style="background:linear-gradient(135deg, #0f3a9e 0%, #5e0f73 100%)">
+<div class="fixed top-0 left-0 right-0 z-50 h-[45px] overflow-hidden flex items-center" style="background:#000000">
   <div class="marquee-track whitespace-nowrap">
     <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12">✦ 의료접근포탈: &quot;비영리 기관들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료 전문가들이 제공하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot; ✦</span>
   </div>
