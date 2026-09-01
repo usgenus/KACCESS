@@ -2260,7 +2260,7 @@
       "createdAt": "2026-07-30T08:45:00+00:00",
       "isDoctorColumn": false,
       "updatedAt": "2026-09-01 19:40:32",
-      "isPolicyReport": false
+      "isPolicyReport": true
     },
     {
       "id": "p_test_sync",
@@ -2407,7 +2407,8 @@
       ],
       "createdAt": "2026-07-29T10:10:00+00:00",
       "isDoctorColumn": true,
-      "updatedAt": "2026-08-19 23:15:15"
+      "updatedAt": "2026-08-19 23:15:15",
+      "isPolicyReport": false
     },
     {
       "id": "p8",
