@@ -37,7 +37,7 @@ foreach ($posts as $p) {
 }
 
 $title = htmlspecialchars($post['title'] ?? '건강 의료 뉴스');
-$category = htmlspecialchars($post['category'] ?? 'Health & Wellness');
+$category = htmlspecialchars($post['category'] ?? '의료칼럼');
 $date = htmlspecialchars($post['date'] ?? date('Y-m-d'));
 $author = htmlspecialchars($post['author'] ?? '편집부');
 $readTime = htmlspecialchars($post['readTime'] ?? '3분');

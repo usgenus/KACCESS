@@ -816,6 +816,12 @@
   async function initBlogInteractivity() {
     var searchInput = document.getElementById('cms-blog-search-input');
     var catContainer = document.getElementById('cms-blog-categories');
+    
+    // If blog.php direct filtering is present, let it handle the category buttons directly
+    if (typeof window.handleBlogCategoryClick === 'function') {
+      return;
+    }
+
     try {
       var res = await fetch('/api/posts.php?_t=' + Date.now());
       var data = await res.json();

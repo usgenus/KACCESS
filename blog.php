@@ -151,14 +151,14 @@ unset($pRef);
       <section class="bg-white border-b border-brand-border sticky top-[109px] z-30 shadow-xs">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-col sm:flex-row gap-3 sm:gap-4 items-start sm:items-center justify-between">
           <div id="cms-blog-categories" class="flex gap-2 flex-wrap">
-            <button class="text-xs sm:text-sm font-sans font-medium px-3.5 py-1.5 rounded-full border transition-all duration-200 bg-brand-gradient text-white border-transparent shadow-sm cursor-pointer">전체</button>
+            <button onclick="handleBlogCategoryClick(this, '전체')" class="category-filter-btn text-xs sm:text-sm font-sans font-medium px-3.5 py-1.5 rounded-full border transition-all duration-200 bg-brand-gradient text-white border-transparent shadow-sm cursor-pointer">전체</button>
             <?php foreach (array_filter($categories, function($c) { return $c !== '전체'; }) as $cat): ?>
-              <button class="text-xs sm:text-sm font-sans font-medium px-3.5 py-1.5 rounded-full border transition-all duration-200 border-brand-border text-brand-muted hover:border-brand-blue hover:text-brand-blue bg-white cursor-pointer"><?= htmlspecialchars($cat) ?></button>
+              <button onclick="handleBlogCategoryClick(this, '<?= htmlspecialchars($cat) ?>')" class="category-filter-btn text-xs sm:text-sm font-sans font-medium px-3.5 py-1.5 rounded-full border transition-all duration-200 border-brand-border text-brand-muted hover:border-brand-blue hover:text-brand-blue bg-white cursor-pointer"><?= htmlspecialchars($cat) ?></button>
             <?php endforeach; ?>
           </div>
           <div class="relative w-full sm:w-64">
             <span class="absolute left-3 top-1/2 -translate-y-1/2 text-brand-muted text-sm">🔍</span>
-            <input id="cms-blog-search-input" type="text" placeholder="기사 검색..." class="w-full text-xs sm:text-sm font-sans pl-9 pr-4 py-2 rounded-full border border-brand-border bg-brand-light outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 transition-all" value="" />
+            <input id="cms-blog-search-input" oninput="handleBlogSearchInput(this.value)" type="text" placeholder="기사 검색..." class="w-full text-xs sm:text-sm font-sans pl-9 pr-4 py-2 rounded-full border border-brand-border bg-brand-light outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 transition-all" value="" />
           </div>
         </div>
       </section>
@@ -169,14 +169,16 @@ unset($pRef);
           <div id="cms-blog-posts-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6">
             <?php foreach ($publishedPosts as $p): 
               $pCover = $p['coverImage'] ?: (!empty($p['images'][0]) ? $p['images'][0] : 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80');
+              $pCat = $p['category'] ?: '의료칼럼';
+              $searchBlob = mb_strtolower(($p['title'] ?? '') . ' ' . ($p['excerpt'] ?? '') . ' ' . ($p['author'] ?? '') . ' ' . ($p['category'] ?? ''));
             ?>
-              <a class="group card-hover block h-full" href="/blog/<?= htmlspecialchars($p['slug'] ?: $p['id']) ?>">
+              <a class="blog-post-card-item group card-hover block h-full" href="/blog/<?= htmlspecialchars($p['slug'] ?: $p['id']) ?>" data-category="<?= htmlspecialchars($pCat) ?>" data-search="<?= htmlspecialchars($searchBlob) ?>">
                 <article class="bg-white rounded-2xl overflow-hidden border border-brand-border h-full flex flex-col justify-between shadow-xs hover:shadow-md transition-all duration-300">
                   <div>
                     <div class="relative h-44 sm:h-48 overflow-hidden bg-gray-100">
                       <img src="<?= htmlspecialchars($pCover) ?>" alt="<?= htmlspecialchars($p['title'] ?? '') ?>" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500">
                       <div class="absolute top-2.5 left-2.5">
-                        <span class="tag-pill bg-brand-blue text-white font-bold text-[10px] sm:text-xs px-2.5 py-0.5 rounded-full shadow-xs"><?= htmlspecialchars($p['category'] ?: '건강 뉴스') ?></span>
+                        <span class="tag-pill bg-brand-blue text-white font-bold text-[10px] sm:text-xs px-2.5 py-0.5 rounded-full shadow-xs"><?= htmlspecialchars($pCat) ?></span>
                       </div>
                     </div>
                     <div class="p-4 sm:p-4.5">
@@ -196,6 +198,10 @@ unset($pRef);
                 </article>
               </a>
             <?php endforeach; ?>
+          </div>
+          <div id="cms-blog-empty-state" class="hidden py-16 text-center text-slate-500">
+            <p class="text-lg font-medium">선택하신 조건에 해당하는 기사가 없습니다.</p>
+            <p class="text-sm text-slate-400 mt-1">다른 카테고리나 검색어를 선택해보세요.</p>
           </div>
         </div>
       </section>
@@ -302,8 +308,87 @@ unset($pRef);
         });
       }
     });
+
+    // 3. Instant Blog Category & Search Filter
+    var blogSelectedCategory = '전체';
+    var blogSearchKeyword = '';
+
+    function normalizeCatString(cat) {
+      if (!cat) return '';
+      var c = cat.trim().toLowerCase().replace(/\s+/g, '');
+      if (c.indexOf('의료칼럼') !== -1 || c.indexOf('의사칼럼') !== -1) return '의료칼럼';
+      if (c.indexOf('recall') !== -1 || c.indexOf('리콜') !== -1) return 'recall(리콜)';
+      if (c.indexOf('health') !== -1 || c.indexOf('wellness') !== -1) return 'health&wellness';
+      if (c.indexOf('의료보험') !== -1 || c.indexOf('medicare') !== -1 || c.indexOf('aca') !== -1 || c.indexOf('보험') !== -1) return '의료보험';
+      if (c.indexOf('한인건강') !== -1 || c.indexOf('특집') !== -1) return '한인건강 특집';
+      if (c.indexOf('한인커뮤니티') !== -1 || c.indexOf('커뮤니티') !== -1) return '한인커뮤니티 뉴스';
+      if (c.indexOf('의학뉴스') !== -1 || c.indexOf('의학') !== -1) return '의학뉴스';
+      return c;
+    }
+
+    function applyBlogFilter() {
+      var cards = document.querySelectorAll('.blog-post-card-item');
+      var emptyBox = document.getElementById('cms-blog-empty-state');
+      var normActive = blogSelectedCategory === '전체' ? '' : normalizeCatString(blogSelectedCategory);
+      var query = (blogSearchKeyword || '').trim().toLowerCase();
+      var visible = 0;
+
+      cards.forEach(function(card) {
+        var cardCat = normalizeCatString(card.getAttribute('data-category') || '');
+        var cardSearch = (card.getAttribute('data-search') || '').toLowerCase();
+
+        var matchCat = !normActive || cardCat === normActive;
+        var matchSearch = !query || cardSearch.indexOf(query) !== -1;
+
+        if (matchCat && matchSearch) {
+          card.style.display = '';
+          visible++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      if (emptyBox) {
+        emptyBox.classList.toggle('hidden', visible > 0);
+      }
+    }
+
+    window.handleBlogCategoryClick = function(btn, catName) {
+      blogSelectedCategory = catName;
+      var catBox = document.getElementById('cms-blog-categories');
+      if (catBox) {
+        catBox.querySelectorAll('button').forEach(function(b) {
+          b.className = 'category-filter-btn text-xs sm:text-sm font-sans font-medium px-3.5 py-1.5 rounded-full border transition-all duration-200 border-brand-border text-brand-muted hover:border-brand-blue hover:text-brand-blue bg-white cursor-pointer';
+        });
+      }
+      if (btn) {
+        btn.className = 'category-filter-btn text-xs sm:text-sm font-sans font-medium px-3.5 py-1.5 rounded-full border transition-all duration-200 bg-brand-gradient text-white border-transparent shadow-sm cursor-pointer';
+      }
+      applyBlogFilter();
+    };
+
+    window.handleBlogSearchInput = function(val) {
+      blogSearchKeyword = val;
+      applyBlogFilter();
+    };
+
+    // Auto-select category if URL param present (e.g. ?category=의료칼럼)
+    document.addEventListener('DOMContentLoaded', function() {
+      try {
+        var p = new URLSearchParams(window.location.search);
+        var qCat = p.get('category');
+        if (qCat) {
+          var btns = document.querySelectorAll('#cms-blog-categories button');
+          btns.forEach(function(b) {
+            if (normalizeCatString(b.textContent) === normalizeCatString(qCat)) {
+              window.handleBlogCategoryClick(b, b.textContent.trim());
+            }
+          });
+        }
+      } catch(e) {}
+    });
   </script>
-  <script src="/js/cms-client.js?v=3.5.0"></script>
-  <script src="/js/fixes.js?v=1.2"></script>
+  <script src="/js/cms-client.js?v=3.5.1"></script>
+  <script src="/js/fixes.js?v=1.3"></script>
 </body>
 </html>

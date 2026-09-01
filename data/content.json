@@ -2131,11 +2131,11 @@
       "id": "p_1787237339_9170",
       "slug": "test-article-2",
       "title": "Test Article 2",
-      "category": "의료보험",
+      "category": "한인커뮤니티 뉴스",
       "date": "2026-08-20",
       "isTopStory": false,
       "isLiveUpdate": false,
-      "isDoctorColumn": false,
+      "isDoctorColumn": true,
       "excerpt": "This is a short summary for Test Article 2",
       "coverImage": "/uploads/images/images_20260820_150004_22fb8a.jpg",
       "images": [
@@ -2151,18 +2151,18 @@
       "summaryPoints": [],
       "status": "published",
       "createdAt": "2026-08-20 14:48:59",
-      "updatedAt": "2026-08-20 22:29:05",
+      "updatedAt": "2026-09-01 02:24:03",
       "isPolicyReport": true
     },
     {
       "id": "p_1787235347_eca7",
       "slug": "test-1",
       "title": "test",
-      "category": "recall(리콜)",
+      "category": "의료칼럼",
       "date": "2026-08-20",
       "isTopStory": false,
       "isLiveUpdate": true,
-      "isDoctorColumn": false,
+      "isDoctorColumn": true,
       "excerpt": "안녕하세요 뉴저지 의료정보 접근센터 입니다.",
       "coverImage": "/uploads/images/images_20260820_141537_8e8e58.jpg",
       "images": [
@@ -2176,7 +2176,8 @@
       "summaryPoints": [],
       "status": "published",
       "createdAt": "2026-08-20 14:15:47",
-      "updatedAt": "2026-08-20 16:06:06"
+      "updatedAt": "2026-09-01 02:23:42",
+      "isPolicyReport": false
     },
     {
       "id": "p_1787081465_3dea",
