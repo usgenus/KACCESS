@@ -205,6 +205,9 @@ function render_article_content($content, $allImages = [], &$usedImages = []) {
             $flushPara();
             $figContent = str_replace(['<DIV_FIG>', '</DIV_FIG>'], '', $trimmed);
             $html .= $figContent;
+            continue;
+        }
+
         // Horizontal Rule / Divider (--- or *** or ___)
         if (preg_match('~^(?:---|___|\*\*\*)$~', $trimmed)) {
             if ($inList) { $html .= '</ul>'; $inList = false; }
