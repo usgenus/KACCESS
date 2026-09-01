@@ -116,12 +116,7 @@ unset($pRef);
         </div>
         <div class="flex items-center gap-3">
           <!-- KakaoTalk 1:1 Chat Button (Top Nav) -->
-          <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 bg-[#FEE500] hover:bg-[#fedc00] active:scale-95 text-[#191919] font-bold text-xs sm:text-sm px-3.5 py-1.5 rounded-full shadow-xs hover:shadow-md transition-all duration-200 cursor-pointer" title="카카오톡 채널 1:1 상담 바로가기">
-            <svg class="w-4 h-4 text-[#191919] shrink-0" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 3C6.48 3 2 6.58 2 11c0 2.82 1.83 5.3 4.62 6.67-.18.66-.75 2.76-.87 3.23-.15.58.21.57.45.42.31-.21 3.59-2.45 4.18-2.86.53.08 1.07.14 1.62.14 5.52 0 10-3.58 10-8s-4.48-8-10-8z"/>
-            </svg>
-            <span class="font-extrabold whitespace-nowrap">카톡 1:1 상담</span>
-          </a>
+          <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 bg-[#FEE500] hover:bg-[#FDD835] active:scale-95 text-black font-extrabold text-xs sm:text-sm px-3.5 py-1.5 rounded-full border border-[#E5CD00] shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer" title="카카오톡 1:1 상담 바로가기"><svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 3C6.477 3 2 6.477 2 10.765c0 2.76 1.83 5.183 4.618 6.568l-.946 3.483c-.083.307.255.553.518.375l4.164-2.77c.535.056 1.083.084 1.646.084 5.523 0 10-3.477 10-7.765S17.523 3 12 3z" fill="#000000"/><path d="M7.74 8.79v4.42H6.55V9.83H5.2V8.79h3.74v1.04H7.74zm2.84 0l1.32 4.42h-1.22l-.24-.87H9.27l-.23.87H7.85l1.34-4.42h1.39zm-.37 2.61l-.34-1.29-.33 1.29h.67zm4.27 1.81h1.56v1h-2.75V8.79h1.19v4.42zm4.32-.97l1.19 1.97h-1.39l-.88-1.5-.47.46v1.04h-1.19V8.79h1.19v2.24l1.27-2.24h1.36l-1.08 1.85z" fill="#FEE500"/></svg><span class="text-black font-black whitespace-nowrap">카톡 1:1 상담</span></a>
           <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors" aria-label="Menu">
             <div class="w-5 h-4 flex flex-col justify-between">
               <span class="block h-0.5 bg-brand-dark rounded-full"></span>
@@ -138,12 +133,7 @@ unset($pRef);
       <a class="font-sans text-sm font-medium text-brand-dark hover:text-brand-blue py-2 border-b border-brand-border/50" href="/medicare">메디케어 &amp; ACA</a>
       <a class="font-sans text-sm font-medium text-brand-dark hover:text-brand-blue py-2 border-b border-brand-border/50" href="/tool">환자도우미</a>
       <a class="font-sans text-sm font-medium text-brand-dark hover:text-brand-blue py-2 border-b border-brand-border/50" href="/about">소개</a>
-      <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-[#FEE500] hover:bg-[#fedc00] text-[#191919] font-bold text-sm py-2.5 px-4 rounded-xl shadow-xs mt-1">
-        <svg class="w-4 h-4 text-[#191919] shrink-0" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 3C6.48 3 2 6.58 2 11c0 2.82 1.83 5.3 4.62 6.67-.18.66-.75 2.76-.87 3.23-.15.58.21.57.45.42.31-.21 3.59-2.45 4.18-2.86.53.08 1.07.14 1.62.14 5.52 0 10-3.58 10-8s-4.48-8-10-8z"/>
-        </svg>
-        <span>카카오톡 1:1 상담하기</span>
-      </a>
+      <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-[#FEE500] hover:bg-[#FDD835] text-black font-extrabold text-sm py-2.5 px-4 rounded-xl border border-[#E5CD00] shadow-sm mt-1"><svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 3C6.477 3 2 6.477 2 10.765c0 2.76 1.83 5.183 4.618 6.568l-.946 3.483c-.083.307.255.553.518.375l4.164-2.77c.535.056 1.083.084 1.646.084 5.523 0 10-3.477 10-7.765S17.523 3 12 3z" fill="#000000"/><path d="M7.74 8.79v4.42H6.55V9.83H5.2V8.79h3.74v1.04H7.74zm2.84 0l1.32 4.42h-1.22l-.24-.87H9.27l-.23.87H7.85l1.34-4.42h1.39zm-.37 2.61l-.34-1.29-.33 1.29h.67zm4.27 1.81h1.56v1h-2.75V8.79h1.19v4.42zm4.32-.97l1.19 1.97h-1.39l-.88-1.5-.47.46v1.04h-1.19V8.79h1.19v2.24l1.27-2.24h1.36l-1.08 1.85z" fill="#FEE500"/></svg><span class="text-black font-black">카카오톡 1:1 상담하기</span></a>
     </div>
   </nav>
 
@@ -403,11 +393,9 @@ unset($pRef);
   </script>
   <!-- KakaoTalk Floating Chat Widget -->
   <aside id="kakao-floating-chat" class="fixed bottom-6 right-6 z-50 flex items-center group">
-    <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 bg-[#FEE500] hover:bg-[#fedc00] text-[#191919] font-bold px-4 py-3 sm:px-4.5 sm:py-3.5 rounded-full shadow-lg hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 ring-4 ring-black/5" aria-label="카카오톡 1:1 상담">
-      <svg class="w-6 h-6 text-[#191919] shrink-0" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 3C6.48 3 2 6.58 2 11c0 2.82 1.83 5.3 4.62 6.67-.18.66-.75 2.76-.87 3.23-.15.58.21.57.45.42.31-.21 3.59-2.45 4.18-2.86.53.08 1.07.14 1.62.14 5.52 0 10-3.58 10-8s-4.48-8-10-8z"/>
-      </svg>
-      <span class="text-sm font-sans tracking-tight font-extrabold hidden sm:inline-block">카톡 1:1 상담</span>
+    <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 bg-[#FEE500] hover:bg-[#FDD835] text-black font-black px-4 py-3 sm:px-4.5 sm:py-3.5 rounded-full border border-[#E5CD00] shadow-lg hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 ring-4 ring-black/5" aria-label="카카오톡 1:1 상담">
+      <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 3C6.477 3 2 6.477 2 10.765c0 2.76 1.83 5.183 4.618 6.568l-.946 3.483c-.083.307.255.553.518.375l4.164-2.77c.535.056 1.083.084 1.646.084 5.523 0 10-3.477 10-7.765S17.523 3 12 3z" fill="#000000"/><path d="M7.74 8.79v4.42H6.55V9.83H5.2V8.79h3.74v1.04H7.74zm2.84 0l1.32 4.42h-1.22l-.24-.87H9.27l-.23.87H7.85l1.34-4.42h1.39zm-.37 2.61l-.34-1.29-.33 1.29h.67zm4.27 1.81h1.56v1h-2.75V8.79h1.19v4.42zm4.32-.97l1.19 1.97h-1.39l-.88-1.5-.47.46v1.04h-1.19V8.79h1.19v2.24l1.27-2.24h1.36l-1.08 1.85z" fill="#FEE500"/></svg>
+      <span class="text-sm font-sans tracking-tight font-black text-black hidden sm:inline-block">카톡 1:1 상담</span>
     </a>
   </aside>
 
