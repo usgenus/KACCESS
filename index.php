@@ -157,7 +157,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
     .h-\[45px\] {
       height: 45px !important;
     }
-    #gallery-billboard-section {
+    #gallery-billboard-section, #gallery-billboard2-section, #medical-videos-section, .billboard-section {
       width: 100vw !important;
       max-width: 100vw !important;
       position: relative !important;
@@ -165,6 +165,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
       right: 50% !important;
       margin-left: -50vw !important;
       margin-right: -50vw !important;
+      box-sizing: border-box !important;
       opacity: 1 !important;
       transform: none !important;
       display: block !important;
@@ -1013,7 +1014,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
         </section>
 
         <!-- 6. Medical Video News Section (의학비디오뉴스) -->
-        <section id="medical-videos-section" class="bg-[#181818] py-14 border-t border-b border-[#2b2b2b] font-sans">
+        <section id="medical-videos-section" class="w-full font-sans bg-[#181818] py-14 border-t border-b border-[#2b2b2b] billboard-section">
           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Section Title Bar -->
             <div class="flex items-center justify-between mb-5 pb-3 border-b border-[#333333]">
@@ -1223,7 +1224,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
 
     // 2. Global Section Slide-in on Scroll (Excludes Top Billboard)
     document.addEventListener('DOMContentLoaded', function() {
-      var targets = document.querySelectorAll('main section:not(#gallery-billboard-section), main article, #homepage-top-story-box, #homepage-latest-news-box, #homepage-doctor-columns-box, #homepage-reports-grid');
+      var targets = document.querySelectorAll('main section:not(#gallery-billboard-section):not(#gallery-billboard2-section):not(#medical-videos-section), main article, #homepage-top-story-box, #homepage-latest-news-box, #homepage-doctor-columns-box, #homepage-reports-grid');
       if ('IntersectionObserver' in window) {
         var observer = new IntersectionObserver(function(entries) {
           entries.forEach(function(entry) {
