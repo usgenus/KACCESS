@@ -171,6 +171,15 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
       display: block !important;
       visibility: visible !important;
     }
+    #medical-videos-section {
+      background-color: #181818 !important;
+      border-top: 1px solid #333333 !important;
+      border-bottom: 1px solid #333333 !important;
+      padding-top: 48px !important;
+      padding-bottom: 56px !important;
+      display: block !important;
+      visibility: visible !important;
+    }
     #gallery-billboard-container {
       opacity: 1 !important;
       transform: none !important;
@@ -1012,10 +1021,11 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
             </a>
           </div>
         </section>
+      </div>
 
-        <!-- 6. Medical Video News Section (의학비디오뉴스) -->
-        <section id="medical-videos-section" class="w-full font-sans bg-[#181818] py-14 border-t border-b border-[#2b2b2b] billboard-section">
-          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- 6. Medical Video News Section (의학비디오뉴스) - FULL HORIZONTAL WIDTH -->
+      <section id="medical-videos-section" class="w-full font-sans billboard-section" style="width: 100vw !important; max-width: 100vw !important; position: relative !important; left: 50% !important; right: 50% !important; margin-left: -50vw !important; margin-right: -50vw !important; background-color: #181818 !important; border-top: 1px solid #333333 !important; border-bottom: 1px solid #333333 !important; padding-top: 48px !important; padding-bottom: 56px !important; box-sizing: border-box !important; display: block !important;">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Section Title Bar -->
             <div class="flex items-center justify-between mb-5 pb-3 border-b border-[#333333]">
               <h2 class="font-extrabold text-2xl sm:text-3xl lg:text-4xl text-white tracking-tight">의학비디오뉴스</h2>
@@ -1138,7 +1148,6 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
           </div>
         </section>
 
-      </div>
     </div>
   </main>
 
