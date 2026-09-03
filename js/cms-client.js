@@ -614,7 +614,7 @@
   var currentVideo = null;
   var activeVideoCategory = '전체';
   var currentVideoPage = 1;
-  var VIDEOS_PER_PAGE = 4;
+  var VIDEOS_PER_PAGE = 7;
 
   function extractYouTubeId(url) {
     if (!url) return '';
@@ -662,9 +662,11 @@
     activeVideoCategory = c;
     currentVideoPage = 1;
     document.querySelectorAll('#medical-videos-categories button').forEach(function(btn) {
-      btn.className = btn.textContent.trim() === c
-        ? 'text-xs font-semibold px-4 py-2 rounded-full transition-all whitespace-nowrap bg-red-600 text-white shadow-sm cursor-pointer'
-        : 'text-xs font-medium px-4 py-2 rounded-full transition-all whitespace-nowrap bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-100 hover:text-slate-900 cursor-pointer';
+      if (btn.textContent.trim() === c) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
     });
     renderVideoPlayerAndList(false);
   };
@@ -675,7 +677,7 @@
     currentVideo = videos.find(function(v) { return v.id === id; });
     renderVideoPlayerAndList(autoPlay === true);
     var playerBox = document.getElementById('medical-video-player-box');
-    if (playerBox && window.innerWidth < 768) {
+    if (playerBox && window.innerWidth < 1024) {
       playerBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   };
@@ -739,30 +741,42 @@
           }
         }
       } else {
-        // Thumbnail with Big Red Play Button
+        // Thumbnail with dark box Play Button
         playerBox.innerHTML = [
           '<div class="relative w-full h-full group cursor-pointer" onclick="window.cmsPlayCurrentVideo()">',
-          '  <img src="' + info.thumb + '" alt="' + escapeHtml(cur.title) + '" onerror="if(this.src.indexOf(\'maxresdefault\')!==-1){this.src=this.src.replace(\'maxresdefault\',\'hqdefault\');}else if(this.src.indexOf(\'hqdefault\')!==-1){this.src=\'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80\';}" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500">',
-          '  <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-black/20 to-transparent"></div>',
+          '  <img src="' + info.thumb + '" alt="' + escapeHtml(cur.title) + '" onerror="if(this.src.indexOf(\'maxresdefault\')!==-1){this.src=this.src.replace(\'maxresdefault\',\'hqdefault\');}else if(this.src.indexOf(\'hqdefault\')!==-1){this.src=\'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80\';}" class="object-cover w-full h-full group-hover:scale-103 transition-transform duration-500">',
+          '  <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent"></div>',
           '  <div class="absolute inset-0 flex items-center justify-center">',
-          '    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white text-red-600 flex items-center justify-center text-2xl sm:text-3xl shadow-2xl group-hover:scale-110 group-hover:bg-red-600 group-hover:text-white transition-all duration-300 ring-4 ring-red-500/30">&#9654;</div>',
+          '    <div class="video-theme-play-btn group-hover:scale-110 transition-transform">',
+          '      <svg class="w-6 h-6 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>',
+          '    </div>',
           '  </div>',
-          '  <div class="absolute bottom-4 left-4 right-4 flex items-end justify-between">',
-          '    <span class="bg-red-600 text-white text-xs font-bold px-3.5 py-1 rounded-full shadow-sm">' + escapeHtml(cur.category || '의학뉴스') + '</span>',
-          '    <span class="bg-white/95 backdrop-blur-sm text-slate-900 text-xs font-mono font-semibold px-2.5 py-1 rounded-md border border-slate-200/80 shadow-sm">&#9201; ' + escapeHtml(cur.duration || '10:00') + '</span>',
+          '  <div class="absolute bottom-3 right-3 bg-black/80 backdrop-blur-xs text-white text-xs px-2.5 py-1 rounded flex items-center gap-1.5 font-mono border border-white/10">',
+          '    <svg class="w-3.5 h-3.5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>',
+          '    <span>' + escapeHtml(cur.duration || '10:00') + '</span>',
           '  </div>',
           '</div>'
         ].join('');
       }
 
       if (infoBox) {
+        var authorMeta = cur.doctor || cur.hospital || '뉴저지 한인 전문의';
+        var dateMeta = cur.date || '최신 의학 정보';
+        var catMeta = cur.category || '의학뉴스';
         infoBox.innerHTML = [
-          '<div class="flex items-center gap-3 text-xs text-slate-500 flex-wrap">',
-          '  <span class="font-bold text-red-600 bg-red-50 border border-red-100 px-2.5 py-0.5 rounded-full">' + escapeHtml(cur.category || '의학뉴스') + '</span>',
-          '  <span class="text-slate-600">&#9201; ' + escapeHtml(cur.duration || '10:00') + '</span>',
+          '<h3 class="video-theme-info-title">' + escapeHtml(cur.title) + '</h3>',
+          '<div class="video-theme-info-byline">',
+          '  <span>By ' + escapeHtml(authorMeta) + '</span>',
+          '  <span class="mx-1.5 text-slate-500">/</span>',
+          '  <span>' + escapeHtml(dateMeta) + '</span>',
+          '  <span class="mx-1.5 text-slate-500">•</span>',
+          '  <span class="text-red-400 font-medium">' + escapeHtml(catMeta) + '</span>',
           '</div>',
-          '<h3 class="font-extrabold text-xl sm:text-2xl text-slate-900 leading-snug tracking-tight">' + escapeHtml(cur.title) + '</h3>',
-          '<p class="text-xs sm:text-sm text-slate-600 leading-relaxed pt-1">' + escapeHtml(cur.summary || cur.description || '') + '</p>'
+          '<p class="video-theme-info-desc line-clamp-3">' + escapeHtml(cur.summary || cur.description || '') + '</p>',
+          '<button type="button" onclick="window.cmsPlayCurrentVideo()" class="video-theme-readmore-btn">',
+          '  <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>',
+          '  <span>영상 시청</span>',
+          '</button>'
         ].join('');
       }
     }
@@ -779,20 +793,17 @@
       playlistBox.innerHTML = pageVideos.map(function(v) {
         var isPlaying = cur && cur.id === v.id;
         var itemInfo = getVideoMediaInfo(v);
+        var author = v.doctor ? (v.doctor + ' · ') : '';
+        var date = v.date || v.category || '최신영상';
         return [
-          '<div onclick="window.cmsSelectVideo(\'' + v.id + '\', true)" class="flex gap-3.5 p-3 rounded-2xl border transition-all duration-200 cursor-pointer ' + (isPlaying ? 'bg-red-50/70 border-red-300 ring-2 ring-red-400 shadow-sm' : 'bg-white border-slate-200/80 hover:bg-slate-50 hover:border-slate-300') + '">',
-          '  <div class="relative w-28 h-20 sm:w-32 sm:h-20 rounded-xl overflow-hidden shrink-0 bg-black">',
+          '<div onclick="window.cmsSelectVideo(\'' + v.id + '\', true)" class="video-theme-item ' + (isPlaying ? 'active' : '') + '">',
+          '  <div class="video-theme-item-thumb">',
           '    <img src="' + itemInfo.thumb + '" alt="' + escapeHtml(v.title) + '" onerror="if(this.src.indexOf(\'maxresdefault\')!==-1){this.src=this.src.replace(\'maxresdefault\',\'hqdefault\');}else if(this.src.indexOf(\'hqdefault\')!==-1){this.src=\'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&q=80\';}" class="w-full h-full object-cover">',
-          '    <div class="absolute bottom-1 right-1 bg-black/85 text-white font-mono font-bold text-[10px] px-1.5 py-0.5 rounded">&#9201; ' + escapeHtml(v.duration || '10:00') + '</div>',
+          '    <div class="video-theme-item-duration">' + escapeHtml(v.duration || '10:00') + '</div>',
           '  </div>',
-          '  <div class="flex-1 min-w-0 flex flex-col justify-between py-0.5">',
-          '    <div>',
-          '      <span class="text-[10px] font-bold text-red-600 uppercase tracking-wider block mb-0.5">' + escapeHtml(v.category || '의학뉴스') + '</span>',
-          '      <h4 class="font-bold text-xs sm:text-sm text-slate-900 leading-snug line-clamp-2' + (isPlaying ? ' text-red-700' : '') + '">' + escapeHtml(v.title) + '</h4>',
-          '    </div>',
-          '    <div class="flex items-center gap-2 text-[11px] text-slate-500 mt-1.5">',
-          '      <span class="text-slate-500 font-mono">&#9201; ' + escapeHtml(v.duration || '10:00') + '</span>',
-          '    </div>',
+          '  <div class="video-theme-item-text">',
+          '    <h4 class="video-theme-item-title">' + escapeHtml(v.title) + '</h4>',
+          '    <div class="video-theme-item-meta">' + escapeHtml(author + date) + '</div>',
           '  </div>',
           '</div>'
         ].join('');
@@ -801,9 +812,9 @@
 
     if (paginationBox) {
       paginationBox.innerHTML = [
-        '<button onclick="window.cmsPrevVideoPage()" ' + (currentVideoPage <= 1 ? 'disabled class="opacity-30 cursor-not-allowed"' : 'class="cursor-pointer font-bold text-slate-700 hover:text-red-600"') + '>&#8249; 이전</button>',
-        '<span class="text-xs font-mono font-bold">' + currentVideoPage + ' / ' + totalPages + '</span>',
-        '<button onclick="window.cmsNextVideoPage()" ' + (currentVideoPage >= totalPages ? 'disabled class="opacity-30 cursor-not-allowed"' : 'class="cursor-pointer font-bold text-slate-700 hover:text-red-600"') + '>다음 &#8250;</button>'
+        '<button onclick="window.cmsPrevVideoPage()" ' + (currentVideoPage <= 1 ? 'disabled class="opacity-30 cursor-not-allowed"' : 'class="cursor-pointer font-bold text-slate-300 hover:text-white"') + '>&#8249; 이전</button>',
+        '<span class="font-mono font-bold text-slate-400">' + currentVideoPage + ' / ' + totalPages + '</span>',
+        '<button onclick="window.cmsNextVideoPage()" ' + (currentVideoPage >= totalPages ? 'disabled class="opacity-30 cursor-not-allowed"' : 'class="cursor-pointer font-bold text-slate-300 hover:text-white"') + '>다음 &#8250;</button>'
       ].join('');
     }
   }

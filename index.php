@@ -107,7 +107,7 @@ if (empty($activeVideos) && !empty($videos)) {
     $activeVideos = $videos;
 }
 $mainVideo = $activeVideos[0] ?? null;
-$playlistVideos = array_slice($activeVideos, 0, 4);
+$playlistVideos = array_slice($activeVideos, 0, 7);
 ?>
 <!DOCTYPE html>
 <html lang="ko" class="h-full antialiased">
@@ -294,6 +294,259 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
       height: 34px !important;
       object-fit: cover !important;
       display: block !important;
+    }
+
+    /* Medical Video Player Dark Theme (Attached Design) */
+    .video-theme-card {
+      background-color: #242424 !important;
+      border: 1px solid #383838 !important;
+      border-radius: 12px !important;
+      overflow: hidden !important;
+      box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.6) !important;
+    }
+    .video-theme-topbar {
+      background-color: #1a1a1a !important;
+      border-bottom: 1px solid #333333 !important;
+      display: flex !important;
+      align-items: stretch !important;
+    }
+    .video-theme-home-btn {
+      background-color: #242424 !important;
+      color: #d1d5db !important;
+      padding: 12px 18px !important;
+      border: none !important;
+      border-right: 1px solid #333333 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      cursor: pointer !important;
+      transition: background-color 0.2s, color 0.2s !important;
+    }
+    .video-theme-home-btn:hover {
+      background-color: #333333 !important;
+      color: #ffffff !important;
+    }
+    .video-theme-categories {
+      display: flex !important;
+      align-items: center !important;
+      overflow-x: auto !important;
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
+      flex: 1 !important;
+    }
+    .video-theme-categories::-webkit-scrollbar {
+      display: none !important;
+    }
+    .video-theme-cat-btn {
+      padding: 12px 18px !important;
+      font-size: 13px !important;
+      font-weight: 500 !important;
+      color: #9ca3af !important;
+      background: transparent !important;
+      border: none !important;
+      border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
+      white-space: nowrap !important;
+      cursor: pointer !important;
+      transition: all 0.2s !important;
+      display: inline-block !important;
+    }
+    .video-theme-cat-btn:hover {
+      color: #ffffff !important;
+      background-color: rgba(255, 255, 255, 0.06) !important;
+    }
+    .video-theme-cat-btn.active {
+      color: #ffffff !important;
+      font-weight: 700 !important;
+      background-color: #7e2224 !important;
+    }
+    .video-theme-layout {
+      display: flex !important;
+      flex-direction: column !important;
+    }
+    @media (min-width: 1024px) {
+      .video-theme-layout {
+        display: grid !important;
+        grid-template-columns: 340px 1fr !important;
+      }
+    }
+    @media (min-width: 1280px) {
+      .video-theme-layout {
+        grid-template-columns: 380px 1fr !important;
+      }
+    }
+    .video-theme-sidebar {
+      background-color: #1e1e1e !important;
+      border-right: 1px solid #333333 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      order: 2 !important;
+    }
+    @media (min-width: 1024px) {
+      .video-theme-sidebar {
+        order: 1 !important;
+      }
+    }
+    .video-theme-playlist {
+      max-height: 560px !important;
+      overflow-y: auto !important;
+    }
+    .video-theme-item {
+      display: flex !important;
+      align-items: center !important;
+      gap: 12px !important;
+      padding: 10px 14px !important;
+      border-bottom: 1px solid #292929 !important;
+      cursor: pointer !important;
+      transition: background-color 0.15s ease !important;
+      text-decoration: none !important;
+      background-color: transparent !important;
+      color: #e2e8f0 !important;
+    }
+    .video-theme-item:hover {
+      background-color: #2b2b2b !important;
+    }
+    .video-theme-item.active {
+      background-color: #7e2224 !important;
+    }
+    .video-theme-item-thumb {
+      width: 92px !important;
+      height: 58px !important;
+      border-radius: 4px !important;
+      overflow: hidden !important;
+      position: relative !important;
+      background-color: #000000 !important;
+      flex-shrink: 0 !important;
+    }
+    .video-theme-item-thumb img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+    }
+    .video-theme-item-duration {
+      position: absolute !important;
+      bottom: 3px !important;
+      right: 3px !important;
+      background-color: rgba(0, 0, 0, 0.85) !important;
+      color: #ffffff !important;
+      font-family: monospace !important;
+      font-size: 10px !important;
+      padding: 1px 4px !important;
+      border-radius: 2px !important;
+      line-height: 1 !important;
+    }
+    .video-theme-item-text {
+      flex: 1 !important;
+      min-width: 0 !important;
+    }
+    .video-theme-item-title {
+      color: #ffffff !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      line-height: 1.35 !important;
+      display: -webkit-box !important;
+      -webkit-line-clamp: 2 !important;
+      -webkit-box-orient: vertical !important;
+      overflow: hidden !important;
+    }
+    .video-theme-item-meta {
+      color: #8f96a3 !important;
+      font-size: 11px !important;
+      margin-top: 4px !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+    .video-theme-item.active .video-theme-item-meta {
+      color: rgba(255, 255, 255, 0.85) !important;
+    }
+    .video-theme-pagination {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      padding: 10px 16px !important;
+      background-color: #181818 !important;
+      border-top: 1px solid #2d2d2d !important;
+      font-size: 12px !important;
+      color: #8f96a3 !important;
+    }
+    .video-theme-main {
+      background-color: #272727 !important;
+      padding: 20px !important;
+      order: 1 !important;
+    }
+    @media (min-width: 1024px) {
+      .video-theme-main {
+        order: 2 !important;
+        padding: 28px !important;
+      }
+    }
+    .video-theme-player-frame {
+      position: relative !important;
+      width: 100% !important;
+      aspect-ratio: 16 / 9 !important;
+      background-color: #000000 !important;
+      border-radius: 6px !important;
+      overflow: hidden !important;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5) !important;
+    }
+    .video-theme-play-btn {
+      width: 64px !important;
+      height: 48px !important;
+      background-color: rgba(0, 0, 0, 0.72) !important;
+      backdrop-filter: blur(4px) !important;
+      border-radius: 8px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      transition: all 0.25s ease !important;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5) !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+    .video-theme-play-btn:hover {
+      background-color: #dc2626 !important;
+      transform: scale(1.08) !important;
+    }
+    .video-theme-info-title {
+      color: #ffffff !important;
+      font-size: 22px !important;
+      font-weight: 700 !important;
+      line-height: 1.3 !important;
+      margin-top: 20px !important;
+    }
+    @media (min-width: 640px) {
+      .video-theme-info-title {
+        font-size: 26px !important;
+      }
+    }
+    .video-theme-info-byline {
+      color: #9ca3af !important;
+      font-size: 13px !important;
+      margin-top: 6px !important;
+    }
+    .video-theme-info-desc {
+      color: #d1d5db !important;
+      font-size: 14px !important;
+      line-height: 1.6 !important;
+      margin-top: 12px !important;
+    }
+    .video-theme-readmore-btn {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      background-color: #3f3f3f !important;
+      color: #ffffff !important;
+      font-size: 12px !important;
+      font-weight: 600 !important;
+      padding: 8px 16px !important;
+      border-radius: 4px !important;
+      border: none !important;
+      cursor: pointer !important;
+      margin-top: 14px !important;
+      transition: background-color 0.2s !important;
+    }
+    .video-theme-readmore-btn:hover {
+      background-color: #7e2224 !important;
     }
   </style>
 </head>
@@ -760,123 +1013,127 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
         </section>
 
         <!-- 6. Medical Video News Section (의학비디오뉴스) -->
-        <section id="medical-videos-section" class="bg-gradient-to-b from-slate-50/60 via-white to-slate-50/60 py-16 border-t border-b border-slate-200/60 font-sans">
+        <section id="medical-videos-section" class="bg-[#181818] py-14 border-t border-b border-[#2b2b2b] font-sans">
           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 border-b border-slate-200/80 pb-5">
-              <div>
-                <h2 class="font-extrabold text-2xl sm:text-3xl lg:text-4xl text-slate-900 tracking-tight">의학비디오뉴스</h2>
-              </div>
-              <div id="medical-videos-categories" class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-                <button onclick="window.cmsSetVideoCat('전체')" class="text-xs font-semibold px-4 py-2 rounded-full transition-all whitespace-nowrap bg-red-600 text-white shadow-sm cursor-pointer">전체</button>
-                <button onclick="window.cmsSetVideoCat('만성질환 & 당뇨')" class="text-xs font-medium px-4 py-2 rounded-full transition-all whitespace-nowrap bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-100 hover:text-slate-900 cursor-pointer">만성질환 &amp; 당뇨</button>
-                <button onclick="window.cmsSetVideoCat('심장 & 혈관')" class="text-xs font-medium px-4 py-2 rounded-full transition-all whitespace-nowrap bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-100 hover:text-slate-900 cursor-pointer">심장 &amp; 혈관</button>
-                <button onclick="window.cmsSetVideoCat('뇌신경 & 치매')" class="text-xs font-medium px-4 py-2 rounded-full transition-all whitespace-nowrap bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-100 hover:text-slate-900 cursor-pointer">뇌신경 &amp; 치매</button>
-                <button onclick="window.cmsSetVideoCat('암 예방 & 검진')" class="text-xs font-medium px-4 py-2 rounded-full transition-all whitespace-nowrap bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-100 hover:text-slate-900 cursor-pointer">암 예방 &amp; 검진</button>
-                <button onclick="window.cmsSetVideoCat('감염병 & 백신')" class="text-xs font-medium px-4 py-2 rounded-full transition-all whitespace-nowrap bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-100 hover:text-slate-900 cursor-pointer">감염병 &amp; 백신</button>
-                <button onclick="window.cmsSetVideoCat('건강검진 & 의료정보')" class="text-xs font-medium px-4 py-2 rounded-full transition-all whitespace-nowrap bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-100 hover:text-slate-900 cursor-pointer">건강검진 &amp; 의료정보</button>
-              </div>
+            <!-- Section Title Bar -->
+            <div class="flex items-center justify-between mb-5 pb-3 border-b border-[#333333]">
+              <h2 class="font-extrabold text-2xl sm:text-3xl lg:text-4xl text-white tracking-tight">의학비디오뉴스</h2>
+              <span id="medical-videos-count-badge" class="text-xs font-semibold text-slate-400 bg-[#282828] px-3 py-1 rounded-full border border-[#383838]"><?= count($activeVideos) ?>개 영상</span>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-              
-              <!-- Main Video Player -->
-              <div class="lg:col-span-7 xl:col-span-8 space-y-4">
-                <div id="medical-video-player-box" class="relative aspect-video w-full rounded-2xl overflow-hidden bg-black border border-slate-200/80 shadow-md">
-                  <?php if ($mainVideo): 
-                    $ytId = $mainVideo['youtubeId'] ?? '';
-                    if (!$ytId && !empty($mainVideo['youtubeUrl']) && preg_match('~(?:youtu\.be/|youtube\.com/(?:embed/|v/|watch\?v=))([\w-]{11})~', $mainVideo['youtubeUrl'], $m)) {
-                        $ytId = $m[1];
-                    }
-                  ?>
-                    <?php if ($ytId): 
-                      $vThumb = !empty($mainVideo['thumbnail']) ? $mainVideo['thumbnail'] : (!empty($mainVideo['thumbnailUrl']) ? $mainVideo['thumbnailUrl'] : ('https://img.youtube.com/vi/' . $ytId . '/maxresdefault.jpg'));
+            <!-- Video Player Widget Container (Attached Design Theme) -->
+            <div class="video-theme-card">
+              <!-- Top Category Navigation Bar -->
+              <div class="video-theme-topbar">
+                <button type="button" onclick="window.cmsSetVideoCat('전체')" class="video-theme-home-btn" title="전체 영상">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
+                </button>
+                <div id="medical-videos-categories" class="video-theme-categories">
+                  <button type="button" onclick="window.cmsSetVideoCat('전체')" class="video-theme-cat-btn active">전체</button>
+                  <button type="button" onclick="window.cmsSetVideoCat('만성질환 & 당뇨')" class="video-theme-cat-btn">만성질환 &amp; 당뇨</button>
+                  <button type="button" onclick="window.cmsSetVideoCat('심장 & 혈관')" class="video-theme-cat-btn">심장 &amp; 혈관</button>
+                  <button type="button" onclick="window.cmsSetVideoCat('뇌신경 & 치매')" class="video-theme-cat-btn">뇌신경 &amp; 치매</button>
+                  <button type="button" onclick="window.cmsSetVideoCat('암 예방 & 검진')" class="video-theme-cat-btn">암 예방 &amp; 검진</button>
+                  <button type="button" onclick="window.cmsSetVideoCat('감염병 & 백신')" class="video-theme-cat-btn">감염병 &amp; 백신</button>
+                  <button type="button" onclick="window.cmsSetVideoCat('건강검진 & 의료정보')" class="video-theme-cat-btn">건강검진 &amp; 의료정보</button>
+                </div>
+              </div>
+
+              <!-- Main Player & Playlist Grid (Left Playlist, Right Video) -->
+              <div class="video-theme-layout">
+                
+                <!-- Left Column: Playlist -->
+                <div class="video-theme-sidebar">
+                  <div id="medical-videos-playlist" class="video-theme-playlist">
+                    <?php foreach ($playlistVideos as $v): 
+                      $isPlaying = $mainVideo && $mainVideo['id'] === $v['id'];
+                      $itemThumb = !empty($v['thumbnail']) ? $v['thumbnail'] : (!empty($v['thumbnailUrl']) ? $v['thumbnailUrl'] : (!empty($v['youtubeId']) ? ('https://img.youtube.com/vi/' . $v['youtubeId'] . '/hqdefault.jpg') : 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&q=80'));
+                      $author = !empty($v['doctor']) ? ($v['doctor'] . ' · ') : '';
+                      $date = $v['date'] ?? ($v['category'] ?? '최신영상');
                     ?>
-                      <div class="relative w-full h-full group cursor-pointer" 
-                           onclick="if(window.cmsPlayCurrentVideo){window.cmsPlayCurrentVideo();}else{this.innerHTML='<iframe class=\'w-full h-full border-0\' src=\'https://www.youtube.com/embed/<?= $ytId ?>?autoplay=1&enablejsapi=1&rel=0&playsinline=1\' title=\'<?= htmlspecialchars($mainVideo['title'] ?? '') ?>\' allow=\'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\' referrerpolicy=\'strict-origin-when-cross-origin\' allowfullscreen></iframe>';}">
-                        <img src="<?= htmlspecialchars($vThumb) ?>" alt="<?= htmlspecialchars($mainVideo['title'] ?? '') ?>" onerror="if(this.src.indexOf('maxresdefault')!==-1){this.src=this.src.replace('maxresdefault','hqdefault');}else{this.onerror=null;this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80';}" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-black/20 to-transparent"></div>
-                        <div class="absolute inset-0 flex items-center justify-center">
-                          <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white text-red-600 flex items-center justify-center text-2xl sm:text-3xl shadow-2xl group-hover:scale-110 group-hover:bg-red-600 group-hover:text-white transition-all duration-300 ring-4 ring-red-500/30">▶</div>
+                      <div onclick="window.cmsSelectVideo('<?= $v['id'] ?>', true)" 
+                           class="video-theme-item <?= $isPlaying ? 'active' : '' ?>">
+                        <div class="video-theme-item-thumb">
+                          <img src="<?= htmlspecialchars($itemThumb) ?>" alt="<?= htmlspecialchars($v['title'] ?? '') ?>" onerror="if(this.src.indexOf('maxresdefault')!==-1){this.src=this.src.replace('maxresdefault','hqdefault');}else{this.onerror=null;this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&q=80';}" class="w-full h-full object-cover">
+                          <div class="video-theme-item-duration">
+                            <?= htmlspecialchars($v['duration'] ?: '10:00') ?>
+                          </div>
                         </div>
-                        <div class="absolute bottom-4 left-4 right-4 flex items-end justify-between">
-                          <span class="bg-red-600 text-white text-xs font-bold px-3.5 py-1 rounded-full shadow-sm"><?= htmlspecialchars($mainVideo['category'] ?: '의학뉴스') ?></span>
-                          <span class="bg-white/95 backdrop-blur-sm text-slate-900 text-xs font-mono font-semibold px-2.5 py-1 rounded-md border border-slate-200/80 shadow-sm">⏱ <?= htmlspecialchars($mainVideo['duration'] ?: '10:00') ?></span>
+                        <div class="video-theme-item-text">
+                          <h4 class="video-theme-item-title">
+                            <?= htmlspecialchars($v['title'] ?? '') ?>
+                          </h4>
+                          <div class="video-theme-item-meta">
+                            <?= htmlspecialchars($author . $date) ?>
+                          </div>
                         </div>
                       </div>
-                    <?php else: ?>
-                      <div class="relative w-full h-full group cursor-pointer" onclick="if(window.cmsPlayCurrentVideo){window.cmsPlayCurrentVideo();}else{window.cmsSelectVideo('<?= $mainVideo['id'] ?>', true);}">
-                        <img src="<?= htmlspecialchars(!empty($mainVideo['thumbnail']) ? $mainVideo['thumbnail'] : (!empty($mainVideo['thumbnailUrl']) ? $mainVideo['thumbnailUrl'] : 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80')) ?>" alt="<?= htmlspecialchars($mainVideo['title'] ?? '') ?>" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80';" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
-                          <div class="w-16 h-16 rounded-full bg-red-600 text-white flex items-center justify-center text-2xl shadow-2xl">▶</div>
+                    <?php endforeach; ?>
+                  </div>
+
+                  <div id="medical-videos-pagination" class="video-theme-pagination">
+                    <button onclick="window.cmsPrevVideoPage()" class="cursor-pointer font-bold text-slate-400 hover:text-white">‹ 이전</button>
+                    <span class="font-mono font-bold text-slate-400">1 / <?= max(1, ceil(count($activeVideos) / 7)) ?></span>
+                    <button onclick="window.cmsNextVideoPage()" class="cursor-pointer font-bold text-slate-400 hover:text-white">다음 ›</button>
+                  </div>
+                </div>
+
+                <!-- Right Column: Main Player & Details -->
+                <div class="video-theme-main">
+                  <div id="medical-video-player-box" class="video-theme-player-frame">
+                    <?php if ($mainVideo): 
+                      $ytId = $mainVideo['youtubeId'] ?? '';
+                      if (!$ytId && !empty($mainVideo['youtubeUrl']) && preg_match('~(?:youtu\.be/|youtube\.com/(?:embed/|v/|watch\?v=))([\w-]{11})~', $mainVideo['youtubeUrl'], $m)) {
+                          $ytId = $m[1];
+                      }
+                      $vThumb = !empty($mainVideo['thumbnail']) ? $mainVideo['thumbnail'] : (!empty($mainVideo['thumbnailUrl']) ? $mainVideo['thumbnailUrl'] : (!empty($ytId) ? ('https://img.youtube.com/vi/' . $ytId . '/maxresdefault.jpg') : 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80'));
+                    ?>
+                      <div class="relative w-full h-full group cursor-pointer" onclick="window.cmsPlayCurrentVideo()">
+                        <img src="<?= htmlspecialchars($vThumb) ?>" alt="<?= htmlspecialchars($mainVideo['title'] ?? '') ?>" onerror="if(this.src.indexOf('maxresdefault')!==-1){this.src=this.src.replace('maxresdefault','hqdefault');}else{this.onerror=null;this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80';}" class="object-cover w-full h-full group-hover:scale-103 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                          <div class="video-theme-play-btn group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                          </div>
+                        </div>
+                        <div class="absolute bottom-3 right-3 bg-black/80 backdrop-blur-xs text-white text-xs px-2.5 py-1 rounded flex items-center gap-1.5 font-mono border border-white/10">
+                          <svg class="w-3.5 h-3.5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                          <span><?= htmlspecialchars($mainVideo['duration'] ?: '10:00') ?></span>
                         </div>
                       </div>
                     <?php endif; ?>
-                  <?php endif; ?>
-                </div>
+                  </div>
 
-                <div id="medical-video-info-box" class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm space-y-2.5">
-                  <?php if ($mainVideo): ?>
-                    <div class="flex items-center gap-3 text-xs text-slate-500 flex-wrap">
-                      <span class="font-bold text-red-600 bg-red-50 border border-red-100 px-2.5 py-0.5 rounded-full"><?= htmlspecialchars($mainVideo['category'] ?: '의학뉴스') ?></span>
-                      <span class="text-slate-600">⏱ <?= htmlspecialchars($mainVideo['duration'] ?: '10:00') ?></span>
-                    </div>
-                    <h3 class="font-extrabold text-xl sm:text-2xl text-slate-900 leading-snug tracking-tight">
-                      <?= htmlspecialchars($mainVideo['title'] ?? '') ?>
-                    </h3>
-                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed pt-1">
-                      <?= htmlspecialchars($mainVideo['description'] ?: ($mainVideo['summary'] ?? '')) ?>
-                    </p>
-                  <?php endif; ?>
-                </div>
-              </div>
-
-              <!-- Recommended Playlist -->
-              <div class="lg:col-span-5 xl:col-span-4 space-y-4">
-                <div class="flex items-center justify-between pb-2.5 border-b border-slate-200/80">
-                  <h3 class="font-extrabold text-sm text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                    <span class="w-2.5 h-2.5 rounded-full bg-red-600 animate-pulse"></span>추천 의학 영상 플레이리스트
-                  </h3>
-                  <span id="medical-videos-count-badge" class="text-xs font-semibold text-slate-500"><?= count($activeVideos) ?>개 영상</span>
-                </div>
-                
-                <div id="medical-videos-playlist" class="space-y-3">
-                  <?php foreach ($playlistVideos as $v): 
-                    $isPlaying = $mainVideo && $mainVideo['id'] === $v['id'];
-                    $itemThumb = !empty($v['thumbnail']) ? $v['thumbnail'] : (!empty($v['thumbnailUrl']) ? $v['thumbnailUrl'] : (!empty($v['youtubeId']) ? ('https://img.youtube.com/vi/' . $v['youtubeId'] . '/hqdefault.jpg') : 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&q=80'));
-                  ?>
-                    <div onclick="window.cmsSelectVideo('<?= $v['id'] ?>')" 
-                      class="flex gap-3.5 p-3 rounded-2xl border transition-all duration-200 cursor-pointer <?= $isPlaying ? 'bg-red-50/70 border-red-300 ring-2 ring-red-400 shadow-sm' : 'bg-white border-slate-200/80 hover:bg-slate-50 hover:border-slate-300 shadow-xs' ?>">
-                      <div class="relative w-28 h-20 sm:w-32 sm:h-20 rounded-xl overflow-hidden shrink-0 bg-black">
-                        <img src="<?= htmlspecialchars($itemThumb) ?>" alt="<?= htmlspecialchars($v['title'] ?? '') ?>" onerror="if(this.src.indexOf('maxresdefault')!==-1){this.src=this.src.replace('maxresdefault','hqdefault');}else{this.onerror=null;this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&q=80';}" class="w-full h-full object-cover">
-                        <div class="absolute bottom-1 right-1 bg-black/85 text-white font-mono font-bold text-[10px] px-1.5 py-0.5 rounded">
-                          <?= htmlspecialchars($v['duration'] ?: '10:00') ?>
-                        </div>
+                  <div id="medical-video-info-box">
+                    <?php if ($mainVideo): 
+                      $authorMeta = $mainVideo['doctor'] ?: ($mainVideo['hospital'] ?: '뉴저지 한인 전문의');
+                      $dateMeta = $mainVideo['date'] ?: '최신 의학 정보';
+                      $catMeta = $mainVideo['category'] ?: '의학뉴스';
+                    ?>
+                      <h3 class="video-theme-info-title">
+                        <?= htmlspecialchars($mainVideo['title'] ?? '') ?>
+                      </h3>
+                      <div class="video-theme-info-byline">
+                        <span>By <?= htmlspecialchars($authorMeta) ?></span>
+                        <span class="mx-1.5 text-slate-500">/</span>
+                        <span><?= htmlspecialchars($dateMeta) ?></span>
+                        <span class="mx-1.5 text-slate-500">•</span>
+                        <span class="text-red-400 font-medium"><?= htmlspecialchars($catMeta) ?></span>
                       </div>
-                      <div class="flex-1 min-w-0 flex flex-col justify-between py-0.5">
-                        <div>
-                          <span class="text-[10px] font-bold text-red-600 uppercase tracking-wider block mb-0.5">
-                            <?= htmlspecialchars($v['category'] ?: '의학뉴스') ?>
-                          </span>
-                          <h4 class="font-bold text-xs sm:text-sm text-slate-900 leading-snug line-clamp-2 <?= $isPlaying ? 'text-red-700' : '' ?>">
-                            <?= htmlspecialchars($v['title'] ?? '') ?>
-                          </h4>
-                        </div>
-                        <div class="flex items-center gap-2 text-[11px] text-slate-500 mt-1.5">
-                          <span class="text-slate-500 font-mono">⏱ <?= htmlspecialchars($v['duration'] ?: '10:00') ?></span>
-                        </div>
-                      </div>
-                    </div>
-                  <?php endforeach; ?>
+                      <p class="video-theme-info-desc line-clamp-3">
+                        <?= htmlspecialchars($mainVideo['description'] ?: ($mainVideo['summary'] ?? '')) ?>
+                      </p>
+                      <button type="button" onclick="window.cmsPlayCurrentVideo()" class="video-theme-readmore-btn">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        <span>영상 시청</span>
+                      </button>
+                    <?php endif; ?>
+                  </div>
                 </div>
 
-                <div id="medical-videos-pagination" class="flex items-center justify-between pt-3 border-t border-slate-200/80">
-                  <button onclick="window.cmsPrevVideoPage()" class="cursor-pointer font-bold text-slate-700 hover:text-red-600">‹ 이전</button>
-                  <span class="text-xs font-mono font-bold">1 / <?= max(1, ceil(count($activeVideos) / 4)) ?></span>
-                  <button onclick="window.cmsNextVideoPage()" class="cursor-pointer font-bold text-slate-700 hover:text-red-600">다음 ›</button>
-                </div>
               </div>
-
             </div>
+
           </div>
         </section>
 
