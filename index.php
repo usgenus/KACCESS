@@ -764,12 +764,7 @@ $playlistVideos = array_slice($activeVideos, 0, 4);
           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 border-b border-slate-200/80 pb-5">
               <div>
-                <div class="flex items-center gap-2 mb-1.5">
-                  <span class="p-1.5 bg-red-50 text-red-600 rounded-lg text-lg border border-red-100 shadow-xs">🎬</span>
-                  <span class="text-[10px] font-bold text-red-600 uppercase tracking-widest block">MEDICAL VIDEO NEWS</span>
-                </div>
                 <h2 class="font-extrabold text-2xl sm:text-3xl lg:text-4xl text-slate-900 tracking-tight">의학비디오뉴스</h2>
-                <p class="text-xs sm:text-sm text-slate-600 mt-1.5 font-normal">한인 전문의와 병원이 직접 전하는 검증된 최신 의학 정보 및 건강 가이드</p>
               </div>
               <div id="medical-videos-categories" class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
                 <button onclick="window.cmsSetVideoCat('전체')" class="text-xs font-semibold px-4 py-2 rounded-full transition-all whitespace-nowrap bg-red-600 text-white shadow-sm cursor-pointer">전체</button>

@@ -184,12 +184,23 @@
       object-fit: cover !important;
       display: block !important;
     }
+    /* Inline style replacements */
+    .marquee-bar-home { height: 45px; background: linear-gradient(135deg, #0f3a9e 0%, #5e0f73 100%); }
+    .nav-top-offset { top: 45px; }
+    .header-spacer-fixed { height: 109px; min-height: 109px; width: 100%; }
+    .billboard-section { width: 100vw; max-width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; }
+    .billboard-aspect { aspect-ratio: 1920 / 566; min-height: 230px; width: 100%; max-height: 480px; }
+    .billboard-inner { min-height: 230px; }
+    .billboard-overlay-z2 { z-index: 2; }
+    .billboard-overlay-z3 { z-index: 3; }
+    .billboard-content-z10 { z-index: 10; }
+    .logo-footer { width: 36px; height: 36px; object-fit: contain; filter: invert(1) brightness(2); flex-shrink: 0; }
   </style>
 </head>
 <body class="min-h-full flex flex-col bg-brand-light">
 
   <!-- Top Marquee Banner -->
-  <div class="fixed top-0 left-0 right-0 z-50 overflow-hidden flex items-center" style="height: 45px; background:linear-gradient(135deg, #0f3a9e 0%, #5e0f73 100%)">
+  <div class="fixed top-0 left-0 right-0 z-50 overflow-hidden flex items-center marquee-bar-home">
     <div class="marquee-track whitespace-nowrap">
       <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12">
         <span class="opacity-60 mr-3">✦</span>의료접근포탈: &quot;비영리 기관들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot;<span class="opacity-60 ml-3">✦</span>
@@ -213,7 +224,7 @@
   </div>
 
   <!-- Main Navigation Bar -->
-  <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/80 backdrop-blur-sm" style="top:45px">
+  <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/80 backdrop-blur-sm nav-top-offset">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         <a class="flex-shrink-0 group flex items-center gap-2.5 cursor-pointer njap-brand-link" href="/" onclick="navigateToHome(event); return false;">
@@ -254,28 +265,28 @@
     </div>
   </nav>
 
-  <div class="h-[109px] header-spacer" style="height: 109px; min-height: 109px; width: 100%;"></div>
+  <div class="h-[109px] header-spacer header-spacer-fixed"></div>
 
   <main class="flex-1">
     <div class="flex flex-col bg-[#F3F3F5] min-h-screen text-[#111111] font-sans">
       
       <!-- 1. 100vw Panoramic Billboard Section (At Top) -->
-      <section id="gallery-billboard-section" class="w-full font-sans bg-slate-950 mb-6" style="width:100vw; max-width:100vw; position:relative; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw;">
+      <section id="gallery-billboard-section" class="w-full font-sans bg-slate-950 mb-6 billboard-section">
         <div id="gallery-billboard-container" class="w-full relative group">
-                    <div class="relative w-full overflow-hidden bg-slate-950 select-none group" style="aspect-ratio: 1920 / 566; min-height: 230px; width: 100%; max-height: 480px;">
+                    <div class="relative w-full overflow-hidden bg-slate-950 select-none group billboard-aspect">
             <a href="/about#contact" class="block relative w-full h-full cursor-pointer" title="2026년 뉴저지 한인 맞춤형 종합 건강검진 특별 지원">
-              <div class="w-full h-full relative overflow-hidden" style="min-height: 230px;">
+              <div class="w-full h-full relative overflow-hidden billboard-inner">
                                   <img id="billboard-active-img" 
                     src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1600&amp;q=80&amp;auto=format" 
                     alt="2026년 뉴저지 한인 맞춤형 종합 건강검진 특별 지원" 
                     class="w-full h-full object-cover transform scale-100 group-hover:scale-103 transition-transform duration-1000 ease-out">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent pointer-events-none" style="z-index: 2;"></div>
-                <div class="absolute inset-0 bg-gradient-to-r from-black/65 via-transparent to-black/20 pointer-events-none" style="z-index: 2;"></div>
-                <div class="absolute inset-0 billboard1-vignette" style="z-index: 3;"></div>
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent pointer-events-none billboard-overlay-z2"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-black/65 via-transparent to-black/20 pointer-events-none billboard-overlay-z2"></div>
+                <div class="absolute inset-0 billboard1-vignette billboard-overlay-z3"></div>
               </div>
 
               <!-- Top Layer (Layer 3): Text, Badges, and Action Buttons -->
-              <div class="absolute inset-0 flex items-end" style="z-index: 10;">
+              <div class="absolute inset-0 flex items-end billboard-content-z10">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-4 sm:pb-6 flex items-end justify-between gap-4">
                   <div class="max-w-3xl space-y-1 sm:space-y-2">
                     <div class="flex items-center gap-2">
@@ -606,11 +617,11 @@
         </section>
 
         <!-- 4.5. 100vw Panoramic Billboard 2 Section (Right Above One-Stop Coverage & Patient Services Center) -->
-        <section id="gallery-billboard2-section" class="w-full font-sans bg-slate-950 mb-8" style="width:100vw; max-width:100vw; position:relative; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw;">
+        <section id="gallery-billboard2-section" class="w-full font-sans bg-slate-950 mb-8 billboard-section">
           <div id="gallery-billboard2-container" class="w-full relative group">
-            <div class="relative w-full overflow-hidden bg-slate-950 select-none group" style="aspect-ratio: 1920 / 566; min-height: 230px; width: 100%; max-height: 480px;">
+            <div class="relative w-full overflow-hidden bg-slate-950 select-none group billboard-aspect">
               <a href="/about#contact" class="block relative w-full h-full cursor-pointer" title="뉴저지 한인 맞춤형 종합 헬스케어 & 환자 지원 센터">
-                <div class="w-full h-full relative overflow-hidden" style="min-height: 230px;">
+                <div class="w-full h-full relative overflow-hidden billboard-inner">
                   <img id="billboard2-active-img" 
                     src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=2000&q=85&auto=format" 
                     alt="뉴저지 한인 맞춤형 종합 헬스케어 & 환자 지원 센터" 
@@ -723,12 +734,7 @@
           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 border-b border-slate-200/80 pb-5">
               <div>
-                <div class="flex items-center gap-2 mb-1.5">
-                  <span class="p-1.5 bg-red-50 text-red-600 rounded-lg text-lg border border-red-100 shadow-xs">🎬</span>
-                  <span class="text-[10px] font-bold text-red-600 uppercase tracking-widest block">MEDICAL VIDEO NEWS</span>
-                </div>
                 <h2 class="font-extrabold text-2xl sm:text-3xl lg:text-4xl text-slate-900 tracking-tight">의학비디오뉴스</h2>
-                <p class="text-xs sm:text-sm text-slate-600 mt-1.5 font-normal">한인 전문의와 병원이 직접 전하는 검증된 최신 의학 정보 및 건강 가이드</p>
               </div>
               <div id="medical-videos-categories" class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
                 <button onclick="window.cmsSetVideoCat('전체')" class="text-xs font-semibold px-4 py-2 rounded-full transition-all whitespace-nowrap bg-red-600 text-white shadow-sm cursor-pointer">전체</button>
@@ -829,7 +835,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
         <div class="lg:col-span-2">
           <a class="inline-flex items-center gap-3 mb-4 group cursor-pointer njap-brand-link" href="/" onclick="navigateToHome(event); return false;">
-            <img src="/logo-icon.svg" alt="NJAP Logo" style="width: 36px; height: 36px; object-fit: contain; filter: invert(1) brightness(2); flex-shrink: 0;" class="transition-transform group-hover:scale-105" />
+            <img src="/logo-icon.svg" alt="NJAP Logo" class="transition-transform group-hover:scale-105 logo-footer" />
             <div>
               <span class="font-serif text-2xl text-white group-hover:text-blue-300 transition-colors block">Healthcare Access Portal</span>
               <span class="block text-xs text-white/50 mt-0.5 font-sans">뉴저지 한인 의료 정보 포털</span>
