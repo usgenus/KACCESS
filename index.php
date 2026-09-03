@@ -172,11 +172,21 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
       visibility: visible !important;
     }
     #medical-videos-section {
+      width: 100vw !important;
+      max-width: 100vw !important;
+      position: relative !important;
+      left: 50% !important;
+      right: 50% !important;
+      margin-left: -50vw !important;
+      margin-right: -50vw !important;
+      margin-top: 4.5rem !important;
+      margin-bottom: 0 !important;
       background-color: #181818 !important;
-      border-top: 1px solid #333333 !important;
-      border-bottom: 1px solid #333333 !important;
-      padding-top: 48px !important;
-      padding-bottom: 56px !important;
+      border-top: 1px solid #2d2d2d !important;
+      border-bottom: 1px solid #2d2d2d !important;
+      padding-top: 52px !important;
+      padding-bottom: 60px !important;
+      box-sizing: border-box !important;
       display: block !important;
       visibility: visible !important;
     }
@@ -306,26 +316,28 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
       display: block !important;
     }
 
-    /* Medical Video Player Dark Theme (Attached Design) */
+    /* Medical Video Player Dark Theme - Seamless with Section Background */
     .video-theme-card {
-      background-color: #242424 !important;
-      border: 1px solid #383838 !important;
-      border-radius: 12px !important;
-      overflow: hidden !important;
-      box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.6) !important;
+      background-color: transparent !important;
+      border: none !important;
+      border-radius: 0 !important;
+      overflow: visible !important;
+      box-shadow: none !important;
     }
     .video-theme-topbar {
-      background-color: #1a1a1a !important;
-      border-bottom: 1px solid #333333 !important;
+      background-color: #181818 !important;
+      border-top: 1px solid #2e2e2e !important;
+      border-bottom: 1px solid #2e2e2e !important;
       display: flex !important;
       align-items: stretch !important;
     }
     .video-theme-home-btn {
-      background-color: #242424 !important;
+      background-color: #1e1e1e !important;
       color: #d1d5db !important;
       padding: 12px 18px !important;
       border: none !important;
-      border-right: 1px solid #333333 !important;
+      border-right: 1px solid #2e2e2e !important;
+      border-left: 1px solid #2e2e2e !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
@@ -385,8 +397,10 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
       }
     }
     .video-theme-sidebar {
-      background-color: #1e1e1e !important;
-      border-right: 1px solid #333333 !important;
+      background-color: #181818 !important;
+      border-right: 1px solid #2e2e2e !important;
+      border-left: 1px solid #2e2e2e !important;
+      border-bottom: 1px solid #2e2e2e !important;
       display: flex !important;
       flex-direction: column !important;
       justify-content: space-between !important;
@@ -481,14 +495,16 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
       color: #8f96a3 !important;
     }
     .video-theme-main {
-      background-color: #272727 !important;
+      background-color: #181818 !important;
       padding: 20px !important;
+      border-right: 1px solid #2e2e2e !important;
+      border-bottom: 1px solid #2e2e2e !important;
       order: 1 !important;
     }
     @media (min-width: 1024px) {
       .video-theme-main {
         order: 2 !important;
-        padding: 28px !important;
+        padding: 24px 28px !important;
       }
     }
     .video-theme-player-frame {
@@ -1024,7 +1040,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
       </div>
 
       <!-- 6. Medical Video News Section (의학비디오뉴스) - FULL HORIZONTAL WIDTH -->
-      <section id="medical-videos-section" class="w-full font-sans billboard-section" style="width: 100vw !important; max-width: 100vw !important; position: relative !important; left: 50% !important; right: 50% !important; margin-left: -50vw !important; margin-right: -50vw !important; background-color: #181818 !important; border-top: 1px solid #333333 !important; border-bottom: 1px solid #333333 !important; padding-top: 48px !important; padding-bottom: 56px !important; box-sizing: border-box !important; display: block !important;">
+      <section id="medical-videos-section" class="w-full font-sans billboard-section" style="width: 100vw !important; max-width: 100vw !important; position: relative !important; left: 50% !important; right: 50% !important; margin-left: -50vw !important; margin-right: -50vw !important; margin-top: 4.5rem !important; background-color: #181818 !important; border-top: 1px solid #2d2d2d !important; border-bottom: 1px solid #2d2d2d !important; padding-top: 52px !important; padding-bottom: 60px !important; box-sizing: border-box !important; display: block !important;">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Section Title Bar -->
             <div class="flex items-center justify-between mb-5 pb-3 border-b border-[#333333]">
@@ -1134,10 +1150,6 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                       <p class="video-theme-info-desc line-clamp-3">
                         <?= htmlspecialchars($mainVideo['description'] ?: ($mainVideo['summary'] ?? '')) ?>
                       </p>
-                      <button type="button" onclick="window.cmsPlayCurrentVideo()" class="video-theme-readmore-btn">
-                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                        <span>영상 시청</span>
-                      </button>
                     <?php endif; ?>
                   </div>
                 </div>
