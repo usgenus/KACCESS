@@ -72,6 +72,11 @@
       '  opacity: 1;',
       '  transform: translateY(0);',
       '}',
+      '#cms-blog-posts-grid, .blog-post-card-item, .blog-post-card-item article {',
+      '  opacity: 1 !important;',
+      '  visibility: visible !important;',
+      '  transform: none !important;',
+      '}',
       '#gallery-billboard-container .billboard-img,',
       '#gallery-billboard-section .billboard-img {',
       '  transition: transform 0.9s cubic-bezier(0.25,0.46,0.45,0.94);',
@@ -960,13 +965,23 @@
   // 6. SECTION SLIDE-IN ANIMATION (IntersectionObserver)
   // ---------------------------------------------------------
   function initSlideInAnimations() {
-    var targets = document.querySelectorAll(
-      'main section:not(#gallery-billboard-section), main article, ' +
+    var raw = document.querySelectorAll(
+      'main section:not(#gallery-billboard-section), main > article, ' +
       '#homepage-top-story-box, #homepage-latest-news-box, ' +
       '#homepage-reports-grid, #medical-videos-section, ' +
       '.space-y-10 > section'
     );
-    if (!targets.length || !window.IntersectionObserver) return;
+    if (!raw.length || !window.IntersectionObserver) return;
+
+    var targets = [];
+    for (var k = 0; k < raw.length; k++) {
+      var node = raw[k];
+      if (node.closest('#cms-blog-posts-grid') || node.classList.contains('blog-post-card-item') || node.closest('.blog-post-card-item')) {
+        continue;
+      }
+      targets.push(node);
+    }
+    if (!targets.length) return;
 
     var observer = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {

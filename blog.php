@@ -68,16 +68,13 @@ unset($pRef);
       animation-play-state: paused;
     }
 
-    /* Section Slide-In Animation */
-    .reveal-section {
-      opacity: 0;
-      transform: translateY(35px);
-      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-      will-change: opacity, transform;
-    }
-    .reveal-section.is-revealed {
+    /* Ensure blog posts and grid are always fully visible on mobile & desktop */
+    #cms-blog-posts-grid,
+    .blog-post-card-item,
+    .blog-post-card-item article {
       opacity: 1 !important;
-      transform: translateY(0) !important;
+      visibility: visible !important;
+      transform: none !important;
     }
   </style>
 </head>
@@ -292,31 +289,8 @@ unset($pRef);
       }
     })();
 
-    // 2. Global Section Slide-in on Scroll (sections only, NOT individual blog cards)
+    // 2. Blog filter initialization on DOM ready
     document.addEventListener('DOMContentLoaded', function() {
-      // Only observe top-level sections/articles, NOT individual blog post cards.
-      // Observing individual cards caused them to stay opacity:0 on mobile
-      // when the viewport didn't trigger the intersection threshold on first load.
-      var targets = document.querySelectorAll('main section, main article');
-      if ('IntersectionObserver' in window) {
-        var observer = new IntersectionObserver(function(entries) {
-          entries.forEach(function(entry) {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('is-revealed');
-              observer.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
-        targets.forEach(function(el, i) {
-          el.classList.add('reveal-section');
-          el.style.transitionDelay = Math.min(i * 35, 200) + 'ms';
-          observer.observe(el);
-        });
-      }
-
-      // Ensure all blog cards are visible on initial load regardless of scroll position.
-      // This prevents the mobile bug where cards stayed hidden (opacity:0) until a
-      // category was clicked.
       applyBlogFilter();
     });
 
@@ -401,7 +375,7 @@ unset($pRef);
   </script>
   
 
-  <script src="/js/cms-client.js?v=3.5.1"></script>
-  <script src="/js/fixes.js?v=2.0"></script>
+  <script src="/js/cms-client.js?v=3.5.2"></script>
+  <script src="/js/fixes.js?v=2.1"></script>
 </body>
 </html>
