@@ -292,9 +292,12 @@ unset($pRef);
       }
     })();
 
-    // 2. Global Section Slide-in on Scroll
+    // 2. Global Section Slide-in on Scroll (sections only, NOT individual blog cards)
     document.addEventListener('DOMContentLoaded', function() {
-      var targets = document.querySelectorAll('main section, main article, #cms-blog-posts-grid > a');
+      // Only observe top-level sections/articles, NOT individual blog post cards.
+      // Observing individual cards caused them to stay opacity:0 on mobile
+      // when the viewport didn't trigger the intersection threshold on first load.
+      var targets = document.querySelectorAll('main section, main article');
       if ('IntersectionObserver' in window) {
         var observer = new IntersectionObserver(function(entries) {
           entries.forEach(function(entry) {
@@ -310,6 +313,11 @@ unset($pRef);
           observer.observe(el);
         });
       }
+
+      // Ensure all blog cards are visible on initial load regardless of scroll position.
+      // This prevents the mobile bug where cards stayed hidden (opacity:0) until a
+      // category was clicked.
+      applyBlogFilter();
     });
 
     // 3. Instant Blog Category & Search Filter
@@ -394,6 +402,6 @@ unset($pRef);
   
 
   <script src="/js/cms-client.js?v=3.5.1"></script>
-  <script src="/js/fixes.js?v=1.3"></script>
+  <script src="/js/fixes.js?v=2.0"></script>
 </body>
 </html>
