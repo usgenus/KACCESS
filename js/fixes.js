@@ -89,7 +89,7 @@
       '.fx-slide { opacity:0; transform:translateY(18px);',
       '  transition: opacity .45s cubic-bezier(.22,1,.36,1), transform .45s cubic-bezier(.22,1,.36,1); }',
       '.fx-slide.fx-in { opacity:1; transform:none; }',
-      '#cms-blog-posts-grid, .blog-post-card-item, .blog-post-card-item article { opacity: 1 !important; visibility: visible !important; transform: none !important; }',
+      '#cms-blog-main-section, section:has(#cms-blog-posts-grid), #cms-blog-posts-grid, .blog-post-card-item, .blog-post-card-item article { opacity: 1 !important; visibility: visible !important; transform: none !important; }',
 
       /* Page entry fade-in */
       '@keyframes bodyFadeIn { from { opacity:0; } to { opacity:1; } }',
@@ -360,7 +360,7 @@
     var sections = [];
     for (var k = 0; k < raw.length; k++) {
       var node = raw[k];
-      if (node.closest('#cms-blog-posts-grid') || node.classList.contains('blog-post-card-item') || node.closest('.blog-post-card-item')) {
+      if (node.querySelector('#cms-blog-posts-grid') || node.id === 'cms-blog-main-section' || node.id === 'cms-blog-posts-grid' || node.closest('#cms-blog-posts-grid') || node.classList.contains('blog-post-card-item') || node.closest('.blog-post-card-item')) {
         continue;
       }
       sections.push(node);

@@ -68,12 +68,19 @@ unset($pRef);
       animation-play-state: paused;
     }
 
-    /* Ensure blog posts and grid are always fully visible on mobile & desktop */
+    /* Ensure blog posts, parent sections, and grid are always 100% visible on mobile & desktop */
+    #cms-blog-main-section,
+    section:has(#cms-blog-posts-grid),
     #cms-blog-posts-grid,
     .blog-post-card-item,
     .blog-post-card-item article {
       opacity: 1 !important;
       visibility: visible !important;
+      transform: none !important;
+    }
+    .fx-slide,
+    .njap-slide-in {
+      opacity: 1 !important;
       transform: none !important;
     }
   </style>
@@ -139,18 +146,18 @@ unset($pRef);
   <main class="flex-1">
     <div>
       <!-- Header Banner -->
-      <section class="bg-brand-darker text-white py-14 sm:py-16">
+      <section class="bg-brand-darker text-white py-8 sm:py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p class="text-xs font-sans font-semibold uppercase tracking-widest text-blue-300 mb-3">뉴스 &amp; 정보</p>
-          <h1 class="font-serif text-4xl sm:text-5xl text-white mb-3">건강 의료 뉴스</h1>
-          <p class="text-white/60 font-sans text-base sm:text-lg max-w-xl">최신 미국 의료 정보, 메디케어 업데이트, 의사 칼럼 및 건강 연구 뉴스를 한국어로 제공합니다.</p>
+          <p class="text-xs font-sans font-semibold uppercase tracking-widest text-blue-300 mb-2">뉴스 &amp; 정보</p>
+          <h1 class="font-serif text-3xl sm:text-5xl text-white mb-2.5">건강 의료 뉴스</h1>
+          <p class="text-white/60 font-sans text-sm sm:text-lg max-w-xl">최신 미국 의료 정보, 메디케어 업데이트, 의사 칼럼 및 건강 연구 뉴스를 한국어로 제공합니다.</p>
         </div>
       </section>
 
       <!-- Category Filter & Search Bar -->
       <section class="bg-white border-b border-brand-border sticky top-[109px] z-30 shadow-xs">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-col sm:flex-row gap-3 sm:gap-4 items-start sm:items-center justify-between">
-          <div id="cms-blog-categories" class="flex gap-2 flex-wrap">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col sm:flex-row gap-2.5 sm:gap-4 items-start sm:items-center justify-between">
+          <div id="cms-blog-categories" class="flex gap-1.5 sm:gap-2 flex-wrap">
             <button onclick="handleBlogCategoryClick(this, '전체')" class="category-filter-btn text-xs sm:text-sm font-sans font-medium px-3.5 py-1.5 rounded-full border transition-all duration-200 bg-brand-gradient text-white border-transparent shadow-sm cursor-pointer">전체</button>
             <?php foreach (array_filter($categories, function($c) { return $c !== '전체'; }) as $cat): ?>
               <button onclick="handleBlogCategoryClick(this, '<?= htmlspecialchars($cat) ?>')" class="category-filter-btn text-xs sm:text-sm font-sans font-medium px-3.5 py-1.5 rounded-full border transition-all duration-200 border-brand-border text-brand-muted hover:border-brand-blue hover:text-brand-blue bg-white cursor-pointer"><?= htmlspecialchars($cat) ?></button>
@@ -164,7 +171,7 @@ unset($pRef);
       </section>
 
       <!-- Main News Content Grid (4 News per Row) -->
-      <section class="py-10 bg-brand-light">
+      <section id="cms-blog-main-section" class="py-6 sm:py-10 bg-brand-light">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div id="cms-blog-posts-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6">
             <?php foreach ($publishedPosts as $p): 
@@ -289,10 +296,12 @@ unset($pRef);
       }
     })();
 
-    // 2. Blog filter initialization on DOM ready
-    document.addEventListener('DOMContentLoaded', function() {
+    // 2. Blog filter initialization immediately or on DOM ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', applyBlogFilter);
+    } else {
       applyBlogFilter();
-    });
+    }
 
     // 3. Instant Blog Category & Search Filter
     var blogSelectedCategory = '전체';

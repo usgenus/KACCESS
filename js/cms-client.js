@@ -72,7 +72,7 @@
       '  opacity: 1;',
       '  transform: translateY(0);',
       '}',
-      '#cms-blog-posts-grid, .blog-post-card-item, .blog-post-card-item article {',
+      '#cms-blog-main-section, section:has(#cms-blog-posts-grid), #cms-blog-posts-grid, .blog-post-card-item, .blog-post-card-item article {',
       '  opacity: 1 !important;',
       '  visibility: visible !important;',
       '  transform: none !important;',
@@ -976,7 +976,7 @@
     var targets = [];
     for (var k = 0; k < raw.length; k++) {
       var node = raw[k];
-      if (node.closest('#cms-blog-posts-grid') || node.classList.contains('blog-post-card-item') || node.closest('.blog-post-card-item')) {
+      if (node.querySelector('#cms-blog-posts-grid') || node.id === 'cms-blog-main-section' || node.id === 'cms-blog-posts-grid' || node.closest('#cms-blog-posts-grid') || node.classList.contains('blog-post-card-item') || node.closest('.blog-post-card-item')) {
         continue;
       }
       targets.push(node);
