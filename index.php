@@ -665,13 +665,13 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
   <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/80 backdrop-blur-sm" style="top:45px">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
-        <a class="flex-shrink-0 group flex items-center gap-2.5 cursor-pointer njap-brand-link" href="/" onclick="navigateToHome(event); return false;">
+        <a class="min-w-0 flex-shrink group flex items-center gap-2 sm:gap-2.5 cursor-pointer njap-brand-link" href="/" onclick="navigateToHome(event); return false;">
           <div class="w-8 h-8 flex items-center justify-center flex-shrink-0">
             <img src="/logo-icon.svg" alt="NJAP Logo" class="w-full h-full object-contain transition-transform group-hover:scale-105" />
           </div>
           <div>
-            <span class="font-serif text-xl text-brand-dark group-hover:text-brand-blue transition-colors duration-200 block">Healthcare Access Portal</span>
-            <span class="block text-[10px] font-sans text-brand-muted leading-tight -mt-0.5">뉴저지 한인 의료 접근 포털</span>
+            <span class="font-serif text-sm sm:text-base md:text-xl text-brand-dark group-hover:text-brand-blue transition-colors duration-200 block">Healthcare Access Portal</span>
+            <span class="block text-[9px] sm:text-[10px] font-sans text-brand-muted leading-tight -mt-0.5">뉴저지 한인 의료 접근 포털</span>
           </div>
         </a>
         <div class="hidden md:flex items-center">
@@ -885,9 +885,6 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                       <span class="bg-red-600 text-white text-[10px] sm:text-xs font-extrabold px-3 py-0.5 sm:py-1 rounded-full uppercase tracking-wider shadow">
                         <?= htmlspecialchars(!empty($b['subtitle']) ? $b['subtitle'] : ($b['category'] ?? 'SPECIAL CAMPAIGN')) ?>
                       </span>
-                      <span class="text-xs font-mono text-white/80 bg-black/60 px-2.5 py-0.5 rounded-full border border-white/15">
-                        1 / <?= count($activeBillboards) ?>
-                      </span>
                     </div>
                     <h3 class="font-extrabold text-base sm:text-2xl md:text-3xl text-white tracking-tight leading-snug drop-shadow-md group-hover:text-blue-300 transition-colors line-clamp-1">
                       <?= htmlspecialchars($b['title'] ?? '') ?>
@@ -903,18 +900,6 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                 </div>
               </div>
             </a>
-
-            <button onclick="event.stopPropagation(); event.preventDefault(); window.cmsPrevBillboard();" 
-              class="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-red-600 text-white backdrop-blur-md border border-white/20 flex items-center justify-center text-xl sm:text-3xl transition-all duration-200 z-20 hover:scale-110 shadow-2xl cursor-pointer"
-              aria-label="Previous Slide">
-              ‹
-            </button>
-
-            <button onclick="event.stopPropagation(); event.preventDefault(); window.cmsNextBillboard();" 
-              class="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-red-600 text-white backdrop-blur-md border border-white/20 flex items-center justify-center text-xl sm:text-3xl transition-all duration-200 z-20 hover:scale-110 shadow-2xl cursor-pointer"
-              aria-label="Next Slide">
-              ›
-            </button>
 
             <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
               <?php foreach ($activeBillboards as $idx => $dummy): ?>
@@ -1159,9 +1144,6 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                         <span class="bg-red-600 text-white text-[10px] sm:text-xs font-extrabold px-3 py-0.5 sm:py-1 rounded-full uppercase tracking-wider shadow">
                           <?= htmlspecialchars(!empty($b2['subtitle']) ? $b2['subtitle'] : ($b2['category'] ?? 'SPECIAL CAMPAIGN')) ?>
                         </span>
-                        <span class="text-xs font-mono text-white/80 bg-black/60 px-2.5 py-0.5 rounded-full border border-white/15">
-                          1 / <?= count($activeBillboards2) ?>
-                        </span>
                       </div>
                       <h3 class="font-extrabold text-base sm:text-2xl md:text-3xl text-white tracking-tight leading-snug drop-shadow-md group-hover:text-blue-300 transition-colors line-clamp-1">
                         <?= htmlspecialchars($b2['title'] ?? '') ?>
@@ -1177,18 +1159,6 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                   </div>
                 </div>
               </a>
-
-              <button onclick="event.stopPropagation(); event.preventDefault(); window.cmsPrevBillboard2();" 
-                class="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-red-600 text-white backdrop-blur-md border border-white/20 flex items-center justify-center text-xl sm:text-3xl transition-all duration-200 z-20 hover:scale-110 shadow-2xl cursor-pointer"
-                aria-label="Previous Slide">
-                ‹
-              </button>
-
-              <button onclick="event.stopPropagation(); event.preventDefault(); window.cmsNextBillboard2();" 
-                class="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-red-600 text-white backdrop-blur-md border border-white/20 flex items-center justify-center text-xl sm:text-3xl transition-all duration-200 z-20 hover:scale-110 shadow-2xl cursor-pointer"
-                aria-label="Next Slide">
-                ›
-              </button>
 
               <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
                 <?php foreach ($activeBillboards2 as $idx => $dummy): ?>

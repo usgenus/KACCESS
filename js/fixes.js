@@ -112,16 +112,16 @@
 
       /* Responsive Nav & Mobile Menu Accordion */
       '@media (max-width: 767px) {',
-      '  .hidden.md\\:flex, div.hidden.md\\:flex, .desktop-nav-links { display: none !important; }',
+      '  nav div.hidden.md\\:flex, nav .desktop-nav-links:not(.h-16):not([class*="justify-between"]) { display: none !important; }',
       '  #mobile-menu-btn { display: inline-flex !important; }',
       '}',
       '@media (min-width: 768px) {',
-      '  .hidden.md\\:flex, div.hidden.md\\:flex, .desktop-nav-links { display: flex !important; align-items: center !important; gap: 26px !important; }',
+      '  nav div.hidden.md\\:flex, nav .desktop-nav-links:not(.h-16):not([class*="justify-between"]) { display: flex !important; align-items: center !important; gap: 26px !important; }',
       '  #mobile-menu-btn { display: none !important; }',
       '  #mobile-menu-dropdown { display: none !important; }',
       '}',
       '#mobile-menu-btn span { transition: transform 0.25s ease, opacity 0.25s ease !important; }',
-      '.mobile-menu-open { max-height: 85vh !important; opacity: 1 !important; pointer-events: auto !important; overflow-y: auto !important; -webkit-overflow-scrolling: touch !important; }',
+      '.mobile-menu-open { max-height: 85vh !important; opacity: 1 !important; pointer-events: auto !important; overflow-y: auto !important; -webkit-overflow-scrolling: touch !important; display: flex !important; }',
       '#mobile-menu-dropdown { -webkit-overflow-scrolling: touch; }',
       '#mobile-menu-dropdown::-webkit-scrollbar { width: 4px; }',
       '#mobile-menu-dropdown::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }',
@@ -132,6 +132,24 @@
       '.mobile-accordion-panel:not(.hidden) { display: flex !important; }',
       '.mobile-accordion-panel.hidden { display: none !important; }',
       '.mobile-acc-chevron { transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1); }',
+
+      /* Billboard arrows & numbering hide */
+      '#gallery-billboard-container button[aria-label="Previous Slide"],',
+      '#gallery-billboard-container button[aria-label="Next Slide"],',
+      '#gallery-billboard2-container button[aria-label="Previous Slide"],',
+      '#gallery-billboard2-container button[aria-label="Next Slide"],',
+      '#gallery-billboard-container span.font-mono,',
+      '#gallery-billboard2-container span.font-mono { display: none !important; }',
+
+      /* Mobile Header Sizing & Spacing — Ensure brand, 1:1 chat and hamburger button fit comfortably */
+      '@media (max-width: 640px) {',
+      '  .njap-brand-link { min-width: 0 !important; flex-shrink: 1 !important; gap: 6px !important; }',
+      '  .njap-brand-link span.font-serif { font-size: 14px !important; line-height: 1.2 !important; white-space: nowrap !important; }',
+      '  .njap-brand-link span[class*="text-\\[10px\\]"] { font-size: 9px !important; white-space: nowrap !important; }',
+      '  nav .h-16 { gap: 6px !important; }',
+      '  nav .h-16 .flex.items-center.gap-3, nav .h-16 .flex.items-center.gap-4 { gap: 6px !important; flex-shrink: 0 !important; }',
+      '  #mobile-menu-btn { flex-shrink: 0 !important; display: inline-flex !important; }',
+      '}',
 
       /* KakaoTalk large CTA button (about page) */
       '.kakao-cta-btn {',
@@ -519,11 +537,13 @@
 
     function openMenu() {
       open = true;
+      dropdown.classList.remove('max-h-0', 'opacity-0');
       dropdown.classList.add('mobile-menu-open');
       dropdown.style.maxHeight = '85vh';
       dropdown.style.opacity = '1';
       dropdown.style.overflowY = 'auto';
       dropdown.style.pointerEvents = 'auto';
+      dropdown.style.display = 'flex';
       if (spans[0]) spans[0].style.transform = 'translateY(6px) rotate(45deg)';
       if (spans[1]) spans[1].style.opacity = '0';
       if (spans[2]) spans[2].style.transform = 'translateY(-6px) rotate(-45deg)';
@@ -532,6 +552,7 @@
     function closeMenu() {
       open = false;
       dropdown.classList.remove('mobile-menu-open');
+      dropdown.classList.add('max-h-0', 'opacity-0');
       dropdown.style.maxHeight = '0';
       dropdown.style.opacity = '0';
       dropdown.style.overflowY = 'hidden';
@@ -735,33 +756,44 @@
 
     var curPath = (window.location.pathname.replace(/\/$/, '') || '/').toLowerCase();
 
-    // 1. Desktop Nav container
+    // 1. Desktop Nav container - target specifically the desktop links wrapper, NOT parent containers
+    var desktopDiv = null;
     var allDivs = nav.querySelectorAll('div');
     for (var i = 0; i < allDivs.length; i++) {
       var div = allDivs[i];
+      // Clean up any accidental desktop-nav-links on parent header containers
+      if (div.classList.contains('h-16') || div.querySelector('#mobile-menu-btn') || div.querySelector('.njap-brand-link')) {
+        div.classList.remove('desktop-nav-links');
+        continue;
+      }
       var homeA = div.querySelector('a[href="/"]');
       var blogA = div.querySelector('a[href="/blog"]');
       if (homeA && blogA && (div.classList.contains('md:flex') || div.className.indexOf('items-center') !== -1) && !div.classList.contains('md:hidden') && div.id !== 'mobile-menu-dropdown') {
-        // Enforce spacious desktop styling via class/gap without forcing inline display on mobile
-        div.classList.add('desktop-nav-links');
-        div.style.gap = '26px';
+        desktopDiv = div;
+        break;
+      }
+    }
 
-        var seniorA = div.querySelector('a[href*="senior-care"]');
-        if (!seniorA) {
-          seniorA = document.createElement('a');
-          seniorA.href = '/senior-care';
-          seniorA.textContent = '시니어 케어';
-          seniorA.className = 'nav-link pb-0.5 ' + (curPath === '/senior-care' ? 'font-bold text-brand-blue' : 'font-medium text-slate-700 hover:text-brand-blue');
-          if (blogA.nextSibling) {
-            div.insertBefore(seniorA, blogA.nextSibling);
-          } else {
-            div.appendChild(seniorA);
-          }
+    if (desktopDiv) {
+      desktopDiv.classList.add('desktop-nav-links');
+      desktopDiv.style.gap = '26px';
+
+      var seniorA = desktopDiv.querySelector('a[href*="senior-care"]');
+      var blogA = desktopDiv.querySelector('a[href="/blog"]');
+      if (!seniorA && blogA) {
+        seniorA = document.createElement('a');
+        seniorA.href = '/senior-care';
+        seniorA.textContent = '시니어 케어';
+        seniorA.className = 'nav-link pb-0.5 ' + (curPath === '/senior-care' ? 'font-bold text-brand-blue' : 'font-medium text-slate-700 hover:text-brand-blue');
+        if (blogA.nextSibling) {
+          desktopDiv.insertBefore(seniorA, blogA.nextSibling);
         } else {
-          if (curPath === '/senior-care') {
-            seniorA.classList.add('font-bold', 'text-brand-blue');
-            seniorA.classList.remove('text-slate-700');
-          }
+          desktopDiv.appendChild(seniorA);
+        }
+      } else if (seniorA) {
+        if (curPath === '/senior-care') {
+          seniorA.classList.add('font-bold', 'text-brand-blue');
+          seniorA.classList.remove('text-slate-700');
         }
       }
     }

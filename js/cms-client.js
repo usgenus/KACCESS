@@ -231,7 +231,6 @@
       '        <div class="max-w-3xl space-y-1 sm:space-y-2">',
       '          <div class="flex items-center gap-2">',
       '            <span class="bg-red-600 text-white text-[10px] sm:text-xs font-extrabold px-3 py-0.5 sm:py-1 rounded-full uppercase tracking-wider shadow">' + escapeHtml(b.subtitle || b.category || 'SPECIAL CAMPAIGN') + '</span>',
-      '            <span class="text-xs font-mono text-white/80 bg-black/60 px-2.5 py-0.5 rounded-full border border-white/15">' + (currentBillboardIndex+1) + ' / ' + billboards.length + '</span>',
       '          </div>',
       '          <h3 class="font-extrabold text-base sm:text-2xl md:text-3xl text-white tracking-tight leading-snug drop-shadow-md line-clamp-1 sm:line-clamp-2">' + escapeHtml(b.title) + '</h3>',
       '        </div>',
@@ -241,8 +240,6 @@
       '      </div>',
       '    </div>',
       '  </a>',
-      '  <button onclick="event.stopPropagation();event.preventDefault();window.cmsPrevBillboard();" class="absolute left-3 sm:left-8 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-red-600 text-white backdrop-blur-md border border-white/20 flex items-center justify-center text-lg sm:text-3xl transition-all duration-200 z-20 hover:scale-110 shadow-2xl cursor-pointer" aria-label="Previous Slide">&#8249;</button>',
-      '  <button onclick="event.stopPropagation();event.preventDefault();window.cmsNextBillboard();" class="absolute right-3 sm:right-8 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-red-600 text-white backdrop-blur-md border border-white/20 flex items-center justify-center text-lg sm:text-3xl transition-all duration-200 z-20 hover:scale-110 shadow-2xl cursor-pointer" aria-label="Next Slide">&#8250;</button>',
       '  <div class="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">' + dotsHtml + '</div>',
       '</div>'
     ].join('');
@@ -431,7 +428,6 @@
       '        <div class="max-w-3xl space-y-1 sm:space-y-2">',
       '          <div class="flex items-center gap-2">',
       '            <span class="bg-red-600 text-white text-[10px] sm:text-xs font-extrabold px-3 py-0.5 sm:py-1 rounded-full uppercase tracking-wider shadow">' + escapeHtml(b.subtitle || b.category || 'SPECIAL CAMPAIGN') + '</span>',
-      '            <span class="text-xs font-mono text-white/80 bg-black/60 px-2.5 py-0.5 rounded-full border border-white/15">' + (currentBillboard2Index+1) + ' / ' + billboards2.length + '</span>',
       '          </div>',
       '          <h3 class="font-extrabold text-base sm:text-2xl md:text-3xl text-white tracking-tight leading-snug drop-shadow-md line-clamp-1 sm:line-clamp-2">' + escapeHtml(b.title) + '</h3>',
       '        </div>',
@@ -441,8 +437,6 @@
       '      </div>',
       '    </div>',
       '  </a>',
-      '  <button onclick="event.stopPropagation();event.preventDefault();window.cmsPrevBillboard2();" class="absolute left-3 sm:left-8 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-red-600 text-white backdrop-blur-md border border-white/20 flex items-center justify-center text-lg sm:text-3xl transition-all duration-200 z-20 hover:scale-110 shadow-2xl cursor-pointer" aria-label="Previous Slide">&#8249;</button>',
-      '  <button onclick="event.stopPropagation();event.preventDefault();window.cmsNextBillboard2();" class="absolute right-3 sm:right-8 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-black/50 hover:bg-red-600 text-white backdrop-blur-md border border-white/20 flex items-center justify-center text-lg sm:text-3xl transition-all duration-200 z-20 hover:scale-110 shadow-2xl cursor-pointer" aria-label="Next Slide">&#8250;</button>',
       '  <div class="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">' + dotsHtml + '</div>',
       '</div>'
     ].join('');
