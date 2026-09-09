@@ -1283,9 +1283,6 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
             <!-- Mission Card -->
             <div class="bg-gradient-to-br from-blue-50/70 to-slate-50 border border-blue-100/80 rounded-2xl p-6 sm:p-8 flex flex-col justify-between shadow-xs">
               <div>
-                <div class="w-12 h-12 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center text-2xl mb-4 font-bold">
-                  🎯
-                </div>
                 <h3 class="font-bold text-xl text-slate-900 mb-2">우리의 미션 (Our Mission)</h3>
                 <p class="text-slate-700 text-sm sm:text-[15px] leading-relaxed mb-4">
                   복잡하고 어려운 미국 의료 시스템 속에서 한인 동포들이 필수적인 의료 자원에 원활히 도달하도록 전문 네비게이션을 제공합니다. 의사 예약, 병원 진료, 필수 의약품 처방은 물론 적합한 공공 보험 및 정부 보조 혜택 가입까지 한국어로 1:1 지원합니다.
@@ -1303,9 +1300,6 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
             <!-- Who We Serve Card -->
             <div class="bg-gradient-to-br from-amber-50/70 to-slate-50 border border-amber-100/80 rounded-2xl p-6 sm:p-8 flex flex-col justify-between shadow-xs">
               <div>
-                <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center text-2xl mb-4 font-bold">
-                  🤝
-                </div>
                 <h3 class="font-bold text-xl text-slate-900 mb-2">우리가 지원하는 분들 (Who We Help)</h3>
                 <p class="text-slate-700 text-sm sm:text-[15px] leading-relaxed mb-4">
                   뉴저지 의료접근센터는 연령, 재정 상태, 이민 및 체류 신분(<strong class="text-amber-700 font-semibold">미등록 체류자 및 서류미비자 포함</strong>) 또는 기존 보험 유무와 상관없이 의료 지원이 필요한 모든 한인 주민에게 문을 열어두고 있습니다.
