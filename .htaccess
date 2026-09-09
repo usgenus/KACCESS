@@ -24,8 +24,6 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^uploads/(images|videos)/(.+)$ api/media.php?file=$2 [L]
 
 # Clean URL rewrites
-RewriteRule ^sitemap\.xml$ sitemap.php [L]
-RewriteRule ^robots\.txt$ robots.txt [L]
 RewriteRule ^medicare/?$ medicare.html [L]
 RewriteRule ^matcher/?$ matcher.html [L]
 RewriteRule ^calculator/?$ calculator.html [L]
