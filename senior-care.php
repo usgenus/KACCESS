@@ -554,9 +554,9 @@
 
         <div class="flex items-center gap-3">
           <!-- KakaoTalk 1:1 Chat Button -->
-          <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity cursor-pointer bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-full" title="카카오톡 1:1 상담 바로가기">
-            <img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-5 h-5 rounded-md shrink-0 object-contain" />
-            <span class="text-xs font-bold text-slate-800 hover:text-brand-blue tracking-tight whitespace-nowrap">시니어 케어 1:1 문의</span>
+          <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity cursor-pointer" title="카카오톡 1:1 상담 바로가기">
+            <img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" />
+            <span class="text-xs sm:text-sm font-bold text-slate-800 hover:text-brand-blue tracking-tight whitespace-nowrap">1:1 상담</span>
           </a>
           <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors" aria-label="Menu">
             <div class="w-5 h-4 flex flex-col justify-between">
