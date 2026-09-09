@@ -38,10 +38,46 @@ unset($pRef);
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>건강 의료 뉴스 | Healthcare Access Portal</title>
-  <meta name="description" content="최신 미국 의료 정보, 메디케어 업데이트, 건강 연구 뉴스를 한국어로 제공합니다." />
-  <meta property="og:title" content="건강 의료 뉴스 | Healthcare Access Portal" />
-  <meta property="og:description" content="최신 미국 의료 정보, 메디케어 업데이트, 건강 연구 뉴스를 한국어로 제공합니다." />
+  <title>건강 의료 뉴스 · Health News | 뉴저지 의료접근센터 · NJ Healthcare Access Center</title>
+  <meta name="description" content="뉴저지 의료접근센터(NJ Healthcare Access Center) 건강 의료 뉴스. 최신 미국 의료 정보, 메디케어 및 ACA 건강보험 규정, 전문의 칼럼, FDA 약물 리콜 및 의학 연구 소식을 한국어로 제공합니다." />
+  <meta name="keywords" content="nj healthcare access portal, nj healthcare access center, healthcare access center, 뉴저지 의료접근센터, 의료접근, 의료접근센터, 건강 의료 뉴스, 의사칼럼, FDA 리콜, 메디케어 뉴스, 한인 건강 뉴스" />
+  <link rel="canonical" href="https://kor2.njaccessportal.com/blog" />
+
+  <!-- OpenGraph / Social Media -->
+  <meta property="og:site_name" content="뉴저지 의료접근센터 · NJ Healthcare Access Center" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kor2.njaccessportal.com/blog" />
+  <meta property="og:title" content="건강 의료 뉴스 · Health News | 뉴저지 의료접근센터 (NJ Healthcare Access Center)" />
+  <meta property="og:description" content="최신 미국 의료 정보, 메디케어 업데이트, 의사 칼럼 및 건강 연구 뉴스를 한국어로 제공합니다." />
+  <meta property="og:image" content="https://kor2.njaccessportal.com/logo-icon.svg" />
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="건강 의료 뉴스 · Health News | 뉴저지 의료접근센터" />
+  <meta name="twitter:description" content="최신 미국 의료 정보, 메디케어 업데이트, 의사 칼럼 및 건강 연구 뉴스를 한국어로 제공합니다." />
+  <meta name="twitter:image" content="https://kor2.njaccessportal.com/logo-icon.svg" />
+
+  <!-- Schema.org JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "건강 의료 뉴스 · Health News | 뉴저지 의료접근센터",
+    "description": "최신 미국 의료 정보, 메디케어 업데이트, 의사 칼럼 및 건강 연구 뉴스를 한국어로 제공합니다.",
+    "url": "https://kor2.njaccessportal.com/blog",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "뉴저지 의료접근센터 · NJ Healthcare Access Center",
+      "url": "https://kor2.njaccessportal.com/"
+    },
+    "publisher": {
+      "@type": "MedicalOrganization",
+      "name": "뉴저지 의료접근센터 (NJ Healthcare Access Center)",
+      "alternateName": ["NJ Healthcare Access Portal", "Healthcare Access Center", "의료접근센터", "의료접근"],
+      "url": "https://kor2.njaccessportal.com"
+    }
+  }
+  </script>
   <link rel="icon" href="/favicon.ico" sizes="256x256" type="image/x-icon" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />

@@ -114,11 +114,78 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Healthcare Access Portal | 뉴저지 한인 의료 정보 포털</title>
-  <meta name="description" content="뉴저지 한인 커뮤니티를 위한 의료 접근 및 건강 정보 포털. 메디케어, ACA, 의료 상담을 한국어로 제공합니다." />
-  <meta property="og:title" content="Healthcare Access Portal | 뉴저지 한인 의료 정보 포털" />
-  <meta property="og:description" content="뉴저지 한인 커뮤니티를 위한 의료 접근 및 건강 정보 포털. 메디케어, ACA, 의료 상담을 한국어로 제공합니다." />
-  <meta property="og:image" content="<?= htmlspecialchars($topStory['coverImage'] ?? '/logo-icon.svg') ?>" />
+  <title>뉴저지 의료접근센터 · NJ Healthcare Access Center | Healthcare Access Portal (의료접근)</title>
+  <meta name="description" content="뉴저지 의료접근센터 (NJ Healthcare Access Center / Healthcare Access Portal)는 뉴저지 한인 동포를 위한 무료 프리미엄 의료접근 및 건강 네비게이션 포털입니다. 메디케어, ACA 건강보험, 시니어 케어 장기요양 및 전문 재활, 한국어 1:1 의료 상담을 제공합니다." />
+  <meta name="keywords" content="nj healthcare access portal, nj healthcare access center, healthcare access center, 뉴저지 의료접근센터, 의료접근, 의료접근센터, 뉴저지 한인 의료, 뉴저지 건강보험, 메디케어, ACA 오바마케어, 뉴저지 시니어 케어, 한인 재활치료" />
+  <link rel="canonical" href="https://kor2.njaccessportal.com/" />
+
+  <!-- OpenGraph / Social Media -->
+  <meta property="og:site_name" content="뉴저지 의료접근센터 · NJ Healthcare Access Center" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kor2.njaccessportal.com/" />
+  <meta property="og:title" content="뉴저지 의료접근센터 · NJ Healthcare Access Center | Healthcare Access Portal (의료접근)" />
+  <meta property="og:description" content="뉴저지 의료접근센터 (NJ Healthcare Access Center / Portal) - 뉴저지 한인 커뮤니티를 위한 무료 의료 접근, 메디케어, ACA, 시니어 케어 및 건강 상담 포털." />
+  <meta property="og:image" content="<?= htmlspecialchars(!empty($topStory['coverImage']) ? $topStory['coverImage'] : 'https://kor2.njaccessportal.com/logo-icon.svg') ?>" />
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="뉴저지 의료접근센터 · NJ Healthcare Access Center" />
+  <meta name="twitter:description" content="뉴저지 한인을 위한 무료 프리미엄 의료 접근·네비게이션 서비스 (Healthcare Access Portal)" />
+  <meta name="twitter:image" content="<?= htmlspecialchars(!empty($topStory['coverImage']) ? $topStory['coverImage'] : 'https://kor2.njaccessportal.com/logo-icon.svg') ?>" />
+
+  <!-- Schema.org JSON-LD Structured Data for Google Search & AI Search -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://kor2.njaccessportal.com/#website",
+        "url": "https://kor2.njaccessportal.com/",
+        "name": "뉴저지 의료접근센터 · NJ Healthcare Access Center",
+        "alternateName": [
+          "NJ Healthcare Access Portal",
+          "NJ Healthcare Access Center",
+          "Healthcare Access Center",
+          "뉴저지 의료접근센터",
+          "의료접근센터",
+          "의료접근",
+          "Healthcare Access Portal"
+        ],
+        "description": "뉴저지 한인 동포를 위한 무료 프리미엄 의료 접근 및 건강 네비게이션 서비스 포털",
+        "inLanguage": ["ko", "en"],
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://kor2.njaccessportal.com/blog?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "MedicalOrganization",
+        "@id": "https://kor2.njaccessportal.com/#organization",
+        "name": "뉴저지 의료접근센터 (NJ Healthcare Access Center)",
+        "alternateName": [
+          "Healthcare Access Center",
+          "NJ Healthcare Access Portal",
+          "의료접근센터",
+          "의료접근"
+        ],
+        "url": "https://kor2.njaccessportal.com",
+        "logo": "https://kor2.njaccessportal.com/logo-icon.svg",
+        "email": "njaccessportal@gmail.com",
+        "areaServed": {
+          "@type": "State",
+          "name": "New Jersey"
+        },
+        "knowsLanguage": ["ko", "en"],
+        "description": "뉴저지 한인 커뮤니티의 언어와 문화적 장벽을 해소하고 최고의 의료 접근성을 제공하는 전문 건강 포털 및 상담 센터",
+        "sameAs": [
+          "http://pf.kakao.com/_hdxmxaX/chat"
+        ]
+      }
+    ]
+  }
+  </script>
   <link rel="icon" href="/favicon.ico" sizes="256x256" type="image/x-icon" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />

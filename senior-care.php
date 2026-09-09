@@ -10,9 +10,62 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>시니어 케어 &amp; 전문 재활 치료 | Healthcare Access Portal</title>
-  <meta name="description" content="뉴저지 최고 수준의 장기요양(Long-Term Care) 및 아급성 집중 전문 재활(Post-Acute Rehab) 시설 안내. 주 7일 물리·작업·언어치료, 24시간 전문 간호, CMS 5성 최고등급 인증 케어." />
+  <title>시니어 케어 &amp; 전문 재활 치료 · Senior Care &amp; Rehab | 뉴저지 의료접근센터 (NJ Healthcare Access Center)</title>
+  <meta name="description" content="뉴저지 최고 수준의 장기요양(Long-Term Care) 및 아급성 집중 전문 재활(Post-Acute Rehab) 시설 안내. 주 7일 물리·작업·언어치료, 24시간 전문 간호, CMS 5성 최고등급 인증 케어. 뉴저지 의료접근센터(NJ Healthcare Access Center) 시니어 케어 가이드." />
+  <meta name="keywords" content="시니어 케어, 뉴저지 재활병원, 뉴저지 장기요양원, senior care NJ, skilled nursing facility, rehab center, nj healthcare access portal, nj healthcare access center, healthcare access center, 뉴저지 의료접근센터, 의료접근, 의료접근센터, post-acute rehab" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://kor2.njaccessportal.com/senior-care" />
   <link rel="icon" href="/favicon.ico" sizes="256x256" type="image/x-icon" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kor2.njaccessportal.com/senior-care" />
+  <meta property="og:title" content="시니어 케어 &amp; 전문 재활 치료 · Senior Care &amp; Rehab | 뉴저지 의료접근센터 (NJ Healthcare Access Center)" />
+  <meta property="og:description" content="뉴저지 최고 수준의 장기요양 및 집중 재활 시설 안내. 주 7일 물리·작업·언어치료, 24시간 전문 간호, CMS 5성 인증 케어." />
+  <meta property="og:image" content="https://kor2.njaccessportal.com/images/senior-hero.png" />
+  <meta property="og:site_name" content="뉴저지 의료접근센터 · NJ Healthcare Access Center" />
+  <meta property="og:locale" content="ko_KR" />
+  <meta property="og:locale:alternate" content="en_US" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="시니어 케어 &amp; 전문 재활 치료 | 뉴저지 의료접근센터" />
+  <meta name="twitter:description" content="뉴저지 최고 수준의 장기요양 및 전문 재활 치료 시설 안내. NJ Healthcare Access Portal." />
+  <meta name="twitter:image" content="https://kor2.njaccessportal.com/images/senior-hero.png" />
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": ["MedicalWebPage", "NursingHome"],
+    "name": "뉴저지 의료접근센터 시니어 케어 & 전문 재활 치료 (Senior Care & Post-Acute Rehab)",
+    "description": "뉴저지 최고 수준의 장기요양(Long-Term Care) 및 아급성 집중 전문 재활(Post-Acute Rehab) 시설 안내 및 1:1 입소 상담.",
+    "url": "https://kor2.njaccessportal.com/senior-care",
+    "inLanguage": ["ko", "en"],
+    "provider": {
+      "@type": "MedicalOrganization",
+      "name": "뉴저지 의료접근센터 (NJ Healthcare Access Center)",
+      "alternateName": ["Healthcare Access Center", "뉴저지 의료접근", "의료접근센터", "NJ Healthcare Access Portal"],
+      "url": "https://kor2.njaccessportal.com"
+    },
+    "medicalSpecialty": [
+      "https://schema.org/Geriatric",
+      "https://schema.org/Physiotherapy"
+    ],
+    "availableService": [
+      {
+        "@type": "MedicalProcedure",
+        "name": "Subacute Rehabilitation (아급성 집중 재활 치료)",
+        "procedureType": "Physical therapy, Occupational therapy, Speech therapy"
+      },
+      {
+        "@type": "MedicalProcedure",
+        "name": "Long-Term Skilled Nursing Care (장기 전문 간호 요양)",
+        "procedureType": "24/7 Skilled Nursing, Chronic Care Management"
+      }
+    ]
+  }
+  </script>
 
   <!-- Pretendard & Noto Sans Fonts -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />

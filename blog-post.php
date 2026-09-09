@@ -278,18 +278,70 @@ function render_article_content($content, $allImages = [], &$usedImages = []) {
 
     return $html;
 }
+
+$canonicalUrl = 'https://kor2.njaccessportal.com/blog/' . rawurlencode($slug ?: ($post['id'] ?? ''));
+$fullCoverUrl = (strpos($coverImage, 'http') === 0) ? $coverImage : 'https://kor2.njaccessportal.com/' . ltrim($coverImage, '/');
+$seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료접근센터(NJ Healthcare Access Center) 건강 의료 전문 리포트');
 ?>
 <!DOCTYPE html>
 <html lang="ko" class="h-full antialiased">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title><?= $title ?> | Healthcare Access Portal</title>
-  <meta name="description" content="<?= $excerpt ?>" />
-  <meta property="og:title" content="<?= $title ?>" />
-  <meta property="og:description" content="<?= $excerpt ?>" />
-  <meta property="og:image" content="<?= $coverImage ?>" />
+  <title><?= $title ?> | 뉴저지 의료접근센터 · NJ Healthcare Access Center</title>
+  <meta name="description" content="<?= $seoDescription ?>" />
+  <meta name="keywords" content="<?= $title ?>, <?= $category ?>, nj healthcare access portal, nj healthcare access center, healthcare access center, 뉴저지 의료접근센터, 의료접근, 의료접근센터, 뉴저지 한인 의료, 의학 리포트, 건강 정보" />
+  <link rel="canonical" href="<?= $canonicalUrl ?>" />
+
+  <!-- OpenGraph / Facebook / KakaoTalk -->
+  <meta property="og:site_name" content="뉴저지 의료접근센터 · NJ Healthcare Access Center" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="<?= $canonicalUrl ?>" />
+  <meta property="og:title" content="<?= $title ?> | 뉴저지 의료접근센터 (NJ Healthcare Access Center)" />
+  <meta property="og:description" content="<?= $seoDescription ?>" />
+  <meta property="og:image" content="<?= $fullCoverUrl ?>" />
+  <meta property="article:published_time" content="<?= date('c', strtotime($post['date'] ?? 'now')) ?>" />
+  <meta property="article:section" content="<?= $category ?>" />
+  <meta property="article:author" content="<?= $author ?>" />
+
+  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="<?= $title ?> | 뉴저지 의료접근센터" />
+  <meta name="twitter:description" content="<?= $seoDescription ?>" />
+  <meta name="twitter:image" content="<?= $fullCoverUrl ?>" />
+
+  <!-- Schema.org JSON-LD Structured Data for Google Search & AI Search -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": <?= json_encode($canonicalUrl, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>
+    },
+    "headline": <?= json_encode($post['title'] ?? '', JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>,
+    "description": <?= json_encode($seoDescription, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>,
+    "image": [<?= json_encode($fullCoverUrl, JSON_UNESCAPED_SLASHES) ?>],
+    "datePublished": "<?= date('c', strtotime($post['date'] ?? 'now')) ?>",
+    "dateModified": "<?= date('c', strtotime($post['updatedAt'] ?? ($post['date'] ?? ($post['createdAt'] ?? 'now')))) ?>",
+    "author": {
+      "@type": "Person",
+      "name": <?= json_encode($author, JSON_UNESCAPED_UNICODE) ?>
+    },
+    "publisher": {
+      "@type": "MedicalOrganization",
+      "name": "뉴저지 의료접근센터 (NJ Healthcare Access Center)",
+      "alternateName": ["NJ Healthcare Access Portal", "Healthcare Access Center", "뉴저지 의료접근센터", "의료접근센터", "의료접근"],
+      "url": "https://kor2.njaccessportal.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://kor2.njaccessportal.com/logo-icon.svg"
+      }
+    },
+    "articleSection": <?= json_encode($category, JSON_UNESCAPED_UNICODE) ?>,
+    "keywords": <?= json_encode($category . ', nj healthcare access portal, nj healthcare access center, healthcare access center, 뉴저지 의료접근센터, 의료접근, 의료접근센터, 뉴저지 한인 건강, 의학 뉴스', JSON_UNESCAPED_UNICODE) ?>
+  }
+  </script>
   
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
