@@ -15,7 +15,8 @@
   <meta name="keywords" content="시니어 케어, 뉴저지 재활병원, 뉴저지 장기요양원, senior care NJ, skilled nursing facility, rehab center, nj healthcare access portal, nj healthcare access center, healthcare access center, 뉴저지 의료접근센터, 의료접근, 의료접근센터, post-acute rehab" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <link rel="canonical" href="https://kor2.njaccessportal.com/senior-care" />
-  <link rel="icon" href="/favicon.ico" sizes="256x256" type="image/x-icon" />
+    <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
+<link rel="icon" href="/favicon.ico?v=2" sizes="256x256" type="image/x-icon" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
@@ -542,7 +543,7 @@
         </a>
 
         <!-- Desktop Menu: "시니어 케어" is right after "뉴스" -->
-        <div class="hidden md:flex items-center desktop-nav-links" style="display: flex; align-items: center; gap: 26px;">
+        <div class="hidden md:flex items-center desktop-nav-links">
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/">홈</a>
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/blog">뉴스</a>
           <a class="nav-link pb-0.5 font-bold text-brand-blue border-b-2 border-brand-blue" href="/senior-care">시니어 케어</a>
@@ -1469,36 +1470,6 @@
   <!-- JAVASCRIPT: Mobile Menu, Video Player, Consultation Mockup -->
   <!-- ================================================================= -->
   <script>
-    // 1. Mobile Menu Toggle
-    (function() {
-      var btn = document.getElementById('mobile-menu-btn');
-      var menu = document.getElementById('mobile-menu-dropdown');
-      if (btn && menu) {
-        var isOpen = false;
-        btn.addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          isOpen = !isOpen;
-          if (isOpen) {
-            menu.style.maxHeight = '450px';
-            menu.style.opacity = '1';
-            menu.style.pointerEvents = 'auto';
-          } else {
-            menu.style.maxHeight = '0';
-            menu.style.opacity = '0';
-            menu.style.pointerEvents = 'none';
-          }
-        });
-        document.addEventListener('click', function(e) {
-          if (isOpen && !btn.contains(e.target) && !menu.contains(e.target)) {
-            isOpen = false;
-            menu.style.maxHeight = '0';
-            menu.style.opacity = '0';
-            menu.style.pointerEvents = 'none';
-          }
-        });
-      }
-    })();
 
     // 2. Senior Story Videos Data (Curated Mockup matching homepage structure)
     var seniorVideos = [
@@ -1685,6 +1656,6 @@
     }
   </script>
 
-  <script src="/js/fixes.js?v=2.3"></script>
+  <script src="/js/fixes.js?v=4.1.0"></script>
 </body>
 </html>

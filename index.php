@@ -187,11 +187,11 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
   }
   </script>
 
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" type="image/x-icon" />
-  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png" />
-  <link rel="icon" href="/favicon-512.png" sizes="512x512" type="image/png" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
+  <link rel="icon" href="/favicon.ico?v=2" sizes="16x16 32x32 48x48" type="image/x-icon" />
+  <link rel="icon" href="/favicon-192.png?v=2" sizes="192x192" type="image/png" />
+  <link rel="icon" href="/favicon-512.png?v=2" sizes="512x512" type="image/png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -674,7 +674,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
             <span class="block text-[10px] font-sans text-brand-muted leading-tight -mt-0.5">뉴저지 한인 의료 접근 포털</span>
           </div>
         </a>
-        <div class="hidden md:flex items-center" style="display: flex; align-items: center; gap: 26px;">
+        <div class="hidden md:flex items-center">
           <a class="nav-link pb-0.5 font-bold text-brand-blue cursor-pointer" href="/" onclick="navigateToHome(event); return false;">홈</a>
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/blog">뉴스</a>
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/senior-care">시니어 케어</a>
@@ -1430,36 +1430,6 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
   </footer>
 
   <script>
-    // 1. Mobile Menu Toggle
-    (function() {
-      var btn = document.getElementById('mobile-menu-btn');
-      var menu = document.getElementById('mobile-menu-dropdown');
-      if (btn && menu) {
-        var isOpen = false;
-        btn.addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          isOpen = !isOpen;
-          if (isOpen) {
-            menu.style.maxHeight = '400px';
-            menu.style.opacity = '1';
-            menu.style.pointerEvents = 'auto';
-          } else {
-            menu.style.maxHeight = '0';
-            menu.style.opacity = '0';
-            menu.style.pointerEvents = 'none';
-          }
-        });
-        document.addEventListener('click', function(e) {
-          if (isOpen && !btn.contains(e.target) && !menu.contains(e.target)) {
-            isOpen = false;
-            menu.style.maxHeight = '0';
-            menu.style.opacity = '0';
-            menu.style.pointerEvents = 'none';
-          }
-        });
-      }
-    })();
 
     // 2. Global Section Slide-in on Scroll (Excludes Top Billboard)
     document.addEventListener('DOMContentLoaded', function() {

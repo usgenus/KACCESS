@@ -142,84 +142,10 @@
   }
 
   // ---------------------------------------------------------
-  // 2. MOBILE MENU TOGGLE (finds button by aria-label="Menu")
+  // 2. MOBILE MENU TOGGLE — Handled exclusively by fixes.js fixMobileMenu() with rich accordion support
   // ---------------------------------------------------------
   function initMobileMenu() {
-    var btn = document.getElementById('mobile-menu-btn');
-    if (!btn) btn = document.querySelector('button[aria-label="Menu"]');
-
-    var menu = document.getElementById('mobile-menu-dropdown');
-    if (!menu) {
-      var nav = document.querySelector('nav');
-      if (nav) {
-        // The mobile dropdown is the div.md:hidden inside nav
-        var allNavDivs = nav.querySelectorAll('div');
-        for (var i = 0; i < allNavDivs.length; i++) {
-          var d = allNavDivs[i];
-          var cls = d.className || '';
-          if (cls.indexOf('md:hidden') !== -1 && cls.indexOf('overflow-hidden') !== -1) {
-            menu = d;
-            break;
-          }
-        }
-      }
-    }
-
-    if (!btn || !menu) return;
-    if (btn.dataset.bound) return;
-    btn.dataset.bound = '1';
-
-    // Initialize closed
-    menu.style.maxHeight = '0';
-    menu.style.opacity = '0';
-    menu.style.pointerEvents = 'none';
-    menu.style.overflow = 'hidden';
-    menu.style.transition = 'max-height 0.32s ease, opacity 0.25s ease';
-
-    var spans = btn.querySelectorAll('span');
-    var isOpen = false;
-
-    function openMenu() {
-      isOpen = true;
-      menu.style.maxHeight = '400px';
-      menu.style.opacity = '1';
-      menu.style.pointerEvents = 'auto';
-      if (spans.length >= 3) {
-        spans[0].style.transform = 'translateY(6px) rotate(45deg)';
-        spans[1].style.opacity = '0';
-        spans[2].style.transform = 'translateY(-6px) rotate(-45deg)';
-      }
-    }
-
-    function closeMenu() {
-      isOpen = false;
-      menu.style.maxHeight = '0';
-      menu.style.opacity = '0';
-      menu.style.pointerEvents = 'none';
-      if (spans.length >= 3) {
-        spans[0].style.transform = '';
-        spans[1].style.opacity = '';
-        spans[2].style.transform = '';
-      }
-    }
-
-    btn.addEventListener('click', function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      if (isOpen) closeMenu(); else openMenu();
-    });
-
-    menu.querySelectorAll('a').forEach(function(link) {
-      link.addEventListener('click', function() {
-        setTimeout(closeMenu, 80);
-      });
-    });
-
-    document.addEventListener('click', function(e) {
-      if (isOpen && !btn.contains(e.target) && !menu.contains(e.target)) {
-        closeMenu();
-      }
-    });
+    return;
   }
 
   // ---------------------------------------------------------

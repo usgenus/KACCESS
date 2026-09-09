@@ -110,8 +110,18 @@
       '@keyframes bodyFadeIn { from { opacity:0; } to { opacity:1; } }',
       'body.fouc-guard-missing { animation: bodyFadeIn 0.28s ease-out both; }',
 
-      /* Mobile menu accordion styles */
-      '.mobile-menu-open { max-height: 82vh !important; opacity: 1 !important; pointer-events: auto !important; overflow-y: auto !important; -webkit-overflow-scrolling: touch !important; }',
+      /* Responsive Nav & Mobile Menu Accordion */
+      '@media (max-width: 767px) {',
+      '  .hidden.md\\:flex, div.hidden.md\\:flex, .desktop-nav-links { display: none !important; }',
+      '  #mobile-menu-btn { display: inline-flex !important; }',
+      '}',
+      '@media (min-width: 768px) {',
+      '  .hidden.md\\:flex, div.hidden.md\\:flex, .desktop-nav-links { display: flex !important; align-items: center !important; gap: 26px !important; }',
+      '  #mobile-menu-btn { display: none !important; }',
+      '  #mobile-menu-dropdown { display: none !important; }',
+      '}',
+      '#mobile-menu-btn span { transition: transform 0.25s ease, opacity 0.25s ease !important; }',
+      '.mobile-menu-open { max-height: 85vh !important; opacity: 1 !important; pointer-events: auto !important; overflow-y: auto !important; -webkit-overflow-scrolling: touch !important; }',
       '#mobile-menu-dropdown { -webkit-overflow-scrolling: touch; }',
       '#mobile-menu-dropdown::-webkit-scrollbar { width: 4px; }',
       '#mobile-menu-dropdown::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }',
@@ -119,6 +129,8 @@
       '.mobile-accordion-btn { -webkit-tap-highlight-color: transparent; }',
       '.mobile-accordion-btn:active { background-color: rgba(241, 245, 249, 0.9); }',
       '.mobile-accordion-panel { transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }',
+      '.mobile-accordion-panel:not(.hidden) { display: flex !important; }',
+      '.mobile-accordion-panel.hidden { display: none !important; }',
       '.mobile-acc-chevron { transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1); }',
 
       /* KakaoTalk large CTA button (about page) */
@@ -435,11 +447,12 @@
         var targetId = b.getAttribute('data-target');
         var panel = targetId ? dropdown.querySelector('#' + targetId) : null;
         var chevron = b.querySelector('.mobile-acc-chevron');
-        var isCurrentlyOpen = panel && !panel.classList.contains('hidden');
+        var isCurrentlyOpen = panel && !panel.classList.contains('hidden') && panel.style.display !== 'none';
 
         // Close other panels for clean accordion UX
         dropdown.querySelectorAll('.mobile-accordion-panel').forEach(function(p) {
           p.classList.add('hidden');
+          p.style.display = 'none';
         });
         dropdown.querySelectorAll('.mobile-acc-chevron').forEach(function(ch) {
           ch.style.transform = '';
@@ -448,6 +461,7 @@
 
         if (!isCurrentlyOpen && panel) {
           panel.classList.remove('hidden');
+          panel.style.display = 'flex';
           if (chevron) {
             chevron.style.transform = 'rotate(180deg)';
             chevron.classList.add('rotate-180');
@@ -462,8 +476,8 @@
     if (!nav) return;
 
     // Find or create hamburger button
-    var btn = document.querySelector('button[aria-label="Menu"]') ||
-              document.getElementById('mobile-menu-btn');
+    var btn = document.getElementById('mobile-menu-btn') ||
+              document.querySelector('button[aria-label="Menu"]');
     
     // Find dropdown
     var dropdown = document.getElementById('mobile-menu-dropdown');
@@ -481,8 +495,6 @@
     }
 
     if (!btn || !dropdown) return;
-    if (btn.dataset.fxbound) return;
-    btn.dataset.fxbound = '1';
 
     var curPath = window.location.pathname.replace(/\/$/, '').toLowerCase() || '/';
 
@@ -491,6 +503,9 @@
       dropdown.innerHTML = buildAccordionMenuHTML(curPath);
     }
     initAccordionToggles(dropdown);
+
+    if (btn.dataset.fxbound) return;
+    btn.dataset.fxbound = '1';
 
     // Initial closed styling
     dropdown.style.maxHeight = '0';
@@ -505,7 +520,7 @@
     function openMenu() {
       open = true;
       dropdown.classList.add('mobile-menu-open');
-      dropdown.style.maxHeight = '82vh';
+      dropdown.style.maxHeight = '85vh';
       dropdown.style.opacity = '1';
       dropdown.style.overflowY = 'auto';
       dropdown.style.pointerEvents = 'auto';
@@ -726,10 +741,9 @@
       var div = allDivs[i];
       var homeA = div.querySelector('a[href="/"]');
       var blogA = div.querySelector('a[href="/blog"]');
-      if (homeA && blogA && (div.classList.contains('md:flex') || div.style.display === 'flex' || div.className.indexOf('items-center') !== -1) && !div.classList.contains('md:hidden') && div.id !== 'mobile-menu-dropdown') {
-        // Enforce spacious spacing
-        div.style.display = 'flex';
-        div.style.alignItems = 'center';
+      if (homeA && blogA && (div.classList.contains('md:flex') || div.className.indexOf('items-center') !== -1) && !div.classList.contains('md:hidden') && div.id !== 'mobile-menu-dropdown') {
+        // Enforce spacious desktop styling via class/gap without forcing inline display on mobile
+        div.classList.add('desktop-nav-links');
         div.style.gap = '26px';
 
         var seniorA = div.querySelector('a[href*="senior-care"]');
@@ -758,8 +772,8 @@
     if (mobileDropdown) {
       if (!mobileDropdown.querySelector('.mobile-accordion-group')) {
         mobileDropdown.innerHTML = buildAccordionMenuHTML(curPath);
-        initAccordionToggles(mobileDropdown);
       }
+      initAccordionToggles(mobileDropdown);
     }
 
     // 3. Footer
@@ -788,10 +802,12 @@
 
   function setupNavObserver() {
     ensureSeniorCareInNav();
+    fixMobileMenu();
     var nav = document.querySelector('nav');
     if (nav && window.MutationObserver) {
       var obs = new MutationObserver(function() {
         ensureSeniorCareInNav();
+        fixMobileMenu();
       });
       obs.observe(nav, { childList: true, subtree: true });
     }
@@ -799,6 +815,7 @@
     var checks = 0;
     var timer = setInterval(function() {
       ensureSeniorCareInNav();
+      fixMobileMenu();
       checks++;
       if (checks > 12) clearInterval(timer);
     }, 250);

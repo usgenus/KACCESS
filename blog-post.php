@@ -349,11 +349,11 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/_next/static/chunks/1fosv8xgmgdeu.css" />
 
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" type="image/x-icon" />
-  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png" />
-  <link rel="icon" href="/favicon-512.png" sizes="512x512" type="image/png" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
+  <link rel="icon" href="/favicon.ico?v=2" sizes="16x16 32x32 48x48" type="image/x-icon" />
+  <link rel="icon" href="/favicon-192.png?v=2" sizes="192x192" type="image/png" />
+  <link rel="icon" href="/favicon-512.png?v=2" sizes="512x512" type="image/png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2" />
 
   <style>
     :root, html, body {
@@ -379,7 +379,7 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
             <span class="block text-[10px] font-sans text-brand-muted leading-tight">뉴저지 한인 의료 접근 포털 · NJAP</span>
           </div>
         </a>
-        <div class="hidden md:flex items-center" style="display: flex; align-items: center; gap: 26px;">
+        <div class="hidden md:flex items-center">
           <a class="nav-link pb-0.5 font-medium text-sm text-slate-700 hover:text-brand-blue cursor-pointer" href="/" onclick="navigateToHome(event); return false;">홈</a>
           <a class="nav-link pb-0.5 font-medium text-sm text-brand-blue font-bold" href="/blog">뉴스</a>
           <a class="nav-link pb-0.5 font-medium text-sm text-slate-700 hover:text-brand-blue" href="/senior-care">시니어 케어</a>
@@ -1231,6 +1231,6 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
     })();
   </script>
   <script src="/js/cms-client.js?v=3.5.0"></script>
-  <script src="/js/fixes.js?v=2.0"></script>
+  <script src="/js/fixes.js?v=4.1.0"></script>
 </body>
 </html>
