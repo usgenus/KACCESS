@@ -1274,7 +1274,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
               뉴저지 의료접근센터 · 의료접근포털
             </h2>
             <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
-              언어와 문화의 장벽 없이, 뉴저지 한인 동포 누구나 최적의 공공 의료 혜택과 건강보험, 병원 진료에 접근할 수 있도록 돕는 비영리 종합 건강 네비게이션 포털입니다.
+              언어와 문화의 장벽 없이, 뉴저지 한인 동포 누구나 최적의 공공 의료 혜택과 건강보험, 병원 진료에 접근할 수 있도록 돕는 종합 건강 네비게이션 포털입니다.
             </p>
           </div>
 
