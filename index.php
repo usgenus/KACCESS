@@ -114,6 +114,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="google-site-verification" content="xmtfJH3AZyW8W9Do_yQyWBZBlmmTET-VSke-GzY2PPs" />
   <title>뉴저지 의료접근센터 · 의료접근포털 | NJ Healthcare Access Center &amp; Portal (NJ Korean Outreach)</title>
   <meta name="description" content="뉴저지 의료접근센터(의료접근포털 / NJ Healthcare Access Center &amp; Portal)는 뉴저지 한인 동포를 위한 무료 종합 의료 접근 및 한인 아웃리치(NJ Korean Outreach) 포털입니다. 뉴저지 패밀리케어(메디케이드), 메디케어, ACA 건강보험, 자선진료(Charity Care), 무료 암 검진(NJCEED), 시니어 케어, 1:1 한국어 전문 의료 상담을 제공합니다." />
   <meta name="keywords" content="의료접근센터, 의료접근포털, 뉴저지 의료접근센터, 뉴저지 의료접근포털, nj korean outreach, 뉴저지 한인 아웃리치, healthcare access center, healthcare access portal, nj healthcare access center, nj healthcare access portal, 의료접근, 뉴저지 한인 의료, 뉴저지 건강보험, 뉴저지 패밀리케어, 메디케이드, 메디케어, ACA 오바마케어, 자선진료, charity care, 무료 암검진, NJCEED, 시니어 케어, 패밀리터치 헬스케어" />
