@@ -114,23 +114,24 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>뉴저지 의료접근센터 · NJ Healthcare Access Center | Healthcare Access Portal (의료접근)</title>
-  <meta name="description" content="뉴저지 의료접근센터 (NJ Healthcare Access Center / Healthcare Access Portal)는 뉴저지 한인 동포를 위한 무료 프리미엄 의료접근 및 건강 네비게이션 포털입니다. 메디케어, ACA 건강보험, 시니어 케어 장기요양 및 전문 재활, 한국어 1:1 의료 상담을 제공합니다." />
-  <meta name="keywords" content="nj healthcare access portal, nj healthcare access center, healthcare access center, 뉴저지 의료접근센터, 의료접근, 의료접근센터, 뉴저지 한인 의료, 뉴저지 건강보험, 메디케어, ACA 오바마케어, 뉴저지 시니어 케어, 한인 재활치료" />
+  <title>뉴저지 의료접근센터 · 의료접근포털 | NJ Healthcare Access Center &amp; Portal (NJ Korean Outreach)</title>
+  <meta name="description" content="뉴저지 의료접근센터(의료접근포털 / NJ Healthcare Access Center &amp; Portal)는 뉴저지 한인 동포를 위한 무료 종합 의료 접근 및 한인 아웃리치(NJ Korean Outreach) 포털입니다. 뉴저지 패밀리케어(메디케이드), 메디케어, ACA 건강보험, 자선진료(Charity Care), 무료 암 검진(NJCEED), 시니어 케어, 1:1 한국어 전문 의료 상담을 제공합니다." />
+  <meta name="keywords" content="의료접근센터, 의료접근포털, 뉴저지 의료접근센터, 뉴저지 의료접근포털, nj korean outreach, 뉴저지 한인 아웃리치, healthcare access center, healthcare access portal, nj healthcare access center, nj healthcare access portal, 의료접근, 뉴저지 한인 의료, 뉴저지 건강보험, 뉴저지 패밀리케어, 메디케이드, 메디케어, ACA 오바마케어, 자선진료, charity care, 무료 암검진, NJCEED, 시니어 케어, 패밀리터치 헬스케어" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <link rel="canonical" href="https://kor2.njaccessportal.com/" />
 
   <!-- OpenGraph / Social Media -->
   <meta property="og:site_name" content="뉴저지 의료접근센터 · NJ Healthcare Access Center" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://kor2.njaccessportal.com/" />
-  <meta property="og:title" content="뉴저지 의료접근센터 · NJ Healthcare Access Center | Healthcare Access Portal (의료접근)" />
-  <meta property="og:description" content="뉴저지 의료접근센터 (NJ Healthcare Access Center / Portal) - 뉴저지 한인 커뮤니티를 위한 무료 의료 접근, 메디케어, ACA, 시니어 케어 및 건강 상담 포털." />
+  <meta property="og:title" content="뉴저지 의료접근센터 · 의료접근포털 | NJ Healthcare Access Center &amp; Portal" />
+  <meta property="og:description" content="뉴저지 의료접근센터 (NJ Healthcare Access Center / Portal / NJ Korean Outreach) - 뉴저지 한인 커뮤니티를 위한 무료 의료 접근, 메디케어, ACA, 자선진료, 무료 암검진 및 건강 상담 포털." />
   <meta property="og:image" content="<?= htmlspecialchars(!empty($topStory['coverImage']) ? $topStory['coverImage'] : 'https://kor2.njaccessportal.com/logo-icon.svg') ?>" />
 
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="뉴저지 의료접근센터 · NJ Healthcare Access Center" />
-  <meta name="twitter:description" content="뉴저지 한인을 위한 무료 프리미엄 의료 접근·네비게이션 서비스 (Healthcare Access Portal)" />
+  <meta name="twitter:title" content="뉴저지 의료접근센터 · 의료접근포털 | NJ Healthcare Access Center" />
+  <meta name="twitter:description" content="뉴저지 한인을 위한 무료 프리미엄 의료 접근·네비게이션 서비스 및 한인 아웃리치 (Healthcare Access Portal)" />
   <meta name="twitter:image" content="<?= htmlspecialchars(!empty($topStory['coverImage']) ? $topStory['coverImage'] : 'https://kor2.njaccessportal.com/logo-icon.svg') ?>" />
 
   <!-- Schema.org JSON-LD Structured Data for Google Search & AI Search -->
@@ -142,17 +143,22 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
         "@type": "WebSite",
         "@id": "https://kor2.njaccessportal.com/#website",
         "url": "https://kor2.njaccessportal.com/",
-        "name": "뉴저지 의료접근센터 · NJ Healthcare Access Center",
+        "name": "뉴저지 의료접근센터 · 의료접근포털 (NJ Healthcare Access Center & Portal)",
         "alternateName": [
-          "NJ Healthcare Access Portal",
-          "NJ Healthcare Access Center",
-          "Healthcare Access Center",
-          "뉴저지 의료접근센터",
           "의료접근센터",
+          "의료접근포털",
+          "뉴저지 의료접근센터",
+          "뉴저지 의료접근포털",
+          "nj korean outreach",
+          "뉴저지 한인 아웃리치",
+          "Healthcare Access Center",
+          "Healthcare Access Portal",
+          "NJ Healthcare Access Center",
+          "NJ Healthcare Access Portal",
           "의료접근",
-          "Healthcare Access Portal"
+          "패밀리터치 헬스케어 액세스 센터"
         ],
-        "description": "뉴저지 한인 동포를 위한 무료 프리미엄 의료 접근 및 건강 네비게이션 서비스 포털",
+        "description": "뉴저지 한인 동포를 위한 무료 프리미엄 의료 접근 및 건강 네비게이션 서비스 포털 (NJ Korean Outreach Hub)",
         "inLanguage": ["ko", "en"],
         "potentialAction": {
           "@type": "SearchAction",
@@ -163,24 +169,138 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
       {
         "@type": "MedicalOrganization",
         "@id": "https://kor2.njaccessportal.com/#organization",
-        "name": "뉴저지 의료접근센터 (NJ Healthcare Access Center)",
+        "name": "뉴저지 의료접근센터 (NJ Healthcare Access Center & Portal)",
         "alternateName": [
+          "의료접근센터",
+          "의료접근포털",
+          "뉴저지 의료접근포털",
           "Healthcare Access Center",
           "NJ Healthcare Access Portal",
-          "의료접근센터",
-          "의료접근"
+          "NJ Korean Outreach",
+          "뉴저지 한인 아웃리치"
         ],
         "url": "https://kor2.njaccessportal.com",
         "logo": "https://kor2.njaccessportal.com/logo-icon.svg",
         "email": "njaccessportal@gmail.com",
+        "telephone": "+1-551-285-0800",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "59 West Palisade Avenue",
+          "addressLocality": "Englewood",
+          "addressRegion": "NJ",
+          "postalCode": "07631",
+          "addressCountry": "US"
+        },
         "areaServed": {
           "@type": "State",
           "name": "New Jersey"
         },
         "knowsLanguage": ["ko", "en"],
-        "description": "뉴저지 한인 커뮤니티의 언어와 문화적 장벽을 해소하고 최고의 의료 접근성을 제공하는 전문 건강 포털 및 상담 센터",
+        "description": "뉴저지 한인 커뮤니티의 언어와 문화적 장벽을 해소하고 공공보험(메디케이드/메디케어/ACA), 자선진료(Charity Care), 무료 암검진(NJCEED), 시니어 케어를 제공하는 전문 의료접근센터 및 포털",
         "sameAs": [
           "http://pf.kakao.com/_hdxmxaX/chat"
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://kor2.njaccessportal.com/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "응급실(ER)과 911은 언제 사용해야 할까요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "가슴 또는 복부의 심한 통증이나 압박감, 멈추지 않는 출혈, 갑작스러운 시력 변화나 언어 장애, 호흡 곤란, 고열을 동반한 심한 두통, 의식 혼미 등 생명을 위협하는 증상이 있을 때 즉시 911에 전화하거나 응급실(ER)을 방문해야 합니다. 거동이 불가능할 때는 911에 구급차(Ambulance)를 요청하십시오."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "예상치 못한 깜짝 의료비(Surprise Medical Bill) 청구를 방지하려면 어떻게 해야 하나요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "네트워크 내 병원을 이용하더라도 진료에 참여한 의사(마취과, 병리학과, 영상의학과 등)가 네트워크 외(Out-of-Network)일 때 깜짝 청구가 발생할 수 있습니다. 비응급 시술 전에는 참여 의료진 전원의 인-네트워크 여부를 사전에 확인하고, 연방법인 'No Surprises Act' 및 뉴저지 'Out-of-Network Consumer Protection, Act'에 따른 환자 보호 권리를 행사해야 합니다."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "미국 병원 의료비 청구서(Medical Bill) 주요 항목은 어떻게 해석하나요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "진료일(DOS), 시술코드(CPT), 진단코드(ICD), 청구금액(Charge), 보험사 할인 삭감액(Adjustment/Write-off - 환자 부담 아님), 보험사 지급액(Insurance Payment), 최종 환자 납부액(Patient Balance/Balance Due)을 확인해야 합니다. 병원 청구 금액을 바로 납부하지 마시고 보험사 EOB 명세서와 먼저 대조하십시오."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "보험 설명서(EOB - Explanation of Benefits)의 핵심 조건은 무엇인가요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "EOB는 청구서가 아닌 보험 혜택 명세서입니다. 공제액(Deductible - 보험 혜택 전 환자가 먼저 채워야 하는 연간 금액), 본인부담금(Copay - 진료당 고정 납부액), 공동보험(Coinsurance - 공제액 충족 후 환자 부담 비율 %), 최대 본인부담금(MOOP - 연간 환자가 부담하는 법적 한도액)을 확인해야 합니다."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "병원 청구서와 보험사 EOB 명세서 금액이 다를 때는 어떻게 하나요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "청구서 잔액(Patient Balance)과 EOB의 'Your Responsibility / Patient Owes' 금액이 반드시 일치해야 합니다. 불일치할 경우 병원 청구 부서에 연락하여 '보험사 처리(EOB)가 최종 반영되었는지' 확인하고, 중복 청구나 오류 코드 청구 여부를 재조정 요청해야 합니다."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "무보험자이거나 재정적 어려움이 있을 때 뉴저지에서 받을 수 있는 의료 지원은?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "뉴저지 패밀리케어(NJFamilyCare 메디케이드) 신청이 가능하며, 소득 기준 초과 시 연방 지원 지역 보건센터(FQHC) 또는 가정의료기관(BVMI)에서 소득 연동 슬라이딩 스케일 요금(Sliding Fee Scale) 또는 자선 진료(Charity Care)를 통해 무료 또는 극히 저렴한 비용으로 치료받을 수 있습니다."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "MOOP(최대 본인 부담금 - Maximum Out-of-Pocket)이란 무엇인가요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "가입자가 1년 동안 건강보험이 적용되는 필수 의료 서비스에 대해 지불하는 본인 부담금(Deductible, Copay, Coinsurance)의 법적 최대 한도입니다. 이 금액에 도달하면 해당 연도 남은 기간 동안 보험사가 100% 비용을 전액 부담합니다."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "진료 의뢰(Referral)와 보험사 사전 승인(Prior Authorization)은 어떻게 다른가요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "진료 의뢰(Referral)는 주치의(PCP)가 특정 전문의 진료를 승인하는 공식 의뢰서(HMO 보험 필수)이며, 사전 승인(Prior Authorization)은 MRI, CT, 특정 수술, 고가 처방약 등 고비용 의료 서비스를 받기 전 보험사로부터 의학적 필요성을 승인받는 절차입니다."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "환자 포털 마이차트(MyChart)는 어떻게 활용하나요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "MyChart는 병원 진료 기록, 혈액 및 영상 검사 결과, 예방 접종 내역 조회, 의료진과의 1:1 메시지 상담, 진료 예약 및 처방전 리필 요청, 진료비 온라인 납부 및 세부 내역 열람을 지원하는 통합 환자 포털입니다."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "미등록 체류자(서류미비자)도 뉴저지에서 의료 지원을 받을 수 있나요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "네. 체류 신분과 관계없이 뉴저지 주 병원의 자선 치료(Hospital Charity Care) 및 연방 공인 커뮤니티 보건소(FQHC)를 전적으로 이용하실 수 있습니다. 의료기관은 환자의 이민 신분을 이민국에 보고하지 않으며 엄격한 의료 정보 기밀(HIPAA)이 법적으로 보장됩니다."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "뉴저지 무료 암 검진 프로그램(NJCEED)은 무엇인가요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "NJCEED(New Jersey Cancer Education and Early Detection)는 무보험자 또는 저보험 뉴저지 거주자(소득 기준 250% FPL 이하)를 대상으로 유방암(맘모그램), 자궁경부암(Pap/HPV), 대장암, 전립선암 검진을 무료로 제공하는 주정부 공식 지원 프로그램입니다."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "한인 정신 건강 지원 및 심리 상담은 어디서 받을 수 있나요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "에스더 하 재단(Esther Ha Foundation), 케어 플러스 뉴저지(Care Plus NJ) 등 한국어 상담이 가능한 전문 기관들과 연계하여 우울증, 불안, 가족 갈등, 트라우마 치료 상담을 한국어로 편안하게 지원받으실 수 있습니다."
+            }
+          }
         ]
       }
     ]
@@ -1139,6 +1259,353 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                 <div class="text-xs font-bold text-blue-400 group-hover:translate-x-1 transition-transform flex items-center gap-1">서비스 바로가기 →</div>
               </div>
             </a>
+        <!-- 5-2. NJ Healthcare Access Center & Korean Outreach (뉴저지 의료접근센터 · 의료접근포털 종합 센터) -->
+        <section id="healthcare-access-center" class="bg-white rounded-3xl p-6 sm:p-10 border border-gray-200 shadow-sm">
+          <!-- Section Header -->
+          <div class="max-w-4xl mx-auto text-center mb-10">
+            <span class="inline-flex items-center gap-1.5 bg-blue-50 text-brand-blue border border-blue-200/80 text-xs font-extrabold uppercase tracking-widest px-3.5 py-1 rounded-full mb-3 shadow-xs">
+              <span>✦</span> NJ KOREAN OUTREACH &amp; HEALTHCARE ACCESS CENTER <span>✦</span>
+            </span>
+            <h2 class="font-extrabold text-2xl sm:text-3xl md:text-4xl text-slate-900 tracking-tight mb-3">
+              뉴저지 의료접근센터 · 의료접근포털
+            </h2>
+            <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
+              언어와 문화의 장벽 없이, 뉴저지 한인 동포 누구나 최적의 공공 의료 혜택과 건강보험, 병원 진료에 접근할 수 있도록 돕는 비영리 종합 건강 네비게이션 포털입니다.
+            </p>
+          </div>
+
+          <!-- Mission & Who We Serve Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            <!-- Mission Card -->
+            <div class="bg-gradient-to-br from-blue-50/70 to-slate-50 border border-blue-100/80 rounded-2xl p-6 sm:p-8 flex flex-col justify-between shadow-xs">
+              <div>
+                <div class="w-12 h-12 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center text-2xl mb-4 font-bold">
+                  🎯
+                </div>
+                <h3 class="font-bold text-xl text-slate-900 mb-2">우리의 미션 (Our Mission)</h3>
+                <p class="text-slate-700 text-sm sm:text-[15px] leading-relaxed mb-4">
+                  복잡하고 어려운 미국 의료 시스템 속에서 한인 동포들이 필수적인 의료 자원에 원활히 도달하도록 전문 네비게이션을 제공합니다. 의사 예약, 병원 진료, 필수 의약품 처방은 물론 적합한 공공 보험 및 정부 보조 혜택 가입까지 한국어로 1:1 지원합니다.
+                </p>
+              </div>
+              <div class="pt-3 border-t border-blue-100 flex items-center gap-2 text-xs font-bold text-brand-blue">
+                <span>✓ 전문 의료진 연계</span>
+                <span class="text-slate-300">•</span>
+                <span>✓ 한국어 통역 및 서류 지원</span>
+                <span class="text-slate-300">•</span>
+                <span>✓ 100% 무료 상담</span>
+              </div>
+            </div>
+
+            <!-- Who We Serve Card -->
+            <div class="bg-gradient-to-br from-amber-50/70 to-slate-50 border border-amber-100/80 rounded-2xl p-6 sm:p-8 flex flex-col justify-between shadow-xs">
+              <div>
+                <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center text-2xl mb-4 font-bold">
+                  🤝
+                </div>
+                <h3 class="font-bold text-xl text-slate-900 mb-2">우리가 지원하는 분들 (Who We Help)</h3>
+                <p class="text-slate-700 text-sm sm:text-[15px] leading-relaxed mb-4">
+                  뉴저지 의료접근센터는 연령, 재정 상태, 이민 및 체류 신분(<strong class="text-amber-700 font-semibold">미등록 체류자 및 서류미비자 포함</strong>) 또는 기존 보험 유무와 상관없이 의료 지원이 필요한 모든 한인 주민에게 문을 열어두고 있습니다.
+                </p>
+              </div>
+              <div class="pt-3 border-t border-amber-100 flex items-center gap-2 text-xs font-bold text-amber-700">
+                <span>✓ 철저한 비밀 보장 (HIPAA)</span>
+                <span class="text-slate-300">•</span>
+                <span>✓ 신분 불문 자선치료 지원</span>
+                <span class="text-slate-300">•</span>
+                <span>✓ 권리 보장</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4 Core Services Grid -->
+          <div class="mb-14">
+            <div class="text-center mb-8">
+              <h3 class="font-bold text-xl sm:text-2xl text-slate-900">주요 의료 접근 서비스 (Core Healthcare Services)</h3>
+              <p class="text-xs sm:text-sm text-slate-500 mt-1">전문 건강 네비게이터가 복잡한 절차를 처음부터 끝까지 함께합니다.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              <!-- Service 1: Public Insurance -->
+              <div class="bg-slate-50 hover:bg-white border border-slate-200/80 hover:border-blue-400 rounded-2xl p-5 transition-all duration-300 shadow-xs hover:shadow-md flex flex-col justify-between">
+                <div>
+                  <span class="text-3xl mb-3 block">📑</span>
+                  <h4 class="font-bold text-base text-slate-900 mb-1.5">공공 건강보험 지원</h4>
+                  <p class="text-xs text-slate-600 leading-relaxed">
+                    뉴저지 패밀리케어(NJFamilyCare 메디케이드), Amerigroup, Horizon NJ Health, 메디케어(Humana/UHC), ACA 오바마케어 자격 심사 및 등록을 맞춤형으로 안내합니다.
+                  </p>
+                </div>
+                <a href="/medicare" class="mt-4 pt-3 border-t border-slate-100 text-xs font-bold text-brand-blue hover:underline block">
+                  공공 보험 안내 →
+                </a>
+              </div>
+
+              <!-- Service 2: Charity Care & FQHC -->
+              <div class="bg-slate-50 hover:bg-white border border-slate-200/80 hover:border-blue-400 rounded-2xl p-5 transition-all duration-300 shadow-xs hover:shadow-md flex flex-col justify-between">
+                <div>
+                  <span class="text-3xl mb-3 block">🏥</span>
+                  <h4 class="font-bold text-base text-slate-900 mb-1.5">자선 진료 (Charity Care)</h4>
+                  <p class="text-xs text-slate-600 leading-relaxed">
+                    병원비 탕감 프로그램(Hospital Charity Care) 신청 및 연방 공인 커뮤니티 보건센터(FQHC), 저비용 클리닉(BVMI) 연계를 통해 무보험자도 부담 없이 진료를 받도록 돕습니다.
+                  </p>
+                </div>
+                <a href="/tool" class="mt-4 pt-3 border-t border-slate-100 text-xs font-bold text-brand-blue hover:underline block">
+                  자선 진료 연계 →
+                </a>
+              </div>
+
+              <!-- Service 3: NJCEED Free Screening -->
+              <div class="bg-slate-50 hover:bg-white border border-slate-200/80 hover:border-blue-400 rounded-2xl p-5 transition-all duration-300 shadow-xs hover:shadow-md flex flex-col justify-between">
+                <div>
+                  <span class="text-3xl mb-3 block">🩺</span>
+                  <h4 class="font-bold text-base text-slate-900 mb-1.5">무료 암 검진 (NJCEED)</h4>
+                  <p class="text-xs text-slate-600 leading-relaxed">
+                    뉴저지 주정부 공식 NJCEED 프로그램을 통해 유방암(맘모그램), 자궁경부암, 대장암, 전립선암 검진을 무료로 받으실 수 있도록 자격 확인과 병원 예약을 대행합니다.
+                  </p>
+                </div>
+                <a href="/about#contact" class="mt-4 pt-3 border-t border-slate-100 text-xs font-bold text-brand-blue hover:underline block">
+                  무료 검진 신청 →
+                </a>
+              </div>
+
+              <!-- Service 4: Korean Outreach & Mental Health -->
+              <div class="bg-slate-50 hover:bg-white border border-slate-200/80 hover:border-blue-400 rounded-2xl p-5 transition-all duration-300 shadow-xs hover:shadow-md flex flex-col justify-between">
+                <div>
+                  <span class="text-3xl mb-3 block">🌱</span>
+                  <h4 class="font-bold text-base text-slate-900 mb-1.5">한인 아웃리치 &amp; 정신 건강</h4>
+                  <p class="text-xs text-slate-600 leading-relaxed">
+                    에스더 하 재단, Care Plus NJ 연계 한인 전문 심리 상담 지원 및 만성질환 예방, 식습관 개선, 신체 건강 증진을 위한 라이브웰(LiveWell) 무료 교육 세미나를 제공합니다.
+                  </p>
+                </div>
+                <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="mt-4 pt-3 border-t border-slate-100 text-xs font-bold text-brand-blue hover:underline block">
+                  커뮤니티 아웃리치 →
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 12 Comprehensive FAQs Accordion Section -->
+          <div class="mt-12 pt-10 border-t border-slate-200" id="faq-section">
+            <div class="text-center max-w-2xl mx-auto mb-8">
+              <span class="text-xs font-bold text-brand-blue uppercase tracking-wider bg-blue-50 px-3 py-1 rounded-full border border-blue-100">COMMUNITY HEALTHCARE FAQ</span>
+              <h3 class="font-extrabold text-2xl sm:text-3xl text-slate-900 mt-2 mb-2">자주 묻는 질문 (FAQ)</h3>
+              <p class="text-xs sm:text-sm text-slate-500">뉴저지 한인 동포분들이 가장 많이 질문하시는 미국 의료 및 건강보험 핵심 안내 12가지</p>
+            </div>
+
+            <div class="max-w-4xl mx-auto space-y-3" id="faq-accordion-list">
+              <!-- Item 1 -->
+              <div class="border border-slate-200 rounded-xl overflow-hidden transition-colors bg-slate-50/50 hover:bg-slate-50">
+                <button type="button" onclick="window.toggleFaq('faq-1')" class="w-full text-left px-5 py-4 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
+                  <span class="font-bold text-sm sm:text-base text-slate-900 flex items-center gap-2.5">
+                    <span class="w-6 h-6 rounded-full bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-extrabold shrink-0">1</span>
+                    응급실(ER)과 911은 언제 사용해야 할까요?
+                  </span>
+                  <span id="faq-icon-faq-1" class="text-slate-400 font-mono text-lg transition-transform duration-200 shrink-0">+</span>
+                </button>
+                <div id="faq-content-faq-1" class="hidden px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+                  다음과 같은 심각하거나 생명을 위협할 수 있는 증상이 있을 때는 즉시 911에 전화하거나 응급실(ER)을 방문하세요:
+                  <ul class="list-disc pl-5 mt-2 space-y-1 text-slate-700">
+                    <li>가슴 또는 복부의 극심한 압박감 또는 급성 통증</li>
+                    <li>지혈되지 않는 과다 출혈</li>
+                    <li>갑작스러운 시력 변화, 언어 어눌함, 편마비, 의식 혼란</li>
+                    <li>호흡 곤란 및 숨쉬기 어려움</li>
+                    <li>고열을 동반한 극심한 두통 또는 유독 물질 섭취</li>
+                  </ul>
+                  <p class="mt-2 text-slate-500 font-medium">※ 스스로 이동하기 위험한 상황에서는 지체 없이 911에 전화하여 구급차(Ambulance)를 요청하십시오.</p>
+                </div>
+              </div>
+
+              <!-- Item 2 -->
+              <div class="border border-slate-200 rounded-xl overflow-hidden transition-colors bg-slate-50/50 hover:bg-slate-50">
+                <button type="button" onclick="window.toggleFaq('faq-2')" class="w-full text-left px-5 py-4 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
+                  <span class="font-bold text-sm sm:text-base text-slate-900 flex items-center gap-2.5">
+                    <span class="w-6 h-6 rounded-full bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-extrabold shrink-0">2</span>
+                    예상치 못한 깜짝 의료비(Surprise Medical Bills) 청구 방지법
+                  </span>
+                  <span id="faq-icon-faq-2" class="text-slate-400 font-mono text-lg transition-transform duration-200 shrink-0">+</span>
+                </button>
+                <div id="faq-content-faq-2" class="hidden px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+                  인-네트워크 병원을 방문했더라도 마취과 의사, 영상의학과 전문의 등이 네트워크 외(Out-of-Network)인 경우 깜짝 청구가 발생할 수 있습니다. 비응급 시술 전 보험사에 의료진 네트워크 상태를 서면으로 확인하시고, 연방법인 'No Surprises Act' 및 뉴저지 'Out-of-Network Consumer Protection Act'에 의해 부당한 추가 청구로부터 법적 보호를 받으실 수 있습니다.
+                </div>
+              </div>
+
+              <!-- Item 3 -->
+              <div class="border border-slate-200 rounded-xl overflow-hidden transition-colors bg-slate-50/50 hover:bg-slate-50">
+                <button type="button" onclick="window.toggleFaq('faq-3')" class="w-full text-left px-5 py-4 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
+                  <span class="font-bold text-sm sm:text-base text-slate-900 flex items-center gap-2.5">
+                    <span class="w-6 h-6 rounded-full bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-extrabold shrink-0">3</span>
+                    의료비 청구서(Medical Bill) 주요 용어 및 해석 방법
+                  </span>
+                  <span id="faq-icon-faq-3" class="text-slate-400 font-mono text-lg transition-transform duration-200 shrink-0">+</span>
+                </button>
+                <div id="faq-content-faq-3" class="hidden px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+                  의료비 청구서를 받으셨을 때 확인해야 할 핵심 용어입니다:
+                  <ul class="list-disc pl-5 mt-2 space-y-1">
+                    <li><strong>DOS (Date of Service):</strong> 진료를 받은 일자</li>
+                    <li><strong>CPT Code:</strong> 시술 및 처치 식별 표준 코드</li>
+                    <li><strong>ICD Code:</strong> 의학적 진단 질병 분류 코드</li>
+                    <li><strong>Charge (Charged Amount):</strong> 병원이 청구한 정가 금액</li>
+                    <li><strong>Adjustment / Write-Off:</strong> 보험사와 병원 간 계약에 의해 자동 삭감된 금액 (환자가 납부할 필요 없음)</li>
+                    <li><strong>Insurance Payment:</strong> 보험사가 병원에 실제 지급한 금액</li>
+                    <li><strong>Patient Balance (Balance Due):</strong> 환자가 최종적으로 지불해야 하는 잔여 금액</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Item 4 -->
+              <div class="border border-slate-200 rounded-xl overflow-hidden transition-colors bg-slate-50/50 hover:bg-slate-50">
+                <button type="button" onclick="window.toggleFaq('faq-4')" class="w-full text-left px-5 py-4 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
+                  <span class="font-bold text-sm sm:text-base text-slate-900 flex items-center gap-2.5">
+                    <span class="w-6 h-6 rounded-full bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-extrabold shrink-0">4</span>
+                    보험 설명서(EOB - Explanation of Benefits) 핵심 조건
+                  </span>
+                  <span id="faq-icon-faq-4" class="text-slate-400 font-mono text-lg transition-transform duration-200 shrink-0">+</span>
+                </button>
+                <div id="faq-content-faq-4" class="hidden px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+                  EOB는 납부 청구서가 아니며 보험사가 병원 청구를 어떻게 처리했는지 보여주는 명세서입니다.
+                  <ul class="list-disc pl-5 mt-2 space-y-1">
+                    <li><strong>Deductible (디덕터블 / 공제액):</strong> 보험 혜택이 본격 시작되기 전 환자가 연간 먼저 채워야 하는 금액</li>
+                    <li><strong>Copay (코페이 / 본인 부담금):</strong> 방문 또는 진료 시마다 고정 지불하는 정액 (예: $20)</li>
+                    <li><strong>Coinsurance (코인슈어런스 / 공동보험):</strong> 디덕터블 충족 후 환자와 보험사가 나누어 내는 비율 (예: 20%)</li>
+                    <li><strong>Out-of-Pocket:</strong> 연간 환자 주머니에서 지출된 총 본인 부담 비용</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Item 5 -->
+              <div class="border border-slate-200 rounded-xl overflow-hidden transition-colors bg-slate-50/50 hover:bg-slate-50">
+                <button type="button" onclick="window.toggleFaq('faq-5')" class="w-full text-left px-5 py-4 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
+                  <span class="font-bold text-sm sm:text-base text-slate-900 flex items-center gap-2.5">
+                    <span class="w-6 h-6 rounded-full bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-extrabold shrink-0">5</span>
+                    병원 청구서와 보험사 EOB 명세서 대조 및 확인 요령
+                  </span>
+                  <span id="faq-icon-faq-5" class="text-slate-400 font-mono text-lg transition-transform duration-200 shrink-0">+</span>
+                </button>
+                <div id="faq-content-faq-5" class="hidden px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+                  청구서를 받자마자 바로 결제하지 마세요! 반드시 보험사에서 발송된 EOB의 <strong>"You May Owe"</strong> 또는 <strong>"Patient Responsibility"</strong> 금액과 병원 청구서의 <strong>"Patient Balance"</strong>가 일치하는지 먼저 대조해야 합니다. 만약 EOB 금액보다 병원 청구서 금액이 높다면 병원 측에 보험사 청구가 정상 반영되었는지 확인을 요청해야 합니다.
+                </div>
+              </div>
+
+              <!-- Item 6 -->
+              <div class="border border-slate-200 rounded-xl overflow-hidden transition-colors bg-slate-50/50 hover:bg-slate-50">
+                <button type="button" onclick="window.toggleFaq('faq-6')" class="w-full text-left px-5 py-4 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
+                  <span class="font-bold text-sm sm:text-base text-slate-900 flex items-center gap-2.5">
+                    <span class="w-6 h-6 rounded-full bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-extrabold shrink-0">6</span>
+                    무보험자이거나 재정적 어려움이 있을 때의 지원 제도
+                  </span>
+                  <span id="faq-icon-faq-6" class="text-slate-400 font-mono text-lg transition-transform duration-200 shrink-0">+</span>
+                </button>
+                <div id="faq-content-faq-6" class="hidden px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+                  뉴저지 거주자는 소득에 따라 뉴저지 패밀리케어(NJFamilyCare 메디케이드) 신청이 연중 상시 가능합니다. 메디케이드 자격이 안 되더라도 연방 지원 지역 보건센터(FQHC) 및 가정의료보험기관(BVMI)에서 소득에 따른 진료비 감면 혜택(Sliding Fee Scale)을 받으실 수 있으며, 병원 입원 및 응급 진료에 대해서는 뉴저지 주정부 병원 자선 진료(Hospital Charity Care)를 신청하여 의료비를 100% 탕감받을 수 있습니다.
+                </div>
+              </div>
+
+              <!-- Item 7 -->
+              <div class="border border-slate-200 rounded-xl overflow-hidden transition-colors bg-slate-50/50 hover:bg-slate-50">
+                <button type="button" onclick="window.toggleFaq('faq-7')" class="w-full text-left px-5 py-4 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
+                  <span class="font-bold text-sm sm:text-base text-slate-900 flex items-center gap-2.5">
+                    <span class="w-6 h-6 rounded-full bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-extrabold shrink-0">7</span>
+                    MOOP (최대 본인 부담금 - Maximum Out-of-Pocket)이란?
+                  </span>
+                  <span id="faq-icon-faq-7" class="text-slate-400 font-mono text-lg transition-transform duration-200 shrink-0">+</span>
+                </button>
+                <div id="faq-content-faq-7" class="hidden px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+                  가입자가 1개 연도 동안 건강보험 적용 진료비(Deductible, Copay, Coinsurance 합산)로 지출할 수 있는 법적 최대 한도액입니다. 1년 동안 환자의 본인 지출이 이 MOOP 한도에 도달하면, 그 해의 남은 기간 동안에는 인-네트워크 필수 의료 서비스 비용을 보험사가 100% 전액 부담합니다.
+                </div>
+              </div>
+
+              <!-- Item 8 -->
+              <div class="border border-slate-200 rounded-xl overflow-hidden transition-colors bg-slate-50/50 hover:bg-slate-50">
+                <button type="button" onclick="window.toggleFaq('faq-8')" class="w-full text-left px-5 py-4 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
+                  <span class="font-bold text-sm sm:text-base text-slate-900 flex items-center gap-2.5">
+                    <span class="w-6 h-6 rounded-full bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-extrabold shrink-0">8</span>
+                    전문의 진료 의뢰 (Referral) vs 보험사 사전 승인 (Prior Authorization)
+                  </span>
+                  <span id="faq-icon-faq-8" class="text-slate-400 font-mono text-lg transition-transform duration-200 shrink-0">+</span>
+                </button>
+                <div id="faq-content-faq-8" class="hidden px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+                  <strong>진료 의뢰 (Referral):</strong> 주치의(PCP)가 안과, 심장내과, 이비인후과 등 특정 전문의의 진료가 필요하다고 판단하여 발급하는 허가서입니다 (HMO 플랜 필수).<br/>
+                  <strong>사전 승인 (Prior Authorization):</strong> MRI, CT, 복잡한 수술, 고가 항암제 등 특정 고비용 시술을 받기 전에 병원이 보험사에 의학적 타당성을 사전 검토받아 결제 보증을 받는 절차입니다.
+                </div>
+              </div>
+
+              <!-- Item 9 -->
+              <div class="border border-slate-200 rounded-xl overflow-hidden transition-colors bg-slate-50/50 hover:bg-slate-50">
+                <button type="button" onclick="window.toggleFaq('faq-9')" class="w-full text-left px-5 py-4 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
+                  <span class="font-bold text-sm sm:text-base text-slate-900 flex items-center gap-2.5">
+                    <span class="w-6 h-6 rounded-full bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-extrabold shrink-0">9</span>
+                    마이차트 (MyChart) 포털 사용법 및 진료 기록 관리
+                  </span>
+                  <span id="faq-icon-faq-9" class="text-slate-400 font-mono text-lg transition-transform duration-200 shrink-0">+</span>
+                </button>
+                <div id="faq-content-faq-9" class="hidden px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+                  MyChart는 병원과 의사 진료 기록을 실시간으로 확인하는 보안 환자 포털입니다. 혈액 검사, 영상 판독 결과 확인, 의사와의 안전한 메시지 상담, 온라인 진료 예약, 처방전 리필 요청, 진료비 명세서 확인 및 납부 등을 스마트폰 앱과 PC에서 간편하게 처리하실 수 있습니다.
+                </div>
+              </div>
+
+              <!-- Item 10 -->
+              <div class="border border-slate-200 rounded-xl overflow-hidden transition-colors bg-slate-50/50 hover:bg-slate-50">
+                <button type="button" onclick="window.toggleFaq('faq-10')" class="w-full text-left px-5 py-4 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
+                  <span class="font-bold text-sm sm:text-base text-slate-900 flex items-center gap-2.5">
+                    <span class="w-6 h-6 rounded-full bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-extrabold shrink-0">10</span>
+                    미등록 체류자(서류미비자) 지원 및 의료 정보 비밀 보장
+                  </span>
+                  <span id="faq-icon-faq-10" class="text-slate-400 font-mono text-lg transition-transform duration-200 shrink-0">+</span>
+                </button>
+                <div id="faq-content-faq-10" class="hidden px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+                  체류 신분과 전혀 관계없이 뉴저지 주 병원의 자선 치료(Charity Care)와 연방 공인 커뮤니티 보건소(FQHC)를 전액 무료 또는 최소한의 비용으로 이용하실 수 있습니다. 연방법(HIPAA)에 의해 환자의 진료 기록 및 신분 정보는 이민국이나 외부 기관에 절대 공개되지 않으며 100% 비밀이 보장됩니다.
+                </div>
+              </div>
+
+              <!-- Item 11 -->
+              <div class="border border-slate-200 rounded-xl overflow-hidden transition-colors bg-slate-50/50 hover:bg-slate-50">
+                <button type="button" onclick="window.toggleFaq('faq-11')" class="w-full text-left px-5 py-4 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
+                  <span class="font-bold text-sm sm:text-base text-slate-900 flex items-center gap-2.5">
+                    <span class="w-6 h-6 rounded-full bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-extrabold shrink-0">11</span>
+                    뉴저지 무료 암 검진 프로그램 (NJCEED) 안내
+                  </span>
+                  <span id="faq-icon-faq-11" class="text-slate-400 font-mono text-lg transition-transform duration-200 shrink-0">+</span>
+                </button>
+                <div id="faq-content-faq-11" class="hidden px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+                  NJCEED(New Jersey Cancer Education and Early Detection)는 무보험 또는 저보험 상태인 뉴저지 주민(연방 빈곤선 250% 이하)을 대상으로 유방암(맘모그램), 자궁경부암(Pap 도말검사/HPV 검사), 대장암(분변잠혈검사/대장내시경 연계), 전립선암 검진을 무료로 제공합니다. 조기 발견을 위한 정기 검진을 꼭 신청하세요.
+                </div>
+              </div>
+
+              <!-- Item 12 -->
+              <div class="border border-slate-200 rounded-xl overflow-hidden transition-colors bg-slate-50/50 hover:bg-slate-50">
+                <button type="button" onclick="window.toggleFaq('faq-12')" class="w-full text-left px-5 py-4 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
+                  <span class="font-bold text-sm sm:text-base text-slate-900 flex items-center gap-2.5">
+                    <span class="w-6 h-6 rounded-full bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-extrabold shrink-0">12</span>
+                    뉴저지 한인 정신 건강 및 심리 상담 지원 연계
+                  </span>
+                  <span id="faq-icon-faq-12" class="text-slate-400 font-mono text-lg transition-transform duration-200 shrink-0">+</span>
+                </button>
+                <div id="faq-content-faq-12" class="hidden px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+                  이민 생활의 스트레스, 우울증, 불안 장애, 가족 갈등으로 어려움을 겪으시는 분들을 위해 에스더 하 재단(Esther Ha Foundation) 및 케어 플러스 뉴저지(Care Plus NJ) 등 한국어 상담이 가능한 전문 정신건강 비영리 기관과 긴밀히 협력하고 있습니다. 상담 신청 시 비밀이 철저히 보장됩니다.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact & Location Hub Card -->
+          <div class="mt-12 bg-slate-900 text-white rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 border border-slate-800">
+            <div class="space-y-2 text-center md:text-left">
+              <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">CENTER INFO &amp; KOREAN OUTREACH</span>
+              <h3 class="text-xl sm:text-2xl font-bold text-white">뉴저지 의료접근센터 현장 안내 &amp; 문의</h3>
+              <p class="text-xs sm:text-sm text-slate-300 max-w-xl">
+                📍 59 West Palisade Avenue, Englewood, NJ 07631 | 📞 551-285-0800<br/>
+                뉴저지 버겐카운티 및 전역 한인 가정을 위한 무료 상담 &amp; 현장 안내 지원 (All Programs Free)
+              </p>
+            </div>
+            <div class="flex items-center gap-3 shrink-0 flex-wrap justify-center">
+              <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-[#FEE500] hover:bg-[#FDD835] text-[#191919] font-extrabold text-sm px-5 py-3 rounded-xl shadow-lg transition-transform hover:scale-105">
+                <img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-5 h-5 rounded-sm object-contain" />
+                <span>카카오톡 1:1 상담 바로가기</span>
+              </a>
+              <a href="/about#contact" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-bold text-sm px-5 py-3 rounded-xl border border-white/20 transition-colors">
+                <span>온라인 문의 작성</span>
+                <span>→</span>
+              </a>
+            </div>
           </div>
         </section>
       </div>
@@ -1317,6 +1784,20 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
   </footer>
 
   <script>
+    // FAQ Accordion Toggle
+    window.toggleFaq = function(id) {
+      var content = document.getElementById('faq-content-' + id);
+      var icon = document.getElementById('faq-icon-' + id);
+      if (!content) return;
+      var isOpen = !content.classList.contains('hidden');
+      if (isOpen) {
+        content.classList.add('hidden');
+        if (icon) icon.textContent = '+';
+      } else {
+        content.classList.remove('hidden');
+        if (icon) icon.textContent = '−';
+      }
+    };
 
     // 2. Global Section Slide-in on Scroll (Excludes Top Billboard)
     document.addEventListener('DOMContentLoaded', function() {
