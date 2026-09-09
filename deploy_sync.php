@@ -1,10 +1,10 @@
 <?php
 /**
- * Automated deploy sync for SEO and sitemap updates
+ * Automated deploy sync for mobile accordion menu and portal updates
  */
 $targetDir = '/home/u738358110/domains/kor2.njaccessportal.com/public_html';
-$tarUrl = 'https://raw.githubusercontent.com/usgenus/KACCESS/main/deploy_seo.tar.gz';
-$tarFile = $targetDir . '/deploy_seo.tar.gz';
+$tarUrl = 'https://raw.githubusercontent.com/usgenus/KACCESS/main/deploy_bundle.tar.gz';
+$tarFile = $targetDir . '/deploy_bundle.tar.gz';
 
 $data = @file_get_contents($tarUrl);
 if (!$data || strlen($data) < 1000) {
