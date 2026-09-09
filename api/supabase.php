@@ -41,7 +41,7 @@ class SupabaseClient {
 
         $res = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
+        // curl_close is a no-op in modern PHP and deprecated in PHP 8.5+
 
         $json = json_decode($res, true);
         return [

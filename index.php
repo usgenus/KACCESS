@@ -602,9 +602,10 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
             <span class="block text-[10px] font-sans text-brand-muted leading-tight -mt-0.5">뉴저지 한인 의료 접근 포털</span>
           </div>
         </a>
-        <div class="hidden md:flex items-center gap-8">
+        <div class="hidden md:flex items-center" style="display: flex; align-items: center; gap: 26px;">
           <a class="nav-link pb-0.5 font-bold text-brand-blue cursor-pointer" href="/" onclick="navigateToHome(event); return false;">홈</a>
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/blog">뉴스</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/senior-care">시니어 케어</a>
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/medicare">메디케어 &amp; ACA</a>
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/tool">환자도우미</a>
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/about">소개</a>
@@ -625,6 +626,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
     <div id="mobile-menu-dropdown" class="md:hidden overflow-hidden transition-all duration-300 max-h-0 opacity-0 bg-white/95 backdrop-blur-md border-t border-brand-border px-4 py-4 flex flex-col gap-3">
       <a class="font-sans text-sm font-bold text-brand-blue py-2 border-b border-brand-border/50 cursor-pointer" href="/" onclick="navigateToHome(event); return false;">홈</a>
       <a class="font-sans text-sm font-medium text-brand-dark hover:text-brand-blue py-2 border-b border-brand-border/50" href="/blog">뉴스</a>
+      <a class="font-sans text-sm font-medium text-brand-dark hover:text-brand-blue py-2 border-b border-brand-border/50" href="/senior-care">시니어 케어</a>
       <a class="font-sans text-sm font-medium text-brand-dark hover:text-brand-blue py-2 border-b border-brand-border/50" href="/medicare">메디케어 &amp; ACA</a>
       <a class="font-sans text-sm font-medium text-brand-dark hover:text-brand-blue py-2 border-b border-brand-border/50" href="/tool">환자도우미</a>
       <a class="font-sans text-sm font-medium text-brand-dark hover:text-brand-blue py-2 border-b border-brand-border/50" href="/about">소개</a>
@@ -1183,6 +1185,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
             <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200 cursor-pointer" href="/" onclick="navigateToHome(event); return false;">홈</a></li>
             <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/about">소개</a></li>
             <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/blog">건강 뉴스</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/senior-care">시니어 케어</a></li>
           </ul>
         </div>
         <div>

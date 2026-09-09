@@ -322,9 +322,10 @@ function render_article_content($content, $allImages = [], &$usedImages = []) {
             <span class="block text-[10px] font-sans text-brand-muted leading-tight">뉴저지 한인 의료 접근 포털 · NJAP</span>
           </div>
         </a>
-        <div class="hidden md:flex items-center gap-8">
+        <div class="hidden md:flex items-center" style="display: flex; align-items: center; gap: 26px;">
           <a class="nav-link pb-0.5 font-medium text-sm text-slate-700 hover:text-brand-blue cursor-pointer" href="/" onclick="navigateToHome(event); return false;">홈</a>
           <a class="nav-link pb-0.5 font-medium text-sm text-brand-blue font-bold" href="/blog">뉴스</a>
+          <a class="nav-link pb-0.5 font-medium text-sm text-slate-700 hover:text-brand-blue" href="/senior-care">시니어 케어</a>
           <a class="nav-link pb-0.5 font-medium text-sm text-slate-700 hover:text-brand-blue" href="/medicare">메디케어 &amp; ACA</a>
           <a class="nav-link pb-0.5 font-medium text-sm text-slate-700 hover:text-brand-blue" href="/tool">환자도우미</a>
           <a class="nav-link pb-0.5 font-medium text-sm text-slate-700 hover:text-brand-blue" href="/about">소개</a>
@@ -453,7 +454,7 @@ function render_article_content($content, $allImages = [], &$usedImages = []) {
           <div class="flex items-center justify-between mb-6 pb-3 border-b border-brand-border">
             <div class="flex items-center gap-2">
               <h2 class="font-serif font-bold text-2xl text-brand-dark">댓글</h2>
-              <span id="comment-total-badge" class="text-sm font-bold text-brand-blue bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-100">3</span>
+              <span id="comment-total-badge" class="text-sm font-bold text-brand-blue bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-100">0</span>
             </div>
             <div class="flex items-center gap-3 text-xs font-medium text-brand-muted">
               <button id="sort-likes" onclick="setCommentSort('likes')" class="transition-colors text-brand-blue font-bold underline cursor-pointer">순공감순</button>
@@ -566,6 +567,7 @@ function render_article_content($content, $allImages = [], &$usedImages = []) {
             <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200 cursor-pointer" href="/" onclick="navigateToHome(event); return false;">홈</a></li>
             <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/about">소개</a></li>
             <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/blog">건강 뉴스</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/senior-care">시니어 케어</a></li>
           </ul>
         </div>
         <div>
@@ -606,65 +608,81 @@ function render_article_content($content, $allImages = [], &$usedImages = []) {
       let currentSort = 'likes';
       let activeReplyId = null;
 
-      // Default seed comments matching original application
-      const defaultSeeds = [
-        {
-          id: "seed-1",
-          nickname: "포트리한인***",
-          content: "좋은 정보 감사합니다! 미국 와서 의료 용어도 어렵고 메디케어 신청 방법도 막막했는데 한국어로 자세히 설명해주셔서 이해가 쏙쏙 되네요.",
-          createdAt: "2026-08-08 14:20",
-          likes: 15,
-          dislikes: 1,
-          replies: [
-            {
-              id: "seed-1-1",
-              nickname: "NJ센터답변***",
-              content: "도움이 되셨다니 다행입니다. 추가로 궁금하신 사항은 1-800-999-7200 무료 상담 전화로 편하게 문의해주세요!",
-              createdAt: "2026-08-08 15:05",
-              likes: 6,
-              dislikes: 0
-            }
-          ]
-        },
-        {
-          id: "seed-2",
-          nickname: "펠팍주민***",
-          content: "부모님 메디케어 파트D 약 보험 가입 때문에 고민 많았는데 관련 기사 내용이 아주 유용합니다. 공유해둘게요.",
-          createdAt: "2026-08-07 09:45",
-          likes: 9,
-          dislikes: 0,
-          replies: []
-        }
-      ];
-
       let commentsData = [];
 
-      // Initial load: local storage first, then sync with API
+      // Known fake/seed nicknames to always strip
+      const FAKE_NICKS = new Set([
+        '포트리한인***', '뉴욕주민***', '맨해튼맘***', '뉴저지한인***',
+        '한인이웃***', 'NJ센터***', 'NJ센터답변***'
+      ]);
+
+      function isFakeComment(c) {
+        return String(c.id).startsWith('seed-') || FAKE_NICKS.has(c.nickname);
+      }
+
+      function isFakeReply(r) {
+        return String(r.id).startsWith('seed-') || FAKE_NICKS.has(r.nickname);
+      }
+
+      function stripFakes(list) {
+        return list
+          .filter(c => !isFakeComment(c))
+          .map(c => {
+            if (Array.isArray(c.replies)) {
+              c.replies = c.replies.filter(r => !isFakeReply(r));
+            }
+            return c;
+          });
+      }
+
+      // Initial load: always fetch from API; localStorage is only a fallback
       function loadComments() {
+        // Purge any stale/fake data from localStorage right away
         try {
           const cached = localStorage.getItem(storageKey);
           if (cached) {
-            commentsData = JSON.parse(cached);
-          } else {
-            commentsData = JSON.parse(JSON.stringify(defaultSeeds));
+            const parsed = JSON.parse(cached);
+            if (Array.isArray(parsed)) {
+              const cleaned = stripFakes(parsed);
+              if (cleaned.length !== parsed.length) {
+                localStorage.setItem(storageKey, JSON.stringify(cleaned));
+              }
+            }
           }
-        } catch (e) {
-          commentsData = JSON.parse(JSON.stringify(defaultSeeds));
-        }
+        } catch (e) {}
 
-        renderComments();
-
-        // Fetch from API in background
+        // Don't pre-render from localStorage; wait for API to avoid flashing stale seeds
+        // Fetch real comments from API
         fetch('/api/comments.php?slug=' + encodeURIComponent(postSlug))
           .then(res => res.json())
           .then(res => {
-            if (res.success && Array.isArray(res.comments) && res.comments.length > 0) {
-              commentsData = res.comments;
+            if (res.success && Array.isArray(res.comments)) {
+              commentsData = stripFakes(res.comments);
               saveCommentsLocal(commentsData);
+              renderComments();
+            } else {
+              // Fallback: use cleaned localStorage
+              try {
+                const cached = localStorage.getItem(storageKey);
+                if (cached) {
+                  const parsed = JSON.parse(cached);
+                  if (Array.isArray(parsed)) commentsData = stripFakes(parsed);
+                }
+              } catch (e) {}
               renderComments();
             }
           })
-          .catch(err => console.log('Comments API offline, using local store'));
+          .catch(() => {
+            // Offline fallback: use cleaned localStorage
+            try {
+              const cached = localStorage.getItem(storageKey);
+              if (cached) {
+                const parsed = JSON.parse(cached);
+                if (Array.isArray(parsed)) commentsData = stripFakes(parsed);
+              }
+            } catch (e) {}
+            renderComments();
+          });
       }
 
       function saveCommentsLocal(data) {
@@ -997,6 +1015,6 @@ function render_article_content($content, $allImages = [], &$usedImages = []) {
     })();
   </script>
   <script src="/js/cms-client.js?v=3.5.0"></script>
-  <script src="/js/fixes.js?v=1.2"></script>
+  <script src="/js/fixes.js?v=2.0"></script>
 </body>
 </html>

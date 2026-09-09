@@ -32,37 +32,7 @@ function get_comments_store() {
             if (is_array($data)) return $data;
         }
     }
-    return [
-        'default' => [
-            [
-                'id' => 'seed-1',
-                'nickname' => '포트리한인***',
-                'content' => '좋은 정보 감사합니다! 미국 와서 의료 용어도 어렵고 메디케어 신청 방법도 막막했는데 한국어로 자세히 설명해주셔서 이해가 쏙쏙 되네요.',
-                'createdAt' => '2026-08-08 14:20',
-                'likes' => 15,
-                'dislikes' => 1,
-                'replies' => [
-                    [
-                        'id' => 'seed-1-1',
-                        'nickname' => 'NJ센터답변***',
-                        'content' => '도움이 되셨다니 다행입니다. 추가로 궁금하신 사항은 1-800-999-7200 무료 상담 전화로 편하게 문의해주세요!',
-                        'createdAt' => '2026-08-08 15:05',
-                        'likes' => 6,
-                        'dislikes' => 0
-                    ]
-                ]
-            ],
-            [
-                'id' => 'seed-2',
-                'nickname' => '펠팍주민***',
-                'content' => '부모님 메디케어 파트D 약 보험 가입 때문에 고민 많았는데 관련 기사 내용이 아주 유용합니다. 공유해둘게요.',
-                'createdAt' => '2026-08-07 09:45',
-                'likes' => 9,
-                'dislikes' => 0,
-                'replies' => []
-            ]
-        ]
-    ];
+    return [];
 }
 
 function save_comments_store($store) {
@@ -79,14 +49,20 @@ function save_comments_store($store) {
     @chmod($localCommentsFile, 0666);
 }
 
-$slug = trim($_GET['slug'] ?? ($_POST['slug'] ?? 'default'));
-if (!$slug) $slug = 'default';
+$input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
+$slug = trim($_GET['slug'] ?? ($input['slug'] ?? ''));
+if (!$slug) $slug = 'general';
 
 $store = get_comments_store();
 
 // GET: Fetch comments for a post
 if ($method === 'GET') {
-    $comments = $store[$slug] ?? ($store['default'] ?? []);
+    $comments = $store[$slug] ?? [];
+    if (!is_array($comments)) $comments = [];
+    // Filter out seed comments if present
+    $comments = array_values(array_filter($comments, function($c) {
+        return is_array($c) && (!isset($c['id']) || strpos((string)$c['id'], 'seed-') !== 0);
+    }));
     send_json([
         'success' => true,
         'slug' => $slug,
@@ -95,11 +71,13 @@ if ($method === 'GET') {
 }
 
 // POST actions
-$input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
-$action = $_GET['action'] ?? ($input['action'] ?? 'add');
-
 if ($method === 'POST') {
-    $comments = $store[$slug] ?? ($store['default'] ?? []);
+    $action = $_GET['action'] ?? ($input['action'] ?? 'add');
+    $comments = $store[$slug] ?? [];
+    if (!is_array($comments)) $comments = [];
+    $comments = array_values(array_filter($comments, function($c) {
+        return is_array($c) && (!isset($c['id']) || strpos((string)$c['id'], 'seed-') !== 0);
+    }));
 
     // 1. ADD COMMENT
     if ($action === 'add') {

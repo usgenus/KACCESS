@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- FOUC Guard: hide body immediately before any external CSS can cause a flash -->
+  <style>body{opacity:0;transition:opacity 0.28s ease}</style>
   <title>Healthcare Access Portal | 뉴저지 한인 의료 정보 포털</title>
   <meta name="description" content="뉴저지 한인 커뮤니티를 위한 의료 접근 및 건강 정보 포털. 메디케어, ACA, 의료 상담을 한국어로 제공합니다." />
   <meta property="og:title" content="Healthcare Access Portal | 뉴저지 한인 의료 정보 포털" />
@@ -109,13 +111,17 @@
     /* Section Slide-In Animation */
     .reveal-section {
       opacity: 0;
-      transform: translateY(35px);
-      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+      transform: translateY(18px);
+      transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
       will-change: opacity, transform;
     }
     .reveal-section.is-revealed {
       opacity: 1 !important;
       transform: translateY(0) !important;
+    }
+    /* Sections that are not yet observed fall back to visible after 0.8s so JS slowness never leaves blank content */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal-section { opacity: 1 !important; transform: none !important; }
     }
 
     /* 3-Column News Section: 2.0fr Top Story (Wider) | 1.05fr Latest News | 0.58fr Doctor Column (35% narrower) */
@@ -378,6 +384,7 @@
       line-height: 1.35 !important;
       display: -webkit-box !important;
       -webkit-line-clamp: 2 !important;
+      line-clamp: 2 !important;
       -webkit-box-orient: vertical !important;
       overflow: hidden !important;
     }
@@ -523,9 +530,10 @@
             <span class="block text-[10px] font-sans text-brand-muted leading-tight -mt-0.5">뉴저지 한인 의료 접근 포털</span>
           </div>
         </a>
-        <div class="hidden md:flex items-center gap-8">
+        <div class="hidden md:flex items-center" style="display: flex; align-items: center; gap: 26px;">
           <a class="nav-link pb-0.5 font-bold text-brand-blue cursor-pointer" href="/" onclick="navigateToHome(event); return false;">홈</a>
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/blog">뉴스</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/senior-care">시니어 케어</a>
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/medicare">메디케어 &amp; ACA</a>
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/tool">환자도우미</a>
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/about">소개</a>
@@ -545,6 +553,7 @@
     <div id="mobile-menu-dropdown" class="md:hidden overflow-hidden transition-all duration-300 max-h-0 opacity-0 bg-white/95 backdrop-blur-md border-t border-brand-border px-4 py-4 flex flex-col gap-3">
       <a class="font-sans text-sm font-bold text-brand-blue py-2 border-b border-brand-border/50 cursor-pointer" href="/" onclick="navigateToHome(event); return false;">홈</a>
       <a class="font-sans text-sm font-medium text-brand-dark hover:text-brand-blue py-2 border-b border-brand-border/50" href="/blog">뉴스</a>
+      <a class="font-sans text-sm font-medium text-brand-dark hover:text-brand-blue py-2 border-b border-brand-border/50" href="/senior-care">시니어 케어</a>
       <a class="font-sans text-sm font-medium text-brand-dark hover:text-brand-blue py-2 border-b border-brand-border/50" href="/medicare">메디케어 &amp; ACA</a>
       <a class="font-sans text-sm font-medium text-brand-dark hover:text-brand-blue py-2 border-b border-brand-border/50" href="/tool">환자도우미</a>
       <a class="font-sans text-sm font-medium text-brand-dark hover:text-brand-blue py-2 border-b border-brand-border/50" href="/about">소개</a>
@@ -1134,6 +1143,7 @@
             <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200 cursor-pointer" href="/" onclick="navigateToHome(event); return false;">홈</a></li>
             <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/about">소개</a></li>
             <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/blog">건강 뉴스</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/senior-care">시니어 케어</a></li>
           </ul>
         </div>
         <div>
@@ -1216,6 +1226,26 @@
   </script>
   <script src="/js/cms-client.js?v=4.0.0"></script>
   <script src="/js/fixes.js?v=4.0.0"></script>
+  <!-- FOUC Reveal: show body after DOM+styles are ready -->
+  <script>
+    (function(){
+      function showBody(){
+        document.body.style.opacity='1';
+      }
+      if(document.readyState==='loading'){
+        document.addEventListener('DOMContentLoaded', function(){
+          // Small rAF delay ensures browser has applied styles before reveal
+          requestAnimationFrame(function(){
+            requestAnimationFrame(showBody);
+          });
+        });
+      } else {
+        requestAnimationFrame(function(){
+          requestAnimationFrame(showBody);
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
 

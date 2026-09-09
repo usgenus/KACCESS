@@ -20,39 +20,38 @@
   // ─────────────────────────────────────────────────────────────
   (function fixNextJsCrossPageCorruption() {
     var path = window.location.pathname.replace(/\/$/, '') || '/';
-    // Pages that are standalone HTML (NOT Next.js rendered)
-    var standalonePages = ['/tool', '/calculator', '/matcher', '/dictionary'];
-    var isStandalone = standalonePages.some(function(p) { return path === p || path.startsWith(p + '/'); });
-    if (!isStandalone) return;
+    var toolPages = ['/tool', '/calculator', '/matcher', '/dictionary'];
+    var isToolPage = toolPages.some(function(p) { return path === p || path.startsWith(p + '/'); });
+    var isSeniorCare = path === '/senior-care' || path.startsWith('/senior-care/');
 
-    // Detect corruption: if __next_f exists on window, Next.js hydration ran on this standalone page
-    // Also detect if our key standalone DOM element is missing (corrupted by React)
+    // Only run corruption check on standalone tool pages and senior care page
+    if (!isToolPage && !isSeniorCare) return;
+
     function isCorrupted() {
-      // If Next.js flight data was pushed into this page, we're corrupted
-      if (window.__next_f && window.__next_f.length > 0) return true;
-      // If the hub-tab-btn elements are gone (React unmounted them)
-      if (!document.querySelector('.hub-tab-btn, .hub-tab-active, .hub-tab-inactive, #calc-income-input, #dict-search, #tool-ai-frame')) return true;
+      if (isSeniorCare) {
+        if (!document.querySelector('#senior-care-hero, .cjr-banner, .senior-two-col, h1')) return true;
+        return false;
+      }
+      if (isToolPage) {
+        if (window.__next_f && window.__next_f.length > 0) return true;
+        if (!document.querySelector('.hub-tab-btn, .hub-tab-active, .hub-tab-inactive, #calc-income-input, #dict-search, #tool-ai-frame')) return true;
+        return false;
+      }
       return false;
     }
 
-    // Check on DOMContentLoaded
     function checkAndReload() {
       if (isCorrupted()) {
-        // Hard reload, bypassing cache
         window.location.reload(true);
-        return;
       }
     }
 
-    // Also handle bfcache (browser back/forward cache) restoration
     window.addEventListener('pageshow', function(e) {
       if (e.persisted) {
-        // Page restored from bfcache — check if it got corrupted
         setTimeout(checkAndReload, 50);
       }
     });
 
-    // Check immediately after DOMContentLoaded
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', function() {
         setTimeout(checkAndReload, 100);
@@ -231,27 +230,21 @@
     } catch (e) {}
 
     // C. Browser Back / Forward buttons (bfcache & popstate)
-    // Only reload if the page looks corrupted by Next.js re-hydration.
-    // Unconditional reload causes a visible flash on every back-navigation.
+    var lastRecordedPath = window.location.pathname.replace(/\/$/, '').toLowerCase() || '/';
+
     window.addEventListener('pageshow', function(e) {
-      if (e.persisted) {
-        // Check if Next.js corrupted a standalone page
-        var path = window.location.pathname.replace(/\/$/, '') || '/';
-        var standalonePages = ['/tool', '/calculator', '/matcher', '/dictionary'];
-        var isStandalone = standalonePages.some(function(p) { return path === p || path.startsWith(p + '/'); });
-        if (isStandalone && window.__next_f && window.__next_f.length > 0) {
-          window.location.reload();
-        }
-        // For non-standalone pages (home, about, blog, medicare), bfcache is fine — no reload needed
+      ensureSeniorCareInNav();
+      if (e.persisted && !window._bfReloaded) {
+        window._bfReloaded = true;
+        window.location.reload();
       }
     });
 
     window.addEventListener('popstate', function() {
-      // Only reload on popstate if Next.js is trying to hijack routing on a standalone page
-      var path = window.location.pathname.replace(/\/$/, '') || '/';
-      var standalonePages = ['/tool', '/calculator', '/matcher', '/dictionary'];
-      var isStandalone = standalonePages.some(function(p) { return path === p || path.startsWith(p + '/'); });
-      if (isStandalone) {
+      var newPath = window.location.pathname.replace(/\/$/, '').toLowerCase() || '/';
+      // If history traversal moved to a different page, ensure fresh server reload
+      if (newPath !== lastRecordedPath) {
+        lastRecordedPath = newPath;
         window.location.reload();
       }
     });
@@ -491,15 +484,124 @@
   }
 
   // ─────────────────────────────────────────────────────────────
+  // 12. PERMANENT NAV GUARDIAN
+  //     Ensures "시니어 케어" is always in desktop and mobile nav,
+  //     and keeps desktop spacing clean (gap: 26px), even across
+  //     Next.js client-side navigation, back/forward history, and hydration.
+  // ─────────────────────────────────────────────────────────────
+  function ensureSeniorCareInNav() {
+    var nav = document.querySelector('nav');
+    if (!nav) return;
+
+    var curPath = (window.location.pathname.replace(/\/$/, '') || '/').toLowerCase();
+
+    // 1. Desktop Nav container
+    var allDivs = nav.querySelectorAll('div');
+    for (var i = 0; i < allDivs.length; i++) {
+      var div = allDivs[i];
+      var homeA = div.querySelector('a[href="/"]');
+      var blogA = div.querySelector('a[href="/blog"]');
+      if (homeA && blogA && (div.classList.contains('md:flex') || div.style.display === 'flex' || div.className.indexOf('items-center') !== -1) && !div.classList.contains('md:hidden') && div.id !== 'mobile-menu-dropdown') {
+        // Enforce spacious spacing
+        div.style.display = 'flex';
+        div.style.alignItems = 'center';
+        div.style.gap = '26px';
+
+        var seniorA = div.querySelector('a[href*="senior-care"]');
+        if (!seniorA) {
+          seniorA = document.createElement('a');
+          seniorA.href = '/senior-care';
+          seniorA.textContent = '시니어 케어';
+          seniorA.className = 'nav-link pb-0.5 ' + (curPath === '/senior-care' ? 'font-bold text-brand-blue' : 'font-medium text-slate-700 hover:text-brand-blue');
+          if (blogA.nextSibling) {
+            div.insertBefore(seniorA, blogA.nextSibling);
+          } else {
+            div.appendChild(seniorA);
+          }
+        } else {
+          if (curPath === '/senior-care') {
+            seniorA.classList.add('font-bold', 'text-brand-blue');
+            seniorA.classList.remove('text-slate-700');
+          }
+        }
+      }
+    }
+
+    // 2. Mobile Nav Dropdown
+    var mobileDropdown = document.getElementById('mobile-menu-dropdown') ||
+                          nav.querySelector('.md\\:hidden[class*="flex-col"], div[class*="max-h-"] div');
+    if (mobileDropdown) {
+      var mBlogA = mobileDropdown.querySelector('a[href="/blog"]');
+      var mSeniorA = mobileDropdown.querySelector('a[href*="senior-care"]');
+      if (mBlogA && !mSeniorA) {
+        mSeniorA = document.createElement('a');
+        mSeniorA.href = '/senior-care';
+        mSeniorA.textContent = '시니어 케어';
+        mSeniorA.className = 'font-sans text-sm ' + (curPath === '/senior-care' ? 'font-bold text-brand-blue' : 'font-medium text-brand-dark hover:text-brand-blue') + ' py-2 border-b border-brand-border/50 transition-colors';
+        if (mBlogA.nextSibling) {
+          mobileDropdown.insertBefore(mSeniorA, mBlogA.nextSibling);
+        } else {
+          mobileDropdown.appendChild(mSeniorA);
+        }
+      }
+    }
+
+    // 3. Footer
+    var footer = document.querySelector('footer');
+    if (footer) {
+      var footerBlogA = footer.querySelector('a[href="/blog"]');
+      var footerSeniorA = footer.querySelector('a[href*="senior-care"]');
+      if (footerBlogA && !footerSeniorA) {
+        var li = document.createElement('li');
+        var fA = document.createElement('a');
+        fA.href = '/senior-care';
+        fA.textContent = '시니어 케어';
+        fA.className = 'text-sm font-sans text-white/60 hover:text-white transition-colors duration-200';
+        li.appendChild(fA);
+        var pLi = footerBlogA.closest('li');
+        if (pLi && pLi.parentElement) {
+          if (pLi.nextSibling) {
+            pLi.parentElement.insertBefore(li, pLi.nextSibling);
+          } else {
+            pLi.parentElement.appendChild(li);
+          }
+        }
+      }
+    }
+  }
+
+  function setupNavObserver() {
+    ensureSeniorCareInNav();
+    var nav = document.querySelector('nav');
+    if (nav && window.MutationObserver) {
+      var obs = new MutationObserver(function() {
+        ensureSeniorCareInNav();
+      });
+      obs.observe(nav, { childList: true, subtree: true });
+    }
+    // Periodic safety check during first 3 seconds to catch delayed React hydration
+    var checks = 0;
+    var timer = setInterval(function() {
+      ensureSeniorCareInNav();
+      checks++;
+      if (checks > 12) clearInterval(timer);
+    }, 250);
+  }
+
+  // ─────────────────────────────────────────────────────────────
   // INIT
   // ─────────────────────────────────────────────────────────────
   // Run navigation interception immediately so no clicks can escape
   fixAllNavigation();
+  ensureSeniorCareInNav();
+  window.addEventListener('pageshow', ensureSeniorCareInNav);
+  window.addEventListener('popstate', ensureSeniorCareInNav);
 
   function init() {
     revealBody();
     injectCSS();
     fixAllNavigation();
+    setupNavObserver();
     fixMobileMenu();
     fixBillboardHover();
     fixVideoAutoplay();
@@ -508,6 +610,7 @@
     setTimeout(function() {
       injectKakaoNavBtn();
       injectKakaoAboutBlock();
+      ensureSeniorCareInNav();
     }, 150);
     setTimeout(fixSlideIn, 200);
   }

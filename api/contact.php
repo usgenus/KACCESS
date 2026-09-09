@@ -214,8 +214,8 @@ if ($action === 'submit') {
     $category = trim($input['category'] ?? '일반 문의');
     $message = trim($input['message'] ?? '');
 
-    if ($name === '' || $email === '' || $message === '') {
-        send_json(['success' => false, 'error' => '성함, 이메일, 문의 내용은 필수 입력 항목입니다.'], 400);
+    if ($name === '' || $phone === '' || $message === '') {
+        send_json(['success' => false, 'error' => '성함, 연락처, 문의 내용은 필수 입력 항목입니다.'], 400);
     }
 
     $newInquiry = [

@@ -422,6 +422,7 @@ footer {
   html,
   :host {
     -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
     text-size-adjust: 100%;
     tab-size: 4;
     font-feature-settings: normal;
@@ -2083,9 +2084,20 @@ footer {
   .scrollbar-none {
     scrollbar-width: none
   }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none
+  }
 
   .scrollbar-thin {
     scrollbar-width: thin
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,.2);
+    border-radius: 3px
   }
 
   .grid-cols-1 {
@@ -2337,8 +2349,7 @@ footer {
   }
 
   .border-brand-blue\/30 {
-    border-color: #1a5cf64d;
-    border-color: lab(43.4907% 28.043 -83.8919/.3)
+    border-color: #1a5cf64d
   }
 
   .border-brand-border {
@@ -2346,13 +2357,11 @@ footer {
   }
 
   .border-brand-border\/50 {
-    border-color: #e5e7eb80;
-    border-color: lab(91.5752% -.154406 -2.19766/.5)
+    border-color: #e5e7eb80
   }
 
   .border-brand-border\/60 {
-    border-color: #e5e7eb99;
-    border-color: lab(91.5752% -.154406 -2.19766/.6)
+    border-color: #e5e7eb99
   }
 
   .border-brand-dark {

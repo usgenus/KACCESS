@@ -45,7 +45,13 @@ function db_sanitize_summary_points($summaryPoints) {
     return [];
 }
 
-function get_db_data($forceCloud = false) {
+/**
+ * Retrieves database data with fallback to persistent storage and local mirror.
+ *
+ * @param bool $forceCloud
+ * @return array
+ */
+function get_db_data($forceCloud = false): array {
     // Auto-seed persistent storage from local mirror if persistent file does not exist yet
     if (!file_exists(PERSISTENT_DATA_FILE) && file_exists(DATA_FILE)) {
         $pDir = dirname(PERSISTENT_DATA_FILE);
