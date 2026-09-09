@@ -186,7 +186,10 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
     ]
   }
   </script>
-  <link rel="icon" href="/favicon.ico" sizes="256x256" type="image/x-icon" />
+  <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" type="image/x-icon" />
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png" />
+  <link rel="icon" href="/favicon-512.png" sizes="512x512" type="image/png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
