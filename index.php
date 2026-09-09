@@ -1260,6 +1260,9 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                 <div class="text-xs font-bold text-blue-400 group-hover:translate-x-1 transition-transform flex items-center gap-1">서비스 바로가기 →</div>
               </div>
             </a>
+          </div>
+        </section>
+
         <!-- 5-2. NJ Healthcare Access Center & Korean Outreach (뉴저지 의료접근센터 · 의료접근포털 종합 센터) -->
         <section id="healthcare-access-center" class="bg-white rounded-3xl p-6 sm:p-10 border border-gray-200 shadow-sm">
           <!-- Section Header -->
