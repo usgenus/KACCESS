@@ -695,7 +695,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
         </div>
       </div>
     </div>
-        <div id="mobile-menu-dropdown" class="md:hidden overflow-hidden transition-all duration-300 max-h-0 opacity-0 bg-white/98 backdrop-blur-md border-t border-brand-border px-4 py-3 flex flex-col gap-1" style="-webkit-overflow-scrolling: touch;">
+            <div id="mobile-menu-dropdown" class="md:hidden overflow-hidden transition-all duration-300 max-h-0 opacity-0 bg-white/98 backdrop-blur-md border-t border-brand-border px-4 py-3 flex flex-col gap-1" style="-webkit-overflow-scrolling: touch;">
       <!-- 홈 (Direct) -->
       <a href="/" class="flex items-center justify-between py-2.5 px-3 text-[15px] font-bold text-brand-blue bg-blue-50/50 hover:bg-slate-50/80 rounded-xl transition-colors border-b border-slate-100">
         <div class="flex items-center gap-2.5">
@@ -840,10 +840,6 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
             </div>
           </div>
           <svg class="w-4 h-4 text-black/60 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        </a>
-        <a href="tel:2018868686" class="flex items-center justify-center gap-2 py-2 text-xs font-semibold text-slate-600 hover:text-brand-blue transition-colors">
-          <svg class="w-4 h-4 text-brand-blue shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-          <span>문의 전화: (201) 886-8686</span>
         </a>
       </div>
     </div>
