@@ -683,13 +683,9 @@
     }
 
     // 2. Mobile Nav Dropdown
-    var mobileDropdown = document.getElementById('mobile-menu-dropdown') ||
-                          nav.querySelector('.md\\:hidden[class*="flex-col"], div[class*="max-h-"] div');
-    if (mobileDropdown) {
-      if (!mobileDropdown.querySelector('.mobile-accordion-group')) {
-        mobileDropdown.innerHTML = buildAccordionMenuHTML(curPath);
-      }
-      initAccordionToggles(mobileDropdown);
+    var mobileDropdown = document.getElementById('mobile-menu-dropdown');
+    if (mobileDropdown && !mobileDropdown.querySelector('a[href*="senior-care"]')) {
+      mobileDropdown.innerHTML = buildAccordionMenuHTML(curPath);
     }
 
     // 3. Footer
@@ -716,25 +712,24 @@
     }
   }
 
+  var isNavUpdating = false;
   function setupNavObserver() {
     ensureSeniorCareInNav();
     fixMobileMenu();
     var nav = document.querySelector('nav');
     if (nav && window.MutationObserver) {
       var obs = new MutationObserver(function() {
-        ensureSeniorCareInNav();
-        fixMobileMenu();
+        if (isNavUpdating) return;
+        isNavUpdating = true;
+        try {
+          ensureSeniorCareInNav();
+          fixMobileMenu();
+        } finally {
+          setTimeout(function() { isNavUpdating = false; }, 150);
+        }
       });
-      obs.observe(nav, { childList: true, subtree: true });
+      obs.observe(nav, { childList: true });
     }
-    // Periodic safety check during first 3 seconds to catch delayed React hydration
-    var checks = 0;
-    var timer = setInterval(function() {
-      ensureSeniorCareInNav();
-      fixMobileMenu();
-      checks++;
-      if (checks > 12) clearInterval(timer);
-    }, 250);
   }
 
   // ─────────────────────────────────────────────────────────────
