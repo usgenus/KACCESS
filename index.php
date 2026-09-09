@@ -1519,27 +1519,6 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
             </div>
           </div>
 
-          <!-- Contact & Location Hub Card -->
-          <div class="mt-12 bg-slate-900 text-white rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 border border-slate-800">
-            <div class="space-y-2 text-center md:text-left">
-              <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">CENTER INFO &amp; KOREAN OUTREACH</span>
-              <h3 class="text-xl sm:text-2xl font-bold text-white">뉴저지 의료접근센터 현장 안내 &amp; 문의</h3>
-              <p class="text-xs sm:text-sm text-slate-300 max-w-xl">
-                📍 59 West Palisade Avenue, Englewood, NJ 07631 | 📞 551-285-0800<br/>
-                뉴저지 버겐카운티 및 전역 한인 가정을 위한 무료 상담 &amp; 현장 안내 지원 (All Programs Free)
-              </p>
-            </div>
-            <div class="flex items-center gap-3 shrink-0 flex-wrap justify-center">
-              <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-[#FEE500] hover:bg-[#FDD835] text-[#191919] font-extrabold text-sm px-5 py-3 rounded-xl shadow-lg transition-transform hover:scale-105">
-                <img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-5 h-5 rounded-sm object-contain" />
-                <span>카카오톡 1:1 상담 바로가기</span>
-              </a>
-              <a href="/about#contact" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-bold text-sm px-5 py-3 rounded-xl border border-white/20 transition-colors">
-                <span>온라인 문의 작성</span>
-                <span>→</span>
-              </a>
-            </div>
-          </div>
         </section>
       </div>
 
