@@ -1150,6 +1150,6 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
   </script>
   <script src="/js/cms-client.js?v=3.5.0"></script>
   <script src="/js/fixes.js?v=4.1.0"></script>
-<script src="/js/translator.js?v=<?= time() ?>"></script>
+<script src="/js/njap-translate.js?v=3.0.0"></script>
 </body>
 </html>

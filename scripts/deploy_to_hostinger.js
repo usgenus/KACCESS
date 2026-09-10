@@ -3,9 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const BASE_DIR = '/Users/ejyoon/Desktop/KACCESS';
-const TUS_URL = 'https://srv1709-files.hstgr.io/rest/f03c71845459a2af/api/tus/public_html';
-const AUTH_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJsb2NhbGUiOiJlbl9VUyIsInZpZXdNb2RlIjoibGlzdCIsInNpbmdsZUNsaWNrIjpmYWxzZSwicmVkaXJlY3RBZnRlckNvcHlNb3ZlIjpmYWxzZSwicGVybSI6eyJhZG1pbiI6ZmFsc2UsImV4ZWN1dGUiOmZhbHNlLCJjcmVhdGUiOnRydWUsInJlbmFtZSI6dHJ1ZSwibW9kaWZ5Ijp0cnVlLCJkZWxldGUiOnRydWUsInNoYXJlIjpmYWxzZSwiZG93bmxvYWQiOnRydWV9LCJjb21tYW5kcyI6W10sImxvY2tQYXNzd29yZCI6dHJ1ZSwiaGlkZURvdGZpbGVzIjpmYWxzZSwiZGF0ZUZvcm1hdCI6ZmFsc2UsInVzZXJuYW1lIjoidTczODM1ODExMCIsImFjZUVkaXRvclRoZW1lIjoiIn0sImlzcyI6IkZpbGUgQnJvd3NlciIsImV4cCI6MTc4OTA3MjcwNSwiaWF0IjoxNzg5MDUxMTA1fQ.OmjfLpj3EN2669uv4mA_eDPnCpH4XKDaQAGDOZ64SA4';
-const REST_AUTH_KEY = '130f8dd1a9409c3646b219d7985fc90133f0b70daa91ffc386cb12d2d196a068-f03c71845459a2af';
+const TUS_URL = 'https://srv1709-files.hstgr.io/rest/43a969ba311a5193/api/tus/public_html';
+const AUTH_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJsb2NhbGUiOiJlbl9VUyIsInZpZXdNb2RlIjoibGlzdCIsInNpbmdsZUNsaWNrIjpmYWxzZSwicmVkaXJlY3RBZnRlckNvcHlNb3ZlIjpmYWxzZSwicGVybSI6eyJhZG1pbiI6ZmFsc2UsImV4ZWN1dGUiOmZhbHNlLCJjcmVhdGUiOnRydWUsInJlbmFtZSI6dHJ1ZSwibW9kaWZ5Ijp0cnVlLCJkZWxldGUiOnRydWUsInNoYXJlIjpmYWxzZSwiZG93bmxvYWQiOnRydWV9LCJjb21tYW5kcyI6W10sImxvY2tQYXNzd29yZCI6dHJ1ZSwiaGlkZURvdGZpbGVzIjpmYWxzZSwiZGF0ZUZvcm1hdCI6ZmFsc2UsInVzZXJuYW1lIjoidTczODM1ODExMCIsImFjZUVkaXRvclRoZW1lIjoiIn0sImlzcyI6IkZpbGUgQnJvd3NlciIsImV4cCI6MTc4OTA3MzYyNSwiaWF0IjoxNzg5MDUyMDI1fQ.ial_Q6RHCRZAAYhHtd5R7P_qg3N_1OmafvKBEYa2-eA';
+const REST_AUTH_KEY = '2e75f8e70a0dfcf56d94f8fc4162d3bef3ac0f083d581e36b9b127b4ce99368e-43a969ba311a5193';
 
 const filesToUpload = [
   '.htaccess',
@@ -35,6 +35,7 @@ const filesToUpload = [
   'js/fixes.js',
   'js/cms-client.js',
   'js/translator.js',
+  'js/njap-translate.js',
   'favicon.ico',
   'favicon.svg',
   'apple-touch-icon.png',
