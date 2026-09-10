@@ -1002,8 +1002,17 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
               } else {
                   $summaryPoints = [];
               }
-              if (empty($summaryPoints)) {
-                  $summaryPoints = ['공식 당국 승인 안전 가이드라인 적용 및 신속 지원', '뉴저지 거주 한인 대상 한국어 무료 상담 창구 운영', '의료 혜택 및 처방약 복용 시 주의 사항 안내'];
+              // Extract from post content if summaryPoints field is empty
+              if (empty($summaryPoints) && !empty($topStory['content'])) {
+                  if (preg_match('/(?:핵심\s*요약|요약|Key\s*Points)[:\s\*\#]+([\s\S]*?)(?=\n\s*(?:권장|출처|주요|참고|\#\#|$))/u', $topStory['content'], $matches)) {
+                      $lines = explode("\n", trim($matches[1]));
+                      foreach ($lines as $line) {
+                          $cleaned = trim(preg_replace('/^[•\-\*\d\.\)\s]+/', '', $line));
+                          if ($cleaned !== '' && mb_strlen($cleaned) > 5) {
+                              $summaryPoints[] = $cleaned;
+                          }
+                      }
+                  }
               }
               $topCover = $topStory['coverImage'] ?: (!empty($topStory['images'][0]) ? $topStory['images'][0] : 'https://images.unsplash.com/photo-1628771065117-74ccb5690668?w=1200&q=80&auto=format');
             ?>
@@ -1028,17 +1037,19 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                   <?= htmlspecialchars($topStory['excerpt'] ?? '') ?>
                 </p>
               </a>
+              <?php if (!empty($summaryPoints)): ?>
               <div class="bg-gray-50 rounded-xl p-4 border border-gray-200/80 mb-3">
                 <p class="text-[11px] font-extrabold text-gray-500 uppercase tracking-wider mb-1.5 whitespace-nowrap">핵심 요약</p>
                 <ul class="space-y-1.5 text-xs sm:text-sm text-gray-900 font-semibold">
                   <?php foreach (array_slice($summaryPoints, 0, 2) as $pt): ?>
                     <li class="flex items-start gap-2">
                       <span class="text-red-600 font-black text-sm leading-none mt-0.5">•</span>
-                      <span class="line-clamp-1"><?= htmlspecialchars($pt) ?></span>
+                      <span class="line-clamp-2 leading-snug"><?= htmlspecialchars($pt) ?></span>
                     </li>
                   <?php endforeach; ?>
                 </ul>
               </div>
+              <?php endif; ?>
               <div class="flex items-center justify-between text-xs sm:text-sm text-gray-500 pt-2.5 border-t border-gray-100">
                 <div class="flex items-center gap-2">
                   <span class="font-black text-gray-950 whitespace-nowrap"><?= htmlspecialchars($topStory['author'] ?? '편집부') ?></span>

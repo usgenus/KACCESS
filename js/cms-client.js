@@ -1067,10 +1067,30 @@
         } else if (rawPts) {
           summaryPts = String(rawPts).split('\n').map(function(s) { return s.replace(/\[object Object\]/g, '').trim(); }).filter(Boolean);
         }
-        if (summaryPts.length === 0) {
-          summaryPts = ['공식 당국 승인 안전 가이드라인 적용 및 자진 리콜 조치', '뉴저지 거주 한인 대상 한국어 무료 상담 창구 운영'];
+        if (summaryPts.length === 0 && topStory.content) {
+          var match = topStory.content.match(/(?:핵심\s*요약|요약|Key\s*Points)[:\s\*\#]+([\s\S]*?)(?=\n\s*(?:권장|출처|주요|참고|\#\#|$))/);
+          if (match && match[1]) {
+            summaryPts = match[1].split('\n').map(function(s) {
+              return s.replace(/^[•\-\*\d\.\)\s]+/, '').trim();
+            }).filter(function(s) { return s.length > 5; });
+          }
         }
         var topCover = topStory.coverImage || (topStory.images && topStory.images[0]) || 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=1200&q=80&auto=format';
+        
+        var summaryBoxHtml = '';
+        if (summaryPts.length > 0) {
+          summaryBoxHtml = [
+            '<div class="bg-gray-50 rounded-xl p-4 border border-gray-200/80 mb-3">',
+            '  <p class="text-[11px] font-extrabold text-gray-500 uppercase tracking-wider mb-1.5 whitespace-nowrap">핵심 요약</p>',
+            '  <ul class="space-y-1.5 text-xs sm:text-sm text-gray-900 font-semibold">',
+            summaryPts.slice(0, 2).map(function(pt) {
+              return '    <li class="flex items-start gap-2"><span class="text-red-600 font-black text-sm leading-none mt-0.5">•</span><span class="line-clamp-2 leading-snug">' + escapeHtml(pt) + '</span></li>';
+            }).join(''),
+            '  </ul>',
+            '</div>'
+          ].join('');
+        }
+
         topStoryBox.innerHTML = [
           '<a class="group block" href="/blog/' + escapeHtml(topStory.slug || topStory.id) + '">',
           '  <div class="flex items-center gap-2 mb-2">',
@@ -1086,14 +1106,7 @@
           '  <p class="text-xs text-gray-400 mb-2 font-sans font-medium">특별 기획: ' + escapeHtml(topStory.title || '') + '</p>',
           '  <p class="text-gray-800 text-sm sm:text-base leading-relaxed mb-4 line-clamp-3 font-serif">' + escapeHtml(topStory.excerpt || '') + '</p>',
           '</a>',
-          '<div class="bg-gray-50 rounded-xl p-4 border border-gray-200/80 mb-3">',
-          '  <p class="text-[11px] font-extrabold text-gray-500 uppercase tracking-wider mb-1.5 whitespace-nowrap">핵심 요약</p>',
-          '  <ul class="space-y-1.5 text-xs sm:text-sm text-gray-900 font-semibold">',
-          summaryPts.slice(0, 2).map(function(pt) {
-            return '    <li class="flex items-start gap-2"><span class="text-red-600 font-black text-sm leading-none mt-0.5">•</span><span class="line-clamp-1">' + escapeHtml(pt) + '</span></li>';
-          }).join(''),
-          '  </ul>',
-          '</div>',
+          summaryBoxHtml,
           '<div class="flex items-center justify-between text-xs sm:text-sm text-gray-500 pt-2.5 border-t border-gray-100">',
           '  <div class="flex items-center gap-2">',
           '    <span class="font-black text-gray-950 whitespace-nowrap">' + escapeHtml(topStory.author || '편집부') + '</span>',
