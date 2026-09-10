@@ -1,8 +1,10 @@
 /**
- * NJAP Instant Translator — js/translator.js
+ * NJAP Instant Translator — js/translator.js (v2.1.0)
  * High-speed instant English/Korean page translation via Google Translate engine.
- * Completely hidden Google UI — clean native button integration.
- * State persisted across page navigation via cookies & localStorage.
+ * - Button labels: strictly EN and KR (with notranslate & translate="no" to prevent Google from translating the button itself).
+ * - Reliable polling to catch .goog-te-combo on every page regardless of load speed.
+ * - Completely hidden Google Translate UI (banners, frames, tooltips, highlights).
+ * - Persisted language across all pages.
  */
 
 (function () {
@@ -41,8 +43,11 @@
     var maxAge = 60 * 60 * 24 * 30; // 30 days
     document.cookie = COOKIE_NAME + '=' + val + '; path=/; max-age=' + maxAge;
     document.cookie = COOKIE_NAME + '=' + val + '; path=/; domain=' + domain + '; max-age=' + maxAge;
-    if (domain.indexOf('.') !== -1) {
-      document.cookie = COOKIE_NAME + '=' + val + '; path=/; domain=.' + domain + '; max-age=' + maxAge;
+    var parts = domain.split('.');
+    if (parts.length > 2) {
+      var root = parts.slice(-2).join('.');
+      document.cookie = COOKIE_NAME + '=' + val + '; path=/; domain=.' + root + '; max-age=' + maxAge;
+      document.cookie = COOKIE_NAME + '=' + val + '; path=/; domain=' + root + '; max-age=' + maxAge;
     }
   }
 
@@ -50,30 +55,50 @@
     var domain = window.location.hostname;
     document.cookie = COOKIE_NAME + '=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
     document.cookie = COOKIE_NAME + '=; path=/; domain=' + domain + '; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
-    if (domain.indexOf('.') !== -1) {
-      document.cookie = COOKIE_NAME + '=; path=/; domain=.' + domain + '; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+    var parts = domain.split('.');
+    if (parts.length > 2) {
+      var root = parts.slice(-2).join('.');
+      document.cookie = COOKIE_NAME + '=; path=/; domain=.' + root + '; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+      document.cookie = COOKIE_NAME + '=; path=/; domain=' + root + '; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
     }
   }
 
-  // 3. Update Button UI
+  // 3. Update Button UI: strictly EN and KR with notranslate attributes
   function updateButtonUI(en) {
     isEnglish = !!en;
     var btns = document.querySelectorAll('#en-translate-btn');
     btns.forEach(function (btn) {
+      btn.classList.add('notranslate');
+      btn.setAttribute('translate', 'no');
       if (isEnglish) {
         btn.style.background = '#2563eb';
         btn.style.color = '#ffffff';
         btn.style.borderColor = '#2563eb';
-        btn.title = '한국어로 변경 (Switch to Korean)';
-        btn.innerHTML = '<span style="font-size:12px">🇰🇷</span> <span class="en-btn-label">KO</span>';
+        btn.title = 'Switch to Korean (KR)';
+        btn.innerHTML = '<span class="notranslate" translate="no">🌐</span> <span class="notranslate en-btn-label" translate="no">KR</span>';
       } else {
         btn.style.background = 'transparent';
         btn.style.color = '#475569';
         btn.style.borderColor = '#cbd5e1';
-        btn.title = '영문 번역 (Translate to English)';
-        btn.innerHTML = '<span style="font-size:12px">🌐</span> <span class="en-btn-label">EN</span>';
+        btn.title = 'Switch to English (EN)';
+        btn.innerHTML = '<span class="notranslate" translate="no">🌐</span> <span class="notranslate en-btn-label" translate="no">EN</span>';
       }
     });
+  }
+
+  // Helper: Poll until .goog-te-combo is ready
+  function waitForCombo(callback, maxAttempts) {
+    maxAttempts = maxAttempts || 30; // 30 x 150ms = 4.5s
+    var attempts = 0;
+    var timer = setInterval(function () {
+      var combo = document.querySelector('.goog-te-combo');
+      if (combo) {
+        clearInterval(timer);
+        callback(combo);
+      } else if (++attempts >= maxAttempts) {
+        clearInterval(timer);
+      }
+    }, 150);
   }
 
   // 4. Toggle Translation Function
@@ -89,8 +114,10 @@
         combo.value = 'en';
         combo.dispatchEvent(new Event('change'));
       } else {
-        // If Google Translate hasn't attached yet, reload with cookie set
-        window.location.reload();
+        waitForCombo(function (c) {
+          c.value = 'en';
+          c.dispatchEvent(new Event('change'));
+        });
       }
     } else {
       // Revert to Korean
@@ -103,10 +130,13 @@
       if (combo) {
         combo.value = 'ko';
         combo.dispatchEvent(new Event('change'));
-        // Clear cookie again after event
-        setTimeout(clearTransCookie, 500);
+        setTimeout(clearTransCookie, 600);
       } else {
-        window.location.reload();
+        waitForCombo(function (c) {
+          c.value = 'ko';
+          c.dispatchEvent(new Event('change'));
+          setTimeout(clearTransCookie, 600);
+        });
       }
     }
   };
@@ -121,18 +151,16 @@
       }, 'google_translate_element');
       isReady = true;
 
-      // Check if user was previously in English
       var saved = localStorage.getItem(STORAGE_KEY);
       var cookieVal = getCookie(COOKIE_NAME);
       if (saved === 'en' || (cookieVal && cookieVal.indexOf('/en') !== -1)) {
         updateButtonUI(true);
-        setTimeout(function () {
-          var combo = document.querySelector('.goog-te-combo');
-          if (combo && combo.value !== 'en') {
+        waitForCombo(function (combo) {
+          if (combo.value !== 'en') {
             combo.value = 'en';
             combo.dispatchEvent(new Event('change'));
           }
-        }, 300);
+        });
       } else {
         updateButtonUI(false);
       }
@@ -148,6 +176,8 @@
       var div = document.createElement('div');
       div.id = 'google_translate_element';
       div.style.display = 'none';
+      div.className = 'notranslate';
+      div.setAttribute('translate', 'no');
       document.body.appendChild(div);
     }
 
@@ -155,6 +185,7 @@
     var saved = localStorage.getItem(STORAGE_KEY);
     var cookieVal = getCookie(COOKIE_NAME);
     if (saved === 'en' || (cookieVal && cookieVal.indexOf('/en') !== -1)) {
+      setTransCookie('/ko/en');
       updateButtonUI(true);
     } else {
       updateButtonUI(false);

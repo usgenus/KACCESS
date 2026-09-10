@@ -43,7 +43,7 @@
       </div>
       <div class="flex items-center gap-3">
         <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity cursor-pointer" title="카카오톡 1:1 상담 바로가기"><img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" /><span class="text-xs sm:text-sm font-bold text-slate-800 hover:text-brand-blue tracking-tight whitespace-nowrap">1:1 상담</span></a>
-        <button id="en-translate-btn" onclick="window.toggleTranslation && window.toggleTranslation()" title="Translate to English (AI-powered)" aria-label="AI English Translation" style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;border:1.5px solid #cbd5e1;font-size:11px;font-weight:700;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s ease;background:transparent;color:#475569;white-space:nowrap;flex-shrink:0;line-height:1.4;">🌐 <span class="en-btn-label">EN</span></button>
+        <button id="en-translate-btn" class="notranslate" translate="no" onclick="window.toggleTranslation && window.toggleTranslation()" title="Switch Language (EN / KR)" aria-label="Language Toggle" style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;border:1.5px solid #cbd5e1;font-size:11px;font-weight:700;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s ease;background:transparent;color:#475569;white-space:nowrap;flex-shrink:0;line-height:1.4;"><span class="notranslate" translate="no">🌐</span> <span class="notranslate en-btn-label" translate="no">EN</span></button>
         <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors" aria-label="Menu">
           <div class="w-5 h-4 flex flex-col justify-between">
             <span class="block h-0.5 bg-brand-dark rounded-full"></span>
@@ -350,6 +350,6 @@
 </footer>
 <script src="/js/cms-client.js?v=3.6.0"></script>
 <script src="/js/fixes.js?v=1.2"></script>
-<script src="/js/translator.js"></script>
+<script src="/js/translator.js?v=2.1.0"></script>
 </body></html>
 
