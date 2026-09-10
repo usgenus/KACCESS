@@ -473,6 +473,7 @@
       line-height: 1.4 !important;
       display: -webkit-box !important;
       -webkit-line-clamp: 2 !important;
+      line-clamp: 2 !important;
       -webkit-box-orient: vertical !important;
       overflow: hidden !important;
     }
@@ -555,6 +556,7 @@
             <img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" />
             <span class="text-xs sm:text-sm font-bold text-slate-800 hover:text-brand-blue tracking-tight whitespace-nowrap">1:1 상담</span>
           </a>
+          <button id="en-translate-btn" onclick="window.toggleTranslation && window.toggleTranslation()" title="Translate to English (AI-powered)" aria-label="AI English Translation" style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;border:1.5px solid #cbd5e1;font-size:11px;font-weight:700;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s ease;background:transparent;color:#475569;white-space:nowrap;flex-shrink:0;line-height:1.4;">🌐 <span class="en-btn-label">EN</span></button>
           <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors" aria-label="Menu">
             <div class="w-5 h-4 flex flex-col justify-between">
               <span class="block h-0.5 bg-brand-dark rounded-full"></span>
@@ -1571,5 +1573,6 @@
   </script>
 
   <script src="/js/fixes.js?v=4.1.0"></script>
+<script src="/js/translator.js"></script>
 </body>
 </html>

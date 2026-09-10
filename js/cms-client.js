@@ -209,6 +209,23 @@
     var isVideo = isBillboardVideo(b);
     var targetLink = b.linkUrl || '/about#contact';
 
+    // If server already rendered the exact video for slide 0, do not destroy and reload it
+    var existingVid = container.querySelector('video');
+    if (existingVid && currentBillboardIndex === 0 && isVideo) {
+      var curSrc = existingVid.getAttribute('src') || (existingVid.querySelector('source') ? existingVid.querySelector('source').getAttribute('src') : '');
+      if (curSrc === b.mediaUrl) {
+        existingVid.defaultMuted = true;
+        existingVid.muted = true;
+        existingVid.setAttribute('muted', '');
+        existingVid.setAttribute('playsinline', '');
+        existingVid.setAttribute('webkit-playsinline', '');
+        existingVid.setAttribute('preload', 'auto');
+        var p0 = existingVid.play();
+        if (p0 && p0.catch) { p0.catch(function() {}); }
+        return;
+      }
+    }
+
     var dotsHtml = billboards.map(function(_, i) {
       var cls = i === currentBillboardIndex
         ? 'w-6 h-1.5 sm:w-8 sm:h-2 bg-white rounded-full shadow-lg ring-1 ring-white/50'
@@ -250,9 +267,20 @@
     if (slot) {
       if (isVideo) {
         var vid = document.createElement('video');
-        vid.src = b.mediaUrl;          // raw URL, no escaping
         vid.className = 'w-full h-full object-cover billboard-img';
         vid.autoplay = true;
+        vid.defaultMuted = true;
+        vid.muted = true;
+        vid.setAttribute('muted', '');
+        vid.setAttribute('playsinline', '');
+        vid.setAttribute('webkit-playsinline', '');
+        vid.setAttribute('preload', 'auto');
+
+        var srcTag = document.createElement('source');
+        srcTag.src = b.mediaUrl;
+        srcTag.type = 'video/mp4';
+        vid.appendChild(srcTag);
+        vid.src = b.mediaUrl;
         vid.muted = true;              // required for browser autoplay policy
         vid.setAttribute('playsinline', '');
         vid.setAttribute('webkit-playsinline', '');
@@ -408,6 +436,23 @@
     var isVideo = isBillboardVideo(b);
     var targetLink = b.linkUrl || '/tool';
 
+    // If server already rendered the exact video for slide 0, do not destroy and reload it
+    var existingVid = container.querySelector('video');
+    if (existingVid && currentBillboard2Index === 0 && isVideo) {
+      var curSrc = existingVid.getAttribute('src') || (existingVid.querySelector('source') ? existingVid.querySelector('source').getAttribute('src') : '');
+      if (curSrc === b.mediaUrl) {
+        existingVid.defaultMuted = true;
+        existingVid.muted = true;
+        existingVid.setAttribute('muted', '');
+        existingVid.setAttribute('playsinline', '');
+        existingVid.setAttribute('webkit-playsinline', '');
+        existingVid.setAttribute('preload', 'auto');
+        var p0 = existingVid.play();
+        if (p0 && p0.catch) { p0.catch(function() {}); }
+        return;
+      }
+    }
+
     var dotsHtml = billboards2.map(function(_, i) {
       var cls = i === currentBillboard2Index
         ? 'w-6 h-1.5 sm:w-8 sm:h-2 bg-white rounded-full shadow-lg ring-1 ring-white/50'
@@ -445,12 +490,20 @@
     if (slot) {
       if (isVideo) {
         var vid = document.createElement('video');
-        vid.src = b.mediaUrl;
         vid.className = 'w-full h-full object-cover billboard-img';
         vid.autoplay = true;
+        vid.defaultMuted = true;
         vid.muted = true;
+        vid.setAttribute('muted', '');
         vid.setAttribute('playsinline', '');
         vid.setAttribute('webkit-playsinline', '');
+        vid.setAttribute('preload', 'auto');
+
+        var srcTag = document.createElement('source');
+        srcTag.src = b.mediaUrl;
+        srcTag.type = 'video/mp4';
+        vid.appendChild(srcTag);
+        vid.src = b.mediaUrl;
 
         if (billboards2.length <= 1) {
           vid.loop = true;
@@ -1216,6 +1269,20 @@
     initHomepageNews();
     initContactForm();
     setTimeout(initSlideInAnimations, 150);
+
+    // Ensure billboard videos resume if browser blocked unmuted or low-power autoplay
+    ['click', 'touchstart', 'scroll', 'keydown'].forEach(function(evt) {
+      window.addEventListener(evt, function tryAutoPlayUnlock() {
+        document.querySelectorAll('#gallery-billboard-container video, #gallery-billboard2-container video').forEach(function(v) {
+          if (v && v.paused) {
+            v.defaultMuted = true;
+            v.muted = true;
+            v.setAttribute('muted', '');
+            v.play().catch(function() {});
+          }
+        });
+      }, { once: true, passive: true });
+    });
   });
 
 })();

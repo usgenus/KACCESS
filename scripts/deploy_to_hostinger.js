@@ -3,9 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const BASE_DIR = '/Users/ejyoon/Desktop/KACCESS';
-const TUS_URL = 'https://srv1709-files.hstgr.io/rest/edda57d2987305e4/api/tus/public_html';
-const AUTH_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJsb2NhbGUiOiJlbl9VUyIsInZpZXdNb2RlIjoibGlzdCIsInNpbmdsZUNsaWNrIjpmYWxzZSwicmVkaXJlY3RBZnRlckNvcHlNb3ZlIjpmYWxzZSwicGVybSI6eyJhZG1pbiI6ZmFsc2UsImV4ZWN1dGUiOmZhbHNlLCJjcmVhdGUiOnRydWUsInJlbmFtZSI6dHJ1ZSwibW9kaWZ5Ijp0cnVlLCJkZWxldGUiOnRydWUsInNoYXJlIjpmYWxzZSwiZG93bmxvYWQiOnRydWV9LCJjb21tYW5kcyI6W10sImxvY2tQYXNzd29yZCI6dHJ1ZSwiaGlkZURvdGZpbGVzIjpmYWxzZSwiZGF0ZUZvcm1hdCI6ZmFsc2UsInVzZXJuYW1lIjoidTczODM1ODExMCIsImFjZUVkaXRvclRoZW1lIjoiIn0sImlzcyI6IkZpbGUgQnJvd3NlciIsImV4cCI6MTc4ODk4NzU4NSwiaWF0IjoxNzg4OTY1OTg1fQ.CW_9i94EcsqXhAKf67Y32MxyN81r4g4dNwae_RUNSH4';
-const REST_AUTH_KEY = '78de60b74bd7302878e019da5b64e89debdc85020e802b6a565dec7aca98c7e0-edda57d2987305e4';
+const TUS_URL = 'https://srv1709-files.hstgr.io/rest/1ffd2f4c0d58e698/api/tus/public_html';
+const AUTH_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJsb2NhbGUiOiJlbl9VUyIsInZpZXdNb2RlIjoibGlzdCIsInNpbmdsZUNsaWNrIjpmYWxzZSwicmVkaXJlY3RBZnRlckNvcHlNb3ZlIjpmYWxzZSwicGVybSI6eyJhZG1pbiI6ZmFsc2UsImV4ZWN1dGUiOmZhbHNlLCJjcmVhdGUiOnRydWUsInJlbmFtZSI6dHJ1ZSwibW9kaWZ5Ijp0cnVlLCJkZWxldGUiOnRydWUsInNoYXJlIjpmYWxzZSwiZG93bmxvYWQiOnRydWV9LCJjb21tYW5kcyI6W10sImxvY2tQYXNzd29yZCI6dHJ1ZSwiaGlkZURvdGZpbGVzIjpmYWxzZSwiZGF0ZUZvcm1hdCI6ZmFsc2UsInVzZXJuYW1lIjoidTczODM1ODExMCIsImFjZUVkaXRvclRoZW1lIjoiIn0sImlzcyI6IkZpbGUgQnJvd3NlciIsImV4cCI6MTc4OTA3MTA2NCwiaWF0IjoxNzg5MDQ5NDY0fQ.m_-HaIf8fiWnudv3Vy7mj7ByMzRY-LqMrsrDTjQrHwc';
+const REST_AUTH_KEY = '28020df5a38c56e19b713d94c61b2864356d059edfbbf0664d29749bee76f3be-1ffd2f4c0d58e698';
 
 const filesToUpload = [
   '.htaccess',
@@ -34,6 +34,7 @@ const filesToUpload = [
   '_not-found.html',
   'js/fixes.js',
   'js/cms-client.js',
+  'js/translator.js',
   'favicon.ico',
   'favicon.svg',
   'apple-touch-icon.png',
@@ -41,14 +42,12 @@ const filesToUpload = [
   'favicon-512.png',
   'favicon-32.png',
   'favicon-16.png',
-  '_next/static/chunks/1fosv8xgmgdeu.css',
-  '_next/static/chunks/191f64lzmub01.js',
-  '_next/static/chunks/3hl7r9k9z73f7.js',
-  '_next/static/chunks/3hl7r9k9z73f7_v2.js',
-  '_next/static/chunks/3hl7r9k9z73f7_v3.js',
+  'api/config.php',
+  'api/translate.php',
   'api/comments.php',
   'api/contact.php',
   'api/db.php',
+  'api/media.php',
   'api/supabase.php'
 ];
 

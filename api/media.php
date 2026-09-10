@@ -83,12 +83,50 @@ if ($streamPath && file_exists($streamPath)) {
 
     // Set permanent caching headers
     header('Content-Type: ' . $mime);
-    header('Content-Length: ' . filesize($streamPath));
     header('Cache-Control: public, max-age=31536000, immutable');
     header('Access-Control-Allow-Origin: *');
+    header('Accept-Ranges: bytes');
     header('X-Media-Source: hostinger-persistent');
 
-    readfile($streamPath);
+    $size = filesize($streamPath);
+    $start = 0;
+    $end = $size - 1;
+
+    // Handle HTTP Range header for HTML5 video streaming
+    if (isset($_SERVER['HTTP_RANGE'])) {
+        if (preg_match('/bytes=\h*(\d+)-(\d*)[\D.*]?/i', $_SERVER['HTTP_RANGE'], $matches)) {
+            $start = intval($matches[1]);
+            if (!empty($matches[2])) {
+                $end = intval($matches[2]);
+            }
+        }
+        if ($start > $end || $start >= $size || $end >= $size) {
+            header('HTTP/1.1 416 Requested Range Not Satisfiable');
+            header("Content-Range: bytes */$size");
+            exit;
+        }
+        header('HTTP/1.1 206 Partial Content');
+        header("Content-Range: bytes $start-$end/$size");
+        $length = $end - $start + 1;
+        header("Content-Length: $length");
+    } else {
+        header("Content-Length: $size");
+    }
+
+    $fp = fopen($streamPath, 'rb');
+    if ($fp) {
+        fseek($fp, $start);
+        $remaining = ($end - $start + 1);
+        while (!feof($fp) && $remaining > 0) {
+            $chunk = min($remaining, 65536);
+            $data = fread($fp, $chunk);
+            if ($data === false) break;
+            echo $data;
+            flush();
+            $remaining -= strlen($data);
+        }
+        fclose($fp);
+    }
     exit;
 }
 

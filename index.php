@@ -806,6 +806,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
         <div class="flex items-center gap-3">
           <!-- KakaoTalk 1:1 Chat Button (Top Nav) -->
           <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity cursor-pointer" title="카카오톡 1:1 상담 바로가기"><img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" /><span class="text-xs sm:text-sm font-bold text-slate-800 hover:text-brand-blue tracking-tight whitespace-nowrap">1:1 상담</span></a>
+          <button id="en-translate-btn" onclick="window.toggleTranslation && window.toggleTranslation()" title="Translate to English (AI-powered)" aria-label="AI English Translation" style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;border:1.5px solid #cbd5e1;font-size:11px;font-weight:700;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s ease;background:transparent;color:#475569;white-space:nowrap;flex-shrink:0;line-height:1.4;">🌐 <span class="en-btn-label">EN</span></button>
           <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors" aria-label="Menu">
             <div class="w-5 h-4 flex flex-col justify-between">
               <span class="block h-0.5 bg-brand-dark rounded-full"></span>
@@ -903,7 +904,9 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
             <a href="<?= htmlspecialchars($b['linkUrl'] ?? '/about#contact') ?>" class="block relative w-full h-full cursor-pointer" title="<?= htmlspecialchars($b['title'] ?? '') ?>">
               <div class="w-full h-full relative overflow-hidden" style="min-height: 230px;">
                 <?php if ($isVideo): ?>
-                  <video src="<?= htmlspecialchars($b['mediaUrl']) ?>" class="w-full h-full object-cover" autoplay muted loop playsinline></video>
+                  <video class="w-full h-full object-cover" autoplay muted loop playsinline webkit-playsinline preload="auto">
+                    <source src="<?= htmlspecialchars($b['mediaUrl']) ?>" type="video/mp4">
+                  </video>
                 <?php else: ?>
                   <img id="billboard-active-img" 
                     src="<?= htmlspecialchars($b['mediaUrl'] ?: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=2000&q=85&auto=format') ?>" 
@@ -1164,7 +1167,9 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
               <a href="<?= htmlspecialchars($b2['linkUrl'] ?? '/about#contact') ?>" class="block relative w-full h-full cursor-pointer" title="<?= htmlspecialchars($b2['title'] ?? '') ?>">
                 <div class="w-full h-full relative overflow-hidden" style="min-height: 230px;">
                   <?php if ($isVid2): ?>
-                    <video src="<?= htmlspecialchars($b2['mediaUrl']) ?>" class="w-full h-full object-cover" autoplay muted loop playsinline></video>
+                    <video class="w-full h-full object-cover" autoplay muted loop playsinline webkit-playsinline preload="auto">
+                      <source src="<?= htmlspecialchars($b2['mediaUrl']) ?>" type="video/mp4">
+                    </video>
                   <?php else: ?>
                     <img id="billboard2-active-img" 
                       src="<?= htmlspecialchars($b2['mediaUrl'] ?: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=2000&q=85&auto=format') ?>" 
@@ -1735,5 +1740,6 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
 
   <script src="/js/cms-client.js?v=<?= time() ?>"></script>
   <script src="/js/fixes.js?v=<?= time() ?>"></script>
+<script src="/js/translator.js"></script>
 </body>
 </html>

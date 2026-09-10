@@ -1,9 +1,23 @@
 DirectoryIndex index.php index.html
 
 <IfModule mod_headers.c>
-  Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0"
+  # Default for web documents
+  Header set Cache-Control "no-cache, must-revalidate, max-age=0"
   Header set Pragma "no-cache"
-  Header set Expires 0
+
+  # Media files MUST have byte-range caching for HTML5 video/audio streaming (no-store breaks Safari & Chromium)
+  <FilesMatch "\.(mp4|webm|ogv|mov|m4v|mp3|ogg|wav)$">
+    Header set Cache-Control "public, max-age=2592000"
+    Header unset Pragma
+    Header unset Expires
+  </FilesMatch>
+
+  # Static assets (images, fonts, scripts, styles)
+  <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|ico|woff|woff2|ttf|eot|css|js)$">
+    Header set Cache-Control "public, max-age=604800"
+    Header unset Pragma
+    Header unset Expires
+  </FilesMatch>
 </IfModule>
 
 <IfModule mod_rewrite.c>
