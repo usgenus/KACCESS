@@ -29,6 +29,13 @@ RewriteRule ^index\.html$ / [R=301,L]
 
 # Admin clean URL
 RewriteRule ^admin/?$ admin/index.php [L]
+RewriteRule ^admin2/?$ admin2/index.php [L]
+
+# Medical Forum clean URLs
+RewriteRule ^forum/?$ forum/index.php [L]
+RewriteRule ^forum/ask/?$ forum/ask.php [L]
+RewriteRule ^forum/category/([^/]+)/?$ forum/index.php?specialty=$1 [L]
+RewriteRule ^forum/topic/([^/]+)/?$ forum/topic.php?id=$1 [L]
 
 # Protect data folder
 RewriteRule ^data/.*$ - [F,L]

@@ -1,0 +1,561 @@
+{
+    "specialties": [
+        {
+            "id": "events",
+            "slug": "events",
+            "name_ko": "이벤트",
+            "name_en": "Events",
+            "description": "뉴저지 한인 의료접근센터 공식 이벤트, 세미나, 건강 강좌 및 공지",
+            "icon": "fa-calendar-star",
+            "color": "#E11D48",
+            "order": 0,
+            "isAdminOnly": true
+        },
+        {
+            "id": "internal_medicine",
+            "slug": "general-internal",
+            "name_ko": "내과 (일반·가정의학과)",
+            "name_en": "Internal & Family Medicine",
+            "description": "성인 만성질환 종합관리, 정기 건강검진, 1차 진료 네비게이션",
+            "icon": "fa-stethoscope",
+            "color": "#1E3A8A",
+            "order": 1
+        },
+        {
+            "id": "cardiology",
+            "slug": "cardiology",
+            "name_ko": "순환기·심장내과",
+            "name_en": "Cardiology",
+            "description": "고혈압, 관상동맥질환, 부정맥, 심부전 및 흉통 질환",
+            "icon": "fa-heart-pulse",
+            "color": "#EF4444",
+            "order": 2
+        },
+        {
+            "id": "neurology",
+            "slug": "neurology",
+            "name_ko": "신경과",
+            "name_en": "Neurology",
+            "description": "뇌졸중, 치매, 두통, 어지럼증, 파킨슨병 및 말초신경",
+            "icon": "fa-brain",
+            "color": "#8B5CF6",
+            "order": 3
+        },
+        {
+            "id": "oncology",
+            "slug": "oncology",
+            "name_ko": "종양·암내과",
+            "name_en": "Oncology",
+            "description": "암 예방, 조기 검진, 항암 치료 및 치료 후 회복 케어",
+            "icon": "fa-ribbon",
+            "color": "#EC4899",
+            "order": 4
+        },
+        {
+            "id": "pediatrics",
+            "slug": "pediatrics",
+            "name_ko": "소아청소년과",
+            "name_en": "Pediatrics",
+            "description": "영유아 발달, 예방접종, 성장, 소아 알레르기 및 급성 질환",
+            "icon": "fa-baby",
+            "color": "#3B82F6",
+            "order": 5
+        },
+        {
+            "id": "dermatology",
+            "slug": "dermatology",
+            "name_ko": "피부과",
+            "name_en": "Dermatology",
+            "description": "아토피, 습진, 건선, 색소질환, 피부 가려움 및 피부암",
+            "icon": "fa-hand-dots",
+            "color": "#F59E0B",
+            "order": 6
+        },
+        {
+            "id": "orthopedics",
+            "slug": "orthopedics",
+            "name_ko": "정형외과",
+            "name_en": "Orthopedics",
+            "description": "퇴행성 관절염, 척추 디스크, 오십견, 골절 및 인대 손상",
+            "icon": "fa-bone",
+            "color": "#10B981",
+            "order": 7
+        },
+        {
+            "id": "endocrinology",
+            "slug": "endocrinology",
+            "name_ko": "내분비내과",
+            "name_en": "Endocrinology",
+            "description": "당뇨병, 갑상선 질환, 골다공증, 비만 및 호르몬 이상",
+            "icon": "fa-dna",
+            "color": "#06B6D4",
+            "order": 8
+        },
+        {
+            "id": "gastroenterology",
+            "slug": "gastroenterology",
+            "name_ko": "소화기내과",
+            "name_en": "Gastroenterology",
+            "description": "역류성 식도염, 위염, 위·대장 내시경 용종, 지방간, 췌장",
+            "icon": "fa-virus-slash",
+            "color": "#14B8A6",
+            "order": 9
+        },
+        {
+            "id": "psychiatry",
+            "slug": "psychiatry",
+            "name_ko": "정신건강의학과",
+            "name_en": "Psychiatry",
+            "description": "불면증, 우울증, 불안장애, 공황장애 및 시니어 인지건강",
+            "icon": "fa-head-side-virus",
+            "color": "#6366F1",
+            "order": 10
+        },
+        {
+            "id": "pulmonology",
+            "slug": "pulmonology",
+            "name_ko": "호흡기내과",
+            "name_en": "Pulmonology",
+            "description": "천식, COPD(만성폐쇄성폐질환), 만성 기침, 폐렴, 수면무호흡",
+            "icon": "fa-lungs",
+            "color": "#0284C7",
+            "order": 11
+        },
+        {
+            "id": "immunology",
+            "slug": "immunology",
+            "name_ko": "면역·감염내과",
+            "name_en": "Immunology & Infectious Disease",
+            "description": "류마티스, 자가면역질환, 백신 접종, 바이러스/세균성 감염증",
+            "icon": "fa-shield-virus",
+            "color": "#84CC16",
+            "order": 12
+        },
+        {
+            "id": "obgyn",
+            "slug": "obgyn",
+            "name_ko": "산부인과",
+            "name_en": "OB-GYN",
+            "description": "여성 정기검진, 갱년기 호르몬 치료, 자궁/난소 질환, 산전 관리",
+            "icon": "fa-venus",
+            "color": "#F43F5E",
+            "order": 13
+        },
+        {
+            "id": "radiology",
+            "slug": "radiology",
+            "name_ko": "영상의학과",
+            "name_en": "Radiology",
+            "description": "X-ray, CT, MRI, 초음파 영상 판독 해석 및 검사 가이드",
+            "icon": "fa-radiation",
+            "color": "#64748B",
+            "order": 14
+        },
+        {
+            "id": "emergency",
+            "slug": "emergency",
+            "name_ko": "응급의학과",
+            "name_en": "Emergency Medicine",
+            "description": "응급실(ER) 방문 기준, 급성 흉통·호흡곤란, 긴급 대처 가이드",
+            "icon": "fa-truck-medical",
+            "color": "#DC2626",
+            "order": 15
+        },
+        {
+            "id": "nursing_home",
+            "slug": "nursing-home",
+            "name_ko": "요양원",
+            "name_en": "Nursing Home / Long-Term Care",
+            "description": "너싱홈 입소 절차, 재활 간호, 메디케이드/메디케어 혜택 및 장기요양 돌봄",
+            "icon": "fa-house-medical",
+            "color": "#059669",
+            "order": 16
+        },
+        {
+            "id": "hospice",
+            "slug": "hospice",
+            "name_ko": "호스피스",
+            "name_en": "Hospice & Palliative Care",
+            "description": "완화의료, 통증 조절, 가정 호스피스, 임종 돌봄 및 가족 심리 상담",
+            "icon": "fa-hand-holding-heart",
+            "color": "#7C3AED",
+            "order": 17
+        }
+    ],
+    "users": {
+        "u_clinician_cardio": {
+            "id": "u_clinician_cardio",
+            "email": "cardio.doctor@njaccess.org",
+            "name": "박준형 전문의 (MD, FACC)",
+            "avatar": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=150&q=80",
+            "isVerifiedClinician": true,
+            "clinicianTitle": "순환기내과 전문의 (Board Certified Cardiologist)",
+            "isBanned": false,
+            "createdAt": "2026-08-01T09:00:00Z",
+            "lastActiveAt": "2026-09-15T02:03:23+00:00"
+        },
+        "u_clinician_endo": {
+            "id": "u_clinician_endo",
+            "email": "endo.kim@njaccess.org",
+            "name": "김서연 전문의 (MD)",
+            "avatar": "https://images.unsplash.com/photo-1594824813589-9304e2a8fa2e?w=150&q=80",
+            "isVerifiedClinician": true,
+            "clinicianTitle": "내분비내과 전문의 (Endocrinologist)",
+            "isBanned": false,
+            "createdAt": "2026-08-05T10:00:00Z",
+            "lastActiveAt": "2026-09-15T02:03:23+00:00"
+        },
+        "u_clinician_neuro": {
+            "id": "u_clinician_neuro",
+            "email": "neuro.lee@njaccess.org",
+            "name": "이민수 전문의 (MD, PhD)",
+            "avatar": "https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=150&q=80",
+            "isVerifiedClinician": true,
+            "clinicianTitle": "신경과 전문의 (Neurologist)",
+            "isBanned": false,
+            "createdAt": "2026-08-10T11:00:00Z",
+            "lastActiveAt": "2026-09-15T02:03:23+00:00"
+        },
+        "u_patient_1": {
+            "id": "u_patient_1",
+            "email": "korean.senior@gmail.com",
+            "name": "포트리 시니어 회원",
+            "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&q=80",
+            "isVerifiedClinician": false,
+            "clinicianTitle": null,
+            "isBanned": false,
+            "createdAt": "2026-08-12T14:20:00Z",
+            "lastActiveAt": "2026-09-15T02:03:23+00:00"
+        },
+        "u_patient_2": {
+            "id": "u_patient_2",
+            "email": "njmom2026@gmail.com",
+            "name": "뉴저지 워킹맘",
+            "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&q=80",
+            "isVerifiedClinician": false,
+            "clinicianTitle": null,
+            "isBanned": false,
+            "createdAt": "2026-08-15T18:40:00Z",
+            "lastActiveAt": "2026-09-15T02:03:23+00:00"
+        },
+        "g_user_677": {
+            "id": "g_user_677",
+            "email": "nj.resident@gmail.com",
+            "name": "뉴저지 포트리 주민",
+            "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&q=80",
+            "isVerifiedClinician": false,
+            "clinicianTitle": null,
+            "isBanned": false,
+            "createdAt": "2026-09-15T02:12:15+00:00",
+            "lastActiveAt": "2026-09-15T02:12:15+00:00"
+        },
+        "g_doc_480": {
+            "id": "g_doc_480",
+            "email": "doc.jung@njaccess.org",
+            "name": "정현우 전문의 (MD)",
+            "avatar": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=150&q=80",
+            "isVerifiedClinician": false,
+            "clinicianTitle": null,
+            "isBanned": false,
+            "createdAt": "2026-09-15T02:12:23+00:00",
+            "lastActiveAt": "2026-09-15T02:12:23+00:00"
+        },
+        "g_user_749": {
+            "id": "u_clinician_neuro",
+            "email": "neuro.lee@njaccess.org",
+            "name": "이민수 전문의 (MD, PhD)",
+            "avatar": "https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=150&q=80",
+            "isVerifiedClinician": true,
+            "clinicianTitle": "신경과 전문의 (Neurologist)",
+            "isBanned": false,
+            "createdAt": "2026-08-10T11:00:00Z",
+            "lastActiveAt": "2026-09-15T02:03:23+00:00"
+        },
+        "u_34d7fdbd76": {
+            "id": "u_34d7fdbd76",
+            "email": "dr.steve.choi@gmail.com",
+            "name": "최성훈 전문의",
+            "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&q=80",
+            "isVerifiedClinician": true,
+            "clinicianTitle": "소아청소년과 전문의 (FAAP)",
+            "isBanned": false,
+            "createdAt": "2026-09-15T02:25:04+00:00",
+            "lastActiveAt": "2026-09-15T02:25:04+00:00"
+        },
+        "u_19f8fafa9d": {
+            "id": "u_19f8fafa9d",
+            "email": "community.member@gmail.com",
+            "name": "버겐카운티 두아이맘",
+            "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&q=80",
+            "isVerifiedClinician": false,
+            "clinicianTitle": null,
+            "isBanned": false,
+            "createdAt": "2026-09-15T02:25:10+00:00",
+            "lastActiveAt": "2026-09-15T02:25:10+00:00"
+        },
+        "u_058cf04ae5": {
+            "id": "u_058cf04ae5",
+            "email": "ethanjyoon@gmail.com",
+            "name": "ET",
+            "avatar": "https://lh3.googleusercontent.com/a/default-user=s150-c",
+            "isVerifiedClinician": true,
+            "clinicianTitle": "내과 전문의 (MD)",
+            "isBanned": false,
+            "createdAt": "2026-09-15T02:34:43+00:00",
+            "lastActiveAt": "2026-09-15T02:34:43+00:00"
+        }
+    },
+    "questions": {
+        "q_cardio_1": {
+            "id": "q_cardio_1",
+            "title": "혈압약을 아침에 먹어야 할까요, 저녁에 먹는 것이 더 심혈관 예방에 좋을까요?",
+            "body": "60대 후반 남성입니다. 3년 전부터 암로디핀과 발사르탄 복합 혈압약을 처방받아 아침 기상 직후 복용해왔습니다.\n최근 새벽에 잰 혈압이 145/90 정도로 약간 높게 측정되는 날이 있어 복용 시간을 저녁 식후나 취침 전으로 바꾸는 것이 안전한지 궁금합니다. 시간에 따른 약효 차이가 있나요?",
+            "specialtyId": "cardiology",
+            "authorId": "u_patient_1",
+            "authorName": "포트리 시니어 회원",
+            "authorAvatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&q=80",
+            "authorBadge": null,
+            "viewCount": 342,
+            "replyCount": 1,
+            "status": "active",
+            "tags": [
+                "혈압약",
+                "고혈압",
+                "복용시간",
+                "새벽고혈압"
+            ],
+            "createdAt": "2026-08-20T10:15:00Z",
+            "updatedAt": "2026-08-20T10:15:00Z"
+        },
+        "q_endo_1": {
+            "id": "q_endo_1",
+            "title": "공복 혈당은 105인데 당화혈색소(HbA1c)가 6.4%로 나왔습니다. 당뇨 전단계 관리법 문의드립니다.",
+            "body": "정기 건강검진 결과 공복 혈당은 105 mg/dL로 정상보다 아주 살짝 높았는데, 당화혈색소가 6.4%로 당뇨 전단계(Pre-diabetes) 상한선에 도달했습니다.\n의사선생님께서 식단 조절과 체중 감량을 권하셨는데, 메트포르민 같은 약물 복용을 지금부터 시작해야 하는지, 생활습관 개선만으로 수치를 되돌릴 수 있는지 궁금합니다.",
+            "specialtyId": "endocrinology",
+            "authorId": "u_patient_2",
+            "authorName": "뉴저지 워킹맘",
+            "authorAvatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&q=80",
+            "authorBadge": null,
+            "viewCount": 286,
+            "replyCount": 1,
+            "status": "active",
+            "tags": [
+                "당화혈색소",
+                "당뇨전단계",
+                "공복혈당",
+                "식단관리"
+            ],
+            "createdAt": "2026-08-22T14:30:00Z",
+            "updatedAt": "2026-08-22T14:30:00Z"
+        },
+        "q_neuro_1": {
+            "id": "q_neuro_1",
+            "title": "어머니(75세)께서 최근 깜빡임이 잦아지셨는데 단순 건망증과 초기 치매(MCI)를 어떻게 구분하나요?",
+            "body": "최근 며칠 전 일이나 약속 날짜를 잊어버리시고 힌트를 주면 기억해내시긴 합니다. 길 찾기나 일상적인 가사 활동은 정상적이십니다.\n병원 신경과에서 어떤 인지기능 검사를 받아보는 것이 좋은지, 한어 통역 서비스가 가능한 검사 경로가 있는지 알고 싶습니다.",
+            "specialtyId": "neurology",
+            "authorId": "u_patient_2",
+            "authorName": "뉴저지 워킹맘",
+            "authorAvatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&q=80",
+            "authorBadge": null,
+            "viewCount": 424,
+            "replyCount": 1,
+            "status": "active",
+            "tags": [
+                "치매예방",
+                "경도인지장애",
+                "신경과검사",
+                "시니어헬스"
+            ],
+            "createdAt": "2026-08-25T09:40:00Z",
+            "updatedAt": "2026-08-25T09:40:00Z"
+        },
+        "q_378d98689720": {
+            "id": "q_378d98689720",
+            "title": "test is tes t test",
+            "body": "test2asdasdasdasdasdasdasdasd",
+            "specialtyId": "psychiatry",
+            "authorId": "g_user_749",
+            "authorName": "뉴저지 포트리 주민",
+            "authorAvatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&q=80",
+            "authorBadge": null,
+            "viewCount": 3,
+            "replyCount": 0,
+            "status": "active",
+            "tags": [],
+            "createdAt": "2026-09-15T02:14:20+00:00",
+            "updatedAt": "2026-09-15T02:14:20+00:00"
+        },
+        "q_115094274132": {
+            "id": "q_115094274132",
+            "title": "소아과 예방접종 일정 문의드립니다",
+            "body": "생후 6개월 아기 필수 예방접종 항목과 미국 소아과 접종 일정에 대해 문의드립니다.",
+            "specialtyId": "pediatrics",
+            "authorId": "u_19f8fafa9d",
+            "authorName": "버겐카운티 두아이맘",
+            "authorAvatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&q=80",
+            "authorBadge": null,
+            "viewCount": 11,
+            "replyCount": 2,
+            "status": "active",
+            "tags": [],
+            "createdAt": "2026-09-15T02:25:13+00:00",
+            "updatedAt": "2026-09-15T02:34:57+00:00"
+        },
+        "q_56afde1c5b56": {
+            "id": "q_56afde1c5b56",
+            "title": "당뇨 관리 중 식후 혈당 스파이크 예방법 문의드립니다",
+            "body": "공복 혈당은 양호한 편이나 식후 2시간 혈당이 종종 180까지 올라갑니다. 식사 순서나 복약 시간에 대한 조언을 부탁드립니다.",
+            "specialtyId": "endocrinology",
+            "authorId": "u_058cf04ae5",
+            "authorName": "ET",
+            "authorAvatar": "https://lh3.googleusercontent.com/a/default-user=s150-c",
+            "authorBadge": "Verified Clinician",
+            "viewCount": 1,
+            "replyCount": 1,
+            "status": "active",
+            "tags": [],
+            "createdAt": "2026-09-15T02:47:07+00:00",
+            "updatedAt": "2026-09-15T02:47:07+00:00"
+        },
+        "q_e979fee37dc8": {
+            "id": "q_e979fee37dc8",
+            "title": "[NJAP 공식 건강 세미나] 시니어 고혈압·당뇨 관리 및 무료 건강검진의 날",
+            "body": "• 일시: 2026년 9월 25일 (토) 오후 2시\n• 장소: 뉴저지 한인 의료접근센터\n• 대상: 포럼 가입 회원 및 동포 누구나",
+            "specialtyId": "events",
+            "authorId": "hac_admin",
+            "authorName": "Healthcare Access Portal (HAC)",
+            "authorAvatar": "/logo-icon.svg",
+            "authorBadge": "Verified Clinician",
+            "images": [
+                "/uploads/images/test_poster.png"
+            ],
+            "viewCount": 4,
+            "replyCount": 0,
+            "status": "active",
+            "tags": [],
+            "createdAt": "2026-09-15T03:10:56+00:00",
+            "updatedAt": "2026-09-15T03:10:56+00:00"
+        }
+    },
+    "answers": {
+        "a_cardio_1": {
+            "id": "a_cardio_1",
+            "questionId": "q_cardio_1",
+            "authorId": "u_clinician_cardio",
+            "authorName": "박준형 전문의 (MD, FACC)",
+            "authorAvatar": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=150&q=80",
+            "authorBadge": "Verified Clinician",
+            "body": "안녕하세요, 순환기내과 전문의 박준형입니다.\n\n매우 좋은 질문입니다. 최근 대규모 임상 연구(TIME Study 등)에 따르면 혈압약을 아침에 복용하든 저녁에 복용하든 전반적인 심혈관 질환 발생률에는 큰 차이가 없다고 밝혀졌습니다.\n\n다만, 질문자님처럼 '새벽 및 기상 직후 혈압(Morning Surge)'이 140/90 mmHg 이상으로 치솟는 양상을 보이신다면:\n1. 24시간 혈압 모니터링(ABPM)이나 가정 혈압 일지를 1~2주간 아침/취침 전 기록하여 주치의에게 보여주시는 것이 가장 안전합니다.\n2. 암로디핀은 반감기가 30~50시간으로 매우 긴 약제이나, 발사르탄의 경우 저녁에 추가 분할하거나 복용 시간을 오후로 옮기는 방안을 주치의와 상의하실 수 있습니다.\n\n※ 임의로 복용 시간을 변경하기 전에 담당 의사와의 상담을 권장합니다.",
+            "upvotes": 18,
+            "upvotedBy": [
+                "u_patient_1",
+                "u_patient_2"
+            ],
+            "status": "active",
+            "createdAt": "2026-08-20T11:05:00Z",
+            "updatedAt": "2026-08-20T11:05:00Z"
+        },
+        "a_endo_1": {
+            "id": "a_endo_1",
+            "questionId": "q_endo_1",
+            "authorId": "u_clinician_endo",
+            "authorName": "김서연 전문의 (MD)",
+            "authorAvatar": "https://images.unsplash.com/photo-1594824813589-9304e2a8fa2e?w=150&q=80",
+            "authorBadge": "Verified Clinician",
+            "body": "안녕하세요, 내분비내과 김서연 전문의입니다.\n\n당화혈색소 6.4%는 당뇨 전단계(5.7%~6.4%)의 최상단 수치로, 적극적인 생활습관 교정이 즉시 요구되는 중요한 시점입니다.\n\n미국 당뇨병학회(ADA) 가이드라인에 따르면:\n1. 체중의 5~7% 감량 (예: 70kg 기준 3.5~5kg 감량)과 주당 최소 150분 이상의 중강도 유산소 운동(빠르게 걷기 등)을 병행하면 2형 당뇨로의 진행 위험을 58% 이상 감소시킬 수 있습니다.\n2. 탄수화물(백미, 밀가루, 당분 음료) 섭취를 줄이고 식이섬유와 단백질 위주로 식사 순서를 바꾸는 '식후 혈당 스파이크 방지'가 핵심입니다.\n3. BMI 35 이상이거나 60세 미만 고위험군에서는 예방적 메트포르민 복용이 고려되기도 하므로, 3개월 후 재검사 결과를 바탕으로 주치의와 약물 시작 여부를 결정하시길 권장합니다.",
+            "upvotes": 14,
+            "upvotedBy": [
+                "u_patient_1"
+            ],
+            "status": "active",
+            "createdAt": "2026-08-22T15:20:00Z",
+            "updatedAt": "2026-08-22T15:20:00Z"
+        },
+        "a_neuro_1": {
+            "id": "a_neuro_1",
+            "questionId": "q_neuro_1",
+            "authorId": "u_clinician_neuro",
+            "authorName": "이민수 전문의 (MD, PhD)",
+            "authorAvatar": "https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=150&q=80",
+            "authorBadge": "Verified Clinician",
+            "body": "안녕하세요, 신경과 이민수 전문의입니다.\n\n단순 노화성 건망증과 경도인지장애(MCI)의 가장 큰 차이점은 '힌트를 주었을 때 회상할 수 있는가'와 '사건 자체를 잊어버리는가'입니다.\n\n- 단순 건망증: 약속 시간이나 이름을 깜빡했더라도 힌트를 주거나 시간이 지나면 스스로 기억해냅니다.\n- 경도인지장애/초기 치매: 힌트를 주어도 사건 자체를 경험한 사실 자체를 기억하지 못하는 경우가 빈번합니다.\n\n질문자님의 어머니께서는 힌트를 드리면 기억하신다니 다행이지만, MoCA(몬트리올 인지평가) 또는 MMSE 선별검사와 뇌 MRI, 비타민 B12 및 갑상선 기능 혈액검사를 받아보시는 것이 안전합니다.\n뉴저지 의료접근센터(NJAP)를 통해 한국어 의료통역 지원이 가능한 병원 신경과 진료 예약 안내를 받으실 수 있습니다.",
+            "upvotes": 22,
+            "upvotedBy": [
+                "u_patient_1",
+                "u_patient_2"
+            ],
+            "status": "active",
+            "createdAt": "2026-08-25T11:00:00Z",
+            "updatedAt": "2026-09-15T02:20:34+00:00"
+        },
+        "a_3066384411ac": {
+            "id": "a_3066384411ac",
+            "questionId": "q_115094274132",
+            "authorId": "u_34d7fdbd76",
+            "authorName": "최성훈 소아청소년과 전문의 (FAAP)",
+            "authorAvatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&q=80",
+            "authorBadge": "Verified Clinician",
+            "body": "안녕하세요, 소아청소년과 전문의 최성훈입니다.\n생후 6개월에는 DTaP(디프테리아/파상풍/백일해), Hib, Polio(IPV), 폐렴구균(PCV), 로타바이러스 3차 접종과 인플루엔자(독감) 1차 접종이 권장됩니다.",
+            "upvotes": 0,
+            "upvotedBy": [],
+            "status": "active",
+            "createdAt": "2026-09-15T02:25:16+00:00",
+            "updatedAt": "2026-09-15T02:25:16+00:00"
+        },
+        "a_adcfea13cff2": {
+            "id": "a_adcfea13cff2",
+            "questionId": "q_115094274132",
+            "authorId": "u_058cf04ae5",
+            "authorName": "ET 내과 전문의",
+            "authorAvatar": "https://lh3.googleusercontent.com/a/default-user=s150-c",
+            "authorBadge": "Verified Clinician",
+            "body": "내과 전문의로서 소아과 예방접종 안내에 추가하여, 영유아 시기 접종 기록(Immunization Record)을 지정 소아청소년과 주치의(PCP) 차트에 정기 보관하시는 것을 권장합니다.",
+            "upvotes": 0,
+            "upvotedBy": [],
+            "status": "active",
+            "createdAt": "2026-09-15T02:34:57+00:00",
+            "updatedAt": "2026-09-15T02:34:57+00:00"
+        },
+        "a_5ccae6a59d04": {
+            "id": "a_5ccae6a59d04",
+            "questionId": "q_56afde1c5b56",
+            "authorId": "u_34d7fdbd76",
+            "authorName": "최성훈 전문의",
+            "authorAvatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&q=80",
+            "authorBadge": "Verified Clinician",
+            "body": "안녕하세요, 전문의 최성훈입니다. 식후 혈당 스파이크를 방지하기 위해서는 식사 순서를 채소(식이섬유) -> 단백질 -> 탄수화물 순서로 섭취하시고, 식후 20~30분 뒤 15분간 가벼운 보행 운동을 권장합니다.",
+            "upvotes": 0,
+            "upvotedBy": [],
+            "status": "active",
+            "createdAt": "2026-09-15T02:47:07+00:00",
+            "updatedAt": "2026-09-15T02:47:07+00:00"
+        }
+    },
+    "doctor_emails": {
+        "cardio.doctor@njaccess.org": {
+            "email": "cardio.doctor@njaccess.org",
+            "title": "순환기내과 전문의 (MD, FACC)",
+            "addedAt": "2026-08-01T00:00:00Z"
+        },
+        "endo.kim@njaccess.org": {
+            "email": "endo.kim@njaccess.org",
+            "title": "내분비내과 전문의 (MD)",
+            "addedAt": "2026-08-05T00:00:00Z"
+        },
+        "neuro.lee@njaccess.org": {
+            "email": "neuro.lee@njaccess.org",
+            "title": "신경과 전문의 (MD, PhD)",
+            "addedAt": "2026-08-10T00:00:00Z"
+        },
+        "dr.steve.choi@gmail.com": {
+            "email": "dr.steve.choi@gmail.com",
+            "title": "소아청소년과 전문의 (FAAP)",
+            "addedAt": "2026-09-15T02:24:58+00:00"
+        },
+        "ethanjyoon@gmail.com": {
+            "email": "ethanjyoon@gmail.com",
+            "title": "내과",
+            "addedAt": "2026-09-15T02:29:36+00:00"
+        }
+    }
+}

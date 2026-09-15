@@ -3,57 +3,326 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://kor2.njaccessportal.com/</loc>
-    <lastmod>2026-09-09</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://kor2.njaccessportal.com/forum</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/forum?view=categories</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://kor2.njaccessportal.com/blog</loc>
-    <lastmod>2026-09-09</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://kor2.njaccessportal.com/senior-care</loc>
-    <lastmod>2026-09-09</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://kor2.njaccessportal.com/medicare</loc>
-    <lastmod>2026-09-09</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://kor2.njaccessportal.com/tool</loc>
-    <lastmod>2026-09-09</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://kor2.njaccessportal.com/matcher</loc>
-    <lastmod>2026-09-09</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kor2.njaccessportal.com/calculator</loc>
-    <lastmod>2026-09-09</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kor2.njaccessportal.com/dictionary</loc>
-    <lastmod>2026-09-09</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://kor2.njaccessportal.com/about</loc>
-    <lastmod>2026-09-09</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://kor2.njaccessportal.com/forum?specialty=events</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/forum?specialty=internal_medicine</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/forum?specialty=cardiology</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/forum?specialty=neurology</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/forum?specialty=oncology</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/forum?specialty=pediatrics</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/forum?specialty=dermatology</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/forum?specialty=orthopedics</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/forum?specialty=endocrinology</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/forum?specialty=gastroenterology</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/forum?specialty=psychiatry</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/forum?specialty=pulmonology</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/forum?specialty=immunology</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/forum?specialty=obgyn</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/forum?specialty=radiology</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/forum?specialty=emergency</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/forum?specialty=nursing_home</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/forum?specialty=hospice</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://kor2.njaccessportal.com/forum/topic/q_e979fee37dc8</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://kor2.njaccessportal.com/uploads/images/test_poster.png</image:loc>
+      <image:title>[NJAP 공식 건강 세미나] 시니어 고혈압·당뇨 관리 및 무료 건강검진의 날</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/forum/topic/q_56afde1c5b56</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/forum/topic/q_115094274132</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/forum/topic/q_378d98689720</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/forum/topic/q_neuro_1</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/forum/topic/q_endo_1</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/forum/topic/q_cardio_1</loc>
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://kor2.njaccessportal.com/blog/post-1789052706</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://kor2.njaccessportal.com/uploads/images/images_20260910_150454_00da2a.jpeg</image:loc>
+      <image:title>암 진단 후 몇 달 동안 뇌졸중 위험 급증</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/blog/post-1789051566</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://kor2.njaccessportal.com/uploads/images/images_20260910_144434_9fa33b.jpeg</image:loc>
+      <image:title>영양 과학: 빵 반죽에 통시금치를 넣으면 인슐린과 포만감이 조절</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/blog/usda--8----1-500</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://kor2.njaccessportal.com/uploads/images/images_20260909_150944_6ad435.jpeg</image:loc>
+      <image:title>미 농무부(USDA) 발칵… 8개 주 식탁 위협한 1,500파운드 돼지고기 오염 경보</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/blog/walmart-----salmonella</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://kor2.njaccessportal.com/uploads/images/images_20260909_145656_6dfe98.jpeg</image:loc>
+      <image:title>월마트(Walmart)에서 판매된 망고가 살모넬라균(Salmonella) 오염 가능성</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/blog/adhd</loc>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://kor2.njaccessportal.com/uploads/images/images_20260910_143121_a9dd86.jpeg</image:loc>
+      <image:title>성인 정신 건강: 여성이 ADHD를 자주 놓치고 오진하는 이유</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/blog/post-1789050354</loc>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://kor2.njaccessportal.com/uploads/images/images_20260910_142444_6f4037.jpeg</image:loc>
+      <image:title>여성 건강: 획기적인 연구를 통해 조기 폐경과 가속화된 인지 변화 간의 연관성 밝혀져</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/blog/hpv</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://kor2.njaccessportal.com/uploads/images/images_20260910_141500_6c0d89.jpeg</image:loc>
+      <image:title>암 예방: 여성용으로 개발된 HPV 백신이 남성의 두경부암을 예방하는 방법</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/blog/fda-2026-2027----19--4</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://kor2.njaccessportal.com/uploads/images/images_20260909_145019_074574.jpeg</image:loc>
+      <image:title>가을철 건강 방어: 미 FDA, 2026–2027 시즌 대비 업데이트된 코로나19 백신 4종 승인</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/blog/fda</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://kor2.njaccessportal.com/uploads/images/images_20260909_144436_e087f4.jpeg</image:loc>
+      <image:title>응급의학의 획기적 발전: 미 FDA, 신속 수혈을 위한 미국 최초 동결건조 혈장 승인</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kor2.njaccessportal.com/blog/11</loc>
+    <lastmod>2026-09-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://kor2.njaccessportal.com/uploads/images/images_20260909_143725_db14a1.jpeg</image:loc>
+      <image:title>실용적인 영양 기록: 꾸준한 식사 일기 작성, 체중 11% 감량과 연관 있다는 연구 결과 나와</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://kor2.njaccessportal.com/blog/post-1788314321</loc>
@@ -96,6 +365,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kor2.njaccessportal.com/blog/post-1789051296</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://kor2.njaccessportal.com/uploads/images/images_20260910_143950_3c3d22.jpeg</image:loc>
+      <image:title>제약 과학: 초기 임상 시험에서 가능성을 보인 &#039;운동 모방&#039; 비만 치료제</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kor2.njaccessportal.com/blog/post-1788397510</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>weekly</changefreq>
@@ -112,7 +391,7 @@
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://kor2.njaccessportal.com/uploads/images/images_20260902_032703_1bba39.jpeg</image:loc>
-      <image:title>장수 과학: 100년 된 당뇨병 치료제 &apos;메트포르민&apos;이 생물학적 노화를 늦추는 데 기여하는 방식</image:title>
+      <image:title>장수 과학: 100년 된 당뇨병 치료제 &#039;메트포르민&#039;이 생물학적 노화를 늦추는 데 기여하는 방식</image:title>
     </image:image>
   </url>
   <url>
@@ -182,7 +461,7 @@
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://kor2.njaccessportal.com/uploads/images/images_20260902_031650_5f3c62.jpeg</image:loc>
-      <image:title>혈관 순환: 종아리 근육이 인체의 &apos;제2의 심장&apos;으로 불리는 이유</image:title>
+      <image:title>혈관 순환: 종아리 근육이 인체의 &#039;제2의 심장&#039;으로 불리는 이유</image:title>
     </image:image>
   </url>
   <url>
@@ -207,7 +486,7 @@
   </url>
   <url>
     <loc>https://kor2.njaccessportal.com/blog/test-article-2</loc>
-    <lastmod>2026-09-01</lastmod>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -227,7 +506,7 @@
   </url>
   <url>
     <loc>https://kor2.njaccessportal.com/blog/fda-recall-heart-medication</loc>
-    <lastmod>2026-09-01</lastmod>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -327,12 +606,12 @@
   </url>
   <url>
     <loc>https://kor2.njaccessportal.com/blog/post-1788293543</loc>
-    <lastmod>2026-09-02</lastmod>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://kor2.njaccessportal.com/uploads/images/images_20260901_201214_232395.jpeg</image:loc>
-      <image:title>미국 적십자사, 여름철 헌혈 급감으로 &apos;국가 혈액 공급 위기&apos; 선포</image:title>
+      <image:title>미국 적십자사, 여름철 헌혈 급감으로 &#039;국가 혈액 공급 위기&#039; 선포</image:title>
     </image:image>
   </url>
   <url>
@@ -417,12 +696,12 @@
   </url>
   <url>
     <loc>https://kor2.njaccessportal.com/blog/medicare-technology</loc>
-    <lastmod>2026-09-02</lastmod>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://kor2.njaccessportal.com/uploads/images/images_20260901_200504_356ab1.jpeg</image:loc>
-      <image:title>심장 건강 경보: 흔히 쓰이는 무설탕 감미료 &apos;자일리톨&apos;, 혈전 및 심근경색 위험과 연관 있다는 연구 결과 발표</image:title>
+      <image:title>심장 건강 경보: 흔히 쓰이는 무설탕 감미료 &#039;자일리톨&#039;, 혈전 및 심근경색 위험과 연관 있다는 연구 결과 발표</image:title>
     </image:image>
   </url>
 </urlset>

@@ -3,16 +3,15 @@ const fs = require('fs');
 const path = require('path');
 
 const BASE_DIR = '/Users/ejyoon/Desktop/KACCESS';
-const TUS_URL = 'https://srv1709-files.hstgr.io/rest/32c5c493772baf1a/api/tus/public_html';
-const AUTH_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJsb2NhbGUiOiJlbl9VUyIsInZpZXdNb2RlIjoibGlzdCIsInNpbmdsZUNsaWNrIjpmYWxzZSwicmVkaXJlY3RBZnRlckNvcHlNb3ZlIjpmYWxzZSwicGVybSI6eyJhZG1pbiI6ZmFsc2UsImV4ZWN1dGUiOmZhbHNlLCJjcmVhdGUiOnRydWUsInJlbmFtZSI6dHJ1ZSwibW9kaWZ5Ijp0cnVlLCJkZWxldGUiOnRydWUsInNoYXJlIjpmYWxzZSwiZG93bmxvYWQiOnRydWV9LCJjb21tYW5kcyI6W10sImxvY2tQYXNzd29yZCI6dHJ1ZSwiaGlkZURvdGZpbGVzIjpmYWxzZSwiZGF0ZUZvcm1hdCI6ZmFsc2UsInVzZXJuYW1lIjoidTczODM1ODExMCIsImFjZUVkaXRvclRoZW1lIjoiIn0sImlzcyI6IkZpbGUgQnJvd3NlciIsImV4cCI6MTc4OTA3NDk1MiwiaWF0IjoxNzg5MDUzMzUyfQ.7nES2-HrTvcjoEWjO9I72mKJhwYEIf-AQjHz92VVONo';
-const REST_AUTH_KEY = '1d45fe6c395b3020d244c99de83027342ed4a46c2224d7208a32f15b73d24980-32c5c493772baf1a';
+const TUS_URL = 'https://srv1709-files.hstgr.io/rest/8c1e7334a3359820/api/tus/public_html';
+const AUTH_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJsb2NhbGUiOiJlbl9VUyIsInZpZXdNb2RlIjoibGlzdCIsInNpbmdsZUNsaWNrIjpmYWxzZSwicmVkaXJlY3RBZnRlckNvcHlNb3ZlIjpmYWxzZSwicGVybSI6eyJhZG1pbiI6ZmFsc2UsImV4ZWN1dGUiOmZhbHNlLCJjcmVhdGUiOnRydWUsInJlbmFtZSI6dHJ1ZSwibW9kaWZ5Ijp0cnVlLCJkZWxldGUiOnRydWUsInNoYXJlIjpmYWxzZSwiZG93bmxvYWQiOnRydWV9LCJjb21tYW5kcyI6W10sImxvY2tQYXNzd29yZCI6dHJ1ZSwiaGlkZURvdGZpbGVzIjpmYWxzZSwiZGF0ZUZvcm1hdCI6ZmFsc2UsInVzZXJuYW1lIjoidTczODM1ODExMCIsImFjZUVkaXRvclRoZW1lIjoiIn0sImlzcyI6IkZpbGUgQnJvd3NlciIsImV4cCI6MTc4OTQ2MjkwOCwiaWF0IjoxNzg5NDQxMzA4fQ.Ptw5VZAWsN4qh9twphnuGpN_pEwmpFRlsQjGeAKuels';
+const REST_AUTH_KEY = 'b65b148529421c5f4d500f21f280fc9e3dc8bff63d33f4febdfd4fc7783dd109-8c1e7334a3359820';
 
 const filesToUpload = [
   '.htaccess',
   'robots.txt',
   'sitemap.php',
   'sitemap.xml',
-  'data/content.json',
   'senior-care.php',
   'senior-care.html',
   'senior-care/index.html',
@@ -49,7 +48,21 @@ const filesToUpload = [
   'api/contact.php',
   'api/db.php',
   'api/media.php',
-  'api/supabase.php'
+  'api/supabase.php',
+  'api/forum_db.php',
+  'api/forum_auth.php',
+  'api/forum.php',
+  'api/forum_admin.php',
+  'forum/index.php',
+  'forum/topic.php',
+  'forum/ask.php',
+  'forum/components.php',
+  'admin2/index.php',
+  'admin2/login.php',
+  'admin2/admin2.js',
+  'data/forum.json',
+  'supabase_forum_schema.sql',
+  'uploads/images/event_poster_20260915_031056_8b8ab63a.png'
 ];
 
 async function uploadFile(relPath) {
