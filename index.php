@@ -1214,22 +1214,22 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                 </div>
               </div>
 
-              <!-- Right Side: Community Illustration -->
-              <div style="flex: 0 1 480px !important; max-width: 520px !important; min-width: 280px !important; display: flex !important; justify-content: flex-end !important; align-items: center !important;">
+              <!-- Right Side: Community Illustration (Larger & Prominent) -->
+              <div style="flex: 1 1 520px !important; max-width: 600px !important; min-width: 280px !important; display: flex !important; justify-content: center !important; align-items: center !important;">
                 <img src="/uploads/images/forum_community_banner.jpg" 
                      alt="뉴저지 의료/정보 나눔 커뮤니티" 
-                     style="width: 100% !important; height: auto !important; max-height: 220px !important; object-fit: contain !important; border-radius: 18px !important; border: 1px solid #d1d5db !important; background: #ffffff !important; padding: 6px !important; box-shadow: 0 6px 18px rgba(15, 23, 42, 0.07) !important;">
+                     style="width: 100% !important; height: auto !important; max-height: 290px !important; object-fit: contain !important; border-radius: 20px !important; border: 1px solid #cbd5e1 !important; background: #ffffff !important; padding: 8px !important; box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08) !important;">
               </div>
             </div>
 
-            <!-- Specialties Quick Navigation Bar -->
-            <div class="py-4 border-b" style="padding-top: 18px !important; padding-bottom: 18px !important; border-bottom: 1px solid #cbd5e1 !important;">
-              <div class="flex items-center justify-between mb-2">
+            <!-- Specialties Quick Navigation Bar (Bottom of Section) -->
+            <div style="padding-top: 22px !important;">
+              <div class="flex items-center justify-between mb-2.5">
                 <span class="text-[11px] font-bold uppercase tracking-wider flex items-center gap-1.5" style="color: #475569 !important;">
                   <i class="fa-solid fa-stethoscope text-blue-600" style="color: #2563eb !important;"></i>
                   <span>전문 진료과 및 시니어 케어 바로가기</span>
                 </span>
-                <span class="text-[11px]" style="color: #64748b !important;">전체 18개 분야</span>
+                <span class="text-[11px] font-medium" style="color: #64748b !important;">전체 <?= count($forumSpecialties) ?>개 분야</span>
               </div>
               <div class="flex flex-wrap items-center gap-2 text-xs font-bold">
                 <?php foreach ($forumSpecialties as $fsp): ?>
@@ -1241,53 +1241,6 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                   </a>
                 <?php endforeach; ?>
               </div>
-            </div>
-
-            <!-- Recent Questions Cards Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6" style="margin-top: 24px !important;">
-              <?php foreach ($forumQuestions as $fq): 
-                $fsp = $fq['specialty'] ?? null;
-              ?>
-                <a href="/forum/topic/<?= htmlspecialchars($fq['id']) ?>" class="group block h-full" style="text-decoration: none !important;">
-                  <div class="rounded-2xl p-4 h-full flex flex-col justify-between transition-all hover:-translate-y-0.5"
-                       style="background: #ffffff !important; border: 1px solid #e2e8f0 !important; border-radius: 18px !important; padding: 18px !important; min-height: 200px !important; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05) !important;">
-                    <div>
-                      <div class="flex items-center justify-between gap-2 mb-2" style="margin-bottom: 10px !important;">
-                        <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-md border" 
-                              style="color: <?= htmlspecialchars($fsp['color'] ?? '#2563eb') ?>; border-color: <?= htmlspecialchars($fsp['color'] ?? '#2563eb') ?>44; background: <?= htmlspecialchars($fsp['color'] ?? '#2563eb') ?>14; padding: 2px 8px !important; border-radius: 6px !important;">
-                          <?= htmlspecialchars($fsp['name_ko'] ?? '진료과') ?>
-                        </span>
-                        <?php if (!empty($fq['hasClinicianAnswer'])): ?>
-                          <span class="text-[9px] font-bold px-1.5 py-0.2 rounded" style="background: #ecfdf5 !important; color: #047857 !important; border: 1px solid #a7f3d0 !important; padding: 2px 6px !important; border-radius: 4px !important;">전문의 답변</span>
-                        <?php endif; ?>
-                      </div>
-                      <h3 class="text-sm font-bold line-clamp-2 leading-snug mb-2 group-hover:text-blue-600 transition-colors" style="color: #0f172a !important; font-size: 14px !important; font-weight: 700 !important; line-height: 1.4 !important; margin: 0 0 8px 0 !important;">
-                        <?= htmlspecialchars($fq['title']) ?>
-                      </h3>
-                      <p class="text-xs line-clamp-2 leading-relaxed" style="color: #64748b !important; font-size: 12px !important; line-height: 1.5 !important; margin: 0 !important;">
-                        <?= htmlspecialchars($fq['body']) ?>
-                      </p>
-                    </div>
-
-                    <div class="pt-3 mt-3 border-t flex items-center justify-between text-[11px]" style="border-top: 1px solid #f1f5f9 !important; padding-top: 12px !important; margin-top: 14px !important; color: #64748b !important; font-size: 11px !important;">
-                      <span class="flex items-center gap-1.5" style="display: flex; align-items: center; gap: 6px;">
-                        <img src="<?= htmlspecialchars($fq['authorAvatar'] ?: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&q=80') ?>" class="w-4 h-4 rounded-full object-cover" style="width: 18px; height: 18px; border-radius: 50%; object-fit: cover;">
-                        <span class="truncate max-w-[80px]" style="color: #334155 !important; font-weight: 500 !important;"><?= htmlspecialchars($fq['authorName'] ?? '회원') ?></span>
-                      </span>
-                      <span style="color: #64748b !important;">💬 <?= (int)($fq['replyCount'] ?? 0) ?></span>
-                    </div>
-                  </div>
-                </a>
-              <?php endforeach; ?>
-            </div>
-
-            <!-- Clinical Safety Micro Notice -->
-            <div class="mt-6 pt-4 border-t flex items-center justify-between text-[11px] flex-wrap gap-2" style="border-top: 1px solid #cbd5e1 !important; margin-top: 24px !important; padding-top: 16px !important; color: #64748b !important; font-size: 11px !important;">
-              <span class="flex items-center gap-1.5" style="display: flex; align-items: center; gap: 6px;">
-                <i class="fa-solid fa-triangle-exclamation text-amber-500" style="color: #d97706 !important;"></i>
-                <span>의료 면책: 본 포럼 콘텐츠는 교육 및 일반 정보 제공 목적이며 공식적인 의학적 진단을 대신할 수 없습니다.</span>
-              </span>
-              <a href="/forum" class="font-bold hover:underline" style="color: #2563eb !important; text-decoration: none !important; font-weight: 700 !important;">전체 질문/정보 나눔 보러가기 →</a>
             </div>
 
           </div>

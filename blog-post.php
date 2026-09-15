@@ -515,6 +515,22 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
       <!-- Body Content -->
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         
+        <!-- Top Medical Disclaimer Notice -->
+        <div class="mb-8 p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 text-amber-950 text-xs sm:text-[13px] flex items-start gap-3 shadow-2xs">
+          <i class="fa-solid fa-triangle-exclamation text-amber-600 text-sm mt-0.5 shrink-0"></i>
+          <div class="space-y-1">
+            <p class="font-bold text-amber-900">
+              의료 면책 공지 (Medical Disclaimer)
+            </p>
+            <p class="text-amber-800 leading-relaxed font-medium">
+              The material is for informational purposes and does not constitute formal professional or medical advice.
+            </p>
+            <p class="text-amber-700/80 text-[11px] leading-relaxed">
+              본 콘텐츠의 모든 내용은 일반 건강 정보 제공 목적이며 공식적인 전문 진료, 의학적 진단 또는 처방을 대신하지 않습니다.
+            </p>
+          </div>
+        </div>
+
         <?php if (!empty($excerpt)): ?>
         <div class="mb-10 p-5 rounded-xl bg-blue-50 border-l-4 border-brand-blue shadow-xs">
           <p class="font-sans text-brand-dark font-medium leading-relaxed text-base"><?= $excerpt ?></p>
@@ -588,6 +604,22 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
           <?php endif; ?>
         </div>
         <?php endif; ?>
+
+        <!-- Bottom Medical Disclaimer Notice -->
+        <div class="my-10 p-4 rounded-2xl bg-slate-50 border border-slate-200 text-slate-700 text-xs sm:text-[13px] flex items-start gap-3 shadow-2xs">
+          <i class="fa-solid fa-circle-info text-blue-600 text-sm mt-0.5 shrink-0"></i>
+          <div class="space-y-1">
+            <p class="font-bold text-slate-900">
+              의료 면책 안내 (Medical Disclaimer)
+            </p>
+            <p class="text-slate-800 leading-relaxed font-medium">
+              The material is for informational purposes and does not constitute formal professional or medical advice.
+            </p>
+            <p class="text-slate-500 text-[11px] leading-relaxed">
+              본 웹사이트에 게재된 건강 및 의학 정보는 일반 참고용이며, 개인의 구체적인 질환이나 의학적 문제는 반드시 면허를 갖춘 전문 의료진과 직접 상담하시기 바랍니다.
+            </p>
+          </div>
+        </div>
 
         <!-- ================================================================= -->
         <!-- COMMENT SECTION (댓글 섹션)                                        -->

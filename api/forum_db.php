@@ -27,6 +27,36 @@ function forum_get_default_specialties(): array {
             'isAdminOnly' => true
         ],
         [
+            'id' => 'medical_billing',
+            'slug' => 'medical-billing',
+            'name_ko' => '의료비/빌링',
+            'name_en' => 'Medical Bills & Billing',
+            'description' => '미국 병원비 및 검사비 청구서(Bill), 분할 납부, 재정 지원 및 네고 상담',
+            'icon' => 'fa-file-invoice-dollar',
+            'color' => '#0284C7',
+            'order' => 1
+        ],
+        [
+            'id' => 'hospital_recommendation',
+            'slug' => 'hospital-recommendation',
+            'name_ko' => '병원 추천',
+            'name_en' => 'Hospital Recommendations',
+            'description' => '지역별 우수 한인 병의원, 종합병원, 전문 클리닉 추천 및 진료 경험 공유',
+            'icon' => 'fa-hospital-user',
+            'color' => '#059669',
+            'order' => 2
+        ],
+        [
+            'id' => 'health_insurance',
+            'slug' => 'health-insurance',
+            'name_ko' => '의료보험',
+            'name_en' => 'Health Insurance',
+            'description' => '메디케어, 메디케이드, 오바마케어(ACA) 및 직장 건강보험 가입·혜택 안내',
+            'icon' => 'fa-shield-halved',
+            'color' => '#4F46E5',
+            'order' => 3
+        ],
+        [
             'id' => 'internal_medicine',
             'slug' => 'general-internal',
             'name_ko' => '내과 (일반·가정의학과)',
@@ -34,7 +64,7 @@ function forum_get_default_specialties(): array {
             'description' => '성인 만성질환 종합관리, 정기 건강검진, 1차 진료 네비게이션',
             'icon' => 'fa-stethoscope',
             'color' => '#1E3A8A',
-            'order' => 1
+            'order' => 4
         ],
         [
             'id' => 'cardiology',
@@ -44,7 +74,7 @@ function forum_get_default_specialties(): array {
             'description' => '고혈압, 관상동맥질환, 부정맥, 심부전 및 흉통 질환',
             'icon' => 'fa-heart-pulse',
             'color' => '#EF4444',
-            'order' => 2
+            'order' => 5
         ],
         [
             'id' => 'neurology',
@@ -54,7 +84,7 @@ function forum_get_default_specialties(): array {
             'description' => '뇌졸중, 치매, 두통, 어지럼증, 파킨슨병 및 말초신경',
             'icon' => 'fa-brain',
             'color' => '#8B5CF6',
-            'order' => 3
+            'order' => 6
         ],
         [
             'id' => 'oncology',
@@ -64,7 +94,7 @@ function forum_get_default_specialties(): array {
             'description' => '암 예방, 조기 검진, 항암 치료 및 치료 후 회복 케어',
             'icon' => 'fa-ribbon',
             'color' => '#EC4899',
-            'order' => 4
+            'order' => 7
         ],
         [
             'id' => 'pediatrics',
@@ -74,7 +104,7 @@ function forum_get_default_specialties(): array {
             'description' => '영유아 발달, 예방접종, 성장, 소아 알레르기 및 급성 질환',
             'icon' => 'fa-baby',
             'color' => '#3B82F6',
-            'order' => 5
+            'order' => 8
         ],
         [
             'id' => 'dermatology',
@@ -84,7 +114,7 @@ function forum_get_default_specialties(): array {
             'description' => '아토피, 습진, 건선, 색소질환, 피부 가려움 및 피부암',
             'icon' => 'fa-hand-dots',
             'color' => '#F59E0B',
-            'order' => 6
+            'order' => 9
         ],
         [
             'id' => 'orthopedics',
@@ -94,7 +124,7 @@ function forum_get_default_specialties(): array {
             'description' => '퇴행성 관절염, 척추 디스크, 오십견, 골절 및 인대 손상',
             'icon' => 'fa-bone',
             'color' => '#10B981',
-            'order' => 7
+            'order' => 10
         ],
         [
             'id' => 'endocrinology',
@@ -104,7 +134,7 @@ function forum_get_default_specialties(): array {
             'description' => '당뇨병, 갑상선 질환, 골다공증, 비만 및 호르몬 이상',
             'icon' => 'fa-dna',
             'color' => '#06B6D4',
-            'order' => 8
+            'order' => 11
         ],
         [
             'id' => 'gastroenterology',
@@ -114,7 +144,7 @@ function forum_get_default_specialties(): array {
             'description' => '역류성 식도염, 위염, 위·대장 내시경 용종, 지방간, 췌장',
             'icon' => 'fa-virus-slash',
             'color' => '#14B8A6',
-            'order' => 9
+            'order' => 12
         ],
         [
             'id' => 'psychiatry',
@@ -124,7 +154,7 @@ function forum_get_default_specialties(): array {
             'description' => '불면증, 우울증, 불안장애, 공황장애 및 시니어 인지건강',
             'icon' => 'fa-head-side-virus',
             'color' => '#6366F1',
-            'order' => 10
+            'order' => 13
         ],
         [
             'id' => 'pulmonology',
@@ -134,7 +164,7 @@ function forum_get_default_specialties(): array {
             'description' => '천식, COPD(만성폐쇄성폐질환), 만성 기침, 폐렴, 수면무호흡',
             'icon' => 'fa-lungs',
             'color' => '#0284C7',
-            'order' => 11
+            'order' => 14
         ],
         [
             'id' => 'immunology',
@@ -144,7 +174,7 @@ function forum_get_default_specialties(): array {
             'description' => '류마티스, 자가면역질환, 백신 접종, 바이러스/세균성 감염증',
             'icon' => 'fa-shield-virus',
             'color' => '#84CC16',
-            'order' => 12
+            'order' => 15
         ],
         [
             'id' => 'obgyn',
@@ -154,7 +184,7 @@ function forum_get_default_specialties(): array {
             'description' => '여성 정기검진, 갱년기 호르몬 치료, 자궁/난소 질환, 산전 관리',
             'icon' => 'fa-venus',
             'color' => '#F43F5E',
-            'order' => 13
+            'order' => 16
         ],
         [
             'id' => 'radiology',
@@ -164,7 +194,7 @@ function forum_get_default_specialties(): array {
             'description' => 'X-ray, CT, MRI, 초음파 영상 판독 해석 및 검사 가이드',
             'icon' => 'fa-radiation',
             'color' => '#64748B',
-            'order' => 14
+            'order' => 17
         ],
         [
             'id' => 'emergency',
@@ -174,7 +204,7 @@ function forum_get_default_specialties(): array {
             'description' => '응급실(ER) 방문 기준, 급성 흉통·호흡곤란, 긴급 대처 가이드',
             'icon' => 'fa-truck-medical',
             'color' => '#DC2626',
-            'order' => 15
+            'order' => 18
         ],
         [
             'id' => 'nursing_home',
@@ -184,7 +214,7 @@ function forum_get_default_specialties(): array {
             'description' => '너싱홈 입소 절차, 재활 간호, 메디케이드/메디케어 혜택 및 장기요양 돌봄',
             'icon' => 'fa-house-medical',
             'color' => '#059669',
-            'order' => 16
+            'order' => 19
         ],
         [
             'id' => 'hospice',
@@ -194,7 +224,7 @@ function forum_get_default_specialties(): array {
             'description' => '완화의료, 통증 조절, 가정 호스피스, 임종 돌봄 및 가족 심리 상담',
             'icon' => 'fa-hand-holding-heart',
             'color' => '#7C3AED',
-            'order' => 17
+            'order' => 20
         ]
     ];
 }
