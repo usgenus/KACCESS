@@ -62,7 +62,8 @@ const filesToUpload = [
   'admin2/admin2.js',
   'data/forum.json',
   'supabase_forum_schema.sql',
-  'uploads/images/event_poster_20260915_031056_8b8ab63a.png'
+  'uploads/images/event_poster_20260915_031056_8b8ab63a.png',
+  'uploads/images/forum_community_banner.jpg'
 ];
 
 async function uploadFile(relPath) {
