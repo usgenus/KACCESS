@@ -213,22 +213,6 @@
     }
   }
 
-  function updateBillboardPlayBadges() {
-    var v1 = document.querySelector('#gallery-billboard-container video, #billboard-active-video');
-    var b1 = document.getElementById('billboard-play-overlay') || document.getElementById('billboard-play-badge');
-    if (b1 && v1) {
-      if (v1.paused) b1.classList.remove('hidden');
-      else b1.classList.add('hidden');
-    }
-    var v2 = document.querySelector('#gallery-billboard2-container video, #billboard2-active-video');
-    var b2 = document.getElementById('billboard2-play-overlay') || document.getElementById('billboard2-play-badge');
-    if (b2 && v2) {
-      if (v2.paused) b2.classList.remove('hidden');
-      else b2.classList.add('hidden');
-    }
-  }
-  window.cmsUpdateBillboardOverlays = updateBillboardPlayBadges;
-
   function renderBillboardShowcase() {
     clearBillboardTimer();
     var container = document.getElementById('gallery-billboard-container');
@@ -250,13 +234,10 @@
         existingVid.setAttribute('playsinline', '');
         existingVid.setAttribute('webkit-playsinline', '');
         existingVid.setAttribute('preload', 'auto');
-        existingVid.addEventListener('playing', updateBillboardPlayBadges);
-        existingVid.addEventListener('pause', updateBillboardPlayBadges);
         if (existingVid.paused) {
           var p0 = existingVid.play();
           if (p0 && p0.catch) { p0.catch(function() {}); }
         }
-        updateBillboardPlayBadges();
         return;
       }
     }
@@ -291,7 +272,6 @@
       '        </div>',
       '      </div>',
       '    </div>',
-      '    <div id="billboard-play-overlay" class="billboard-play-overlay hidden" onclick="event.stopPropagation(); event.preventDefault(); window.cmsPlayBillboardVideo();" role="button" aria-label="영상 재생"><div class="billboard-play-btn-inner"><svg class="w-4 h-4 sm:w-5 sm:h-5 fill-current ml-0.5 text-white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>영상 재생 (클릭)</span></div></div>',
       '  </a>',
       '  <div class="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">' + dotsHtml + '</div>',
       '</div>'
@@ -318,10 +298,6 @@
         srcTag.src = b.mediaUrl;
         srcTag.type = 'video/mp4';
         vid.appendChild(srcTag);
-
-        var bbBadge = document.getElementById('billboard-play-badge');
-        vid.addEventListener('playing', function() { if (bbBadge) bbBadge.classList.add('hidden'); });
-        vid.addEventListener('pause', function() { if (bbBadge) bbBadge.classList.remove('hidden'); });
 
         if (billboards.length <= 1) {
           vid.loop = true;
@@ -487,13 +463,10 @@
         existingVid.setAttribute('playsinline', '');
         existingVid.setAttribute('webkit-playsinline', '');
         existingVid.setAttribute('preload', 'auto');
-        existingVid.addEventListener('playing', updateBillboardPlayBadges);
-        existingVid.addEventListener('pause', updateBillboardPlayBadges);
         if (existingVid.paused) {
           var p0 = existingVid.play();
           if (p0 && p0.catch) { p0.catch(function() {}); }
         }
-        updateBillboardPlayBadges();
         return;
       }
     }
@@ -526,7 +499,6 @@
       '        </div>',
       '      </div>',
       '    </div>',
-      '    <div id="billboard2-play-overlay" class="billboard-play-overlay hidden" onclick="event.stopPropagation(); event.preventDefault(); window.cmsPlayBillboardVideo();" role="button" aria-label="영상 재생"><div class="billboard-play-btn-inner"><svg class="w-4 h-4 sm:w-5 sm:h-5 fill-current ml-0.5 text-white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>영상 재생 (클릭)</span></div></div>',
       '  </a>',
       '  <div class="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">' + dotsHtml + '</div>',
       '</div>'
@@ -552,9 +524,6 @@
         srcTag.src = b.mediaUrl;
         srcTag.type = 'video/mp4';
         vid.appendChild(srcTag);
-
-        vid.addEventListener('playing', updateBillboardPlayBadges);
-        vid.addEventListener('pause', updateBillboardPlayBadges);
 
         if (billboards2.length <= 1) {
           vid.loop = true;
@@ -1350,7 +1319,6 @@
           if (p && p.catch) p.catch(function() {});
         }
       });
-      updateBillboardPlayBadges();
     };
 
     function ensureAllBillboardVideosPlay() {
@@ -1373,19 +1341,18 @@
         }
       });
 
-      updateBillboardPlayBadges();
       return !stillPaused;
     }
 
     // Try immediately and at progressive intervals after DOM is fully painted
     ensureAllBillboardVideosPlay();
-    setTimeout(ensureAllBillboardVideosPlay, 100);
-    setTimeout(ensureAllBillboardVideosPlay, 350);
-    setTimeout(ensureAllBillboardVideosPlay, 800);
+    setTimeout(ensureAllBillboardVideosPlay, 50);
+    setTimeout(ensureAllBillboardVideosPlay, 200);
+    setTimeout(ensureAllBillboardVideosPlay, 600);
     setTimeout(ensureAllBillboardVideosPlay, 1500);
 
-    // Capture-phase gesture listeners ensure ANY touch, click, or tap on the page starts video
-    var gestureEvents = ['pointerdown', 'mousedown', 'touchstart', 'touchend', 'keydown', 'click'];
+    // Capture-phase gesture listeners ensure ANY touch, click, scroll or mouse movement starts video
+    var gestureEvents = ['pointerdown', 'mousedown', 'touchstart', 'touchend', 'keydown', 'click', 'scroll', 'wheel', 'mousemove', 'pointermove'];
     var onGlobalGesture = function() {
       ensureAllBillboardVideosPlay();
     };
