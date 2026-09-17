@@ -111,6 +111,9 @@ if ($streamPath && file_exists($streamPath)) {
         header("Content-Length: $length");
     } else {
         header("Content-Length: $size");
+    // Clear any output buffers to ensure uncompressed, direct binary streaming (crucial for Safari byte-ranges)
+    while (ob_get_level() > 0) {
+        @ob_end_clean();
     }
 
     $fp = fopen($streamPath, 'rb');

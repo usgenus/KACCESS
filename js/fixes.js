@@ -79,9 +79,9 @@
 
       /* Mobile Billboard Full Visibility */
       '@media (max-width: 640px) {',
-      '  #gallery-billboard-section { margin-top: 0 !important; margin-bottom: 1.25rem !important; }',
-      '  #gallery-billboard-container > div { min-height: 230px !important; height: 240px !important; }',
-      '  #gallery-billboard-container video, #gallery-billboard-container img { min-height: 230px !important; height: 100% !important; object-fit: cover !important; }',
+      '  #gallery-billboard-section, #gallery-billboard2-section { margin-top: 0 !important; margin-bottom: 1.25rem !important; }',
+      '  #gallery-billboard-container > div, #gallery-billboard2-container > div { min-height: 230px !important; height: 240px !important; }',
+      '  #gallery-billboard-container video, #gallery-billboard-container img, #gallery-billboard2-container video, #gallery-billboard2-container img { min-height: 230px !important; height: 100% !important; object-fit: cover !important; }',
       '}',
 
       /* Slide-in animation */
@@ -512,17 +512,31 @@
   // 5. VIDEO AUTOPLAY FIX (Reinforces seamless playback on Safari & Mobile)
   // ─────────────────────────────────────────────────────────────
   function fixVideoAutoplay() {
+    function prepareVideoElement(v) {
+      if (!v) return;
+      v.defaultMuted = true;
+      v.muted = true;
+      v.volume = 0;
+      v.playsInline = true;
+      if (!v.hasAttribute('muted')) v.setAttribute('muted', '');
+      if (!v.hasAttribute('playsinline')) v.setAttribute('playsinline', '');
+      if (!v.hasAttribute('webkit-playsinline')) v.setAttribute('webkit-playsinline', '');
+      if (!v.hasAttribute('autoplay')) v.setAttribute('autoplay', '');
+      if (v.style) {
+        v.style.webkitTransform = 'translateZ(0)';
+        v.style.transform = 'translateZ(0)';
+      }
+    }
+
     function resumeAllBillboards() {
       var vids = document.querySelectorAll('#gallery-billboard-container video, #gallery-billboard2-container video, #billboard-active-video, #billboard2-active-video');
       vids.forEach(function(v) {
-        if (v && v.paused) {
-          v.defaultMuted = true;
-          v.muted = true;
-          v.volume = 0;
-          v.playsInline = true;
-          v.setAttribute('muted', '');
-          v.setAttribute('playsinline', '');
-          v.setAttribute('webkit-playsinline', '');
+        if (!v) return;
+        prepareVideoElement(v);
+        if (v.paused) {
+          if (v.networkState === HTMLMediaElement.NETWORK_EMPTY || v.readyState === 0) {
+            try { v.load(); } catch(e) {}
+          }
           var p = v.play();
           if (p && p.catch) p.catch(function() {});
         }
@@ -532,9 +546,7 @@
     function wireVideoLifecycle(v) {
       if (!v || v._bbAutoplayWired) return;
       v._bbAutoplayWired = true;
-      v.muted = true;
-      v.defaultMuted = true;
-      v.playsInline = true;
+      prepareVideoElement(v);
       ['loadstart', 'loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough'].forEach(function(evt) {
         v.addEventListener(evt, function() {
           if (v.paused) {
@@ -548,6 +560,30 @@
     var vids = document.querySelectorAll('#gallery-billboard-container video, #gallery-billboard2-container video, #billboard-active-video, #billboard2-active-video');
     vids.forEach(wireVideoLifecycle);
 
+    // Viewport Visibility Trigger (Crucial for Safari power-saver & offscreen videos)
+    if (window.IntersectionObserver) {
+      var io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            var el = entry.target;
+            var vid = el.tagName === 'VIDEO' ? el : el.querySelector('video');
+            if (vid) {
+              prepareVideoElement(vid);
+              if (vid.paused) {
+                var p = vid.play();
+                if (p && p.catch) p.catch(function() {});
+              }
+            }
+          }
+        });
+      }, { threshold: [0, 0.1, 0.25] });
+
+      ['gallery-billboard-section', 'gallery-billboard2-section', 'gallery-billboard-container', 'gallery-billboard2-container'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) io.observe(el);
+      });
+    }
+
     if (window.MutationObserver) {
       var mo = new MutationObserver(function() {
         var nv = document.querySelectorAll('#gallery-billboard-container video, #gallery-billboard2-container video, #billboard-active-video, #billboard2-active-video');
@@ -557,8 +593,8 @@
       mo.observe(document.body || document.documentElement, { childList: true, subtree: true });
     }
 
-    // Capture-phase interaction listeners guarantee instant play on ANY touch, click, scroll or mouse movement
-    ['pointerdown', 'mousedown', 'touchstart', 'touchend', 'keydown', 'click', 'scroll', 'wheel', 'mousemove', 'pointermove'].forEach(function(evt) {
+    // Capture-phase interaction listeners guarantee instant play on ANY user gesture (touch, click, key, scroll)
+    ['touchstart', 'touchend', 'pointerdown', 'mousedown', 'keydown', 'click', 'scroll'].forEach(function(evt) {
       window.addEventListener(evt, resumeAllBillboards, { capture: true, passive: true });
     });
     window.addEventListener('focus', resumeAllBillboards, { passive: true });
@@ -568,9 +604,9 @@
 
     resumeAllBillboards();
     setTimeout(resumeAllBillboards, 50);
-    setTimeout(resumeAllBillboards, 200);
-    setTimeout(resumeAllBillboards, 500);
-    setTimeout(resumeAllBillboards, 1200);
+    setTimeout(resumeAllBillboards, 150);
+    setTimeout(resumeAllBillboards, 400);
+    setTimeout(resumeAllBillboards, 1000);
   }
 
   // ─────────────────────────────────────────────────────────────

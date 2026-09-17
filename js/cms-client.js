@@ -284,14 +284,18 @@
       if (isVideo) {
         var vid = document.createElement('video');
         vid.className = 'w-full h-full object-cover billboard-img';
-        vid.autoplay = true;
-        vid.defaultMuted = true;
-        vid.muted = true;
-        vid.volume = 0;
+        vid.style.webkitTransform = 'translateZ(0)';
+        vid.style.transform = 'translateZ(0)';
         vid.setAttribute('muted', '');
         vid.setAttribute('playsinline', '');
         vid.setAttribute('webkit-playsinline', '');
+        vid.setAttribute('autoplay', '');
         vid.setAttribute('preload', 'auto');
+        vid.defaultMuted = true;
+        vid.muted = true;
+        vid.volume = 0;
+        vid.playsInline = true;
+        vid.autoplay = true;
         vid.src = b.mediaUrl;
 
         var srcTag = document.createElement('source');
@@ -509,15 +513,18 @@
       if (isVideo) {
         var vid = document.createElement('video');
         vid.className = 'w-full h-full object-cover billboard-img';
-        vid.autoplay = true;
+        vid.style.webkitTransform = 'translateZ(0)';
+        vid.style.transform = 'translateZ(0)';
+        vid.setAttribute('muted', '');
+        vid.setAttribute('playsinline', '');
+        vid.setAttribute('webkit-playsinline', '');
+        vid.setAttribute('autoplay', '');
+        vid.setAttribute('preload', 'auto');
         vid.defaultMuted = true;
         vid.muted = true;
         vid.volume = 0;
         vid.playsInline = true;
-        vid.setAttribute('muted', '');
-        vid.setAttribute('playsinline', '');
-        vid.setAttribute('webkit-playsinline', '');
-        vid.setAttribute('preload', 'auto');
+        vid.autoplay = true;
         vid.src = b.mediaUrl;
 
         var srcTag = document.createElement('source');
@@ -1330,10 +1337,17 @@
           v.muted = true;
           v.volume = 0;
           v.playsInline = true;
-          v.setAttribute('muted', '');
-          v.setAttribute('playsinline', '');
-          v.setAttribute('webkit-playsinline', '');
+          if (!v.hasAttribute('muted')) v.setAttribute('muted', '');
+          if (!v.hasAttribute('playsinline')) v.setAttribute('playsinline', '');
+          if (!v.hasAttribute('webkit-playsinline')) v.setAttribute('webkit-playsinline', '');
+          if (v.style) {
+            v.style.webkitTransform = 'translateZ(0)';
+            v.style.transform = 'translateZ(0)';
+          }
           if (v.paused) {
+            if (v.networkState === HTMLMediaElement.NETWORK_EMPTY || v.readyState === 0) {
+              try { v.load(); } catch(e) {}
+            }
             var p = v.play();
             if (p && p.catch) p.catch(function() {});
             if (v.paused) stillPaused = true;
@@ -1347,12 +1361,27 @@
     // Try immediately and at progressive intervals after DOM is fully painted
     ensureAllBillboardVideosPlay();
     setTimeout(ensureAllBillboardVideosPlay, 50);
-    setTimeout(ensureAllBillboardVideosPlay, 200);
-    setTimeout(ensureAllBillboardVideosPlay, 600);
-    setTimeout(ensureAllBillboardVideosPlay, 1500);
+    setTimeout(ensureAllBillboardVideosPlay, 150);
+    setTimeout(ensureAllBillboardVideosPlay, 400);
+    setTimeout(ensureAllBillboardVideosPlay, 1000);
 
-    // Capture-phase gesture listeners ensure ANY touch, click, scroll or mouse movement starts video
-    var gestureEvents = ['pointerdown', 'mousedown', 'touchstart', 'touchend', 'keydown', 'click', 'scroll', 'wheel', 'mousemove', 'pointermove'];
+    // Viewport Intersection Observer for Safari power-saving & scrolled-in billboards
+    if (window.IntersectionObserver) {
+      var bbIo = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting) {
+            ensureAllBillboardVideosPlay();
+          }
+        });
+      }, { threshold: [0, 0.1, 0.25] });
+      ['gallery-billboard-container', 'gallery-billboard2-container', 'gallery-billboard-section', 'gallery-billboard2-section'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) bbIo.observe(el);
+      });
+    }
+
+    // Capture-phase gesture listeners ensure ANY touch, click, or scroll starts video on Safari
+    var gestureEvents = ['touchstart', 'touchend', 'pointerdown', 'mousedown', 'keydown', 'click', 'scroll'];
     var onGlobalGesture = function() {
       ensureAllBillboardVideosPlay();
     };
@@ -1360,12 +1389,11 @@
       window.addEventListener(evt, onGlobalGesture, { capture: true, passive: true });
     });
 
-    // Also attempt on scroll and mouse enter on billboard banners
-    window.addEventListener('scroll', ensureAllBillboardVideosPlay, { passive: true });
+    // Also attempt on mouse enter on billboard banners
     ['gallery-billboard-container', 'gallery-billboard2-container', 'gallery-billboard-section', 'gallery-billboard2-section'].forEach(function(id) {
       var el = document.getElementById(id);
       if (el) {
-        ['mouseenter', 'pointerenter', 'mousemove'].forEach(function(evt) {
+        ['mouseenter', 'pointerenter'].forEach(function(evt) {
           el.addEventListener(evt, ensureAllBillboardVideosPlay, { passive: true });
         });
       }

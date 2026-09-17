@@ -3,9 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const BASE_DIR = '/Users/ejyoon/Desktop/KACCESS';
-const TUS_URL = 'https://srv1709-files.hstgr.io/rest/dd49fdb398ee9afa/api/tus/public_html';
-const AUTH_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJsb2NhbGUiOiJlbl9VUyIsInZpZXdNb2RlIjoibGlzdCIsInNpbmdsZUNsaWNrIjpmYWxzZSwicmVkaXJlY3RBZnRlckNvcHlNb3ZlIjpmYWxzZSwicGVybSI6eyJhZG1pbiI6ZmFsc2UsImV4ZWN1dGUiOmZhbHNlLCJjcmVhdGUiOnRydWUsInJlbmFtZSI6dHJ1ZSwibW9kaWZ5Ijp0cnVlLCJkZWxldGUiOnRydWUsInNoYXJlIjpmYWxzZSwiZG93bmxvYWQiOnRydWV9LCJjb21tYW5kcyI6W10sImxvY2tQYXNzd29yZCI6dHJ1ZSwiaGlkZURvdGZpbGVzIjpmYWxzZSwiZGF0ZUZvcm1hdCI6ZmFsc2UsInVzZXJuYW1lIjoidTczODM1ODExMCIsImFjZUVkaXRvclRoZW1lIjoiIn0sImlzcyI6IkZpbGUgQnJvd3NlciIsImV4cCI6MTc4OTUwODkyOCwiaWF0IjoxNzg5NDg3MzI4fQ.3LE1-MsKWqpH3rcN_qR-b6u9BCJcySaPS9k6w-QcsmI';
-const REST_AUTH_KEY = 'c45c673d3fdb12d0abad9eb6a108b7a2e64b23afe830070d603925388cc36a7d-dd49fdb398ee9afa';
+const TUS_URL = 'https://srv1709-files.hstgr.io/rest/c4385bccb8d7dfac/api/tus/public_html';
+const AUTH_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJsb2NhbGUiOiJlbl9VUyIsInZpZXdNb2RlIjoibGlzdCIsInNpbmdsZUNsaWNrIjpmYWxzZSwicmVkaXJlY3RBZnRlckNvcHlNb3ZlIjpmYWxzZSwicGVybSI6eyJhZG1pbiI6ZmFsc2UsImV4ZWN1dGUiOmZhbHNlLCJjcmVhdGUiOnRydWUsInJlbmFtZSI6dHJ1ZSwibW9kaWZ5Ijp0cnVlLCJkZWxldGUiOnRydWUsInNoYXJlIjpmYWxzZSwiZG93bmxvYWQiOnRydWV9LCJjb21tYW5kcyI6W10sImxvY2tQYXNzd29yZCI6dHJ1ZSwiaGlkZURvdGZpbGVzIjpmYWxzZSwiZGF0ZUZvcm1hdCI6ZmFsc2UsInVzZXJuYW1lIjoidTczODM1ODExMCIsImFjZUVkaXRvclRoZW1lIjoiIn0sImlzcyI6IkZpbGUgQnJvd3NlciIsImV4cCI6MTc4OTYzNDE0MCwiaWF0IjoxNzg5NjEyNTQwfQ.zPCD5U_ler68YRaUMkSHWaDB2G_OsCUmXE2bLoDnt0o';
+const REST_AUTH_KEY = 'bb2ec0c98dbba27815647f13bb8603e85c386412f8fc46315349ffa0ec18f52f-c4385bccb8d7dfac';
 
 const filesToUpload = [
   '.htaccess',
@@ -62,6 +62,8 @@ const filesToUpload = [
   'admin2/admin2.js',
   'data/forum.json',
   'supabase_forum_schema.sql',
+  'splash.html',
+  'uploads/videos/splash-video.mp4',
   'uploads/images/event_poster_20260915_031056_8b8ab63a.png',
   'uploads/images/forum_community_banner.jpg'
 ];
@@ -135,11 +137,12 @@ async function uploadFile(relPath) {
 }
 
 async function main() {
-  console.log(`Starting deployment of ${filesToUpload.length} files to Hostinger...`);
+  const targets = process.argv.slice(2).length > 0 ? process.argv.slice(2) : filesToUpload;
+  console.log(`Starting deployment of ${targets.length} files to Hostinger...`);
   let successCount = 0;
   let errorCount = 0;
 
-  for (const file of filesToUpload) {
+  for (const file of targets) {
     try {
       await uploadFile(file);
       successCount++;

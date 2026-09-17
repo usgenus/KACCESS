@@ -15,21 +15,27 @@ $posts = $db['posts'] ?? [];
 $forumQuestions = array_slice(forum_get_questions('', 'latest', '', 'active'), 0, 4);
 $forumSpecialties = forum_get_specialties();
 
-// Filter active billboards
+// Filter active billboards and sort by order
 $activeBillboards = array_values(array_filter($billboards, function($b) {
     return !isset($b['active']) || $b['active'] !== false;
 }));
 if (empty($activeBillboards) && !empty($billboards)) {
     $activeBillboards = $billboards;
 }
+usort($activeBillboards, function($a, $b) {
+    return ($a['order'] ?? 0) <=> ($b['order'] ?? 0);
+});
 
-// Filter active billboards 2
+// Filter active billboards 2 and sort by order
 $activeBillboards2 = array_values(array_filter($billboards2, function($b) {
     return !isset($b['active']) || $b['active'] !== false;
 }));
 if (empty($activeBillboards2) && !empty($billboards2)) {
     $activeBillboards2 = $billboards2;
 }
+usort($activeBillboards2, function($a, $b) {
+    return ($a['order'] ?? 0) <=> ($b['order'] ?? 0);
+});
 
 // Filter published posts and sort by newest first (date then updatedAt/createdAt)
 $publishedPosts = array_values(array_filter($posts, function($p) {
@@ -919,26 +925,36 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
             <a href="<?= htmlspecialchars($b['linkUrl'] ?? '/about#contact') ?>" class="block relative w-full h-full cursor-pointer" title="<?= htmlspecialchars($b['title'] ?? '') ?>">
               <div class="w-full h-full relative overflow-hidden" style="min-height: 230px;">
                 <?php if ($isVideo): ?>
-                  <video id="billboard-active-video" class="w-full h-full object-cover" autoplay muted loop playsinline webkit-playsinline preload="auto" disablePictureInPicture disableremoteplayback>
+                  <video id="billboard-active-video" 
+                         class="w-full h-full object-cover" 
+                         src="<?= htmlspecialchars($b['mediaUrl']) ?>" 
+                         muted 
+                         autoplay 
+                         loop 
+                         playsinline 
+                         webkit-playsinline 
+                         preload="auto"
+                         style="-webkit-transform: translateZ(0); transform: translateZ(0); object-fit: cover;">
                     <source src="<?= htmlspecialchars($b['mediaUrl']) ?>" type="video/mp4">
                   </video>
                   <script>
                     (function(){
                       var v = document.getElementById('billboard-active-video');
                       if (v) {
-                        v.muted = true;
                         v.defaultMuted = true;
+                        v.muted = true;
                         v.volume = 0;
                         v.playsInline = true;
-                        var play = function() {
+                        var triggerPlay = function() {
                           if (v.paused) {
                             var p = v.play();
                             if (p && p.catch) p.catch(function(){});
                           }
                         };
-                        play();
-                        v.addEventListener('canplay', play, { once: true });
-                        v.addEventListener('loadeddata', play, { once: true });
+                        triggerPlay();
+                        ['loadedmetadata', 'canplay', 'loadeddata'].forEach(function(evt) {
+                          v.addEventListener(evt, triggerPlay, { once: true });
+                        });
                       }
                     })();
                   </script>
@@ -1278,26 +1294,36 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
               <a href="<?= htmlspecialchars($b2['linkUrl'] ?? '/about#contact') ?>" class="block relative w-full h-full cursor-pointer" title="<?= htmlspecialchars($b2['title'] ?? '') ?>">
                 <div class="w-full h-full relative overflow-hidden" style="min-height: 230px;">
                   <?php if ($isVid2): ?>
-                    <video id="billboard2-active-video" class="w-full h-full object-cover" autoplay muted loop playsinline webkit-playsinline preload="auto" disablePictureInPicture disableremoteplayback>
+                    <video id="billboard2-active-video" 
+                           class="w-full h-full object-cover" 
+                           src="<?= htmlspecialchars($b2['mediaUrl']) ?>" 
+                           muted 
+                           autoplay 
+                           loop 
+                           playsinline 
+                           webkit-playsinline 
+                           preload="auto"
+                           style="-webkit-transform: translateZ(0); transform: translateZ(0); object-fit: cover;">
                       <source src="<?= htmlspecialchars($b2['mediaUrl']) ?>" type="video/mp4">
                     </video>
                     <script>
                       (function(){
                         var v = document.getElementById('billboard2-active-video');
                         if (v) {
-                          v.muted = true;
                           v.defaultMuted = true;
+                          v.muted = true;
                           v.volume = 0;
                           v.playsInline = true;
-                          var play = function() {
+                          var triggerPlay = function() {
                             if (v.paused) {
                               var p = v.play();
                               if (p && p.catch) p.catch(function(){});
                             }
                           };
-                          play();
-                          v.addEventListener('canplay', play, { once: true });
-                          v.addEventListener('loadeddata', play, { once: true });
+                          triggerPlay();
+                          ['loadedmetadata', 'canplay', 'loadeddata'].forEach(function(evt) {
+                            v.addEventListener(evt, triggerPlay, { once: true });
+                          });
                         }
                       })();
                     </script>

@@ -8,6 +8,7 @@ DirectoryIndex index.php index.html
   # Media files MUST have byte-range caching for HTML5 video/audio streaming (no-store breaks Safari & Chromium)
   <FilesMatch "\.(mp4|webm|ogv|mov|m4v|mp3|ogg|wav)$">
     Header set Cache-Control "public, max-age=2592000"
+    Header set Accept-Ranges "bytes"
     Header unset Pragma
     Header unset Expires
   </FilesMatch>
