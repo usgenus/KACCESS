@@ -216,12 +216,18 @@
       if (curSrc === b.mediaUrl) {
         existingVid.defaultMuted = true;
         existingVid.muted = true;
+        existingVid.volume = 0;
         existingVid.setAttribute('muted', '');
         existingVid.setAttribute('playsinline', '');
         existingVid.setAttribute('webkit-playsinline', '');
         existingVid.setAttribute('preload', 'auto');
-        var p0 = existingVid.play();
-        if (p0 && p0.catch) { p0.catch(function() {}); }
+        var badge1 = document.getElementById('billboard-play-badge');
+        existingVid.addEventListener('playing', function() { if (badge1) badge1.classList.add('hidden'); });
+        existingVid.addEventListener('pause', function() { if (badge1) badge1.classList.remove('hidden'); });
+        if (existingVid.paused) {
+          var p0 = existingVid.play();
+          if (p0 && p0.catch) { p0.catch(function() {}); }
+        }
         return;
       }
     }
@@ -271,19 +277,21 @@
         vid.autoplay = true;
         vid.defaultMuted = true;
         vid.muted = true;
+        vid.volume = 0;
         vid.setAttribute('muted', '');
         vid.setAttribute('playsinline', '');
         vid.setAttribute('webkit-playsinline', '');
         vid.setAttribute('preload', 'auto');
+        vid.src = b.mediaUrl;
 
         var srcTag = document.createElement('source');
         srcTag.src = b.mediaUrl;
         srcTag.type = 'video/mp4';
         vid.appendChild(srcTag);
-        vid.src = b.mediaUrl;
-        vid.muted = true;              // required for browser autoplay policy
-        vid.setAttribute('playsinline', '');
-        vid.setAttribute('webkit-playsinline', '');
+
+        var bbBadge = document.getElementById('billboard-play-badge');
+        vid.addEventListener('playing', function() { if (bbBadge) bbBadge.classList.add('hidden'); });
+        vid.addEventListener('pause', function() { if (bbBadge) bbBadge.classList.remove('hidden'); });
 
         if (billboards.length <= 1) {
           vid.loop = true;
@@ -443,12 +451,18 @@
       if (curSrc === b.mediaUrl) {
         existingVid.defaultMuted = true;
         existingVid.muted = true;
+        existingVid.volume = 0;
         existingVid.setAttribute('muted', '');
         existingVid.setAttribute('playsinline', '');
         existingVid.setAttribute('webkit-playsinline', '');
         existingVid.setAttribute('preload', 'auto');
-        var p0 = existingVid.play();
-        if (p0 && p0.catch) { p0.catch(function() {}); }
+        var badge2 = document.getElementById('billboard2-play-badge');
+        existingVid.addEventListener('playing', function() { if (badge2) badge2.classList.add('hidden'); });
+        existingVid.addEventListener('pause', function() { if (badge2) badge2.classList.remove('hidden'); });
+        if (existingVid.paused) {
+          var p0 = existingVid.play();
+          if (p0 && p0.catch) { p0.catch(function() {}); }
+        }
         return;
       }
     }
@@ -494,16 +508,21 @@
         vid.autoplay = true;
         vid.defaultMuted = true;
         vid.muted = true;
+        vid.volume = 0;
         vid.setAttribute('muted', '');
         vid.setAttribute('playsinline', '');
         vid.setAttribute('webkit-playsinline', '');
         vid.setAttribute('preload', 'auto');
+        vid.src = b.mediaUrl;
 
         var srcTag = document.createElement('source');
         srcTag.src = b.mediaUrl;
         srcTag.type = 'video/mp4';
         vid.appendChild(srcTag);
-        vid.src = b.mediaUrl;
+
+        var bb2Badge = document.getElementById('billboard2-play-badge');
+        vid.addEventListener('playing', function() { if (bb2Badge) bb2Badge.classList.add('hidden'); });
+        vid.addEventListener('pause', function() { if (bb2Badge) bb2Badge.classList.remove('hidden'); });
 
         if (billboards2.length <= 1) {
           vid.loop = true;
@@ -1283,18 +1302,93 @@
     initContactForm();
     setTimeout(initSlideInAnimations, 150);
 
-    // Ensure billboard videos resume if browser blocked unmuted or low-power autoplay
-    ['click', 'touchstart', 'scroll', 'keydown'].forEach(function(evt) {
-      window.addEventListener(evt, function tryAutoPlayUnlock() {
-        document.querySelectorAll('#gallery-billboard-container video, #gallery-billboard2-container video').forEach(function(v) {
-          if (v && v.paused) {
-            v.defaultMuted = true;
-            v.muted = true;
-            v.setAttribute('muted', '');
-            v.play().catch(function() {});
+    // Robust Safari & Low-Power Autoplay Guardian
+    window.cmsPlayBillboardVideo = function() {
+      var vids = document.querySelectorAll('#gallery-billboard-container video, #gallery-billboard2-container video, #billboard-active-video, #billboard2-active-video');
+      vids.forEach(function(v) {
+        if (v) {
+          v.defaultMuted = true;
+          v.muted = true;
+          v.volume = 0;
+          v.setAttribute('muted', '');
+          v.setAttribute('playsinline', '');
+          v.setAttribute('webkit-playsinline', '');
+          var p = v.play();
+          if (p && p.catch) p.catch(function() {});
+        }
+      });
+      var b1 = document.getElementById('billboard-play-badge');
+      if (b1) b1.classList.add('hidden');
+      var b2 = document.getElementById('billboard2-play-badge');
+      if (b2) b2.classList.add('hidden');
+    };
+
+    function ensureAllBillboardVideosPlay() {
+      var allVids = document.querySelectorAll('#gallery-billboard-container video, #gallery-billboard2-container video, #billboard-active-video, #billboard2-active-video');
+      var stillPaused = false;
+      allVids.forEach(function(v) {
+        if (v) {
+          v.defaultMuted = true;
+          v.muted = true;
+          v.volume = 0;
+          v.setAttribute('muted', '');
+          v.setAttribute('playsinline', '');
+          v.setAttribute('webkit-playsinline', '');
+          if (v.paused) {
+            var p = v.play();
+            if (p && p.catch) p.catch(function() {});
+            if (v.paused) stillPaused = true;
           }
+        }
+      });
+
+      var v1 = document.querySelector('#gallery-billboard-container video, #billboard-active-video');
+      var b1 = document.getElementById('billboard-play-badge');
+      if (b1 && v1) {
+        if (v1.paused) b1.classList.remove('hidden');
+        else b1.classList.add('hidden');
+      }
+
+      var v2 = document.querySelector('#gallery-billboard2-container video, #billboard2-active-video');
+      var b2 = document.getElementById('billboard2-play-badge');
+      if (b2 && v2) {
+        if (v2.paused) b2.classList.remove('hidden');
+        else b2.classList.add('hidden');
+      }
+
+      return !stillPaused;
+    }
+
+    // Try immediately and at progressive intervals after DOM is fully painted
+    ensureAllBillboardVideosPlay();
+    setTimeout(ensureAllBillboardVideosPlay, 100);
+    setTimeout(ensureAllBillboardVideosPlay, 350);
+    setTimeout(ensureAllBillboardVideosPlay, 800);
+    setTimeout(ensureAllBillboardVideosPlay, 1500);
+
+    // Capture-phase gesture listeners ensure ANY touch, click, or tap on the page starts video
+    var gestureEvents = ['pointerdown', 'mousedown', 'touchstart', 'touchend', 'keydown', 'click'];
+    var onGlobalGesture = function() {
+      ensureAllBillboardVideosPlay();
+    };
+    gestureEvents.forEach(function(evt) {
+      window.addEventListener(evt, onGlobalGesture, { capture: true, passive: true });
+    });
+
+    // Also attempt on scroll and mouse enter on billboard banners
+    window.addEventListener('scroll', ensureAllBillboardVideosPlay, { passive: true });
+    ['gallery-billboard-container', 'gallery-billboard2-container', 'gallery-billboard-section', 'gallery-billboard2-section'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) {
+        ['mouseenter', 'pointerenter', 'mousemove'].forEach(function(evt) {
+          el.addEventListener(evt, ensureAllBillboardVideosPlay, { passive: true });
         });
-      }, { once: true, passive: true });
+      }
+    });
+
+    window.addEventListener('focus', ensureAllBillboardVideosPlay);
+    document.addEventListener('visibilitychange', function() {
+      if (!document.hidden) ensureAllBillboardVideosPlay();
     });
   });
 

@@ -481,10 +481,34 @@
   }
 
   // ─────────────────────────────────────────────────────────────
-  // 5. VIDEO AUTOPLAY FIX (Handled natively by cms-client.js)
+  // 5. VIDEO AUTOPLAY FIX (Reinforces seamless playback on Safari & Mobile)
   // ─────────────────────────────────────────────────────────────
   function fixVideoAutoplay() {
-    // Delegated to cms-client.js for modern interactive playback
+    function resumeAllBillboards() {
+      var vids = document.querySelectorAll('#gallery-billboard-container video, #gallery-billboard2-container video, #billboard-active-video, #billboard2-active-video');
+      vids.forEach(function(v) {
+        if (v && v.paused) {
+          v.defaultMuted = true;
+          v.muted = true;
+          v.volume = 0;
+          v.setAttribute('muted', '');
+          v.setAttribute('playsinline', '');
+          v.setAttribute('webkit-playsinline', '');
+          var p = v.play();
+          if (p && p.catch) p.catch(function() {});
+        }
+      });
+    }
+
+    // Capture-phase listeners guarantee early execution even before link handlers
+    ['pointerdown', 'mousedown', 'touchstart', 'touchend', 'keydown', 'click'].forEach(function(evt) {
+      window.addEventListener(evt, resumeAllBillboards, { capture: true, passive: true });
+    });
+    window.addEventListener('scroll', resumeAllBillboards, { passive: true });
+    window.addEventListener('focus', resumeAllBillboards, { passive: true });
+    document.addEventListener('visibilitychange', function() {
+      if (!document.hidden) resumeAllBillboards();
+    });
   }
 
   // ─────────────────────────────────────────────────────────────
