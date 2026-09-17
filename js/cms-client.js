@@ -201,6 +201,34 @@
     }
   }
 
+  function isSameMediaSrc(s1, s2) {
+    if (!s1 || !s2) return false;
+    if (s1 === s2) return true;
+    try {
+      var p1 = new URL(s1, window.location.origin).pathname;
+      var p2 = new URL(s2, window.location.origin).pathname;
+      return p1 === p2;
+    } catch(e) {
+      return s1.endsWith(s2) || s2.endsWith(s1);
+    }
+  }
+
+  function updateBillboardPlayBadges() {
+    var v1 = document.querySelector('#gallery-billboard-container video, #billboard-active-video');
+    var b1 = document.getElementById('billboard-play-overlay') || document.getElementById('billboard-play-badge');
+    if (b1 && v1) {
+      if (v1.paused) b1.classList.remove('hidden');
+      else b1.classList.add('hidden');
+    }
+    var v2 = document.querySelector('#gallery-billboard2-container video, #billboard2-active-video');
+    var b2 = document.getElementById('billboard2-play-overlay') || document.getElementById('billboard2-play-badge');
+    if (b2 && v2) {
+      if (v2.paused) b2.classList.remove('hidden');
+      else b2.classList.add('hidden');
+    }
+  }
+  window.cmsUpdateBillboardOverlays = updateBillboardPlayBadges;
+
   function renderBillboardShowcase() {
     clearBillboardTimer();
     var container = document.getElementById('gallery-billboard-container');
@@ -213,21 +241,22 @@
     var existingVid = container.querySelector('video');
     if (existingVid && currentBillboardIndex === 0 && isVideo) {
       var curSrc = existingVid.getAttribute('src') || (existingVid.querySelector('source') ? existingVid.querySelector('source').getAttribute('src') : '');
-      if (curSrc === b.mediaUrl) {
+      if (isSameMediaSrc(curSrc, b.mediaUrl)) {
         existingVid.defaultMuted = true;
         existingVid.muted = true;
         existingVid.volume = 0;
+        existingVid.playsInline = true;
         existingVid.setAttribute('muted', '');
         existingVid.setAttribute('playsinline', '');
         existingVid.setAttribute('webkit-playsinline', '');
         existingVid.setAttribute('preload', 'auto');
-        var badge1 = document.getElementById('billboard-play-badge');
-        existingVid.addEventListener('playing', function() { if (badge1) badge1.classList.add('hidden'); });
-        existingVid.addEventListener('pause', function() { if (badge1) badge1.classList.remove('hidden'); });
+        existingVid.addEventListener('playing', updateBillboardPlayBadges);
+        existingVid.addEventListener('pause', updateBillboardPlayBadges);
         if (existingVid.paused) {
           var p0 = existingVid.play();
           if (p0 && p0.catch) { p0.catch(function() {}); }
         }
+        updateBillboardPlayBadges();
         return;
       }
     }
@@ -262,6 +291,7 @@
       '        </div>',
       '      </div>',
       '    </div>',
+      '    <div id="billboard-play-overlay" class="billboard-play-overlay hidden" onclick="event.stopPropagation(); event.preventDefault(); window.cmsPlayBillboardVideo();" role="button" aria-label="영상 재생"><div class="billboard-play-btn-inner"><svg class="w-4 h-4 sm:w-5 sm:h-5 fill-current ml-0.5 text-white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>영상 재생 (클릭)</span></div></div>',
       '  </a>',
       '  <div class="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">' + dotsHtml + '</div>',
       '</div>'
@@ -448,21 +478,22 @@
     var existingVid = container.querySelector('video');
     if (existingVid && currentBillboard2Index === 0 && isVideo) {
       var curSrc = existingVid.getAttribute('src') || (existingVid.querySelector('source') ? existingVid.querySelector('source').getAttribute('src') : '');
-      if (curSrc === b.mediaUrl) {
+      if (isSameMediaSrc(curSrc, b.mediaUrl)) {
         existingVid.defaultMuted = true;
         existingVid.muted = true;
         existingVid.volume = 0;
+        existingVid.playsInline = true;
         existingVid.setAttribute('muted', '');
         existingVid.setAttribute('playsinline', '');
         existingVid.setAttribute('webkit-playsinline', '');
         existingVid.setAttribute('preload', 'auto');
-        var badge2 = document.getElementById('billboard2-play-badge');
-        existingVid.addEventListener('playing', function() { if (badge2) badge2.classList.add('hidden'); });
-        existingVid.addEventListener('pause', function() { if (badge2) badge2.classList.remove('hidden'); });
+        existingVid.addEventListener('playing', updateBillboardPlayBadges);
+        existingVid.addEventListener('pause', updateBillboardPlayBadges);
         if (existingVid.paused) {
           var p0 = existingVid.play();
           if (p0 && p0.catch) { p0.catch(function() {}); }
         }
+        updateBillboardPlayBadges();
         return;
       }
     }
@@ -495,6 +526,7 @@
       '        </div>',
       '      </div>',
       '    </div>',
+      '    <div id="billboard2-play-overlay" class="billboard-play-overlay hidden" onclick="event.stopPropagation(); event.preventDefault(); window.cmsPlayBillboardVideo();" role="button" aria-label="영상 재생"><div class="billboard-play-btn-inner"><svg class="w-4 h-4 sm:w-5 sm:h-5 fill-current ml-0.5 text-white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>영상 재생 (클릭)</span></div></div>',
       '  </a>',
       '  <div class="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">' + dotsHtml + '</div>',
       '</div>'
@@ -509,6 +541,7 @@
         vid.defaultMuted = true;
         vid.muted = true;
         vid.volume = 0;
+        vid.playsInline = true;
         vid.setAttribute('muted', '');
         vid.setAttribute('playsinline', '');
         vid.setAttribute('webkit-playsinline', '');
@@ -520,9 +553,8 @@
         srcTag.type = 'video/mp4';
         vid.appendChild(srcTag);
 
-        var bb2Badge = document.getElementById('billboard2-play-badge');
-        vid.addEventListener('playing', function() { if (bb2Badge) bb2Badge.classList.add('hidden'); });
-        vid.addEventListener('pause', function() { if (bb2Badge) bb2Badge.classList.remove('hidden'); });
+        vid.addEventListener('playing', updateBillboardPlayBadges);
+        vid.addEventListener('pause', updateBillboardPlayBadges);
 
         if (billboards2.length <= 1) {
           vid.loop = true;
@@ -1310,6 +1342,7 @@
           v.defaultMuted = true;
           v.muted = true;
           v.volume = 0;
+          v.playsInline = true;
           v.setAttribute('muted', '');
           v.setAttribute('playsinline', '');
           v.setAttribute('webkit-playsinline', '');
@@ -1317,10 +1350,7 @@
           if (p && p.catch) p.catch(function() {});
         }
       });
-      var b1 = document.getElementById('billboard-play-badge');
-      if (b1) b1.classList.add('hidden');
-      var b2 = document.getElementById('billboard2-play-badge');
-      if (b2) b2.classList.add('hidden');
+      updateBillboardPlayBadges();
     };
 
     function ensureAllBillboardVideosPlay() {
@@ -1331,6 +1361,7 @@
           v.defaultMuted = true;
           v.muted = true;
           v.volume = 0;
+          v.playsInline = true;
           v.setAttribute('muted', '');
           v.setAttribute('playsinline', '');
           v.setAttribute('webkit-playsinline', '');
@@ -1342,20 +1373,7 @@
         }
       });
 
-      var v1 = document.querySelector('#gallery-billboard-container video, #billboard-active-video');
-      var b1 = document.getElementById('billboard-play-badge');
-      if (b1 && v1) {
-        if (v1.paused) b1.classList.remove('hidden');
-        else b1.classList.add('hidden');
-      }
-
-      var v2 = document.querySelector('#gallery-billboard2-container video, #billboard2-active-video');
-      var b2 = document.getElementById('billboard2-play-badge');
-      if (b2 && v2) {
-        if (v2.paused) b2.classList.remove('hidden');
-        else b2.classList.add('hidden');
-      }
-
+      updateBillboardPlayBadges();
       return !stillPaused;
     }
 

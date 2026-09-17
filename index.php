@@ -434,7 +434,53 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
       background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.55) 100%) !important;
     }
 
-    /* Billboard Video Play Badge (Safari & Low-Power Fallback) */
+    /* Billboard Video Play Badge & Overlay (Safari & Low-Power Fallback) */
+    .billboard-play-overlay {
+      position: absolute !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      z-index: 30 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      pointer-events: auto !important;
+      cursor: pointer !important;
+      transition: opacity 0.35s ease, transform 0.25s ease, visibility 0.35s !important;
+    }
+    .billboard-play-overlay.hidden {
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+      transform: translate(-50%, -50%) scale(0.92) !important;
+    }
+    .billboard-play-btn-inner {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+      padding: 10px 22px !important;
+      background: rgba(15, 23, 42, 0.82) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      color: #ffffff !important;
+      border-radius: 9999px !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.4) !important;
+      font-size: 13px !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.02em !important;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.15) !important;
+      animation: pulsePlayBtn 2.2s infinite ease-in-out !important;
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease !important;
+    }
+    @keyframes pulsePlayBtn {
+      0%, 100% { transform: scale(1); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 255, 255, 0.1); }
+      50% { transform: scale(1.04); box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(255, 255, 255, 0.25); }
+    }
+    .billboard-play-btn-inner:hover {
+      background: rgba(15, 23, 42, 0.95) !important;
+      border-color: rgba(255, 255, 255, 0.75) !important;
+      transform: scale(1.07) !important;
+    }
     .billboard-video-play-badge {
       position: absolute !important;
       bottom: 14px !important;
@@ -455,11 +501,6 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
       cursor: pointer !important;
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
       transition: opacity 0.3s ease, transform 0.2s ease, background 0.2s ease !important;
-    }
-    .billboard-video-play-badge:hover {
-      transform: scale(1.05) !important;
-      background: rgba(15, 23, 42, 0.95) !important;
-      border-color: rgba(255, 255, 255, 0.5) !important;
     }
     .billboard-video-play-badge.hidden {
       display: none !important;
@@ -949,7 +990,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
             <a href="<?= htmlspecialchars($b['linkUrl'] ?? '/about#contact') ?>" class="block relative w-full h-full cursor-pointer" title="<?= htmlspecialchars($b['title'] ?? '') ?>">
               <div class="w-full h-full relative overflow-hidden" style="min-height: 230px;">
                 <?php if ($isVideo): ?>
-                  <video id="billboard-active-video" class="w-full h-full object-cover" src="<?= htmlspecialchars($b['mediaUrl']) ?>" autoplay muted="muted" loop playsinline webkit-playsinline preload="auto">
+                  <video id="billboard-active-video" class="w-full h-full object-cover" src="<?= htmlspecialchars($b['mediaUrl']) ?>" autoplay muted loop playsinline webkit-playsinline preload="auto">
                     <source src="<?= htmlspecialchars($b['mediaUrl']) ?>" type="video/mp4">
                   </video>
                   <script>
@@ -959,15 +1000,12 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                         v.defaultMuted = true;
                         v.muted = true;
                         v.volume = 0;
+                        v.playsInline = true;
                         var p = v.play();
                         if (p && p.catch) p.catch(function(){});
                       }
                     })();
                   </script>
-                  <button id="billboard-play-badge" type="button" onclick="event.stopPropagation(); event.preventDefault(); window.cmsPlayBillboardVideo();" class="billboard-video-play-badge hidden" aria-label="영상 재생">
-                    <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                    <span>영상 재생</span>
-                  </button>
                 <?php else: ?>
                   <img id="billboard-active-img" 
                     src="<?= htmlspecialchars($b['mediaUrl'] ?: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=2000&q=85&auto=format') ?>" 
@@ -999,6 +1037,14 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                       <span>→</span>
                     </span>
                   </div>
+                </div>
+              </div>
+
+              <!-- Center Play Overlay for Low Power Mode / Safari Autoplay Block -->
+              <div id="billboard-play-overlay" class="billboard-play-overlay hidden" onclick="event.stopPropagation(); event.preventDefault(); window.cmsPlayBillboardVideo();" role="button" aria-label="영상 재생">
+                <div class="billboard-play-btn-inner">
+                  <svg class="w-4 h-4 sm:w-5 sm:h-5 fill-current ml-0.5 text-white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                  <span>영상 재생 (클릭)</span>
                 </div>
               </div>
             </a>
@@ -1304,7 +1350,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
               <a href="<?= htmlspecialchars($b2['linkUrl'] ?? '/about#contact') ?>" class="block relative w-full h-full cursor-pointer" title="<?= htmlspecialchars($b2['title'] ?? '') ?>">
                 <div class="w-full h-full relative overflow-hidden" style="min-height: 230px;">
                   <?php if ($isVid2): ?>
-                    <video id="billboard2-active-video" class="w-full h-full object-cover" src="<?= htmlspecialchars($b2['mediaUrl']) ?>" autoplay muted="muted" loop playsinline webkit-playsinline preload="auto">
+                    <video id="billboard2-active-video" class="w-full h-full object-cover" src="<?= htmlspecialchars($b2['mediaUrl']) ?>" autoplay muted loop playsinline webkit-playsinline preload="auto">
                       <source src="<?= htmlspecialchars($b2['mediaUrl']) ?>" type="video/mp4">
                     </video>
                     <script>
@@ -1314,15 +1360,12 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                           v.defaultMuted = true;
                           v.muted = true;
                           v.volume = 0;
+                          v.playsInline = true;
                           var p = v.play();
                           if (p && p.catch) p.catch(function(){});
                         }
                       })();
                     </script>
-                    <button id="billboard2-play-badge" type="button" onclick="event.stopPropagation(); event.preventDefault(); window.cmsPlayBillboardVideo();" class="billboard-video-play-badge hidden" aria-label="영상 재생">
-                      <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                      <span>영상 재생</span>
-                    </button>
                   <?php else: ?>
                     <img id="billboard2-active-img" 
                       src="<?= htmlspecialchars($b2['mediaUrl'] ?: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=2000&q=85&auto=format') ?>" 
@@ -1352,6 +1395,14 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                         <span>→</span>
                       </span>
                     </div>
+                  </div>
+                </div>
+
+                <!-- Center Play Overlay for Low Power Mode / Safari Autoplay Block -->
+                <div id="billboard2-play-overlay" class="billboard-play-overlay hidden" onclick="event.stopPropagation(); event.preventDefault(); window.cmsPlayBillboardVideo();" role="button" aria-label="영상 재생">
+                  <div class="billboard-play-btn-inner">
+                    <svg class="w-4 h-4 sm:w-5 sm:h-5 fill-current ml-0.5 text-white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    <span>영상 재생 (클릭)</span>
                   </div>
                 </div>
               </a>
