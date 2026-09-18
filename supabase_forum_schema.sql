@@ -86,7 +86,9 @@ INSERT INTO public.forum_specialties (id, slug, name_ko, name_en, description, i
   ('radiology', 'radiology', '영상의학과', 'Radiology', 'X-ray, CT, MRI, 초음파 판독 및 영상 판독 문의 가이드', 'fa-radiation', '#64748B', 17),
   ('emergency', 'emergency', '응급의학과', 'Emergency Medicine', '응급실(ER) 방문 기준, 급성 흉통, 골절 대처 및 긴급 행동 요령', 'fa-truck-medical', '#DC2626', 18),
   ('nursing_home', 'nursing-home', '요양원', 'Nursing Home / Long-Term Care', '너싱홈 입소 절차, 재활 간호, 메디케이드/메디케어 혜택 및 장기요양 돌봄', 'fa-house-medical', '#059669', 19),
-  ('hospice', 'hospice', '호스피스', 'Hospice & Palliative Care', '완화의료, 통증 조절, 가정 호스피스, 임종 돌봄 및 가족 심리 상담', 'fa-hand-holding-heart', '#7C3AED', 20)
+  ('hospice', 'hospice', '호스피스', 'Hospice & Palliative Care', '완화의료, 통증 조절, 가정 호스피스, 임종 돌봄 및 가족 심리 상담', 'fa-hand-holding-heart', '#7C3AED', 20),
+  ('pharmacy', 'pharmacy', '약국', 'Pharmacy', '처방약 복약 지도, 일반의약품(OTC), 영양제 상호작용 및 미국 약국(CVS, Walgreens) 이용 안내', 'fa-pills', '#0D9488', 21),
+  ('korean_medicine', 'korean-medicine', '한의학', 'Korean Traditional Medicine / Acupuncture', '한방 진료, 침구·부항 치료, 체질 맞춤 한약, 만성 통증 완화 및 한방 건강관리 안내', 'fa-leaf', '#B45309', 22)
 ON CONFLICT (id) DO UPDATE SET
   name_ko = EXCLUDED.name_ko,
   name_en = EXCLUDED.name_en,

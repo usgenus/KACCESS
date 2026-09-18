@@ -225,6 +225,26 @@ function forum_get_default_specialties(): array {
             'icon' => 'fa-hand-holding-heart',
             'color' => '#7C3AED',
             'order' => 20
+        ],
+        [
+            'id' => 'pharmacy',
+            'slug' => 'pharmacy',
+            'name_ko' => '약국',
+            'name_en' => 'Pharmacy',
+            'description' => '처방약 복약 지도, 일반의약품(OTC), 영양제 상호작용 및 미국 약국(CVS, Walgreens 등) 이용 안내',
+            'icon' => 'fa-pills',
+            'color' => '#0D9488',
+            'order' => 21
+        ],
+        [
+            'id' => 'korean_medicine',
+            'slug' => 'korean-medicine',
+            'name_ko' => '한의학',
+            'name_en' => 'Korean Traditional Medicine / Acupuncture',
+            'description' => '한방 진료, 침구·부항 치료, 체질 맞춤 한약, 만성 통증 완화 및 한방 건강관리 안내',
+            'icon' => 'fa-leaf',
+            'color' => '#B45309',
+            'order' => 22
         ]
     ];
 }
@@ -1037,6 +1057,34 @@ function forum_moderate_question(string $questionId, string $status): bool {
     if (!isset($data['questions'][$questionId])) return false;
 
     $data['questions'][$questionId]['status'] = $status;
+    $data['questions'][$questionId]['updatedAt'] = date('c');
+    return save_forum_data($data);
+}
+
+/**
+ * Moderator: Update question specialty / category
+ */
+function forum_update_question_specialty(string $questionId, string $specialtyId): bool {
+    $data = get_forum_data();
+    if (!isset($data['questions'][$questionId])) return false;
+
+    // Validate specialty ID
+    $validSpecialties = array_column(forum_get_default_specialties(), 'id');
+    if (!in_array($specialtyId, $validSpecialties)) {
+        return false;
+    }
+
+    // Find specialty slug
+    $specialtySlug = $specialtyId;
+    foreach (forum_get_default_specialties() as $sp) {
+        if ($sp['id'] === $specialtyId) {
+            $specialtySlug = $sp['slug'] ?? $specialtyId;
+            break;
+        }
+    }
+
+    $data['questions'][$questionId]['specialtyId'] = $specialtyId;
+    $data['questions'][$questionId]['specialtySlug'] = $specialtySlug;
     $data['questions'][$questionId]['updatedAt'] = date('c');
     return save_forum_data($data);
 }

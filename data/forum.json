@@ -210,6 +210,26 @@
             "icon": "fa-hand-holding-heart",
             "color": "#7C3AED",
             "order": 20
+        },
+        {
+            "id": "pharmacy",
+            "slug": "pharmacy",
+            "name_ko": "약국",
+            "name_en": "Pharmacy",
+            "description": "처방약 복약 지도, 일반의약품(OTC), 영양제 상호작용 및 미국 약국(CVS, Walgreens 등) 이용 안내",
+            "icon": "fa-pills",
+            "color": "#0D9488",
+            "order": 21
+        },
+        {
+            "id": "korean_medicine",
+            "slug": "korean-medicine",
+            "name_ko": "한의학",
+            "name_en": "Korean Traditional Medicine / Acupuncture",
+            "description": "한방 진료, 침구·부항 치료, 체질 맞춤 한약, 만성 통증 완화 및 한방 건강관리 안내",
+            "icon": "fa-leaf",
+            "color": "#B45309",
+            "order": 22
         }
     ],
     "users": {
@@ -355,7 +375,8 @@
                 "새벽고혈압"
             ],
             "createdAt": "2026-08-20T10:15:00Z",
-            "updatedAt": "2026-08-20T10:15:00Z"
+            "updatedAt": "2026-09-18T13:49:50+00:00",
+            "specialtySlug": "cardiology"
         },
         "q_endo_1": {
             "id": "q_endo_1",

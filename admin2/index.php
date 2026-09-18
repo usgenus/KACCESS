@@ -607,9 +607,21 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
         <i class="fa-solid fa-xmark text-lg"></i>
       </button>
 
-      <div class="flex items-center gap-2 mb-3">
-        <span id="modal-q-specialty" class="text-xs font-bold px-2.5 py-1 rounded-lg bg-blue-500/20 text-blue-300 border border-blue-500/30"></span>
-        <span id="modal-q-status" class="text-xs font-bold px-2.5 py-1 rounded-lg"></span>
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-4 bg-slate-950/60 p-3 rounded-2xl border border-slate-800">
+        <div class="flex items-center gap-2">
+          <span id="modal-q-specialty" class="text-xs font-bold px-2.5 py-1 rounded-lg bg-blue-500/20 text-blue-300 border border-blue-500/30"></span>
+          <span id="modal-q-status" class="text-xs font-bold px-2.5 py-1 rounded-lg"></span>
+        </div>
+        <div class="flex items-center gap-2">
+          <label for="modal-q-specialty-select" class="text-[11px] font-bold text-slate-400">진료과/카테고리 변경:</label>
+          <select id="modal-q-specialty-select" class="bg-slate-900 border border-slate-700 text-xs text-slate-200 rounded-xl px-2.5 py-1.5 focus:outline-none focus:border-blue-500 font-semibold">
+            <!-- Dynamically populated with all specialties including 약국, 한의학 -->
+          </select>
+          <button id="modal-q-specialty-save-btn" onclick="saveQuestionSpecialty()" class="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1 cursor-pointer">
+            <i class="fa-solid fa-check"></i>
+            <span>변경 저장</span>
+          </button>
+        </div>
       </div>
 
       <h3 id="modal-q-title" class="text-xl font-bold text-white mb-2"></h3>

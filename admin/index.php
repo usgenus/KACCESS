@@ -825,6 +825,8 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
               <option value="한인건강 특집">
               <option value="한인커뮤니티 뉴스">
               <option value="의학뉴스">
+              <option value="약국">
+              <option value="한의학">
             </datalist>
             <!-- Quick Category Select Pills -->
             <div class="flex flex-wrap gap-1.5 mt-2">
@@ -835,6 +837,8 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
               <button type="button" onclick="selectPostCategory('한인건강 특집')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all cursor-pointer">🇰🇷 한인건강 특집</button>
               <button type="button" onclick="selectPostCategory('한인커뮤니티 뉴스')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all cursor-pointer">📢 한인커뮤니티 뉴스</button>
               <button type="button" onclick="selectPostCategory('의학뉴스')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all cursor-pointer">🔬 의학뉴스</button>
+              <button type="button" onclick="selectPostCategory('약국')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-teal-900/40 text-teal-300 border border-teal-700/60 hover:bg-teal-700 hover:text-white transition-all cursor-pointer">💊 약국</button>
+              <button type="button" onclick="selectPostCategory('한의학')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-amber-900/40 text-amber-300 border border-amber-700/60 hover:bg-amber-700 hover:text-white transition-all cursor-pointer">🌿 한의학</button>
             </div>
           </div>
           <div>

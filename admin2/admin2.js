@@ -541,9 +541,34 @@ function loadSpecialtiesGrid() {
 }
 
 // Question Detail Modal
+let currentModalQuestion = null;
+
 function openQModal(q) {
+  currentModalQuestion = q;
   const s = q.specialty || {};
-  document.getElementById('modal-q-specialty').innerText = s.name_ko || '진료과';
+  const currentSpecialtyId = q.specialtyId || s.id || '';
+
+  const specialtyBadge = document.getElementById('modal-q-specialty');
+  if (specialtyBadge) {
+    specialtyBadge.innerText = s.name_ko || '진료과';
+    if (s.color) {
+      specialtyBadge.style.backgroundColor = s.color + '22';
+      specialtyBadge.style.color = s.color;
+      specialtyBadge.style.borderColor = s.color + '44';
+    }
+  }
+
+  // Populate specialty select options
+  const sel = document.getElementById('modal-q-specialty-select');
+  if (sel) {
+    sel.innerHTML = allSpecialties.map(sp => `
+      <option value="${sp.id}" ${sp.id === currentSpecialtyId ? 'selected' : ''}>
+        ${sp.name_ko} (${sp.name_en || sp.id})
+      </option>
+    `).join('');
+    sel.value = currentSpecialtyId;
+  }
+
   document.getElementById('modal-q-status').innerText = q.status === 'active' ? '공개중' : (q.status === 'hidden' ? '숨김' : '신고됨');
   document.getElementById('modal-q-title').innerText = q.title;
   document.getElementById('modal-q-author').innerText = `작성자: ${q.authorName || '익명'}`;
@@ -553,6 +578,68 @@ function openQModal(q) {
   const modal = document.getElementById('modal-q-detail');
   modal.classList.remove('hidden');
   modal.classList.add('flex');
+}
+
+async function saveQuestionSpecialty() {
+  if (!currentModalQuestion || !currentModalQuestion.id) return;
+  const sel = document.getElementById('modal-q-specialty-select');
+  if (!sel) return;
+  const newSpecialtyId = sel.value;
+  const saveBtn = document.getElementById('modal-q-specialty-save-btn');
+
+  try {
+    if (saveBtn) {
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> 저장 중...`;
+    }
+
+    const res = await fetch('/api/forum_admin.php?action=update_question_specialty', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: currentModalQuestion.id, specialty_id: newSpecialtyId })
+    });
+    const json = await res.json();
+
+    if (!json.success) {
+      alert(json.error || '진료과 변경에 실패했습니다.');
+      return;
+    }
+
+    // Find new specialty info
+    const matched = allSpecialties.find(sp => sp.id === newSpecialtyId);
+    if (matched) {
+      currentModalQuestion.specialtyId = newSpecialtyId;
+      currentModalQuestion.specialtySlug = matched.slug;
+      currentModalQuestion.specialty = matched;
+
+      const badge = document.getElementById('modal-q-specialty');
+      if (badge) {
+        badge.innerText = matched.name_ko;
+        badge.style.backgroundColor = matched.color + '22';
+        badge.style.color = matched.color;
+        badge.style.borderColor = matched.color + '44';
+      }
+    }
+
+    if (saveBtn) {
+      saveBtn.innerHTML = `<i class="fa-solid fa-check text-emerald-300"></i> 변경 완료!`;
+      setTimeout(() => {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = `<i class="fa-solid fa-check"></i> <span>변경 저장</span>`;
+      }, 1500);
+    }
+
+    // Refresh questions table and overview stats in background
+    loadQuestionsTable();
+    loadForumStats();
+  } catch (err) {
+    console.error('Error updating question specialty:', err);
+    alert('서버 통신 중 오류가 발생했습니다.');
+    if (saveBtn) {
+      saveBtn.disabled = false;
+      saveBtn.innerHTML = `<i class="fa-solid fa-check"></i> <span>변경 저장</span>`;
+    }
+  }
 }
 
 function closeQModal() {

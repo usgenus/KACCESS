@@ -739,7 +739,7 @@ async function deleteVideo(id) {
 function renderPosts() {
   const catFilters = document.getElementById('post-category-filters');
   const catList = document.getElementById('post-categories-datalist');
-  const defaultCats = ['의료칼럼', 'recall(리콜)', 'health&wellness', '의료보험', '한인건강 특집', '한인커뮤니티 뉴스', '의학뉴스'];
+  const defaultCats = ['의료칼럼', 'recall(리콜)', 'health&wellness', '의료보험', '한인건강 특집', '한인커뮤니티 뉴스', '의학뉴스', '약국', '한의학'];
   const cats = ['전체', ...defaultCats];
 
   catFilters.innerHTML = cats.map(c => `
@@ -764,6 +764,8 @@ function renderPosts() {
       if (fCat.includes('한인건강')) return pCat.includes('한인건강') || pCat.includes('특집');
       if (fCat.includes('한인커뮤니티')) return pCat.includes('한인커뮤니티') || pCat.includes('커뮤니티');
       if (fCat.includes('의학뉴스')) return pCat.includes('의학뉴스') || pCat.includes('의학');
+      if (fCat.includes('약국')) return pCat.includes('약국') || pCat.includes('약') || pCat.includes('pharmacy');
+      if (fCat.includes('한의학')) return pCat.includes('한의') || pCat.includes('침') || pCat.includes('한약') || pCat.includes('oriental');
       return (p.category || '') === state.postFilter;
     });
   }

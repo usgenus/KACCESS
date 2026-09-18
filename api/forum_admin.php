@@ -241,6 +241,28 @@ if ($method === 'POST') {
         exit;
     }
 
+    // 1.5 Update Question Specialty / Category
+    if ($action === 'update_question_specialty') {
+        $id = trim($input['id'] ?? '');
+        $specialtyId = trim($input['specialty_id'] ?? ($input['specialtyId'] ?? ''));
+
+        if (empty($id) || empty($specialtyId)) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => '질문 ID와 변경할 진료과를 선택해주세요.']);
+            exit;
+        }
+
+        $res = forum_update_question_specialty($id, $specialtyId);
+        if (!$res) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => '진료과 변경에 실패했습니다. 유효한 진료과인지 확인해주세요.']);
+            exit;
+        }
+
+        echo json_encode(['success' => true, 'message' => '질문의 전문 진료과/카테고리가 성공적으로 변경되었습니다.']);
+        exit;
+    }
+
     // 2. Delete Question
     if ($action === 'delete_question') {
         $id = trim($input['id'] ?? '');
