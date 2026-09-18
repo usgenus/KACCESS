@@ -330,10 +330,24 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/_next/static/chunks/1fosv8xgmgdeu.css" />
 
+  <script>
+    (function() {
+      try {
+        var s = parseInt(localStorage.getItem('njap_senior_mode'), 10);
+        if (s === 1) document.documentElement.classList.add('senior-mode-1');
+        else if (s === 2) document.documentElement.classList.add('senior-mode-2');
+      } catch(e) {}
+    })();
+  </script>
+
   <style>
     :root, html, body {
       font-family: "Pretendard Variable", Pretendard, "Noto Sans KR", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif !important;
     }
+    html.senior-mode-1 { font-size: 118% !important; }
+    html.senior-mode-2 { font-size: 135% !important; }
+    html.senior-mode-1 .header-spacer, html.senior-mode-1 .h-\[109px\], html.senior-mode-1 #header-spacer { height: 120px !important; min-height: 120px !important; }
+    html.senior-mode-2 .header-spacer, html.senior-mode-2 .h-\[109px\], html.senior-mode-2 #header-spacer { height: 132px !important; min-height: 132px !important; }
     html, body {
       overflow-x: hidden !important;
       max-width: 100% !important;
@@ -393,26 +407,60 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
       display: block !important;
       visibility: visible !important;
     }
-    #gallery-billboard-container {
+    #gallery-billboard-container,
+    #gallery-billboard2-container {
+      width: 100% !important;
+      position: relative !important;
+      overflow: hidden !important;
       opacity: 1 !important;
       transform: none !important;
       visibility: visible !important;
     }
-    @media (max-width: 640px) {
-      #gallery-billboard-section {
-        margin-top: 0 !important;
-        margin-bottom: 1.25rem !important;
-      }
-      #gallery-billboard-container > div {
-        min-height: 230px !important;
-        height: 240px !important;
-      }
-      #gallery-billboard-container video,
-      #gallery-billboard-container img {
-        min-height: 230px !important;
-        height: 100% !important;
-        object-fit: cover !important;
-      }
+    #gallery-billboard-container > div,
+    #gallery-billboard2-container > div {
+      height: clamp(230px, 29.48vw, 480px) !important;
+      min-height: 230px !important;
+      max-height: 480px !important;
+      width: 100% !important;
+      position: relative !important;
+      overflow: hidden !important;
+    }
+    #gallery-billboard-container a,
+    #gallery-billboard2-container a {
+      display: block !important;
+      position: absolute !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      overflow: hidden !important;
+    }
+    #gallery-billboard-container video,
+    #gallery-billboard-container img,
+    #gallery-billboard2-container video,
+    #gallery-billboard2-container img,
+    #billboard-active-video,
+    #billboard2-active-video,
+    #billboard-active-img,
+    #billboard2-active-img {
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+    }
+    .billboard-text-layer {
+      position: absolute !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      display: flex !important;
+      align-items: flex-end !important;
+      z-index: 10 !important;
+      pointer-events: none !important;
+    }
+    .billboard-text-layer > div {
+      pointer-events: auto !important;
     }
 
     /* Billboard Image Hover Scale */
@@ -421,7 +469,6 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
     #billboard-active-img,
     .billboard-img {
       transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
-      will-change: transform;
     }
     #gallery-billboard-container:hover img,
     #gallery-billboard-container:hover video,
@@ -438,6 +485,26 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
       z-index: 3 !important;
       box-shadow: inset 0 0 110px 30px rgba(0, 0, 0, 0.7) !important;
       background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.55) 100%) !important;
+    }
+
+    /* Hide Safari's native 'tap to play' overlay */
+    #billboard-active-video::-webkit-media-controls,
+    #billboard-active-video::-webkit-media-controls-panel,
+    #billboard-active-video::-webkit-media-controls-play-button,
+    #billboard-active-video::-webkit-media-controls-start-playback-button,
+    #billboard2-active-video::-webkit-media-controls,
+    #billboard2-active-video::-webkit-media-controls-panel,
+    #billboard2-active-video::-webkit-media-controls-play-button,
+    #billboard2-active-video::-webkit-media-controls-start-playback-button,
+    #gallery-billboard-container video::-webkit-media-controls,
+    #gallery-billboard-container video::-webkit-media-controls-panel,
+    #gallery-billboard-container video::-webkit-media-controls-start-playback-button,
+    #gallery-billboard2-container video::-webkit-media-controls,
+    #gallery-billboard2-container video::-webkit-media-controls-panel,
+    #gallery-billboard2-container video::-webkit-media-controls-start-playback-button {
+      display: none !important;
+      opacity: 0 !important;
+      -webkit-appearance: none !important;
     }
 
 
@@ -815,9 +882,11 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/tool">환자도우미</a>
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/about">소개</a>
         </div>
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 sm:gap-3">
           <!-- KakaoTalk 1:1 Chat Button (Top Nav) -->
           <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity cursor-pointer" title="카카오톡 1:1 상담 바로가기"><img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" /><span class="text-xs sm:text-sm font-bold text-slate-800 hover:text-brand-blue tracking-tight whitespace-nowrap">1:1 상담</span></a>
+          <!-- Senior Mode (시니어모드+) 3-Step Toggle Button -->
+          <button id="senior-mode-btn" class="senior-mode-btn notranslate" translate="no" type="button" onclick="window.cycleSeniorMode && window.cycleSeniorMode()" title="시니어모드+ (글자 크기 3단계 조절)" aria-label="시니어모드 글자 크기 조절"><span class="senior-btn-label">시니어모드+</span><span class="senior-step-badge" style="display:none;"></span></button>
           <button id="en-translate-btn" class="notranslate" translate="no" onclick="window.toggleTranslation && window.toggleTranslation()" title="Switch Language (EN / KR)" aria-label="Language Toggle" style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;border:1.5px solid #cbd5e1;font-size:11px;font-weight:700;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s ease;background:transparent;color:#475569;white-space:nowrap;flex-shrink:0;line-height:1.4;"><span class="notranslate" translate="no">🌐</span> <span class="notranslate en-btn-label" translate="no">EN</span></button>
           <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors" aria-label="Menu">
             <div class="w-5 h-4 flex flex-col justify-between">
@@ -830,6 +899,16 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
       </div>
     </div>
                 <div id="mobile-menu-dropdown" class="md:hidden overflow-hidden transition-all duration-300 max-h-0 opacity-0 bg-white/98 backdrop-blur-md border-t border-brand-border px-4 py-3 flex flex-col gap-1" style="-webkit-overflow-scrolling: touch;">
+      <!-- Senior Mode in Mobile Menu -->
+      <div class="flex items-center justify-between py-2.5 px-3.5 mb-1.5 rounded-xl bg-slate-50 border border-slate-200/80">
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-bold text-slate-700">화면 글자 크기</span>
+        </div>
+        <button type="button" class="senior-mode-btn notranslate" translate="no" onclick="window.cycleSeniorMode && window.cycleSeniorMode()" style="padding:4px 10px;font-size:12px;">
+          <span class="senior-btn-label">시니어모드+</span>
+          <span class="senior-step-badge" style="display:none;"></span>
+        </button>
+      </div>
       <!-- 1. 홈 -->
       <a href="/" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-bold text-brand-blue bg-blue-50/70">
         <div class="flex items-center gap-3">
@@ -921,40 +1000,40 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
             $b = $activeBillboards[0];
             $isVideo = ($b['mediaType'] ?? '') === 'video' || (isset($b['mediaUrl']) && (str_ends_with($b['mediaUrl'], '.mp4') || str_ends_with($b['mediaUrl'], '.webm')));
           ?>
-          <div class="relative w-full overflow-hidden bg-slate-950 select-none group" style="aspect-ratio: 1920 / 566; min-height: 230px; width: 100%; max-height: 480px;">
-            <a href="<?= htmlspecialchars($b['linkUrl'] ?? '/about#contact') ?>" class="block relative w-full h-full cursor-pointer" title="<?= htmlspecialchars($b['title'] ?? '') ?>">
-              <div class="w-full h-full relative overflow-hidden" style="min-height: 230px;">
+          <div class="relative w-full overflow-hidden bg-slate-950 select-none group" style="height: clamp(230px, 29.48vw, 480px); min-height: 230px; max-height: 480px; width: 100%; position: relative; overflow: hidden;">
+            <a href="<?= htmlspecialchars($b['linkUrl'] ?? '/about#contact') ?>" class="block absolute inset-0 w-full h-full cursor-pointer select-none" title="<?= htmlspecialchars($b['title'] ?? '') ?>" onclick="var v=this.querySelector('video');if(v&&v.paused){event.preventDefault();event.stopPropagation();v.defaultMuted=true;v.muted=true;v.play();return false;}">
+              <div class="absolute inset-0 w-full h-full overflow-hidden" style="position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1;">
                 <?php if ($isVideo): ?>
                   <video id="billboard-active-video" 
                          class="w-full h-full object-cover" 
-                         src="<?= htmlspecialchars($b['mediaUrl']) ?>" 
                          muted 
                          autoplay 
                          loop 
                          playsinline 
                          webkit-playsinline 
                          preload="auto"
-                         style="-webkit-transform: translateZ(0); transform: translateZ(0); object-fit: cover;">
+                         style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
                     <source src="<?= htmlspecialchars($b['mediaUrl']) ?>" type="video/mp4">
                   </video>
                   <script>
                     (function(){
                       var v = document.getElementById('billboard-active-video');
-                      if (v) {
-                        v.defaultMuted = true;
-                        v.muted = true;
-                        v.volume = 0;
-                        v.playsInline = true;
-                        var triggerPlay = function() {
-                          if (v.paused) {
-                            var p = v.play();
-                            if (p && p.catch) p.catch(function(){});
-                          }
-                        };
+                      if (!v) return;
+                      v.defaultMuted = true;
+                      v.muted = true;
+                      v.volume = 0;
+                      v.playsInline = true;
+                      var triggerPlay = function() {
+                        if (v.paused) {
+                          var p = v.play();
+                          if (p && p.catch) p.catch(function(){});
+                        }
+                      };
+                      if (v.readyState >= 2) {
                         triggerPlay();
-                        ['loadedmetadata', 'canplay', 'loadeddata'].forEach(function(evt) {
-                          v.addEventListener(evt, triggerPlay, { once: true });
-                        });
+                      } else {
+                        v.addEventListener('canplay', triggerPlay, { once: true });
+                        v.addEventListener('loadeddata', triggerPlay, { once: true });
                       }
                     })();
                   </script>
@@ -962,7 +1041,8 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                   <img id="billboard-active-img" 
                     src="<?= htmlspecialchars($b['mediaUrl'] ?: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=2000&q=85&auto=format') ?>" 
                     alt="<?= htmlspecialchars($b['title'] ?? '') ?>" 
-                    class="w-full h-full object-cover transform scale-100 group-hover:scale-103 transition-transform duration-1000 ease-out">
+                    class="w-full h-full object-cover transform scale-100 group-hover:scale-103 transition-transform duration-1000 ease-out"
+                    style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
                 <?php endif; ?>
                 <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent pointer-events-none" style="z-index: 2;"></div>
                 <div class="absolute inset-0 bg-gradient-to-r from-black/65 via-transparent to-black/20 pointer-events-none" style="z-index: 2;"></div>
@@ -970,8 +1050,8 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
               </div>
 
               <!-- Top Layer (Layer 3): Text, Badges, and Action Buttons -->
-              <div class="absolute inset-0 flex items-end" style="z-index: 10;">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-4 sm:pb-6 flex items-end justify-between gap-4">
+              <div class="absolute inset-0 flex items-end billboard-text-layer pointer-events-none" style="position: absolute; inset: 0; display: flex; align-items: flex-end; z-index: 10;">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-4 sm:pb-6 flex items-end justify-between gap-4 pointer-events-auto">
                   <div class="max-w-3xl space-y-1 sm:space-y-2">
                     <div class="flex items-center gap-2">
                       <span class="bg-red-600 text-white text-[10px] sm:text-xs font-extrabold px-3 py-0.5 sm:py-1 rounded-full uppercase tracking-wider shadow">
@@ -1290,75 +1370,76 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
               $b2 = $activeBillboards2[0];
               $isVid2 = ($b2['mediaType'] ?? '') === 'video' || (isset($b2['mediaUrl']) && (str_ends_with($b2['mediaUrl'], '.mp4') || str_ends_with($b2['mediaUrl'], '.webm')));
             ?>
-            <div class="relative w-full overflow-hidden bg-slate-950 select-none group" style="aspect-ratio: 1920 / 566; min-height: 230px; width: 100%; max-height: 480px;">
-              <a href="<?= htmlspecialchars($b2['linkUrl'] ?? '/about#contact') ?>" class="block relative w-full h-full cursor-pointer" title="<?= htmlspecialchars($b2['title'] ?? '') ?>">
-                <div class="w-full h-full relative overflow-hidden" style="min-height: 230px;">
-                  <?php if ($isVid2): ?>
-                    <video id="billboard2-active-video" 
-                           class="w-full h-full object-cover" 
-                           src="<?= htmlspecialchars($b2['mediaUrl']) ?>" 
-                           muted 
-                           autoplay 
-                           loop 
-                           playsinline 
-                           webkit-playsinline 
-                           preload="auto"
-                           style="-webkit-transform: translateZ(0); transform: translateZ(0); object-fit: cover;">
-                      <source src="<?= htmlspecialchars($b2['mediaUrl']) ?>" type="video/mp4">
-                    </video>
-                    <script>
-                      (function(){
-                        var v = document.getElementById('billboard2-active-video');
-                        if (v) {
-                          v.defaultMuted = true;
-                          v.muted = true;
-                          v.volume = 0;
-                          v.playsInline = true;
-                          var triggerPlay = function() {
-                            if (v.paused) {
-                              var p = v.play();
-                              if (p && p.catch) p.catch(function(){});
-                            }
-                          };
-                          triggerPlay();
-                          ['loadedmetadata', 'canplay', 'loadeddata'].forEach(function(evt) {
-                            v.addEventListener(evt, triggerPlay, { once: true });
-                          });
+          <div class="relative w-full overflow-hidden bg-slate-950 select-none group" style="height: clamp(230px, 29.48vw, 480px); min-height: 230px; max-height: 480px; width: 100%; position: relative; overflow: hidden;">
+            <a href="<?= htmlspecialchars($b2['linkUrl'] ?? '/about#contact') ?>" class="block absolute inset-0 w-full h-full cursor-pointer select-none" title="<?= htmlspecialchars($b2['title'] ?? '') ?>" onclick="var v=this.querySelector('video');if(v&&v.paused){event.preventDefault();event.stopPropagation();v.defaultMuted=true;v.muted=true;v.play();return false;}">
+              <div class="absolute inset-0 w-full h-full overflow-hidden" style="position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1;">
+                <?php if ($isVid2): ?>
+                  <video id="billboard2-active-video" 
+                         class="w-full h-full object-cover" 
+                         muted 
+                         autoplay 
+                         loop 
+                         playsinline 
+                         webkit-playsinline 
+                         preload="auto"
+                         style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+                    <source src="<?= htmlspecialchars($b2['mediaUrl']) ?>" type="video/mp4">
+                  </video>
+                  <script>
+                    (function(){
+                      var v = document.getElementById('billboard2-active-video');
+                      if (!v) return;
+                      v.defaultMuted = true;
+                      v.muted = true;
+                      v.volume = 0;
+                      v.playsInline = true;
+                      var triggerPlay = function() {
+                        if (v.paused) {
+                          var p = v.play();
+                          if (p && p.catch) p.catch(function(){});
                         }
-                      })();
-                    </script>
-                  <?php else: ?>
-                    <img id="billboard2-active-img" 
-                      src="<?= htmlspecialchars($b2['mediaUrl'] ?: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=2000&q=85&auto=format') ?>" 
-                      alt="<?= htmlspecialchars($b2['title'] ?? '') ?>" 
-                      class="w-full h-full object-cover transform scale-100 group-hover:scale-103 transition-transform duration-1000 ease-out">
-                  <?php endif; ?>
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/15 pointer-events-none"></div>
-                  <div class="absolute inset-0 bg-gradient-to-r from-black/75 via-transparent to-black/25 pointer-events-none"></div>
-                </div>
+                      };
+                      if (v.readyState >= 2) {
+                        triggerPlay();
+                      } else {
+                        v.addEventListener('canplay', triggerPlay, { once: true });
+                        v.addEventListener('loadeddata', triggerPlay, { once: true });
+                      }
+                    })();
+                  </script>
+                <?php else: ?>
+                  <img id="billboard2-active-img" 
+                    src="<?= htmlspecialchars($b2['mediaUrl'] ?: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=2000&q=85&auto=format') ?>" 
+                    alt="<?= htmlspecialchars($b2['title'] ?? '') ?>" 
+                    class="w-full h-full object-cover transform scale-100 group-hover:scale-103 transition-transform duration-1000 ease-out"
+                    style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+                <?php endif; ?>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/15 pointer-events-none" style="z-index: 2;"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-black/75 via-transparent to-black/25 pointer-events-none" style="z-index: 2;"></div>
+              </div>
 
-                <div class="absolute inset-0 flex items-end">
-                  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-4 sm:pb-6 flex items-end justify-between gap-4">
-                    <div class="max-w-3xl space-y-1 sm:space-y-2">
-                      <div class="flex items-center gap-2">
-                        <span class="bg-red-600 text-white text-[10px] sm:text-xs font-extrabold px-3 py-0.5 sm:py-1 rounded-full uppercase tracking-wider shadow">
-                          <?= htmlspecialchars(!empty($b2['subtitle']) ? $b2['subtitle'] : ($b2['category'] ?? 'SPECIAL CAMPAIGN')) ?>
-                        </span>
-                      </div>
-                      <h3 class="font-extrabold text-base sm:text-2xl md:text-3xl text-white tracking-tight leading-snug drop-shadow-md group-hover:text-blue-300 transition-colors line-clamp-1">
-                        <?= htmlspecialchars($b2['title'] ?? '') ?>
-                      </h3>
-                    </div>
-
-                    <div class="flex items-center gap-2 shrink-0">
-                      <span class="inline-flex items-center gap-1.5 bg-gradient-to-r from-red-600 to-brand-blue text-white font-extrabold text-xs sm:text-sm px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl shadow-xl">
-                        <span><?= htmlspecialchars($b2['linkText'] ?? '자세히 보기') ?></span>
-                        <span>→</span>
+              <div class="absolute inset-0 flex items-end billboard-text-layer pointer-events-none" style="position: absolute; inset: 0; display: flex; align-items: flex-end; z-index: 10;">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-4 sm:pb-6 flex items-end justify-between gap-4 pointer-events-auto">
+                  <div class="max-w-3xl space-y-1 sm:space-y-2">
+                    <div class="flex items-center gap-2">
+                      <span class="bg-red-600 text-white text-[10px] sm:text-xs font-extrabold px-3 py-0.5 sm:py-1 rounded-full uppercase tracking-wider shadow">
+                        <?= htmlspecialchars(!empty($b2['subtitle']) ? $b2['subtitle'] : ($b2['category'] ?? 'SPECIAL CAMPAIGN')) ?>
                       </span>
                     </div>
+                    <h3 class="font-extrabold text-base sm:text-2xl md:text-3xl text-white tracking-tight leading-snug drop-shadow-md group-hover:text-blue-300 transition-colors line-clamp-1">
+                      <?= htmlspecialchars($b2['title'] ?? '') ?>
+                    </h3>
+                  </div>
+
+                  <div class="flex items-center gap-2 shrink-0">
+                    <span class="inline-flex items-center gap-1.5 bg-gradient-to-r from-red-600 to-brand-blue text-white font-extrabold text-xs sm:text-sm px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl shadow-xl">
+                      <span><?= htmlspecialchars($b2['linkText'] ?? '자세히 보기') ?></span>
+                      <span>→</span>
+                    </span>
                   </div>
                 </div>
-              </a>
+              </div>
+            </a>
 
               <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
                 <?php foreach ($activeBillboards2 as $idx => $dummy): ?>

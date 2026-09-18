@@ -12,6 +12,18 @@
   var KAKAO_URL = 'http://pf.kakao.com/_hdxmxaX/chat';
   var KAKAO_ICON = '/kakaotalk-icon.png';
 
+  // Instant Senior Mode class application on initial load
+  (function applyImmediateSeniorMode() {
+    try {
+      var s = parseInt(localStorage.getItem('njap_senior_mode'), 10);
+      if (s === 1) {
+        document.documentElement.classList.add('senior-mode-1');
+      } else if (s === 2) {
+        document.documentElement.classList.add('senior-mode-2');
+      }
+    } catch(e) {}
+  })();
+
   // ─────────────────────────────────────────────────────────────
   // 0. NEXT.JS CROSS-PAGE CORRUPTION GUARD
   //    When navigating back from Next.js pages (about/blog/medicare)
@@ -77,11 +89,48 @@
       '}',
       '.h-\\[45px\\] { height: 45px !important; }',
 
-      /* Mobile Billboard Full Visibility */
+      /* Billboard Container & Layer Visibility Fix */
+      '#gallery-billboard-container > div, #gallery-billboard2-container > div {',
+      '  height: clamp(230px, 29.48vw, 480px) !important;',
+      '  min-height: 230px !important;',
+      '  max-height: 480px !important;',
+      '  width: 100% !important;',
+      '  position: relative !important;',
+      '  overflow: hidden !important;',
+      '}',
+      '#gallery-billboard-container a, #gallery-billboard2-container a {',
+      '  display: block !important;',
+      '  position: absolute !important;',
+      '  inset: 0 !important;',
+      '  width: 100% !important;',
+      '  height: 100% !important;',
+      '  overflow: hidden !important;',
+      '}',
+      '#gallery-billboard-container video, #gallery-billboard2-container video,',
+      '#billboard-active-video, #billboard2-active-video,',
+      '#billboard-active-img, #billboard2-active-img {',
+      '  position: absolute !important;',
+      '  top: 0 !important;',
+      '  left: 0 !important;',
+      '  width: 100% !important;',
+      '  height: 100% !important;',
+      '  object-fit: cover !important;',
+      '}',
+      '.billboard-text-layer {',
+      '  position: absolute !important;',
+      '  inset: 0 !important;',
+      '  width: 100% !important;',
+      '  height: 100% !important;',
+      '  display: flex !important;',
+      '  align-items: flex-end !important;',
+      '  z-index: 10 !important;',
+      '  pointer-events: none !important;',
+      '}',
+      '.billboard-text-layer > div {',
+      '  pointer-events: auto !important;',
+      '}',
       '@media (max-width: 640px) {',
       '  #gallery-billboard-section, #gallery-billboard2-section { margin-top: 0 !important; margin-bottom: 1.25rem !important; }',
-      '  #gallery-billboard-container > div, #gallery-billboard2-container > div { min-height: 230px !important; height: 240px !important; }',
-      '  #gallery-billboard-container video, #gallery-billboard-container img, #gallery-billboard2-container video, #gallery-billboard2-container img { min-height: 230px !important; height: 100% !important; object-fit: cover !important; }',
       '}',
 
       /* Slide-in animation */
@@ -90,9 +139,8 @@
       '.fx-slide.fx-in { opacity:1; transform:none; }',
       '#cms-blog-main-section, section:has(#cms-blog-posts-grid), #cms-blog-posts-grid, .blog-post-card-item, .blog-post-card-item article { opacity: 1 !important; visibility: visible !important; transform: none !important; }',
 
-      /* Page entry fade-in */
+      /* body fade-in: only apply to pages with explicit FOUC guard class, NOT globally (opacity:0 blocks Safari autoplay) */
       '@keyframes bodyFadeIn { from { opacity:0; } to { opacity:1; } }',
-      'body { animation: bodyFadeIn 0.22s ease-out both; }',
 
       /* Billboard hover scale */
       '.bb-img { transition: transform .9s ease; }',
@@ -165,6 +213,76 @@
       '.kakao-cta-btn img { width: 26px; height: 26px; border-radius: 6px; object-fit: contain; flex-shrink: 0; }',
       '.kakao-cta-label { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.25; }',
       '.kakao-cta-label .kakao-cta-sub { font-size: 11px; font-weight: 500; opacity: 0.65; }',
+
+      /* Senior Mode (시니어모드+) Typography & Layout Scaling */
+      ':root { --senior-scale: 1; }',
+      'html.senior-mode-1 { font-size: 118% !important; --senior-scale: 1.18; }',
+      'html.senior-mode-2 { font-size: 135% !important; --senior-scale: 1.35; }',
+      'html.senior-mode-1, html.senior-mode-2 { text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }',
+
+      /* Spacer adjustments so hero & content remain completely visible below fixed header */
+      'html.senior-mode-1 .header-spacer, html.senior-mode-1 .h-\\[109px\\], html.senior-mode-1 #header-spacer { height: 120px !important; min-height: 120px !important; }',
+      'html.senior-mode-2 .header-spacer, html.senior-mode-2 .h-\\[109px\\], html.senior-mode-2 #header-spacer { height: 132px !important; min-height: 132px !important; }',
+
+      /* Enhanced readability for senior users */
+      'html.senior-mode-1 body, html.senior-mode-2 body { letter-spacing: -0.01em !important; word-break: keep-all; }',
+      'html.senior-mode-1 p, html.senior-mode-1 li, html.senior-mode-1 dd, html.senior-mode-1 .text-base, html.senior-mode-1 .text-sm { line-height: 1.68 !important; }',
+      'html.senior-mode-2 p, html.senior-mode-2 li, html.senior-mode-2 dd, html.senior-mode-2 .text-base, html.senior-mode-2 .text-sm { line-height: 1.76 !important; }',
+
+      /* Tailwind explicit arbitrary pixel font sizes overrides */
+      'html.senior-mode-1 [class*="text-[9px]"] { font-size: 11px !important; }',
+      'html.senior-mode-1 [class*="text-[10px]"] { font-size: 12.5px !important; }',
+      'html.senior-mode-1 [class*="text-[11px]"] { font-size: 13.5px !important; }',
+      'html.senior-mode-1 [class*="text-[12px]"] { font-size: 14.5px !important; }',
+      'html.senior-mode-1 [class*="text-[13px]"] { font-size: 16px !important; }',
+      'html.senior-mode-1 [class*="text-[14px]"] { font-size: 17px !important; }',
+      'html.senior-mode-1 [class*="text-[15px]"] { font-size: 18.5px !important; }',
+      'html.senior-mode-1 [class*="text-[16px]"] { font-size: 19.5px !important; }',
+      'html.senior-mode-1 [class*="text-[18px]"] { font-size: 22px !important; }',
+
+      'html.senior-mode-2 [class*="text-[9px]"] { font-size: 13px !important; }',
+      'html.senior-mode-2 [class*="text-[10px]"] { font-size: 14.5px !important; }',
+      'html.senior-mode-2 [class*="text-[11px]"] { font-size: 16px !important; }',
+      'html.senior-mode-2 [class*="text-[12px]"] { font-size: 17px !important; }',
+      'html.senior-mode-2 [class*="text-[13px]"] { font-size: 18.5px !important; }',
+      'html.senior-mode-2 [class*="text-[14px]"] { font-size: 20px !important; }',
+      'html.senior-mode-2 [class*="text-[15px]"] { font-size: 21.5px !important; }',
+      'html.senior-mode-2 [class*="text-[16px]"] { font-size: 23px !important; }',
+      'html.senior-mode-2 [class*="text-[18px]"] { font-size: 25.5px !important; }',
+
+      /* Senior Mode Button Base */
+      '.senior-mode-btn {',
+      '  display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 4px !important;',
+      '  padding: 3px 9px !important; border-radius: 9999px !important; border: 1.5px solid #cbd5e1 !important;',
+      '  background: #ffffff !important; color: #334155 !important; font-size: 11px !important; font-weight: 700 !important;',
+      '  letter-spacing: -0.01em !important; cursor: pointer !important; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;',
+      '  white-space: nowrap !important; flex-shrink: 0 !important; line-height: 1.4 !important; user-select: none !important;',
+      '  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;',
+      '}',
+      '.senior-mode-btn:hover { border-color: #3b82f6 !important; color: #2563eb !important; background: #f8fafc !important; transform: translateY(-0.5px); }',
+      '.senior-mode-btn:active { transform: scale(0.97); }',
+      '.senior-mode-btn.step-1 { border-color: #2563eb !important; background: #eff6ff !important; color: #1d4ed8 !important; font-weight: 800 !important; box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15) !important; }',
+      '.senior-mode-btn.step-2 { border-color: #ea580c !important; background: #fff7ed !important; color: #c2410c !important; font-weight: 800 !important; box-shadow: 0 0 0 2px rgba(234, 88, 12, 0.18) !important; }',
+      '.senior-step-badge { display: none; align-items: center; justify-content: center; font-size: 9px !important; font-weight: 800 !important; padding: 1px 5px !important; border-radius: 999px !important; line-height: 1.2 !important; transition: all 0.2s ease !important; }',
+      '.senior-mode-btn.step-1 .senior-step-badge { display: inline-flex !important; background: #2563eb !important; color: #ffffff !important; }',
+      '.senior-mode-btn.step-2 .senior-step-badge { display: inline-flex !important; background: #ea580c !important; color: #ffffff !important; }',
+      '@media (max-width: 480px) {',
+      '  .senior-mode-btn { padding: 2.5px 6px !important; font-size: 10px !important; gap: 2px !important; }',
+      '}',
+
+      /* Senior Mode Toast Notification */
+      '#senior-mode-toast {',
+      '  position: fixed !important; top: 114px !important; left: 50% !important;',
+      '  transform: translateX(-50%) translateY(-12px) !important; z-index: 99999 !important;',
+      '  padding: 9px 18px !important; border-radius: 9999px !important; font-size: 13px !important;',
+      '  font-weight: 700 !important; display: flex !important; align-items: center !important; gap: 7px !important;',
+      '  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.22), 0 8px 10px -6px rgba(0, 0, 0, 0.12) !important;',
+      '  pointer-events: none !important; opacity: 0 !important; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;',
+      '}',
+      '#senior-mode-toast.show { opacity: 1 !important; transform: translateX(-50%) translateY(0) !important; }',
+      '#senior-mode-toast.toast-step-1 { background: #1e3a8a !important; color: #ffffff !important; border: 1.5px solid #3b82f6 !important; }',
+      '#senior-mode-toast.toast-step-2 { background: #7c2d12 !important; color: #ffffff !important; border: 1.5px solid #ea580c !important; }',
+      '#senior-mode-toast.toast-step-0 { background: #1e293b !important; color: #ffffff !important; border: 1.5px solid #475569 !important; }',
     ].join('\n');
     document.head.appendChild(s);
   }
@@ -328,6 +446,16 @@
     var isAbout = curPath.indexOf('/about') === 0;
 
     return [
+      '<!-- Senior Mode in Mobile Dropdown -->',
+      '<div class="flex items-center justify-between py-2.5 px-3.5 mb-1.5 rounded-xl bg-slate-50 border border-slate-200/80">',
+      '  <div class="flex items-center gap-2">',
+      '    <span class="text-xs font-bold text-slate-700">화면 글자 크기</span>',
+      '  </div>',
+      '  <button type="button" class="senior-mode-btn notranslate" translate="no" onclick="window.cycleSeniorMode && window.cycleSeniorMode()" style="padding:4px 10px;font-size:12px;">',
+      '    <span class="senior-btn-label">시니어모드+</span>',
+      '    <span class="senior-step-badge" style="display:none;"></span>',
+      '  </button>',
+      '</div>',
       '<!-- 1. 홈 -->',
       '<a href="/" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isHome ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
       '  <div class="flex items-center gap-3">',
@@ -522,24 +650,15 @@
       if (!v.hasAttribute('playsinline')) v.setAttribute('playsinline', '');
       if (!v.hasAttribute('webkit-playsinline')) v.setAttribute('webkit-playsinline', '');
       if (!v.hasAttribute('autoplay')) v.setAttribute('autoplay', '');
-      if (v.style) {
-        v.style.webkitTransform = 'translateZ(0)';
-        v.style.transform = 'translateZ(0)';
-      }
     }
 
     function resumeAllBillboards() {
       var vids = document.querySelectorAll('#gallery-billboard-container video, #gallery-billboard2-container video, #billboard-active-video, #billboard2-active-video');
       vids.forEach(function(v) {
-        if (!v) return;
+        if (!v || !v.paused) return;
         prepareVideoElement(v);
-        if (v.paused) {
-          if (v.networkState === HTMLMediaElement.NETWORK_EMPTY || v.readyState === 0) {
-            try { v.load(); } catch(e) {}
-          }
-          var p = v.play();
-          if (p && p.catch) p.catch(function() {});
-        }
+        var p = v.play();
+        if (p && p.catch) p.catch(function() {});
       });
     }
 
@@ -547,13 +666,13 @@
       if (!v || v._bbAutoplayWired) return;
       v._bbAutoplayWired = true;
       prepareVideoElement(v);
-      ['loadstart', 'loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough'].forEach(function(evt) {
+      ['loadedmetadata', 'canplay'].forEach(function(evt) {
         v.addEventListener(evt, function() {
           if (v.paused) {
             var p = v.play();
             if (p && p.catch) p.catch(function() {});
           }
-        });
+        }, { once: true });
       });
     }
 
@@ -588,7 +707,6 @@
       var mo = new MutationObserver(function() {
         var nv = document.querySelectorAll('#gallery-billboard-container video, #gallery-billboard2-container video, #billboard-active-video, #billboard2-active-video');
         nv.forEach(wireVideoLifecycle);
-        resumeAllBillboards();
       });
       mo.observe(document.body || document.documentElement, { childList: true, subtree: true });
     }
@@ -603,10 +721,8 @@
     });
 
     resumeAllBillboards();
-    setTimeout(resumeAllBillboards, 50);
-    setTimeout(resumeAllBillboards, 150);
-    setTimeout(resumeAllBillboards, 400);
-    setTimeout(resumeAllBillboards, 1000);
+    setTimeout(resumeAllBillboards, 100);
+    setTimeout(resumeAllBillboards, 500);
   }
 
   // ─────────────────────────────────────────────────────────────
@@ -834,9 +950,160 @@
     }
   }
 
+  // ─────────────────────────────────────────────────────────────
+  // 13. SENIOR MODE (시니어모드+) CONTROLLER & NAV GUARDIAN
+  //     Provides 3-step font size cycling:
+  //     Step 1: Bigger (+18%)
+  //     Step 2: Even Bigger (+35%)
+  //     Step 0: Back to Normal (Default)
+  // ─────────────────────────────────────────────────────────────
+  var seniorToastTimer = null;
+
+  function getSeniorModeStep() {
+    try {
+      var s = parseInt(localStorage.getItem('njap_senior_mode'), 10);
+      return (s === 1 || s === 2) ? s : 0;
+    } catch(e) {
+      return 0;
+    }
+  }
+
+  function showSeniorToast(msg, step) {
+    var toast = document.getElementById('senior-mode-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'senior-mode-toast';
+      document.body.appendChild(toast);
+    }
+    toast.className = 'toast-step-' + step;
+    toast.innerHTML = msg;
+    void toast.offsetWidth;
+    toast.classList.add('show');
+
+    if (seniorToastTimer) clearTimeout(seniorToastTimer);
+    seniorToastTimer = setTimeout(function() {
+      if (toast) toast.classList.remove('show');
+    }, 2000);
+  }
+
+  function applySeniorMode(step, showFeedback) {
+    step = (step === 1 || step === 2) ? step : 0;
+    var html = document.documentElement;
+
+    if (step === 1) {
+      html.classList.add('senior-mode-1');
+      html.classList.remove('senior-mode-2');
+    } else if (step === 2) {
+      html.classList.add('senior-mode-2');
+      html.classList.remove('senior-mode-1');
+    } else {
+      html.classList.remove('senior-mode-1', 'senior-mode-2');
+    }
+
+    try {
+      localStorage.setItem('njap_senior_mode', String(step));
+    } catch(e) {}
+
+    var btns = document.querySelectorAll('.senior-mode-btn');
+    btns.forEach(function(btn) {
+      btn.classList.remove('step-1', 'step-2');
+      var badge = btn.querySelector('.senior-step-badge');
+      if (step === 1) {
+        btn.classList.add('step-1');
+        btn.setAttribute('title', '시니어모드 1단계 (크게) — 한 번 더 누르면 더 커집니다');
+        if (badge) {
+          badge.textContent = '1단계';
+          badge.style.display = 'inline-flex';
+        }
+      } else if (step === 2) {
+        btn.classList.add('step-2');
+        btn.setAttribute('title', '시니어모드 2단계 (더 크게) — 한 번 더 누르면 기본 크기로 돌아갑니다');
+        if (badge) {
+          badge.textContent = '2단계';
+          badge.style.display = 'inline-flex';
+        }
+      } else {
+        btn.setAttribute('title', '시니어모드+ (글자 크기 3단계 조절: 크게 > 더 크게 > 보통)');
+        if (badge) {
+          badge.style.display = 'none';
+        }
+      }
+    });
+
+    if (showFeedback) {
+      if (step === 1) {
+        showSeniorToast('<span>👁️</span> <span>시니어모드 <strong>1단계</strong>: 글자가 확대되었습니다 (+18%)</span>', 1);
+      } else if (step === 2) {
+        showSeniorToast('<span>🔍</span> <span>시니어모드 <strong>2단계</strong>: 글자가 더 크게 확대되었습니다 (+35%)</span>', 2);
+      } else {
+        showSeniorToast('<span>↩️</span> <span>시니어모드 <strong>해제</strong>: 기본 글자 크기로 복원되었습니다</span>', 0);
+      }
+    }
+  }
+
+  function cycleSeniorMode() {
+    var cur = getSeniorModeStep();
+    var next = (cur + 1) % 3; // 0 -> 1 -> 2 -> 0
+    applySeniorMode(next, true);
+  }
+
+  window.cycleSeniorMode = cycleSeniorMode;
+  window.applySeniorMode = applySeniorMode;
+  window.getSeniorModeStep = getSeniorModeStep;
+
+  function ensureSeniorModeInNav() {
+    var nav = document.querySelector('nav');
+    if (nav) {
+      var enBtn = nav.querySelector('#en-translate-btn');
+      var rightContainer = enBtn ? enBtn.parentElement : null;
+      if (!rightContainer) {
+        var mobileBtn = nav.querySelector('#mobile-menu-btn');
+        if (mobileBtn) rightContainer = mobileBtn.parentElement;
+      }
+
+      if (rightContainer && !rightContainer.querySelector('#senior-mode-btn')) {
+        var btn = document.createElement('button');
+        btn.id = 'senior-mode-btn';
+        btn.className = 'senior-mode-btn notranslate';
+        btn.setAttribute('translate', 'no');
+        btn.setAttribute('type', 'button');
+        btn.setAttribute('aria-label', '시니어모드 글자 크기 조절');
+        btn.setAttribute('title', '시니어모드+ (글자 크기 3단계 조절)');
+        btn.innerHTML = '<span class="senior-btn-label">시니어모드+</span><span class="senior-step-badge" style="display:none;"></span>';
+
+        if (enBtn) {
+          rightContainer.insertBefore(btn, enBtn);
+        } else {
+          var mBtn = rightContainer.querySelector('#mobile-menu-btn');
+          if (mBtn) {
+            rightContainer.insertBefore(btn, mBtn);
+          } else {
+            rightContainer.appendChild(btn);
+          }
+        }
+      }
+    }
+
+    // Bind click listener to all .senior-mode-btn instances
+    var allBtns = document.querySelectorAll('.senior-mode-btn');
+    allBtns.forEach(function(b) {
+      if (!b.dataset.seniorBound) {
+        b.dataset.seniorBound = '1';
+        b.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          cycleSeniorMode();
+        });
+      }
+    });
+
+    applySeniorMode(getSeniorModeStep(), false);
+  }
+
   var isNavUpdating = false;
   function setupNavObserver() {
     ensureSeniorCareInNav();
+    ensureSeniorModeInNav();
     fixMobileMenu();
     var nav = document.querySelector('nav');
     if (nav && window.MutationObserver) {
@@ -845,6 +1112,7 @@
         isNavUpdating = true;
         try {
           ensureSeniorCareInNav();
+          ensureSeniorModeInNav();
           fixMobileMenu();
         } finally {
           setTimeout(function() { isNavUpdating = false; }, 150);
@@ -860,14 +1128,22 @@
   // Run navigation interception immediately so no clicks can escape
   fixAllNavigation();
   ensureSeniorCareInNav();
-  window.addEventListener('pageshow', ensureSeniorCareInNav);
-  window.addEventListener('popstate', ensureSeniorCareInNav);
+  ensureSeniorModeInNav();
+  window.addEventListener('pageshow', function() {
+    ensureSeniorCareInNav();
+    ensureSeniorModeInNav();
+  });
+  window.addEventListener('popstate', function() {
+    ensureSeniorCareInNav();
+    ensureSeniorModeInNav();
+  });
 
   function init() {
     revealBody();
     injectCSS();
     fixAllNavigation();
     setupNavObserver();
+    ensureSeniorModeInNav();
     fixMobileMenu();
     fixBillboardHover();
     fixVideoAutoplay();
@@ -877,6 +1153,7 @@
       injectKakaoNavBtn();
       injectKakaoAboutBlock();
       ensureSeniorCareInNav();
+      ensureSeniorModeInNav();
     }, 150);
     setTimeout(fixSlideIn, 200);
   }
