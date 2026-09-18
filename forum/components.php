@@ -60,6 +60,7 @@ function render_forum_header(string $searchQuery = '', ?array $currentSpecialty 
           </a>
 
           <!-- EN Translation Toggle Button -->
+          <button id="senior-mode-btn" class="senior-mode-btn notranslate" translate="no" type="button" onclick="window.cycleSeniorMode && window.cycleSeniorMode()" title="시니어모드+ (글자 크기 3단계 조절)" aria-label="시니어모드 글자 크기 조절"><span class="senior-btn-label">시니어모드+</span><span class="senior-step-badge" style="display:none;"></span></button>
           <button id="en-translate-btn" class="notranslate" translate="no" onclick="window.toggleTranslation && window.toggleTranslation()" title="Switch Language (EN / KR)" aria-label="Language Toggle" style="display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:999px;border:1.5px solid #cbd5e1;font-size:10px;font-weight:700;letter-spacing:0.04em;cursor:pointer;transition:all 0.2s ease;background:transparent;color:#475569;white-space:nowrap;flex-shrink:0;line-height:1.4;"><span class="notranslate" translate="no">🌐</span> <span class="notranslate en-btn-label" translate="no">EN</span></button>
 
           <!-- Forum Auth Profile / Google Login -->
@@ -674,6 +675,7 @@ function render_forum_footer() {
     </div>
   </footer>
   <script src="/js/njap-translate.js?v=3.0.0"></script>
+  <script src="/js/fixes.js?v=5.1.0"></script>
 <?php
 }
 

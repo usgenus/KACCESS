@@ -12,14 +12,24 @@
   var KAKAO_URL = 'http://pf.kakao.com/_hdxmxaX/chat';
   var KAKAO_ICON = '/kakaotalk-icon.png';
 
-  // Instant Senior Mode class application on initial load
+  // Instant Senior Mode class application on initial load (0 is strict default)
   (function applyImmediateSeniorMode() {
     try {
-      var s = parseInt(localStorage.getItem('njap_senior_mode'), 10);
+      var s = parseInt(sessionStorage.getItem('njap_senior_mode'), 10);
+      if (isNaN(s)) {
+        // First load of the page: senior mode 0 is default
+        s = 0;
+        sessionStorage.setItem('njap_senior_mode', '0');
+        localStorage.removeItem('njap_senior_mode');
+      }
       if (s === 1) {
         document.documentElement.classList.add('senior-mode-1');
+        document.documentElement.classList.remove('senior-mode-2');
       } else if (s === 2) {
         document.documentElement.classList.add('senior-mode-2');
+        document.documentElement.classList.remove('senior-mode-1');
+      } else {
+        document.documentElement.classList.remove('senior-mode-1', 'senior-mode-2');
       }
     } catch(e) {}
   })();
@@ -961,7 +971,9 @@
 
   function getSeniorModeStep() {
     try {
-      var s = parseInt(localStorage.getItem('njap_senior_mode'), 10);
+      var val = sessionStorage.getItem('njap_senior_mode');
+      if (val === null) return 0;
+      var s = parseInt(val, 10);
       return (s === 1 || s === 2) ? s : 0;
     } catch(e) {
       return 0;
@@ -1001,6 +1013,7 @@
     }
 
     try {
+      sessionStorage.setItem('njap_senior_mode', String(step));
       localStorage.setItem('njap_senior_mode', String(step));
     } catch(e) {}
 

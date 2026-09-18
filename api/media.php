@@ -111,7 +111,10 @@ if ($streamPath && file_exists($streamPath)) {
         header("Content-Length: $length");
     } else {
         header("Content-Length: $size");
-    // Clear any output buffers to ensure uncompressed, direct binary streaming (crucial for Safari byte-ranges)
+    }
+
+    // Clear any output buffers to ensure uncompressed, direct binary streaming
+    // CRITICAL for Safari: must stream actual bytes after headers for BOTH range and full requests
     while (ob_get_level() > 0) {
         @ob_end_clean();
     }

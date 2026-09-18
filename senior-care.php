@@ -514,6 +514,21 @@
       transform: scale(1.1) !important;
     }
   </style>
+  <script>
+    (function() {
+      try {
+        var s = parseInt(localStorage.getItem('njap_senior_mode'), 10);
+        if (s === 1) document.documentElement.classList.add('senior-mode-1');
+        else if (s === 2) document.documentElement.classList.add('senior-mode-2');
+      } catch(e) {}
+    })();
+  </script>
+  <style id="njap-senior-mode-base-css">
+    html.senior-mode-1 { font-size: 118% !important; }
+    html.senior-mode-2 { font-size: 135% !important; }
+    html.senior-mode-1 .header-spacer, html.senior-mode-1 .h-\[109px\], html.senior-mode-1 #header-spacer { height: 120px !important; min-height: 120px !important; }
+    html.senior-mode-2 .header-spacer, html.senior-mode-2 .h-\[109px\], html.senior-mode-2 #header-spacer { height: 132px !important; min-height: 132px !important; }
+  </style>
 </head>
 <body class="min-h-full flex flex-col bg-[#F3F3F5]">
 
@@ -559,6 +574,7 @@
             <img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" />
             <span class="text-xs sm:text-sm font-bold text-slate-800 hover:text-brand-blue tracking-tight whitespace-nowrap">1:1 상담</span>
           </a>
+          <button id="senior-mode-btn" class="senior-mode-btn notranslate" translate="no" type="button" onclick="window.cycleSeniorMode && window.cycleSeniorMode()" title="시니어모드+ (글자 크기 3단계 조절)" aria-label="시니어모드 글자 크기 조절"><span class="senior-btn-label">시니어모드+</span><span class="senior-step-badge" style="display:none;"></span></button>
           <button id="en-translate-btn" class="notranslate" translate="no" onclick="window.toggleTranslation && window.toggleTranslation()" title="Switch Language (EN / KR)" aria-label="Language Toggle" style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;border:1.5px solid #cbd5e1;font-size:11px;font-weight:700;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s ease;background:transparent;color:#475569;white-space:nowrap;flex-shrink:0;line-height:1.4;"><span class="notranslate" translate="no">🌐</span> <span class="notranslate en-btn-label" translate="no">EN</span></button>
           <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors" aria-label="Menu">
             <div class="w-5 h-4 flex flex-col justify-between">
@@ -1585,7 +1601,7 @@
     }
   </script>
 
-  <script src="/js/fixes.js?v=4.1.0"></script>
+  <script src="/js/fixes.js?v=5.1.0"></script>
 <script src="/js/njap-translate.js?v=3.0.0"></script>
 </body>
 </html>

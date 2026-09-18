@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>뉴저지 한인 의료 접근센터 | Healthcare Access Portal</title>
+  <meta name="description" content="뉴저지 한인을 위한 무료 종합 의료 접근 및 한인 아웃리치 포털. 메디케어, ACA 건강보험, 환자도우미 및 전문의 커뮤니티 포럼." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --primary-cyan: #00f2fe;
+      --primary-blue: #4facfe;
+      --accent-teal: #00d4c8;
+      --accent-gold: #ffd166;
+      --navy-deep: #030813;
+      --card-bg: rgba(10, 20, 36, 0.68);
+      --card-border: rgba(255, 255, 255, 0.16);
+      --card-hover-border: rgba(0, 242, 254, 0.7);
+      --text-white: #ffffff;
+      --text-sub: rgba(255, 255, 255, 0.88);
+      --text-dim: rgba(255, 255, 255, 0.65);
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Plus Jakarta Sans', 'Noto Sans KR', sans-serif;
+      background-color: var(--navy-deep);
+      color: var(--text-white);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Full-screen Background Video */
+    .video-viewport {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    #bgVideo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      transition: filter 1.6s ease, transform 1.6s ease;
+    }
+
+    /* Ambient Scrim / Vignette Overlays */
+    .video-scrim {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      background: radial-gradient(circle at center, rgba(3, 8, 19, 0.25) 0%, rgba(3, 8, 19, 0.65) 100%);
+      pointer-events: none;
+      transition: background 1.5s cubic-bezier(0.16, 1, 0.3, 1), backdrop-filter 1.5s ease;
+    }
+
+    /* After 10s: scrim gently deepens to give maximum pop to white text & buttons */
+    body.is-revealed .video-scrim {
+      background: radial-gradient(circle at center, rgba(3, 8, 19, 0.5) 0%, rgba(3, 8, 19, 0.85) 100%);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+
+    body.is-revealed #bgVideo {
+      filter: brightness(0.85) contrast(1.05);
+      transform: translate(-50%, -50%) scale(1.03);
+    }
+
+    /* Top Bar Controls */
+    .top-controls {
+      position: fixed;
+      top: 24px;
+      right: 28px;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .ctrl-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: #fff;
+      background: rgba(10, 20, 36, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 9999px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+      user-select: none;
+    }
+
+    .ctrl-pill-btn:hover {
+      background: rgba(0, 242, 254, 0.2);
+      border-color: var(--primary-cyan);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(0, 242, 254, 0.35);
+      color: #fff;
+    }
+
+    .ctrl-pill-btn:active {
+      transform: translateY(0);
+    }
+
+    .ctrl-pill-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* Subtle Countdown Timeline (Visible during the 10s wait) */
+    .timeline-container {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 15;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      width: 90%;
+      max-width: 360px;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    body.is-revealed .timeline-container {
+      opacity: 0;
+      transform: translate(-50%, 20px);
+      pointer-events: none;
+    }
+
+    .timeline-bar-bg {
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+      overflow: hidden;
+      backdrop-filter: blur(8px);
+      position: relative;
+    }
+
+    .timeline-bar-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #00f2fe, #4facfe, #00d4c8);
+      border-radius: 999px;
+      box-shadow: 0 0 12px rgba(0, 242, 254, 0.8);
+      transition: width 0.1s linear;
+    }
+
+    .timeline-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.75);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .timeline-skip-link {
+      color: var(--primary-cyan);
+      font-weight: 700;
+      cursor: pointer;
+      border-bottom: 1px dashed rgba(0, 242, 254, 0.6);
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .timeline-skip-link:hover {
+      color: #fff;
+      border-color: #fff;
+    }
+
+    /* Main Splash Content Wrapper */
+    .splash-stage {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      text-align: center;
+      overflow-y: auto;
+    }
+
+    .content-box {
+      max-width: 1100px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: auto 0;
+    }
+
+    /* ========================================================
+       SMOOTH POP-OUT WHITE TEXT (Triggered at 10 Seconds)
+       ======================================================== */
+    .smooth-white-text-block {
+      opacity: 0;
+      transform: translateY(35px) scale(0.96);
+      filter: blur(12px);
+      transition: 
+        opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+        filter 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+      margin-bottom: 36px;
+    }
+
+    body.is-revealed .smooth-white-text-block {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+      pointer-events: auto;
+    }
+
+    /* Eyebrow / Organization Tag */
+    .text-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 18px;
+      margin-bottom: 14px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--primary-cyan);
+      background: rgba(0, 242, 254, 0.1);
+      border: 1px solid rgba(0, 242, 254, 0.35);
+      border-radius: 9999px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 24px rgba(0, 242, 254, 0.2);
+    }
+
+    .eyebrow-pulse {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--primary-cyan);
+      box-shadow: 0 0 10px var(--primary-cyan);
+      animation: pulseDot 2s infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(1.4); }
+    }
+
+    /* Korean Main Subtitle */
+    .hero-korean-subtitle {
+      font-size: clamp(1.4rem, 3.2vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: #ffffff;
+      text-shadow: 
+        0 2px 24px rgba(0, 0, 0, 0.9),
+        0 0 40px rgba(255, 255, 255, 0.35);
+      line-height: 1.35;
+      margin-bottom: 6px;
+    }
+
+    /* English Majestic Headline */
+    .hero-english-title {
+      font-size: clamp(2.5rem, 6.8vw, 5.2rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      color: #ffffff;
+      text-shadow: 
+        0 4px 30px rgba(0, 0, 0, 0.95),
+        0 0 50px rgba(255, 255, 255, 0.45);
+      margin-bottom: 16px;
+      background: linear-gradient(180deg, #ffffff 40%, #e0f7fa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Description Tagline */
+    .hero-lead-description {
+      font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 680px;
+      margin: 0 auto;
+      line-height: 1.65;
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.9);
+    }
+
+    /* ========================================================
+       BOUNCY POP-OUT BUTTONS (Triggered at 10 Seconds)
+       ======================================================== */
+    .buttons-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      max-width: 980px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .portal-pop-btn {
+      position: relative;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 170px;
+      min-height: 82px;
+      padding: 18px 28px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      color: #ffffff;
+      text-decoration: none;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      overflow: hidden;
+      cursor: pointer;
+
+      /* Initial hidden state: scaled down & transparent */
+      opacity: 0;
+      transform: scale(0.3) translateY(60px);
+      pointer-events: none;
+
+      /* Spring pop-out physics */
+      transition: 
+        opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+        transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+        background 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+    }
+
+    /* Staggered Pop-Out after 10s */
+    body.is-revealed .portal-pop-btn {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+      pointer-events: auto;
+    }
+
+    /* Individual Button Spring Delay Deliberation */
+    body.is-revealed .portal-pop-btn:nth-child(1) { transition-delay: 0.05s; }
+    body.is-revealed .portal-pop-btn:nth-child(2) { transition-delay: 0.15s; }
+    body.is-revealed .portal-pop-btn:nth-child(3) { transition-delay: 0.25s; }
+    body.is-revealed .portal-pop-btn:nth-child(4) { transition-delay: 0.35s; }
+    body.is-revealed .portal-pop-btn:nth-child(5) { transition-delay: 0.45s; }
+
+    /* Hover & Active Effects */
+    .portal-pop-btn::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 60%);
+      opacity: 0;
+      transform: scale(0.6);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+    }
+
+    .portal-pop-btn:hover {
+      transform: translateY(-6px) scale(1.04);
+      background: rgba(16, 32, 58, 0.85);
+      border-color: var(--primary-cyan);
+      box-shadow: 
+        0 14px 40px rgba(0, 242, 254, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+
+    .portal-pop-btn:hover::before {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .portal-pop-btn:active {
+      transform: translateY(-1px) scale(1.01);
+    }
+
+    /* Special Accent for Enterprise B2B Button */
+    .portal-pop-btn.btn-enterprise {
+      min-width: 280px;
+      background: linear-gradient(135deg, rgba(24, 38, 70, 0.8) 0%, rgba(10, 20, 36, 0.8) 100%);
+      border-color: rgba(0, 242, 254, 0.4);
+    }
+
+    .portal-pop-btn.btn-enterprise:hover {
+      border-color: #00f2fe;
+      box-shadow: 0 14px 45px rgba(0, 242, 254, 0.5);
+    }
+
+    .btn-text-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+    }
+
+    .btn-main-label {
+      font-size: 1.12rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: #ffffff;
+      white-space: nowrap;
+      margin-bottom: 4px;
+    }
+
+    .btn-sub-label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-dim);
+      white-space: nowrap;
+      letter-spacing: 0.02em;
+      transition: color 0.2s ease;
+    }
+
+    .portal-pop-btn:hover .btn-sub-label {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* ========================================================
+       FOOTER / OTHER LANGUAGE EDITIONS (Pop in smoothly)
+       ======================================================== */
+    .secondary-editions-row {
+      margin-top: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1.2s 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+
+    body.is-revealed .secondary-editions-row {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .edition-badge-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.82);
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 9999px;
+      backdrop-filter: blur(10px);
+      transition: all 0.2s ease;
+    }
+
+    .edition-badge-link:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .splash-copyright {
+      width: 100%;
+      text-align: center;
+      font-size: 0.72rem;
+      color: rgba(255, 255, 255, 0.45);
+      margin-top: 20px;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .splash-stage {
+        padding: 30px 16px 80px;
+        justify-content: flex-start;
+      }
+      .content-box {
+        margin: 20px 0;
+      }
+      .buttons-container {
+        gap: 12px;
+      }
+      .portal-pop-btn {
+        width: 100%;
+        max-width: 320px;
+        min-width: 0;
+        flex-direction: column;
+        padding: 14px 20px;
+        text-align: center;
+        justify-content: center;
+      }
+      .portal-pop-btn.btn-enterprise {
+        min-width: 0;
+      }
+      .btn-text-col {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .top-controls {
+        top: 16px;
+        right: 16px;
+      }
+      .smooth-white-text-block {
+        margin-bottom: 24px;
+      }
+    }
+
+    /* ============================================================
+       INTRO START OVERLAY (Korean & English)
+       ============================================================ */
+    .intro-start-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at center, rgba(3, 8, 19, 0.72) 0%, rgba(3, 8, 19, 0.94) 100%);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+      opacity: 1;
+      visibility: visible;
+    }
+    .intro-start-overlay.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .intro-start-modal {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 42px 36px;
+      max-width: 580px;
+      width: 90%;
+      background: rgba(10, 20, 38, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 28px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 242, 254, 0.15);
+      animation: modalFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes modalFadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.92) translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+    .intro-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 14px;
+      border-radius: 9999px;
+      background: rgba(0, 242, 254, 0.12);
+      border: 1px solid rgba(0, 242, 254, 0.35);
+      color: var(--primary-cyan);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .intro-korean-title {
+      font-size: 28px;
+      font-weight: 900;
+      color: #ffffff;
+      margin-bottom: 6px;
+      letter-spacing: -0.02em;
+    }
+    .intro-english-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 30px;
+      letter-spacing: 0.05em;
+    }
+    .intro-start-btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 18px 36px;
+      background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+      color: #030813;
+      border: none;
+      border-radius: 9999px;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(0, 242, 254, 0.45), 0 2px 10px rgba(0, 0, 0, 0.3);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      outline: none;
+    }
+    .intro-start-btn:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 14px 40px rgba(0, 242, 254, 0.65), 0 4px 14px rgba(0, 0, 0, 0.4);
+    }
+    .intro-start-btn:active {
+      transform: translateY(1px) scale(0.98);
+    }
+    .intro-btn-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #030813;
+      color: #00f2fe;
+      flex-shrink: 0;
+    }
+    .intro-btn-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+    }
+    .intro-btn-text .main-text {
+      font-size: 18px;
+      font-weight: 800;
+      color: #030813;
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+    }
+    .intro-btn-text .sub-text {
+      font-size: 13px;
+      font-weight: 700;
+      color: rgba(3, 8, 19, 0.75);
+      letter-spacing: 0.02em;
+      line-height: 1.25;
+      text-transform: uppercase;
+    }
+    .intro-direct-skip {
+      margin-top: 22px;
+    }
+    .intro-skip-link {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.65);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 8px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .intro-skip-link:hover {
+      color: var(--primary-cyan);
+      background: rgba(255, 255, 255, 0.06);
+    }
+    @media (max-width: 640px) {
+      .intro-start-modal {
+        padding: 30px 20px;
+      }
+      .intro-korean-title {
+        font-size: 22px;
+      }
+      .intro-start-btn {
+        padding: 14px 24px;
+        gap: 12px;
+        width: 100%;
+      }
+      .intro-btn-text .main-text {
+        font-size: 16px;
+      }
+      .intro-btn-text .sub-text {
+        font-size: 11px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Initial Cinematic Intro Start Overlay (Korean & English) -->
+  <div class="intro-start-overlay" id="introStartOverlay">
+    <div class="intro-start-modal">
+      <div class="intro-badge">NEW JERSEY HEALTHCARE ACCESS CENTER</div>
+      <h2 class="intro-korean-title">뉴저지 한인 의료 접근센터</h2>
+      <p class="intro-english-title">Healthcare Access Portal</p>
+      
+      <button class="intro-start-btn" id="introStartBtn" aria-label="소리와 함께 인트로 보기 / Watch Intro with Sound">
+        <div class="intro-btn-icon">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+          </svg>
+        </div>
+        <div class="intro-btn-text">
+          <span class="main-text">소리와 함께 인트로 보기</span>
+          <span class="sub-text">Watch Intro with Sound</span>
+        </div>
+      </button>
+
+      <div class="intro-direct-skip">
+        <button type="button" id="introSkipBtn" class="intro-skip-link">포털로 바로가기 · Skip to Portal ›</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full-Screen Video Background -->
+  <div class="video-viewport">
+    <video id="bgVideo" autoplay muted playsinline webkit-playsinline loop preload="auto">
+      <!-- Local ultra-fast video source -->
+      <source src="/uploads/videos/splash-video.mp4" type="video/mp4" />
+      <source src="uploads/videos/splash-video.mp4" type="video/mp4" />
+      <!-- Fallback direct stream from Google Drive -->
+      <source src="https://drive.usercontent.google.com/download?id=1ARUAgh6VJ5ckKoGjxyTdZtampzIva5AY&export=download" type="video/mp4" />
+    </video>
+  </div>
+
+  <!-- Ambient Contrast Scrim -->
+  <div class="video-scrim"></div>
+
+  <!-- Top Right Utility Controls -->
+  <div class="top-controls">
+    <!-- Sound Toggle -->
+    <button class="ctrl-pill-btn" id="soundToggleBtn" aria-label="소리 끄기">
+      <svg id="soundMutedIcon" viewBox="0 0 24 24" style="display:none;">
+        <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+      </svg>
+      <svg id="soundActiveIcon" viewBox="0 0 24 24">
+        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+      </svg>
+      <span id="soundLabel">소리 끄기</span>
+    </button>
+
+    <!-- Immediate Skip / Reveal Button -->
+    <button class="ctrl-pill-btn" id="skipActionBtn" aria-label="인트로 건너뛰기">
+      <span id="skipLabel">바로가기 ⏭</span>
+    </button>
+  </div>
+
+  <!-- 10-Second Countdown Timeline Progress Indicator -->
+  <div class="timeline-container" id="timelineContainer">
+    <div class="timeline-bar-bg">
+      <div class="timeline-bar-fill" id="timelineBar"></div>
+    </div>
+    <div class="timeline-label">
+      <span>Portal Starting in <strong id="timerSec" style="color:var(--primary-cyan);">17</strong>s</span>
+      <span>·</span>
+      <span class="timeline-skip-link" id="timelineSkipBtn">지금 열기 ›</span>
+    </div>
+  </div>
+
+  <!-- Interactive Stage Overlay -->
+  <main class="splash-stage">
+    <div class="content-box">
+
+      <!-- ========================================================
+           WHITE TEXT BLOCK (Smooth Pop-Out after 10s)
+           ======================================================== -->
+      <header class="smooth-white-text-block" id="whiteTextBlock">
+        <div class="text-eyebrow">
+          <span class="eyebrow-pulse"></span>
+          NEW JERSEY HEALTHCARE ACCESS CENTER
+        </div>
+        <p class="hero-korean-subtitle">뉴저지 한인 의료 접근센터/포털</p>
+        <h1 class="hero-english-title">Healthcare Access Portal</h1>
+        <p class="hero-lead-description">
+          뉴저지 한인 동포 및 취약계층을 위한 종합 의료 접근, 메디케어·ACA 맞춤 지원, 무료 검진 및 전문의 상담 포털입니다.
+        </p>
+      </header>
+
+      <!-- ========================================================
+           BUTTONS FROM NJACCESSPORTAL (Spring Pop-Out after 10s)
+           ======================================================== -->
+      <nav class="buttons-container" id="buttonsContainer" aria-label="주요 포털 바로가기">
+        
+        <!-- 1. 홈페이지 (Home) -->
+        <a href="https://kor2.njaccessportal.com/" class="portal-pop-btn" id="btnHome" title="의료접근포털 홈페이지">
+          <div class="btn-text-col">
+            <span class="btn-main-label">홈페이지</span>
+            <span class="btn-sub-label">공식 메인 포털</span>
+          </div>
+        </a>
+
+        <!-- 2. 메디케어 & ACA -->
+        <a href="https://kor2.njaccessportal.com/medicare" class="portal-pop-btn" id="btnMedicare" title="메디케어 & ACA 건강보험 안내">
+          <div class="btn-text-col">
+            <span class="btn-main-label">메디케어 &amp; ACA</span>
+            <span class="btn-sub-label">건강보험 종합 가이드</span>
+          </div>
+        </a>
+
+        <!-- 3. 뉴저지 의료/정보 나눔 포럼 -->
+        <a href="https://kor2.njaccessportal.com/forum" class="portal-pop-btn" id="btnForum" title="뉴저지 의료/정보 나눔 포럼">
+          <div class="btn-text-col">
+            <span class="btn-main-label">뉴저지 의료/정보 나눔 포럼</span>
+          </div>
+        </a>
+
+        <!-- 4. 환자도우미 -->
+        <a href="https://kor2.njaccessportal.com/tool" class="portal-pop-btn" id="btnTool" title="환자 맞춤형 복지 및 네비게이션 도우미">
+          <div class="btn-text-col">
+            <span class="btn-main-label">환자도우미</span>
+            <span class="btn-sub-label">의료비·자선진료 네비게이터</span>
+          </div>
+        </a>
+
+        <!-- 5. For Hospitals and Physician Groups -->
+        <a href="https://engine.njaccessportal.com/" target="_blank" rel="noopener" class="portal-pop-btn btn-enterprise" id="btnEnterprise" title="의료기관 및 병원 그룹 파트너십">
+          <div class="btn-text-col">
+            <span class="btn-main-label">For Hospitals &amp; Physicians</span>
+            <span class="btn-sub-label">Provider Enterprise Network</span>
+          </div>
+        </a>
+
+      </nav>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      const TOTAL_WAIT_MS = 17000; // 17 seconds
+      const video = document.getElementById('bgVideo');
+      const timelineBar = document.getElementById('timelineBar');
+      const timerSec = document.getElementById('timerSec');
+      const soundToggleBtn = document.getElementById('soundToggleBtn');
+      const soundMutedIcon = document.getElementById('soundMutedIcon');
+      const soundActiveIcon = document.getElementById('soundActiveIcon');
+      const soundLabel = document.getElementById('soundLabel');
+      const skipActionBtn = document.getElementById('skipActionBtn');
+      const skipLabel = document.getElementById('skipLabel');
+      const timelineSkipBtn = document.getElementById('timelineSkipBtn');
+      const currentYear = document.getElementById('currentYear');
+
+      const introStartOverlay = document.getElementById('introStartOverlay');
+      const introStartBtn = document.getElementById('introStartBtn');
+      const introSkipBtn = document.getElementById('introSkipBtn');
+
+      if (currentYear) {
+        currentYear.textContent = new Date().getFullYear();
+      }
+
+      let isRevealed = false;
+      let isIntroRunning = false;
+      let startTime = performance.now();
+
+      // Trigger the pop-out reveal
+      function triggerReveal() {
+        if (isRevealed) return;
+        isRevealed = true;
+        if (introStartOverlay) {
+          introStartOverlay.classList.add('is-hidden');
+        }
+        document.body.classList.add('is-revealed');
+        if (skipLabel) {
+          skipLabel.textContent = '다시보기 ↺';
+        }
+      }
+
+      // Replay functionality
+      function replayIntro() {
+        isRevealed = false;
+        document.body.classList.remove('is-revealed');
+        if (skipLabel) {
+          skipLabel.textContent = '바로가기 ⏭';
+        }
+        if (video) {
+          video.currentTime = 0;
+          video.muted = false;
+          video.volume = 1.0;
+          video.play().catch(function () {});
+          if (soundMutedIcon) soundMutedIcon.style.display = 'none';
+          if (soundActiveIcon) soundActiveIcon.style.display = 'block';
+          if (soundLabel) soundLabel.textContent = '소리 끄기';
+        }
+        startTime = performance.now();
+        requestAnimationFrame(updateTimeline);
+      }
+
+      // Timeline frame animation
+      function updateTimeline(now) {
+        if (isRevealed || !isIntroRunning) return;
+
+        let elapsedMs = now - startTime;
+        if (video && video.currentTime > 0 && !video.paused) {
+          elapsedMs = Math.max(elapsedMs, video.currentTime * 1000);
+        }
+
+        const progress = Math.min(elapsedMs / TOTAL_WAIT_MS, 1);
+        const remainingSec = Math.max(0, Math.ceil((TOTAL_WAIT_MS - elapsedMs) / 1000));
+
+        if (timelineBar) {
+          timelineBar.style.width = (progress * 100).toFixed(1) + '%';
+        }
+        if (timerSec) {
+          timerSec.textContent = remainingSec;
+        }
+
+        if (elapsedMs >= TOTAL_WAIT_MS) {
+          triggerReveal();
+        } else {
+          requestAnimationFrame(updateTimeline);
+        }
+      }
+
+      // Start Intro with Full Sound
+      function startIntroWithSound() {
+        if (isIntroRunning) return;
+        isIntroRunning = true;
+        if (introStartOverlay) {
+          introStartOverlay.classList.add('is-hidden');
+        }
+        if (video) {
+          video.currentTime = 0;
+          video.muted = false;
+          video.volume = 1.0;
+          video.play().catch(function () {
+            // In case of browser edge case
+            video.muted = false;
+            video.play().catch(function () {});
+          });
+          if (soundMutedIcon) soundMutedIcon.style.display = 'none';
+          if (soundActiveIcon) soundActiveIcon.style.display = 'block';
+          if (soundLabel) soundLabel.textContent = '소리 끄기';
+        }
+        startTime = performance.now();
+        requestAnimationFrame(updateTimeline);
+      }
+
+      if (introStartBtn) {
+        introStartBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          startIntroWithSound();
+        });
+      }
+
+      if (introSkipBtn) {
+        introSkipBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          triggerReveal();
+        });
+      }
+
+      // Allow clicking background of modal to also start
+      if (introStartOverlay) {
+        introStartOverlay.addEventListener('click', function (e) {
+          if (e.target === introStartOverlay) {
+            startIntroWithSound();
+          }
+        });
+      }
+
+      // Gentle ambient background loop while waiting for start click
+      if (video) {
+        video.muted = true;
+        video.play().catch(function () {});
+      }
+
+      // Skip Buttons
+      if (skipActionBtn) {
+        skipActionBtn.addEventListener('click', function () {
+          if (isRevealed) {
+            replayIntro();
+          } else {
+            triggerReveal();
+          }
+        });
+      }
+
+      if (timelineSkipBtn) {
+        timelineSkipBtn.addEventListener('click', function () {
+          triggerReveal();
+        });
+      }
+
+      // Sound Toggle Button
+      if (soundToggleBtn && video) {
+        soundToggleBtn.addEventListener('click', function () {
+          if (video.muted) {
+            video.muted = false;
+            video.volume = 1.0;
+            video.play().catch(function () {});
+            soundMutedIcon.style.display = 'none';
+            soundActiveIcon.style.display = 'block';
+            soundLabel.textContent = '소리 끄기';
+          } else {
+            video.muted = true;
+            soundMutedIcon.style.display = 'block';
+            soundActiveIcon.style.display = 'none';
+            soundLabel.textContent = '소리 켜기';
+          }
+        });
+      }
+
+    })();
+  </script>
+</body>
+</html>

@@ -1978,7 +1978,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
   
 
   <script src="/js/cms-client.js?v=<?= time() ?>"></script>
-  <script src="/js/fixes.js?v=<?= time() ?>"></script>
+  <script src="/js/fixes.js?v=5.1.0 time() ?>"></script>
 <script src="/js/njap-translate.js?v=3.0.0"></script>
 </body>
 </html>

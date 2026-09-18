@@ -250,17 +250,17 @@
     }).join('');
 
     container.innerHTML = [
-      '<div class="relative w-full overflow-hidden bg-slate-950 select-none" style="aspect-ratio:1920/566;min-height:230px;width:100%;max-height:480px;overflow:hidden;" onmouseenter="window.cmsPauseBillboard()" onmouseleave="window.cmsResumeBillboard()">',
-      '  <a href="' + escapeHtml(targetLink) + '" class="block relative w-full h-full cursor-pointer" title="' + escapeHtml(b.title) + '">',
-      '    <div class="w-full h-full relative" style="overflow:hidden;min-height:230px;">',
-      '      <div id="bb-media-slot" class="w-full h-full" style="min-height:230px;"></div>',
+      '<div class="relative w-full overflow-hidden bg-slate-950 select-none" style="height:clamp(230px,29.48vw,480px);min-height:230px;max-height:480px;width:100%;position:relative;overflow:hidden;" onmouseenter="window.cmsPauseBillboard()" onmouseleave="window.cmsResumeBillboard()">',
+      '  <a href="' + escapeHtml(targetLink) + '" class="block absolute inset-0 w-full h-full cursor-pointer select-none" title="' + escapeHtml(b.title) + '">',
+      '    <div class="absolute inset-0 w-full h-full overflow-hidden" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;">',
+      '      <div id="bb-media-slot" class="w-full h-full" style="position:absolute;inset:0;width:100%;height:100%;"></div>',
       '      <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent pointer-events-none" style="z-index:2;"></div>',
       '      <div class="absolute inset-0 bg-gradient-to-r from-black/65 via-transparent to-black/20 pointer-events-none" style="z-index:2;"></div>',
       '      <div class="absolute inset-0 billboard1-vignette" style="z-index:3;"></div>',
       '    </div>',
       '    <!-- Top Layer (Layer 3): Text, Badges, and Buttons -->',
-      '    <div class="absolute inset-0 flex items-end" style="z-index:10;">',
-      '      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-4 sm:pb-6 flex items-end justify-between gap-4">',
+      '    <div class="absolute inset-0 flex items-end billboard-text-layer pointer-events-none" style="position:absolute;inset:0;display:flex;align-items:flex-end;z-index:10;">',
+      '      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-4 sm:pb-6 flex items-end justify-between gap-4 pointer-events-auto">',
       '        <div class="max-w-3xl space-y-1 sm:space-y-2">',
       '          <div class="flex items-center gap-2">',
       '            <span class="bg-red-600 text-white text-[10px] sm:text-xs font-extrabold px-3 py-0.5 sm:py-1 rounded-full uppercase tracking-wider shadow">' + escapeHtml(b.subtitle || b.category || 'SPECIAL CAMPAIGN') + '</span>',
@@ -284,8 +284,11 @@
       if (isVideo) {
         var vid = document.createElement('video');
         vid.className = 'w-full h-full object-cover billboard-img';
-        vid.style.webkitTransform = 'translateZ(0)';
-        vid.style.transform = 'translateZ(0)';
+        vid.style.position = 'absolute';
+        vid.style.inset = '0';
+        vid.style.width = '100%';
+        vid.style.height = '100%';
+        vid.style.objectFit = 'cover';
         vid.setAttribute('muted', '');
         vid.setAttribute('playsinline', '');
         vid.setAttribute('webkit-playsinline', '');
@@ -483,15 +486,15 @@
     }).join('');
 
     container.innerHTML = [
-      '<div class="relative w-full overflow-hidden bg-slate-950 select-none" style="aspect-ratio:1920/566;min-height:230px;width:100%;max-height:480px;overflow:hidden;" onmouseenter="window.cmsPauseBillboard2()" onmouseleave="window.cmsResumeBillboard2()">',
-      '  <a href="' + escapeHtml(targetLink) + '" class="block relative w-full h-full cursor-pointer" title="' + escapeHtml(b.title) + '">',
-      '    <div class="w-full h-full relative" style="overflow:hidden;min-height:230px;">',
-      '      <div id="bb2-media-slot" class="w-full h-full" style="min-height:230px;"></div>',
-      '      <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/15 pointer-events-none"></div>',
-      '      <div class="absolute inset-0 bg-gradient-to-r from-black/75 via-transparent to-black/25 pointer-events-none"></div>',
+      '<div class="relative w-full overflow-hidden bg-slate-950 select-none" style="height:clamp(230px,29.48vw,480px);min-height:230px;max-height:480px;width:100%;position:relative;overflow:hidden;" onmouseenter="window.cmsPauseBillboard2()" onmouseleave="window.cmsResumeBillboard2()">',
+      '  <a href="' + escapeHtml(targetLink) + '" class="block absolute inset-0 w-full h-full cursor-pointer select-none" title="' + escapeHtml(b.title) + '">',
+      '    <div class="absolute inset-0 w-full h-full overflow-hidden" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;">',
+      '      <div id="bb2-media-slot" class="w-full h-full" style="position:absolute;inset:0;width:100%;height:100%;"></div>',
+      '      <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/15 pointer-events-none" style="z-index:2;"></div>',
+      '      <div class="absolute inset-0 bg-gradient-to-r from-black/75 via-transparent to-black/25 pointer-events-none" style="z-index:2;"></div>',
       '    </div>',
-      '    <div class="absolute inset-0 flex items-end">',
-      '      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-4 sm:pb-6 flex items-end justify-between gap-4">',
+      '    <div class="absolute inset-0 flex items-end billboard-text-layer pointer-events-none" style="position:absolute;inset:0;display:flex;align-items:flex-end;z-index:10;">',
+      '      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-4 sm:pb-6 flex items-end justify-between gap-4 pointer-events-auto">',
       '        <div class="max-w-3xl space-y-1 sm:space-y-2">',
       '          <div class="flex items-center gap-2">',
       '            <span class="bg-red-600 text-white text-[10px] sm:text-xs font-extrabold px-3 py-0.5 sm:py-1 rounded-full uppercase tracking-wider shadow">' + escapeHtml(b.subtitle || b.category || 'SPECIAL CAMPAIGN') + '</span>',
@@ -513,8 +516,11 @@
       if (isVideo) {
         var vid = document.createElement('video');
         vid.className = 'w-full h-full object-cover billboard-img';
-        vid.style.webkitTransform = 'translateZ(0)';
-        vid.style.transform = 'translateZ(0)';
+        vid.style.position = 'absolute';
+        vid.style.inset = '0';
+        vid.style.width = '100%';
+        vid.style.height = '100%';
+        vid.style.objectFit = 'cover';
         vid.setAttribute('muted', '');
         vid.setAttribute('playsinline', '');
         vid.setAttribute('webkit-playsinline', '');
@@ -1340,14 +1346,7 @@
           if (!v.hasAttribute('muted')) v.setAttribute('muted', '');
           if (!v.hasAttribute('playsinline')) v.setAttribute('playsinline', '');
           if (!v.hasAttribute('webkit-playsinline')) v.setAttribute('webkit-playsinline', '');
-          if (v.style) {
-            v.style.webkitTransform = 'translateZ(0)';
-            v.style.transform = 'translateZ(0)';
-          }
           if (v.paused) {
-            if (v.networkState === HTMLMediaElement.NETWORK_EMPTY || v.readyState === 0) {
-              try { v.load(); } catch(e) {}
-            }
             var p = v.play();
             if (p && p.catch) p.catch(function() {});
             if (v.paused) stillPaused = true;
@@ -1358,12 +1357,8 @@
       return !stillPaused;
     }
 
-    // Try immediately and at progressive intervals after DOM is fully painted
+    // Try play once DOM is ready
     ensureAllBillboardVideosPlay();
-    setTimeout(ensureAllBillboardVideosPlay, 50);
-    setTimeout(ensureAllBillboardVideosPlay, 150);
-    setTimeout(ensureAllBillboardVideosPlay, 400);
-    setTimeout(ensureAllBillboardVideosPlay, 1000);
 
     // Viewport Intersection Observer for Safari power-saving & scrolled-in billboards
     if (window.IntersectionObserver) {
