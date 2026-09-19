@@ -3,9 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const BASE_DIR = '/Users/ejyoon/Desktop/KACCESS';
-const TUS_URL = 'https://srv1709-files.hstgr.io/rest/1f4136099826cc5e/api/tus/public_html';
-const AUTH_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJsb2NhbGUiOiJlbl9VUyIsInZpZXdNb2RlIjoibGlzdCIsInNpbmdsZUNsaWNrIjpmYWxzZSwicmVkaXJlY3RBZnRlckNvcHlNb3ZlIjpmYWxzZSwicGVybSI6eyJhZG1pbiI6ZmFsc2UsImV4ZWN1dGUiOmZhbHNlLCJjcmVhdGUiOnRydWUsInJlbmFtZSI6dHJ1ZSwibW9kaWZ5Ijp0cnVlLCJkZWxldGUiOnRydWUsInNoYXJlIjpmYWxzZSwiZG93bmxvYWQiOnRydWV9LCJjb21tYW5kcyI6W10sImxvY2tQYXNzd29yZCI6dHJ1ZSwiaGlkZURvdGZpbGVzIjpmYWxzZSwiZGF0ZUZvcm1hdCI6ZmFsc2UsInVzZXJuYW1lIjoidTczODM1ODExMCIsImFjZUVkaXRvclRoZW1lIjoiIn0sImlzcyI6IkZpbGUgQnJvd3NlciIsImV4cCI6MTc4OTcxNjkzMSwiaWF0IjoxNzg5Njk1MzMxfQ.Tsr3nWzNtffOhx-Qt6oWPWWC-DU8WUZSbrrzLf_vAu4';
-const REST_AUTH_KEY = '26326db0f233184413854b1d60ca7ebe40ccfaf80f1532ce916c667dc82377c0-1f4136099826cc5e';
+const TUS_URL = 'https://srv1709-files.hstgr.io/rest/12c324f5d8916245/api/tus/public_html';
+const AUTH_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJsb2NhbGUiOiJlbl9VUyIsInZpZXdNb2RlIjoibGlzdCIsInNpbmdsZUNsaWNrIjpmYWxzZSwicmVkaXJlY3RBZnRlckNvcHlNb3ZlIjpmYWxzZSwicGVybSI6eyJhZG1pbiI6ZmFsc2UsImV4ZWN1dGUiOmZhbHNlLCJjcmVhdGUiOnRydWUsInJlbmFtZSI6dHJ1ZSwibW9kaWZ5Ijp0cnVlLCJkZWxldGUiOnRydWUsInNoYXJlIjpmYWxzZSwiZG93bmxvYWQiOnRydWV9LCJjb21tYW5kcyI6W10sImxvY2tQYXNzd29yZCI6dHJ1ZSwiaGlkZURvdGZpbGVzIjpmYWxzZSwiZGF0ZUZvcm1hdCI6ZmFsc2UsInVzZXJuYW1lIjoidTczODM1ODExMCIsImFjZUVkaXRvclRoZW1lIjoiIn0sImlzcyI6IkZpbGUgQnJvd3NlciIsImV4cCI6MTc4OTg3MDQzNCwiaWF0IjoxNzg5ODQ4ODM0fQ.KL1HzwoIVTCq65Lklqr1hY-TI76GJQIfyfEZoEkIhjg';
+const REST_AUTH_KEY = 'd46016f2cf396b00070f437fd2336f82718d9f5578675090391e6a0f65951eed-12c324f5d8916245';
 
 const filesToUpload = [
   '.htaccess',
@@ -64,8 +64,20 @@ const filesToUpload = [
   'supabase_forum_schema.sql',
   'splash.html',
   'uploads/videos/splash-video.mp4',
+  'uploads/videos/excelcare_billboard_bg.mp4',
   'uploads/images/event_poster_20260915_031056_8b8ab63a.png',
-  'uploads/images/forum_community_banner.jpg'
+  'uploads/images/forum_community_banner.jpg',
+  'uploads/images/excelcare/excelcare-norwood-4.jpg',
+  'uploads/images/excelcare/excelcare-norwood-amenities.jpg',
+  'uploads/images/excelcare/excel-care-smaller-file-size-1.jpg',
+  'uploads/images/excelcare/excelcare-norwood-1.png',
+  'uploads/images/excelcare/image-2-1.png',
+  'uploads/images/excelcare/image-3.png',
+  'uploads/images/excelcare/image-4.png',
+  'uploads/images/excelcare/norwood-2-1.png',
+  'uploads/images/excelcare/norwood-5.jpg',
+  'uploads/images/excelcare/norwood-8-1.jpg',
+  'uploads/images/excelcare/norwood-new-logo.png'
 ];
 
 async function uploadFile(relPath) {

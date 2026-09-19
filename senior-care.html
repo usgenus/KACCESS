@@ -8,12 +8,12 @@
   <meta name="keywords" content="시니어 케어, 뉴저지 재활병원, 뉴저지 장기요양원, senior care NJ, skilled nursing facility, rehab center, nj healthcare access portal, nj healthcare access center, healthcare access center, 뉴저지 의료접근센터, 의료접근, 의료접근센터, post-acute rehab" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <link rel="canonical" href="https://kor2.njaccessportal.com/senior-care" />
-
-  <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
-  <link rel="icon" href="/favicon.ico?v=2" sizes="16x16 32x32 48x48" type="image/x-icon" />
-  <link rel="icon" href="/favicon-192.png?v=2" sizes="192x192" type="image/png" />
-  <link rel="icon" href="/favicon-512.png?v=2" sizes="512x512" type="image/png" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2" />
+    <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
+<link rel="icon" href="/favicon.ico?v=2" sizes="256x256" type="image/x-icon" />
+  <script>
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+  </script>
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
@@ -93,15 +93,15 @@
       animation-play-state: paused;
     }
 
-    /* 100vw Billboard Sections */
+    /* Fullwidth Billboard Sections (100% Container Span) */
     .billboard-fullwidth {
-      width: 100vw !important;
-      max-width: 100vw !important;
+      width: 100% !important;
+      max-width: 100% !important;
       position: relative !important;
-      left: 50% !important;
-      right: 50% !important;
-      margin-left: -50vw !important;
-      margin-right: -50vw !important;
+      left: 0 !important;
+      right: 0 !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
       box-sizing: border-box !important;
     }
 
@@ -167,12 +167,65 @@
     .senior-grid-3 {
       display: grid !important;
       grid-template-columns: 1fr !important;
-      gap: 24px !important;
+      gap: 28px !important;
     }
     @media (min-width: 768px) {
       .senior-grid-3 {
         grid-template-columns: repeat(3, 1fr) !important;
+        gap: 32px !important;
       }
+    }
+    .senior-philosophy-card {
+      background: #ffffff !important;
+      border: 1px solid rgba(226, 232, 240, 0.9) !important;
+      border-radius: 24px !important;
+      padding: 36px 30px !important;
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.02) !important;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      position: relative !important;
+      overflow: hidden !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+    }
+    .senior-philosophy-card::before {
+      content: '' !important;
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      height: 4px !important;
+      background: transparent !important;
+      transition: background 0.3s ease !important;
+    }
+    .senior-philosophy-card:hover {
+      transform: translateY(-4px) !important;
+      box-shadow: 0 20px 35px -10px rgba(240, 90, 79, 0.16), 0 1px 3px rgba(0, 0, 0, 0.02) !important;
+      border-color: rgba(240, 90, 79, 0.35) !important;
+    }
+    .senior-philosophy-card:hover::before {
+      background: linear-gradient(90deg, #f05a4f 0%, #ff8f85 100%) !important;
+    }
+    .senior-card-step-badge {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: 38px !important;
+      height: 38px !important;
+      border-radius: 10px !important;
+      background: #fef2f1 !important;
+      color: #f05a4f !important;
+      font-size: 14px !important;
+      font-weight: 800 !important;
+      border: 1px solid rgba(240, 90, 79, 0.25) !important;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+    }
+    .senior-card-eyebrow {
+      font-size: 11px !important;
+      font-weight: 700 !important;
+      color: #f05a4f !important;
+      letter-spacing: 0.08em !important;
+      text-transform: uppercase !important;
     }
 
     /* 4-card / 8-card grid (Rehab domains & Clinical capabilities) */
@@ -224,32 +277,32 @@
     /* Clinical Capabilities (Section C) Full Dark Background & Cards */
     .senior-clinical-section {
       background: #090f1d !important;
-      background: linear-gradient(180deg, #090f1d 0%, #0d1629 50%, #090f1d 100%) !important;
+      background: linear-gradient(180deg, #090f1d 0%, #111a2e 50%, #090f1d 100%) !important;
       color: #ffffff !important;
-      width: 100vw !important;
-      max-width: 100vw !important;
+      width: 100% !important;
+      max-width: 100% !important;
       position: relative !important;
-      left: 50% !important;
-      right: 50% !important;
-      margin-left: -50vw !important;
-      margin-right: -50vw !important;
-      padding-top: 5rem !important;
-      padding-bottom: 5rem !important;
+      left: 0 !important;
+      right: 0 !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      padding-top: 5.5rem !important;
+      padding-bottom: 5.5rem !important;
       box-sizing: border-box !important;
     }
     .senior-clinical-card {
-      background: #111e38 !important;
-      background: linear-gradient(180deg, #152545 0%, #0d1830 100%) !important;
-      border: 1px solid #1e3a66 !important;
-      border-radius: 16px !important;
+      background: #111a2e !important;
+      background: linear-gradient(180deg, #162238 0%, #0d1627 100%) !important;
+      border: 1px solid #1e293b !important;
+      border-radius: 18px !important;
       padding: 24px !important;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
       transition: all 0.25s ease !important;
     }
     .senior-clinical-card:hover {
-      border-color: #3b82f6 !important;
+      border-color: #f05a4f !important;
       transform: translateY(-3px) !important;
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6), 0 0 16px rgba(59, 130, 246, 0.2) !important;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6), 0 0 20px rgba(240, 90, 79, 0.22) !important;
     }
     .senior-clinical-card h4 {
       color: #ffffff !important;
@@ -271,13 +324,12 @@
 
     /* CJR Spotlight Banner */
     .cjr-banner {
-      background: #0f1c3f !important;
-      background: linear-gradient(135deg, #10214c 0%, #1e1b4b 55%, #0f172a 100%) !important;
-      border: 1px solid #2e4374 !important;
-      border-radius: 16px !important;
-      padding: 32px 36px !important;
+      background: linear-gradient(135deg, #162238 0%, #0f172a 60%, #2a1618 100%) !important;
+      border: 1px solid rgba(240, 90, 79, 0.35) !important;
+      border-radius: 20px !important;
+      padding: 34px 38px !important;
       color: #ffffff !important;
-      box-shadow: 0 10px 25px rgba(15, 28, 63, 0.4) !important;
+      box-shadow: 0 15px 35px -10px rgba(15, 23, 42, 0.6), 0 0 30px rgba(240, 90, 79, 0.1) !important;
       margin-bottom: 2.5rem !important;
       position: relative !important;
       overflow: hidden !important;
@@ -299,9 +351,9 @@
       display: inline-flex !important;
       align-items: center !important;
       gap: 8px !important;
-      background: rgba(59, 130, 246, 0.25) !important;
-      border: 1px solid rgba(96, 165, 250, 0.45) !important;
-      color: #93c5fd !important;
+      background: rgba(240, 90, 79, 0.2) !important;
+      border: 1px solid rgba(240, 90, 79, 0.45) !important;
+      color: #ff9087 !important;
       font-size: 12px !important;
       font-weight: 700 !important;
       padding: 5px 14px !important;
@@ -312,204 +364,329 @@
       display: inline-flex !important;
       align-items: center !important;
       gap: 6px !important;
-      color: #cbd5e1 !important;
+      color: #f1f5f9 !important;
       font-size: 13px !important;
       font-weight: 600 !important;
       background: rgba(255, 255, 255, 0.08) !important;
-      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
       padding: 6px 14px !important;
       border-radius: 8px !important;
     }
 
-    /* Primary Action Buttons */
+    /* Primary Action Buttons - Excelcare Theme */
+    .btn-excelcare-action,
     .btn-blue-action {
-      background: #2563eb !important;
-      background: linear-gradient(135deg, #2563eb 0%, #4338ca 100%) !important;
+      background: #f05a4f !important;
+      background: linear-gradient(135deg, #f05a4f 0%, #d93829 100%) !important;
       color: #ffffff !important;
       border: none !important;
+      box-shadow: 0 10px 25px -5px rgba(240, 90, 79, 0.4) !important;
+      transition: all 0.25s ease !important;
+      cursor: pointer !important;
     }
+    .btn-excelcare-action:hover,
     .btn-blue-action:hover {
-      background: linear-gradient(135deg, #1d4ed8 0%, #3730a3 100%) !important;
+      background: linear-gradient(135deg, #e0483d 0%, #be2b1d 100%) !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 14px 28px -5px rgba(240, 90, 79, 0.5) !important;
     }
 
-    /* Video Player Dark Theme (Identical to Homepage) */
+    /* Video Player - Excelcare Brand Theme (Coral #f05a4f & Deep Slate #0f172a / #162032) */
+    .video-theme-section {
+      background: linear-gradient(180deg, #0f172a 0%, #162032 100%) !important;
+      border-top: 1px solid #1e293b !important;
+      border-bottom: 1px solid #1e293b !important;
+    }
     .video-theme-card {
       background-color: transparent !important;
       border: none !important;
       border-radius: 0 !important;
       overflow: visible !important;
       box-shadow: none !important;
+      padding: 0 !important;
     }
     .video-theme-topbar {
-      background-color: #181818 !important;
-      border-top: 1px solid #2e2e2e !important;
-      border-bottom: 1px solid #2e2e2e !important;
+      background-color: #1e293b !important;
+      border: 1px solid #334155 !important;
       display: flex !important;
-      align-items: stretch !important;
-      overflow-x: auto !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      padding: 10px 16px !important;
+      border-radius: 14px !important;
+      margin-bottom: 24px !important;
+      gap: 12px !important;
+      flex-wrap: wrap !important;
+      max-width: 1152px !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
     }
     .video-theme-home-btn {
-      background-color: #1e1e1e !important;
-      color: #d1d5db !important;
-      padding: 12px 18px !important;
-      border: none !important;
-      border-right: 1px solid #2e2e2e !important;
+      background-color: #0f172a !important;
+      color: #e2e8f0 !important;
+      padding: 8px 14px !important;
+      border: 1px solid #334155 !important;
+      border-radius: 8px !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
       cursor: pointer !important;
-      transition: background-color 0.2s, color 0.2s !important;
+      transition: all 0.2s !important;
       flex-shrink: 0 !important;
     }
     .video-theme-home-btn:hover {
-      background-color: #333333 !important;
+      background-color: #f05a4f !important;
+      border-color: #f05a4f !important;
       color: #ffffff !important;
     }
     .video-theme-categories {
       display: flex !important;
       align-items: center !important;
-      gap: 6px !important;
-      padding: 6px 12px !important;
+      gap: 8px !important;
       overflow-x: auto !important;
       white-space: nowrap !important;
-      scrollbar-width: thin !important;
+      scrollbar-width: none !important;
+      padding: 4px 0 !important;
+    }
+    .video-theme-categories::-webkit-scrollbar {
+      display: none !important;
     }
     .video-theme-cat-btn {
-      background-color: #242424 !important;
-      color: #9ca3af !important;
-      font-size: 12px !important;
+      background-color: #0f172a !important;
+      color: #94a3b8 !important;
+      font-size: 13px !important;
       font-weight: 600 !important;
-      padding: 6px 14px !important;
-      border-radius: 4px !important;
-      border: 1px solid #333333 !important;
+      padding: 7px 16px !important;
+      border-radius: 8px !important;
+      border: 1px solid #334155 !important;
       cursor: pointer !important;
       transition: all 0.2s ease !important;
       white-space: nowrap !important;
     }
     .video-theme-cat-btn:hover {
-      background-color: #383838 !important;
+      background-color: #1e293b !important;
       color: #ffffff !important;
+      border-color: #f05a4f !important;
     }
     .video-theme-cat-btn.active {
-      background-color: #1e40af !important;
+      background-color: #f05a4f !important;
       color: #ffffff !important;
-      border-color: #3b82f6 !important;
+      border-color: #f05a4f !important;
+      box-shadow: 0 4px 14px rgba(240, 90, 79, 0.4) !important;
     }
-    .video-theme-layout {
-      display: flex !important;
-      flex-direction: column !important;
-      background-color: #121212 !important;
-      border: 1px solid #242424 !important;
-      border-top: none !important;
-    }
-    @media (min-width: 1024px) {
-      .video-theme-layout {
-        display: grid !important;
-        grid-template-columns: 380px 1fr !important;
-      }
-    }
-    .video-theme-sidebar {
-      background-color: #161616 !important;
-      border-right: 1px solid #242424 !important;
-      display: flex !important;
-      flex-direction: column !important;
-      max-height: 540px !important;
-      overflow-y: auto !important;
-    }
-    .video-theme-playlist {
-      flex: 1 !important;
-      overflow-y: auto !important;
-    }
-    .video-theme-item {
-      display: flex !important;
-      gap: 12px !important;
-      padding: 12px 14px !important;
-      border-bottom: 1px solid #222222 !important;
-      cursor: pointer !important;
-      transition: background-color 0.2s !important;
-      align-items: center !important;
-    }
-    .video-theme-item:hover {
-      background-color: #202020 !important;
-    }
-    .video-theme-item.active {
-      background-color: #1e293b !important;
-      border-left: 3px solid #3b82f6 !important;
-    }
-    .video-theme-item-thumb {
-      position: relative !important;
-      width: 105px !important;
-      height: 62px !important;
-      min-width: 105px !important;
-      border-radius: 4px !important;
-      overflow: hidden !important;
-      background-color: #000000 !important;
-      flex-shrink: 0 !important;
-    }
-    .video-theme-item-thumb img {
+    
+    /* Center Big Screen Monitor - Full & Expansive */
+    .video-center-container {
+      max-width: 1152px !important;
+      margin: 0 auto !important;
       width: 100% !important;
-      height: 100% !important;
-      object-fit: cover !important;
-    }
-    .video-theme-item-duration {
-      position: absolute !important;
-      bottom: 3px !important;
-      right: 3px !important;
-      background: rgba(0, 0, 0, 0.8) !important;
-      color: #ffffff !important;
-      font-size: 10px !important;
-      font-weight: 700 !important;
-      padding: 1px 4px !important;
-      border-radius: 3px !important;
-    }
-    .video-theme-item-text {
-      flex: 1 !important;
-      min-width: 0 !important;
-    }
-    .video-theme-item-title {
-      font-size: 13px !important;
-      font-weight: 600 !important;
-      color: #e2e8f0 !important;
-      line-height: 1.4 !important;
-      display: -webkit-box !important;
-      -webkit-line-clamp: 2 !important;
-      line-clamp: 2 !important;
-      -webkit-box-orient: vertical !important;
-      overflow: hidden !important;
-    }
-    .video-theme-item-meta {
-      font-size: 11px !important;
-      color: #94a3b8 !important;
-      margin-top: 4px !important;
-    }
-    .video-theme-main {
-      padding: 20px !important;
-      background-color: #121212 !important;
     }
     .video-theme-player-frame {
       position: relative !important;
       width: 100% !important;
       aspect-ratio: 16 / 9 !important;
       background-color: #000000 !important;
-      border-radius: 8px !important;
+      border-radius: 18px !important;
       overflow: hidden !important;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.6) !important;
+      border: 1px solid rgba(240, 90, 79, 0.25) !important;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9), 0 0 40px rgba(240, 90, 79, 0.08) !important;
     }
     .video-theme-play-btn {
-      width: 68px !important;
-      height: 48px !important;
-      background-color: rgba(0, 0, 0, 0.75) !important;
-      backdrop-filter: blur(4px) !important;
-      border-radius: 10px !important;
+      width: 80px !important;
+      height: 56px !important;
+      background-color: rgba(240, 90, 79, 0.92) !important;
+      backdrop-filter: blur(8px) !important;
+      border-radius: 16px !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
-      transition: all 0.25s ease !important;
-      border: 1px solid rgba(255, 255, 255, 0.2) !important;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      border: 1px solid rgba(255, 255, 255, 0.4) !important;
+      box-shadow: 0 10px 30px rgba(240, 90, 79, 0.5) !important;
     }
     .video-theme-play-btn:hover {
-      background-color: #dc2626 !important;
-      transform: scale(1.1) !important;
+      background-color: #e04b40 !important;
+      transform: scale(1.15) !important;
+      box-shadow: 0 14px 36px rgba(240, 90, 79, 0.7) !important;
+    }
+
+    /* Video Details Info Box */
+    .video-theme-info-box {
+      background-color: #162032 !important;
+      border: 1px solid #233147 !important;
+      border-radius: 16px !important;
+      padding: 22px 26px !important;
+      margin-top: 18px !important;
+      margin-bottom: 28px !important;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5) !important;
+    }
+
+    /* Thumbnails Row Directly Below Monitor */
+    .video-thumbs-section-header {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      margin-bottom: 14px !important;
+      padding: 0 4px !important;
+    }
+    .video-thumbs-nav-btn {
+      width: 38px !important;
+      height: 38px !important;
+      border-radius: 50% !important;
+      background-color: #1e293b !important;
+      border: 1px solid #334155 !important;
+      color: #e2e8f0 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      cursor: pointer !important;
+      transition: all 0.2s !important;
+    }
+    .video-thumbs-nav-btn:hover {
+      background-color: #f05a4f !important;
+      border-color: #f05a4f !important;
+      color: #ffffff !important;
+      transform: scale(1.06) !important;
+    }
+    .video-thumbs-wrapper {
+      position: relative !important;
+      width: 100% !important;
+    }
+    .video-thumbs-track {
+      display: flex !important;
+      gap: 16px !important;
+      overflow-x: auto !important;
+      scroll-snap-type: x mandatory !important;
+      scroll-behavior: smooth !important;
+      padding: 4px 4px 18px 4px !important;
+      scrollbar-width: thin !important;
+      scrollbar-color: #f05a4f #1e293b !important;
+    }
+    .video-thumbs-track::-webkit-scrollbar {
+      height: 6px !important;
+    }
+    .video-thumbs-track::-webkit-scrollbar-track {
+      background: #111827 !important;
+      border-radius: 4px !important;
+    }
+    .video-thumbs-track::-webkit-scrollbar-thumb {
+      background: #f05a4f !important;
+      border-radius: 4px !important;
+    }
+
+    /* Exactly 4 thumbnails visible at once on desktop, scrollable right for more */
+    .video-thumb-card {
+      flex: 0 0 calc(25% - 12px) !important;
+      min-width: 240px !important;
+      scroll-snap-align: start !important;
+      background-color: #162032 !important;
+      border: 1px solid #233147 !important;
+      border-radius: 14px !important;
+      overflow: hidden !important;
+      cursor: pointer !important;
+      transition: all 0.25s ease !important;
+      display: flex !important;
+      flex-direction: column !important;
+      text-align: left !important;
+    }
+    @media (max-width: 1024px) {
+      .video-thumb-card {
+        flex: 0 0 calc(33.333% - 11px) !important;
+        min-width: 210px !important;
+      }
+    }
+    @media (max-width: 768px) {
+      .video-thumb-card {
+        flex: 0 0 calc(50% - 8px) !important;
+        min-width: 190px !important;
+      }
+    }
+    @media (max-width: 480px) {
+      .video-thumb-card {
+        flex: 0 0 85% !important;
+      }
+    }
+    .video-thumb-card:hover {
+      background-color: #1c2a42 !important;
+      border-color: #f05a4f !important;
+      transform: translateY(-3px) !important;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.6) !important;
+    }
+    .video-thumb-card.active {
+      background-color: #1e2d48 !important;
+      border-color: #f05a4f !important;
+      box-shadow: 0 0 0 2px rgba(240, 90, 79, 0.7), 0 14px 32px rgba(0, 0, 0, 0.65) !important;
+    }
+    .video-thumb-media {
+      position: relative !important;
+      width: 100% !important;
+      aspect-ratio: 16 / 9 !important;
+      overflow: hidden !important;
+      background-color: #000000 !important;
+    }
+    .video-thumb-media img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      transition: transform 0.4s ease !important;
+    }
+    .video-thumb-card:hover .video-thumb-media img {
+      transform: scale(1.06) !important;
+    }
+    .video-thumb-duration {
+      position: absolute !important;
+      bottom: 6px !important;
+      right: 6px !important;
+      background: rgba(15, 23, 42, 0.9) !important;
+      color: #ffffff !important;
+      font-size: 11px !important;
+      font-weight: 700 !important;
+      padding: 2px 6px !important;
+      border-radius: 4px !important;
+      font-family: monospace !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    }
+    .video-thumb-playing-tag {
+      position: absolute !important;
+      top: 6px !important;
+      left: 6px !important;
+      background: #f05a4f !important;
+      color: #ffffff !important;
+      font-size: 10px !important;
+      font-weight: 700 !important;
+      padding: 2px 7px !important;
+      border-radius: 4px !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 4px !important;
+      box-shadow: 0 2px 8px rgba(240, 90, 79, 0.5) !important;
+    }
+    .video-thumb-content {
+      padding: 12px 14px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      flex: 1 !important;
+      justify-content: space-between !important;
+    }
+    .video-thumb-title {
+      font-size: 13px !important;
+      font-weight: 700 !important;
+      color: #f1f5f9 !important;
+      line-height: 1.4 !important;
+      display: -webkit-box !important;
+      -webkit-line-clamp: 2 !important;
+      -webkit-box-orient: vertical !important;
+      overflow: hidden !important;
+      margin-bottom: 6px !important;
+    }
+    .video-thumb-speaker {
+      font-size: 11px !important;
+      color: #94a3b8 !important;
+    }
+    .video-thumb-cat {
+      font-size: 11px !important;
+      color: #f05a4f !important;
+      font-weight: 600 !important;
+      margin-top: 4px !important;
     }
   </style>
   <script>
@@ -533,11 +710,24 @@
   <!-- Top Marquee Banner -->
   <div class="fixed top-0 left-0 right-0 z-50 h-[45px] overflow-hidden flex items-center" style="background:#000000">
     <div class="marquee-track whitespace-nowrap">
-      <?php for ($i = 0; $i < 6; $i++): ?>
+      <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12">
+          <span class="opacity-60 mr-3">✦</span>의료접근포탈: &quot;비영리 기관들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot;<span class="opacity-60 ml-3">✦</span>
+        </span>
         <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12">
           <span class="opacity-60 mr-3">✦</span>의료접근포탈: &quot;비영리 기관들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot;<span class="opacity-60 ml-3">✦</span>
         </span>
-      <?php endfor; ?>
+        <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12">
+          <span class="opacity-60 mr-3">✦</span>의료접근포탈: &quot;비영리 기관들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot;<span class="opacity-60 ml-3">✦</span>
+        </span>
+        <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12">
+          <span class="opacity-60 mr-3">✦</span>의료접근포탈: &quot;비영리 기관들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot;<span class="opacity-60 ml-3">✦</span>
+        </span>
+        <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12">
+          <span class="opacity-60 mr-3">✦</span>의료접근포탈: &quot;비영리 기관들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot;<span class="opacity-60 ml-3">✦</span>
+        </span>
+        <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12">
+          <span class="opacity-60 mr-3">✦</span>의료접근포탈: &quot;비영리 기관들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot;<span class="opacity-60 ml-3">✦</span>
+        </span>
     </div>
   </div>
 
@@ -555,12 +745,12 @@
           </div>
         </a>
 
-        <!-- Desktop Menu: "시니어 케어" is right after "뉴스" -->
+        <!-- Desktop Menu: "커뮤니티 포럼" is right after "뉴스" -->
         <div class="hidden md:flex items-center desktop-nav-links">
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/">홈</a>
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/blog">뉴스</a>
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/forum">커뮤니티 포럼</a>
-          <a class="nav-link pb-0.5 font-bold text-brand-blue border-b-2 border-brand-blue" href="/senior-care">시니어 케어</a>
+          <a class="nav-link pb-0.5 font-bold text-[#f05a4f] border-b-2 border-[#f05a4f]" href="/senior-care">시니어 케어</a>
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/medicare">메디케어 &amp; ACA</a>
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/tool">환자도우미</a>
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/about">소개</a>
@@ -615,12 +805,12 @@
       </a>
 
       <!-- 3. 시니어 케어 -->
-      <a href="/senior-care" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-bold text-brand-blue bg-blue-50/70">
+      <a href="/senior-care" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-bold text-[#f05a4f] bg-[#fef2f1]">
         <div class="flex items-center gap-3">
-          <svg class="w-5 h-5 text-brand-blue shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+          <svg class="w-5 h-5 text-[#f05a4f] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
           <span class="text-[15px]">시니어 케어</span>
         </div>
-        <svg class="w-4 h-4 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <svg class="w-4 h-4 text-[#f05a4f]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
 
       <!-- 4. 메디케어 & ACA -->
@@ -674,25 +864,55 @@
     <!-- ================================================================= -->
     <!-- 1. TOP BILLBOARD SECTION (HORIZONTALLY FULL - 100VW) -->
     <!-- ================================================================= -->
-    <section id="senior-billboard-1" class="billboard-fullwidth bg-slate-950 text-white relative select-none overflow-hidden" style="min-height: 480px;">
-      <!-- Background Image with Ambient Glow -->
-      <div class="absolute inset-0 w-full h-full">
-        <img 
-          src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=2000&q=85&auto=format" 
-          alt="시니어 케어 및 전문 재활 시설" 
-          class="w-full h-full object-cover object-center opacity-45 scale-105 transition-transform duration-1000 ease-out"
-        />
+    <section id="senior-billboard-1" class="billboard-fullwidth bg-slate-950 text-white relative select-none">
+      <!-- Background Video with Ambient Glow & Pristine Fallback -->
+      <div class="absolute inset-0 w-full h-full overflow-hidden">
+        <video 
+          id="senior-billboard-video"
+          autoplay 
+          muted 
+          loop 
+          playsinline 
+          webkit-playsinline 
+          preload="auto"
+          poster="/uploads/images/excelcare/excelcare-norwood-amenities.jpg"
+          class="w-full h-full object-cover object-center opacity-55 scale-105 transition-opacity duration-700"
+          style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"
+        >
+          <source src="/uploads/videos/excelcare_billboard_bg.mp4" type="video/mp4">
+        </video>
         <!-- Gradients for pristine text contrast -->
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/30"></div>
-        <div class="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/50 to-transparent"></div>
-        <div class="billboard-vignette"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/30 pointer-events-none"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/50 to-transparent pointer-events-none"></div>
+        <div class="billboard-vignette pointer-events-none"></div>
       </div>
+      <script>
+        (function(){
+          var v = document.getElementById('senior-billboard-video');
+          if (!v) return;
+          v.defaultMuted = true;
+          v.muted = true;
+          v.playsInline = true;
+          var triggerPlay = function() {
+            if (v && v.paused) {
+              var p = v.play();
+              if (p && p.catch) p.catch(function(){});
+            }
+          };
+          triggerPlay();
+          document.addEventListener('DOMContentLoaded', triggerPlay);
+          window.addEventListener('load', triggerPlay);
+          ['click', 'touchstart', 'scroll'].forEach(function(ev){
+            document.addEventListener(ev, triggerPlay, { once: true, passive: true });
+          });
+        })();
+      </script>
 
-      <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 flex flex-col justify-center min-h-[480px]">
+      <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-8 sm:pt-14 sm:pb-10 flex flex-col justify-start">
         <div class="max-w-3xl">
           <!-- CMS 5-Star & Facility Trust Badge -->
-          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-300 text-xs font-semibold tracking-wide backdrop-blur-md mb-4">
-            <span class="flex items-center text-amber-400">★★★★★</span>
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#f05a4f]/25 border border-[#f05a4f]/40 text-white text-xs font-semibold tracking-wide backdrop-blur-md mb-4 shadow-sm">
+            <span class="flex items-center text-amber-300">★★★★★</span>
             <span class="h-3 w-px bg-white/20"></span>
             <span>메디케어 공식 CMS 5-STAR 최고등급 인증</span>
             <span class="h-3 w-px bg-white/20"></span>
@@ -702,7 +922,7 @@
           <!-- Main Billboard Title -->
           <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-[1.2] mb-4">
             전문의료 중심의 맞춤형 <br class="hidden sm:inline" />
-            <span style="color: #93c5fd; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">
+            <span style="color: #ff9087; text-shadow: 0 2px 14px rgba(240,90,79,0.5);">
               장기요양(Long-Term Care) &amp; 전문 재활 치료
             </span>
           </h1>
@@ -715,7 +935,7 @@
 
           <!-- Billboard Action Buttons -->
           <div class="flex flex-wrap items-center gap-3.5">
-            <a href="#admissions-inquiry" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl btn-blue-action text-white font-bold text-sm shadow-lg shadow-blue-500/25 transition-all transform hover:-translate-y-0.5">
+            <a href="#admissions-inquiry" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl btn-excelcare-action text-white font-bold text-sm shadow-lg transition-all transform hover:-translate-y-0.5">
               <span>시설 투어 및 입원 상담 예약</span>
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
             </a>
@@ -739,7 +959,7 @@
               <span class="text-xs text-slate-400">프리미엄 1·2인실 입원 병상</span>
             </div>
             <div class="border-r border-white/10 last:border-0 py-1">
-              <span class="block text-xl sm:text-2xl font-extrabold text-blue-400">7 Days / Week</span>
+              <span class="block text-xl sm:text-2xl font-extrabold text-[#ff9087]">7 Days / Week</span>
               <span class="text-xs text-slate-400">주 7일 집중 전문 재활치료</span>
             </div>
             <div class="border-r border-white/10 last:border-0 py-1">
@@ -758,56 +978,195 @@
     <!-- ================================================================= -->
     <!-- 2. PHILOSOPHY & OUR APPROACH (Just Like Home) -->
     <!-- ================================================================= -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <div class="text-center max-w-3xl mx-auto mb-12">
-        <span class="text-xs font-bold text-brand-blue uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full border border-blue-100">Our Core Approach</span>
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-3 tracking-tight">
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#fef2f1] border border-[#f05a4f]/30 text-[#f05a4f] text-xs font-bold tracking-wide uppercase mb-4 shadow-xs">
+          <span class="w-2 h-2 rounded-full bg-[#f05a4f]"></span>
+          OUR CARE PHILOSOPHY · 전인적 케어 철학
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
           내 집 같은 따뜻함과 분야별 최고 의료진의 전인적 치료
         </h2>
-        <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed">
-          Excelcare at Wayne은 단순한 요양 시설을 넘어, 환자와 가족 모두가 신뢰할 수 있는 
+        <p class="text-slate-600 text-base sm:text-lg mt-4 leading-relaxed font-normal max-w-2xl mx-auto">
+          Excelcare는 단순한 요양 시설을 넘어, 환자와 가족 모두가 신뢰할 수 있는 
           체계적인 의료 서비스와 정서적 안정감을 제공합니다.
         </p>
       </div>
 
       <div class="senior-grid-3">
         <!-- Card 1 -->
-        <div class="bg-white p-7 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow">
-          <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 mb-5">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <div class="senior-philosophy-card">
+          <div>
+            <div class="flex items-center justify-between gap-3 mb-5">
+              <span class="senior-card-step-badge">01</span>
+              <span class="senior-card-eyebrow">COMFORT &amp; DIGNITY</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 tracking-tight mb-1">
+              내 집 같은 안락함
+            </h3>
+            <div class="text-xs font-semibold text-slate-400 mb-3 tracking-wide">
+              JUST LIKE HOME
+            </div>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              환자 한 분 한 분이 내 집처럼 편안하게 머무르실 수 있도록 최신 리노베이션된 스위트룸과 자연 채광이 가득한 공동 라운지, 넓은 야외 테라스 정원을 완비하고 있습니다.
+            </p>
           </div>
-          <h3 class="text-lg font-bold text-slate-900 mb-2">JUST LIKE HOME (내 집 같은 안락함)</h3>
-          <p class="text-sm text-slate-600 leading-relaxed">
-            환자 한 분 한 분이 편안하게 지내실 수 있도록 리노베이션된 최신 스위트룸과 
-            자연 채광이 풍부한 공동 거실, 넓은 야외 테라스 정원을 완비하고 있습니다.
-          </p>
+          <div class="mt-6 pt-5 border-t border-slate-100 flex flex-col gap-2.5">
+            <div class="flex items-center gap-2 text-xs font-medium text-slate-700">
+              <svg class="w-4 h-4 text-[#f05a4f] shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span>최신 리노베이션 1·2인실 프라이빗 스위트</span>
+            </div>
+            <div class="flex items-center gap-2 text-xs font-medium text-slate-700">
+              <svg class="w-4 h-4 text-[#f05a4f] shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span>자연 채광 통창 &amp; 힐링 산책 캠퍼스</span>
+            </div>
+          </div>
         </div>
 
         <!-- Card 2 -->
-        <div class="bg-white p-7 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow">
-          <div class="w-12 h-12 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600 mb-5">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+        <div class="senior-philosophy-card">
+          <div>
+            <div class="flex items-center justify-between gap-3 mb-5">
+              <span class="senior-card-step-badge">02</span>
+              <span class="senior-card-eyebrow">CLINICAL EXCELLENCE</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 tracking-tight mb-1">
+              전담 의료진 상주
+            </h3>
+            <div class="text-xs font-semibold text-slate-400 mb-3 tracking-wide">
+              DEDICATED STAFF
+            </div>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              전문의(Physicians), 전문 간호사(RN/LPN), 라이센스를 보유한 재활 치료팀이 24시간 상주하며, 환자 및 가족과 긴밀하게 소통하는 1:1 맞춤형 통합 임상 치료 계획을 실행합니다.
+            </p>
           </div>
-          <h3 class="text-lg font-bold text-slate-900 mb-2">DEDICATED STAFF (전담 의료진 상주)</h3>
-          <p class="text-sm text-slate-600 leading-relaxed">
-            전문의(Physicians), 전문간호사(RN/LPN), 라이센스를 보유한 재활 치료사들이 
-            환자 및 보호자와 긴밀히 소통하며 1:1 맞춤형 통합 치료 계획을 수립합니다.
-          </p>
+          <div class="mt-6 pt-5 border-t border-slate-100 flex flex-col gap-2.5">
+            <div class="flex items-center gap-2 text-xs font-medium text-slate-700">
+              <svg class="w-4 h-4 text-[#f05a4f] shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span>24시간 전문 의료진 투약 및 활력 징후 관리</span>
+            </div>
+            <div class="flex items-center gap-2 text-xs font-medium text-slate-700">
+              <svg class="w-4 h-4 text-[#f05a4f] shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span>한국어 전담 케어 코디네이터 상시 소통</span>
+            </div>
+          </div>
         </div>
 
         <!-- Card 3 -->
-        <div class="bg-white p-7 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow">
-          <div class="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 mb-5">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <div class="senior-philosophy-card">
+          <div>
+            <div class="flex items-center justify-between gap-3 mb-5">
+              <span class="senior-card-step-badge">03</span>
+              <span class="senior-card-eyebrow">MINDFUL WELLNESS</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 tracking-tight mb-1">
+              전인적 힐링 케어
+            </h3>
+            <div class="text-xs font-semibold text-slate-400 mb-3 tracking-wide">
+              HOLISTIC HEALING
+            </div>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              의학적 치료뿐만 아니라 어르신의 정서적 활력과 자존감을 위해 체계적인 여가 활동, 음악·미술 테라피, 종교 지원 및 임상 영양사가 감수하는 정갈한 한식 식단을 종합 운영합니다.
+            </p>
           </div>
-          <h3 class="text-lg font-bold text-slate-900 mb-2">HOLISTIC HEALING (전인적 힐링 케어)</h3>
-          <p class="text-sm text-slate-600 leading-relaxed">
-            의학적 치료뿐만 아니라 어르신의 정서적 활력과 사회적 교류를 위해 
-            체계적인 여가 프로그램, 음악·미술 치료, 영양사 맞춤 식단을 종합 운영합니다.
-          </p>
+          <div class="mt-6 pt-5 border-t border-slate-100 flex flex-col gap-2.5">
+            <div class="flex items-center gap-2 text-xs font-medium text-slate-700">
+              <svg class="w-4 h-4 text-[#f05a4f] shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span>임상 영양사 감수 질환별 맞춤 한식 식단</span>
+            </div>
+            <div class="flex items-center gap-2 text-xs font-medium text-slate-700">
+              <svg class="w-4 h-4 text-[#f05a4f] shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span>음악·미술 치료, 원예, 한국 방송 및 종교 행사</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
+
+    <!-- ================================================================= -->
+    <!-- VIDEO SECTION: EXCELCARE STORIES (FULL WIDTH, BELOW SECTION 2) -->
+    <!-- ================================================================= -->
+    <section id="senior-story-videos-section" class="billboard-fullwidth video-theme-section py-16 sm:py-20 text-white my-8">
+      <div class="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Video Header on Top: "Excelcare Stories" -->
+        <div class="text-center max-w-3xl mx-auto mb-10">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#f05a4f]/20 border border-[#f05a4f]/40 text-[#ff9087] text-xs font-bold tracking-widest uppercase mb-3 backdrop-blur-md">
+            <span class="w-2 h-2 rounded-full bg-[#f05a4f] animate-pulse"></span>
+            PATIENT &amp; REHABILITATION STORIES
+          </div>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
+            Excelcare Stories
+          </h2>
+          <p class="text-slate-300 text-sm sm:text-base mt-3 leading-relaxed font-light max-w-2xl mx-auto">
+            Excelcare에서 건강과 일상을 되찾으신 어르신들과 가족, 헌신하는 의료진의 생생한 감동 이야기입니다.
+          </p>
+        </div>
+
+        <!-- Video Player Card Widget -->
+        <div class="video-theme-card">
+          
+          <!-- Category Filter Bar with Excelcare Theme -->
+          <div class="video-theme-topbar">
+            <div class="flex items-center gap-2">
+              <button type="button" onclick="setSeniorVideoCat('전체')" class="video-theme-home-btn" title="전체 영상">
+                <svg class="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
+                <span>전체</span>
+              </button>
+            </div>
+            <div id="senior-videos-categories" class="video-theme-categories">
+              <button type="button" onclick="setSeniorVideoCat('전체')" class="video-theme-cat-btn active">전체</button>
+              <button type="button" onclick="setSeniorVideoCat('재활 성공기')" class="video-theme-cat-btn">재활 성공기</button>
+              <button type="button" onclick="setSeniorVideoCat('장기요양 일상')" class="video-theme-cat-btn">장기요양 일상</button>
+              <button type="button" onclick="setSeniorVideoCat('가족 인터뷰')" class="video-theme-cat-btn">가족 인터뷰</button>
+              <button type="button" onclick="setSeniorVideoCat('의료진 이야기')" class="video-theme-cat-btn">의료진 이야기</button>
+            </div>
+            <span id="senior-video-count-badge" class="text-xs font-semibold text-slate-300 bg-[#0f172a] px-3.5 py-1.5 rounded-full border border-[#334155]">
+              6개 영상
+            </span>
+          </div>
+
+          <!-- Center Big Screen Monitor Section -->
+          <div class="video-center-container">
+            <div id="senior-video-player-box" class="video-theme-player-frame">
+              <!-- Main video or thumbnail player loaded here -->
+            </div>
+            
+            <!-- Video Info Box below monitor -->
+            <div id="senior-video-info-box" class="video-theme-info-box">
+              <!-- Title, Speaker, Description loaded here -->
+            </div>
+
+            <!-- Thumbnails Section Header & Controls -->
+            <div class="video-thumbs-section-header">
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-bold text-white tracking-wide">영상 목록 (Playlist)</span>
+                <span class="text-xs text-slate-400">· 4개 표시, 우측으로 스크롤하여 더 보기</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="scrollSeniorThumbs(-1)" class="video-thumbs-nav-btn" title="이전 영상">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+                </button>
+                <button type="button" onclick="scrollSeniorThumbs(1)" class="video-thumbs-nav-btn" title="다음 영상">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Thumbnails Track: Exactly 4 visible side-by-side on desktop, scrollable to right -->
+            <div class="video-thumbs-wrapper">
+              <div id="senior-videos-playlist" class="video-thumbs-track">
+                <!-- Dynamically rendered via JS -->
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
 
     <!-- ================================================================= -->
     <!-- 3. SERVICE SECTION A: SHORT-TERM REHABILITATION (단기 전문 재활) -->
@@ -818,7 +1177,7 @@
         <!-- Section Header -->
         <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-6 border-b border-slate-100 gap-4">
           <div>
-            <span class="text-xs font-bold text-rose-600 uppercase tracking-widest bg-rose-50 px-3 py-1 rounded-full border border-rose-100">Post-Acute Care</span>
+            <span class="text-xs font-bold text-[#f05a4f] uppercase tracking-widest bg-[#fef2f1] px-3.5 py-1.5 rounded-full border border-[#f05a4f]/30">Post-Acute Care</span>
             <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2 tracking-tight">
               단기 집중 전문 재활 치료 (Short-Term Rehabilitation)
             </h2>
@@ -859,9 +1218,9 @@
           
           <!-- 1. Joint Replacement -->
           <div class="service-card bg-slate-50 border border-slate-200 rounded-xl p-5">
-            <div class="w-10 h-10 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-lg mb-3">1</div>
+            <div class="w-10 h-10 rounded-lg bg-[#fef2f1] text-[#f05a4f] flex items-center justify-center font-bold text-lg mb-3 border border-[#f05a4f]/20">1</div>
             <h4 class="font-bold text-slate-900 text-base mb-1">인공관절 수술 후 재활</h4>
-            <span class="text-xs text-blue-600 font-semibold block mb-2">Joint Replacement</span>
+            <span class="text-xs text-[#f05a4f] font-semibold block mb-2">Joint Replacement</span>
             <p class="text-xs text-slate-600 leading-relaxed">
               고관절, 무릎, 어깨 인공관절 수술 후 관절 기능 회복 및 낙상 없는 보행 자립 훈련을 실시합니다.
             </p>
@@ -951,65 +1310,149 @@
     <!-- ================================================================= -->
     <!-- 4. SERVICE SECTION B: LONG-TERM CARE (24시간 전문 장기요양) -->
     <!-- ================================================================= -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <div class="senior-two-col">
-        
-        <div>
-          <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">Skilled Nursing Care</span>
-          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-3 tracking-tight">
-            품격 있는 24시간 전문 장기요양 간호 (Long-Term Care)
-          </h2>
-          <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed">
-            일상생활에 지속적인 도움이 필요하신 어르신들을 위해 24시간 전문 간호 인력이 상주하며, 
-            가족 같은 따뜻함과 철저한 의료 관리를 동시에 제공합니다.
-          </p>
-
-          <div class="space-y-4 mt-6">
-            <div class="flex items-start gap-3.5 p-3.5 rounded-xl bg-white border border-slate-200">
-              <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-              </div>
-              <div>
-                <h4 class="font-bold text-slate-900 text-sm">24시간 상주 전문 간호 &amp; 전담 주치의 진료</h4>
-                <p class="text-xs text-slate-600 mt-1">전문 간호사(RN/LPN)가 24시간 활력 징후와 건강 상태를 관찰하며 정기 전담 주치의 회진이 이루어집니다.</p>
-              </div>
+    <section id="long-term-care" class="w-full bg-white py-20 sm:py-24 border-t border-slate-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="senior-two-col">
+          
+          <div>
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#fef2f1] text-[#f05a4f] text-xs font-bold tracking-wider uppercase border border-[#f05a4f]/25 mb-3">
+              SKILLED NURSING &amp; KOREAN SENIOR UNIT
             </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
+              Excelcare 품격 있는 24시간 전문 장기요양 간호 &amp; 한인 시니어 케어
+            </h2>
+            <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed">
+              일상생활에 지속적인 도움이 필요하신 어르신들을 위해 24시간 전문 간호 인력이 상주하며, 
+              가족 같은 따뜻함과 철저한 의료 관리를 동시에 제공합니다. 특히 한인 어르신들의 편안한 생활을 위한 언어·식단·문화 맞춤 서비스를 운영합니다.
+            </p>
 
-            <div class="flex items-start gap-3.5 p-3.5 rounded-xl bg-white border border-slate-200">
-              <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            <div class="space-y-4 mt-6">
+              <div class="flex items-start gap-3.5 p-4 rounded-xl bg-slate-50/80 border border-slate-200/80">
+                <div class="w-9 h-9 rounded-lg bg-[#fef2f1] text-[#f05a4f] flex items-center justify-center shrink-0 mt-0.5 border border-[#f05a4f]/20">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                </div>
+                <div>
+                  <h4 class="font-bold text-slate-900 text-sm">24시간 상주 전문 간호 &amp; 한국어 전담 코디네이터</h4>
+                  <p class="text-xs text-slate-600 mt-1">전문 간호사(RN/LPN)가 24시간 활력 징후와 투약을 관리하며, 한국어 전담 상담팀이 입원부터 일상 소통까지 가족처럼 돌봅니다.</p>
+                </div>
               </div>
-              <div>
-                <h4 class="font-bold text-slate-900 text-sm">임상 영양사 감수 개인별 맞춤 건강 식단</h4>
-                <p class="text-xs text-slate-600 mt-1">당뇨식, 저염식, 연하곤란식 등 어르신의 건강 상태에 맞춘 영양 식단과 한국식 입맛을 고려한 식사가 제공됩니다.</p>
-              </div>
-            </div>
 
-            <div class="flex items-start gap-3.5 p-3.5 rounded-xl bg-white border border-slate-200">
-              <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <div class="flex items-start gap-3.5 p-4 rounded-xl bg-slate-50/80 border border-slate-200/80">
+                <div class="w-9 h-9 rounded-lg bg-[#fef2f1] text-[#f05a4f] flex items-center justify-center shrink-0 mt-0.5 border border-[#f05a4f]/20">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                </div>
+                <div>
+                  <h4 class="font-bold text-slate-900 text-sm">임상 영양사 감수 한식 맞춤 건강 식단</h4>
+                  <p class="text-xs text-slate-600 mt-1">당뇨식, 저염식, 연하곤란식 등 건강 상태별 맞춤 조리와 함께 어르신 입맛에 맞춘 따뜻한 밥, 국, 계절 나물, 영양죽을 정갈하게 제공합니다.</p>
+                </div>
               </div>
-              <div>
-                <h4 class="font-bold text-slate-900 text-sm">정서적 교류와 인지 활력 데일리 프로그램</h4>
-                <p class="text-xs text-slate-600 mt-1">원예, 미술, 음악 치료, 명절 행사, 종교 예배 등 매일 진행되는 다채로운 여가 활동으로 활기찬 노후를 돕습니다.</p>
+
+              <div class="flex items-start gap-3.5 p-4 rounded-xl bg-slate-50/80 border border-slate-200/80">
+                <div class="w-9 h-9 rounded-lg bg-[#fef2f1] text-[#f05a4f] flex items-center justify-center shrink-0 mt-0.5 border border-[#f05a4f]/20">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                </div>
+                <div>
+                  <h4 class="font-bold text-slate-900 text-sm">한국 문화 정서 교류 &amp; 활력 데일리 프로그램</h4>
+                  <p class="text-xs text-slate-600 mt-1">한국 방송 채널(KBS, MBC, SBS, YTN) 상시 시청, 한국 명절 전통 행사, 원예·미술·음악 치료, 예배 및 종교 활동으로 활기찬 노후를 지원합니다.</p>
+                </div>
               </div>
             </div>
           </div>
+
+          <div>
+            <div class="relative rounded-2xl overflow-hidden shadow-xl border border-slate-200 group">
+              <img 
+                src="/uploads/images/excelcare/excelcare-norwood-4.jpg" 
+                alt="Excelcare at Norwood 최고급 프라이빗 스위트룸" 
+                class="w-full h-[420px] object-cover group-hover:scale-102 transition-transform duration-700"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/30 to-transparent flex items-end p-6">
+                <div class="text-white">
+                  <span class="text-xs uppercase tracking-wider text-[#ff9087] font-bold bg-[#f05a4f]/30 px-2.5 py-1 rounded border border-[#f05a4f]/40 inline-block mb-2">Excelcare Interior</span>
+                  <h3 class="text-lg font-bold">어르신에게는 평온한 쉼터, 자녀분들에게는 깊은 안심</h3>
+                  <p class="text-xs text-slate-200 mt-1">자연 채광과 최고급 편의 시설을 갖춘 리노베이션 스위트룸에서 24시간 가족 같은 보살핌을 약속드립니다.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- 5. FACILITY SHOWCASE & HEALING ENVIRONMENT (Excelcare 최고급 시설) -->
+    <!-- ================================================================= -->
+    <section id="facility-gallery" class="w-full bg-[#fdfbf9] py-20 sm:py-28 border-y border-slate-200/80">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-14">
+          <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#fef2f1] text-[#f05a4f] text-xs font-bold tracking-widest uppercase border border-[#f05a4f]/30 mb-3 shadow-xs">
+            <span class="w-2 h-2 rounded-full bg-[#f05a4f]"></span>
+            FACILITY &amp; HEALING ENVIRONMENT
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            Excelcare 최고급 시설 &amp; 한인 어르신을 위한 힐링 환경
+          </h2>
+          <p class="text-slate-600 text-sm sm:text-base mt-3 max-w-2xl mx-auto leading-relaxed">
+            프라이빗 스위트 병실부터 첨단 집중 재활 치료실, 안락한 커뮤니티 라운지까지 Excelcare의 실제 인테리어입니다.
+          </p>
         </div>
 
-        <div>
-          <div class="relative rounded-2xl overflow-hidden shadow-xl border border-slate-200">
-            <img 
-              src="https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?w=1000&q=80&auto=format" 
-              alt="따뜻한 장기요양 간호 환경" 
-              class="w-full h-[420px] object-cover"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex items-end p-6">
-              <div class="text-white">
-                <span class="text-xs uppercase tracking-wider text-blue-300 font-bold">Safe &amp; Loving Environment</span>
-                <h3 class="text-lg font-bold mt-1">어르신에게는 평온한 쉼터, 자녀분들에게는 깊은 안심</h3>
-                <p class="text-xs text-slate-200 mt-1">언제나 가족 여러분과 긴밀하게 소통하며 어르신의 상태 변화를 투명하게 공유합니다.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Item 1: Private Suite -->
+          <div class="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl hover:border-[#f05a4f]/40 transition-all duration-300">
+            <div class="relative aspect-4/3 overflow-hidden bg-slate-100">
+              <img src="/uploads/images/excelcare/excelcare-norwood-4.jpg" alt="Excelcare 프라이빗 입원실" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <div class="absolute top-3 left-3 bg-slate-900/85 backdrop-blur-xs text-white text-[11px] font-bold px-2.5 py-1 rounded-md">
+                프라이빗 스위트룸
               </div>
+            </div>
+            <div class="p-5">
+              <h4 class="font-bold text-slate-900 text-sm mb-1.5 group-hover:text-[#f05a4f] transition-colors">최신 리노베이션 1·2인실</h4>
+              <p class="text-xs text-slate-500 leading-relaxed">전동식 의료 침대, 개인 화장실, 케이블 TV 및 풍부한 채광을 갖춘 안락한 생활 공간</p>
+            </div>
+          </div>
+
+          <!-- Item 2: Rehab Gym -->
+          <div class="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl hover:border-[#f05a4f]/40 transition-all duration-300">
+            <div class="relative aspect-4/3 overflow-hidden bg-slate-100">
+              <img src="/uploads/images/excelcare/image-3.png" alt="Excelcare 전문 재활 치료실" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <div class="absolute top-3 left-3 bg-[#f05a4f]/90 backdrop-blur-xs text-white text-[11px] font-bold px-2.5 py-1 rounded-md">
+                전문 재활 짐 (Gym)
+              </div>
+            </div>
+            <div class="p-5">
+              <h4 class="font-bold text-slate-900 text-sm mb-1.5 group-hover:text-[#f05a4f] transition-colors">주 7일 집중 재활 테라피 윙</h4>
+              <p class="text-xs text-slate-500 leading-relaxed">관절 수술 및 뇌졸중 후유증 회복을 위한 최첨단 보행 및 근력 회복 장비 완비</p>
+            </div>
+          </div>
+
+          <!-- Item 3: Lounge & Activity -->
+          <div class="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl hover:border-[#f05a4f]/40 transition-all duration-300">
+            <div class="relative aspect-4/3 overflow-hidden bg-slate-100">
+              <img src="/uploads/images/excelcare/norwood-2-1.png" alt="Excelcare 커뮤니티 라운지" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <div class="absolute top-3 left-3 bg-slate-900/85 backdrop-blur-xs text-white text-[11px] font-bold px-2.5 py-1 rounded-md">
+                커뮤니티 라운지
+              </div>
+            </div>
+            <div class="p-5">
+              <h4 class="font-bold text-slate-900 text-sm mb-1.5 group-hover:text-[#f05a4f] transition-colors">정서 교류 &amp; 문화 프로그램</h4>
+              <p class="text-xs text-slate-500 leading-relaxed">가족 면회, 어르신 미술·음악 치료, 종교 행사 및 친목을 나눌 수 있는 밝고 쾌적한 거실</p>
+            </div>
+          </div>
+
+          <!-- Item 4: Dining & Korean Meal -->
+          <div class="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl hover:border-[#f05a4f]/40 transition-all duration-300">
+            <div class="relative aspect-4/3 overflow-hidden bg-slate-100">
+              <img src="/uploads/images/excelcare/image-4.png" alt="Excelcare 다이닝 & 식단" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <div class="absolute top-3 left-3 bg-[#f05a4f]/90 backdrop-blur-xs text-white text-[11px] font-bold px-2.5 py-1 rounded-md">
+                영양 식단 &amp; 다이닝
+              </div>
+            </div>
+            <div class="p-5">
+              <h4 class="font-bold text-slate-900 text-sm mb-1.5 group-hover:text-[#f05a4f] transition-colors">한식 맞춤 영양 식단 제공</h4>
+              <p class="text-xs text-slate-500 leading-relaxed">임상 영양사가 감수하는 정갈한 한식 식단과 질환별(당뇨, 저염, 연하식) 맞춤 조리</p>
             </div>
           </div>
         </div>
@@ -1024,7 +1467,7 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div class="text-center max-w-3xl mx-auto mb-12">
-          <span class="text-xs font-bold text-blue-400 uppercase tracking-widest bg-blue-900/50 px-3.5 py-1.5 rounded-full border border-blue-500/30">Clinical Capabilities</span>
+          <span class="text-xs font-bold text-[#ff9087] uppercase tracking-widest bg-[#f05a4f]/25 px-3.5 py-1.5 rounded-full border border-[#f05a4f]/40">Clinical Capabilities</span>
           <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white mt-3 tracking-tight">
             전문 임상 케어 프로그램 (Clinical Capabilities)
           </h2>
@@ -1037,7 +1480,7 @@
           
           <!-- 1. NEURO -->
           <div class="senior-clinical-card">
-            <span class="spec-badge bg-blue-500/20 text-blue-300 border border-blue-500/40 mb-3">NEURO (뇌신경)</span>
+            <span class="spec-badge bg-[#f05a4f]/25 text-[#ff9087] border border-[#f05a4f]/40 mb-3">NEURO (뇌신경)</span>
             <h4>뇌신경 질환 클리닉</h4>
             <ul>
               <li>• 뇌졸중(CVA / Stroke) 후유 회복</li>
@@ -1189,70 +1632,9 @@
     </section>
 
     <!-- ================================================================= -->
-    <!-- 7. SENIOR STORY VIDEO SECTION (BOTTOM SECTION - HOMEPAGE THEME) -->
+    <!-- 7. OUR SENIOR STORIES IN EXCEL CARE (CENTER MONITOR + 4 THUMBNAILS BELOW) -->
     <!-- ================================================================= -->
-    <section id="senior-story-videos-section" class="billboard-fullwidth bg-[#181818] border-y border-[#2d2d2d] py-14 text-white">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <!-- Section Header -->
-        <div class="flex items-center justify-between mb-6 pb-3 border-b border-[#333333]">
-          <div>
-            <div class="flex items-center gap-2 mb-1">
-              <span class="w-2.5 h-2.5 rounded-full bg-red-600 animate-pulse"></span>
-              <span class="text-xs font-bold text-red-400 uppercase tracking-widest">Senior Story &amp; Rehab Recovery</span>
-            </div>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-              시니어 스토리 &amp; 재활 회복 비디오
-            </h2>
-          </div>
-          <span id="senior-video-count-badge" class="text-xs font-semibold text-slate-400 bg-[#282828] px-3.5 py-1.5 rounded-full border border-[#383838]">
-            5개 영상
-          </span>
-        </div>
-
-        <!-- Video Player Card Widget -->
-        <div class="video-theme-card">
-          
-          <!-- Category Filter Bar -->
-          <div class="video-theme-topbar">
-            <button type="button" onclick="setSeniorVideoCat('전체')" class="video-theme-home-btn" title="전체 영상">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
-            </button>
-            <div id="senior-videos-categories" class="video-theme-categories">
-              <button type="button" onclick="setSeniorVideoCat('전체')" class="video-theme-cat-btn active">전체</button>
-              <button type="button" onclick="setSeniorVideoCat('재활 성공기')" class="video-theme-cat-btn">재활 성공기</button>
-              <button type="button" onclick="setSeniorVideoCat('장기요양 일상')" class="video-theme-cat-btn">장기요양 일상</button>
-              <button type="button" onclick="setSeniorVideoCat('가족 인터뷰')" class="video-theme-cat-btn">가족 인터뷰</button>
-              <button type="button" onclick="setSeniorVideoCat('의료진 이야기')" class="video-theme-cat-btn">의료진 이야기</button>
-            </div>
-          </div>
-
-          <!-- Video Layout: Left Playlist, Right Main Player -->
-          <div class="video-theme-layout">
-            
-            <!-- Left Column: Interactive Playlist -->
-            <div class="video-theme-sidebar">
-              <div id="senior-videos-playlist" class="video-theme-playlist">
-                <!-- Dynamically rendered via JS -->
-              </div>
-            </div>
-
-            <!-- Right Column: Main Player & Info Box -->
-            <div class="video-theme-main">
-              <div id="senior-video-player-box" class="video-theme-player-frame">
-                <!-- Main video or thumbnail player loaded here -->
-              </div>
-              <div id="senior-video-info-box" class="mt-4">
-                <!-- Title, Speaker, Description loaded here -->
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-    </section>
+    
 
     <!-- ================================================================= -->
     <!-- 8. ADMISSIONS & VISIT INQUIRY MOCKUP (입원 및 투어 예약) -->
@@ -1262,7 +1644,7 @@
         <div class="senior-inquiry-layout">
           
           <div>
-            <span class="text-xs font-bold text-blue-600 uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full border border-blue-100">Contact &amp; Admissions</span>
+            <span class="text-xs font-bold text-[#f05a4f] uppercase tracking-widest bg-[#fef2f1] px-3.5 py-1.5 rounded-full border border-[#f05a4f]/25">Contact &amp; Admissions</span>
             <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-3 tracking-tight">
               입원 문의 &amp; 캠퍼스 투어 신청
             </h2>
@@ -1272,17 +1654,17 @@
 
             <div class="mt-8 space-y-4">
               <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                <div class="w-10 h-10 rounded-xl bg-[#fef2f1] text-[#f05a4f] flex items-center justify-center shrink-0 border border-[#f05a4f]/20">
                   <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 4V3z"/></svg>
                 </div>
                 <div>
                   <span class="text-xs text-slate-400 block font-medium">전화 상담 직통 (24/7)</span>
-                  <a href="tel:9737905800" class="text-base font-bold text-slate-900 hover:text-blue-600">(973) 790-5800</a>
+                  <a href="tel:9737905800" class="text-base font-bold text-slate-900 hover:text-[#f05a4f] transition-colors">(973) 790-5800</a>
                 </div>
               </div>
 
               <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                <div class="w-10 h-10 rounded-xl bg-[#fef2f1] text-[#f05a4f] flex items-center justify-center shrink-0 border border-[#f05a4f]/20">
                   <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
                 </div>
                 <div>
@@ -1292,36 +1674,36 @@
               </div>
 
               <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-yellow-50 text-yellow-700 flex items-center justify-center shrink-0">
+                <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center shrink-0 border border-amber-200/60">
                   <img src="/kakaotalk-icon.png" alt="Kakao" class="w-5 h-5 rounded" />
                 </div>
                 <div>
                   <span class="text-xs text-slate-400 block font-medium">카카오톡 공식 채널</span>
-                  <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="text-sm font-bold text-slate-900 hover:text-blue-600">Healthcare Access Portal 1:1 채팅</a>
+                  <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="text-sm font-bold text-slate-900 hover:text-[#f05a4f] transition-colors">Healthcare Access Portal 1:1 채팅</a>
                 </div>
               </div>
             </div>
           </div>
 
           <!-- Mockup Consultation Form -->
-          <div class="bg-slate-50 p-6 sm:p-8 rounded-2xl border border-slate-200">
+          <div class="bg-slate-50/80 p-6 sm:p-8 rounded-2xl border border-slate-200">
             <h3 class="text-lg font-bold text-slate-900 mb-4">온라인 상담 신청 (Mock-up)</h3>
             <form id="senior-consultation-form" onsubmit="submitSeniorMockForm(event)" class="space-y-4">
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label class="block text-xs font-semibold text-slate-700 mb-1">신청자 성함 *</label>
-                  <input type="text" id="consult-name" required placeholder="홍길동" class="w-full text-sm bg-white border border-slate-300 rounded-lg px-3.5 py-2.5 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" />
+                  <input type="text" id="consult-name" required placeholder="홍길동" class="w-full text-sm bg-white border border-slate-300 rounded-lg px-3.5 py-2.5 outline-none focus:border-[#f05a4f] focus:ring-1 focus:ring-[#f05a4f]" />
                 </div>
                 <div>
                   <label class="block text-xs font-semibold text-slate-700 mb-1">연락처 전화번호 *</label>
-                  <input type="tel" id="consult-phone" required placeholder="201-000-0000" class="w-full text-sm bg-white border border-slate-300 rounded-lg px-3.5 py-2.5 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" />
+                  <input type="tel" id="consult-phone" required placeholder="201-000-0000" class="w-full text-sm bg-white border border-slate-300 rounded-lg px-3.5 py-2.5 outline-none focus:border-[#f05a4f] focus:ring-1 focus:ring-[#f05a4f]" />
                 </div>
               </div>
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label class="block text-xs font-semibold text-slate-700 mb-1">관심 케어 서비스 *</label>
-                  <select id="consult-service" class="w-full text-sm bg-white border border-slate-300 rounded-lg px-3.5 py-2.5 outline-none focus:border-blue-500">
+                  <select id="consult-service" class="w-full text-sm bg-white border border-slate-300 rounded-lg px-3.5 py-2.5 outline-none focus:border-[#f05a4f] focus:ring-1 focus:ring-[#f05a4f]">
                     <option value="rehab">단기 집중 재활 치료 (수술/뇌졸중 후)</option>
                     <option value="longterm">24시간 전문 장기요양 간호</option>
                     <option value="respite">단기 위탁 보호 (Respite Care)</option>
@@ -1331,7 +1713,7 @@
                 </div>
                 <div>
                   <label class="block text-xs font-semibold text-slate-700 mb-1">현재 거주 / 입원 상태</label>
-                  <select id="consult-status" class="w-full text-sm bg-white border border-slate-300 rounded-lg px-3.5 py-2.5 outline-none focus:border-blue-500">
+                  <select id="consult-status" class="w-full text-sm bg-white border border-slate-300 rounded-lg px-3.5 py-2.5 outline-none focus:border-[#f05a4f] focus:ring-1 focus:ring-[#f05a4f]">
                     <option value="hospital">현재 일반 병원 입원 중 (퇴원 재활 필요)</option>
                     <option value="home">자택 거주 중 (통원 또는 입원 요양 필요)</option>
                     <option value="other">타 요양시설 전원 희망</option>
@@ -1341,10 +1723,10 @@
 
               <div>
                 <label class="block text-xs font-semibold text-slate-700 mb-1">문의 사항 및 환자 상태 메모</label>
-                <textarea id="consult-memo" rows="3" placeholder="환자분의 연세, 주요 질환(예: 인공관절 수술, 뇌졸중, 치매 등) 및 궁금하신 사항을 적어주세요." class="w-full text-sm bg-white border border-slate-300 rounded-lg px-3.5 py-2.5 outline-none focus:border-blue-500"></textarea>
+                <textarea id="consult-memo" rows="3" placeholder="환자분의 연세, 주요 질환(예: 인공관절 수술, 뇌졸중, 치매 등) 및 궁금하신 사항을 적어주세요." class="w-full text-sm bg-white border border-slate-300 rounded-lg px-3.5 py-2.5 outline-none focus:border-[#f05a4f] focus:ring-1 focus:ring-[#f05a4f]"></textarea>
               </div>
 
-              <button type="submit" class="w-full py-3.5 px-6 rounded-xl btn-blue-action text-white font-bold text-sm shadow-md transition-all cursor-pointer">
+              <button type="submit" class="w-full py-3.5 px-6 rounded-xl btn-excelcare-action text-white font-bold text-sm shadow-md transition-all cursor-pointer">
                 상담 및 시설 투어 신청서 제출하기
               </button>
               <div id="senior-consult-result" class="hidden text-xs text-center font-semibold text-emerald-700 bg-emerald-50 p-3 rounded-lg border border-emerald-200">
@@ -1414,7 +1796,7 @@
   <!-- ================================================================= -->
   <script>
 
-    // 2. Senior Story Videos Data (Curated Mockup matching homepage structure)
+    // 2. Senior Story Videos Data (Curated for Excelcare at Norwood & Wayne)
     var seniorVideos = [
       {
         id: "sv_1",
@@ -1435,7 +1817,7 @@
         category: "재활 성공기",
         duration: "11:20",
         date: "2026.08.28",
-        thumbnail: "https://img.youtube.com/vi/mK1ClXJjEns/maxresdefault.jpg",
+        thumbnail: "https://img.youtube.com/vi/mK1ClXJjEns/hqdefault.jpg",
         description: "급성 뇌경색 후유증으로 우측 마비와 삼킴 곤란을 겪던 이정호 어르신의 8주 집중 재활 스토리. 최첨단 재활 장비와 1:1 연하치료를 병행하며 수저를 스스로 쥐고 식사할 수 있게 된 감격의 순간을 공유합니다."
       },
       {
@@ -1447,18 +1829,18 @@
         duration: "09:15",
         date: "2026.08.20",
         thumbnail: "https://img.youtube.com/vi/USO48_378n8/maxresdefault.jpg",
-        description: "집에서 홀로 치매와 만성 질환을 앓으시는 어머니를 모시며 죄책감과 간병 피로에 시달렸던 가족이 Excelcare의 'Just Like Home' 환경과 따뜻한 간호팀을 만나 안심과 평화를 되찾게 된 진솔한 이야기입니다."
+        description: "집에서 홀로 치매와 만성 질환을 앓으시는 어머니를 모시며 죄책감과 간병 피로에 시달렸던 가족이 Excelcare의 'Just Like Home' 환경과 따뜻한 한인 전담 간호팀을 만나 안심과 평화를 되찾게 된 진솔한 이야기입니다."
       },
       {
         id: "sv_4",
         youtubeId: "pEl1jWvgUcI",
-        title: "웨인 캠퍼스의 하루: 원예 정원 산책부터 음악 치료까지",
+        title: "캠퍼스의 하루: 원예 정원 산책부터 음악 치료와 한식 식단까지",
         speaker: "액티비티 디렉터 & 입원 어르신들",
         category: "장기요양 일상",
         duration: "07:30",
         date: "2026.08.15",
         thumbnail: "https://img.youtube.com/vi/pEl1jWvgUcI/maxresdefault.jpg",
-        description: "7에이커 규모의 녹지 캠퍼스에서 펼쳐지는 Excelcare Wayne의 생생한 일상! 아침 가벼운 산책부터 치매 예방을 위한 미술·음악 테라피, 건강식 영양 식단까지 어르신들의 활기찬 하루를 영상으로 담았습니다."
+        description: "쾌적하고 넓은 캠퍼스에서 펼쳐지는 Excelcare의 생생한 일상! 아침 가벼운 산책부터 치매 예방을 위한 미술·음악 테라피, 영양사 감수 한식 건강 식단까지 어르신들의 활기찬 하루를 영상으로 담았습니다."
       },
       {
         id: "sv_5",
@@ -1470,6 +1852,17 @@
         date: "2026.08.10",
         thumbnail: "https://img.youtube.com/vi/tpQqEaRX6nY/maxresdefault.jpg",
         description: "수술 후 첫 30일이 왜 회복의 평생을 좌우하는지, 메디케어 Part A를 활용한 전문 재활 시설(SNF) 입원 혜택과 전문의가 권장하는 주 7일 물리치료의 임상적 중요성을 알기 쉽게 설명해 드립니다."
+      },
+      {
+        id: "sv_6",
+        youtubeId: "Jk7p7i9-cFE",
+        title: "Excelcare at Norwood 투어: 최신 시설과 한인 전문 케어 프로그램",
+        speaker: "시설 디렉터 & 한인 코디네이터",
+        category: "장기요양 일상",
+        duration: "06:15",
+        date: "2026.08.05",
+        thumbnail: "/uploads/images/excelcare/excelcare-norwood-4.jpg",
+        description: "Excelcare at Norwood의 쾌적한 1·2인실 리노베이션 입원실, 주 7일 전문 재활 치료실, 한식 맞춤 영양 식단, 한국어 전담 간호팀의 따뜻한 돌봄 환경을 둘러보실 수 있는 공식 시설 투어 영상입니다."
       }
     ];
 
@@ -1491,9 +1884,11 @@
         currentVid = found;
         renderSeniorVideoPlayer(autoPlay);
         renderSeniorVideoPlaylist(false);
-        var pBox = document.getElementById('senior-video-player-box');
-        if (pBox && window.innerWidth < 1024) {
-          pBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (autoPlay && window.innerWidth < 768) {
+          var pBox = document.getElementById('senior-video-player-box');
+          if (pBox) {
+            pBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
         }
       }
     }
@@ -1512,14 +1907,14 @@
       } else {
         pBox.innerHTML = [
           '<div class="relative w-full h-full group cursor-pointer" onclick="playSeniorCurrentVideo()">',
-          '  <img src="' + currentVid.thumbnail + '" alt="' + currentVid.title + '" class="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500">',
-          '  <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent"></div>',
+          '  <img src="' + currentVid.thumbnail + '" alt="' + currentVid.title + '" class="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500">',
+          '  <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent"></div>',
           '  <div class="absolute inset-0 flex items-center justify-center">',
           '    <div class="video-theme-play-btn group-hover:scale-110 transition-transform">',
-          '      <svg class="w-6 h-6 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>',
+          '      <svg class="w-7 h-7 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>',
           '    </div>',
           '  </div>',
-          '  <div class="absolute bottom-3 right-3 bg-black/80 backdrop-blur-xs text-white text-xs px-2.5 py-1 rounded font-mono border border-white/10">',
+          '  <div class="absolute bottom-4 right-4 bg-black/85 backdrop-blur-xs text-white text-xs px-3 py-1 rounded-md font-mono border border-white/15">',
           '    ' + currentVid.duration,
           '  </div>',
           '</div>'
@@ -1528,16 +1923,28 @@
 
       if (iBox) {
         iBox.innerHTML = [
-          '<h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight mt-1">' + currentVid.title + '</h3>',
-          '<div class="text-xs text-slate-400 mt-2 flex items-center gap-2">',
-          '  <span class="text-blue-400 font-semibold">' + currentVid.category + '</span>',
-          '  <span>•</span>',
-          '  <span>' + currentVid.speaker + '</span>',
-          '  <span>•</span>',
-          '  <span>' + currentVid.date + '</span>',
+          '<div class="flex flex-wrap items-center justify-between gap-3 border-b border-[#262626] pb-3 mb-3">',
+          '  <div class="flex items-center gap-2 text-xs">',
+          '    <span class="bg-[#f05a4f]/20 text-[#f05a4f] font-semibold px-2.5 py-0.5 rounded border border-[#f05a4f]/40">' + currentVid.category + '</span>',
+          '    <span class="text-slate-400">•</span>',
+          '    <span class="text-slate-300 font-medium">' + currentVid.speaker + '</span>',
+          '    <span class="text-slate-400">•</span>',
+          '    <span class="text-slate-400">' + currentVid.date + '</span>',
+          '  </div>',
+          '  <span class="text-xs text-slate-400 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-[#f05a4f] animate-pulse"></span>HD 고화질 재생</span>',
           '</div>',
-          '<p class="text-sm text-slate-300 leading-relaxed mt-3 font-light">' + currentVid.description + '</p>'
+          '<h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">' + currentVid.title + '</h3>',
+          '<p class="text-sm text-slate-300 leading-relaxed mt-2.5 font-light">' + currentVid.description + '</p>'
         ].join('');
+      }
+    }
+
+    function scrollSeniorThumbs(direction) {
+      var track = document.getElementById('senior-videos-playlist');
+      if (track) {
+        var card = track.querySelector('.video-thumb-card');
+        var cardWidth = card ? card.offsetWidth + 16 : 240;
+        track.scrollBy({ left: direction * cardWidth * 2, behavior: 'smooth' });
       }
     }
 
@@ -1563,14 +1970,18 @@
       filtered.forEach(function(v) {
         var isAct = v.id === currentVid.id;
         html += [
-          '<div onclick="selectSeniorVideo(\'' + v.id + '\', true)" class="video-theme-item ' + (isAct ? 'active' : '') + '">',
-          '  <div class="video-theme-item-thumb">',
-          '    <img src="' + v.thumbnail + '" alt="' + v.title + '" onerror="this.src=\'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=400&q=80\'">',
-          '    <div class="video-theme-item-duration">' + v.duration + '</div>',
+          '<div onclick="selectSeniorVideo(\'' + v.id + '\', true)" class="video-thumb-card ' + (isAct ? 'active' : '') + '">',
+          '  <div class="video-thumb-media">',
+          '    <img src="' + v.thumbnail + '" alt="' + v.title + '" onerror="this.src=\'/uploads/images/excelcare/excelcare-norwood-4.jpg\'">',
+          (isAct ? '    <div class="video-thumb-playing-tag"><span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>재생 중</div>' : ''),
+          '    <div class="video-thumb-duration">' + v.duration + '</div>',
           '  </div>',
-          '  <div class="video-theme-item-text">',
-          '    <h4 class="video-theme-item-title">' + v.title + '</h4>',
-          '    <div class="video-theme-item-meta">' + v.speaker + '</div>',
+          '  <div class="video-thumb-content">',
+          '    <h4 class="video-thumb-title">' + v.title + '</h4>',
+          '    <div>',
+          '      <div class="video-thumb-speaker">' + v.speaker + '</div>',
+          '      <div class="video-thumb-cat">' + v.category + '</div>',
+          '    </div>',
           '  </div>',
           '</div>'
         ].join('');

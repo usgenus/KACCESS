@@ -663,7 +663,7 @@
     }
 
     function resumeAllBillboards() {
-      var vids = document.querySelectorAll('#gallery-billboard-container video, #gallery-billboard2-container video, #billboard-active-video, #billboard2-active-video');
+      var vids = document.querySelectorAll('#gallery-billboard-container video, #gallery-billboard2-container video, #billboard-active-video, #billboard2-active-video, #senior-billboard-video, #senior-billboard-1 video');
       vids.forEach(function(v) {
         if (!v || !v.paused) return;
         prepareVideoElement(v);
@@ -686,7 +686,7 @@
       });
     }
 
-    var vids = document.querySelectorAll('#gallery-billboard-container video, #gallery-billboard2-container video, #billboard-active-video, #billboard2-active-video');
+    var vids = document.querySelectorAll('#gallery-billboard-container video, #gallery-billboard2-container video, #billboard-active-video, #billboard2-active-video, #senior-billboard-video, #senior-billboard-1 video');
     vids.forEach(wireVideoLifecycle);
 
     // Viewport Visibility Trigger (Crucial for Safari power-saver & offscreen videos)
@@ -707,7 +707,7 @@
         });
       }, { threshold: [0, 0.1, 0.25] });
 
-      ['gallery-billboard-section', 'gallery-billboard2-section', 'gallery-billboard-container', 'gallery-billboard2-container'].forEach(function(id) {
+      ['gallery-billboard-section', 'gallery-billboard2-section', 'gallery-billboard-container', 'gallery-billboard2-container', 'senior-billboard-1'].forEach(function(id) {
         var el = document.getElementById(id);
         if (el) io.observe(el);
       });
@@ -715,7 +715,7 @@
 
     if (window.MutationObserver) {
       var mo = new MutationObserver(function() {
-        var nv = document.querySelectorAll('#gallery-billboard-container video, #gallery-billboard2-container video, #billboard-active-video, #billboard2-active-video');
+        var nv = document.querySelectorAll('#gallery-billboard-container video, #gallery-billboard2-container video, #billboard-active-video, #billboard2-active-video, #senior-billboard-video, #senior-billboard-1 video');
         nv.forEach(wireVideoLifecycle);
       });
       mo.observe(document.body || document.documentElement, { childList: true, subtree: true });
@@ -740,7 +740,7 @@
   // ─────────────────────────────────────────────────────────────
   function fixSlideIn() {
     if (!window.IntersectionObserver) return;
-    var raw = document.querySelectorAll('main section:not(#gallery-billboard-section), main > article, .fx-slide-target');
+    var raw = document.querySelectorAll('main section:not(#gallery-billboard-section):not([id*="billboard"]):not(.billboard-fullwidth), main > article, .fx-slide-target');
     if (!raw.length) return;
 
     var sections = [];
