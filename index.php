@@ -891,9 +891,9 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
     @keyframes njapNavKeySlide {
       0% {
         opacity: 0;
-        transform: translate(140px, 0);
+        transform: translate(480px, 0);
       }
-      20% {
+      15% {
         opacity: 1;
       }
       75% {

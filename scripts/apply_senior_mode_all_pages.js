@@ -41,7 +41,14 @@ const mobileSeniorRowHTML = `      <!-- Senior Mode in Mobile Menu -->
 const earlyHeadScript = `  <script>
     (function() {
       try {
-        var s = parseInt(localStorage.getItem('njap_senior_mode'), 10);
+        var userChosen = sessionStorage.getItem('njap_senior_user_chosen') || localStorage.getItem('njap_senior_user_chosen');
+        var s;
+        if (userChosen === '1') {
+          var val = sessionStorage.getItem('njap_senior_mode') || localStorage.getItem('njap_senior_mode');
+          s = parseInt(val, 10);
+        } else {
+          s = (window.innerWidth >= 768) ? 1 : 0;
+        }
         if (s === 1) document.documentElement.classList.add('senior-mode-1');
         else if (s === 2) document.documentElement.classList.add('senior-mode-2');
       } catch(e) {}

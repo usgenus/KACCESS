@@ -79,6 +79,9 @@ if (is_array($summaryPoints)) {
 $videoUrl = $post['videoUrl'] ?? '';
 $content = $post['content'] ?? '';
 $postSlug = htmlspecialchars($post['slug'] ?? ($post['id'] ?? 'default'));
+$audioSlug = ($post['slug'] ?? '') ?: ($post['id'] ?? '');
+$audioFile = __DIR__ . '/uploads/audio/' . $audioSlug . '.mp3';
+$audioUrl = file_exists($audioFile) ? '/uploads/audio/' . rawurlencode($audioSlug) . '.mp3' : '';
 
 function render_article_content($content, $allImages = [], &$usedImages = []) {
     if (empty($content)) return '';
@@ -366,7 +369,14 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
   <script>
     (function() {
       try {
-        var s = parseInt(localStorage.getItem('njap_senior_mode'), 10);
+        var userChosen = sessionStorage.getItem('njap_senior_user_chosen') || localStorage.getItem('njap_senior_user_chosen');
+        var s;
+        if (userChosen === '1') {
+          var val = sessionStorage.getItem('njap_senior_mode') || localStorage.getItem('njap_senior_mode');
+          s = parseInt(val, 10);
+        } else {
+          s = (window.innerWidth >= 768) ? 1 : 0;
+        }
         if (s === 1) document.documentElement.classList.add('senior-mode-1');
         else if (s === 2) document.documentElement.classList.add('senior-mode-2');
       } catch(e) {}
@@ -378,6 +388,107 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
     html.senior-mode-1 .header-spacer, html.senior-mode-1 .h-\[109px\], html.senior-mode-1 #header-spacer { height: 120px !important; min-height: 120px !important; }
     html.senior-mode-2 .header-spacer, html.senior-mode-2 .h-\[109px\], html.senior-mode-2 #header-spacer { height: 132px !important; min-height: 132px !important; }
   </style>
+
+  <!-- Logo Animation Styles -->
+  <style id="njap-logo-anim-styles">
+    @keyframes njapNavKeySlide {
+      0% {
+        opacity: 0;
+        transform: translate(480px, 0);
+      }
+      15% {
+        opacity: 1;
+      }
+      75% {
+        transform: translate(0, 0);
+      }
+      86% {
+        transform: translate(-3.5px, 0);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+    }
+
+    @keyframes njapNavKeyholePulse {
+      0%, 70% {
+        stroke: #DC2626;
+        filter: drop-shadow(0 0 0 transparent);
+      }
+      82% {
+        stroke: #EF4444;
+        filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.85));
+      }
+      100% {
+        stroke: #DC2626;
+        filter: drop-shadow(0 0 0 transparent);
+      }
+    }
+
+    @keyframes njapNavDoorAppear {
+      0% {
+        opacity: 0;
+        transform: scale(0.96);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes njapNavTextMain {
+      0% {
+        opacity: 0;
+        transform: translate(45px, 0);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+    }
+
+    @keyframes njapNavTextSub {
+      0% {
+        opacity: 0;
+        transform: translate(35px, 0);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+    }
+
+    .njap-nav-door {
+      transform-origin: 40px 45px;
+      animation: njapNavDoorAppear 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .njap-nav-key {
+      animation: njapNavKeySlide 1.45s cubic-bezier(0.22, 1, 0.36, 1) 0.22s both;
+    }
+
+    .njap-nav-keyhole {
+      animation: njapNavKeyholePulse 1.6s ease-out 0.22s both;
+    }
+
+    .njap-nav-text-main {
+      animation: njapNavTextMain 1.0s cubic-bezier(0.16, 1, 0.3, 1) 1.45s both;
+    }
+
+    .njap-nav-text-sub {
+      animation: njapNavTextSub 1.0s cubic-bezier(0.16, 1, 0.3, 1) 1.75s both;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .njap-nav-door, .njap-nav-key, .njap-nav-keyhole, .njap-nav-text-main, .njap-nav-text-sub {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+  </style>
+
 </head>
 <body class="min-h-full flex flex-col bg-brand-light">
 
@@ -385,14 +496,39 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
   <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/90 backdrop-blur-md border-b border-brand-border">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
-        <a class="flex items-center gap-3 group flex-shrink-0 cursor-pointer njap-brand-link" href="/" onclick="navigateToHome(event); return false;">
-          <div class="w-8 h-8 text-brand-blue flex-shrink-0">
-            <img src="/logo-icon.svg" alt="NJAP Logo" class="w-full h-full object-contain">
-          </div>
-          <div>
-            <span class="font-serif text-xl font-bold text-brand-dark group-hover:text-brand-blue transition-colors duration-200 block leading-tight">Healthcare Access Portal</span>
-            <span class="block text-[10px] font-sans text-brand-muted leading-tight">뉴저지 한인 의료 접근 포털 · NJAP</span>
-          </div>
+        <a class="flex items-center cursor-pointer njap-brand-link flex-shrink-0 group" href="/" onclick="navigateToHome(event); return false;" title="Healthcare Access Portal">
+          <svg class="h-8 sm:h-10 md:h-11 w-auto object-contain transition-transform group-hover:scale-102" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Healthcare Access Portal · 뉴저지 한인 의료 정보 포털 · NJAP" style="overflow: visible;">
+            <title>Healthcare Access Portal · 뉴저지 한인 의료 정보 포털 · NJAP</title>
+            <!-- Icon Mark (Door + Key + NJAP) -->
+            <g transform="translate(4, 2) scale(0.56)" stroke-linecap="round" stroke-linejoin="round">
+              <!-- Door Frame & NJAP Text -->
+              <g class="njap-nav-door" stroke="#1E3A8A">
+                <line x1="20" y1="12" x2="20" y2="88" stroke-width="3.5" />
+                <rect x="25" y="12" width="55" height="76" rx="2" stroke-width="4" fill="none" />
+                <polyline points="25,16 52,25 52,36" stroke-width="3.5" />
+                <text x="52.5" y="81" font-family="'Times New Roman', serif" font-size="13.5" font-weight="900" letter-spacing="1.5" fill="#1E3A8A" stroke="none" text-anchor="middle">NJAP</text>
+              </g>
+              
+              <!-- Keyhole -->
+              <path class="njap-nav-keyhole" d="M 43,45 A 7,7 0 1,1 53,45 L 56,64 L 40,64 Z" stroke="#DC2626" stroke-width="3.5" fill="none" />
+              
+              <!-- Key: enters from right side into the door -->
+              <g class="njap-nav-key">
+                <circle cx="74" cy="45" r="6.5" stroke="#DC2626" stroke-width="3.5" fill="none" />
+                <line x1="47" y1="45" x2="67.5" y2="45" stroke="#DC2626" stroke-width="3.5" />
+                <line x1="49" y1="45" x2="49" y2="49" stroke="#DC2626" stroke-width="3.5" />
+                <line x1="53" y1="45" x2="53" y2="48" stroke="#DC2626" stroke-width="3" />
+              </g>
+            </g>
+
+            <!-- Typography: slides in from right after key enters -->
+            <g class="njap-nav-text-main">
+              <text x="64" y="27" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="18" font-weight="900" fill="#0B192C" letter-spacing="-0.5">Healthcare Access Portal</text>
+            </g>
+            <g class="njap-nav-text-sub">
+              <text x="64" y="44" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="10.5" font-weight="600" fill="#64748B" letter-spacing="0.2">뉴저지 한인 의료 정보 포털 · NJAP</text>
+            </g>
+          </svg>
         </a>
         <div class="hidden md:flex items-center">
           <a class="nav-link pb-0.5 font-medium text-sm text-slate-700 hover:text-brand-blue cursor-pointer" href="/" onclick="navigateToHome(event); return false;">홈</a>
@@ -527,6 +663,71 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
           </div>
         </div>
       </div>
+
+      <?php if (!empty($audioUrl)): ?>
+      <!-- Audio Reader -->
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-10 mb-2">
+        <div id="njap-audio-player" class="flex items-center gap-3 bg-white/95 backdrop-blur-md border border-slate-200/80 rounded-2xl shadow-lg px-4 py-3">
+          <!-- Play/Pause -->
+          <button id="njap-play-btn" onclick="njapTogglePlay()" title="듣기 / 일시정지"
+            class="flex-shrink-0 w-10 h-10 rounded-full bg-brand-blue hover:bg-brand-dark text-white flex items-center justify-center shadow-md transition-all active:scale-95">
+            <svg id="njap-icon-play" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 ml-0.5"><path d="M8 5.14v14l11-7-11-7z"/></svg>
+            <svg id="njap-icon-pause" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 hidden"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          </button>
+          <!-- Label + Seek -->
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-xs font-bold text-brand-blue tracking-wide flex items-center gap-1"><span>🔊</span> 뉴스 읽어주기</span>
+              <span id="njap-time-display" class="text-[11px] font-mono text-slate-400">0:00 / 0:00</span>
+            </div>
+            <input id="njap-seek" type="range" min="0" max="100" value="0" oninput="njapSeek(this.value)"
+              class="w-full h-1.5 rounded-full accent-brand-blue cursor-pointer" />
+          </div>
+          <!-- Download -->
+          <a href="<?= htmlspecialchars($audioUrl) ?>" download title="MP3 다운로드"
+            class="flex-shrink-0 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-brand-blue flex items-center justify-center transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
+          </a>
+        </div>
+        <audio id="njap-audio" src="<?= htmlspecialchars($audioUrl) ?>" preload="metadata"></audio>
+      </div>
+      <script>
+        (function() {
+          var audio = document.getElementById('njap-audio');
+          var seekBar = document.getElementById('njap-seek');
+          var timeDisp = document.getElementById('njap-time-display');
+          var iconPlay = document.getElementById('njap-icon-play');
+          var iconPause = document.getElementById('njap-icon-pause');
+          function fmt(s) {
+            s = Math.floor(s || 0);
+            return Math.floor(s/60) + ':' + ('0' + (s%60)).slice(-2);
+          }
+          audio.addEventListener('timeupdate', function() {
+            var pct = audio.duration ? (audio.currentTime / audio.duration * 100) : 0;
+            seekBar.value = pct;
+            timeDisp.textContent = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
+          });
+          audio.addEventListener('ended', function() {
+            iconPlay.classList.remove('hidden');
+            iconPause.classList.add('hidden');
+          });
+          window.njapTogglePlay = function() {
+            if (audio.paused) {
+              audio.play();
+              iconPlay.classList.add('hidden');
+              iconPause.classList.remove('hidden');
+            } else {
+              audio.pause();
+              iconPlay.classList.remove('hidden');
+              iconPause.classList.add('hidden');
+            }
+          };
+          window.njapSeek = function(v) {
+            if (audio.duration) audio.currentTime = audio.duration * v / 100;
+          };
+        })();
+      </script>
+      <?php endif; ?>
 
       <!-- Body Content -->
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
@@ -744,12 +945,8 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-10">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
         <div class="lg:col-span-2">
-          <a class="inline-flex items-center gap-3 mb-4 group cursor-pointer njap-brand-link" href="/" onclick="navigateToHome(event); return false;">
-            <img src="/logo-icon.svg" alt="NJAP Logo" style="width: 36px; height: 36px; object-fit: contain; filter: invert(1) brightness(2); flex-shrink: 0;" class="transition-transform group-hover:scale-105">
-            <div>
-              <span class="font-serif text-2xl text-white group-hover:text-blue-300 transition-colors block">Healthcare Access Portal</span>
-              <span class="block text-xs text-white/50 mt-0.5 font-sans">뉴저지 한인 의료 정보 포털</span>
-            </div>
+          <a class="inline-flex items-center mb-4 group cursor-pointer njap-brand-link" href="/" onclick="navigateToHome(event); return false;" title="Healthcare Access Portal">
+            <img src="/logo-white.png" alt="Healthcare Access Portal · 뉴저지 한인 의료 정보 포털" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
           </a>
           <p class="text-sm text-white/60 font-sans leading-relaxed max-w-xs mb-6">뉴저지 한인 커뮤니티를 위한 의료 접근 및 건강 정보 포털. 메디케어, ACA, 의료 상담을 한국어로 제공합니다.</p>
         </div>

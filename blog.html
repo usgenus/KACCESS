@@ -20,6 +20,107 @@
     html.senior-mode-1 .header-spacer, html.senior-mode-1 .h-\[109px\], html.senior-mode-1 #header-spacer { height: 120px !important; min-height: 120px !important; }
     html.senior-mode-2 .header-spacer, html.senior-mode-2 .h-\[109px\], html.senior-mode-2 #header-spacer { height: 132px !important; min-height: 132px !important; }
   </style>
+
+  <!-- Logo Animation Styles -->
+  <style id="njap-logo-anim-styles">
+    @keyframes njapNavKeySlide {
+      0% {
+        opacity: 0;
+        transform: translate(480px, 0);
+      }
+      15% {
+        opacity: 1;
+      }
+      75% {
+        transform: translate(0, 0);
+      }
+      86% {
+        transform: translate(-3.5px, 0);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+    }
+
+    @keyframes njapNavKeyholePulse {
+      0%, 70% {
+        stroke: #DC2626;
+        filter: drop-shadow(0 0 0 transparent);
+      }
+      82% {
+        stroke: #EF4444;
+        filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.85));
+      }
+      100% {
+        stroke: #DC2626;
+        filter: drop-shadow(0 0 0 transparent);
+      }
+    }
+
+    @keyframes njapNavDoorAppear {
+      0% {
+        opacity: 0;
+        transform: scale(0.96);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes njapNavTextMain {
+      0% {
+        opacity: 0;
+        transform: translate(45px, 0);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+    }
+
+    @keyframes njapNavTextSub {
+      0% {
+        opacity: 0;
+        transform: translate(35px, 0);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+    }
+
+    .njap-nav-door {
+      transform-origin: 40px 45px;
+      animation: njapNavDoorAppear 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .njap-nav-key {
+      animation: njapNavKeySlide 1.45s cubic-bezier(0.22, 1, 0.36, 1) 0.22s both;
+    }
+
+    .njap-nav-keyhole {
+      animation: njapNavKeyholePulse 1.6s ease-out 0.22s both;
+    }
+
+    .njap-nav-text-main {
+      animation: njapNavTextMain 1.0s cubic-bezier(0.16, 1, 0.3, 1) 1.45s both;
+    }
+
+    .njap-nav-text-sub {
+      animation: njapNavTextSub 1.0s cubic-bezier(0.16, 1, 0.3, 1) 1.75s both;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .njap-nav-door, .njap-nav-key, .njap-nav-keyhole, .njap-nav-text-main, .njap-nav-text-sub {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+  </style>
+
 </head>
 <body style="font-family:sans-serif;text-align:center;padding-top:50px;">
   <p>최신 건강 의료 뉴스 페이지로 이동 중입니다... <a href="/blog">여기</a>를 클릭하세요.</p>

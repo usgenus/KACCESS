@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="ko" class="h-full antialiased">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Health Bridge (더 헬스 브릿지) · 미국 의료 연계 가교 | 뉴저지 의료접근센터 (NJAP)</title>
+  <meta name="description" content="미국 주요 종합병원과 한인 환자를 직접 잇는 원스톱 헬스케어 가교 'The Health Bridge'. 언어 장벽 해소, 한국어 전문의 매칭, 보험 사전승인(PA) 및 병원비 감면(Charity Care) 무료 네비게이션." />
+  <meta name="keywords" content="The Health Bridge, 더 헬스 브릿지, 헬스브릿지, 뉴저지 의료접근센터, healthcare access portal, 미국 병원 연계, 한인 전문의, 의료 통역, Charity Care, Hackensack, Holy Name, Englewood Health" />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
+  <link rel="icon" href="/favicon.ico?v=2" sizes="16x16 32x32 48x48" type="image/x-icon" />
+  <link rel="icon" href="/favicon-192.png?v=2" sizes="192x192" type="image/png" />
+  <link rel="icon" href="/favicon-512.png?v=2" sizes="512x512" type="image/png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2" />
+
+  <!-- Font Awesome 6.5 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  
+  <!-- Next.js Tailwind CSS Export -->
+  <link rel="stylesheet" href="/_next/static/chunks/1fosv8xgmgdeu.css" />
+
+  <style>
+    :root, html, body {
+      font-family: "Pretendard Variable", Pretendard, "Noto Sans KR", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif !important;
+    }
+    .marquee-bar { background: #000000; }
+    .nav-top-offset { top: 45px; }
+    .logo-footer { width: 36px; height: 36px; object-fit: contain; filter: invert(1) brightness(2); flex-shrink: 0; }
+    
+    /* Bridge Gradient Accents */
+    .bridge-hero-bg {
+      background: radial-gradient(circle at 50% 20%, rgba(30, 58, 138, 0.45) 0%, rgba(15, 23, 42, 0.95) 75%),
+                  linear-gradient(180deg, #090e1a 0%, #0b1528 100%);
+    }
+    .bridge-card {
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .bridge-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px -8px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
+      border-color: #3b82f6;
+    }
+    .bridge-glow-pill {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(6, 182, 212, 0.15) 100%);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+    .bridge-step-number {
+      background: linear-gradient(135deg, #1E3A8A 0%, #2563eb 100%);
+      color: white;
+    }
+
+    /* Senior Mode Base Styles */
+    html.senior-mode-1 { font-size: 118% !important; }
+    html.senior-mode-2 { font-size: 135% !important; }
+    html.senior-mode-1 .header-spacer, html.senior-mode-1 .h-\[109px\], html.senior-mode-1 #header-spacer { height: 120px !important; min-height: 120px !important; }
+    html.senior-mode-2 .header-spacer, html.senior-mode-2 .h-\[109px\], html.senior-mode-2 #header-spacer { height: 132px !important; min-height: 132px !important; }
+  </style>
+
+  <script>
+    (function() {
+      try {
+        var userChosen = sessionStorage.getItem('njap_senior_user_chosen') || localStorage.getItem('njap_senior_user_chosen');
+        var s;
+        if (userChosen === '1') {
+          var val = sessionStorage.getItem('njap_senior_mode') || localStorage.getItem('njap_senior_mode');
+          s = parseInt(val, 10);
+        } else {
+          s = (window.innerWidth >= 768) ? 1 : 0;
+        }
+        if (s === 1) document.documentElement.classList.add('senior-mode-1');
+        else if (s === 2) document.documentElement.classList.add('senior-mode-2');
+      } catch(e) {}
+    })();
+  </script>
+  <script>
+    (function() {
+      try {
+        var d = localStorage.getItem('njap_dark_mode');
+        if (!d) {
+          if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            d = 'dark';
+          } else {
+            d = 'light';
+          }
+        }
+        if (d === 'dark') document.documentElement.classList.add('dark');
+        else document.documentElement.classList.remove('dark');
+      } catch(e) {}
+    })();
+  </script>
+  <style id="njap-dark-mode-base-css">
+    html.dark, html.dark body { background-color: #0b0f19 !important; color: #f8fafc !important; }
+    html.dark .bg-brand-light, html.dark .bg-\[\#F3F3F5\], html.dark .bg-\[\#F8F9FA\] { background-color: #0b0f19 !important; color: #f8fafc !important; }
+    html.dark nav { background-color: rgba(15, 23, 42, 0.92) !important; border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important; }
+    html.dark nav .njap-brand-link img { filter: brightness(0) invert(1) !important; }
+    html.dark .dark-mode-btn { background: #1e293b !important; border-color: #475569 !important; color: #fbbf24 !important; }
+    html.dark .dark-mode-btn .dark-mode-sun-icon { display: block !important; stroke: currentColor !important; }
+    html.dark .dark-mode-btn .dark-mode-moon-icon { display: none !important; }
+    .dark-mode-btn .dark-mode-sun-icon { display: none !important; }
+    .dark-mode-btn .dark-mode-moon-icon { display: block !important; fill: currentColor !important; }
+  </style>
+
+  <!-- Logo Animation Styles -->
+  <style id="njap-logo-anim-styles">
+    @keyframes njapNavKeySlide {
+      0% {
+        opacity: 0;
+        transform: translate(480px, 0);
+      }
+      15% {
+        opacity: 1;
+      }
+      75% {
+        transform: translate(0, 0);
+      }
+      86% {
+        transform: translate(-3.5px, 0);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+    }
+
+    @keyframes njapNavKeyholePulse {
+      0%, 70% {
+        stroke: #DC2626;
+        filter: drop-shadow(0 0 0 transparent);
+      }
+      82% {
+        stroke: #EF4444;
+        filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.85));
+      }
+      100% {
+        stroke: #DC2626;
+        filter: drop-shadow(0 0 0 transparent);
+      }
+    }
+
+    @keyframes njapNavDoorAppear {
+      0% {
+        opacity: 0;
+        transform: scale(0.96);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes njapNavTextMain {
+      0% {
+        opacity: 0;
+        transform: translate(45px, 0);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+    }
+
+    @keyframes njapNavTextSub {
+      0% {
+        opacity: 0;
+        transform: translate(35px, 0);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+    }
+
+    .njap-nav-door {
+      transform-origin: 40px 45px;
+      animation: njapNavDoorAppear 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .njap-nav-key {
+      animation: njapNavKeySlide 1.45s cubic-bezier(0.22, 1, 0.36, 1) 0.22s both;
+    }
+
+    .njap-nav-keyhole {
+      animation: njapNavKeyholePulse 1.6s ease-out 0.22s both;
+    }
+
+    .njap-nav-text-main {
+      animation: njapNavTextMain 1.0s cubic-bezier(0.16, 1, 0.3, 1) 1.45s both;
+    }
+
+    .njap-nav-text-sub {
+      animation: njapNavTextSub 1.0s cubic-bezier(0.16, 1, 0.3, 1) 1.75s both;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .njap-nav-door, .njap-nav-key, .njap-nav-keyhole, .njap-nav-text-main, .njap-nav-text-sub {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+  </style>
+
+</head>
+<body class="min-h-full flex flex-col bg-slate-50 text-slate-900">
+
+  <!-- 1. Top Marquee Banner -->
+  <div class="fixed top-0 left-0 right-0 z-50 h-[45px] overflow-hidden flex items-center marquee-bar">
+    <div class="marquee-track whitespace-nowrap">
+      <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12">
+        <span class="opacity-60 mr-3">✦</span>The Health Bridge: &quot;최고의 미국 종합병원과 한인 환자를 잇는 든든한 의료 가교 — 언어 장벽 없는 1:1 맞춤 네비게이션&quot;<span class="opacity-60 ml-3">✦</span>
+      </span>
+      <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12">
+        <span class="opacity-60 mr-3">✦</span>The Health Bridge: &quot;최고의 미국 종합병원과 한인 환자를 잇는 든든한 의료 가교 — 언어 장벽 없는 1:1 맞춤 네비게이션&quot;<span class="opacity-60 ml-3">✦</span>
+      </span>
+      <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12">
+        <span class="opacity-60 mr-3">✦</span>The Health Bridge: &quot;최고의 미국 종합병원과 한인 환자를 잇는 든든한 의료 가교 — 언어 장벽 없는 1:1 맞춤 네비게이션&quot;<span class="opacity-60 ml-3">✦</span>
+      </span>
+      <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12">
+        <span class="opacity-60 mr-3">✦</span>The Health Bridge: &quot;최고의 미국 종합병원과 한인 환자를 잇는 든든한 의료 가교 — 언어 장벽 없는 1:1 맞춤 네비게이션&quot;<span class="opacity-60 ml-3">✦</span>
+      </span>
+    </div>
+  </div>
+
+  <!-- 2. Navigation Bar -->
+  <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/90 backdrop-blur-md border-b border-slate-200/80 nav-top-offset shadow-xs">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        
+        <!-- Logo -->
+        <a class="flex items-center cursor-pointer njap-brand-link flex-shrink-0 group" href="/" onclick="navigateToHome(event); return false;" title="Healthcare Access Portal">
+          <svg class="h-8 sm:h-10 md:h-11 w-auto object-contain transition-transform group-hover:scale-102" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Healthcare Access Portal · 뉴저지 한인 의료 정보 포털 · NJAP" style="overflow: visible;">
+            <title>Healthcare Access Portal · 뉴저지 한인 의료 정보 포털 · NJAP</title>
+            <!-- Icon Mark (Door + Key + NJAP) -->
+            <g transform="translate(4, 2) scale(0.56)" stroke-linecap="round" stroke-linejoin="round">
+              <!-- Door Frame & NJAP Text -->
+              <g class="njap-nav-door" stroke="#1E3A8A">
+                <line x1="20" y1="12" x2="20" y2="88" stroke-width="3.5" />
+                <rect x="25" y="12" width="55" height="76" rx="2" stroke-width="4" fill="none" />
+                <polyline points="25,16 52,25 52,36" stroke-width="3.5" />
+                <text x="52.5" y="81" font-family="'Times New Roman', serif" font-size="13.5" font-weight="900" letter-spacing="1.5" fill="#1E3A8A" stroke="none" text-anchor="middle">NJAP</text>
+              </g>
+              
+              <!-- Keyhole -->
+              <path class="njap-nav-keyhole" d="M 43,45 A 7,7 0 1,1 53,45 L 56,64 L 40,64 Z" stroke="#DC2626" stroke-width="3.5" fill="none" />
+              
+              <!-- Key: enters from right side into the door -->
+              <g class="njap-nav-key">
+                <circle cx="74" cy="45" r="6.5" stroke="#DC2626" stroke-width="3.5" fill="none" />
+                <line x1="47" y1="45" x2="67.5" y2="45" stroke="#DC2626" stroke-width="3.5" />
+                <line x1="49" y1="45" x2="49" y2="49" stroke="#DC2626" stroke-width="3.5" />
+                <line x1="53" y1="45" x2="53" y2="48" stroke="#DC2626" stroke-width="3" />
+              </g>
+            </g>
+
+            <!-- Typography: slides in from right after key enters -->
+            <g class="njap-nav-text-main">
+              <text x="64" y="27" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="18" font-weight="900" fill="#0B192C" letter-spacing="-0.5">Healthcare Access Portal</text>
+            </g>
+            <g class="njap-nav-text-sub">
+              <text x="64" y="44" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="10.5" font-weight="600" fill="#64748B" letter-spacing="0.2">뉴저지 한인 의료 정보 포털 · NJAP</text>
+            </g>
+          </svg>
+        </a>
+
+        <!-- Desktop Navigation Items -->
+        <div class="hidden md:flex items-center gap-1 lg:gap-2">
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue px-2.5 py-1" href="/">홈</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue px-2.5 py-1" href="/blog">뉴스</a>
+          
+          <!-- The Health Bridge (Active Item) -->
+          <a class="nav-link pb-0.5 font-bold text-blue-700 bg-blue-50/80 border border-blue-200/80 rounded-full px-3 py-1 flex items-center gap-1.5 shadow-2xs" href="/the-health-bridge">
+            <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+            <span>The Health Bridge</span>
+          </a>
+
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue px-2.5 py-1" href="/forum">커뮤니티 포럼</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue px-2.5 py-1" href="/senior-care">시니어 케어</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue px-2.5 py-1" href="/medicare">메디케어 &amp; ACA</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue px-2.5 py-1" href="/tool">환자도우미</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue px-2.5 py-1" href="/about">소개</a>
+        </div>
+
+        <!-- Right Tools -->
+        <div class="flex items-center gap-2.5 sm:gap-3">
+          <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 hover:opacity-80 transition-opacity cursor-pointer flex-shrink-0" title="카카오톡 1:1 상담 바로가기"><img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-5 h-5 sm:w-6 sm:h-6 rounded-md shrink-0 object-contain shadow-2xs" /><span class="hidden xs:inline text-xs sm:text-sm font-bold text-slate-800 hover:text-brand-blue tracking-tight whitespace-nowrap">1:1 상담</span></a>
+
+          <button id="senior-mode-btn" class="senior-mode-btn notranslate" translate="no" type="button" onclick="window.cycleSeniorMode && window.cycleSeniorMode()" title="시니어모드+ (글자 크기 3단계 조절)" aria-label="시니어모드 글자 크기 조절">
+            <span class="senior-btn-label">시니어모드+</span>
+            <span class="senior-step-badge" style="display:none;"></span>
+          </button>
+
+          <button id="en-translate-btn" class="notranslate" translate="no" onclick="window.toggleTranslation && window.toggleTranslation()" title="Switch Language (EN / KR)" aria-label="Language Toggle" style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;border:1.5px solid #cbd5e1;font-size:11px;font-weight:700;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s ease;background:transparent;color:#475569;white-space:nowrap;flex-shrink:0;line-height:1.4;">
+            <span class="notranslate" translate="no">🌐</span> <span class="notranslate en-btn-label" translate="no">EN</span>
+          </button>
+          <button id="dark-mode-btn" class="dark-mode-btn notranslate" translate="no" type="button" onclick="window.toggleDarkMode && window.toggleDarkMode()" title="다크 모드로 전환" aria-label="다크 모드 전환"><svg class="dark-mode-moon-icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" /></svg><svg class="dark-mode-sun-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button>
+
+          <!-- Mobile Hamburger -->
+          <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors" aria-label="Menu">
+            <div class="w-5 h-4 flex flex-col justify-between">
+              <span class="block h-0.5 bg-brand-dark rounded-full transition-all"></span>
+              <span class="block h-0.5 bg-brand-dark rounded-full transition-all"></span>
+              <span class="block h-0.5 bg-brand-dark rounded-full transition-all"></span>
+            </div>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobile-menu-dropdown" class="md:hidden overflow-hidden transition-all duration-300 max-h-0 opacity-0 bg-white/98 backdrop-blur-md border-t border-slate-200 px-4 py-3 flex flex-col gap-1">
+      <!-- Dark Mode in Mobile Menu -->
+      <div class="flex items-center justify-between py-2.5 px-3.5 mb-1.5 rounded-xl bg-slate-50 border border-slate-200/80">
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-bold text-slate-700">화면 모드 (다크/라이트)</span>
+        </div>
+        <button type="button" class="dark-mode-btn notranslate" translate="no" onclick="window.toggleDarkMode && window.toggleDarkMode()" aria-label="다크 모드 전환" title="다크 모드 전환">
+          <svg class="dark-mode-moon-icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+            <path d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+          </svg>
+          <svg class="dark-mode-sun-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+          </svg>
+        </button>
+      </div>
+
+      <a href="/" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:bg-slate-50">
+        <span>홈</span>
+        <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+      </a>
+      <a href="/blog" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:bg-slate-50">
+        <span>뉴스</span>
+        <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+      </a>
+      <a href="/the-health-bridge" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors border-b border-slate-100 font-bold text-blue-700 bg-blue-50/80">
+        <span class="flex items-center gap-2">
+          <i class="fa-solid fa-bridge text-blue-600"></i>
+          <span>The Health Bridge</span>
+        </span>
+        <span class="text-[10px] font-extrabold bg-blue-600 text-white px-2 py-0.5 rounded-full">NEW</span>
+      </a>
+      <a href="/forum" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:bg-slate-50">
+        <span>커뮤니티 포럼</span>
+        <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+      </a>
+      <a href="/senior-care" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:bg-slate-50">
+        <span>시니어 케어</span>
+        <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+      </a>
+      <a href="/medicare" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:bg-slate-50">
+        <span>메디케어 &amp; ACA</span>
+        <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+      </a>
+      <a href="/tool" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:bg-slate-50">
+        <span>환자도우미</span>
+        <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+      </a>
+      <a href="/about" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors font-semibold text-slate-800 hover:bg-slate-50">
+        <span>소개</span>
+        <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+      </a>
+    </div>
+  </nav>
+
+  <div class="h-[109px]"></div>
+
+  <main class="flex-1">
+
+    <!-- ========================================================= -->
+    <!-- 3. HERO SECTION: THE HEALTH BRIDGE -->
+    <!-- ========================================================= -->
+    <section class="bridge-hero-bg text-white py-16 sm:py-24 relative overflow-hidden">
+      <!-- Glow Gradients in Background -->
+      <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-blue-500/20 blur-[120px] rounded-full pointer-events-none"></div>
+      <div class="absolute bottom-0 right-10 w-[400px] h-[250px] bg-teal-500/15 blur-[100px] rounded-full pointer-events-none"></div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center sm:text-left">
+        <div class="max-w-3xl">
+          
+          <!-- Badge -->
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bridge-glow-pill text-blue-300 text-xs sm:text-sm font-bold mb-6">
+            <i class="fa-solid fa-bridge text-cyan-300"></i>
+            <span>THE HEALTH BRIDGE · 한인 원스톱 의료 연계 가교</span>
+            <span class="text-[11px] bg-blue-500/30 text-cyan-200 px-2 py-0.5 rounded-full">SAMPLE PREVIEW</span>
+          </div>
+
+          <!-- Main Title -->
+          <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight mb-6">
+            미국 최고 의료 시스템과<br />
+            한인 환자를 잇는 든든한 가교,<br />
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-emerald-400">The Health Bridge</span>
+          </h1>
+
+          <!-- Description -->
+          <p class="text-slate-300 text-base sm:text-lg leading-relaxed mb-8">
+            언어의 장벽, 복잡한 보험과 사전 승인(PA), 과도한 병원비 걱정으로 상급 병원 치료를 주저하셨나요?<br class="hidden sm:inline" />
+            <strong>The Health Bridge</strong>는 뉴저지·뉴욕 유수 대학병원 및 최고 전문의 네트워크와 한인 동포를 1:1로 직접 연결하는 비영리 전문 의료 연계 플랫폼입니다.
+          </p>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-col sm:flex-row items-center gap-3.5">
+            <a href="#bridge-consult" class="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-bold text-sm shadow-lg shadow-blue-500/25 transition-all text-center flex items-center justify-center gap-2">
+              <i class="fa-solid fa-hand-holding-medical"></i>
+              <span>브릿지 케어 상담 신청하기 (무료)</span>
+            </a>
+            <a href="#bridge-network" class="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-slate-800/90 hover:bg-slate-700/90 text-slate-200 border border-slate-700 font-bold text-sm transition-all text-center flex items-center justify-center gap-2">
+              <i class="fa-solid fa-hospital"></i>
+              <span>연계 종합병원 네트워크</span>
+            </a>
+          </div>
+
+        </div>
+
+        <!-- Trust Stats Badges -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-12 sm:mt-16 pt-8 border-t border-slate-800/80">
+          <div class="bg-slate-900/60 backdrop-blur-xs border border-slate-800 rounded-2xl p-4">
+            <div class="text-2xl sm:text-3xl font-extrabold text-cyan-400 mb-1">100%</div>
+            <div class="text-xs text-slate-300 font-semibold">무료 비영리 서비스</div>
+            <p class="text-[11px] text-slate-400 mt-0.5">상담 및 병원 연계 수수료 $0</p>
+          </div>
+          <div class="bg-slate-900/60 backdrop-blur-xs border border-slate-800 rounded-2xl p-4">
+            <div class="text-2xl sm:text-3xl font-extrabold text-emerald-400 mb-1">Top 6</div>
+            <div class="text-xs text-slate-300 font-semibold">핵심 대학·종합병원</div>
+            <p class="text-[11px] text-slate-400 mt-0.5">NJ/NY 최고 의료 시스템 연계</p>
+          </div>
+          <div class="bg-slate-900/60 backdrop-blur-xs border border-slate-800 rounded-2xl p-4">
+            <div class="text-2xl sm:text-3xl font-extrabold text-blue-400 mb-1">1:1 전담</div>
+            <div class="text-xs text-slate-300 font-semibold">의료 통역 &amp; 네비게이션</div>
+            <p class="text-[11px] text-slate-400 mt-0.5">예약부터 사후 관리까지 동행</p>
+          </div>
+          <div class="bg-slate-900/60 backdrop-blur-xs border border-slate-800 rounded-2xl p-4">
+            <div class="text-2xl sm:text-3xl font-extrabold text-amber-400 mb-1">최대 100%</div>
+            <div class="text-xs text-slate-300 font-semibold">Charity Care 감면 지원</div>
+            <p class="text-[11px] text-slate-400 mt-0.5">무보험·저소득 병원비 지원 대행</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 4. 4 CORE BRIDGE PILLARS (핵심 브릿지 체계) -->
+    <!-- ========================================================= -->
+    <section class="py-16 sm:py-24 bg-white border-b border-slate-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-2xl mx-auto mb-14 sm:mb-16">
+          <span class="text-xs font-extrabold tracking-wider uppercase text-blue-600 bg-blue-50 border border-blue-200 px-3 py-1 rounded-full inline-block mb-3">
+            Core Pillars of The Health Bridge
+          </span>
+          <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            환자의 모든 의료 여정을 잇는 4대 브릿지
+          </h2>
+          <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed">
+            단순한 진료 예약 대행을 넘어, 병원 선택부터 전문의 상담, 병원비 감면, 퇴원 후 회복까지 통합 지원합니다.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          
+          <!-- Pillar 1 -->
+          <div class="bridge-card p-6 sm:p-7 rounded-3xl flex flex-col justify-between">
+            <div>
+              <div class="w-13 h-13 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl mb-5 shadow-2xs">
+                <i class="fa-solid fa-hospital-user"></i>
+              </div>
+              <span class="text-xs font-extrabold text-blue-600 uppercase tracking-wider">Pillar 1</span>
+              <h3 class="text-lg font-bold text-slate-900 mt-1 mb-2.5">병원 &amp; 전문의 연계 브릿지</h3>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                해켄색 머리디언, 홀리네임, 잉글우드 헬스, 밸리병원 등 뉴저지 최고 종합병원 및 컬럼비아·마운트사이나이의 세부 전공의를 신속하게 연결합니다.
+              </p>
+            </div>
+            <ul class="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500 space-y-1.5 font-medium">
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-blue-600"></i> 한국어 가능 전문의 우선 매칭</li>
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-blue-600"></i> 2차 소견(Second Opinion) 자문 연계</li>
+            </ul>
+          </div>
+
+          <!-- Pillar 2 -->
+          <div class="bridge-card p-6 sm:p-7 rounded-3xl flex flex-col justify-between">
+            <div>
+              <div class="w-13 h-13 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl mb-5 shadow-2xs">
+                <i class="fa-solid fa-language"></i>
+              </div>
+              <span class="text-xs font-extrabold text-emerald-600 uppercase tracking-wider">Pillar 2</span>
+              <h3 class="text-lg font-bold text-slate-900 mt-1 mb-2.5">의료 전문 통역 &amp; 소통 브릿지</h3>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                진료실에서 어려운 의학 전문 용어 때문에 겪는 불안을 없앱니다. 연방 민권법에 따른 공인 의료 통역사 사전 배치 및 문진표 작성을 돕습니다.
+              </p>
+            </div>
+            <ul class="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500 space-y-1.5 font-medium">
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-emerald-600"></i> 병원 내 실시간 한국어 통역 동행</li>
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-emerald-600"></i> 검사 결과지 및 의사 지시문 해설</li>
+            </ul>
+          </div>
+
+          <!-- Pillar 3 -->
+          <div class="bridge-card p-6 sm:p-7 rounded-3xl flex flex-col justify-between">
+            <div>
+              <div class="w-13 h-13 rounded-2xl bg-cyan-50 text-cyan-600 flex items-center justify-center text-2xl mb-5 shadow-2xs">
+                <i class="fa-solid fa-file-invoice-dollar"></i>
+              </div>
+              <span class="text-xs font-extrabold text-cyan-600 uppercase tracking-wider">Pillar 3</span>
+              <h3 class="text-lg font-bold text-slate-900 mt-1 mb-2.5">보험 사전승인 &amp; 재정 브릿지</h3>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                MRI/CT 검사나 특수 치료 시 필수적인 보험사 사전 승인(Prior Authorization) 지연을 예방하고, 병원비 감면(Charity Care) 신청을 지원합니다.
+              </p>
+            </div>
+            <ul class="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500 space-y-1.5 font-medium">
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-cyan-600"></i> 주정부 Charity Care 서류 대행</li>
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-cyan-600"></i> 병원비 분할 납부 및 청구서 네고</li>
+            </ul>
+          </div>
+
+          <!-- Pillar 4 -->
+          <div class="bridge-card p-6 sm:p-7 rounded-3xl flex flex-col justify-between">
+            <div>
+              <div class="w-13 h-13 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-2xl mb-5 shadow-2xs">
+                <i class="fa-solid fa-hand-holding-heart"></i>
+              </div>
+              <span class="text-xs font-extrabold text-purple-600 uppercase tracking-wider">Pillar 4</span>
+              <h3 class="text-lg font-bold text-slate-900 mt-1 mb-2.5">사후 관리 &amp; 연속 돌봄 브릿지</h3>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                수술이나 퇴원 후 가정 간호(Home Health), 물리 재활, 한국어 약국의 복약 지도, 시니어 너싱홈 및 호스피스 완화의료까지 이어지는 돌봄 체계입니다.
+              </p>
+            </div>
+            <ul class="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500 space-y-1.5 font-medium">
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-purple-600"></i> 처방약 이전 및 90일 복약 지원</li>
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-purple-600"></i> 메디케이드 MLTSS 장기요양 연계</li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 5. 4-STEP PATIENT JOURNEY (어떻게 진행되나요?) -->
+    <!-- ========================================================= -->
+    <section class="py-16 sm:py-20 bg-slate-50 border-b border-slate-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-14">
+          <span class="text-xs font-extrabold tracking-wider uppercase text-cyan-700 bg-cyan-50 border border-cyan-200 px-3 py-1 rounded-full inline-block mb-3">
+            Patient Pathway
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">
+            The Health Bridge 진행 절차
+          </h2>
+          <p class="text-slate-600 text-sm mt-2">
+            복잡한 예약 절차 없이, 4단계로 쉽고 편안하게 진료를 받으실 수 있습니다.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+          
+          <!-- Step 1 -->
+          <div class="bg-white border border-slate-200 rounded-3xl p-6 relative">
+            <div class="w-10 h-10 rounded-xl bridge-step-number flex items-center justify-center font-extrabold text-sm mb-4 shadow-sm">
+              01
+            </div>
+            <h4 class="font-bold text-slate-900 text-base mb-2">상담 접수 &amp; 증상 분석</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              온라인 접수 또는 1:1 상담을 통해 현재 겪고 계신 증상, 보유 건강보험, 거주 지역 및 선호 의료진을 파악합니다.
+            </p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="bg-white border border-slate-200 rounded-3xl p-6 relative">
+            <div class="w-10 h-10 rounded-xl bridge-step-number flex items-center justify-center font-extrabold text-sm mb-4 shadow-sm">
+              02
+            </div>
+            <h4 class="font-bold text-slate-900 text-base mb-2">최적 전문의·병원 매칭</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              보험 네트워크(In-Network) 및 한국어 지원 여부를 고려하여 최적의 상급 종합병원 전문의 또는 전문 클리닉을 매칭합니다.
+            </p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="bg-white border border-slate-200 rounded-3xl p-6 relative">
+            <div class="w-10 h-10 rounded-xl bridge-step-number flex items-center justify-center font-extrabold text-sm mb-4 shadow-sm">
+              03
+            </div>
+            <h4 class="font-bold text-slate-900 text-base mb-2">예약 &amp; 사전 승인 지원</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              환자 맞춤 일정으로 진료 예약을 조율하고, MRI/CT 검사 및 특수 진료에 필요한 보험사 사전 승인(PA) 절차를 안내합니다.
+            </p>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="bg-white border border-slate-200 rounded-3xl p-6 relative">
+            <div class="w-10 h-10 rounded-xl bridge-step-number flex items-center justify-center font-extrabold text-sm mb-4 shadow-sm">
+              04
+            </div>
+            <h4 class="font-bold text-slate-900 text-base mb-2">통역 동행 &amp; 사후 케어</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              병원 방문 당일 통역을 연계하고, 진료 후 처방전 수령, 검사 결과 확인 및 다음 단계 치료 계획까지 함께합니다.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 6. PARTNER HOSPITAL NETWORK (연계 종합병원 네트워크) -->
+    <!-- ========================================================= -->
+    <section id="bridge-network" class="py-16 sm:py-24 bg-white border-b border-slate-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
+          <div>
+            <span class="text-xs font-extrabold tracking-wider uppercase text-blue-600 bg-blue-50 border border-blue-200 px-3 py-1 rounded-full inline-block mb-3">
+              Partner Health Systems
+            </span>
+            <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+              주요 연계 종합병원 및 헬스 시스템
+            </h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-500 max-w-md">
+            뉴저지주 최고 순위의 급성기 병원과 뉴욕 명문 대학병원 네트워크를 통해 수준 높은 임상 진료를 연결합니다.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          
+          <!-- Hospital 1: Hackensack -->
+          <div class="border border-slate-200 rounded-3xl p-6 bg-slate-50/60 hover:bg-white hover:border-blue-500 transition-all">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-[11px] font-extrabold px-2.5 py-1 rounded-full bg-blue-100 text-blue-800">뉴저지 종합병원 #1</span>
+              <span class="text-xs text-slate-400 font-bold"><i class="fa-solid fa-location-dot text-red-500 mr-1"></i>Hackensack, NJ</span>
+            </div>
+            <h3 class="font-extrabold text-slate-900 text-lg mb-1.5">Hackensack University Medical Center</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+              심혈관 센터, 헬레나 버거 암센터, 정형외과 및 뇌신경 수술 분야 전미 최고 수준의 임상 역량을 보유한 대형 의료원.
+            </p>
+            <div class="flex flex-wrap gap-1.5 text-[11px]">
+              <span class="bg-white border border-slate-200 px-2 py-0.5 rounded-md text-slate-600 font-semibold">✓ Charity Care 병원</span>
+              <span class="bg-white border border-slate-200 px-2 py-0.5 rounded-md text-slate-600 font-semibold">✓ 한국어 전문의 다수</span>
+              <span class="bg-white border border-slate-200 px-2 py-0.5 rounded-md text-slate-600 font-semibold">✓ 로봇 수술 센터</span>
+            </div>
+          </div>
+
+          <!-- Hospital 2: Holy Name -->
+          <div class="border border-slate-200 rounded-3xl p-6 bg-slate-50/60 hover:bg-white hover:border-blue-500 transition-all">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-[11px] font-extrabold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800">코리안 메디컬 프로그램</span>
+              <span class="text-xs text-slate-400 font-bold"><i class="fa-solid fa-location-dot text-red-500 mr-1"></i>Teaneck, NJ</span>
+            </div>
+            <h3 class="font-extrabold text-slate-900 text-lg mb-1.5">Holy Name Medical Center</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+              미국 내 최초이자 최대 규모의 한국인 메디컬 프로그램(KMP)을 운영하며 한인 환자를 위한 완벽한 문화적 편의와 한식 식사를 제공.
+            </p>
+            <div class="flex flex-wrap gap-1.5 text-[11px]">
+              <span class="bg-white border border-slate-200 px-2 py-0.5 rounded-md text-slate-600 font-semibold">✓ 한국어 전담 코디네이터</span>
+              <span class="bg-white border border-slate-200 px-2 py-0.5 rounded-md text-slate-600 font-semibold">✓ KMP 무료 검진</span>
+              <span class="bg-white border border-slate-200 px-2 py-0.5 rounded-md text-slate-600 font-semibold">✓ 아시안 간질환 센터</span>
+            </div>
+          </div>
+
+          <!-- Hospital 3: Englewood Health -->
+          <div class="border border-slate-200 rounded-3xl p-6 bg-slate-50/60 hover:bg-white hover:border-blue-500 transition-all">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-[11px] font-extrabold px-2.5 py-1 rounded-full bg-cyan-100 text-cyan-800">버겐카운티 중심 케어</span>
+              <span class="text-xs text-slate-400 font-bold"><i class="fa-solid fa-location-dot text-red-500 mr-1"></i>Englewood, NJ</span>
+            </div>
+            <h3 class="font-extrabold text-slate-900 text-lg mb-1.5">Englewood Hospital &amp; Medical Center</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+              무수혈 센터, 레슬리 사이먼 유방암 케어 센터, 첨단 심혈관 중재술 및 한인 전담 통역 지원 시스템 완비.
+            </p>
+            <div class="flex flex-wrap gap-1.5 text-[11px]">
+              <span class="bg-white border border-slate-200 px-2 py-0.5 rounded-md text-slate-600 font-semibold">✓ 환자 중심 무수혈 수술</span>
+              <span class="bg-white border border-slate-200 px-2 py-0.5 rounded-md text-slate-600 font-semibold">✓ 첨단 암 치료 센터</span>
+              <span class="bg-white border border-slate-200 px-2 py-0.5 rounded-md text-slate-600 font-semibold">✓ 포트리/팰팍 근접</span>
+            </div>
+          </div>
+
+          <!-- Hospital 4: The Valley Hospital -->
+          <div class="border border-slate-200 rounded-3xl p-6 bg-slate-50/60 hover:bg-white hover:border-blue-500 transition-all">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-[11px] font-extrabold px-2.5 py-1 rounded-full bg-purple-100 text-purple-800">2024 파라무스 신축 스마트 병원</span>
+              <span class="text-xs text-slate-400 font-bold"><i class="fa-solid fa-location-dot text-red-500 mr-1"></i>Paramus, NJ</span>
+            </div>
+            <h3 class="font-extrabold text-slate-900 text-lg mb-1.5">The Valley Hospital (Paramus)</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+              전 병실 1인실, 최신 AI 기반 스마트 의료 인프라와 마운트 사이나이 헬스 시스템과의 임상 제휴를 통한 고난도 암 치료.
+            </p>
+            <div class="flex flex-wrap gap-1.5 text-[11px]">
+              <span class="bg-white border border-slate-200 px-2 py-0.5 rounded-md text-slate-600 font-semibold">✓ 100% 1인실 병동</span>
+              <span class="bg-white border border-slate-200 px-2 py-0.5 rounded-md text-slate-600 font-semibold">✓ 마운트사이나이 제휴</span>
+              <span class="bg-white border border-slate-200 px-2 py-0.5 rounded-md text-slate-600 font-semibold">✓ 청정 감염관리</span>
+            </div>
+          </div>
+
+          <!-- Hospital 5: Columbia University -->
+          <div class="border border-slate-200 rounded-3xl p-6 bg-slate-50/60 hover:bg-white hover:border-blue-500 transition-all">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-[11px] font-extrabold px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-800">뉴욕 최고 명문 대학병원</span>
+              <span class="text-xs text-slate-400 font-bold"><i class="fa-solid fa-location-dot text-red-500 mr-1"></i>New York, NY</span>
+            </div>
+            <h3 class="font-extrabold text-slate-900 text-lg mb-1.5">Columbia University Irving Medical Center</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+              희귀 난치 질환, 고난도 장기 이식, 심장 수술 및 정밀 종양학 치료를 위한 전미 톱티어 아이비리그 대학병원.
+            </p>
+            <div class="flex flex-wrap gap-1.5 text-[11px]">
+              <span class="bg-white border border-slate-200 px-2 py-0.5 rounded-md text-slate-600 font-semibold">✓ 최신 신약 임상시험</span>
+              <span class="bg-white border border-slate-200 px-2 py-0.5 rounded-md text-slate-600 font-semibold">✓ 장기이식 전문</span>
+              <span class="bg-white border border-slate-200 px-2 py-0.5 rounded-md text-slate-600 font-semibold">✓ 세계적 석학 진료</span>
+            </div>
+          </div>
+
+          <!-- Hospital 6: Mount Sinai -->
+          <div class="border border-slate-200 rounded-3xl p-6 bg-slate-50/60 hover:bg-white hover:border-blue-500 transition-all">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-[11px] font-extrabold px-2.5 py-1 rounded-full bg-rose-100 text-rose-800">글로벌 리서치 센터</span>
+              <span class="text-xs text-slate-400 font-bold"><i class="fa-solid fa-location-dot text-red-500 mr-1"></i>New York, NY</span>
+            </div>
+            <h3 class="font-extrabold text-slate-900 text-lg mb-1.5">Mount Sinai Health System</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+              티쉬 암 연구원(Tisch Cancer Institute), 마운트 사이나이 심장센터 등 세계 수준의 의학 연구 및 진료를 제공.
+            </p>
+            <div class="flex flex-wrap gap-1.5 text-[11px]">
+              <span class="bg-white border border-slate-200 px-2 py-0.5 rounded-md text-slate-600 font-semibold">✓ 맞춤 항암 치료</span>
+              <span class="bg-white border border-slate-200 px-2 py-0.5 rounded-md text-slate-600 font-semibold">✓ 소화기 정밀 내시경</span>
+              <span class="bg-white border border-slate-200 px-2 py-0.5 rounded-md text-slate-600 font-semibold">✓ 척추 관절 혁신</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 7. INTERACTIVE INQUIRY FORM (브릿지 케어 상담 신청) -->
+    <!-- ========================================================= -->
+    <section id="bridge-consult" class="py-16 sm:py-24 bg-gradient-to-b from-slate-50 to-blue-50/50">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="bg-white rounded-3xl border border-slate-200 shadow-xl p-8 sm:p-12 relative overflow-hidden">
+          
+          <div class="max-w-xl mx-auto text-center mb-8">
+            <span class="text-xs font-bold text-blue-600 uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full">
+              Free Bridge Navigation
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-3 mb-2">
+              The Health Bridge 1:1 상담 신청
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">
+              도움이 필요하신 내용을 작성해 주시면, 전담 한국어 코디네이터가 24시간 이내에 친절히 연락드립니다.
+            </p>
+          </div>
+
+          <form id="bridge-form" onsubmit="handleBridgeSubmit(event)" class="space-y-4">
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1.5">신청자 성함 <span class="text-red-500">*</span></label>
+                <input type="text" id="b-name" required placeholder="예: 홍길동"
+                  class="w-full p-3.5 rounded-xl border border-slate-300 text-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500/20" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1.5">연락처 전화번호 <span class="text-red-500">*</span></label>
+                <input type="tel" id="b-phone" required placeholder="예: 201-000-0000"
+                  class="w-full p-3.5 rounded-xl border border-slate-300 text-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500/20" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1.5">희망 서비스 분야 <span class="text-red-500">*</span></label>
+                <select id="b-service" required class="w-full p-3.5 rounded-xl border border-slate-300 text-sm bg-white focus:border-blue-600 focus:outline-none">
+                  <option value="종합병원 전문의 진료 매칭">종합병원 전문의 진료 매칭</option>
+                  <option value="정밀 검사(MRI/CT) 및 보험 사전승인(PA)">정밀 검사(MRI/CT) 및 보험 사전승인(PA)</option>
+                  <option value="병원비 감면(Charity Care) 신청">병원비 감면(Charity Care) 신청</option>
+                  <option value="한국어 의료 통역 지원">한국어 의료 통역 지원</option>
+                  <option value="퇴원 후 가정 간호 및 시니어 장기요양">퇴원 후 가정 간호 및 시니어 장기요양</option>
+                  <option value="약국 처방전 이전 및 복약 상담">약국 처방전 이전 및 복약 상담</option>
+                  <option value="한의학 침 치료 보험 커버리지 상담">한의학 침 치료 보험 커버리지 상담</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1.5">보유 건강보험 유형</label>
+                <select id="b-insurance" class="w-full p-3.5 rounded-xl border border-slate-300 text-sm bg-white focus:border-blue-600 focus:outline-none">
+                  <option value="메디케어 (Medicare)">메디케어 (Medicare)</option>
+                  <option value="메디케이드 (NJ FamilyCare)">메디케이드 (NJ FamilyCare)</option>
+                  <option value="오바마케어 (GetCoveredNJ)">오바마케어 (GetCoveredNJ)</option>
+                  <option value="직장/민간 건강보험">직장/민간 건강보험</option>
+                  <option value="무보험 (Uninsured / Charity Care 희망)">무보험 (Uninsured / Charity Care 희망)</option>
+                  <option value="기타 / 확인 필요">기타 / 확인 필요</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1.5">현재 증상 또는 문의 내용</label>
+              <textarea id="b-notes" rows="4" placeholder="진료를 원하시는 증상이나 질환, 선호하시는 병원 또는 궁금하신 점을 적어주세요."
+                class="w-full p-3.5 rounded-xl border border-slate-300 text-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500/20"></textarea>
+            </div>
+
+            <div class="pt-2">
+              <button type="submit" id="b-submit-btn"
+                class="w-full py-4 rounded-xl bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 hover:opacity-95 text-white font-extrabold text-base shadow-lg shadow-blue-500/20 transition-all cursor-pointer flex items-center justify-center gap-2">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span>무료 브릿지 상담 신청서 제출</span>
+              </button>
+            </div>
+
+            <div id="b-success-msg" class="hidden p-4 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs sm:text-sm font-medium text-center">
+              🎉 <strong>신청이 정상적으로 접수되었습니다!</strong> 전담 코디네이터가 검토 후 빠른 시일 내에 연락드리겠습니다.
+            </div>
+
+          </form>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 8. FREQUENTLY ASKED QUESTIONS (FAQ) -->
+    <!-- ========================================================= -->
+    <section class="py-16 sm:py-20 bg-white border-b border-slate-200">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-12">
+          <span class="text-xs font-bold text-slate-500 uppercase tracking-widest bg-slate-100 px-3 py-1 rounded-full">
+            FAQ
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-3">
+            자주 묻는 질문
+          </h2>
+        </div>
+
+        <div class="space-y-4">
+          <div class="border border-slate-200 rounded-2xl p-5 bg-slate-50/50">
+            <h4 class="text-sm sm:text-base font-bold text-slate-900 mb-2 flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-xs font-black shrink-0">Q</span>
+              <span>The Health Bridge 서비스 이용 시 별도 수수료가 발생하나요?</span>
+            </h4>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed pl-8">
+              아닙니다. The Health Bridge는 뉴저지 비영리 의료 포털(NJAP)이 한인 커뮤니티의 의료 접근성 향상을 위해 전액 무료로 운영하는 공익 서비스입니다. 병원 진료비(환자 본인부담금/코페이) 외에 센터에 지불하시는 수수료는 $0입니다.
+            </p>
+          </div>
+
+          <div class="border border-slate-200 rounded-2xl p-5 bg-slate-50/50">
+            <h4 class="text-sm sm:text-base font-bold text-slate-900 mb-2 flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-xs font-black shrink-0">Q</span>
+              <span>건강보험이 없거나 체류 신분이 불안정해도 종합병원 진료가 가능한가요?</span>
+            </h4>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed pl-8">
+              네, 가능합니다. 뉴저지 주정부 규정에 따라 주내 모든 비영리 급성기 종합병원은 소득 자격을 충족하는 주민에게 체류 신분과 무관하게 병원비를 50%~100% 면제해 주는 자선진료(Charity Care) 제도를 운영합니다. 저희 브릿지 팀이 구비 서류와 감면 신청을 원스톱으로 도와드립니다.
+            </p>
+          </div>
+
+          <div class="border border-slate-200 rounded-2xl p-5 bg-slate-50/50">
+            <h4 class="text-sm sm:text-base font-bold text-slate-900 mb-2 flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-xs font-black shrink-0">Q</span>
+              <span>병원에서 한국어 통역을 실제로 어떻게 지원받나요?</span>
+            </h4>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed pl-8">
+              미국 연방 민권법(Title VI)에 의해 메디케어/메디케이드를 수용하는 모든 병원은 환자에게 무료 언어 통역을 제공할 법적 의무가 있습니다. The Health Bridge를 통해 예약 시 병원 측에 공식 한국어 의료 통역사(대면 또는 실시간 화상)를 사전 확정해 드립니다.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================= -->
+  <!-- 9. FOOTER -->
+  <!-- ========================================================= -->
+  <footer class="bg-brand-darker text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-10">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+        
+        <div class="lg:col-span-2">
+          <a class="inline-flex items-center mb-4 group cursor-pointer njap-brand-link" href="/" onclick="navigateToHome(event); return false;" title="Healthcare Access Portal">
+            <img src="/logo-white.png" alt="Healthcare Access Portal · 뉴저지 한인 의료 정보 포털" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
+          </a>
+          <p class="text-sm text-white/60 font-sans leading-relaxed max-w-xs mb-6">
+            뉴저지 한인 커뮤니티를 위한 의료 접근 및 건강 정보 포털. 메디케어, ACA, 의료 상담을 한국어로 제공합니다.
+          </p>
+          <div>
+            <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-3">뉴스레터 구독</p>
+            <form class="flex gap-2" onsubmit="event.preventDefault(); alert('구독해 주셔서 감사합니다!');">
+              <input type="email" placeholder="이메일 주소" class="flex-1 text-sm font-sans bg-white/10 border border-white/20 rounded-full px-4 py-2 text-white placeholder-white/40 outline-none focus:border-brand-blue" />
+              <button type="submit" class="text-sm font-sans font-medium bg-brand-gradient text-white px-4 py-2 rounded-full hover:opacity-90 whitespace-nowrap">구독</button>
+            </form>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">포털 바로가기</p>
+          <ul class="space-y-2.5">
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors" href="/">홈</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors" href="/blog">건강 뉴스</a></li>
+            <li><a class="text-sm font-sans text-blue-400 font-bold hover:text-white transition-colors" href="/the-health-bridge">The Health Bridge</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors" href="/forum">커뮤니티 포럼</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors" href="/senior-care">시니어 케어</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors" href="/about">소개</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">환자 가이드</p>
+          <ul class="space-y-2.5">
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors" href="/medicare">메디케어 &amp; ACA</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors" href="/tool">환자도우미 도구</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors" href="/calculator">보조금 계산기</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors" href="/dictionary">의학용어 사전</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors" href="/forum/ask">전문의 상담 질문하기</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">고객 지원</p>
+          <p class="text-xs font-sans text-white/60 leading-relaxed mb-3">
+            월 - 금: 오전 9시 - 오후 5시 (EST)<br />
+            이메일: njaccessportal@gmail.com
+          </p>
+          <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-400 text-slate-900 font-bold text-xs hover:bg-amber-300 transition-all">
+            <img src="/kakaotalk-icon.png" class="w-4 h-4 rounded" alt="" />
+            <span>카카오톡 1:1 상담</span>
+          </a>
+        </div>
+
+      </div>
+
+      <div class="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-sans text-white/40">
+        <p>© 2026 Healthcare Access Portal (NJAP). All rights reserved.</p>
+        <p>※ The Health Bridge는 오프라인 사전 검토용 샘플 페이지입니다.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts for interactivity & Senior Mode -->
+  <script src="/js/fixes.js?v=5.2.0"></script>
+  <script src="/js/njap-translate.js"></script>
+  <script>
+    function toggleMobileMenu() {
+      var dropdown = document.getElementById('mobile-menu-dropdown');
+      if (!dropdown) return;
+      if (dropdown.classList.contains('max-h-0')) {
+        dropdown.classList.remove('max-h-0', 'opacity-0');
+        dropdown.classList.add('max-h-[600px]', 'opacity-100');
+      } else {
+        dropdown.classList.remove('max-h-[600px]', 'opacity-100');
+        dropdown.classList.add('max-h-0', 'opacity-0');
+      }
+    }
+
+    function handleBridgeSubmit(e) {
+      e.preventDefault();
+      var name = document.getElementById('b-name').value.trim();
+      var phone = document.getElementById('b-phone').value.trim();
+      var service = document.getElementById('b-service').value;
+      var insurance = document.getElementById('b-insurance').value;
+      var notes = document.getElementById('b-notes').value.trim();
+
+      var btn = document.getElementById('b-submit-btn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 전송 중...';
+
+      setTimeout(function() {
+        btn.style.display = 'none';
+        var msg = document.getElementById('b-success-msg');
+        msg.classList.remove('hidden');
+      }, 700);
+    }
+  </script>
+</body>
+</html>

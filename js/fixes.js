@@ -12,15 +12,20 @@
   var KAKAO_URL = 'http://pf.kakao.com/_hdxmxaX/chat';
   var KAKAO_ICON = '/kakaotalk-icon.png';
 
-  // Instant Senior Mode class application on initial load (0 is strict default)
+  // Instant Senior Mode class application on initial load (Desktop default: 1단계, Mobile default: 0단계)
   (function applyImmediateSeniorMode() {
     try {
-      var s = parseInt(sessionStorage.getItem('njap_senior_mode'), 10);
-      if (isNaN(s)) {
-        // First load of the page: senior mode 0 is default
-        s = 0;
-        sessionStorage.setItem('njap_senior_mode', '0');
-        localStorage.removeItem('njap_senior_mode');
+      var userChosen = sessionStorage.getItem('njap_senior_user_chosen') || localStorage.getItem('njap_senior_user_chosen');
+      var isDesktop = typeof window !== 'undefined' && window.innerWidth >= 768;
+      var s;
+      if (userChosen === '1') {
+        var raw = sessionStorage.getItem('njap_senior_mode') || localStorage.getItem('njap_senior_mode');
+        s = parseInt(raw, 10);
+        if (isNaN(s) || (s !== 1 && s !== 2)) s = 0;
+      } else {
+        // Unconfigured default: Desktop is 1단계 (+18%), mobile is standard (0)
+        s = isDesktop ? 1 : 0;
+        sessionStorage.setItem('njap_senior_mode', String(s));
       }
       if (s === 1) {
         document.documentElement.classList.add('senior-mode-1');
@@ -208,6 +213,10 @@
       '  nav .h-16 .flex.items-center.gap-3, nav .h-16 .flex.items-center.gap-4 { gap: 6px !important; flex-shrink: 0 !important; }',
       '  #mobile-menu-btn { flex-shrink: 0 !important; display: inline-flex !important; }',
       '}',
+      '.njap-brand-link { display: inline-flex !important; align-items: center !important; flex-shrink: 0 !important; }',
+      '.njap-brand-link img { height: 52px !important; max-height: 54px !important; width: auto !important; object-fit: contain !important; }',
+      '@media (max-width: 640px) { .njap-brand-link img { height: 40px !important; max-height: 42px !important; width: auto !important; } }',
+      '@media (max-width: 375px) { .njap-brand-link img { height: 34px !important; max-height: 36px !important; } }',
 
       /* KakaoTalk large CTA button (about page) */
       '.kakao-cta-btn {',
@@ -971,12 +980,16 @@
 
   function getSeniorModeStep() {
     try {
-      var val = sessionStorage.getItem('njap_senior_mode');
-      if (val === null) return 0;
+      var userChosen = sessionStorage.getItem('njap_senior_user_chosen') || localStorage.getItem('njap_senior_user_chosen');
+      var isDesktop = typeof window !== 'undefined' && window.innerWidth >= 768;
+      if (userChosen !== '1') {
+        return isDesktop ? 1 : 0;
+      }
+      var val = sessionStorage.getItem('njap_senior_mode') || localStorage.getItem('njap_senior_mode');
       var s = parseInt(val, 10);
       return (s === 1 || s === 2) ? s : 0;
     } catch(e) {
-      return 0;
+      return (typeof window !== 'undefined' && window.innerWidth >= 768) ? 1 : 0;
     }
   }
 
@@ -1010,6 +1023,13 @@
       html.classList.remove('senior-mode-1');
     } else {
       html.classList.remove('senior-mode-1', 'senior-mode-2');
+    }
+
+    if (showFeedback) {
+      try {
+        sessionStorage.setItem('njap_senior_user_chosen', '1');
+        localStorage.setItem('njap_senior_user_chosen', '1');
+      } catch(e) {}
     }
 
     try {
@@ -1064,6 +1084,36 @@
   window.applySeniorMode = applySeniorMode;
   window.getSeniorModeStep = getSeniorModeStep;
 
+  if (!window.navigateToHome) {
+    window.navigateToHome = function(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      var cur = window.location.pathname;
+      if (cur === '/' || cur === '/index.php' || cur === '/index.html' || cur === '') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        window.location.href = '/';
+      }
+    };
+  }
+
+  // When window resizes and user hasn't explicitly chosen a mode, adapt between desktop (1단계) and mobile (0단계)
+  var seniorResizeTimer = null;
+  window.addEventListener('resize', function() {
+    if (seniorResizeTimer) clearTimeout(seniorResizeTimer);
+    seniorResizeTimer = setTimeout(function() {
+      try {
+        var userChosen = sessionStorage.getItem('njap_senior_user_chosen') || localStorage.getItem('njap_senior_user_chosen');
+        if (userChosen !== '1') {
+          var step = (window.innerWidth >= 768) ? 1 : 0;
+          applySeniorMode(step, false);
+        }
+      } catch(e) {}
+    }, 150);
+  });
+
   function ensureSeniorModeInNav() {
     var nav = document.querySelector('nav');
     if (nav) {
@@ -1113,8 +1163,48 @@
     applySeniorMode(getSeniorModeStep(), false);
   }
 
+  function ensureUnifiedLogo() {
+    try {
+      // 1. Navigation logo
+      var nav = document.querySelector('nav');
+      if (nav) {
+        var brandLinks = nav.querySelectorAll('a.njap-brand-link, a[href="/"]');
+        for (var i = 0; i < brandLinks.length; i++) {
+          var link = brandLinks[i];
+          var text = (link.textContent || '').trim();
+          if (text === '홈' || link.classList.contains('nav-link')) continue;
+          // If already contains animated SVG, keep it
+          if (link.querySelector('svg.njap-nav-door, svg g.njap-nav-door')) continue;
+        }
+      }
+
+      // 2. Footer logo
+      var footers = document.querySelectorAll('footer');
+      for (var f = 0; f < footers.length; f++) {
+        var fLinks = footers[f].querySelectorAll('a[href="/"]');
+        for (var j = 0; j < fLinks.length; j++) {
+          var fLink = fLinks[j];
+          var fText = (fLink.textContent || '').trim();
+          if (fText === '홈' || fLink.classList.contains('nav-link')) continue;
+          var fImg = fLink.querySelector('img');
+          if (fImg && (!fImg.src || fImg.src.indexOf('/logo-white.png') === -1)) {
+            fImg.src = '/logo-white.png';
+            fImg.alt = 'Healthcare Access Portal · 뉴저지 한인 의료 정보 포털';
+            fImg.className = 'h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105';
+            fImg.style.width = 'auto';
+            fImg.style.height = '';
+            fImg.style.filter = '';
+            var fTextDiv = fLink.querySelector('div:not(:has(img))');
+            if (fTextDiv) fTextDiv.style.display = 'none';
+          }
+        }
+      }
+    } catch(e) {}
+  }
+
   var isNavUpdating = false;
   function setupNavObserver() {
+    ensureUnifiedLogo();
     ensureSeniorCareInNav();
     ensureSeniorModeInNav();
     fixMobileMenu();
@@ -1124,6 +1214,7 @@
         if (isNavUpdating) return;
         isNavUpdating = true;
         try {
+          ensureUnifiedLogo();
           ensureSeniorCareInNav();
           ensureSeniorModeInNav();
           fixMobileMenu();
@@ -1140,13 +1231,16 @@
   // ─────────────────────────────────────────────────────────────
   // Run navigation interception immediately so no clicks can escape
   fixAllNavigation();
+  ensureUnifiedLogo();
   ensureSeniorCareInNav();
   ensureSeniorModeInNav();
   window.addEventListener('pageshow', function() {
+    ensureUnifiedLogo();
     ensureSeniorCareInNav();
     ensureSeniorModeInNav();
   });
   window.addEventListener('popstate', function() {
+    ensureUnifiedLogo();
     ensureSeniorCareInNav();
     ensureSeniorModeInNav();
   });
@@ -1155,6 +1249,7 @@
     revealBody();
     injectCSS();
     fixAllNavigation();
+    ensureUnifiedLogo();
     setupNavObserver();
     ensureSeniorModeInNav();
     fixMobileMenu();
@@ -1163,6 +1258,7 @@
     fixToolLoader();
     // Kakao injections — run after a short delay to allow CMS-rendered navs to settle
     setTimeout(function() {
+      ensureUnifiedLogo();
       injectKakaoNavBtn();
       injectKakaoAboutBlock();
       ensureSeniorCareInNav();

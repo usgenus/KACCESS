@@ -56,6 +56,11 @@ if (preg_match('#^/blog/([^/]+)/?$#', $uri, $m)) {
     exit;
 }
 
+if (preg_match('#^/the-health-bridge/?$#', $uri)) {
+    require __DIR__ . '/the-health-bridge.php';
+    exit;
+}
+
 if (preg_match('#^/senior-care/?$#', $uri)) {
     require __DIR__ . '/senior-care.php';
     exit;
