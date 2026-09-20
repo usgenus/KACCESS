@@ -39,6 +39,34 @@
 
   <!-- Logo Animation Styles -->
   <style id="njap-logo-anim-styles">
+    .njap-brand-link {
+      display: inline-flex !important;
+      align-items: center !important;
+      flex-shrink: 0 !important;
+    }
+    .njap-brand-link img,
+    .njap-brand-link svg {
+      height: 52px !important;
+      max-height: 54px !important;
+      width: auto !important;
+      object-fit: contain !important;
+    }
+    @media (max-width: 640px) {
+      .njap-brand-link img,
+      .njap-brand-link svg {
+        height: 40px !important;
+        max-height: 42px !important;
+        width: auto !important;
+      }
+    }
+    @media (max-width: 375px) {
+      .njap-brand-link img,
+      .njap-brand-link svg {
+        height: 34px !important;
+        max-height: 36px !important;
+      }
+    }
+
     @keyframes njapNavKeySlide {
       0% {
         opacity: 0;

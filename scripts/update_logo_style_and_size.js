@@ -1,28 +1,33 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="refresh" content="0;url=/blog" />
-  <title>건강 의료 뉴스 | Healthcare Access Portal</title>
-  <script>window.location.replace('/blog');</script>
-  <script>
-    (function() {
-      try {
-        var s = parseInt(localStorage.getItem('njap_senior_mode'), 10);
-        if (s === 1) document.documentElement.classList.add('senior-mode-1');
-        else if (s === 2) document.documentElement.classList.add('senior-mode-2');
-      } catch(e) {}
-    })();
-  </script>
-  <style id="njap-senior-mode-base-css">
-    html.senior-mode-1 { font-size: 118% !important; }
-    html.senior-mode-2 { font-size: 135% !important; }
-    html.senior-mode-1 .header-spacer, html.senior-mode-1 .h-\[109px\], html.senior-mode-1 #header-spacer { height: 120px !important; min-height: 120px !important; }
-    html.senior-mode-2 .header-spacer, html.senior-mode-2 .h-\[109px\], html.senior-mode-2 #header-spacer { height: 132px !important; min-height: 132px !important; }
-  </style>
+const fs = require('fs');
+const path = require('path');
 
-  <!-- Logo Animation Styles -->
-  <style id="njap-logo-anim-styles">
+const ROOT = path.resolve(__dirname, '..');
+
+const targetFiles = [
+  'index.php',
+  'blog.php',
+  'blog.html',
+  'blog-post.php',
+  'senior-care.php',
+  'senior-care.html',
+  'senior-care/index.html',
+  'medicare.html',
+  'medicare/index.html',
+  'tool.html',
+  'tool/index.html',
+  'about.html',
+  'about/index.html',
+  'calculator.html',
+  'dictionary.html',
+  'matcher.html',
+  'the-health-bridge.html',
+  'the-health-bridge/index.html',
+  'forum/components.php',
+  '404.html',
+  '_not-found.html'
+];
+
+const unifiedStyle = `  <style id="njap-logo-anim-styles">
     .njap-brand-link {
       display: inline-flex !important;
       align-items: center !important;
@@ -147,11 +152,46 @@
         transform: none !important;
       }
     }
-  </style>
+  </style>`;
 
-</head>
-<body style="font-family:sans-serif;text-align:center;padding-top:50px;">
-  <p>최신 건강 의료 뉴스 페이지로 이동 중입니다... <a href="/blog">여기</a>를 클릭하세요.</p>
-  <script src="/js/fixes.js?v=5.1.0"></script>
-</body>
-</html>
+let updated = 0;
+
+for (const relPath of targetFiles) {
+  const fullPath = path.join(ROOT, relPath);
+  if (!fs.existsSync(fullPath)) continue;
+
+  let content = fs.readFileSync(fullPath, 'utf8');
+  let replaced = false;
+
+  if (content.includes('<style id="njap-logo-anim-styles">')) {
+    // Replace the existing block
+    content = content.replace(
+      /<style id="njap-logo-anim-styles">[\s\S]*?<\/style>/,
+      unifiedStyle.trim()
+    );
+    replaced = true;
+  } else if (relPath === 'forum/components.php') {
+    // Insert into forum/components.php at the start of render_forum_header
+    content = content.replace(
+      /function render_forum_header\(string \$searchQuery = '', \?array \$currentSpecialty = null\) \{\s*\?>/,
+      `function render_forum_header(string $searchQuery = '', ?array $currentSpecialty = null) {\n?>\n${unifiedStyle}`
+    );
+    replaced = true;
+  }
+
+  // Ensure any lingering 480px is 335px
+  if (content.includes('480px')) {
+    content = content.replace(/translate\(480px,\s*0\)/g, 'translate(335px, 0)');
+    replaced = true;
+  }
+
+  if (replaced) {
+    fs.writeFileSync(fullPath, content, 'utf8');
+    console.log('[UPDATED]', relPath);
+    updated++;
+  } else {
+    console.log('[SKIPPED]', relPath);
+  }
+}
+
+console.log(`Finished updating ${updated} files.`);
