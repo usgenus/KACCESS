@@ -8,6 +8,7 @@ const AUTH_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJsb
 const REST_AUTH_KEY = '7d27eeea49a698b9b8b90e407c7bb4c2c26291351a9b9ead2dff896613e956c5-95bc1299df41ac60';
 
 const filesToUpload = [
+  'index.php',
   'medicare.html',
   'medicare/index.html',
   'senior-care.html',
