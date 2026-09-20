@@ -8,8 +8,8 @@ define('SUPABASE_URL', 'https://hjswqohhrrgclosqsikw.supabase.co');
 define('SUPABASE_KEY', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhqc3dxb2hocnJnY2xvc3FzaWt3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYzNjMxMTMsImV4cCI6MjEwMTkzOTExM30.cIaGtw9CSLvPib5V6WbB7nM5_AnGg0Iz_rd2ccO52UI');
 
 // 3. Gemini AI Translation API Key (get free key at https://aistudio.google.com)
-// Replace the empty string below with your actual Gemini API key.
-define('GEMINI_API_KEY', 'AQ.Ab8RN6Lj2fCrAgLIoIVV4f3HXhyChMJ10vUFoAVk8Hp_ijT3fA');
+// Load securely from environment variable to prevent public exposure
+define('GEMINI_API_KEY', getenv('GEMINI_API_KEY') ?: '');
 
 // 2. Resolve Hostinger Persistent Host Space (Outside public_html so static deployments NEVER wipe data)
 function get_persistent_root() {
