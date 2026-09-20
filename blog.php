@@ -153,7 +153,7 @@ unset($pRef);
     @keyframes njapNavKeySlide {
       0% {
         opacity: 0;
-        transform: translate(480px, 0);
+        transform: translate(335px, 0);
       }
       15% {
         opacity: 1;
