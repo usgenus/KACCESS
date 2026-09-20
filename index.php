@@ -958,23 +958,23 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
 
     .njap-nav-door {
       transform-origin: 40px 45px;
-      animation: njapNavDoorAppear 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation: njapNavDoorAppear 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
 
     .njap-nav-key {
-      animation: njapNavKeySlide 0.95s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+      animation: njapNavKeySlide 1.45s cubic-bezier(0.22, 1, 0.36, 1) 0.22s both;
     }
 
     .njap-nav-keyhole {
-      animation: njapNavKeyholePulse 1.05s ease-out 0.15s both;
+      animation: njapNavKeyholePulse 1.6s ease-out 0.22s both;
     }
 
     .njap-nav-text-main {
-      animation: njapNavTextMain 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.95s both;
+      animation: njapNavTextMain 1.0s cubic-bezier(0.16, 1, 0.3, 1) 1.45s both;
     }
 
     .njap-nav-text-sub {
-      animation: njapNavTextSub 0.65s cubic-bezier(0.16, 1, 0.3, 1) 1.15s both;
+      animation: njapNavTextSub 1.0s cubic-bezier(0.16, 1, 0.3, 1) 1.75s both;
     }
 
     @media (prefers-reduced-motion: reduce) {
