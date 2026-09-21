@@ -269,7 +269,7 @@
       'html.senior-mode-2 [class*="text-[16px]"] { font-size: 23px !important; }',
       'html.senior-mode-2 [class*="text-[18px]"] { font-size: 25.5px !important; }',
 
-      /* Senior Mode Button Base */
+      /* Senior Mode Button Base (Desktop style) */
       '.senior-mode-btn {',
       '  align-items: center !important; justify-content: center !important; gap: 4px !important;',
       '  padding: 3px 9px !important; border-radius: 9999px !important; border: 1.5px solid #cbd5e1 !important;',
@@ -285,16 +285,34 @@
       '.senior-step-badge { display: none; align-items: center; justify-content: center; font-size: 9px !important; font-weight: 800 !important; padding: 1px 5px !important; border-radius: 999px !important; line-height: 1.2 !important; transition: all 0.2s ease !important; }',
       '.senior-mode-btn.step-1 .senior-step-badge { display: inline-flex !important; background: #2563eb !important; color: #ffffff !important; }',
       '.senior-mode-btn.step-2 .senior-step-badge { display: inline-flex !important; background: #ea580c !important; color: #ffffff !important; }',
-      '/* Nav Controls: Senior Mode hidden in top nav on mobile (< 768px), visible on desktop (768px+) */',
-      'nav .senior-mode-btn, nav #senior-mode-btn { display: none !important; }',
-      '#mobile-menu-dropdown .senior-mode-btn { display: inline-flex !important; }',
+      '',
+      '/* ========================================================',
+      '   MOBILE VIEWPORT ONLY (< 768px): Strict Removal & Layout',
+      '   ======================================================== */',
+      '@media (max-width: 767px) {',
+      '  /* 1. Remove Senior Mode button completely on mobile (nav, header & dropdowns) */',
+      '  .senior-mode-btn, #senior-mode-btn, [id*="senior-mode"], .mobile-senior-box { display: none !important; }',
+      '',
+      '  /* 2. Compact language switch */',
+      '  nav #en-translate-btn { padding: 2px 7px !important; font-size: 9.5px !important; font-weight: 700 !important; height: 20px !important; line-height: 1.2 !important; border-radius: 9999px !important; border-width: 1px !important; letter-spacing: 0.02em !important; white-space: nowrap !important; }',
+      '',
+      '  /* 3. Forum Mobile Header: Guarantee BOTH Left and Right menus are visible & never clipped */',
+      '  #sidebar-toggle-btn { display: inline-flex !important; align-items: center !important; justify-content: center !important; flex-shrink: 0 !important; width: 32px !important; height: 32px !important; }',
+      '  #mobile-menu-btn, button[aria-label="Menu"] { display: inline-flex !important; align-items: center !important; justify-content: center !important; flex-shrink: 0 !important; }',
+      '  nav a.forum-kakao-btn, body.forum-page nav a[href*="pf.kakao.com"], #forum-sidebar ~ * nav a[href*="pf.kakao.com"] { display: none !important; }',
+      '  body.forum-page nav .njap-brand-link, #forum-sidebar ~ * nav .njap-brand-link { max-width: calc(100vw - 190px) !important; flex-shrink: 1 !important; min-width: 0 !important; }',
+      '  body.forum-page nav .njap-brand-link svg, #forum-sidebar ~ * nav .njap-brand-link svg { max-width: 100% !important; height: 28px !important; }',
+      '  body.forum-page nav #auth-box button span, #forum-sidebar ~ * nav #auth-box button span { display: none !important; }',
+      '}',
+      '',
+      '/* ========================================================',
+      '   DESKTOP VIEWPORT ONLY (>= 768px): Unaltered Standard UX',
+      '   ======================================================== */',
       '@media (min-width: 768px) {',
       '  nav .senior-mode-btn, nav #senior-mode-btn { display: inline-flex !important; }',
-      '}',
-      '@media (max-width: 767px) {',
-      '  nav #en-translate-btn { padding: 2px 7px !important; font-size: 9.5px !important; font-weight: 700 !important; height: 20px !important; line-height: 1.2 !important; border-radius: 9999px !important; border-width: 1px !important; letter-spacing: 0.02em !important; white-space: nowrap !important; }',
-      '  /* Forum mobile view: hide Kakao button to give full space to menu and controls */',
-      '  nav a.forum-kakao-btn, body.forum-page nav a[href*="pf.kakao.com"], #forum-sidebar ~ * nav a[href*="pf.kakao.com"] { display: none !important; }',
+      '  #sidebar-toggle-btn { display: none !important; }',
+      '  #mobile-menu-btn { display: none !important; }',
+      '  #mobile-menu-dropdown { display: none !important; }',
       '}',
 
       /* Senior Mode Toast Notification */
@@ -467,22 +485,13 @@
   function buildAccordionMenuHTML(curPath) {
     var isHome = curPath === '/' || curPath === '';
     var isBlog = curPath.indexOf('/blog') === 0;
+    var isForum = curPath.indexOf('/forum') === 0;
     var isSenior = curPath.indexOf('/senior-care') === 0;
     var isMedicare = curPath.indexOf('/medicare') === 0;
     var isTool = curPath.indexOf('/tool') === 0 || curPath.indexOf('/matcher') === 0 || curPath.indexOf('/calculator') === 0 || curPath.indexOf('/dictionary') === 0;
     var isAbout = curPath.indexOf('/about') === 0;
 
     return [
-      '<!-- Senior Mode in Mobile Dropdown -->',
-      '<div class="flex items-center justify-between py-2.5 px-3.5 mb-1.5 rounded-xl bg-slate-50 border border-slate-200/80">',
-      '  <div class="flex items-center gap-2">',
-      '    <span class="text-xs font-bold text-slate-700">화면 글자 크기</span>',
-      '  </div>',
-      '  <button type="button" class="senior-mode-btn notranslate" translate="no" onclick="window.cycleSeniorMode && window.cycleSeniorMode()" style="padding:4px 10px;font-size:12px;">',
-      '    <span class="senior-btn-label">시니어모드+</span>',
-      '    <span class="senior-step-badge" style="display:none;"></span>',
-      '  </button>',
-      '</div>',
       '<!-- 1. 홈 -->',
       '<a href="/" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isHome ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
       '  <div class="flex items-center gap-3">',
@@ -499,6 +508,15 @@
       '    <span class="text-[15px]">뉴스</span>',
       '  </div>',
       '  <svg class="w-4 h-4 ' + (isBlog ? 'text-brand-blue' : 'text-slate-300') + '" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>',
+      '</a>',
+
+      '<!-- 2.5 커뮤니티 포럼 -->',
+      '<a href="/forum" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isForum ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
+      '  <div class="flex items-center gap-3">',
+      '    <svg class="w-5 h-5 ' + (isForum ? 'text-brand-blue' : 'text-slate-400') + ' shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>',
+      '    <span class="text-[15px]">커뮤니티 포럼</span>',
+      '  </div>',
+      '  <svg class="w-4 h-4 ' + (isForum ? 'text-brand-blue' : 'text-slate-300') + '" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>',
       '</a>',
 
       '<!-- 3. 시니어 케어 -->',

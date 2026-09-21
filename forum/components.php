@@ -147,16 +147,16 @@ function render_forum_header(string $searchQuery = '', ?array $currentSpecialty 
     <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16 gap-2">
         
-        <!-- Left: Sidebar Mobile Toggle + Brand Logo -->
-        <div class="flex items-center gap-1.5 sm:gap-3 shrink-0 min-w-0">
+        <!-- Left: Sidebar Mobile Toggle (Categories Menu) + Brand Logo -->
+        <div class="flex items-center gap-1 sm:gap-2.5 shrink-0 min-w-0">
           <button id="sidebar-toggle-btn" onclick="toggleForumSidebar()" 
-            class="md:hidden w-8 h-8 flex items-center justify-center rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors shrink-0"
+            class="md:hidden w-8 h-8 flex items-center justify-center rounded-lg text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition-colors shrink-0"
             title="진료과목 메뉴 열기/접기" aria-label="메뉴 토글">
             <i class="fa-solid fa-bars text-sm"></i>
           </button>
 
-          <a class="flex items-center cursor-pointer njap-brand-link flex-shrink-0 group" href="/" onclick="navigateToHome(event); return false;" title="Healthcare Access Portal">
-          <svg class="h-8 sm:h-10 md:h-11 w-auto object-contain transition-transform group-hover:scale-102" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Healthcare Access Portal · 뉴저지 한인 의료 정보 포털 · NJAP" style="overflow: visible;">
+          <a class="flex items-center cursor-pointer njap-brand-link flex-shrink min-w-0 group" href="/" onclick="navigateToHome(event); return false;" title="Healthcare Access Portal">
+          <svg class="h-7 sm:h-9 md:h-11 w-auto max-w-[135px] xs:max-w-[165px] sm:max-w-none object-contain transition-transform group-hover:scale-102" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Healthcare Access Portal · 뉴저지 한인 의료 정보 포털 · NJAP" style="overflow: visible;">
             <title>Healthcare Access Portal · 뉴저지 한인 의료 정보 포털 · NJAP</title>
             <!-- Icon Mark (Door + Key + NJAP) -->
             <g transform="translate(4, 2) scale(0.56)" stroke-linecap="round" stroke-linejoin="round">
@@ -191,7 +191,7 @@ function render_forum_header(string $searchQuery = '', ?array $currentSpecialty 
         </a>
         </div>
 
-        <!-- Center: Main Webpage Navigation Links -->
+        <!-- Center: Main Webpage Navigation Links (Desktop only) -->
         <div class="hidden lg:flex items-center space-x-1 xl:space-x-3 text-[14px]">
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue cursor-pointer" href="/" onclick="navigateToHome(event); return false;">홈</a>
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/blog">뉴스</a>
@@ -202,36 +202,38 @@ function render_forum_header(string $searchQuery = '', ?array $currentSpecialty 
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/about">소개</a>
         </div>
 
-        <!-- Right: Kakao 1:1, EN Switch, Forum Auth Box & New Topic Button -->
-        <div class="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+        <!-- Right: Kakao 1:1, EN Switch, Forum Auth Box, New Topic Button, and Right Mobile Menu Toggle -->
+        <div class="flex items-center gap-1 sm:gap-2 shrink-0">
           <!-- KakaoTalk 1:1 Chat Button (hidden on mobile, visible md+) -->
           <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="forum-kakao-btn hidden md:inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity cursor-pointer" title="카카오톡 1:1 상담 바로가기">
             <img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" />
             <span class="text-xs sm:text-sm font-bold text-slate-800 hover:text-brand-blue tracking-tight whitespace-nowrap">1:1 상담</span>
           </a>
 
-          <!-- EN Translation Toggle Button -->
+          <!-- Senior Mode Button (hidden on mobile, visible md+) -->
           <button id="senior-mode-btn" class="hidden md:inline-flex senior-mode-btn notranslate" translate="no" type="button" onclick="window.cycleSeniorMode && window.cycleSeniorMode()" title="시니어모드+ (글자 크기 3단계 조절)" aria-label="시니어모드 글자 크기 조절"><span class="senior-btn-label">시니어모드+</span><span class="senior-step-badge" style="display:none;"></span></button>
-          <button id="en-translate-btn" class="notranslate" translate="no" onclick="window.toggleTranslation && window.toggleTranslation()" title="Switch Language (EN / KR)" aria-label="Language Toggle" style="display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:999px;border:1.5px solid #cbd5e1;font-size:10px;font-weight:700;letter-spacing:0.04em;cursor:pointer;transition:all 0.2s ease;background:transparent;color:#475569;white-space:nowrap;flex-shrink:0;line-height:1.4;"><span class="notranslate" translate="no">🌐</span> <span class="notranslate en-btn-label" translate="no">EN</span></button>
 
-          <!-- Forum Auth Profile / Google Login -->
-          <div id="auth-box" class="flex items-center gap-1 shrink-0">
-            <button onclick="openGoogleAuthModal()" id="btn-login" class="text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 px-2 sm:px-3 py-1.5 rounded-lg transition-all flex items-center gap-1 shadow-2xs">
+          <!-- EN Translation Toggle Button (Compact) -->
+          <button id="en-translate-btn" class="notranslate" translate="no" onclick="window.toggleTranslation && window.toggleTranslation()" title="Switch Language (EN / KR)" aria-label="Language Toggle" style="display:inline-flex;align-items:center;gap:3px;padding:2px 6px;border-radius:999px;border:1.5px solid #cbd5e1;font-size:9.5px;font-weight:700;letter-spacing:0.02em;cursor:pointer;transition:all 0.2s ease;background:transparent;color:#475569;white-space:nowrap;flex-shrink:0;line-height:1.2;height:22px;"><span class="notranslate" translate="no">🌐</span> <span class="notranslate en-btn-label" translate="no">EN</span></button>
+
+          <!-- Forum Auth Profile / Google Login (Icon-only on mobile) -->
+          <div id="auth-box" class="flex items-center shrink-0">
+            <button onclick="openGoogleAuthModal()" id="btn-login" class="text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 p-1.5 sm:px-2.5 sm:py-1.5 rounded-lg transition-all flex items-center gap-1 shadow-2xs" title="Google 로그인">
               <i class="fa-brands fa-google text-red-500 text-xs"></i>
-              <span class="hidden xs:inline">로그인</span>
+              <span class="hidden sm:inline">로그인</span>
             </button>
           </div>
 
           <!-- Forum Style New Topic Button (Icon only on mobile, text on sm+) -->
           <a href="/forum/ask<?= ($currentSpecialty && ($currentSpecialty['id'] ?? '') !== 'events') ? '?specialty=' . urlencode($currentSpecialty['id']) : '' ?>" 
-             class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs p-2 sm:px-3 sm:py-1.5 rounded-lg transition-all shadow-xs flex items-center gap-1.5 shrink-0"
+             class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs p-1.5 sm:px-2.5 sm:py-1.5 rounded-lg transition-all shadow-xs flex items-center gap-1 shrink-0"
              title="질문/정보 공유">
             <i class="fa-solid fa-plus text-xs"></i>
             <span class="hidden sm:inline">질문/정보 공유</span>
           </a>
 
-          <!-- Mobile Nav Hamburger Button -->
-          <button id="mobile-menu-btn" onclick="toggleMobileNavMenu()" class="lg:hidden p-1.5 sm:p-2 rounded-lg hover:bg-gray-100 transition-colors shrink-0" aria-label="Menu">
+          <!-- Mobile Nav Hamburger Button (Right Menu Toggle) -->
+          <button id="mobile-menu-btn" onclick="toggleMobileNavMenu()" class="lg:hidden p-1.5 sm:p-2 rounded-lg hover:bg-gray-100 transition-colors shrink-0 flex items-center justify-center" aria-label="Menu">
             <div class="w-5 h-4 flex flex-col justify-between">
               <span class="block h-0.5 bg-brand-dark rounded-full"></span>
               <span class="block h-0.5 bg-brand-dark rounded-full"></span>
@@ -750,13 +752,20 @@ function render_forum_auth_scripts() {
     function toggleMobileNavMenu() {
       const menu = document.getElementById('mobile-menu-dropdown');
       if (!menu) return;
-      const isClosed = menu.classList.contains('max-h-0');
-      if (isClosed) {
-        menu.classList.remove('max-h-0', 'opacity-0');
-        menu.classList.add('max-h-[600px]', 'opacity-100');
-      } else {
+      const isOpen = menu.classList.contains('mobile-menu-open') || menu.style.maxHeight === '85vh' || (!menu.classList.contains('max-h-0') && menu.style.maxHeight !== '0px');
+      if (isOpen) {
+        menu.classList.remove('mobile-menu-open');
         menu.classList.add('max-h-0', 'opacity-0');
-        menu.classList.remove('max-h-[600px]', 'opacity-100');
+        menu.style.maxHeight = '0px';
+        menu.style.opacity = '0';
+        menu.style.pointerEvents = 'none';
+      } else {
+        menu.classList.remove('max-h-0', 'opacity-0');
+        menu.classList.add('mobile-menu-open');
+        menu.style.maxHeight = '85vh';
+        menu.style.opacity = '1';
+        menu.style.pointerEvents = 'auto';
+        menu.style.display = 'flex';
       }
     }
 
@@ -822,7 +831,7 @@ function render_forum_footer() {
     </div>
   </footer>
   <script src="/js/njap-translate.js?v=3.0.0"></script>
-  <script src="/js/fixes.js?v=5.2.0"></script>
+  <script src="/js/fixes.js?v=6.0.0"></script>
 <?php
 }
 

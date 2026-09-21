@@ -2161,7 +2161,7 @@
     }
   </script>
 
-  <script src="/js/fixes.js?v=5.1.0"></script>
+  <script src="/js/fixes.js?v=6.0.0"></script>
 <script src="/js/njap-translate.js?v=3.0.0"></script>
 </body>
 </html>

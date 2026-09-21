@@ -644,7 +644,7 @@ unset($pRef);
   
 
   <script src="/js/cms-client.js?v=3.5.2"></script>
-  <script src="/js/fixes.js?v=5.1.0"></script>
+  <script src="/js/fixes.js?v=6.0.0"></script>
 <script src="/js/njap-translate.js?v=3.0.0"></script>
 </body>
 </html>
