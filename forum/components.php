@@ -204,14 +204,14 @@ function render_forum_header(string $searchQuery = '', ?array $currentSpecialty 
 
         <!-- Right: Kakao 1:1, EN Switch, Forum Auth Box & New Topic Button -->
         <div class="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
-          <!-- KakaoTalk 1:1 Chat Button (hidden on mobile, visible sm+) -->
-          <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity cursor-pointer" title="카카오톡 1:1 상담 바로가기">
+          <!-- KakaoTalk 1:1 Chat Button (hidden on mobile, visible md+) -->
+          <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="forum-kakao-btn hidden md:inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity cursor-pointer" title="카카오톡 1:1 상담 바로가기">
             <img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" />
             <span class="text-xs sm:text-sm font-bold text-slate-800 hover:text-brand-blue tracking-tight whitespace-nowrap">1:1 상담</span>
           </a>
 
           <!-- EN Translation Toggle Button -->
-          <button id="senior-mode-btn" class="senior-mode-btn notranslate" translate="no" type="button" onclick="window.cycleSeniorMode && window.cycleSeniorMode()" title="시니어모드+ (글자 크기 3단계 조절)" aria-label="시니어모드 글자 크기 조절"><span class="senior-btn-label">시니어모드+</span><span class="senior-step-badge" style="display:none;"></span></button>
+          <button id="senior-mode-btn" class="hidden md:inline-flex senior-mode-btn notranslate" translate="no" type="button" onclick="window.cycleSeniorMode && window.cycleSeniorMode()" title="시니어모드+ (글자 크기 3단계 조절)" aria-label="시니어모드 글자 크기 조절"><span class="senior-btn-label">시니어모드+</span><span class="senior-step-badge" style="display:none;"></span></button>
           <button id="en-translate-btn" class="notranslate" translate="no" onclick="window.toggleTranslation && window.toggleTranslation()" title="Switch Language (EN / KR)" aria-label="Language Toggle" style="display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:999px;border:1.5px solid #cbd5e1;font-size:10px;font-weight:700;letter-spacing:0.04em;cursor:pointer;transition:all 0.2s ease;background:transparent;color:#475569;white-space:nowrap;flex-shrink:0;line-height:1.4;"><span class="notranslate" translate="no">🌐</span> <span class="notranslate en-btn-label" translate="no">EN</span></button>
 
           <!-- Forum Auth Profile / Google Login -->
@@ -822,7 +822,7 @@ function render_forum_footer() {
     </div>
   </footer>
   <script src="/js/njap-translate.js?v=3.0.0"></script>
-  <script src="/js/fixes.js?v=5.1.0"></script>
+  <script src="/js/fixes.js?v=5.2.0"></script>
 <?php
 }
 

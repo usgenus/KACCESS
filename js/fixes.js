@@ -271,7 +271,7 @@
 
       /* Senior Mode Button Base */
       '.senior-mode-btn {',
-      '  display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 4px !important;',
+      '  align-items: center !important; justify-content: center !important; gap: 4px !important;',
       '  padding: 3px 9px !important; border-radius: 9999px !important; border: 1.5px solid #cbd5e1 !important;',
       '  background: #ffffff !important; color: #334155 !important; font-size: 11px !important; font-weight: 700 !important;',
       '  letter-spacing: -0.01em !important; cursor: pointer !important; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;',
@@ -285,8 +285,16 @@
       '.senior-step-badge { display: none; align-items: center; justify-content: center; font-size: 9px !important; font-weight: 800 !important; padding: 1px 5px !important; border-radius: 999px !important; line-height: 1.2 !important; transition: all 0.2s ease !important; }',
       '.senior-mode-btn.step-1 .senior-step-badge { display: inline-flex !important; background: #2563eb !important; color: #ffffff !important; }',
       '.senior-mode-btn.step-2 .senior-step-badge { display: inline-flex !important; background: #ea580c !important; color: #ffffff !important; }',
-      '@media (max-width: 480px) {',
-      '  .senior-mode-btn { padding: 2.5px 6px !important; font-size: 10px !important; gap: 2px !important; }',
+      '/* Nav Controls: Senior Mode hidden in top nav on mobile (< 768px), visible on desktop (768px+) */',
+      'nav .senior-mode-btn, nav #senior-mode-btn { display: none !important; }',
+      '#mobile-menu-dropdown .senior-mode-btn { display: inline-flex !important; }',
+      '@media (min-width: 768px) {',
+      '  nav .senior-mode-btn, nav #senior-mode-btn { display: inline-flex !important; }',
+      '}',
+      '@media (max-width: 767px) {',
+      '  nav #en-translate-btn { padding: 2px 7px !important; font-size: 9.5px !important; font-weight: 700 !important; height: 20px !important; line-height: 1.2 !important; border-radius: 9999px !important; border-width: 1px !important; letter-spacing: 0.02em !important; white-space: nowrap !important; }',
+      '  /* Forum mobile view: hide Kakao button to give full space to menu and controls */',
+      '  nav a.forum-kakao-btn, body.forum-page nav a[href*="pf.kakao.com"], #forum-sidebar ~ * nav a[href*="pf.kakao.com"] { display: none !important; }',
       '}',
 
       /* Senior Mode Toast Notification */
@@ -1135,7 +1143,7 @@
         btn.innerHTML = '<span class="senior-btn-label">시니어모드+</span><span class="senior-step-badge" style="display:none;"></span>';
 
         if (enBtn) {
-          rightContainer.insertBefore(btn, enBtn);
+          enBtn.parentNode.insertBefore(btn, enBtn);
         } else {
           var mBtn = rightContainer.querySelector('#mobile-menu-btn');
           if (mBtn) {
@@ -1145,6 +1153,7 @@
           }
         }
       }
+
     }
 
     // Bind click listener to all .senior-mode-btn instances
