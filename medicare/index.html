@@ -83,6 +83,11 @@
     .nav-top-offset { top: 45px; }
     .logo-footer { width: 36px; height: 36px; object-fit: contain; filter: invert(1) brightness(2); flex-shrink: 0; }
 
+    /* SVG safeguard against unstyled expansion */
+    svg.w-3\.5, svg.h-3\.5 { width: 14px !important; height: 14px !important; }
+    svg.w-4, svg.h-4 { width: 16px !important; height: 16px !important; }
+    svg.w-5, svg.h-5 { width: 20px !important; height: 20px !important; }
+
     /* Hero Section */
     .medicare-hero {
       background-color: #0d1b2b !important;
@@ -622,6 +627,7 @@
             <a href="#section-compare" class="hero-pill-nav">4. 오리지널 vs 어드밴티지</a>
             <a href="#section-senior" class="hero-pill-nav">5. NJ 시니어 지원</a>
             <a href="#section-faq" class="hero-pill-nav">6. 자주 묻는 질문</a>
+            <a href="#section-disclaimer" class="hero-pill-nav" style="border-color: rgba(255,255,255,0.4) !important; background: rgba(255,255,255,0.18) !important;">TPMO 고지사항</a>
           </div>
         </div>
       </section>
@@ -912,6 +918,9 @@
                 </tbody>
               </table>
             </div>
+            <p class="text-[11.5px] text-slate-500 mt-2.5 leading-relaxed px-1">
+              ※ <strong>안내:</strong> 메디케어 어드밴티지 및 처방약 플랜의 세부 보장 내용 및 상품 수는 거주 지역(카운티)별로 상이합니다. 자세한 플랜 옵션 정보는 페이지 하단의 <a href="#section-disclaimer" class="text-blue-600 hover:underline font-semibold">TPMO 고지사항</a> 및 Medicare.gov에서 확인하실 수 있습니다.
+            </p>
           </div>
 
           <!-- ENROLLMENT & NJ SENIOR SUPPORT -->
@@ -985,6 +994,11 @@
             <a href="https://kor2.njaccessportal.com/tool" class="medicare-cta-btn">
               스마트 환자 서비스 바로가기 (무료 상담 및 접수) →
             </a>
+            <div class="mt-4 pt-3.5 border-t border-slate-200 text-center">
+              <p class="text-[11.5px] text-slate-500 leading-relaxed">
+                <span class="font-semibold text-slate-700">※ TPMO 고지사항:</span> 당사는 귀하의 지역에서 이용 가능한 모든 플랜을 제공하지는 않습니다. 모든 선택 옵션에 대한 정보는 <strong>Medicare.gov</strong>, <strong>1-800-MEDICARE</strong>(연중무휴 24시간, TTY: 1-877-486-2048), 또는 뉴저지 주 건강보험 지원 프로그램(NJ SHIP: 1-800-792-8820)으로 문의하십시오.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -1062,6 +1076,97 @@
         </div>
       </section>
 
+      <!-- SECTION 5: COMPLIANCE & TPMO DISCLAIMER -->
+      <section id="section-disclaimer" class="py-8 sm:py-10 bg-slate-100/80 border-t border-brand-border">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <!-- Header Tag & Title -->
+          <div class="text-center mb-5">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide bg-slate-200 text-slate-600 border border-slate-300/80 mb-1.5 shadow-2xs">
+              연방 규정 준수 고지 · CMS TPMO Compliance Notice
+            </span>
+            <h2 class="font-serif text-lg sm:text-xl text-brand-dark font-bold">
+              제3자 마케팅 조직(TPMO) 고지사항 &amp; 규정 준수 안내
+            </h2>
+            <p class="text-slate-500 font-sans text-[11px] sm:text-xs max-w-2xl mx-auto mt-1 leading-normal">
+              연방 메디케어·메디케이드 서비스 센터(CMS) 42 CFR § 422.2267(e)(41) 및 42 CFR § 423.2267(e)(41) 규정에 따른 공식 고지문입니다.
+            </p>
+          </div>
+
+          <!-- Main Disclaimer Container Card -->
+          <div class="bg-white rounded-xl border border-slate-200/90 p-4 sm:p-6 shadow-2xs space-y-3.5">
+            
+            <!-- Side-by-Side Notices on Desktop -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <!-- Korean TPMO Box -->
+              <div class="p-3.5 bg-blue-50/60 rounded-lg border border-blue-200/70">
+                <h3 class="text-xs font-bold text-blue-950 mb-1.5 flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+                  CMS 필수 고지문 (한국어 공식 고지)
+                </h3>
+                <p class="text-xs text-slate-700 leading-relaxed">
+                  &ldquo;당사는 귀하의 지역에서 이용 가능한 모든 플랜을 제공하지는 않습니다. 현재 당사는 귀하의 지역에서 [X]개 기관이 제공하는 [Y]개 상품을 대리/안내하고 있습니다. 모든 선택 옵션에 대한 정보를 확인하시려면 <strong>Medicare.gov</strong>를 방문하시거나, <strong>1-800-MEDICARE</strong> (연중무휴 24시간, TTY <strong>1-877-486-2048</strong>) 또는 뉴저지 주 건강보험 지원 프로그램(<strong>NJ SHIP: 1-800-792-8820</strong>)으로 문의하시기 바랍니다.&rdquo;
+                </p>
+              </div>
+
+              <!-- English Required Verbatim Box -->
+              <div class="p-3.5 bg-slate-50/80 rounded-lg border border-slate-200">
+                <h3 class="text-xs font-bold text-slate-800 mb-1.5 flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
+                  CMS Mandatory TPMO Disclaimer (Verbatim)
+                </h3>
+                <blockquote class="text-[11px] sm:text-xs text-slate-600 italic leading-relaxed pl-2.5 border-l-2 border-slate-300">
+                  &ldquo;We do not offer every plan available in your area. Currently we represent [insert number of organizations] organizations which offer [insert number of plans] products in your area. Please contact Medicare.gov, 1-800-MEDICARE (TTY users should call 1-877-486-2048), 24 hours a day/7 days a week, or your local State Health Insurance Program (SHIP) to get information on all of your options.&rdquo;
+                </blockquote>
+              </div>
+            </div>
+
+            <!-- Non-Government Affiliation & ACA Notice -->
+            <div class="pt-2.5 border-t border-slate-100 text-[11px] sm:text-xs text-slate-500 leading-relaxed">
+              <strong class="font-semibold text-slate-700">※ 비정부 기관 독립성 고지:</strong> 뉴저지 의료접근센터(NJ Healthcare Access Center &amp; Portal)는 미국 연방 정부, CMS, 연방 메디케어 당국, 또는 뉴저지 주 공식 마켓플레이스(GetCoveredNJ)와 직접적인 제휴 관계가 없는 민간 정보 제공 및 건강 네비게이션 포털입니다. 본 사이트의 내용은 동포의 건강 정보 접근성을 위한 교육 목적으로 제공되며, 의료적 또는 법률적 보증을 구성하지 않습니다.
+            </div>
+
+            <!-- Official Public Resources Direct Links Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
+              <a href="https://www.medicare.gov" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-lg border border-slate-200 bg-slate-50/70 hover:bg-white hover:border-blue-300 hover:shadow-2xs transition-all group flex items-center justify-between">
+                <div>
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-xs font-bold text-blue-900 group-hover:text-blue-700">Medicare.gov</span>
+                    <span class="text-[9px] font-semibold px-1.5 py-0.5 rounded bg-blue-100 text-blue-800">연방 공식</span>
+                  </div>
+                  <p class="text-[11px] text-slate-600 font-medium">1-800-MEDICARE <span class="text-slate-400 font-normal">(24/7)</span></p>
+                </div>
+                <svg class="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-600 shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </a>
+
+              <a href="https://www.state.nj.us/humanservices/doas/services/ship/" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-lg border border-slate-200 bg-slate-50/70 hover:bg-white hover:border-indigo-300 hover:shadow-2xs transition-all group flex items-center justify-between">
+                <div>
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-xs font-bold text-indigo-900 group-hover:text-indigo-700">뉴저지 SHIP 프로그램</span>
+                    <span class="text-[9px] font-semibold px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-800">주 무료상담</span>
+                  </div>
+                  <p class="text-[11px] text-slate-600 font-medium">1-800-792-8820 <span class="text-slate-400 font-normal">(1:1 무료)</span></p>
+                </div>
+                <svg class="w-3.5 h-3.5 text-slate-400 group-hover:text-indigo-600 shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </a>
+
+              <a href="https://nj.gov/getcoverednj/" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-lg border border-slate-200 bg-slate-50/70 hover:bg-white hover:border-emerald-300 hover:shadow-2xs transition-all group flex items-center justify-between">
+                <div>
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-xs font-bold text-emerald-900 group-hover:text-emerald-700">GetCoveredNJ</span>
+                    <span class="text-[9px] font-semibold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800">NJ 공식 마켓</span>
+                  </div>
+                  <p class="text-[11px] text-slate-600 font-medium">1-877-962-8448 <span class="text-slate-400 font-normal">(마켓플레이스)</span></p>
+                </div>
+                <svg class="w-3.5 h-3.5 text-slate-400 group-hover:text-emerald-600 shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
     </div>
   </main>
 
@@ -1091,6 +1196,7 @@
             <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/medicare">메디케어 안내</a></li>
             <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/medicare#aca">ACA 보험</a></li>
             <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/medicare#faq">자주 묻는 질문</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/medicare#section-disclaimer">TPMO 고지사항</a></li>
           </ul>
         </div>
         <div>
@@ -1103,8 +1209,9 @@
         </div>
       </div>
       <div class="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <div class="text-xs font-sans text-white/30 max-w-2xl leading-relaxed">
-          <span class="font-semibold text-white/40">의료 면책 조항:</span> 이 웹사이트의 정보는 교육 목적으로만 제공됩니다. 의료 결정은 반드시 자격을 갖춘 의료 전문가와 상담하십시오.
+        <div class="text-xs font-sans text-white/40 max-w-3xl leading-relaxed space-y-1">
+          <p><span class="font-semibold text-white/60">의료 면책 조항:</span> 이 웹사이트의 정보는 교육 목적으로만 제공되며, 의료 결정은 반드시 자격을 갖춘 의료 전문가와 상담하십시오.</p>
+          <p><span class="font-semibold text-white/60">TPMO Disclaimer:</span> We do not offer every plan available in your area. Currently we represent organizations which offer products in your area. Please contact Medicare.gov, 1-800-MEDICARE (TTY: 1-877-486-2048), or your local SHIP to get information on all of your options. (당사는 귀하 지역의 모든 플랜을 취급하지 않으며, 세부 옵션은 Medicare.gov 또는 1-800-MEDICARE에서 확인하실 수 있습니다.)</p>
         </div>
         <p class="text-xs font-sans text-white/30 whitespace-nowrap">© 2026 Healthcare Access Portal</p>
       </div>

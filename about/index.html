@@ -84,6 +84,237 @@
     .kakao-banner-img { width: 26px; height: 26px; border-radius: 6px; object-fit: contain; flex-shrink: 0; }
     .kakao-banner-text { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.25; }
     .kakao-banner-subtext { font-size: 11px; font-weight: 500; opacity: 0.65; }
+
+    /* ========================================================
+       ABOUT PAGE SLIDE DECK PREMIUM DESIGN SYSTEM
+       ======================================================== */
+    .about-hero-wrap {
+      background: linear-gradient(135deg, #023e8a 0%, #0077b6 50%, #0096c7 100%) !important;
+      position: relative;
+      overflow: hidden;
+      color: #ffffff !important;
+    }
+    .about-hero-title {
+      color: #ffffff !important;
+      font-weight: 900 !important;
+      letter-spacing: -0.035em !important;
+      line-height: 1.2 !important;
+      text-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+    }
+    .about-hero-sub {
+      color: #f0f9ff !important;
+      font-size: 1.18rem !important;
+      line-height: 1.75 !important;
+      font-weight: 400 !important;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+    .about-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 18px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.22) !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.45) !important;
+      color: #ffffff !important;
+      font-size: 13.5px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+    }
+    .about-hero-line {
+      width: 72px;
+      height: 4px;
+      border-radius: 9999px;
+      background: #ffffff !important;
+      box-shadow: 0 0 16px rgba(255, 255, 255, 0.8);
+      margin: 28px auto 0 auto;
+    }
+    .about-hero-pill-card {
+      background: rgba(255, 255, 255, 0.15) !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 16px 14px;
+      color: #ffffff !important;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      transition: all 0.25s ease;
+    }
+    .about-hero-pill-card:hover {
+      background: rgba(255, 255, 255, 0.22) !important;
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.5) !important;
+    }
+
+    /* Core Services Container */
+    .about-services-wrap {
+      background: #f8fafc !important;
+    }
+    .about-section-heading {
+      color: #0f172a !important;
+      font-size: 1.85rem !important;
+      font-weight: 900 !important;
+      letter-spacing: -0.025em !important;
+      line-height: 1.3 !important;
+    }
+    @media (min-width: 640px) {
+      .about-section-heading {
+        font-size: 2.25rem !important;
+      }
+    }
+    .about-step-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      font-size: 12.5px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #0284c7 0%, #0077b6 100%) !important;
+      color: #ffffff !important;
+      box-shadow: 0 3px 8px rgba(2, 132, 199, 0.25) !important;
+      margin-bottom: 12px;
+    }
+
+    /* Cards */
+    .about-card-box {
+      background: #ffffff !important;
+      border: 1.5px solid #e2e8f0 !important;
+      border-radius: 24px !important;
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 4px 10px -2px rgba(15, 23, 42, 0.02) !important;
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      position: relative;
+    }
+    .about-card-box:hover {
+      transform: translateY(-4px) !important;
+      border-color: #38bdf8 !important;
+      box-shadow: 0 20px 30px -10px rgba(2, 132, 199, 0.16), 0 8px 16px -4px rgba(0, 0, 0, 0.04) !important;
+    }
+    .about-icon-badge {
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%) !important;
+      border: 1.5px solid #7dd3fc !important;
+      color: #0284c7 !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-bottom: 22px;
+      box-shadow: 0 3px 10px rgba(2, 132, 199, 0.15);
+    }
+    .about-card-title-text {
+      color: #0f172a !important;
+      font-size: 1.4rem !important;
+      font-weight: 800 !important;
+      letter-spacing: -0.02em !important;
+      margin-bottom: 12px;
+      line-height: 1.35 !important;
+    }
+    .about-card-desc-text {
+      color: #334155 !important;
+      font-size: 1.05rem !important;
+      line-height: 1.75 !important;
+      font-weight: 450 !important;
+    }
+    .about-feature-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 16px;
+      background: #f8fafc !important;
+      border-radius: 12px;
+      color: #1e293b !important;
+      font-size: 14px;
+      font-weight: 600;
+      border: 1.5px solid #e2e8f0;
+      transition: all 0.2s ease;
+    }
+    .about-feature-chip:hover {
+      background: #f1f5f9 !important;
+      border-color: #cbd5e1;
+    }
+    .about-feature-chip svg {
+      color: #0284c7;
+      flex-shrink: 0;
+    }
+
+    /* CTA Section */
+    .about-cta-wrap {
+      background: linear-gradient(135deg, #023e8a 0%, #0077b6 50%, #0096c7 100%) !important;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      color: #ffffff !important;
+    }
+    .about-cta-title-text {
+      color: #ffffff !important;
+      font-weight: 900 !important;
+      letter-spacing: -0.03em !important;
+      font-size: 2.3rem !important;
+      line-height: 1.25 !important;
+      text-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+    }
+    @media (min-width: 640px) {
+      .about-cta-title-text {
+        font-size: 3.1rem !important;
+      }
+    }
+    .about-cta-desc-text {
+      color: #f0f9ff !important;
+      font-size: 1.18rem !important;
+      line-height: 1.7 !important;
+      font-weight: 400 !important;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+    .about-cta-action-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #ffffff !important;
+      color: #005f9e !important;
+      font-size: 1.15rem !important;
+      font-weight: 800 !important;
+      padding: 17px 40px !important;
+      border-radius: 9999px !important;
+      box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.35), 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+      text-decoration: none !important;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      cursor: pointer !important;
+    }
+    .about-cta-action-btn:hover {
+      background: #f8fafc !important;
+      color: #0284c7 !important;
+      transform: translateY(-3px) scale(1.02) !important;
+      box-shadow: 0 20px 40px -6px rgba(0, 0, 0, 0.4) !important;
+    }
+    .about-cta-kakao-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      background: #FEE500 !important;
+      color: #191919 !important;
+      font-size: 1.15rem !important;
+      font-weight: 800 !important;
+      padding: 17px 36px !important;
+      border-radius: 9999px !important;
+      box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.25) !important;
+      text-decoration: none !important;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      cursor: pointer !important;
+    }
+    .about-cta-kakao-btn:hover {
+      background: #fdd835 !important;
+      transform: translateY(-3px) scale(1.02) !important;
+      box-shadow: 0 18px 36px -6px rgba(0, 0, 0, 0.3) !important;
+    }
   </style>
   <script>
     (function() {
@@ -359,128 +590,190 @@
       <!-- ========================================================
            SLIDE 1: Hero Section (여러분의 든든한 건강 동반자)
            ======================================================== -->
-      <section class="relative bg-[#0077b6] text-white py-20 sm:py-28 lg:py-32 overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-[#0284c7] via-[#0077b6] to-[#005f9e] opacity-95"></div>
-        <div class="absolute -right-24 -bottom-24 w-96 h-96 rounded-full bg-white/10 blur-3xl pointer-events-none"></div>
-        <div class="absolute left-1/3 -top-20 w-72 h-72 rounded-full bg-sky-300/10 blur-2xl pointer-events-none"></div>
-        <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p class="text-white/85 font-medium text-sm sm:text-base tracking-wide mb-3">여러분의 든든한 건강 동반자</p>
-          <h1 class="font-sans font-extrabold text-3xl sm:text-5xl lg:text-6xl text-white leading-tight mb-6 tracking-tight">
+      <section class="about-hero-wrap py-20 sm:py-28 lg:py-32" style="background: linear-gradient(135deg, #023e8a 0%, #0077b6 50%, #0096c7 100%) !important; position: relative; overflow: hidden; color: #ffffff !important;">
+        <!-- Ambient decorative glows -->
+        <div style="position:absolute;top:-100px;right:-100px;width:450px;height:450px;background:radial-gradient(circle,rgba(255,255,255,0.18) 0%,transparent 70%);border-radius:50%;pointer-events:none;"></div>
+        <div style="position:absolute;bottom:-80px;left:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(56,189,248,0.2) 0%,transparent 70%);border-radius:50%;pointer-events:none;"></div>
+
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center">
+          <div class="about-hero-badge mb-6">
+            <span>✦</span>
+            <span>여러분의 든든한 건강 동반자</span>
+          </div>
+          <h1 class="about-hero-title text-3xl sm:text-5xl lg:text-6xl mb-6 max-w-4xl" style="color: #ffffff !important;">
             복잡한 병원 이용, 이제 혼자 고민하지 마세요
           </h1>
-          <p class="text-white/90 font-sans text-base sm:text-xl font-normal leading-relaxed max-w-2xl">
+          <p class="about-hero-sub max-w-2xl text-base sm:text-xl" style="color: #f0f9ff !important;">
             언어 장벽과 복잡한 절차 속에서 여러분을 따뜻하게 안내해 드립니다
           </p>
-          <div class="w-16 h-1 bg-white/80 rounded-full mt-7"></div>
+          <div class="about-hero-line mb-12"></div>
+
+          <!-- 4 Core Navigation Pillars Highlight Cards inside Hero -->
+          <div class="w-full grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 text-left">
+            <div class="about-hero-pill-card">
+              
+              <div class="font-extrabold text-sm sm:text-base text-white">01. 의사 연계</div>
+              <div class="text-xs text-sky-100/90 mt-1">한국어 가능 전문의 매칭</div>
+            </div>
+            <div class="about-hero-pill-card">
+              
+              <div class="font-extrabold text-sm sm:text-base text-white">02. 예약 &amp; 통역</div>
+              <div class="text-xs text-sky-100/90 mt-1">현장 동행 및 유선 지원</div>
+            </div>
+            <div class="about-hero-pill-card">
+              
+              <div class="font-extrabold text-sm sm:text-base text-white">03. 보험 &amp; 비용</div>
+              <div class="text-xs text-sky-100/90 mt-1">청구서 검토 및 감면 안내</div>
+            </div>
+            <div class="about-hero-pill-card">
+              
+              <div class="font-extrabold text-sm sm:text-base text-white">04. 사후 관리</div>
+              <div class="text-xs text-sky-100/90 mt-1">지속적인 회복 모니터링</div>
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- ========================================================
-           SLIDES 2 - 5: Core Services & Patient Navigation Pillars
+           SLIDES 2 - 5: 4 Core Pillars of Patient Navigation
            ======================================================== -->
-      <section class="py-16 sm:py-24 bg-slate-50/70 border-b border-slate-200/60">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 sm:space-y-20">
+      <section class="about-services-wrap py-16 sm:py-24 border-b border-slate-200/80" style="background: #f8fafc !important;">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 sm:space-y-24">
 
           <!-- SLIDE 2: 병원 찾기 및 예약 · 통역 지원 -->
           <div>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-6 sm:mb-8 tracking-tight">
-              병원 찾기 및 예약 · 통역 지원
-            </h2>
+            <div class="mb-6 sm:mb-8">
+              <span class="about-step-pill">STEP 01 · 의사 연계 &amp; 통역 동행</span>
+              <h2 class="about-section-heading" style="color: #0f172a !important;">병원 찾기 및 예약 · 통역 지원</h2>
+            </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
               <!-- Card 1: 맞춤 병원 및 의사 찾기 -->
-              <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-sm hover:shadow-md transition-all duration-300 border border-slate-100 flex flex-col items-start group">
-                <div class="w-14 h-14 rounded-2xl bg-sky-50 text-[#0077b6] flex items-center justify-center mb-6 group-hover:scale-105 transition-transform">
-                  <!-- Doctor / Hospital Badge Icon -->
-                  <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                  </svg>
+              <div class="about-card-box p-8 sm:p-10 flex flex-col justify-between" style="background: #ffffff !important;">
+                <div>
+                  
+                  <h3 class="about-card-title-text" style="color: #0f172a !important;">맞춤 병원 및 의사 찾기</h3>
+                  <p class="about-card-desc-text mb-6" style="color: #334155 !important;">
+                    나와 잘 통하고 모국어를 구사하는 전문 의료진을 찾아드립니다.
+                  </p>
                 </div>
-                <h3 class="text-xl sm:text-2xl font-bold text-slate-900 mb-3 tracking-tight">
-                  맞춤 병원 및 의사 찾기
-                </h3>
-                <p class="text-slate-600 text-base sm:text-lg leading-relaxed font-normal">
-                  나와 잘 통하고 모국어를 구사하는 전문 의료진을 찾아드립니다.
-                </p>
+                <div class="pt-4 border-t border-slate-100 flex flex-wrap gap-2.5">
+                  <span class="about-feature-chip" style="color: #1e293b !important;">
+                    한국어 가능 1차 진료의 &amp; 전문의
+                  </span>
+                  <span class="about-feature-chip" style="color: #1e293b !important;">
+                    진료 과목별 맞춤 네트워크 매칭
+                  </span>
+                </div>
               </div>
 
               <!-- Card 2: 예약 및 통역 동행 -->
-              <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-sm hover:shadow-md transition-all duration-300 border border-slate-100 flex flex-col items-start group">
-                <div class="w-14 h-14 rounded-2xl bg-sky-50 text-[#0077b6] flex items-center justify-center mb-6 group-hover:scale-105 transition-transform">
-                  <!-- Speech Bubble / Interpretation Chat Icon -->
-                  <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                  </svg>
+              <div class="about-card-box p-8 sm:p-10 flex flex-col justify-between" style="background: #ffffff !important;">
+                <div>
+                  
+                  <h3 class="about-card-title-text" style="color: #0f172a !important;">예약 및 통역 동행</h3>
+                  <p class="about-card-desc-text mb-6" style="color: #334155 !important;">
+                    진료 예약부터 동행 및 통역까지 지원하여 중요한 내용이 누락되지 않도록 돕습니다.
+                  </p>
                 </div>
-                <h3 class="text-xl sm:text-2xl font-bold text-slate-900 mb-3 tracking-tight">
-                  예약 및 통역 동행
-                </h3>
-                <p class="text-slate-600 text-base sm:text-lg leading-relaxed font-normal">
-                  진료 예약부터 동행 및 통역까지 지원하여 중요한 내용이 누락되지 않도록 돕습니다.
-                </p>
+                <div class="pt-4 border-t border-slate-100 flex flex-wrap gap-2.5">
+                  <span class="about-feature-chip" style="color: #1e293b !important;">
+                    신속한 미국 병원 예약 지원
+                  </span>
+                  <span class="about-feature-chip" style="color: #1e293b !important;">
+                    현장 대면 &amp; 실시간 유선 통역
+                  </span>
+                </div>
               </div>
             </div>
           </div>
 
           <!-- SLIDE 3: 예방 및 건강 교육 -->
           <div>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-6 sm:mb-8 tracking-tight">
-              예방 및 건강 교육
-            </h2>
-            <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-sm hover:shadow-md transition-all duration-300 border border-slate-100 flex flex-col items-start group">
-              <div class="w-14 h-14 rounded-2xl bg-sky-50 text-[#0077b6] flex items-center justify-center mb-6 group-hover:scale-105 transition-transform">
-                <!-- Brain / Health Awareness Icon -->
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                </svg>
+            <div class="mb-6 sm:mb-8">
+              <span class="about-step-pill">STEP 02 · 질병 예방 &amp; 건강 증진</span>
+              <h2 class="about-section-heading" style="color: #0f172a !important;">예방 및 건강 교육</h2>
+            </div>
+            <div class="about-card-box p-8 sm:p-10" style="background: #ffffff !important;">
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-7">
+                  
+                  <h3 class="about-card-title-text" style="color: #0f172a !important;">질병 예방과 쉬운 건강 교육</h3>
+                  <p class="about-card-desc-text" style="color: #334155 !important;">
+                    당뇨 관리나 치매 예방 등 이해하기 쉬운 건강 워크숍과 교육을 제공하여 질병을 미리 예방하고 건강한 삶을 유지하도록 돕습니다.
+                  </p>
+                </div>
+                <div class="lg:col-span-5 bg-slate-50 rounded-2xl p-6 border border-slate-100/80 space-y-3">
+                  <div class="about-feature-chip w-full" style="color: #1e293b !important;">
+                    당뇨 · 고혈압 만성질환 워크숍
+                  </div>
+                  <div class="about-feature-chip w-full" style="color: #1e293b !important;">
+                    시니어 치매 조기 진단 &amp; 인지 예방
+                  </div>
+                  <div class="about-feature-chip w-full" style="color: #1e293b !important;">
+                    무료 정기 건강 세미나 및 가이드 배포
+                  </div>
+                </div>
               </div>
-              <h3 class="text-xl sm:text-2xl font-bold text-slate-900 mb-3 tracking-tight">
-                질병 예방과 쉬운 건강 교육
-              </h3>
-              <p class="text-slate-600 text-base sm:text-lg leading-relaxed font-normal max-w-3xl">
-                당뇨 관리나 치매 예방 등 이해하기 쉬운 건강 워크숍과 교육을 제공하여 질병을 미리 예방하고 건강한 삶을 유지하도록 돕습니다.
-              </p>
             </div>
           </div>
 
           <!-- SLIDE 4: 보험 및 의료비 청구 안내 -->
           <div>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-6 sm:mb-8 tracking-tight">
-              보험 및 의료비 청구 안내
-            </h2>
-            <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-sm hover:shadow-md transition-all duration-300 border border-slate-100 flex flex-col items-start group">
-              <div class="w-14 h-14 rounded-2xl bg-sky-50 text-[#0077b6] flex items-center justify-center mb-6 group-hover:scale-105 transition-transform">
-                <!-- Document / Billing & Insurance Icon -->
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2zM12 7v10" />
-                </svg>
+            <div class="mb-6 sm:mb-8">
+              <span class="about-step-pill">STEP 03 · 비용 부담 해소 &amp; 보험 안내</span>
+              <h2 class="about-section-heading" style="color: #0f172a !important;">보험 및 의료비 청구 안내</h2>
+            </div>
+            <div class="about-card-box p-8 sm:p-10" style="background: #ffffff !important;">
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-7">
+                  
+                  <h3 class="about-card-title-text" style="color: #0f172a !important;">투명하고 알기 쉬운 비용 처리</h3>
+                  <p class="about-card-desc-text" style="color: #334155 !important;">
+                    복잡한 보험 서류와 청구 과정을 함께 확인하고 예상 비용을 미리 안내해 드려 뜻밖의 경제적 부담이나 놀람이 없도록 돕습니다.
+                  </p>
+                </div>
+                <div class="lg:col-span-5 bg-slate-50 rounded-2xl p-6 border border-slate-100/80 space-y-3">
+                  <div class="about-feature-chip w-full" style="color: #1e293b !important;">
+                    보험 본인부담금(Co-pay) 사전 산정
+                  </div>
+                  <div class="about-feature-chip w-full" style="color: #1e293b !important;">
+                    병원비 청구서 오류 검토 및 감면 상담
+                  </div>
+                  <div class="about-feature-chip w-full" style="color: #1e293b !important;">
+                    자선진료(Charity Care) 신청 연계
+                  </div>
+                </div>
               </div>
-              <h3 class="text-xl sm:text-2xl font-bold text-slate-900 mb-3 tracking-tight">
-                투명하고 알기 쉬운 비용 처리
-              </h3>
-              <p class="text-slate-600 text-base sm:text-lg leading-relaxed font-normal max-w-3xl">
-                복잡한 보험 서류와 청구 과정을 함께 확인하고 예상 비용을 미리 안내해 드려 뜻밖의 경제적 부담이나 놀람이 없도록 돕습니다.
-              </p>
             </div>
           </div>
 
           <!-- SLIDE 5: 진료 후 사후 관리 -->
           <div>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-6 sm:mb-8 tracking-tight">
-              진료 후 사후 관리
-            </h2>
-            <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-sm hover:shadow-md transition-all duration-300 border border-slate-100 flex flex-col items-start group">
-              <div class="w-14 h-14 rounded-2xl bg-sky-50 text-[#0077b6] flex items-center justify-center mb-6 group-hover:scale-105 transition-transform">
-                <!-- Heartbeat / Recovery Monitoring Icon -->
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
+            <div class="mb-6 sm:mb-8">
+              <span class="about-step-pill">STEP 04 · 회복 지원 &amp; 지속 돌봄</span>
+              <h2 class="about-section-heading" style="color: #0f172a !important;">진료 후 사후 관리</h2>
+            </div>
+            <div class="about-card-box p-8 sm:p-10" style="background: #ffffff !important;">
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-7">
+                  
+                  <h3 class="about-card-title-text" style="color: #0f172a !important;">지속적인 회복 모니터링</h3>
+                  <p class="about-card-desc-text" style="color: #334155 !important;">
+                    진료나 치료가 끝난 후에도 꾸준히 연락하여 어떻게 follow up을 해야하는지 지원 드리며 원활하게 회복할 수 있도록 세심하게 돌봐드립니다.
+                  </p>
+                </div>
+                <div class="lg:col-span-5 bg-slate-50 rounded-2xl p-6 border border-slate-100/80 space-y-3">
+                  <div class="about-feature-chip w-full" style="color: #1e293b !important;">
+                    처방약 복약 지도 및 후속 진료 안내
+                  </div>
+                  <div class="about-feature-chip w-full" style="color: #1e293b !important;">
+                    정기 검진 리마인드 및 회복 경과 체크
+                  </div>
+                  <div class="about-feature-chip w-full" style="color: #1e293b !important;">
+                    가정 간호 및 시니어 재활 케어 연결
+                  </div>
+                </div>
               </div>
-              <h3 class="text-xl sm:text-2xl font-bold text-slate-900 mb-3 tracking-tight">
-                지속적인 회복 모니터링
-              </h3>
-              <p class="text-slate-600 text-base sm:text-lg leading-relaxed font-normal max-w-3xl">
-                진료나 치료가 끝난 후에도 꾸준히 연락하여 어떻게 follow up을 해야하는지 지원 드리며 원활하게 회복할 수 있도록 세심하게 돌봐드립니다.
-              </p>
             </div>
           </div>
 
@@ -490,19 +783,31 @@
       <!-- ========================================================
            SLIDE 6: Closing CTA Section (건강한 삶의 시작, 지금 함께하세요)
            ======================================================== -->
-      <section class="relative bg-[#0077b6] text-white py-18 sm:py-24 overflow-hidden text-center">
-        <div class="absolute inset-0 bg-gradient-to-br from-[#0284c7] via-[#0077b6] to-[#005f9e] opacity-95"></div>
-        <div class="absolute -left-20 -bottom-20 w-80 h-80 rounded-full bg-white/10 blur-3xl pointer-events-none"></div>
-        <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
-          <h2 class="font-sans font-extrabold text-2xl sm:text-4xl lg:text-5xl text-white leading-tight mb-4 tracking-tight">
+      <section class="about-cta-wrap py-20 sm:py-28" style="background: linear-gradient(135deg, #023e8a 0%, #0077b6 50%, #0096c7 100%) !important; position: relative; overflow: hidden; color: #ffffff !important;">
+        <!-- Ambient decorative glow -->
+        <div style="position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:500px;height:500px;background:radial-gradient(circle,rgba(255,255,255,0.15) 0%,transparent 70%);border-radius:50%;pointer-events:none;"></div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col items-center text-center">
+          <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 border border-white/30 text-white text-xs sm:text-sm font-bold tracking-wider uppercase mb-5">
+            ✨ New Jersey Healthcare Access Center
+          </span>
+          <h2 class="about-cta-title-text mb-5" style="color: #ffffff !important;">
             건강한 삶의 시작, 지금 함께하세요
           </h2>
-          <p class="text-white/90 font-sans text-base sm:text-lg max-w-2xl mb-8 leading-relaxed font-normal">
+          <p class="about-cta-desc-text max-w-2xl mb-10" style="color: #f0f9ff !important;">
             여러분의 건강과 행복을 위해 언제나 곁에서 든든한 길잡이가 되어 드리겠습니다.
           </p>
-          <a href="#contact" class="inline-flex items-center justify-center px-9 py-4 bg-white text-[#0077b6] font-extrabold text-base sm:text-lg rounded-2xl shadow-lg hover:shadow-xl hover:bg-slate-50 transition-all cursor-pointer transform hover:-translate-y-0.5">
-            지금 바로 문의하기
-          </a>
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
+            <a href="#contact" class="about-cta-action-btn w-full sm:w-auto" style="background: #ffffff !important; color: #005f9e !important; font-weight: 800 !important;">
+              <span>지금 바로 문의하기</span>
+              <span style="font-size: 1.25rem;">→</span>
+            </a>
+            <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="about-cta-kakao-btn w-full sm:w-auto" style="background: #FEE500 !important; color: #191919 !important; font-weight: 800 !important;">
+              <img src="/kakaotalk-icon.png" alt="KakaoTalk" style="width: 22px; height: 22px; border-radius: 5px;" />
+              <span>카카오톡 1:1 빠른 상담</span>
+            </a>
+          </div>
+          <p class="text-xs text-sky-100/80 mt-6 font-medium">※ 본 상담 및 문의 안내는 뉴저지 동포들을 위한 무료 지원 서비스입니다.</p>
         </div>
       </section>
 

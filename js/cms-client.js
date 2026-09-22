@@ -151,8 +151,12 @@
   // ---------------------------------------------------------
   // 3. GLOBAL STATE & BILLBOARDS
   // ---------------------------------------------------------
-  var billboards = [];
-  try { billboards = JSON.parse(sessionStorage.getItem('njap_billboards') || '[]'); } catch(e) {}
+  var billboards = (typeof window !== 'undefined' && Array.isArray(window.__INITIAL_BILLBOARDS__) && window.__INITIAL_BILLBOARDS__.length > 0)
+    ? window.__INITIAL_BILLBOARDS__
+    : [];
+  if (billboards.length === 0) {
+    try { billboards = JSON.parse(sessionStorage.getItem('njap_billboards') || '[]'); } catch(e) {}
+  }
   var currentBillboardIndex = 0;
   var billboardTimer = null;
   var BILLBOARD_IMAGE_DURATION = 5000; // 5 seconds for images
@@ -221,7 +225,7 @@
     var isVideo = isBillboardVideo(b);
     var targetLink = b.linkUrl || '/about#contact';
 
-    // If server already rendered the exact video for slide 0, do not destroy and reload it
+    // If server already rendered the exact video for slide 0, configure playback without recreating
     var existingVid = container.querySelector('video');
     if (existingVid && currentBillboardIndex === 0 && isVideo) {
       var curSrc = existingVid.getAttribute('src') || (existingVid.querySelector('source') ? existingVid.querySelector('source').getAttribute('src') : '');
@@ -234,6 +238,24 @@
         existingVid.setAttribute('playsinline', '');
         existingVid.setAttribute('webkit-playsinline', '');
         existingVid.setAttribute('preload', 'auto');
+        if (billboards.length > 1) {
+          existingVid.loop = false;
+          existingVid.removeAttribute('loop');
+          existingVid.onended = function() {
+            window.cmsNextBillboard();
+          };
+          var dur0 = existingVid.duration;
+          if (isFinite(dur0) && dur0 > 0) {
+            scheduleBillboardTimer(Math.max(3000, Math.round((dur0 - existingVid.currentTime + 1.2) * 1000)));
+          } else {
+            existingVid.addEventListener('loadedmetadata', function() {
+              if (isFinite(existingVid.duration) && existingVid.duration > 0) {
+                scheduleBillboardTimer(Math.max(3000, Math.round((existingVid.duration + 1.2) * 1000)));
+              }
+            }, { once: true });
+            scheduleBillboardTimer(45000);
+          }
+        }
         if (existingVid.paused) {
           var p0 = existingVid.play();
           if (p0 && p0.catch) { p0.catch(function() {}); }
@@ -250,7 +272,7 @@
     }).join('');
 
     container.innerHTML = [
-      '<div class="relative w-full overflow-hidden bg-slate-950 select-none" style="height:clamp(230px,29.48vw,480px);min-height:230px;max-height:480px;width:100%;position:relative;overflow:hidden;" onmouseenter="window.cmsPauseBillboard()" onmouseleave="window.cmsResumeBillboard()">',
+      '<div class="relative w-full overflow-hidden bg-slate-950 select-none" style="height:clamp(300px,38.32vw,624px);min-height:300px;max-height:624px;width:100%;position:relative;overflow:hidden;" onmouseenter="window.cmsPauseBillboard()" onmouseleave="window.cmsResumeBillboard()">',
       '  <a href="' + escapeHtml(targetLink) + '" class="block absolute inset-0 w-full h-full cursor-pointer select-none" title="' + escapeHtml(b.title) + '">',
       '    <div class="absolute inset-0 w-full h-full overflow-hidden" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;">',
       '      <div id="bb-media-slot" class="w-full h-full" style="position:absolute;inset:0;width:100%;height:100%;"></div>',
@@ -289,6 +311,7 @@
         vid.style.width = '100%';
         vid.style.height = '100%';
         vid.style.objectFit = 'cover';
+        vid.style.objectPosition = 'center';
         vid.setAttribute('muted', '');
         vid.setAttribute('playsinline', '');
         vid.setAttribute('webkit-playsinline', '');
@@ -299,48 +322,44 @@
         vid.volume = 0;
         vid.playsInline = true;
         vid.autoplay = true;
-        vid.src = b.mediaUrl;
-
-        var srcTag = document.createElement('source');
-        srcTag.src = b.mediaUrl;
-        srcTag.type = 'video/mp4';
-        vid.appendChild(srcTag);
 
         if (billboards.length <= 1) {
           vid.loop = true;
         } else {
           vid.loop = false;
-          // When the video finishes playing its full length, transition to next billboard
-          vid.addEventListener('ended', function() {
+          vid.onended = function() {
             window.cmsNextBillboard();
-          });
-          // Fallback safety: once metadata loads, set safety timer for duration + 1.5s
+          };
           vid.addEventListener('loadedmetadata', function() {
             if (isFinite(vid.duration) && vid.duration > 0) {
-              scheduleBillboardTimer(Math.round((vid.duration + 1.5) * 1000));
+              scheduleBillboardTimer(Math.round((vid.duration + 1.2) * 1000));
             }
           });
-          // Fallback if video fails to play or errors
           vid.addEventListener('error', function() {
             scheduleBillboardTimer(BILLBOARD_IMAGE_DURATION);
           });
-          // Initial safety timeout (15s) in case metadata takes long
-          scheduleBillboardTimer(15000);
+          scheduleBillboardTimer(45000);
         }
 
+        vid.src = b.mediaUrl;
         slot.appendChild(vid);
-        // Play after paint so the element is fully rendered in the DOM
-        requestAnimationFrame(function() {
-          vid.muted = true;
-          var p = vid.play();
-          if (p && p.catch) {
-            p.catch(function() {
-              if (billboards.length > 1) {
-                scheduleBillboardTimer(BILLBOARD_IMAGE_DURATION);
+        vid.load();
+        var p = vid.play();
+        if (p && p.catch) {
+          p.catch(function() {
+            requestAnimationFrame(function() {
+              vid.muted = true;
+              var p2 = vid.play();
+              if (p2 && p2.catch) {
+                p2.catch(function() {
+                  if (billboards.length > 1) {
+                    scheduleBillboardTimer(BILLBOARD_IMAGE_DURATION);
+                  }
+                });
               }
             });
-          }
-        });
+          });
+        }
       } else {
         var img = document.createElement('img');
         img.src = b.mediaUrl || 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=2000&q=85&auto=format';
@@ -407,8 +426,12 @@
   // ---------------------------------------------------------
   // 3.5. BILLBOARD 2 (Above One-stop Patient Services Center)
   // ---------------------------------------------------------
-  var billboards2 = [];
-  try { billboards2 = JSON.parse(sessionStorage.getItem('njap_billboards2') || '[]'); } catch(e) {}
+  var billboards2 = (typeof window !== 'undefined' && Array.isArray(window.__INITIAL_BILLBOARDS2__) && window.__INITIAL_BILLBOARDS2__.length > 0)
+    ? window.__INITIAL_BILLBOARDS2__
+    : [];
+  if (billboards2.length === 0) {
+    try { billboards2 = JSON.parse(sessionStorage.getItem('njap_billboards2') || '[]'); } catch(e) {}
+  }
   var currentBillboard2Index = 0;
   var billboard2Timer = null;
 
@@ -457,7 +480,7 @@
     var isVideo = isBillboardVideo(b);
     var targetLink = b.linkUrl || '/tool';
 
-    // If server already rendered the exact video for slide 0, do not destroy and reload it
+    // If server already rendered the exact video for slide 0, configure playback without recreating
     var existingVid = container.querySelector('video');
     if (existingVid && currentBillboard2Index === 0 && isVideo) {
       var curSrc = existingVid.getAttribute('src') || (existingVid.querySelector('source') ? existingVid.querySelector('source').getAttribute('src') : '');
@@ -470,6 +493,24 @@
         existingVid.setAttribute('playsinline', '');
         existingVid.setAttribute('webkit-playsinline', '');
         existingVid.setAttribute('preload', 'auto');
+        if (billboards2.length > 1) {
+          existingVid.loop = false;
+          existingVid.removeAttribute('loop');
+          existingVid.onended = function() {
+            window.cmsNextBillboard2();
+          };
+          var dur0 = existingVid.duration;
+          if (isFinite(dur0) && dur0 > 0) {
+            scheduleBillboard2Timer(Math.max(3000, Math.round((dur0 - existingVid.currentTime + 1.2) * 1000)));
+          } else {
+            existingVid.addEventListener('loadedmetadata', function() {
+              if (isFinite(existingVid.duration) && existingVid.duration > 0) {
+                scheduleBillboard2Timer(Math.max(3000, Math.round((existingVid.duration + 1.2) * 1000)));
+              }
+            }, { once: true });
+            scheduleBillboard2Timer(45000);
+          }
+        }
         if (existingVid.paused) {
           var p0 = existingVid.play();
           if (p0 && p0.catch) { p0.catch(function() {}); }
@@ -486,7 +527,7 @@
     }).join('');
 
     container.innerHTML = [
-      '<div class="relative w-full overflow-hidden bg-slate-950 select-none" style="height:clamp(230px,29.48vw,480px);min-height:230px;max-height:480px;width:100%;position:relative;overflow:hidden;" onmouseenter="window.cmsPauseBillboard2()" onmouseleave="window.cmsResumeBillboard2()">',
+      '<div class="relative w-full overflow-hidden bg-slate-950 select-none" style="height:clamp(300px,38.32vw,624px);min-height:300px;max-height:624px;width:100%;position:relative;overflow:hidden;" onmouseenter="window.cmsPauseBillboard2()" onmouseleave="window.cmsResumeBillboard2()">',
       '  <a href="' + escapeHtml(targetLink) + '" class="block absolute inset-0 w-full h-full cursor-pointer select-none" title="' + escapeHtml(b.title) + '">',
       '    <div class="absolute inset-0 w-full h-full overflow-hidden" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;">',
       '      <div id="bb2-media-slot" class="w-full h-full" style="position:absolute;inset:0;width:100%;height:100%;"></div>',
@@ -521,6 +562,7 @@
         vid.style.width = '100%';
         vid.style.height = '100%';
         vid.style.objectFit = 'cover';
+        vid.style.objectPosition = 'center';
         vid.setAttribute('muted', '');
         vid.setAttribute('playsinline', '');
         vid.setAttribute('webkit-playsinline', '');
@@ -531,44 +573,44 @@
         vid.volume = 0;
         vid.playsInline = true;
         vid.autoplay = true;
-        vid.src = b.mediaUrl;
-
-        var srcTag = document.createElement('source');
-        srcTag.src = b.mediaUrl;
-        srcTag.type = 'video/mp4';
-        vid.appendChild(srcTag);
 
         if (billboards2.length <= 1) {
           vid.loop = true;
         } else {
           vid.loop = false;
-          // When the video finishes playing full length, advance
-          vid.addEventListener('ended', function() {
+          vid.onended = function() {
             window.cmsNextBillboard2();
-          });
+          };
           vid.addEventListener('loadedmetadata', function() {
             if (isFinite(vid.duration) && vid.duration > 0) {
-              scheduleBillboard2Timer(Math.round((vid.duration + 1.5) * 1000));
+              scheduleBillboard2Timer(Math.round((vid.duration + 1.2) * 1000));
             }
           });
           vid.addEventListener('error', function() {
             scheduleBillboard2Timer(BILLBOARD_IMAGE_DURATION);
           });
-          scheduleBillboard2Timer(15000);
+          scheduleBillboard2Timer(45000);
         }
 
+        vid.src = b.mediaUrl;
         slot.appendChild(vid);
-        requestAnimationFrame(function() {
-          vid.muted = true;
-          var p = vid.play();
-          if (p && p.catch) {
-            p.catch(function() {
-              if (billboards2.length > 1) {
-                scheduleBillboard2Timer(BILLBOARD_IMAGE_DURATION);
+        vid.load();
+        var p = vid.play();
+        if (p && p.catch) {
+          p.catch(function() {
+            requestAnimationFrame(function() {
+              vid.muted = true;
+              var p2 = vid.play();
+              if (p2 && p2.catch) {
+                p2.catch(function() {
+                  if (billboards2.length > 1) {
+                    scheduleBillboard2Timer(BILLBOARD_IMAGE_DURATION);
+                  }
+                });
               }
             });
-          }
-        });
+          });
+        }
       } else {
         var img = document.createElement('img');
         img.src = b.mediaUrl || 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=2000&q=85&auto=format';

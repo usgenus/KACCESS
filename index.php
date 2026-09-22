@@ -425,9 +425,9 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
     }
     #gallery-billboard-container > div,
     #gallery-billboard2-container > div {
-      height: clamp(230px, 29.48vw, 480px) !important;
-      min-height: 230px !important;
-      max-height: 480px !important;
+      height: clamp(300px, 38.32vw, 624px) !important;
+      min-height: 300px !important;
+      max-height: 624px !important;
       width: 100% !important;
       position: relative !important;
       overflow: hidden !important;
@@ -455,6 +455,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
       width: 100% !important;
       height: 100% !important;
       object-fit: cover !important;
+      object-position: center !important;
     }
     .billboard-text-layer {
       position: absolute !important;
@@ -470,18 +471,22 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
       pointer-events: auto !important;
     }
 
-    /* Billboard Image Hover Scale */
+    /* Billboard Image Hover Scale (Images only - videos remain completely unscaled) */
     #gallery-billboard-container img,
-    #gallery-billboard-container video,
     #billboard-active-img,
     .billboard-img {
       transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
     }
     #gallery-billboard-container:hover img,
-    #gallery-billboard-container:hover video,
     #gallery-billboard-section:hover img,
     .group:hover #billboard-active-img {
-      transform: scale(1.06) !important;
+      transform: scale(1.04) !important;
+    }
+    #gallery-billboard-container video,
+    #gallery-billboard2-container video,
+    #billboard-active-video,
+    #billboard2-active-video {
+      transform: none !important;
     }
 
     /* Billboard 1 Vignette Effect — Layer 2: sits above media, below text */
@@ -984,7 +989,38 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
         transform: none !important;
       }
     }
+
+    /* Modern Typography-Driven FAQ (No Icons) */
+    .faq-card {
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      border-left: 4px solid transparent;
+    }
+    .faq-card:hover {
+      border-color: #cbd5e1;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.06);
+    }
+    .faq-card.is-open {
+      border-left-color: #0047AB !important;
+      border-color: #cbd5e1 !important;
+      box-shadow: 0 12px 28px -6px rgba(0, 71, 171, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.04) !important;
+    }
+    .faq-card.is-open .faq-status-pill {
+      background-color: #0047AB !important;
+      color: #ffffff !important;
+      border-color: #0047AB !important;
+    }
+    .faq-cat-filter.active {
+      background-color: #0047AB !important;
+      color: #ffffff !important;
+      border-color: #0047AB !important;
+      box-shadow: 0 4px 12px -2px rgba(0, 71, 171, 0.3) !important;
+    }
   </style>
+  <script>
+    window.__INITIAL_BILLBOARDS__ = <?= json_encode($activeBillboards, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
+    window.__INITIAL_BILLBOARDS2__ = <?= json_encode($activeBillboards2, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
+  </script>
 </head>
 <body class="min-h-full flex flex-col bg-brand-light">
 
@@ -1165,7 +1201,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
             $b = $activeBillboards[0];
             $isVideo = ($b['mediaType'] ?? '') === 'video' || (isset($b['mediaUrl']) && (str_ends_with($b['mediaUrl'], '.mp4') || str_ends_with($b['mediaUrl'], '.webm')));
           ?>
-          <div class="relative w-full overflow-hidden bg-slate-950 select-none group" style="height: clamp(230px, 29.48vw, 480px); min-height: 230px; max-height: 480px; width: 100%; position: relative; overflow: hidden;">
+          <div class="relative w-full overflow-hidden bg-slate-950 select-none group" style="height: clamp(300px, 38.32vw, 624px); min-height: 300px; max-height: 624px; width: 100%; position: relative; overflow: hidden;">
             <a href="<?= htmlspecialchars($b['linkUrl'] ?? '/about#contact') ?>" class="block absolute inset-0 w-full h-full cursor-pointer select-none" title="<?= htmlspecialchars($b['title'] ?? '') ?>" onclick="var v=this.querySelector('video');if(v&&v.paused){event.preventDefault();event.stopPropagation();v.defaultMuted=true;v.muted=true;v.play();return false;}">
               <div class="absolute inset-0 w-full h-full overflow-hidden" style="position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1;">
                 <?php if ($isVideo): ?>
@@ -1173,11 +1209,11 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                          class="w-full h-full object-cover" 
                          muted 
                          autoplay 
-                         loop 
+                         <?= count($activeBillboards) <= 1 ? 'loop' : '' ?> 
                          playsinline 
                          webkit-playsinline 
                          preload="auto"
-                         style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+                         style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center;">
                     <source src="<?= htmlspecialchars($b['mediaUrl']) ?>" type="video/mp4">
                   </video>
                   <script>
@@ -1200,6 +1236,11 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                         v.addEventListener('canplay', triggerPlay, { once: true });
                         v.addEventListener('loadeddata', triggerPlay, { once: true });
                       }
+                      v.addEventListener('ended', function() {
+                        if (typeof window.cmsNextBillboard === 'function') {
+                          window.cmsNextBillboard();
+                        }
+                      });
                     })();
                   </script>
                 <?php else: ?>
@@ -1535,7 +1576,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
               $b2 = $activeBillboards2[0];
               $isVid2 = ($b2['mediaType'] ?? '') === 'video' || (isset($b2['mediaUrl']) && (str_ends_with($b2['mediaUrl'], '.mp4') || str_ends_with($b2['mediaUrl'], '.webm')));
             ?>
-          <div class="relative w-full overflow-hidden bg-slate-950 select-none group" style="height: clamp(230px, 29.48vw, 480px); min-height: 230px; max-height: 480px; width: 100%; position: relative; overflow: hidden;">
+          <div class="relative w-full overflow-hidden bg-slate-950 select-none group" style="height: clamp(300px, 38.32vw, 624px); min-height: 300px; max-height: 624px; width: 100%; position: relative; overflow: hidden;">
             <a href="<?= htmlspecialchars($b2['linkUrl'] ?? '/about#contact') ?>" class="block absolute inset-0 w-full h-full cursor-pointer select-none" title="<?= htmlspecialchars($b2['title'] ?? '') ?>" onclick="var v=this.querySelector('video');if(v&&v.paused){event.preventDefault();event.stopPropagation();v.defaultMuted=true;v.muted=true;v.play();return false;}">
               <div class="absolute inset-0 w-full h-full overflow-hidden" style="position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1;">
                 <?php if ($isVid2): ?>
@@ -1543,11 +1584,11 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                          class="w-full h-full object-cover" 
                          muted 
                          autoplay 
-                         loop 
+                         <?= count($activeBillboards2) <= 1 ? 'loop' : '' ?> 
                          playsinline 
                          webkit-playsinline 
                          preload="auto"
-                         style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+                         style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center;">
                     <source src="<?= htmlspecialchars($b2['mediaUrl']) ?>" type="video/mp4">
                   </video>
                   <script>
@@ -1570,6 +1611,11 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                         v.addEventListener('canplay', triggerPlay, { once: true });
                         v.addEventListener('loadeddata', triggerPlay, { once: true });
                       }
+                      v.addEventListener('ended', function() {
+                        if (typeof window.cmsNextBillboard2 === 'function') {
+                          window.cmsNextBillboard2();
+                        }
+                      });
                     })();
                   </script>
                 <?php else: ?>
@@ -1672,255 +1718,333 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
         </section>
 
         <!-- 5-2. NJ Healthcare Access Center & Korean Outreach (뉴저지 의료접근센터 · 의료접근포털 종합 센터) -->
-        <section id="healthcare-access-center" class="bg-white rounded-3xl p-6 sm:p-10 border border-gray-200 shadow-sm">
+        <section id="healthcare-access-center" class="relative bg-white rounded-3xl p-6 sm:p-10 lg:p-12 border border-slate-200/90 shadow-[0_20px_50px_-20px_rgba(15,23,42,0.06)] overflow-hidden">
+          <!-- Top Accent Gradient Line -->
+          <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-400"></div>
+          <!-- Ambient Glow Blobs -->
+          <div class="pointer-events-none absolute -top-24 -left-20 w-80 h-80 bg-blue-100/30 rounded-full blur-3xl"></div>
+          <div class="pointer-events-none absolute top-1/3 -right-20 w-80 h-80 bg-indigo-50/40 rounded-full blur-3xl"></div>
+
           <!-- Section Header -->
-          <div class="max-w-4xl mx-auto text-center mb-10">
-            <span class="inline-flex items-center gap-1.5 bg-blue-50 text-brand-blue border border-blue-200/80 text-xs font-extrabold uppercase tracking-widest px-3.5 py-1 rounded-full mb-3 shadow-xs">
-              <span>✦</span> NJ KOREAN OUTREACH &amp; HEALTHCARE ACCESS CENTER <span>✦</span>
-            </span>
-            <h2 class="font-extrabold text-2xl sm:text-3xl md:text-4xl text-slate-900 tracking-tight mb-3">
+          <div class="relative max-w-4xl mx-auto text-center mb-10 sm:mb-12">
+            <div class="inline-block text-brand-blue border border-blue-200/90 bg-gradient-to-r from-blue-50/90 via-indigo-50/70 to-blue-50/90 text-[11px] sm:text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-3.5 shadow-2xs">
+              NJ KOREAN OUTREACH &amp; HEALTHCARE ACCESS CENTER
+            </div>
+            <h2 class="font-black text-2xl sm:text-3xl md:text-4xl text-slate-900 tracking-tight mb-3">
               뉴저지 의료접근센터 · 의료접근포털
             </h2>
-            <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
+            <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto font-normal">
               언어와 문화의 장벽 없이, 뉴저지 한인 동포 누구나 최적의 공공 의료 혜택과 건강보험, 병원 진료에 접근할 수 있도록 돕는 종합 건강 네비게이션 포털입니다.
             </p>
           </div>
 
           <!-- Mission & Who We Serve Cards -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+          <div class="relative grid grid-cols-1 md:grid-cols-2 gap-6 mb-12 sm:mb-16">
             <!-- Mission Card -->
-            <div class="bg-gradient-to-br from-blue-50/70 to-slate-50 border border-blue-100/80 rounded-2xl p-6 sm:p-8 flex flex-col justify-between shadow-xs">
+            <div class="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 flex flex-col justify-between shadow-[0_4px_20px_-4px_rgba(15,23,42,0.04)] hover:shadow-xl hover:border-blue-300 hover:-translate-y-1 transition-all duration-300 group">
               <div>
-                <h3 class="font-bold text-xl text-slate-900 mb-2">우리의 미션 (Our Mission)</h3>
-                <p class="text-slate-700 text-sm sm:text-[15px] leading-relaxed mb-4">
+                <div class="flex items-center justify-between mb-4">
+                  <span class="text-[11px] font-black tracking-wider uppercase px-3 py-1 rounded-full bg-blue-50 text-brand-blue border border-blue-200/70">OUR MISSION</span>
+                  <span class="text-xs font-semibold text-slate-400">의료 접근성 지원</span>
+                </div>
+                <h3 class="font-black text-xl text-slate-900 mb-3 tracking-tight group-hover:text-brand-blue transition-colors">우리의 미션 (Our Mission)</h3>
+                <p class="text-slate-600 text-sm sm:text-[15px] leading-relaxed mb-6">
                   복잡하고 어려운 미국 의료 시스템 속에서 한인 동포들이 필수적인 의료 자원에 원활히 도달하도록 전문 네비게이션을 제공합니다. 의사 예약, 병원 진료, 필수 의약품 처방은 물론 적합한 공공 보험 및 정부 보조 혜택 가입까지 한국어로 1:1 지원합니다.
                 </p>
               </div>
-              <div class="pt-3 border-t border-blue-100 flex items-center gap-2 text-xs font-bold text-brand-blue">
-                <span>✓ 전문 의료진 연계</span>
-                <span class="text-slate-300">•</span>
-                <span>✓ 한국어 통역 및 서류 지원</span>
-                <span class="text-slate-300">•</span>
-                <span>✓ 100% 무료 상담</span>
+              <div class="pt-4 border-t border-slate-100 flex flex-wrap items-center gap-2 text-xs font-bold">
+                <span class="px-3 py-1.5 rounded-lg bg-blue-50/90 text-brand-blue border border-blue-100/90">전문 의료진 연계</span>
+                <span class="px-3 py-1.5 rounded-lg bg-blue-50/90 text-brand-blue border border-blue-100/90">한국어 통역 및 서류 지원</span>
+                <span class="px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-100">100% 무료 상담</span>
               </div>
             </div>
 
             <!-- Who We Serve Card -->
-            <div class="bg-gradient-to-br from-amber-50/70 to-slate-50 border border-amber-100/80 rounded-2xl p-6 sm:p-8 flex flex-col justify-between shadow-xs">
+            <div class="bg-white border border-amber-200/90 rounded-2xl p-6 sm:p-8 flex flex-col justify-between shadow-[0_4px_20px_-4px_rgba(245,158,11,0.04)] hover:shadow-xl hover:border-amber-400 hover:-translate-y-1 transition-all duration-300 group">
               <div>
-                <h3 class="font-bold text-xl text-slate-900 mb-2">우리가 지원하는 분들 (Who We Help)</h3>
-                <p class="text-slate-700 text-sm sm:text-[15px] leading-relaxed mb-4">
-                  뉴저지 의료접근센터는 연령, 재정 상태, 이민 및 체류 신분(<strong class="text-amber-700 font-semibold">미등록 체류자 및 서류미비자 포함</strong>) 또는 기존 보험 유무와 상관없이 의료 지원이 필요한 모든 한인 주민에게 문을 열어두고 있습니다.
+                <div class="flex items-center justify-between mb-4">
+                  <span class="text-[11px] font-black tracking-wider uppercase px-3 py-1 rounded-full bg-amber-50 text-amber-900 border border-amber-200">WHO WE HELP</span>
+                  <span class="text-xs font-semibold text-slate-400">지원 대상 및 권리</span>
+                </div>
+                <h3 class="font-black text-xl text-slate-900 mb-3 tracking-tight group-hover:text-amber-800 transition-colors">우리가 지원하는 분들 (Who We Help)</h3>
+                <p class="text-slate-600 text-sm sm:text-[15px] leading-relaxed mb-6">
+                  뉴저지 의료접근센터는 연령, 재정 상태, 이민 및 체류 신분(<strong class="text-amber-900 font-bold bg-amber-100/90 px-2 py-0.5 rounded-md inline-block">미등록 체류자 및 서류미비자 포함</strong>) 또는 기존 보험 유무와 상관없이 의료 지원이 필요한 모든 한인 주민에게 문을 열어두고 있습니다.
                 </p>
               </div>
-              <div class="pt-3 border-t border-amber-100 flex items-center gap-2 text-xs font-bold text-amber-700">
-                <span>✓ 철저한 비밀 보장 (HIPAA)</span>
-                <span class="text-slate-300">•</span>
-                <span>✓ 신분 불문 자선치료 지원</span>
-                <span class="text-slate-300">•</span>
-                <span>✓ 권리 보장</span>
+              <div class="pt-4 border-t border-slate-100 flex flex-wrap items-center gap-2 text-xs font-bold text-amber-900">
+                <span class="px-3 py-1.5 rounded-lg bg-amber-50 border border-amber-200/80">철저한 비밀 보장 (HIPAA)</span>
+                <span class="px-3 py-1.5 rounded-lg bg-amber-50 border border-amber-200/80">신분 불문 자선치료 지원</span>
+                <span class="px-3 py-1.5 rounded-lg bg-amber-50 border border-amber-200/80">권리 보장</span>
               </div>
             </div>
           </div>
 
-
-          <!-- 12 Comprehensive FAQs Accordion Section -->
-          <div class="mt-12 pt-10 border-t border-slate-200" id="faq-section">
+          <!-- FAQ Accordion Section -->
+          <div class="relative mt-12 pt-10 border-t border-slate-200/90" id="faq-section">
             <div class="text-center max-w-2xl mx-auto mb-8">
-              <span class="text-xs font-bold text-brand-blue uppercase tracking-wider bg-blue-50 px-3 py-1 rounded-full border border-blue-100">COMMUNITY HEALTHCARE FAQ</span>
-              <h3 class="font-extrabold text-2xl sm:text-3xl text-slate-900 mt-2 mb-2">자주 묻는 질문 (FAQ)</h3>
-              <p class="text-xs sm:text-sm text-slate-500">뉴저지 한인 동포분들이 가장 많이 질문하시는 미국 의료 및 건강보험 핵심 안내 12가지</p>
+              <div class="inline-block px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 shadow-2xs mb-2.5">
+                <span class="text-xs font-black tracking-wider text-brand-blue uppercase">COMMUNITY HEALTHCARE FAQ</span>
+              </div>
+              <h3 class="font-black text-2xl sm:text-3xl text-slate-900 mt-1 mb-2 tracking-tight">자주 묻는 질문 (FAQ)</h3>
+              <p class="text-xs sm:text-sm text-slate-500 font-normal">뉴저지 한인 동포분들이 가장 많이 질문하시는 미국 의료 및 건강보험 핵심 안내</p>
             </div>
 
-            <div class="max-w-4xl mx-auto space-y-3" id="faq-accordion-list">
+            <!-- Category Filter Tabs & Expand All Controls -->
+            <div class="max-w-4xl mx-auto mb-6 flex flex-wrap items-center justify-between gap-3">
+              <div class="flex flex-wrap items-center gap-1.5" id="faq-cat-filters">
+                <button type="button" onclick="window.filterFaq('all', this)" class="faq-cat-filter active px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all border border-blue-200/60 bg-brand-blue text-white shadow-xs">전체</button>
+                <button type="button" onclick="window.filterFaq('er', this)" class="faq-cat-filter px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all border border-slate-200 bg-white text-slate-600 hover:bg-slate-50">응급 및 911</button>
+                <button type="button" onclick="window.filterFaq('billing', this)" class="faq-cat-filter px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all border border-slate-200 bg-white text-slate-600 hover:bg-slate-50">의료비 및 청구</button>
+                <button type="button" onclick="window.filterFaq('insurance', this)" class="faq-cat-filter px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all border border-slate-200 bg-white text-slate-600 hover:bg-slate-50">건강보험 및 EOB</button>
+                <button type="button" onclick="window.filterFaq('assistance', this)" class="faq-cat-filter px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all border border-slate-200 bg-white text-slate-600 hover:bg-slate-50">무보험 및 복지</button>
+                <button type="button" onclick="window.filterFaq('portal', this)" class="faq-cat-filter px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all border border-slate-200 bg-white text-slate-600 hover:bg-slate-50">포털 및 검진</button>
+              </div>
+              <button type="button" onclick="window.toggleAllFaqs()" id="faq-toggle-all-btn" class="px-3.5 py-1.5 rounded-xl text-xs font-bold text-slate-600 bg-white border border-slate-200 hover:border-blue-300 hover:text-brand-blue transition-all shadow-xs shrink-0 cursor-pointer">
+                모두 펼치기
+              </button>
+            </div>
+
+            <div class="max-w-4xl mx-auto space-y-3.5" id="faq-accordion-list">
               <!-- Item 1 -->
-              <div class="border border-slate-200 rounded-xl overflow-hidden transition-colors bg-slate-50/50 hover:bg-slate-50">
-                <button type="button" onclick="window.toggleFaq('faq-1')" class="w-full text-left px-5 py-4 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
-                  <span class="font-bold text-sm sm:text-base text-slate-900 flex items-center gap-2.5">
-                    <span class="w-6 h-6 rounded-full bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-extrabold shrink-0">1</span>
-                    응급실(ER)과 911은 언제 사용해야 할까요?
-                  </span>
-                  <span id="faq-icon-faq-1" class="text-slate-400 font-mono text-lg transition-transform duration-200 shrink-0">+</span>
+              <div id="faq-item-faq-1" data-category="er" class="faq-card border border-slate-200/90 rounded-2xl overflow-hidden bg-white group">
+                <button type="button" onclick="window.toggleFaq('faq-1')" class="w-full text-left px-5 py-4 sm:px-6 sm:py-5 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
+                  <div class="flex-1 min-w-0 pr-2">
+                    <span class="block font-bold text-[15px] sm:text-base text-slate-900 group-hover:text-brand-blue transition-colors tracking-tight leading-snug">
+                      응급실(ER)과 911은 언제 사용해야 할까요?
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-2 shrink-0">
+                    <span class="hidden sm:inline-block text-[11px] font-semibold text-slate-400 bg-slate-50 border border-slate-200/70 px-2.5 py-0.5 rounded-full">응급 · 911</span>
+                    <span id="faq-btn-faq-1" class="faq-status-pill text-[12px] font-semibold text-brand-blue bg-blue-50/90 border border-blue-200/70 px-3 py-1 rounded-full transition-all duration-200">자세히 보기</span>
+                  </div>
                 </button>
-                <div id="faq-content-faq-1" class="hidden px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
-                  다음과 같은 심각하거나 생명을 위협할 수 있는 증상이 있을 때는 즉시 911에 전화하거나 응급실(ER)을 방문하세요:
-                  <ul class="list-disc pl-5 mt-2 space-y-1 text-slate-700">
-                    <li>가슴 또는 복부의 극심한 압박감 또는 급성 통증</li>
-                    <li>지혈되지 않는 과다 출혈</li>
-                    <li>갑작스러운 시력 변화, 언어 어눌함, 편마비, 의식 혼란</li>
-                    <li>호흡 곤란 및 숨쉬기 어려움</li>
-                    <li>고열을 동반한 극심한 두통 또는 유독 물질 섭취</li>
+                <div id="faq-content-faq-1" class="hidden px-5 sm:px-6 pb-6 pt-3 bg-slate-50/50 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  <p class="font-medium text-slate-800 mb-2">다음과 같은 심각하거나 생명을 위협할 수 있는 증상이 있을 때는 즉시 911에 전화하거나 응급실(ER)을 방문하세요:</p>
+                  <ul class="space-y-1.5 text-slate-700 my-3">
+                    <li class="flex items-start gap-2"><span class="text-rose-600 font-bold shrink-0 mt-0.5">•</span><span>가슴 또는 복부의 극심한 압박감 또는 급성 통증</span></li>
+                    <li class="flex items-start gap-2"><span class="text-rose-600 font-bold shrink-0 mt-0.5">•</span><span>지혈되지 않는 과다 출혈</span></li>
+                    <li class="flex items-start gap-2"><span class="text-rose-600 font-bold shrink-0 mt-0.5">•</span><span>갑작스러운 시력 변화, 언어 어눌함, 편마비, 의식 혼란</span></li>
+                    <li class="flex items-start gap-2"><span class="text-rose-600 font-bold shrink-0 mt-0.5">•</span><span>호흡 곤란 및 숨쉬기 어려움</span></li>
+                    <li class="flex items-start gap-2"><span class="text-rose-600 font-bold shrink-0 mt-0.5">•</span><span>고열을 동반한 극심한 두통 또는 유독 물질 섭취</span></li>
                   </ul>
-                  <p class="mt-2 text-slate-500 font-medium">※ 스스로 이동하기 위험한 상황에서는 지체 없이 911에 전화하여 구급차(Ambulance)를 요청하십시오.</p>
+                  <div class="mt-3 p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-xs sm:text-sm text-rose-900 font-medium leading-relaxed">
+                    ※ 스스로 이동하기 위험한 상황에서는 지체 없이 911에 전화하여 구급차(Ambulance)를 요청하십시오.
+                  </div>
                 </div>
               </div>
 
               <!-- Item 2 -->
-              <div class="border border-slate-200 rounded-xl overflow-hidden transition-colors bg-slate-50/50 hover:bg-slate-50">
-                <button type="button" onclick="window.toggleFaq('faq-2')" class="w-full text-left px-5 py-4 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
-                  <span class="font-bold text-sm sm:text-base text-slate-900 flex items-center gap-2.5">
-                    <span class="w-6 h-6 rounded-full bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-extrabold shrink-0">2</span>
-                    예상치 못한 깜짝 의료비(Surprise Medical Bills) 청구 방지법
-                  </span>
-                  <span id="faq-icon-faq-2" class="text-slate-400 font-mono text-lg transition-transform duration-200 shrink-0">+</span>
+              <div id="faq-item-faq-2" data-category="billing" class="faq-card border border-slate-200/90 rounded-2xl overflow-hidden bg-white group">
+                <button type="button" onclick="window.toggleFaq('faq-2')" class="w-full text-left px-5 py-4 sm:px-6 sm:py-5 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
+                  <div class="flex-1 min-w-0 pr-2">
+                    <span class="block font-bold text-[15px] sm:text-base text-slate-900 group-hover:text-brand-blue transition-colors tracking-tight leading-snug">
+                      예상치 못한 깜짝 의료비(Surprise Medical Bills) 청구 방지법
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-2 shrink-0">
+                    <span class="hidden sm:inline-block text-[11px] font-semibold text-slate-400 bg-slate-50 border border-slate-200/70 px-2.5 py-0.5 rounded-full">깜짝 의료비</span>
+                    <span id="faq-btn-faq-2" class="faq-status-pill text-[12px] font-semibold text-brand-blue bg-blue-50/90 border border-blue-200/70 px-3 py-1 rounded-full transition-all duration-200">자세히 보기</span>
+                  </div>
                 </button>
-                <div id="faq-content-faq-2" class="hidden px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+                <div id="faq-content-faq-2" class="hidden px-5 sm:px-6 pb-6 pt-3 bg-slate-50/50 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed">
                   인-네트워크 병원을 방문했더라도 마취과 의사, 영상의학과 전문의 등이 네트워크 외(Out-of-Network)인 경우 깜짝 청구가 발생할 수 있습니다. 비응급 시술 전 보험사에 의료진 네트워크 상태를 서면으로 확인하시고, 연방법인 'No Surprises Act' 및 뉴저지 'Out-of-Network Consumer Protection Act'에 의해 부당한 추가 청구로부터 법적 보호를 받으실 수 있습니다.
                 </div>
               </div>
 
               <!-- Item 3 -->
-              <div class="border border-slate-200 rounded-xl overflow-hidden transition-colors bg-slate-50/50 hover:bg-slate-50">
-                <button type="button" onclick="window.toggleFaq('faq-3')" class="w-full text-left px-5 py-4 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
-                  <span class="font-bold text-sm sm:text-base text-slate-900 flex items-center gap-2.5">
-                    <span class="w-6 h-6 rounded-full bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-extrabold shrink-0">3</span>
-                    의료비 청구서(Medical Bill) 주요 용어 및 해석 방법
-                  </span>
-                  <span id="faq-icon-faq-3" class="text-slate-400 font-mono text-lg transition-transform duration-200 shrink-0">+</span>
+              <div id="faq-item-faq-3" data-category="billing" class="faq-card border border-slate-200/90 rounded-2xl overflow-hidden bg-white group">
+                <button type="button" onclick="window.toggleFaq('faq-3')" class="w-full text-left px-5 py-4 sm:px-6 sm:py-5 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
+                  <div class="flex-1 min-w-0 pr-2">
+                    <span class="block font-bold text-[15px] sm:text-base text-slate-900 group-hover:text-brand-blue transition-colors tracking-tight leading-snug">
+                      의료비 청구서(Medical Bill) 주요 용어 및 해석 방법
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-2 shrink-0">
+                    <span class="hidden sm:inline-block text-[11px] font-semibold text-slate-400 bg-slate-50 border border-slate-200/70 px-2.5 py-0.5 rounded-full">청구서 용어</span>
+                    <span id="faq-btn-faq-3" class="faq-status-pill text-[12px] font-semibold text-brand-blue bg-blue-50/90 border border-blue-200/70 px-3 py-1 rounded-full transition-all duration-200">자세히 보기</span>
+                  </div>
                 </button>
-                <div id="faq-content-faq-3" class="hidden px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
-                  의료비 청구서를 받으셨을 때 확인해야 할 핵심 용어입니다:
-                  <ul class="list-disc pl-5 mt-2 space-y-1">
-                    <li><strong>DOS (Date of Service):</strong> 진료를 받은 일자</li>
-                    <li><strong>CPT Code:</strong> 시술 및 처치 식별 표준 코드</li>
-                    <li><strong>ICD Code:</strong> 의학적 진단 질병 분류 코드</li>
-                    <li><strong>Charge (Charged Amount):</strong> 병원이 청구한 정가 금액</li>
-                    <li><strong>Adjustment / Write-Off:</strong> 보험사와 병원 간 계약에 의해 자동 삭감된 금액 (환자가 납부할 필요 없음)</li>
-                    <li><strong>Insurance Payment:</strong> 보험사가 병원에 실제 지급한 금액</li>
-                    <li><strong>Patient Balance (Balance Due):</strong> 환자가 최종적으로 지불해야 하는 잔여 금액</li>
+                <div id="faq-content-faq-3" class="hidden px-5 sm:px-6 pb-6 pt-3 bg-slate-50/50 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  <p class="font-medium text-slate-800 mb-2">의료비 청구서를 받으셨을 때 확인해야 할 핵심 용어입니다:</p>
+                  <ul class="space-y-2 text-slate-700 my-3">
+                    <li class="flex items-start gap-2"><span class="font-bold text-blue-900 bg-blue-100/80 px-2 py-0.5 rounded text-xs shrink-0 mt-0.5">DOS (Date of Service)</span><span>진료를 받은 일자</span></li>
+                    <li class="flex items-start gap-2"><span class="font-bold text-blue-900 bg-blue-100/80 px-2 py-0.5 rounded text-xs shrink-0 mt-0.5">CPT Code</span><span>시술 및 처치 식별 표준 코드</span></li>
+                    <li class="flex items-start gap-2"><span class="font-bold text-blue-900 bg-blue-100/80 px-2 py-0.5 rounded text-xs shrink-0 mt-0.5">ICD Code</span><span>의학적 진단 질병 분류 코드</span></li>
+                    <li class="flex items-start gap-2"><span class="font-bold text-blue-900 bg-blue-100/80 px-2 py-0.5 rounded text-xs shrink-0 mt-0.5">Charge (Charged Amount)</span><span>병원이 청구한 정가 금액</span></li>
+                    <li class="flex items-start gap-2"><span class="font-bold text-blue-900 bg-blue-100/80 px-2 py-0.5 rounded text-xs shrink-0 mt-0.5">Adjustment / Write-Off</span><span>보험사와 병원 간 계약에 의해 자동 삭감된 금액 (환자가 납부할 필요 없음)</span></li>
+                    <li class="flex items-start gap-2"><span class="font-bold text-blue-900 bg-blue-100/80 px-2 py-0.5 rounded text-xs shrink-0 mt-0.5">Insurance Payment</span><span>보험사가 병원에 실제 지급한 금액</span></li>
+                    <li class="flex items-start gap-2"><span class="font-bold text-amber-900 bg-amber-100/80 px-2 py-0.5 rounded text-xs shrink-0 mt-0.5">Patient Balance (Balance Due)</span><span>환자가 최종적으로 지불해야 하는 잔여 금액</span></li>
                   </ul>
                 </div>
               </div>
 
               <!-- Item 4 -->
-              <div class="border border-slate-200 rounded-xl overflow-hidden transition-colors bg-slate-50/50 hover:bg-slate-50">
-                <button type="button" onclick="window.toggleFaq('faq-4')" class="w-full text-left px-5 py-4 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
-                  <span class="font-bold text-sm sm:text-base text-slate-900 flex items-center gap-2.5">
-                    <span class="w-6 h-6 rounded-full bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-extrabold shrink-0">4</span>
-                    보험 설명서(EOB - Explanation of Benefits) 핵심 조건
-                  </span>
-                  <span id="faq-icon-faq-4" class="text-slate-400 font-mono text-lg transition-transform duration-200 shrink-0">+</span>
+              <div id="faq-item-faq-4" data-category="insurance" class="faq-card border border-slate-200/90 rounded-2xl overflow-hidden bg-white group">
+                <button type="button" onclick="window.toggleFaq('faq-4')" class="w-full text-left px-5 py-4 sm:px-6 sm:py-5 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
+                  <div class="flex-1 min-w-0 pr-2">
+                    <span class="block font-bold text-[15px] sm:text-base text-slate-900 group-hover:text-brand-blue transition-colors tracking-tight leading-snug">
+                      보험 설명서(EOB - Explanation of Benefits) 핵심 조건
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-2 shrink-0">
+                    <span class="hidden sm:inline-block text-[11px] font-semibold text-slate-400 bg-slate-50 border border-slate-200/70 px-2.5 py-0.5 rounded-full">EOB 명세서</span>
+                    <span id="faq-btn-faq-4" class="faq-status-pill text-[12px] font-semibold text-brand-blue bg-blue-50/90 border border-blue-200/70 px-3 py-1 rounded-full transition-all duration-200">자세히 보기</span>
+                  </div>
                 </button>
-                <div id="faq-content-faq-4" class="hidden px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
-                  EOB는 납부 청구서가 아니며 보험사가 병원 청구를 어떻게 처리했는지 보여주는 명세서입니다.
-                  <ul class="list-disc pl-5 mt-2 space-y-1">
-                    <li><strong>Deductible (디덕터블 / 공제액):</strong> 보험 혜택이 본격 시작되기 전 환자가 연간 먼저 채워야 하는 금액</li>
-                    <li><strong>Copay (코페이 / 본인 부담금):</strong> 방문 또는 진료 시마다 고정 지불하는 정액 (예: $20)</li>
-                    <li><strong>Coinsurance (코인슈어런스 / 공동보험):</strong> 디덕터블 충족 후 환자와 보험사가 나누어 내는 비율 (예: 20%)</li>
-                    <li><strong>Out-of-Pocket:</strong> 연간 환자 주머니에서 지출된 총 본인 부담 비용</li>
+                <div id="faq-content-faq-4" class="hidden px-5 sm:px-6 pb-6 pt-3 bg-slate-50/50 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  <p class="font-medium text-slate-800 mb-2">EOB는 납부 청구서가 아니며 보험사가 병원 청구를 어떻게 처리했는지 보여주는 명세서입니다.</p>
+                  <ul class="space-y-2 text-slate-700 my-3">
+                    <li class="flex items-start gap-2"><span class="font-bold text-blue-900 bg-blue-100/80 px-2 py-0.5 rounded text-xs shrink-0 mt-0.5">Deductible (디덕터블 / 공제액)</span><span>보험 혜택이 본격 시작되기 전 환자가 연간 먼저 채워야 하는 금액</span></li>
+                    <li class="flex items-start gap-2"><span class="font-bold text-blue-900 bg-blue-100/80 px-2 py-0.5 rounded text-xs shrink-0 mt-0.5">Copay (코페이 / 본인 부담금)</span><span>방문 또는 진료 시마다 고정 지불하는 정액 (예: $20)</span></li>
+                    <li class="flex items-start gap-2"><span class="font-bold text-blue-900 bg-blue-100/80 px-2 py-0.5 rounded text-xs shrink-0 mt-0.5">Coinsurance (코인슈어런스 / 공동보험)</span><span>디덕터블 충족 후 환자와 보험사가 나누어 내는 비율 (예: 20%)</span></li>
+                    <li class="flex items-start gap-2"><span class="font-bold text-blue-900 bg-blue-100/80 px-2 py-0.5 rounded text-xs shrink-0 mt-0.5">Out-of-Pocket</span><span>연간 환자 주머니에서 지출된 총 본인 부담 비용</span></li>
                   </ul>
                 </div>
               </div>
 
               <!-- Item 5 -->
-              <div class="border border-slate-200 rounded-xl overflow-hidden transition-colors bg-slate-50/50 hover:bg-slate-50">
-                <button type="button" onclick="window.toggleFaq('faq-5')" class="w-full text-left px-5 py-4 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
-                  <span class="font-bold text-sm sm:text-base text-slate-900 flex items-center gap-2.5">
-                    <span class="w-6 h-6 rounded-full bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-extrabold shrink-0">5</span>
-                    병원 청구서와 보험사 EOB 명세서 대조 및 확인 요령
-                  </span>
-                  <span id="faq-icon-faq-5" class="text-slate-400 font-mono text-lg transition-transform duration-200 shrink-0">+</span>
+              <div id="faq-item-faq-5" data-category="billing" class="faq-card border border-slate-200/90 rounded-2xl overflow-hidden bg-white group">
+                <button type="button" onclick="window.toggleFaq('faq-5')" class="w-full text-left px-5 py-4 sm:px-6 sm:py-5 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
+                  <div class="flex-1 min-w-0 pr-2">
+                    <span class="block font-bold text-[15px] sm:text-base text-slate-900 group-hover:text-brand-blue transition-colors tracking-tight leading-snug">
+                      병원 청구서와 보험사 EOB 명세서 대조 및 확인 요령
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-2 shrink-0">
+                    <span class="hidden sm:inline-block text-[11px] font-semibold text-slate-400 bg-slate-50 border border-slate-200/70 px-2.5 py-0.5 rounded-full">청구서 대조</span>
+                    <span id="faq-btn-faq-5" class="faq-status-pill text-[12px] font-semibold text-brand-blue bg-blue-50/90 border border-blue-200/70 px-3 py-1 rounded-full transition-all duration-200">자세히 보기</span>
+                  </div>
                 </button>
-                <div id="faq-content-faq-5" class="hidden px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+                <div id="faq-content-faq-5" class="hidden px-5 sm:px-6 pb-6 pt-3 bg-slate-50/50 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed">
                   청구서를 받자마자 바로 결제하지 마세요! 반드시 보험사에서 발송된 EOB의 <strong>"You May Owe"</strong> 또는 <strong>"Patient Responsibility"</strong> 금액과 병원 청구서의 <strong>"Patient Balance"</strong>가 일치하는지 먼저 대조해야 합니다. 만약 EOB 금액보다 병원 청구서 금액이 높다면 병원 측에 보험사 청구가 정상 반영되었는지 확인을 요청해야 합니다.
                 </div>
               </div>
 
               <!-- Item 6 -->
-              <div class="border border-slate-200 rounded-xl overflow-hidden transition-colors bg-slate-50/50 hover:bg-slate-50">
-                <button type="button" onclick="window.toggleFaq('faq-6')" class="w-full text-left px-5 py-4 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
-                  <span class="font-bold text-sm sm:text-base text-slate-900 flex items-center gap-2.5">
-                    <span class="w-6 h-6 rounded-full bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-extrabold shrink-0">6</span>
-                    무보험자이거나 재정적 어려움이 있을 때의 지원 제도
-                  </span>
-                  <span id="faq-icon-faq-6" class="text-slate-400 font-mono text-lg transition-transform duration-200 shrink-0">+</span>
+              <div id="faq-item-faq-6" data-category="assistance" class="faq-card border border-slate-200/90 rounded-2xl overflow-hidden bg-white group">
+                <button type="button" onclick="window.toggleFaq('faq-6')" class="w-full text-left px-5 py-4 sm:px-6 sm:py-5 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
+                  <div class="flex-1 min-w-0 pr-2">
+                    <span class="block font-bold text-[15px] sm:text-base text-slate-900 group-hover:text-brand-blue transition-colors tracking-tight leading-snug">
+                      무보험자이거나 재정적 어려움이 있을 때의 지원 제도
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-2 shrink-0">
+                    <span class="hidden sm:inline-block text-[11px] font-semibold text-slate-400 bg-slate-50 border border-slate-200/70 px-2.5 py-0.5 rounded-full">자선진료 · FQHC</span>
+                    <span id="faq-btn-faq-6" class="faq-status-pill text-[12px] font-semibold text-brand-blue bg-blue-50/90 border border-blue-200/70 px-3 py-1 rounded-full transition-all duration-200">자세히 보기</span>
+                  </div>
                 </button>
-                <div id="faq-content-faq-6" class="hidden px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+                <div id="faq-content-faq-6" class="hidden px-5 sm:px-6 pb-6 pt-3 bg-slate-50/50 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed">
                   뉴저지 거주자는 소득에 따라 뉴저지 패밀리케어(NJFamilyCare 메디케이드) 신청이 연중 상시 가능합니다. 메디케이드 자격이 안 되더라도 연방 지원 지역 보건센터(FQHC) 및 가정의료보험기관(BVMI)에서 소득에 따른 진료비 감면 혜택(Sliding Fee Scale)을 받으실 수 있으며, 병원 입원 및 응급 진료에 대해서는 뉴저지 주정부 병원 자선 진료(Hospital Charity Care)를 신청하여 의료비를 100% 탕감받을 수 있습니다.
                 </div>
               </div>
 
               <!-- Item 7 -->
-              <div class="border border-slate-200 rounded-xl overflow-hidden transition-colors bg-slate-50/50 hover:bg-slate-50">
-                <button type="button" onclick="window.toggleFaq('faq-7')" class="w-full text-left px-5 py-4 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
-                  <span class="font-bold text-sm sm:text-base text-slate-900 flex items-center gap-2.5">
-                    <span class="w-6 h-6 rounded-full bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-extrabold shrink-0">7</span>
-                    MOOP (최대 본인 부담금 - Maximum Out-of-Pocket)이란?
-                  </span>
-                  <span id="faq-icon-faq-7" class="text-slate-400 font-mono text-lg transition-transform duration-200 shrink-0">+</span>
+              <div id="faq-item-faq-7" data-category="insurance" class="faq-card border border-slate-200/90 rounded-2xl overflow-hidden bg-white group">
+                <button type="button" onclick="window.toggleFaq('faq-7')" class="w-full text-left px-5 py-4 sm:px-6 sm:py-5 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
+                  <div class="flex-1 min-w-0 pr-2">
+                    <span class="block font-bold text-[15px] sm:text-base text-slate-900 group-hover:text-brand-blue transition-colors tracking-tight leading-snug">
+                      MOOP (최대 본인 부담금 - Maximum Out-of-Pocket)이란?
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-2 shrink-0">
+                    <span class="hidden sm:inline-block text-[11px] font-semibold text-slate-400 bg-slate-50 border border-slate-200/70 px-2.5 py-0.5 rounded-full">MOOP 한도</span>
+                    <span id="faq-btn-faq-7" class="faq-status-pill text-[12px] font-semibold text-brand-blue bg-blue-50/90 border border-blue-200/70 px-3 py-1 rounded-full transition-all duration-200">자세히 보기</span>
+                  </div>
                 </button>
-                <div id="faq-content-faq-7" class="hidden px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+                <div id="faq-content-faq-7" class="hidden px-5 sm:px-6 pb-6 pt-3 bg-slate-50/50 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed">
                   가입자가 1개 연도 동안 건강보험 적용 진료비(Deductible, Copay, Coinsurance 합산)로 지출할 수 있는 법적 최대 한도액입니다. 1년 동안 환자의 본인 지출이 이 MOOP 한도에 도달하면, 그 해의 남은 기간 동안에는 인-네트워크 필수 의료 서비스 비용을 보험사가 100% 전액 부담합니다.
                 </div>
               </div>
 
               <!-- Item 8 -->
-              <div class="border border-slate-200 rounded-xl overflow-hidden transition-colors bg-slate-50/50 hover:bg-slate-50">
-                <button type="button" onclick="window.toggleFaq('faq-8')" class="w-full text-left px-5 py-4 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
-                  <span class="font-bold text-sm sm:text-base text-slate-900 flex items-center gap-2.5">
-                    <span class="w-6 h-6 rounded-full bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-extrabold shrink-0">8</span>
-                    전문의 진료 의뢰 (Referral) vs 보험사 사전 승인 (Prior Authorization)
-                  </span>
-                  <span id="faq-icon-faq-8" class="text-slate-400 font-mono text-lg transition-transform duration-200 shrink-0">+</span>
+              <div id="faq-item-faq-8" data-category="insurance" class="faq-card border border-slate-200/90 rounded-2xl overflow-hidden bg-white group">
+                <button type="button" onclick="window.toggleFaq('faq-8')" class="w-full text-left px-5 py-4 sm:px-6 sm:py-5 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
+                  <div class="flex-1 min-w-0 pr-2">
+                    <span class="block font-bold text-[15px] sm:text-base text-slate-900 group-hover:text-brand-blue transition-colors tracking-tight leading-snug">
+                      전문의 진료 의뢰 (Referral) vs 보험사 사전 승인 (Prior Authorization)
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-2 shrink-0">
+                    <span class="hidden sm:inline-block text-[11px] font-semibold text-slate-400 bg-slate-50 border border-slate-200/70 px-2.5 py-0.5 rounded-full">진료의뢰 · 사전승인</span>
+                    <span id="faq-btn-faq-8" class="faq-status-pill text-[12px] font-semibold text-brand-blue bg-blue-50/90 border border-blue-200/70 px-3 py-1 rounded-full transition-all duration-200">자세히 보기</span>
+                  </div>
                 </button>
-                <div id="faq-content-faq-8" class="hidden px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
-                  <strong>진료 의뢰 (Referral):</strong> 주치의(PCP)가 안과, 심장내과, 이비인후과 등 특정 전문의의 진료가 필요하다고 판단하여 발급하는 허가서입니다 (HMO 플랜 필수).<br/>
-                  <strong>사전 승인 (Prior Authorization):</strong> MRI, CT, 복잡한 수술, 고가 항암제 등 특정 고비용 시술을 받기 전에 병원이 보험사에 의학적 타당성을 사전 검토받아 결제 보증을 받는 절차입니다.
+                <div id="faq-content-faq-8" class="hidden px-5 sm:px-6 pb-6 pt-3 bg-slate-50/50 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  <div class="space-y-2.5">
+                    <p><strong class="text-blue-900 bg-blue-100/80 px-2 py-0.5 rounded text-xs">진료 의뢰 (Referral):</strong> 주치의(PCP)가 안과, 심장내과, 이비인후과 등 특정 전문의의 진료가 필요하다고 판단하여 발급하는 허가서입니다 (HMO 플랜 필수).</p>
+                    <p><strong class="text-indigo-900 bg-indigo-100/80 px-2 py-0.5 rounded text-xs">사전 승인 (Prior Authorization):</strong> MRI, CT, 복잡한 수술, 고가 항암제 등 특정 고비용 시술을 받기 전에 병원이 보험사에 의학적 타당성을 사전 검토받아 결제 보증을 받는 절차입니다.</p>
+                  </div>
                 </div>
               </div>
 
               <!-- Item 9 -->
-              <div class="border border-slate-200 rounded-xl overflow-hidden transition-colors bg-slate-50/50 hover:bg-slate-50">
-                <button type="button" onclick="window.toggleFaq('faq-9')" class="w-full text-left px-5 py-4 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
-                  <span class="font-bold text-sm sm:text-base text-slate-900 flex items-center gap-2.5">
-                    <span class="w-6 h-6 rounded-full bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-extrabold shrink-0">9</span>
-                    마이차트 (MyChart) 포털 사용법 및 진료 기록 관리
-                  </span>
-                  <span id="faq-icon-faq-9" class="text-slate-400 font-mono text-lg transition-transform duration-200 shrink-0">+</span>
+              <div id="faq-item-faq-9" data-category="portal" class="faq-card border border-slate-200/90 rounded-2xl overflow-hidden bg-white group">
+                <button type="button" onclick="window.toggleFaq('faq-9')" class="w-full text-left px-5 py-4 sm:px-6 sm:py-5 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
+                  <div class="flex-1 min-w-0 pr-2">
+                    <span class="block font-bold text-[15px] sm:text-base text-slate-900 group-hover:text-brand-blue transition-colors tracking-tight leading-snug">
+                      마이차트 (MyChart) 포털 사용법 및 진료 기록 관리
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-2 shrink-0">
+                    <span class="hidden sm:inline-block text-[11px] font-semibold text-slate-400 bg-slate-50 border border-slate-200/70 px-2.5 py-0.5 rounded-full">MyChart 포털</span>
+                    <span id="faq-btn-faq-9" class="faq-status-pill text-[12px] font-semibold text-brand-blue bg-blue-50/90 border border-blue-200/70 px-3 py-1 rounded-full transition-all duration-200">자세히 보기</span>
+                  </div>
                 </button>
-                <div id="faq-content-faq-9" class="hidden px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+                <div id="faq-content-faq-9" class="hidden px-5 sm:px-6 pb-6 pt-3 bg-slate-50/50 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed">
                   MyChart는 병원과 의사 진료 기록을 실시간으로 확인하는 보안 환자 포털입니다. 혈액 검사, 영상 판독 결과 확인, 의사와의 안전한 메시지 상담, 온라인 진료 예약, 처방전 리필 요청, 진료비 명세서 확인 및 납부 등을 스마트폰 앱과 PC에서 간편하게 처리하실 수 있습니다.
                 </div>
               </div>
 
               <!-- Item 10 -->
-              <div class="border border-slate-200 rounded-xl overflow-hidden transition-colors bg-slate-50/50 hover:bg-slate-50">
-                <button type="button" onclick="window.toggleFaq('faq-10')" class="w-full text-left px-5 py-4 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
-                  <span class="font-bold text-sm sm:text-base text-slate-900 flex items-center gap-2.5">
-                    <span class="w-6 h-6 rounded-full bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-extrabold shrink-0">10</span>
-                    미등록 체류자(서류미비자) 지원 및 의료 정보 비밀 보장
-                  </span>
-                  <span id="faq-icon-faq-10" class="text-slate-400 font-mono text-lg transition-transform duration-200 shrink-0">+</span>
+              <div id="faq-item-faq-10" data-category="assistance" class="faq-card border border-slate-200/90 rounded-2xl overflow-hidden bg-white group">
+                <button type="button" onclick="window.toggleFaq('faq-10')" class="w-full text-left px-5 py-4 sm:px-6 sm:py-5 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
+                  <div class="flex-1 min-w-0 pr-2">
+                    <span class="block font-bold text-[15px] sm:text-base text-slate-900 group-hover:text-brand-blue transition-colors tracking-tight leading-snug">
+                      미등록 체류자(서류미비자) 지원 및 의료 정보 비밀 보장
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-2 shrink-0">
+                    <span class="hidden sm:inline-block text-[11px] font-semibold text-slate-400 bg-slate-50 border border-slate-200/70 px-2.5 py-0.5 rounded-full">서류미비자 지원</span>
+                    <span id="faq-btn-faq-10" class="faq-status-pill text-[12px] font-semibold text-brand-blue bg-blue-50/90 border border-blue-200/70 px-3 py-1 rounded-full transition-all duration-200">자세히 보기</span>
+                  </div>
                 </button>
-                <div id="faq-content-faq-10" class="hidden px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+                <div id="faq-content-faq-10" class="hidden px-5 sm:px-6 pb-6 pt-3 bg-slate-50/50 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed">
                   체류 신분과 전혀 관계없이 뉴저지 주 병원의 자선 치료(Charity Care)와 연방 공인 커뮤니티 보건소(FQHC)를 전액 무료 또는 최소한의 비용으로 이용하실 수 있습니다. 연방법(HIPAA)에 의해 환자의 진료 기록 및 신분 정보는 이민국이나 외부 기관에 절대 공개되지 않으며 100% 비밀이 보장됩니다.
                 </div>
               </div>
 
               <!-- Item 11 -->
-              <div class="border border-slate-200 rounded-xl overflow-hidden transition-colors bg-slate-50/50 hover:bg-slate-50">
-                <button type="button" onclick="window.toggleFaq('faq-11')" class="w-full text-left px-5 py-4 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
-                  <span class="font-bold text-sm sm:text-base text-slate-900 flex items-center gap-2.5">
-                    <span class="w-6 h-6 rounded-full bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-extrabold shrink-0">11</span>
-                    뉴저지 무료 암 검진 프로그램 (NJCEED) 안내
-                  </span>
-                  <span id="faq-icon-faq-11" class="text-slate-400 font-mono text-lg transition-transform duration-200 shrink-0">+</span>
+              <div id="faq-item-faq-11" data-category="portal" class="faq-card border border-slate-200/90 rounded-2xl overflow-hidden bg-white group">
+                <button type="button" onclick="window.toggleFaq('faq-11')" class="w-full text-left px-5 py-4 sm:px-6 sm:py-5 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
+                  <div class="flex-1 min-w-0 pr-2">
+                    <span class="block font-bold text-[15px] sm:text-base text-slate-900 group-hover:text-brand-blue transition-colors tracking-tight leading-snug">
+                      뉴저지 무료 암 검진 프로그램 (NJCEED) 안내
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-2 shrink-0">
+                    <span class="hidden sm:inline-block text-[11px] font-semibold text-slate-400 bg-slate-50 border border-slate-200/70 px-2.5 py-0.5 rounded-full">NJCEED 무료검진</span>
+                    <span id="faq-btn-faq-11" class="faq-status-pill text-[12px] font-semibold text-brand-blue bg-blue-50/90 border border-blue-200/70 px-3 py-1 rounded-full transition-all duration-200">자세히 보기</span>
+                  </div>
                 </button>
-                <div id="faq-content-faq-11" class="hidden px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+                <div id="faq-content-faq-11" class="hidden px-5 sm:px-6 pb-6 pt-3 bg-slate-50/50 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed">
                   NJCEED(New Jersey Cancer Education and Early Detection)는 무보험 또는 저보험 상태인 뉴저지 주민(연방 빈곤선 250% 이하)을 대상으로 유방암(맘모그램), 자궁경부암(Pap 도말검사/HPV 검사), 대장암(분변잠혈검사/대장내시경 연계), 전립선암 검진을 무료로 제공합니다. 조기 발견을 위한 정기 검진을 꼭 신청하세요.
                 </div>
               </div>
 
               <!-- Item 12 -->
-              <div class="border border-slate-200 rounded-xl overflow-hidden transition-colors bg-slate-50/50 hover:bg-slate-50">
-                <button type="button" onclick="window.toggleFaq('faq-12')" class="w-full text-left px-5 py-4 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
-                  <span class="font-bold text-sm sm:text-base text-slate-900 flex items-center gap-2.5">
-                    <span class="w-6 h-6 rounded-full bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-extrabold shrink-0">12</span>
-                    뉴저지 한인 정신 건강 및 심리 상담 지원 연계
-                  </span>
-                  <span id="faq-icon-faq-12" class="text-slate-400 font-mono text-lg transition-transform duration-200 shrink-0">+</span>
+              <div id="faq-item-faq-12" data-category="assistance" class="faq-card border border-slate-200/90 rounded-2xl overflow-hidden bg-white group">
+                <button type="button" onclick="window.toggleFaq('faq-12')" class="w-full text-left px-5 py-4 sm:px-6 sm:py-5 flex items-center justify-between gap-4 cursor-pointer focus:outline-none">
+                  <div class="flex-1 min-w-0 pr-2">
+                    <span class="block font-bold text-[15px] sm:text-base text-slate-900 group-hover:text-brand-blue transition-colors tracking-tight leading-snug">
+                      뉴저지 한인 정신 건강 및 심리 상담 지원 연계
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-2 shrink-0">
+                    <span class="hidden sm:inline-block text-[11px] font-semibold text-slate-400 bg-slate-50 border border-slate-200/70 px-2.5 py-0.5 rounded-full">정신건강 상담</span>
+                    <span id="faq-btn-faq-12" class="faq-status-pill text-[12px] font-semibold text-brand-blue bg-blue-50/90 border border-blue-200/70 px-3 py-1 rounded-full transition-all duration-200">자세히 보기</span>
+                  </div>
                 </button>
-                <div id="faq-content-faq-12" class="hidden px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+                <div id="faq-content-faq-12" class="hidden px-5 sm:px-6 pb-6 pt-3 bg-slate-50/50 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed">
                   이민 생활의 스트레스, 우울증, 불안 장애, 가족 갈등으로 어려움을 겪으시는 분들을 위해 에스더 하 재단(Esther Ha Foundation) 및 케어 플러스 뉴저지(Care Plus NJ) 등 한국어 상담이 가능한 전문 정신건강 비영리 기관과 긴밀히 협력하고 있습니다. 상담 신청 시 비밀이 철저히 보장됩니다.
                 </div>
               </div>
@@ -2101,19 +2225,70 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
   </footer>
 
   <script>
-    // FAQ Accordion Toggle
+    // Modern FAQ Accordion Toggle & Interactive Filters (No Icons)
     window.toggleFaq = function(id) {
       var content = document.getElementById('faq-content-' + id);
-      var icon = document.getElementById('faq-icon-' + id);
+      var item = document.getElementById('faq-item-' + id);
+      var btn = document.getElementById('faq-btn-' + id);
       if (!content) return;
       var isOpen = !content.classList.contains('hidden');
       if (isOpen) {
         content.classList.add('hidden');
-        if (icon) icon.textContent = '+';
+        if (item) item.classList.remove('is-open');
+        if (btn) btn.textContent = '자세히 보기';
       } else {
         content.classList.remove('hidden');
-        if (icon) icon.textContent = '−';
+        if (item) item.classList.add('is-open');
+        if (btn) btn.textContent = '접기';
       }
+    };
+
+    window.toggleAllFaqs = function() {
+      var cards = document.querySelectorAll('.faq-card');
+      var btn = document.getElementById('faq-toggle-all-btn');
+      var anyClosed = false;
+      cards.forEach(function(card) {
+        var id = card.id.replace('faq-item-', '');
+        var content = document.getElementById('faq-content-' + id);
+        if (content && content.classList.contains('hidden')) anyClosed = true;
+      });
+      cards.forEach(function(card) {
+        var id = card.id.replace('faq-item-', '');
+        var content = document.getElementById('faq-content-' + id);
+        var btnEl = document.getElementById('faq-btn-' + id);
+        if (!content) return;
+        if (anyClosed) {
+          content.classList.remove('hidden');
+          card.classList.add('is-open');
+          if (btnEl) btnEl.textContent = '접기';
+        } else {
+          content.classList.add('hidden');
+          card.classList.remove('is-open');
+          if (btnEl) btnEl.textContent = '자세히 보기';
+        }
+      });
+      if (btn) {
+        btn.textContent = anyClosed ? '모두 접기' : '모두 펼치기';
+      }
+    };
+
+    window.filterFaq = function(cat, btnEl) {
+      document.querySelectorAll('.faq-cat-filter').forEach(function(b) {
+        b.classList.remove('active', 'bg-brand-blue', 'text-white', 'shadow-xs');
+        b.classList.add('bg-white', 'text-slate-600', 'hover:bg-slate-50');
+      });
+      if (btnEl) {
+        btnEl.classList.add('active', 'bg-brand-blue', 'text-white', 'shadow-xs');
+        btnEl.classList.remove('bg-white', 'text-slate-600', 'hover:bg-slate-50');
+      }
+      var cards = document.querySelectorAll('.faq-card');
+      cards.forEach(function(card) {
+        if (cat === 'all' || card.getAttribute('data-category') === cat) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
     };
 
     // 2. Global Section Slide-in on Scroll (Excludes Top Billboard)
