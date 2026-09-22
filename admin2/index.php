@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
-    header('Location: /admin2/login.php');
+    header('Location: /ko/admin2/login.php');
     exit;
 }
 ?>
@@ -65,9 +65,9 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
   <header class="bg-slate-900/90 border-b border-slate-800 backdrop-blur-md sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <a href="/admin2/" class="flex items-center gap-3 group">
+        <a href="/ko/admin2/" class="flex items-center gap-3 group">
           <div class="w-10 h-10 rounded-xl bg-slate-950 border border-slate-700/80 flex items-center justify-center p-1.5 shadow-md group-hover:scale-105 transition-transform text-white">
-            <img src="/logo-icon.svg" alt="NJAP Logo" class="w-full h-full object-contain filter invert brightness-200">
+            <img src="/ko/logo-icon.svg" alt="NJAP Logo" class="w-full h-full object-contain filter invert brightness-200">
           </div>
           <div>
             <div class="font-extrabold text-base tracking-tight text-white flex items-center gap-2">
@@ -109,11 +109,11 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
 
       <!-- Right Action Tools -->
       <div class="flex items-center gap-2 sm:gap-3">
-        <a href="/admin/" class="text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 shadow-sm" title="기존 뉴스 CMS로 이동">
+        <a href="/ko/admin/" class="text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 shadow-sm" title="기존 뉴스 CMS로 이동">
           <i class="fa-solid fa-newspaper text-slate-400"></i>
           <span class="hidden lg:inline">뉴스 CMS (/admin)</span>
         </a>
-        <a href="/forum" target="_blank" class="text-xs font-semibold bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 shadow-sm">
+        <a href="/ko/forum" target="_blank" class="text-xs font-semibold bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 shadow-sm">
           <span>포럼 사이트</span>
           <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
         </a>
@@ -641,6 +641,6 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
     </div>
   </div>
 
-  <script src="/admin2/admin2.js"></script>
+  <script src="/ko/admin2/admin2.js"></script>
 </body>
 </html>

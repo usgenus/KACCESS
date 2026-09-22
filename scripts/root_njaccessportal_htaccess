@@ -1,0 +1,52 @@
+DirectoryIndex index.html index.php
+
+<IfModule mod_headers.c>
+  Header set Cache-Control "no-cache, must-revalidate, max-age=0"
+  Header set Pragma "no-cache"
+
+  # Media files byte-range caching
+  <FilesMatch "\.(mp4|webm|ogv|mov|m4v|mp3|ogg|wav)$">
+    Header set Cache-Control "public, max-age=2592000"
+    Header set Accept-Ranges "bytes"
+    Header unset Pragma
+    Header unset Expires
+  </FilesMatch>
+
+  # Static assets
+  <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|ico|woff|woff2|ttf|eot|css|js)$">
+    Header set Cache-Control "public, max-age=604800"
+    Header unset Pragma
+    Header unset Expires
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+
+# 1. Forward non-prefixed portal pages to /ko/
+RewriteRule ^(medicare|blog|forum|senior-care|tool|about|matcher|calculator|dictionary|admin|admin2)(/.*)?$ /ko/$1$2 [R=301,L]
+
+# 2. Forward legacy root asset/API fallbacks to /ko/ if not found at root
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^api/(.*)$ /ko/api/$1 [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^uploads/(images|videos|audio)/(.+)$ /ko/uploads/$1/$2 [L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^_next/(.*)$ /ko/_next/$1 [L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(favicon\.(ico|svg|png)|favicon-.*\.png|apple-touch-icon\.png|logo.*|kakao.*)$ /ko/$1 [L]
+
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+</IfModule>
+
+ErrorDocument 404 /ko/404.html

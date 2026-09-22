@@ -155,7 +155,7 @@ function render_forum_header(string $searchQuery = '', ?array $currentSpecialty 
             <i class="fa-solid fa-bars text-sm"></i>
           </button>
 
-          <a class="flex items-center cursor-pointer njap-brand-link flex-shrink min-w-0 group" href="/" onclick="navigateToHome(event); return false;" title="Healthcare Access Portal">
+          <a class="flex items-center cursor-pointer njap-brand-link flex-shrink min-w-0 group" href="/ko/" onclick="navigateToHome(event); return false;" title="Healthcare Access Portal">
           <svg class="h-7 sm:h-9 md:h-11 w-auto max-w-[135px] xs:max-w-[165px] sm:max-w-none object-contain transition-transform group-hover:scale-102" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Healthcare Access Portal · 뉴저지 한인 의료 정보 포털 · NJAP" style="overflow: visible;">
             <title>Healthcare Access Portal · 뉴저지 한인 의료 정보 포털 · NJAP</title>
             <!-- Icon Mark (Door + Key + NJAP) -->
@@ -193,20 +193,20 @@ function render_forum_header(string $searchQuery = '', ?array $currentSpecialty 
 
         <!-- Center: Main Webpage Navigation Links (Desktop only) -->
         <div class="hidden lg:flex items-center space-x-1 xl:space-x-3 text-[14px]">
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue cursor-pointer" href="/" onclick="navigateToHome(event); return false;">홈</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/blog">뉴스</a>
-          <a class="nav-link pb-0.5 font-bold text-brand-blue" href="/forum">커뮤니티 포럼</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/senior-care">시니어 케어</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/medicare">메디케어 &amp; ACA</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/tool">환자도우미</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/about">소개</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue cursor-pointer" href="/ko/" onclick="navigateToHome(event); return false;">홈</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/blog">뉴스</a>
+          <a class="nav-link pb-0.5 font-bold text-brand-blue" href="/ko/forum">커뮤니티 포럼</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/senior-care">시니어 케어</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/medicare">메디케어 &amp; ACA</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/tool">환자도우미</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/about">소개</a>
         </div>
 
         <!-- Right: Kakao 1:1, EN Switch, Forum Auth Box, New Topic Button, and Right Mobile Menu Toggle -->
         <div class="flex items-center gap-1 sm:gap-2 shrink-0">
           <!-- KakaoTalk 1:1 Chat Button (hidden on mobile, visible md+) -->
           <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="forum-kakao-btn hidden md:inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity cursor-pointer" title="카카오톡 1:1 상담 바로가기">
-            <img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" />
+            <img src="/ko/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" />
             <span class="text-xs sm:text-sm font-bold text-slate-800 hover:text-brand-blue tracking-tight whitespace-nowrap">1:1 상담</span>
           </a>
 
@@ -225,7 +225,7 @@ function render_forum_header(string $searchQuery = '', ?array $currentSpecialty 
           </div>
 
           <!-- Forum Style New Topic Button (Icon only on mobile, text on sm+) -->
-          <a href="/forum/ask<?= ($currentSpecialty && ($currentSpecialty['id'] ?? '') !== 'events') ? '?specialty=' . urlencode($currentSpecialty['id']) : '' ?>" 
+          <a href="/ko/forum/ask<?= ($currentSpecialty && ($currentSpecialty['id'] ?? '') !== 'events') ? '?specialty=' . urlencode($currentSpecialty['id']) : '' ?>" 
              class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs p-1.5 sm:px-2.5 sm:py-1.5 rounded-lg transition-all shadow-xs flex items-center gap-1 shrink-0"
              title="질문/정보 공유">
             <i class="fa-solid fa-plus text-xs"></i>
@@ -248,7 +248,7 @@ function render_forum_header(string $searchQuery = '', ?array $currentSpecialty 
     <!-- Mobile Dropdown Menu -->
     <div id="mobile-menu-dropdown" class="lg:hidden overflow-hidden transition-all duration-300 max-h-0 opacity-0 bg-white/98 backdrop-blur-md border-t border-brand-border px-4 py-3 flex flex-col gap-1" style="-webkit-overflow-scrolling: touch;">
       <!-- 1. 홈 -->
-      <a href="/" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/ko/" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
           <span class="text-[14px]">홈</span>
@@ -257,7 +257,7 @@ function render_forum_header(string $searchQuery = '', ?array $currentSpecialty 
       </a>
 
       <!-- 2. 뉴스 -->
-      <a href="/blog" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/ko/blog" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
           <span class="text-[14px]">뉴스</span>
@@ -266,7 +266,7 @@ function render_forum_header(string $searchQuery = '', ?array $currentSpecialty 
       </a>
 
       <!-- 2.5. 커뮤니티 포럼 (Active) -->
-      <a href="/forum" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors border-b border-slate-100 font-bold text-brand-blue bg-blue-50/70">
+      <a href="/ko/forum" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors border-b border-slate-100 font-bold text-brand-blue bg-blue-50/70">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-brand-blue shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>
           <span class="text-[14px]">커뮤니티 포럼</span>
@@ -275,7 +275,7 @@ function render_forum_header(string $searchQuery = '', ?array $currentSpecialty 
       </a>
 
       <!-- 3. 시니어 케어 -->
-      <a href="/senior-care" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/ko/senior-care" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
           <span class="text-[14px]">시니어 케어</span>
@@ -284,7 +284,7 @@ function render_forum_header(string $searchQuery = '', ?array $currentSpecialty 
       </a>
 
       <!-- 4. 메디케어 & ACA -->
-      <a href="/medicare" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/ko/medicare" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
           <span class="text-[14px]">메디케어 &amp; ACA</span>
@@ -293,7 +293,7 @@ function render_forum_header(string $searchQuery = '', ?array $currentSpecialty 
       </a>
 
       <!-- 5. 환자도우미 -->
-      <a href="/tool" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/ko/tool" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
           <span class="text-[14px]">환자도우미</span>
@@ -302,7 +302,7 @@ function render_forum_header(string $searchQuery = '', ?array $currentSpecialty 
       </a>
 
       <!-- 6. 소개 -->
-      <a href="/about" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/ko/about" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
           <span class="text-[14px]">소개</span>
@@ -314,7 +314,7 @@ function render_forum_header(string $searchQuery = '', ?array $currentSpecialty 
       <div class="pt-2 pb-1">
         <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3 bg-[#FEE500] hover:bg-[#FDD835] text-[#191919] rounded-xl font-bold text-xs shadow-xs transition-all cursor-pointer">
           <div class="flex items-center gap-2.5">
-            <img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-5 h-5 rounded-md shrink-0 object-contain shadow-xs" />
+            <img src="/ko/kakaotalk-icon.png" alt="KakaoTalk" class="w-5 h-5 rounded-md shrink-0 object-contain shadow-xs" />
             <div class="flex flex-col text-left">
               <span class="text-xs font-bold leading-tight">카카오톡 1:1 상담 바로가기</span>
               <span class="text-[10px] font-medium text-black/70">의료 복지 및 시니어 케어 실시간 문의</span>
@@ -342,7 +342,7 @@ function render_forum_sidebar(array $specialties, string $activeSpecialty = '', 
     <!-- Mobile Drawer Close Header -->
     <div class="flex md:hidden items-center justify-between pb-3 mb-3 border-b border-slate-200 shrink-0">
       <div class="flex items-center gap-2">
-        <img src="/logo-icon.svg" class="w-5 h-5" alt="Logo">
+        <img src="/ko/logo-icon.svg" class="w-5 h-5" alt="Logo">
         <span class="font-bold text-xs text-slate-900">전문 진료과목 &amp; 이벤트</span>
       </div>
       <button onclick="toggleForumSidebar()" class="w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100" aria-label="메뉴 닫기">
@@ -353,7 +353,7 @@ function render_forum_sidebar(array $specialties, string $activeSpecialty = '', 
     <div class="space-y-6">
       <!-- Main Nav Links -->
       <div class="space-y-0.5">
-        <a href="/forum?view=categories" 
+        <a href="/ko/forum?view=categories" 
            class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-bold transition-colors <?= ($activeView === 'categories' && empty($activeSpecialty)) ? 'bg-blue-50 text-blue-700' : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900' ?>">
           <i class="fa-solid fa-house text-sm w-4 text-center <?= ($activeView === 'categories' && empty($activeSpecialty)) ? 'text-blue-600' : 'text-slate-400' ?>"></i>
           <span>포럼 홈 (Home)</span>
@@ -372,7 +372,7 @@ function render_forum_sidebar(array $specialties, string $activeSpecialty = '', 
             $isActive = ($activeSpecialty === $sp['id'] || $activeSpecialty === $sp['slug']);
             $isEvents = ($sp['id'] === 'events');
           ?>
-            <a href="/forum?specialty=<?= urlencode($sp['id']) ?>&view=topics" 
+            <a href="/ko/forum?specialty=<?= urlencode($sp['id']) ?>&view=topics" 
                class="flex items-center justify-between px-3 py-1.5 rounded-lg text-xs transition-colors <?= $isActive ? ($isEvents ? 'bg-rose-600 text-white font-bold shadow-xs' : 'bg-blue-600 text-white font-bold shadow-xs') : ($isEvents ? 'bg-rose-50/80 hover:bg-rose-100/70 text-rose-900 font-bold border border-rose-200/60' : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900 font-medium') ?>"
                title="<?= htmlspecialchars($sp['name_ko']) ?> (<?= htmlspecialchars($sp['name_en']) ?>)">
               <div class="flex items-center gap-2.5 truncate">
@@ -391,7 +391,7 @@ function render_forum_sidebar(array $specialties, string $activeSpecialty = '', 
             </a>
           <?php endforeach; ?>
 
-          <a href="/forum?view=categories" 
+          <a href="/ko/forum?view=categories" 
              class="flex items-center gap-2.5 px-3 py-1.5 text-xs text-slate-500 hover:text-blue-600 transition-colors font-semibold mt-1">
             <i class="fa-solid fa-list-ul text-[11px] text-slate-400"></i>
             <span>전체 카테고리 (All Categories)</span>
@@ -409,7 +409,7 @@ function render_forum_sidebar(array $specialties, string $activeSpecialty = '', 
           $tags = ['혈압약', '당뇨전단계', '예방접종', '경도인지장애', '소아과', '응급실', '콜레스테롤', '영상의학'];
           foreach ($tags as $tag):
           ?>
-            <a href="/forum?q=<?= urlencode($tag) ?>&view=topics" 
+            <a href="/ko/forum?q=<?= urlencode($tag) ?>&view=topics" 
                class="text-[11px] px-2 py-0.5 rounded bg-white hover:bg-blue-50 text-slate-600 hover:text-blue-700 border border-slate-200 transition-colors">
               #<?= htmlspecialchars($tag) ?>
             </a>
@@ -422,11 +422,11 @@ function render_forum_sidebar(array $specialties, string $activeSpecialty = '', 
     <!-- Bottom Links (About / CMS) -->
     <div class="pt-4 mt-6 border-t border-slate-200 text-[11px] text-slate-400 space-y-1.5">
       <div class="flex items-center justify-between px-3">
-        <a href="/about" class="hover:text-slate-600 transition-colors flex items-center gap-1.5">
+        <a href="/ko/about" class="hover:text-slate-600 transition-colors flex items-center gap-1.5">
           <i class="fa-solid fa-circle-info text-[10px]"></i>
           <span>포럼 안내 &amp; 면책조항</span>
         </a>
-        <a href="/admin2/" class="hover:text-blue-600 transition-colors font-bold flex items-center gap-1">
+        <a href="/ko/admin2/" class="hover:text-blue-600 transition-colors font-bold flex items-center gap-1">
           <i class="fa-solid fa-lock text-[9px]"></i>
           <span>관리자 CMS</span>
         </a>
@@ -546,7 +546,7 @@ function render_forum_auth_scripts() {
 
     async function checkAuth() {
       try {
-        const res = await fetch('/api/forum_auth.php?action=me');
+        const res = await fetch('/ko/api/forum_auth.php?action=me');
         const data = await res.json();
         if (data.success && data.logged_in && data.user) {
           currentUser = data.user;
@@ -656,7 +656,7 @@ function render_forum_auth_scripts() {
       if (!newName) return;
 
       try {
-        const res = await fetch('/api/forum_auth.php?action=update_name', {
+        const res = await fetch('/ko/api/forum_auth.php?action=update_name', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name: newName })
@@ -679,7 +679,7 @@ function render_forum_auth_scripts() {
 
     async function handleGoogleSignIn(response) {
       try {
-        const res = await fetch('/api/forum_auth.php', {
+        const res = await fetch('/ko/api/forum_auth.php', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ credential: response.credential })
@@ -719,7 +719,7 @@ function render_forum_auth_scripts() {
       };
 
       try {
-        const res = await fetch('/api/forum_auth.php', {
+        const res = await fetch('/ko/api/forum_auth.php', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(profile)
@@ -741,7 +741,7 @@ function render_forum_auth_scripts() {
     }
 
     async function handleLogout() {
-      await fetch('/api/forum_auth.php?action=logout');
+      await fetch('/ko/api/forum_auth.php?action=logout');
       currentUser = null;
       renderAuthBox();
       if (typeof syncAuthorFields === 'function') {
@@ -790,35 +790,35 @@ function render_forum_footer() {
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-10">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
         <div class="lg:col-span-2">
-          <a class="inline-flex items-center mb-4 group cursor-pointer njap-brand-link" href="/" onclick="navigateToHome(event); return false;" title="Healthcare Access Portal">
-            <img src="/logo-white.png" alt="Healthcare Access Portal · 뉴저지 한인 의료 정보 포털" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
+          <a class="inline-flex items-center mb-4 group cursor-pointer njap-brand-link" href="/ko/" onclick="navigateToHome(event); return false;" title="Healthcare Access Portal">
+            <img src="/ko/logo-white.png" alt="Healthcare Access Portal · 뉴저지 한인 의료 정보 포털" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
           </a>
           <p class="text-sm text-white/60 font-sans leading-relaxed max-w-xs mb-6">뉴저지 한인 커뮤니티를 위한 의료 접근 및 건강 정보 포털. 메디케어, ACA, 의료 상담을 한국어로 제공합니다.</p>
         </div>
         <div>
           <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">정보</p>
           <ul class="space-y-2.5">
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200 cursor-pointer" href="/" onclick="navigateToHome(event); return false;">홈</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/about">소개</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/blog">건강 뉴스</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200 font-bold text-white" href="/forum">커뮤니티 포럼</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/senior-care">시니어 케어</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200 cursor-pointer" href="/ko/" onclick="navigateToHome(event); return false;">홈</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/about">소개</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/blog">건강 뉴스</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200 font-bold text-white" href="/ko/forum">커뮤니티 포럼</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/senior-care">시니어 케어</a></li>
           </ul>
         </div>
         <div>
           <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">의료 가이드</p>
           <ul class="space-y-2.5">
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/medicare">메디케어 안내</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/medicare#aca">ACA 보험</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/medicare#faq">자주 묻는 질문</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/medicare">메디케어 안내</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/medicare#aca">ACA 보험</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/medicare#faq">자주 묻는 질문</a></li>
           </ul>
         </div>
         <div>
           <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">환자도우미</p>
           <ul class="space-y-2.5">
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/tool">보험 자격 진단</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/calculator">보조금 계산기</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/dictionary">의학 용어 사전</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/tool">보험 자격 진단</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/calculator">보조금 계산기</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/dictionary">의학 용어 사전</a></li>
           </ul>
         </div>
       </div>

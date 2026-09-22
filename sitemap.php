@@ -6,7 +6,7 @@
  */
 header('Content-Type: application/xml; charset=utf-8');
 
-$baseUrl = 'https://kor2.njaccessportal.com';
+$baseUrl = 'https://njaccessportal.com/ko';
 require_once __DIR__ . '/api/db.php';
 require_once __DIR__ . '/api/forum_db.php';
 

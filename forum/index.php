@@ -34,11 +34,11 @@ if (!empty($specialtyFilter) && $specialtyFilter !== 'all') {
 $allActive = forum_get_questions('', 'popular', '', 'active');
 $featuredPosts = array_slice($allActive, 0, 3);
 
-$canonicalUrl = 'https://kor2.njaccessportal.com/forum';
+$canonicalUrl = 'https://njaccessportal.com/ko/forum';
 if ($currentSpecialty) {
-    $canonicalUrl = 'https://kor2.njaccessportal.com/forum?specialty=' . urlencode($currentSpecialty['id']);
+    $canonicalUrl = 'https://njaccessportal.com/ko/forum?specialty=' . urlencode($currentSpecialty['id']);
 } elseif ($viewMode === 'categories') {
-    $canonicalUrl = 'https://kor2.njaccessportal.com/forum?view=categories';
+    $canonicalUrl = 'https://njaccessportal.com/ko/forum?view=categories';
 }
 $seoTitle = ($currentSpecialty ? htmlspecialchars($currentSpecialty['name_ko']) . ' 전문의 Q&A — ' : '') . '메디컬 포럼 & 전문의 질의응답 | 뉴저지 의료접근센터 (NJAP)';
 $seoDesc = $currentSpecialty ? htmlspecialchars($currentSpecialty['description']) . ' 뉴저지 한인 동포를 위한 전문의 답변 및 질문/정보 나눔.' : '뉴저지 한인 동포를 위한 전문 진료과 및 시니어 케어 무료 의료 질문/정보 공유 커뮤니티. 편리하게 전문의 답변과 건강 질의응답을 확인하세요.';
@@ -60,13 +60,13 @@ $seoDesc = $currentSpecialty ? htmlspecialchars($currentSpecialty['description']
   <meta property="og:title" content="<?= $seoTitle ?>" />
   <meta property="og:description" content="<?= $seoDesc ?>" />
   <meta property="og:url" content="<?= htmlspecialchars($canonicalUrl) ?>" />
-  <meta property="og:image" content="https://kor2.njaccessportal.com/logo-icon.svg" />
+  <meta property="og:image" content="https://njaccessportal.com/ko/logo-icon.svg" />
 
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="<?= $seoTitle ?>" />
   <meta name="twitter:description" content="<?= $seoDesc ?>" />
-  <meta name="twitter:image" content="https://kor2.njaccessportal.com/logo-icon.svg" />
+  <meta name="twitter:image" content="https://njaccessportal.com/ko/logo-icon.svg" />
 
   <!-- Schema.org JSON-LD Structured Data -->
   <script type="application/ld+json">
@@ -80,7 +80,7 @@ $seoDesc = $currentSpecialty ? htmlspecialchars($currentSpecialty['description']
     "publisher": {
       "@type": "MedicalOrganization",
       "name": "뉴저지 의료접근센터 (Healthcare Access Portal)",
-      "url": "https://kor2.njaccessportal.com/"
+      "url": "https://njaccessportal.com/ko/"
     }
   }
   </script>
@@ -92,7 +92,7 @@ $seoDesc = $currentSpecialty ? htmlspecialchars($currentSpecialty['description']
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/_next/static/chunks/1fosv8xgmgdeu.css" />
+  <link rel="stylesheet" href="/ko/_next/static/chunks/1fosv8xgmgdeu.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Identity Services (GIS) -->
@@ -205,7 +205,7 @@ $seoDesc = $currentSpecialty ? htmlspecialchars($currentSpecialty['description']
             <strong>의료 면책 안내:</strong> 본 포럼의 질의응답은 교육 및 일반 정보 제공 목적이며 대면 진료를 대신하지 않습니다. 응급 시 911에 신고하십시오.
           </span>
         </div>
-        <a href="/about" class="text-[11px] font-bold text-amber-700 hover:underline shrink-0 hidden sm:inline">
+        <a href="/ko/about" class="text-[11px] font-bold text-amber-700 hover:underline shrink-0 hidden sm:inline">
           가이드라인 보기 →
         </a>
       </div>
@@ -216,7 +216,7 @@ $seoDesc = $currentSpecialty ? htmlspecialchars($currentSpecialty['description']
         <!-- Left: Category / Section Title -->
         <div class="flex items-center gap-2">
           <?php if (!empty($currentSpecialty)): ?>
-            <a href="/forum" class="text-xs font-bold text-slate-500 hover:text-blue-600 flex items-center gap-1 transition-colors">
+            <a href="/ko/forum" class="text-xs font-bold text-slate-500 hover:text-blue-600 flex items-center gap-1 transition-colors">
               <i class="fa-solid fa-arrow-left text-[10px]"></i>
               <span>전체 포럼</span>
             </a>
@@ -237,7 +237,7 @@ $seoDesc = $currentSpecialty ? htmlspecialchars($currentSpecialty['description']
 
         <!-- Right: Quick Search & Counter -->
         <div class="flex items-center gap-3">
-          <form action="/forum" method="GET" class="relative hidden sm:block">
+          <form action="/ko/forum" method="GET" class="relative hidden sm:block">
             <input type="hidden" name="view" value="topics" />
             <?php if (!empty($specialtyFilter)): ?>
               <input type="hidden" name="specialty" value="<?= htmlspecialchars($specialtyFilter) ?>" />
@@ -270,7 +270,7 @@ $seoDesc = $currentSpecialty ? htmlspecialchars($currentSpecialty['description']
                    style="border-left: 4px solid <?= htmlspecialchars($sp['color']) ?>;">
                 <div class="space-y-1">
                   <div class="flex items-center gap-2">
-                    <a href="/forum?specialty=<?= urlencode($sp['id']) ?>&view=topics" 
+                    <a href="/ko/forum?specialty=<?= urlencode($sp['id']) ?>&view=topics" 
                        class="text-sm font-bold text-slate-900 hover:text-blue-600 transition-colors flex items-center gap-1.5">
                       <span><?= htmlspecialchars($sp['name_ko']) ?></span>
                       <span class="text-xs font-normal text-slate-400">(<?= htmlspecialchars($sp['name_en']) ?>)</span>
@@ -281,7 +281,7 @@ $seoDesc = $currentSpecialty ? htmlspecialchars($currentSpecialty['description']
                   </p>
                 </div>
 
-                <a href="/forum?specialty=<?= urlencode($sp['id']) ?>&view=topics" 
+                <a href="/ko/forum?specialty=<?= urlencode($sp['id']) ?>&view=topics" 
                    class="text-xs font-extrabold text-slate-700 bg-slate-100 hover:bg-blue-50 hover:text-blue-700 px-2.5 py-1 rounded-lg transition-colors shrink-0">
                   <?= (int)($sp['questionCount'] ?? 0) ?>
                 </a>
@@ -311,7 +311,7 @@ $seoDesc = $currentSpecialty ? htmlspecialchars($currentSpecialty['description']
                          class="w-9 h-9 rounded-full object-cover shrink-0 border <?= $hasDoc ? 'border-emerald-500 ring-2 ring-emerald-400/20' : 'border-slate-200' ?>">
                     
                     <div class="flex-1 min-w-0">
-                      <a href="/forum/topic/<?= htmlspecialchars($lq['id']) ?>" 
+                      <a href="/ko/forum/topic/<?= htmlspecialchars($lq['id']) ?>" 
                          class="text-xs sm:text-sm font-bold text-slate-900 hover:text-blue-600 transition-colors line-clamp-2 leading-snug">
                         <?= htmlspecialchars($lq['title']) ?>
                       </a>
@@ -367,11 +367,11 @@ $seoDesc = $currentSpecialty ? htmlspecialchars($currentSpecialty['description']
             </div>
 
             <div class="flex items-center gap-2 shrink-0">
-              <a href="/forum?view=categories" class="text-xs font-semibold text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg transition-colors">
+              <a href="/ko/forum?view=categories" class="text-xs font-semibold text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg transition-colors">
                 ← 전체 카테고리
               </a>
               <?php if (empty($currentSpecialty['isAdminOnly']) && ($currentSpecialty['id'] ?? '') !== 'events'): ?>
-                <a href="/forum/ask?specialty=<?= urlencode($currentSpecialty['id']) ?>" class="text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 px-3.5 py-1.5 rounded-lg transition-colors shadow-2xs flex items-center gap-1.5">
+                <a href="/ko/forum/ask?specialty=<?= urlencode($currentSpecialty['id']) ?>" class="text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 px-3.5 py-1.5 rounded-lg transition-colors shadow-2xs flex items-center gap-1.5">
                   <i class="fa-solid fa-plus text-xs"></i>
                   <span>질문/정보 공유</span>
                 </a>
@@ -415,14 +415,14 @@ $seoDesc = $currentSpecialty ? htmlspecialchars($currentSpecialty['description']
                             <i class="fa-solid fa-circle-check text-emerald-600 text-sm mt-0.5 shrink-0" title="공인 전문의 답변 완료"></i>
                           <?php endif; ?>
                           <div>
-                            <a href="/forum/topic/<?= htmlspecialchars($q['id']) ?>" 
+                            <a href="/ko/forum/topic/<?= htmlspecialchars($q['id']) ?>" 
                                class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-snug line-clamp-2 text-sm">
                               <?= htmlspecialchars($q['title']) ?>
                             </a>
 
                             <div class="flex items-center gap-2 mt-1 flex-wrap">
                               <!-- Category Badge -->
-                              <a href="/forum?specialty=<?= urlencode($sp['id'] ?? '') ?>&view=topics" 
+                              <a href="/ko/forum?specialty=<?= urlencode($sp['id'] ?? '') ?>&view=topics" 
                                  class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-slate-600 hover:text-slate-900">
                                 <span class="w-2 h-2 rounded-xs shrink-0" style="background-color: <?= htmlspecialchars($sp['color'] ?? '#3b82f6') ?>"></span>
                                 <span><?= htmlspecialchars($sp['name_ko'] ?? '진료과') ?></span>

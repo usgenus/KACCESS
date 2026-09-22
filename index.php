@@ -129,21 +129,21 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
   <meta name="description" content="뉴저지 의료접근센터(의료접근포털 / NJ Healthcare Access Center &amp; Portal)는 뉴저지 한인 동포를 위한 무료 종합 의료 접근 및 한인 아웃리치(NJ Korean Outreach) 포털입니다. 뉴저지 패밀리케어(메디케이드), 메디케어, ACA 건강보험, 자선진료(Charity Care), 무료 암 검진(NJCEED), 시니어 케어, 1:1 한국어 전문 의료 상담을 제공합니다." />
   <meta name="keywords" content="의료접근센터, 의료접근포털, 뉴저지 의료접근센터, 뉴저지 의료접근포털, nj korean outreach, 뉴저지 한인 아웃리치, healthcare access center, healthcare access portal, nj healthcare access center, nj healthcare access portal, 의료접근, 뉴저지 한인 의료, 뉴저지 건강보험, 뉴저지 패밀리케어, 메디케이드, 메디케어, ACA 오바마케어, 자선진료, charity care, 무료 암검진, NJCEED, 시니어 케어, 패밀리터치 헬스케어" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-  <link rel="canonical" href="https://kor2.njaccessportal.com/" />
+  <link rel="canonical" href="https://njaccessportal.com/ko/" />
 
   <!-- OpenGraph / Social Media -->
   <meta property="og:site_name" content="뉴저지 의료접근센터 · NJ Healthcare Access Center" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://kor2.njaccessportal.com/" />
+  <meta property="og:url" content="https://njaccessportal.com/ko/" />
   <meta property="og:title" content="뉴저지 의료접근센터 · 의료접근포털 | NJ Healthcare Access Center &amp; Portal" />
   <meta property="og:description" content="뉴저지 의료접근센터 (NJ Healthcare Access Center / Portal / NJ Korean Outreach) - 뉴저지 한인 커뮤니티를 위한 무료 의료 접근, 메디케어, ACA, 자선진료, 무료 암검진 및 건강 상담 포털." />
-  <meta property="og:image" content="<?= htmlspecialchars(!empty($topStory['coverImage']) ? $topStory['coverImage'] : 'https://kor2.njaccessportal.com/logo-icon.svg') ?>" />
+  <meta property="og:image" content="<?= htmlspecialchars(!empty($topStory['coverImage']) ? $topStory['coverImage'] : 'https://njaccessportal.com/ko/logo-icon.svg') ?>" />
 
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="뉴저지 의료접근센터 · 의료접근포털 | NJ Healthcare Access Center" />
   <meta name="twitter:description" content="뉴저지 한인을 위한 무료 프리미엄 의료 접근·네비게이션 서비스 및 한인 아웃리치 (Healthcare Access Portal)" />
-  <meta name="twitter:image" content="<?= htmlspecialchars(!empty($topStory['coverImage']) ? $topStory['coverImage'] : 'https://kor2.njaccessportal.com/logo-icon.svg') ?>" />
+  <meta name="twitter:image" content="<?= htmlspecialchars(!empty($topStory['coverImage']) ? $topStory['coverImage'] : 'https://njaccessportal.com/ko/logo-icon.svg') ?>" />
 
   <!-- Schema.org JSON-LD Structured Data for Google Search & AI Search -->
   <script type="application/ld+json">
@@ -152,8 +152,8 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
     "@graph": [
       {
         "@type": "WebSite",
-        "@id": "https://kor2.njaccessportal.com/#website",
-        "url": "https://kor2.njaccessportal.com/",
+        "@id": "https://njaccessportal.com/ko/#website",
+        "url": "https://njaccessportal.com/ko/",
         "name": "뉴저지 의료접근센터 · 의료접근포털 (NJ Healthcare Access Center & Portal)",
         "alternateName": [
           "의료접근센터",
@@ -173,13 +173,13 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
         "inLanguage": ["ko", "en"],
         "potentialAction": {
           "@type": "SearchAction",
-          "target": "https://kor2.njaccessportal.com/blog?q={search_term_string}",
+          "target": "https://njaccessportal.com/ko/blog?q={search_term_string}",
           "query-input": "required name=search_term_string"
         }
       },
       {
         "@type": "MedicalOrganization",
-        "@id": "https://kor2.njaccessportal.com/#organization",
+        "@id": "https://njaccessportal.com/ko/#organization",
         "name": "뉴저지 의료접근센터 (NJ Healthcare Access Center & Portal)",
         "alternateName": [
           "의료접근센터",
@@ -190,8 +190,8 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
           "NJ Korean Outreach",
           "뉴저지 한인 아웃리치"
         ],
-        "url": "https://kor2.njaccessportal.com",
-        "logo": "https://kor2.njaccessportal.com/logo-icon.svg",
+        "url": "https://njaccessportal.com/ko",
+        "logo": "https://njaccessportal.com/ko/logo-icon.svg",
         "email": "njaccessportal@gmail.com",
         "telephone": "+1-551-285-0800",
         "address": {
@@ -214,7 +214,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
       },
       {
         "@type": "FAQPage",
-        "@id": "https://kor2.njaccessportal.com/#faq",
+        "@id": "https://njaccessportal.com/ko/#faq",
         "mainEntity": [
           {
             "@type": "Question",
@@ -328,7 +328,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/_next/static/chunks/1fosv8xgmgdeu.css" />
+  <link rel="stylesheet" href="/ko/_next/static/chunks/1fosv8xgmgdeu.css" />
 
   <script>
     (function() {
@@ -1040,7 +1040,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
   <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/80 backdrop-blur-sm" style="top:45px">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
-        <a class="flex items-center cursor-pointer njap-brand-link flex-shrink-0 group" href="/" onclick="navigateToHome(event); return false;" title="Healthcare Access Portal">
+        <a class="flex items-center cursor-pointer njap-brand-link flex-shrink-0 group" href="/ko/" onclick="navigateToHome(event); return false;" title="Healthcare Access Portal">
           <svg class="h-8 sm:h-10 md:h-11 w-auto object-contain transition-transform group-hover:scale-102" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Healthcare Access Portal · 뉴저지 한인 의료 정보 포털 · NJAP" style="overflow: visible;">
             <title>Healthcare Access Portal · 뉴저지 한인 의료 정보 포털 · NJAP</title>
             <!-- Icon Mark (Door + Key + NJAP) -->
@@ -1075,17 +1075,17 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
           </svg>
         </a>
         <div class="hidden md:flex items-center">
-          <a class="nav-link pb-0.5 font-bold text-brand-blue cursor-pointer" href="/" onclick="navigateToHome(event); return false;">홈</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/blog">뉴스</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/forum">커뮤니티 포럼</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/senior-care">시니어 케어</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/medicare">메디케어 &amp; ACA</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/tool">환자도우미</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/about">소개</a>
+          <a class="nav-link pb-0.5 font-bold text-brand-blue cursor-pointer" href="/ko/" onclick="navigateToHome(event); return false;">홈</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/blog">뉴스</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/forum">커뮤니티 포럼</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/senior-care">시니어 케어</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/medicare">메디케어 &amp; ACA</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/tool">환자도우미</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/about">소개</a>
         </div>
         <div class="flex items-center gap-2 sm:gap-3">
           <!-- KakaoTalk 1:1 Chat Button (Top Nav) -->
-          <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity cursor-pointer" title="카카오톡 1:1 상담 바로가기"><img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" /><span class="text-xs sm:text-sm font-bold text-slate-800 hover:text-brand-blue tracking-tight whitespace-nowrap">1:1 상담</span></a>
+          <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity cursor-pointer" title="카카오톡 1:1 상담 바로가기"><img src="/ko/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" /><span class="text-xs sm:text-sm font-bold text-slate-800 hover:text-brand-blue tracking-tight whitespace-nowrap">1:1 상담</span></a>
           <!-- Senior Mode (시니어모드+) 3-Step Toggle Button -->
           <button id="senior-mode-btn" class="senior-mode-btn notranslate" translate="no" type="button" onclick="window.cycleSeniorMode && window.cycleSeniorMode()" title="시니어모드+ (글자 크기 3단계 조절)" aria-label="시니어모드 글자 크기 조절"><span class="senior-btn-label">시니어모드+</span><span class="senior-step-badge" style="display:none;"></span></button>
           <button id="en-translate-btn" class="notranslate" translate="no" onclick="window.toggleTranslation && window.toggleTranslation()" title="Switch Language (EN / KR)" aria-label="Language Toggle" style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;border:1.5px solid #cbd5e1;font-size:11px;font-weight:700;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s ease;background:transparent;color:#475569;white-space:nowrap;flex-shrink:0;line-height:1.4;"><span class="notranslate" translate="no">🌐</span> <span class="notranslate en-btn-label" translate="no">EN</span></button>
@@ -1111,7 +1111,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
         </button>
       </div>
       <!-- 1. 홈 -->
-      <a href="/" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-bold text-brand-blue bg-blue-50/70">
+      <a href="/ko/" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-bold text-brand-blue bg-blue-50/70">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-brand-blue shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
           <span class="text-[15px]">홈</span>
@@ -1120,7 +1120,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
       </a>
 
       <!-- 2. 뉴스 -->
-      <a href="/blog" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/ko/blog" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
           <span class="text-[15px]">뉴스</span>
@@ -1129,7 +1129,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
       </a>
 
       <!-- 2.5. 커뮤니티 포럼 -->
-      <a href="/forum" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/ko/forum" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>
           <span class="text-[15px]">커뮤니티 포럼</span>
@@ -1138,7 +1138,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
       </a>
 
       <!-- 3. 시니어 케어 -->
-      <a href="/senior-care" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/ko/senior-care" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
           <span class="text-[15px]">시니어 케어</span>
@@ -1147,7 +1147,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
       </a>
 
       <!-- 4. 메디케어 & ACA -->
-      <a href="/medicare" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/ko/medicare" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
           <span class="text-[15px]">메디케어 &amp; ACA</span>
@@ -1156,7 +1156,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
       </a>
 
       <!-- 5. 환자도우미 -->
-      <a href="/tool" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/ko/tool" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
           <span class="text-[15px]">환자도우미</span>
@@ -1165,7 +1165,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
       </a>
 
       <!-- 6. 소개 -->
-      <a href="/about" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/ko/about" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
           <span class="text-[15px]">소개</span>
@@ -1177,7 +1177,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
       <div class="pt-2 pb-1">
         <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3.5 bg-[#FEE500] hover:bg-[#FDD835] active:bg-[#FBC02D] text-[#191919] rounded-xl font-bold text-sm shadow-xs transition-all cursor-pointer">
           <div class="flex items-center gap-2.5">
-            <img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" />
+            <img src="/ko/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" />
             <div class="flex flex-col text-left">
               <span class="text-sm font-bold leading-tight">카카오톡 1:1 상담 바로가기</span>
               <span class="text-[11px] font-medium text-black/70">의료 복지 및 시니어 케어 실시간 문의</span>
@@ -1302,7 +1302,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
               <span id="homepage-live-headline"><?= htmlspecialchars($liveHeadline) ?></span>
             </a>
           </div>
-          <a class="shrink-0 text-white/70 hover:text-white transition-colors underline font-medium" href="/blog">전체 뉴스 →</a>
+          <a class="shrink-0 text-white/70 hover:text-white transition-colors underline font-medium" href="/ko/blog">전체 뉴스 →</a>
         </div>
 
         <!-- 3. Top Story, Real-time Latest News & Doctor's Column Grid (3 Columns) -->
@@ -1354,7 +1354,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
               $topCover = $topStory['coverImage'] ?: (!empty($topStory['images'][0]) ? $topStory['images'][0] : 'https://images.unsplash.com/photo-1628771065117-74ccb5690668?w=1200&q=80&auto=format');
             ?>
             <div id="homepage-top-story-box" class="news-col-left flex flex-col justify-between pb-6 lg:pb-0">
-              <a class="group block" href="/blog/<?= htmlspecialchars($topStory['slug'] ?: $topStory['id']) ?>">
+              <a class="group block" href="/ko/blog/<?= htmlspecialchars($topStory['slug'] ?: $topStory['id']) ?>">
                 <div class="flex items-center gap-2 mb-2">
                   <span class="w-2.5 h-2.5 bg-red-600 inline-block"></span>
                   <span class="text-xs sm:text-sm font-black text-red-600 uppercase tracking-widest whitespace-nowrap"><?= htmlspecialchars($topStory['category'] ?: '주요 뉴스') ?></span>
@@ -1410,7 +1410,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                   <?php foreach ($latestNews as $item): 
                     $itemCover = $item['coverImage'] ?: (!empty($item['images'][0]) ? $item['images'][0] : 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&q=80');
                   ?>
-                    <a class="group py-3.5 first:pt-0 last:pb-0 flex gap-3 items-start justify-between" href="/blog/<?= htmlspecialchars($item['slug'] ?: $item['id']) ?>">
+                    <a class="group py-3.5 first:pt-0 last:pb-0 flex gap-3 items-start justify-between" href="/ko/blog/<?= htmlspecialchars($item['slug'] ?: $item['id']) ?>">
                       <div class="flex-1 min-w-0 pr-1">
                         <span class="text-[11px] sm:text-xs font-black text-red-600 uppercase tracking-wider block mb-1 whitespace-nowrap">
                           <?= htmlspecialchars($item['category'] ?: '뉴스') ?>
@@ -1444,7 +1444,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                   <?php foreach (array_slice($doctorPosts, 0, 10) as $dIdx => $dItem): 
                     $dCover = $dItem['coverImage'] ?: (!empty($dItem['images'][0]) ? $dItem['images'][0] : 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=300&q=80');
                   ?>
-                    <a class="group py-2.5 first:pt-0 last:pb-0 flex gap-2.5 items-start justify-between cursor-pointer" href="/blog/<?= htmlspecialchars($dItem['slug'] ?: $dItem['id']) ?>">
+                    <a class="group py-2.5 first:pt-0 last:pb-0 flex gap-2.5 items-start justify-between cursor-pointer" href="/ko/blog/<?= htmlspecialchars($dItem['slug'] ?: $dItem['id']) ?>">
                       <div class="flex gap-2 items-start flex-1 min-w-0 pr-1">
                         <span class="text-lg sm:text-xl font-serif font-black text-red-600 leading-none w-4 shrink-0 mt-0.5 select-none">
                           <?= $dIdx + 1 ?>
@@ -1474,13 +1474,13 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
         <section>
           <div class="flex items-center justify-between mb-4 pb-2 border-b-2 border-gray-900">
             <h2 class="font-extrabold text-xl text-gray-950 uppercase tracking-wider">리콜(Recalls and Food Safety)</h2>
-            <a class="text-xs font-bold text-brand-blue hover:underline" href="/blog">전체보기 →</a>
+            <a class="text-xs font-bold text-brand-blue hover:underline" href="/ko/blog">전체보기 →</a>
           </div>
           <div id="homepage-reports-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             <?php foreach ($reportNews as $p): 
               $pCover = $p['coverImage'] ?: (!empty($p['images'][0]) ? $p['images'][0] : 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=800&q=80');
             ?>
-              <a class="group card-hover" href="/blog/<?= htmlspecialchars($p['slug'] ?: $p['id']) ?>">
+              <a class="group card-hover" href="/ko/blog/<?= htmlspecialchars($p['slug'] ?: $p['id']) ?>">
                 <article class="bg-white rounded-2xl p-4 border border-gray-200/90 h-full flex flex-col justify-between shadow-sm">
                   <div>
                     <div class="relative h-40 w-full rounded-xl overflow-hidden mb-3 bg-gray-100">
@@ -1525,12 +1525,12 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                 </p>
 
                 <div style="display: flex !important; align-items: center !important; gap: 12px !important; flex-wrap: wrap !important;">
-                  <a href="/forum/ask" 
+                  <a href="/ko/forum/ask" 
                      style="display: inline-flex !important; align-items: center !important; gap: 8px !important; background: #2563eb !important; color: #ffffff !important; padding: 10px 20px !important; border-radius: 12px !important; font-size: 13.5px !important; font-weight: 700 !important; text-decoration: none !important; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25) !important; transition: all 0.2s ease !important;">
                     <i class="fa-solid fa-pen-to-square"></i>
                     <span>질문/정보 공유</span>
                   </a>
-                  <a href="/forum" 
+                  <a href="/ko/forum" 
                      style="display: inline-flex !important; align-items: center !important; gap: 6px !important; background: #ffffff !important; color: #0f172a !important; border: 1.5px solid #cbd5e1 !important; padding: 9px 18px !important; border-radius: 12px !important; font-size: 13.5px !important; font-weight: 700 !important; text-decoration: none !important; box-shadow: 0 2px 6px rgba(0,0,0,0.04) !important; transition: all 0.2s ease !important;">
                     <span>포럼 전체보기 →</span>
                   </a>
@@ -1539,7 +1539,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
 
               <!-- Right Side: Community Illustration (Larger & Prominent) -->
               <div style="flex: 1 1 520px !important; max-width: 600px !important; min-width: 280px !important; display: flex !important; justify-content: center !important; align-items: center !important;">
-                <img src="/uploads/images/forum_community_banner.jpg" 
+                <img src="/ko/uploads/images/forum_community_banner.jpg" 
                      alt="뉴저지 의료/정보 나눔 커뮤니티" 
                      style="width: 100% !important; height: auto !important; max-height: 290px !important; object-fit: contain !important; border-radius: 20px !important; border: 1px solid #cbd5e1 !important; background: #ffffff !important; padding: 8px !important; box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08) !important;">
               </div>
@@ -1556,7 +1556,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
               </div>
               <div class="flex flex-wrap items-center gap-2 text-xs font-bold">
                 <?php foreach ($forumSpecialties as $fsp): ?>
-                  <a href="/forum?specialty=<?= urlencode($fsp['id']) ?>" 
+                  <a href="/ko/forum?specialty=<?= urlencode($fsp['id']) ?>" 
                      class="px-2.5 py-1.5 rounded-lg transition-all flex items-center gap-1.5 shadow-2xs hover:shadow-xs"
                      style="background: #ffffff !important; color: #1e293b !important; border: 1px solid #cbd5e1 !important; padding: 6px 12px !important; border-radius: 10px !important; text-decoration: none !important; font-size: 12px !important; font-weight: 700 !important; box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;">
                     <span class="w-2 h-2 rounded-full shrink-0" style="background-color: <?= htmlspecialchars($fsp['color']) ?>"></span>
@@ -1674,7 +1674,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
             <p class="text-white/70 text-sm sm:text-base leading-relaxed">보험 자격 진단부터 병원 사전접수, 의학 용어 사전 및 의료비 지원 신청까지 한곳에서 이용하실 수 있습니다.</p>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            <a class="group" href="/matcher">
+            <a class="group" href="/ko/matcher">
               <div class="bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl p-5 h-full flex flex-col justify-between transition-all duration-300 group-hover:border-blue-400/50">
                 <div>
                   <div class="flex items-center justify-start mb-4"><span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-white/10 text-white/80">INSURANCE MATCHER</span></div>
@@ -1684,7 +1684,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                 <div class="text-xs font-bold text-blue-400 group-hover:translate-x-1 transition-transform flex items-center gap-1">서비스 바로가기 →</div>
               </div>
             </a>
-            <a class="group" href="/calculator">
+            <a class="group" href="/ko/calculator">
               <div class="bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl p-5 h-full flex flex-col justify-between transition-all duration-300 group-hover:border-blue-400/50">
                 <div>
                   <div class="flex items-center justify-start mb-4"><span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-white/10 text-white/80">CALCULATOR</span></div>
@@ -1694,7 +1694,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                 <div class="text-xs font-bold text-blue-400 group-hover:translate-x-1 transition-transform flex items-center gap-1">서비스 바로가기 →</div>
               </div>
             </a>
-            <a class="group" href="/dictionary">
+            <a class="group" href="/ko/dictionary">
               <div class="bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl p-5 h-full flex flex-col justify-between transition-all duration-300 group-hover:border-blue-400/50">
                 <div>
                   <div class="flex items-center justify-start mb-4"><span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-white/10 text-white/80">DICTIONARY</span></div>
@@ -1704,7 +1704,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                 <div class="text-xs font-bold text-blue-400 group-hover:translate-x-1 transition-transform flex items-center gap-1">서비스 바로가기 →</div>
               </div>
             </a>
-            <a class="group" href="/tool">
+            <a class="group" href="/ko/tool">
               <div class="bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl p-5 h-full flex flex-col justify-between transition-all duration-300 group-hover:border-blue-400/50">
                 <div>
                   <div class="flex items-center justify-start mb-4"><span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-white/10 text-white/80">PATIENT PORTAL</span></div>
@@ -2183,35 +2183,35 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-10">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
         <div class="lg:col-span-2">
-          <a class="inline-flex items-center mb-4 group cursor-pointer njap-brand-link" href="/" onclick="navigateToHome(event); return false;" title="Healthcare Access Portal">
-            <img src="/logo-white.png" alt="Healthcare Access Portal · 뉴저지 한인 의료 정보 포털" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
+          <a class="inline-flex items-center mb-4 group cursor-pointer njap-brand-link" href="/ko/" onclick="navigateToHome(event); return false;" title="Healthcare Access Portal">
+            <img src="/ko/logo-white.png" alt="Healthcare Access Portal · 뉴저지 한인 의료 정보 포털" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
           </a>
           <p class="text-sm text-white/60 font-sans leading-relaxed max-w-xs mb-6">뉴저지 한인 커뮤니티를 위한 의료 접근 및 건강 정보 포털. 메디케어, ACA, 의료 상담을 한국어로 제공합니다.</p>
         </div>
         <div>
           <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">정보</p>
           <ul class="space-y-2.5">
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200 cursor-pointer" href="/" onclick="navigateToHome(event); return false;">홈</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/about">소개</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/blog">건강 뉴스</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/forum">커뮤니티 포럼</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/senior-care">시니어 케어</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200 cursor-pointer" href="/ko/" onclick="navigateToHome(event); return false;">홈</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/about">소개</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/blog">건강 뉴스</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/forum">커뮤니티 포럼</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/senior-care">시니어 케어</a></li>
           </ul>
         </div>
         <div>
           <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">의료 가이드</p>
           <ul class="space-y-2.5">
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/medicare">메디케어 안내</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/medicare#aca">ACA 보험</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/medicare#faq">자주 묻는 질문</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/medicare">메디케어 안내</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/medicare#aca">ACA 보험</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/medicare#faq">자주 묻는 질문</a></li>
           </ul>
         </div>
         <div>
           <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">환자도우미</p>
           <ul class="space-y-2.5">
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/matcher">보험 자격 진단</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/calculator">보조금 계산기</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/dictionary">의학 용어 사전</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/matcher">보험 자격 진단</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/calculator">보조금 계산기</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/dictionary">의학 용어 사전</a></li>
           </ul>
         </div>
       </div>

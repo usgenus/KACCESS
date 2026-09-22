@@ -23,10 +23,10 @@ DirectoryIndex index.php index.html
 
 <IfModule mod_rewrite.c>
 RewriteEngine On
-RewriteBase /
+RewriteBase /ko/
 
 # Redirect index.html to /
-RewriteRule ^index\.html$ / [R=301,L]
+RewriteRule ^index\.html$ /ko/ [R=301,L]
 
 # Admin clean URL
 RewriteRule ^admin/?$ admin/index.php [L]
@@ -65,4 +65,4 @@ RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 </IfModule>
 
-ErrorDocument 404 /404.html
+ErrorDocument 404 /ko/404.html

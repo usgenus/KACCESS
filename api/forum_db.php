@@ -1529,7 +1529,7 @@ function forum_send_event_broadcast_email(array $eventQuestion, array $allUsers,
     $host = $_SERVER['HTTP_HOST'] ?? 'localhost:8080';
     $proto = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
     if (empty($host) || str_contains($host, 'cli')) {
-        $baseUrl = 'https://kor2.njaccessportal.com';
+        $baseUrl = 'https://njaccessportal.com/ko';
     } else {
         $baseUrl = $proto . '://' . $host;
     }

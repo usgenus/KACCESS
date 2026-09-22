@@ -158,7 +158,7 @@ function send_contact_notification_email($item) {
                 <tr>
                   <td align="center" style="padding: 10px 0;">
                     <a href="mailto:' . $email . '?subject=' . rawurlencode('[답변] Healthcare Access Portal 문의 답변 드립니다') . '" style="display: inline-block; background-color: #1e3a8a; color: #ffffff; font-size: 13px; font-weight: 700; text-decoration: none; padding: 12px 24px; border-radius: 8px; margin-right: 10px;">이메일로 바로 회신하기</a>
-                    <a href="https://kor2.njaccessportal.com/admin/" style="display: inline-block; background-color: #f1f5f9; color: #334155; font-size: 13px; font-weight: 700; text-decoration: none; padding: 12px 20px; border-radius: 8px; border: 1px solid #cbd5e1;">CMS 관리자 바로가기</a>
+                    <a href="https://njaccessportal.com/ko/admin/" style="display: inline-block; background-color: #f1f5f9; color: #334155; font-size: 13px; font-weight: 700; text-decoration: none; padding: 12px 20px; border-radius: 8px; border: 1px solid #cbd5e1;">CMS 관리자 바로가기</a>
                   </td>
                 </tr>
               </table>

@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 if (!empty($_SESSION['cms_logged_in']) && $_SESSION['cms_logged_in'] === true) {
-    header('Location: /admin2/');
+    header('Location: /ko/admin2/');
     exit;
 }
 
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['cms_user'] = 'hap';
         $_SESSION['cms_login_time'] = time();
 
-        header('Location: /admin2/');
+        header('Location: /ko/admin2/');
         exit;
     } else {
         $error = '아이디 또는 비밀번호가 올바르지 않습니다.';
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Header Box -->
     <div class="text-center mb-8">
       <div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-slate-950/90 border border-slate-700/80 text-white shadow-2xl mb-4 p-3.5 ring-4 ring-blue-500/20">
-        <img src="/logo-icon.svg" alt="NJAP Logo" class="w-full h-full object-contain filter invert brightness-200">
+        <img src="/ko/logo-icon.svg" alt="NJAP Logo" class="w-full h-full object-contain filter invert brightness-200">
       </div>
       <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Healthcare Access Portal</h1>
       <p class="text-sm text-slate-400 mt-1">메디컬 포럼 &amp; 전문의 Q&amp;A 관리자 CMS · /admin2</p>
@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
       <?php endif; ?>
 
-      <form action="/admin2/login.php" method="POST" class="space-y-4">
+      <form action="/ko/admin2/login.php" method="POST" class="space-y-4">
         <div>
           <label class="block text-xs font-semibold text-slate-300 mb-1.5">관리자 아이디</label>
           <div class="relative">
@@ -116,8 +116,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </form>
 
       <div class="mt-6 pt-4 border-t border-slate-700/60 flex items-center justify-between text-xs text-slate-400">
-        <a href="/admin/" class="hover:text-white transition-colors">기존 뉴스 CMS로 가기 →</a>
-        <a href="/forum" class="hover:text-white transition-colors">포럼 사이트 가기</a>
+        <a href="/ko/admin/" class="hover:text-white transition-colors">기존 뉴스 CMS로 가기 →</a>
+        <a href="/ko/forum" class="hover:text-white transition-colors">포럼 사이트 가기</a>
       </div>
     </div>
   </div>

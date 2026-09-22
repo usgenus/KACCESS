@@ -38,4 +38,4 @@ Disallow: /api/
 Disallow: /data/
 
 # XML Sitemaps
-Sitemap: https://kor2.njaccessportal.com/sitemap.xml
+Sitemap: https://njaccessportal.com/ko/sitemap.xml

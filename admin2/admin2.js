@@ -33,9 +33,9 @@ function switchTab(tabId) {
 // 1. Load Dashboard Statistics
 async function loadDashboardStats() {
   try {
-    const res = await fetch('/api/forum_admin.php?action=stats');
+    const res = await fetch('/ko/api/forum_admin.php?action=stats');
     if (res.status === 401) {
-      window.location.href = '/admin2/login.php';
+      window.location.href = '/ko/admin2/login.php';
       return;
     }
     const json = await res.json();
@@ -173,7 +173,7 @@ async function loadQuestionsTable() {
 // Toggle Question Status
 async function toggleQStatus(id, newStatus) {
   try {
-    const res = await fetch('/api/forum_admin.php?action=moderate_question', {
+    const res = await fetch('/ko/api/forum_admin.php?action=moderate_question', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: id, status: newStatus })
@@ -195,7 +195,7 @@ async function deleteQuestion(id) {
   if (!confirm('이 질문과 모든 답변을 영구적으로 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) return;
 
   try {
-    const res = await fetch('/api/forum_admin.php?action=delete_question', {
+    const res = await fetch('/ko/api/forum_admin.php?action=delete_question', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: id })
@@ -244,7 +244,7 @@ async function loadAnswersTable() {
       return `
         <tr class="hover:bg-slate-700/30 transition-colors">
           <td class="py-3.5 px-4 text-blue-400 font-bold max-w-xs truncate">
-            <a href="/forum/topic/${encodeURIComponent(a.questionId)}" target="_blank" class="hover:underline">
+            <a href="/ko/forum/topic/${encodeURIComponent(a.questionId)}" target="_blank" class="hover:underline">
               ${escapeHtml(a.questionTitle || '원문 보기')}
             </a>
           </td>
@@ -288,7 +288,7 @@ async function loadAnswersTable() {
 
 async function toggleAnswerStatus(id, newStatus) {
   try {
-    const res = await fetch('/api/forum_admin.php?action=moderate_answer', {
+    const res = await fetch('/ko/api/forum_admin.php?action=moderate_answer', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: id, status: newStatus })
@@ -304,7 +304,7 @@ async function toggleAnswerStatus(id, newStatus) {
 async function deleteAnswer(id) {
   if (!confirm('이 답변을 영구 삭제하시겠습니까?')) return;
   try {
-    const res = await fetch('/api/forum_admin.php?action=delete_answer', {
+    const res = await fetch('/ko/api/forum_admin.php?action=delete_answer', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: id })
@@ -327,7 +327,7 @@ async function loadUsersTable() {
   if (tbody) tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i>회원 명단 불러오는 중...</td></tr>`;
 
   try {
-    const res = await fetch('/api/forum_admin.php?action=users');
+    const res = await fetch('/ko/api/forum_admin.php?action=users');
     const json = await res.json();
     if (!json.success) return;
 
@@ -433,7 +433,7 @@ async function handleAddDoctorEmail(e) {
   if (btn) btn.disabled = true;
 
   try {
-    const res = await fetch('/api/forum_admin.php?action=add_doctor_email', {
+    const res = await fetch('/ko/api/forum_admin.php?action=add_doctor_email', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: email, title: title })
@@ -460,7 +460,7 @@ async function removeDoctorEmail(email) {
   if (!confirm(`'${email}' 전문의 등록을 취소하시겠습니까?\n해당 사용자의 의사 인증 배지가 해제됩니다.`)) return;
 
   try {
-    const res = await fetch('/api/forum_admin.php?action=remove_doctor_email', {
+    const res = await fetch('/ko/api/forum_admin.php?action=remove_doctor_email', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: email })
@@ -485,7 +485,7 @@ function promptClinicianBadge(userId, userName) {
 
 async function toggleVerifiedClinician(userId, isVerified, title = '') {
   try {
-    const res = await fetch('/api/forum_admin.php?action=toggle_verified_clinician', {
+    const res = await fetch('/ko/api/forum_admin.php?action=toggle_verified_clinician', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId: userId, isVerified: isVerified, clinicianTitle: title })
@@ -503,7 +503,7 @@ async function toggleBanUser(userId, isBanned) {
   if (!confirm(msg)) return;
 
   try {
-    const res = await fetch('/api/forum_admin.php?action=toggle_ban_user', {
+    const res = await fetch('/ko/api/forum_admin.php?action=toggle_ban_user', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId: userId, isBanned: isBanned })
@@ -593,7 +593,7 @@ async function saveQuestionSpecialty() {
       saveBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> 저장 중...`;
     }
 
-    const res = await fetch('/api/forum_admin.php?action=update_question_specialty', {
+    const res = await fetch('/ko/api/forum_admin.php?action=update_question_specialty', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: currentModalQuestion.id, specialty_id: newSpecialtyId })
@@ -650,8 +650,8 @@ function closeQModal() {
 
 // Logout
 async function handleLogout() {
-  await fetch('/api/auth.php?action=logout');
-  window.location.href = '/admin2/login.php';
+  await fetch('/ko/api/auth.php?action=logout');
+  window.location.href = '/ko/admin2/login.php';
 }
 
 function empty(v) {
@@ -678,7 +678,7 @@ async function loadEventsSection() {
   tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i>이벤트 목록을 불러오는 중...</td></tr>`;
 
   try {
-    const res = await fetch('/api/forum_admin.php?action=events');
+    const res = await fetch('/ko/api/forum_admin.php?action=events');
     const json = await res.json();
     if (!json.success || !Array.isArray(json.data)) {
       tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-red-400">이벤트 목록 로드 실패</td></tr>`;
@@ -709,7 +709,7 @@ async function loadEventsSection() {
             `}
           </td>
           <td class="py-3 px-4">
-            <a href="/forum/topic/${encodeURIComponent(ev.id)}" target="_blank" class="font-bold text-white hover:text-rose-400 transition-colors line-clamp-2">
+            <a href="/ko/forum/topic/${encodeURIComponent(ev.id)}" target="_blank" class="font-bold text-white hover:text-rose-400 transition-colors line-clamp-2">
               ${escapeHtml(ev.title)}
             </a>
             <p class="text-[11px] text-slate-400 mt-1 line-clamp-1">${escapeHtml(ev.body)}</p>
@@ -726,7 +726,7 @@ async function loadEventsSection() {
             ${dateStr}
           </td>
           <td class="py-3 px-4 text-right whitespace-nowrap space-x-1">
-            <a href="/forum/topic/${encodeURIComponent(ev.id)}" target="_blank" 
+            <a href="/ko/forum/topic/${encodeURIComponent(ev.id)}" target="_blank" 
                class="px-2.5 py-1.5 rounded-lg bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 font-semibold text-xs transition-colors inline-flex items-center gap-1">
               <span>보기</span>
               <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
@@ -774,7 +774,7 @@ async function handlePosterUpload(input) {
   formData.append('poster', file);
 
   try {
-    const res = await fetch('/api/forum_admin.php?action=upload_poster', {
+    const res = await fetch('/ko/api/forum_admin.php?action=upload_poster', {
       method: 'POST',
       body: formData
     });
@@ -833,7 +833,7 @@ async function handleCreateEvent(e) {
   btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 이벤트 등록 및 이메일 발송 중...';
 
   try {
-    const res = await fetch('/api/forum_admin.php?action=create_event', {
+    const res = await fetch('/ko/api/forum_admin.php?action=create_event', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -868,7 +868,7 @@ async function handleDeleteEvent(id) {
   }
 
   try {
-    const res = await fetch('/api/forum_admin.php?action=delete_question', {
+    const res = await fetch('/ko/api/forum_admin.php?action=delete_question', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: id })

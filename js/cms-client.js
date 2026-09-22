@@ -100,10 +100,10 @@
       if (e.stopImmediatePropagation) e.stopImmediatePropagation();
     }
     var currentPath = window.location.pathname;
-    if (currentPath === '/' || currentPath === '/index.php' || currentPath === '/index.html' || currentPath === '') {
+    if (currentPath === '/ko' || currentPath === '/ko/' || currentPath === '/' || currentPath === '/index.php' || currentPath === '/index.html' || currentPath === '') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      window.location.href = '/';
+      window.location.href = '/ko/';
     }
   }
   window.navigateToHome = navigateToHome;
@@ -188,7 +188,7 @@
       renderBillboardShowcase();
     }
     try {
-      var res = await fetch('/api/billboards.php?active_only=1&_t=' + Date.now());
+      var res = await fetch('/ko/api/billboards.php?active_only=1&_t=' + Date.now());
       var data = await res.json();
       if (data.success && data.data && data.data.length > 0) {
         billboards = data.data;
@@ -455,7 +455,7 @@
       renderBillboard2Showcase();
     }
     try {
-      var res = await fetch('/api/billboards2.php?active_only=1&_t=' + Date.now());
+      var res = await fetch('/ko/api/billboards2.php?active_only=1&_t=' + Date.now());
       var data = await res.json();
       if (data.success && data.data && data.data.length > 0) {
         billboards2 = data.data;
@@ -737,7 +737,7 @@
 
   async function initMedicalVideos() {
     try {
-      var res = await fetch('/api/videos.php?_t=' + Date.now());
+      var res = await fetch('/ko/api/videos.php?_t=' + Date.now());
       var data = await res.json();
       if (data.success && data.data && data.data.length > 0) {
         videos = data.data;
@@ -885,7 +885,7 @@
     }
 
     try {
-      var res = await fetch('/api/posts.php?_t=' + Date.now());
+      var res = await fetch('/ko/api/posts.php?_t=' + Date.now());
       var data = await res.json();
       if (data.success && data.data) {
         posts = data.data;
@@ -986,7 +986,7 @@
     }
     blogContainer.innerHTML = filtered.map(function(p) {
       return [
-        '<a class="group card-hover block h-full" href="/blog/' + (p.slug || p.id) + '">',
+        '<a class="group card-hover block h-full" href="/ko/blog/' + (p.slug || p.id) + '">',
         '  <article class="bg-white rounded-2xl overflow-hidden border border-brand-border h-full flex flex-col justify-between shadow-xs hover:shadow-md transition-all duration-300">',
         '    <div>',
         '      <div class="relative h-44 sm:h-48 overflow-hidden bg-gray-100">',
@@ -1063,7 +1063,7 @@
     }
 
     try {
-      var res = await fetch('/api/posts.php?_t=' + Date.now());
+      var res = await fetch('/ko/api/posts.php?_t=' + Date.now());
       var data = await res.json();
       if (!data.success || !Array.isArray(data.data) || data.data.length === 0) return;
       
@@ -1167,7 +1167,7 @@
         }
 
         topStoryBox.innerHTML = [
-          '<a class="group block" href="/blog/' + escapeHtml(topStory.slug || topStory.id) + '">',
+          '<a class="group block" href="/ko/blog/' + escapeHtml(topStory.slug || topStory.id) + '">',
           '  <div class="flex items-center gap-2 mb-2">',
           '    <span class="w-2.5 h-2.5 bg-red-600 inline-block"></span>',
           '    <span class="text-xs sm:text-sm font-black text-red-600 uppercase tracking-widest whitespace-nowrap">' + escapeHtml(topStory.category || '주요 뉴스') + '</span>',
@@ -1198,7 +1198,7 @@
         latestNewsBox.innerHTML = latestNews.map(function(item) {
           var itemCover = item.coverImage || (item.images && item.images[0]) || 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&q=80';
           return [
-            '<a class="group py-3.5 first:pt-0 last:pb-0 flex gap-3 items-start justify-between" href="/blog/' + escapeHtml(item.slug || item.id) + '">',
+            '<a class="group py-3.5 first:pt-0 last:pb-0 flex gap-3 items-start justify-between" href="/ko/blog/' + escapeHtml(item.slug || item.id) + '">',
             '  <div class="flex-1 min-w-0 pr-1">',
             '    <span class="text-[11px] sm:text-xs font-black text-red-600 uppercase tracking-wider block mb-1 whitespace-nowrap">' + escapeHtml(item.category || '뉴스') + '</span>',
             '    <h3 class="font-extrabold text-sm sm:text-base text-gray-950 leading-snug line-clamp-2 group-hover:text-brand-blue transition-colors">' + escapeHtml(item.title || '') + '</h3>',
@@ -1217,7 +1217,7 @@
         doctorColsBox.innerHTML = doctorPosts.slice(0, 10).map(function(dItem, dIdx) {
           var dCover = dItem.coverImage || (dItem.images && dItem.images[0]) || 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=300&q=80';
           return [
-            '<a class="group py-2.5 first:pt-0 last:pb-0 flex gap-2.5 items-start justify-between cursor-pointer" href="/blog/' + escapeHtml(dItem.slug || dItem.id) + '">',
+            '<a class="group py-2.5 first:pt-0 last:pb-0 flex gap-2.5 items-start justify-between cursor-pointer" href="/ko/blog/' + escapeHtml(dItem.slug || dItem.id) + '">',
             '  <div class="flex gap-2 items-start flex-1 min-w-0 pr-1">',
             '    <span class="text-lg sm:text-xl font-serif font-black text-red-600 leading-none w-4 shrink-0 mt-0.5 select-none">' + (dIdx + 1) + '</span>',
             '    <div class="flex-1 min-w-0">',
@@ -1238,7 +1238,7 @@
         reportsGrid.innerHTML = reportNews.map(function(p) {
           var pCover = p.coverImage || (p.images && p.images[0]) || 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=800&q=80';
           return [
-            '<a class="group card-hover" href="/blog/' + escapeHtml(p.slug || p.id) + '">',
+            '<a class="group card-hover" href="/ko/blog/' + escapeHtml(p.slug || p.id) + '">',
             '  <article class="bg-white rounded-2xl p-4 border border-gray-200/90 h-full flex flex-col justify-between shadow-sm">',
             '    <div>',
             '      <div class="relative h-40 w-full rounded-xl overflow-hidden mb-3 bg-gray-100">',
@@ -1299,7 +1299,7 @@
       }
 
       try {
-        var res = await fetch('/api/contact.php?action=submit', {
+        var res = await fetch('/ko/api/contact.php?action=submit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

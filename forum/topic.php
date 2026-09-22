@@ -4,13 +4,13 @@ require_once __DIR__ . '/components.php';
 
 $id = trim($_GET['id'] ?? '');
 if (!$id) {
-    header('Location: /forum');
+    header('Location: /ko/forum');
     exit;
 }
 
 $question = forum_get_question($id, true);
 if (!$question || (($question['status'] ?? '') === 'hidden')) {
-    header('Location: /forum');
+    header('Location: /ko/forum');
     exit;
 }
 
@@ -31,15 +31,15 @@ $isQuestionClinician = !empty($question['authorBadge']) && str_contains($questio
   <meta name="description" content="<?= htmlspecialchars(mb_substr(strip_tags($question['body']), 0, 160)) ?>" />
   <meta name="keywords" content="<?= htmlspecialchars($specialty['name_ko'] ?? '전문의 상담') ?>, <?= htmlspecialchars($specialty['name_en'] ?? '') ?>, 건강 Q&A, 의료 질문 정보 나눔, 전문의 답변, 뉴저지 한인 병원" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-  <link rel="canonical" href="https://kor2.njaccessportal.com/forum/topic/<?= urlencode($question['id']) ?>" />
+  <link rel="canonical" href="https://njaccessportal.com/ko/forum/topic/<?= urlencode($question['id']) ?>" />
 
   <!-- OpenGraph / Social Media -->
   <meta property="og:site_name" content="NJAP 메디컬 포럼 · 뉴저지 의료접근센터" />
   <meta property="og:type" content="article" />
   <meta property="og:title" content="<?= htmlspecialchars($question['title']) ?>" />
   <meta property="og:description" content="<?= htmlspecialchars(mb_substr(strip_tags($question['body']), 0, 160)) ?>" />
-  <meta property="og:url" content="https://kor2.njaccessportal.com/forum/topic/<?= urlencode($question['id']) ?>" />
-  <meta property="og:image" content="<?= htmlspecialchars(!empty($question['images'][0]) ? (str_starts_with($question['images'][0], 'http') ? $question['images'][0] : 'https://kor2.njaccessportal.com/' . ltrim($question['images'][0], '/')) : 'https://kor2.njaccessportal.com/logo-icon.svg') ?>" />
+  <meta property="og:url" content="https://njaccessportal.com/ko/forum/topic/<?= urlencode($question['id']) ?>" />
+  <meta property="og:image" content="<?= htmlspecialchars(!empty($question['images'][0]) ? (str_starts_with($question['images'][0], 'http') ? $question['images'][0] : 'https://njaccessportal.com/ko/' . ltrim($question['images'][0], '/')) : 'https://njaccessportal.com/ko/logo-icon.svg') ?>" />
   <meta property="article:published_time" content="<?= htmlspecialchars(date('c', strtotime($question['createdAt'] ?? 'now'))) ?>" />
   <meta property="article:section" content="<?= htmlspecialchars($specialty['name_ko'] ?? '의학 Q&A') ?>" />
 
@@ -47,7 +47,7 @@ $isQuestionClinician = !empty($question['authorBadge']) && str_contains($questio
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="<?= htmlspecialchars($question['title']) ?>" />
   <meta name="twitter:description" content="<?= htmlspecialchars(mb_substr(strip_tags($question['body']), 0, 160)) ?>" />
-  <meta name="twitter:image" content="<?= htmlspecialchars(!empty($question['images'][0]) ? (str_starts_with($question['images'][0], 'http') ? $question['images'][0] : 'https://kor2.njaccessportal.com/' . ltrim($question['images'][0], '/')) : 'https://kor2.njaccessportal.com/logo-icon.svg') ?>" />
+  <meta name="twitter:image" content="<?= htmlspecialchars(!empty($question['images'][0]) ? (str_starts_with($question['images'][0], 'http') ? $question['images'][0] : 'https://njaccessportal.com/ko/' . ltrim($question['images'][0], '/')) : 'https://njaccessportal.com/ko/logo-icon.svg') ?>" />
 
   <!-- Schema.org JSON-LD Structured Data: Google QAPage Rich Results -->
   <script type="application/ld+json">
@@ -71,7 +71,7 @@ $isQuestionClinician = !empty($question['authorBadge']) && str_contains($questio
                   'text' => strip_tags($ans['body']),
                   'dateCreated' => date('c', strtotime($ans['createdAt'] ?? 'now')),
                   'upvoteCount' => (int)($ans['upvotes'] ?? 0),
-                  'url' => 'https://kor2.njaccessportal.com/forum/topic/' . urlencode($question['id']) . '#ans-' . urlencode($ans['id']),
+                  'url' => 'https://njaccessportal.com/ko/forum/topic/' . urlencode($question['id']) . '#ans-' . urlencode($ans['id']),
                   'author' => [
                       '@type' => 'Person',
                       'name' => $ans['authorName'] ?? '답변자'
@@ -88,7 +88,7 @@ $isQuestionClinician = !empty($question['authorBadge']) && str_contains($questio
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/_next/static/chunks/1fosv8xgmgdeu.css" />
+  <link rel="stylesheet" href="/ko/_next/static/chunks/1fosv8xgmgdeu.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Identity Services (GIS) -->
@@ -190,7 +190,7 @@ $isQuestionClinician = !empty($question['authorBadge']) && str_contains($questio
       
       <!-- Top Breadcrumbs & Back Bar -->
       <div class="flex items-center justify-between gap-4 mb-4 text-xs font-semibold text-slate-500">
-        <a href="/forum?specialty=<?= urlencode($question['specialtyId'] ?? '') ?>&view=topics" 
+        <a href="/ko/forum?specialty=<?= urlencode($question['specialtyId'] ?? '') ?>&view=topics" 
            class="inline-flex items-center gap-2 hover:text-blue-600 transition-colors">
           <i class="fa-solid fa-arrow-left"></i>
           <span><?= $specialty ? htmlspecialchars($specialty['name_ko']) . ' 목록으로' : '포럼 목록으로' ?></span>
@@ -204,7 +204,7 @@ $isQuestionClinician = !empty($question['authorBadge']) && str_contains($questio
       <div class="mb-6">
         <div class="flex items-center gap-2 mb-2 flex-wrap">
           <?php if ($specialty): ?>
-            <a href="/forum?specialty=<?= urlencode($specialty['id']) ?>&view=topics" 
+            <a href="/ko/forum?specialty=<?= urlencode($specialty['id']) ?>&view=topics" 
                class="inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-lg border bg-white text-slate-800 shadow-2xs hover:border-blue-400 transition-colors">
               <span class="w-2.5 h-2.5 rounded-xs shrink-0" style="background-color: <?= htmlspecialchars($specialty['color']) ?>"></span>
               <span><?= htmlspecialchars($specialty['name_ko']) ?></span>
@@ -512,7 +512,7 @@ $isQuestionClinician = !empty($question['authorBadge']) && str_contains($questio
               </h4>
               <div class="space-y-3">
                 <?php foreach ($relatedQuestions as $rq): ?>
-                  <a href="/forum/topic/<?= htmlspecialchars($rq['id']) ?>" 
+                  <a href="/ko/forum/topic/<?= htmlspecialchars($rq['id']) ?>" 
                      class="block group text-xs text-slate-700 hover:text-blue-600 font-medium leading-snug">
                     <span class="group-hover:underline line-clamp-2"><?= htmlspecialchars($rq['title']) ?></span>
                     <span class="block text-[10px] text-slate-400 mt-0.5">답변 <?= (int)$rq['replyCount'] ?>개</span>
@@ -593,7 +593,7 @@ $isQuestionClinician = !empty($question['authorBadge']) && str_contains($questio
         formData.append('image', file);
 
         try {
-          const res = await fetch('/api/forum.php?action=upload_image', {
+          const res = await fetch('/ko/api/forum.php?action=upload_image', {
             method: 'POST',
             body: formData
           });
@@ -649,7 +649,7 @@ $isQuestionClinician = !empty($question['authorBadge']) && str_contains($questio
       btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 등록 중...';
 
       try {
-        const res = await fetch('/api/forum.php?action=reply', {
+        const res = await fetch('/ko/api/forum.php?action=reply', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -681,7 +681,7 @@ $isQuestionClinician = !empty($question['authorBadge']) && str_contains($questio
       }
 
       try {
-        const res = await fetch('/api/forum.php?action=upvote', {
+        const res = await fetch('/ko/api/forum.php?action=upvote', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ answer_id: answerId })

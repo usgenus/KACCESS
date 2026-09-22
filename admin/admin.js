@@ -79,11 +79,11 @@ async function fetchAllData() {
   try {
     const t = Date.now();
     const [bRes, b2Res, vRes, pRes, inqRes] = await Promise.all([
-      fetch(`/api/billboards.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false })),
-      fetch(`/api/billboards2.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false })),
-      fetch(`/api/videos.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false })),
-      fetch(`/api/posts.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false })),
-      fetch(`/api/contact.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false }))
+      fetch(`/ko/api/billboards.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false })),
+      fetch(`/ko/api/billboards2.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false })),
+      fetch(`/ko/api/videos.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false })),
+      fetch(`/ko/api/posts.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false })),
+      fetch(`/ko/api/contact.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false }))
     ]);
 
     if (bRes.success) {
@@ -122,10 +122,10 @@ async function fetchAllData() {
 async function handleLogout() {
   if (!confirm('로그아웃 하시겠습니까?')) return;
   try {
-    await fetch('/api/auth.php?action=logout');
-    window.location.href = '/admin/login.php';
+    await fetch('/ko/api/auth.php?action=logout');
+    window.location.href = '/ko/admin/login.php';
   } catch (err) {
-    window.location.href = '/admin/login.php';
+    window.location.href = '/ko/admin/login.php';
   }
 }
 
@@ -332,7 +332,7 @@ async function handleSaveBillboard(e) {
   };
 
   try {
-    const res = await fetch('/api/billboards.php', {
+    const res = await fetch('/ko/api/billboards.php', {
       method: isEdit ? 'PUT' : 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
@@ -354,7 +354,7 @@ async function handleSaveBillboard(e) {
 async function deleteBillboard(id) {
   if (!confirm('이 갤러리 빌보드를 삭제하시겠습니까?')) return;
   try {
-    const res = await fetch(`/api/billboards.php?id=${id}`, { method: 'DELETE' });
+    const res = await fetch(`/ko/api/billboards.php?id=${id}`, { method: 'DELETE' });
     const data = await res.json();
     if (data.success) {
       showToast('빌보드가 삭제되었습니다.');
@@ -505,7 +505,7 @@ async function handleSaveBillboard2(e) {
   };
 
   try {
-    const res = await fetch('/api/billboards2.php', {
+    const res = await fetch('/ko/api/billboards2.php', {
       method: isEdit ? 'PUT' : 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
@@ -526,7 +526,7 @@ async function handleSaveBillboard2(e) {
 async function deleteBillboard2(id) {
   if (!confirm('이 갤러리 빌보드 2를 삭제하시겠습니까?')) return;
   try {
-    const res = await fetch(`/api/billboards2.php?id=${id}`, { method: 'DELETE' });
+    const res = await fetch(`/ko/api/billboards2.php?id=${id}`, { method: 'DELETE' });
     const data = await res.json();
     if (data.success) {
       showToast('빌보드 2가 삭제되었습니다.');
@@ -698,7 +698,7 @@ async function handleSaveVideo(e) {
   };
 
   try {
-    const res = await fetch('/api/videos.php', {
+    const res = await fetch('/ko/api/videos.php', {
       method: isEdit ? 'PUT' : 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
@@ -720,7 +720,7 @@ async function handleSaveVideo(e) {
 async function deleteVideo(id) {
   if (!confirm('이 의학비디오를 삭제하시겠습니까?')) return;
   try {
-    const res = await fetch(`/api/videos.php?id=${id}`, { method: 'DELETE' });
+    const res = await fetch(`/ko/api/videos.php?id=${id}`, { method: 'DELETE' });
     const data = await res.json();
     if (data.success) {
       showToast('의학비디오가 삭제되었습니다.');
@@ -837,12 +837,12 @@ function renderPosts() {
       </div>
 
       <div class="px-5 pb-5 pt-2 flex items-center justify-between border-t border-slate-700/40">
-        <a href="/blog/${p.slug || p.id}" target="_blank" class="text-[11px] text-blue-400 hover:text-blue-300 font-mono truncate max-w-[120px] flex items-center gap-1 hover:underline">
+        <a href="/ko/blog/${p.slug || p.id}" target="_blank" class="text-[11px] text-blue-400 hover:text-blue-300 font-mono truncate max-w-[120px] flex items-center gap-1 hover:underline">
           <span>/${p.slug || ''}</span>
           <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
         </a>
         <div class="flex items-center gap-2">
-          <a href="/blog/${p.slug || p.id}" target="_blank" class="px-2.5 py-1.5 bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 rounded-xl text-xs font-semibold flex items-center gap-1 transition-all">
+          <a href="/ko/blog/${p.slug || p.id}" target="_blank" class="px-2.5 py-1.5 bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 rounded-xl text-xs font-semibold flex items-center gap-1 transition-all">
             <span>보기 ↗</span>
           </a>
           <button onclick="editPost('${p.id}')" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-white rounded-xl text-xs font-semibold flex items-center gap-1 transition-all">
@@ -1463,7 +1463,7 @@ async function uploadMultiplePostImages(input) {
     try {
       const formData = new FormData();
       formData.append('file', file);
-      const res = await fetch('/api/upload.php', { method: 'POST', body: formData });
+      const res = await fetch('/ko/api/upload.php', { method: 'POST', body: formData });
       const data = await res.json();
       if (data.success && data.url) {
         currentPostImages.push(data.url);
@@ -1550,7 +1550,7 @@ async function handleSavePost(e) {
   };
 
   try {
-    const res = await fetch('/api/posts.php', {
+    const res = await fetch('/ko/api/posts.php', {
       method: isEdit ? 'PUT' : 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
@@ -1572,7 +1572,7 @@ async function handleSavePost(e) {
 async function deletePost(id) {
   if (!confirm('이 기사를 삭제하시겠습니까?')) return;
   try {
-    const res = await fetch(`/api/posts.php?id=${id}`, { method: 'DELETE' });
+    const res = await fetch(`/ko/api/posts.php?id=${id}`, { method: 'DELETE' });
     const data = await res.json();
     if (data.success) {
       showToast('기사가 삭제되었습니다.');
@@ -1590,7 +1590,7 @@ async function deletePost(id) {
 // =========================================================
 async function fetchMediaFiles() {
   try {
-    const res = await fetch('/api/upload.php?action=list');
+    const res = await fetch('/ko/api/upload.php?action=list');
     const data = await res.json();
     let files = (data.success && data.files) ? data.files : [];
 
@@ -1682,7 +1682,7 @@ function copyMediaUrl(url) {
 async function deleteMediaFile(url) {
   if (!confirm('이 미디어 파일을 삭제하시겠습니까?')) return;
   try {
-    const res = await fetch(`/api/upload.php?action=delete&url=${encodeURIComponent(url)}`, { method: 'DELETE' });
+    const res = await fetch(`/ko/api/upload.php?action=delete&url=${encodeURIComponent(url)}`, { method: 'DELETE' });
     const data = await res.json();
     if (data.success) {
       showToast('파일이 삭제되었습니다.');
@@ -1707,7 +1707,7 @@ async function uploadFieldFile(input, targetInputId, previewId) {
   try {
     const formData = new FormData();
     formData.append('file', file);
-    const res = await fetch('/api/upload.php', { method: 'POST', body: formData });
+    const res = await fetch('/ko/api/upload.php', { method: 'POST', body: formData });
     const data = await res.json();
 
     if (data.success && data.url) {
@@ -1767,7 +1767,7 @@ async function handleDirectFileUpload(files) {
     try {
       const formData = new FormData();
       formData.append('file', file);
-      await fetch('/api/upload.php', { method: 'POST', body: formData });
+      await fetch('/ko/api/upload.php', { method: 'POST', body: formData });
     } catch (e) {}
   }
 
@@ -1814,7 +1814,7 @@ function closeModal(id) {
 async function fetchInquiries(showNotification = false) {
   try {
     const t = Date.now();
-    const res = await fetch(`/api/contact.php?_t=${t}`, { cache: 'no-store' });
+    const res = await fetch(`/ko/api/contact.php?_t=${t}`, { cache: 'no-store' });
     const data = await res.json();
     if (data.success) {
       state.inquiries = data.data || [];
@@ -1863,7 +1863,7 @@ async function toggleInquiryResolved(e, id) {
     e.stopPropagation();
   }
   try {
-    const res = await fetch('/api/contact.php?action=toggle_resolved', {
+    const res = await fetch('/ko/api/contact.php?action=toggle_resolved', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id })
@@ -1895,7 +1895,7 @@ async function deleteInquiry(e, id) {
   if (!confirm(`'${name}' 님의 문의 내역을 영구히 삭제하시겠습니까?`)) return;
 
   try {
-    const res = await fetch('/api/contact.php?action=delete', {
+    const res = await fetch('/ko/api/contact.php?action=delete', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id })

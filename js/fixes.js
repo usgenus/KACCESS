@@ -503,7 +503,7 @@
 
     return [
       '<!-- 1. 홈 -->',
-      '<a href="/" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isHome ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
+      '<a href="/ko/" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isHome ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
       '  <div class="flex items-center gap-3">',
       '    <svg class="w-5 h-5 ' + (isHome ? 'text-brand-blue' : 'text-slate-400') + ' shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>',
       '    <span class="text-[15px]">홈</span>',
@@ -512,7 +512,7 @@
       '</a>',
 
       '<!-- 2. 뉴스 -->',
-      '<a href="/blog" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isBlog ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
+      '<a href="/ko/blog" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isBlog ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
       '  <div class="flex items-center gap-3">',
       '    <svg class="w-5 h-5 ' + (isBlog ? 'text-brand-blue' : 'text-slate-400') + ' shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>',
       '    <span class="text-[15px]">뉴스</span>',
@@ -521,7 +521,7 @@
       '</a>',
 
       '<!-- 2.5 커뮤니티 포럼 -->',
-      '<a href="/forum" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isForum ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
+      '<a href="/ko/forum" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isForum ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
       '  <div class="flex items-center gap-3">',
       '    <svg class="w-5 h-5 ' + (isForum ? 'text-brand-blue' : 'text-slate-400') + ' shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>',
       '    <span class="text-[15px]">커뮤니티 포럼</span>',
@@ -530,7 +530,7 @@
       '</a>',
 
       '<!-- 3. 시니어 케어 -->',
-      '<a href="/senior-care" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isSenior ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
+      '<a href="/ko/senior-care" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isSenior ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
       '  <div class="flex items-center gap-3">',
       '    <svg class="w-5 h-5 ' + (isSenior ? 'text-brand-blue' : 'text-slate-400') + ' shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>',
       '    <span class="text-[15px]">시니어 케어</span>',
@@ -539,7 +539,7 @@
       '</a>',
 
       '<!-- 4. 메디케어 & ACA -->',
-      '<a href="/medicare" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isMedicare ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
+      '<a href="/ko/medicare" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isMedicare ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
       '  <div class="flex items-center gap-3">',
       '    <svg class="w-5 h-5 ' + (isMedicare ? 'text-brand-blue' : 'text-slate-400') + ' shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>',
       '    <span class="text-[15px]">메디케어 &amp; ACA</span>',
@@ -548,7 +548,7 @@
       '</a>',
 
       '<!-- 5. 환자도우미 -->',
-      '<a href="/tool" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isTool ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
+      '<a href="/ko/tool" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isTool ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
       '  <div class="flex items-center gap-3">',
       '    <svg class="w-5 h-5 ' + (isTool ? 'text-brand-blue' : 'text-slate-400') + ' shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>',
       '    <span class="text-[15px]">환자도우미</span>',
@@ -557,7 +557,7 @@
       '</a>',
 
       '<!-- 6. 소개 -->',
-      '<a href="/about" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isAbout ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
+      '<a href="/ko/about" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isAbout ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
       '  <div class="flex items-center gap-3">',
       '    <svg class="w-5 h-5 ' + (isAbout ? 'text-brand-blue' : 'text-slate-400') + ' shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
       '    <span class="text-[15px]">소개</span>',
@@ -569,7 +569,7 @@
       '<div class="pt-2 pb-1">',
       '  <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3.5 bg-[#FEE500] hover:bg-[#FDD835] active:bg-[#FBC02D] text-[#191919] rounded-xl font-bold text-sm shadow-xs transition-all cursor-pointer">',
       '    <div class="flex items-center gap-2.5">',
-      '      <img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" />',
+      '      <img src="/ko/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" />',
       '      <div class="flex flex-col text-left">',
       '        <span class="text-sm font-bold leading-tight">카카오톡 1:1 상담 바로가기</span>',
       '        <span class="text-[11px] font-medium text-black/70">의료 복지 및 시니어 케어 실시간 문의</span>',
@@ -943,8 +943,8 @@
         div.classList.remove('desktop-nav-links');
         continue;
       }
-      var homeA = div.querySelector('a[href="/"]');
-      var blogA = div.querySelector('a[href="/blog"]');
+      var homeA = div.querySelector('a[href="/ko/"]');
+      var blogA = div.querySelector('a[href="/ko/blog"]');
       if (homeA && blogA && (div.classList.contains('md:flex') || div.className.indexOf('items-center') !== -1) && !div.classList.contains('md:hidden') && div.id !== 'mobile-menu-dropdown') {
         desktopDiv = div;
         break;
@@ -956,7 +956,7 @@
       desktopDiv.style.gap = '26px';
 
       var seniorA = desktopDiv.querySelector('a[href*="senior-care"]');
-      var blogA = desktopDiv.querySelector('a[href="/blog"]');
+      var blogA = desktopDiv.querySelector('a[href="/ko/blog"]');
       if (!seniorA && blogA) {
         seniorA = document.createElement('a');
         seniorA.href = '/senior-care';
@@ -984,7 +984,7 @@
     // 3. Footer
     var footer = document.querySelector('footer');
     if (footer) {
-      var footerBlogA = footer.querySelector('a[href="/blog"]');
+      var footerBlogA = footer.querySelector('a[href="/ko/blog"]');
       var footerSeniorA = footer.querySelector('a[href*="senior-care"]');
       if (footerBlogA && !footerSeniorA) {
         var li = document.createElement('li');
@@ -1127,10 +1127,10 @@
         e.stopPropagation();
       }
       var cur = window.location.pathname;
-      if (cur === '/' || cur === '/index.php' || cur === '/index.html' || cur === '') {
+      if (cur === '/ko' || cur === '/ko/' || cur === '/' || cur === '/index.php' || cur === '/index.html' || cur === '') {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
-        window.location.href = '/';
+        window.location.href = '/ko/';
       }
     };
   }
@@ -1205,7 +1205,7 @@
       // 1. Navigation logo
       var nav = document.querySelector('nav');
       if (nav) {
-        var brandLinks = nav.querySelectorAll('a.njap-brand-link, a[href="/"]');
+        var brandLinks = nav.querySelectorAll('a.njap-brand-link, a[href="/ko/"]');
         for (var i = 0; i < brandLinks.length; i++) {
           var link = brandLinks[i];
           var text = (link.textContent || '').trim();
@@ -1218,7 +1218,7 @@
       // 2. Footer logo
       var footers = document.querySelectorAll('footer');
       for (var f = 0; f < footers.length; f++) {
-        var fLinks = footers[f].querySelectorAll('a[href="/"]');
+        var fLinks = footers[f].querySelectorAll('a[href="/ko/"]');
         for (var j = 0; j < fLinks.length; j++) {
           var fLink = fLinks[j];
           var fText = (fLink.textContent || '').trim();

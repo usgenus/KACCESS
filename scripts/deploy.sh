@@ -5,13 +5,13 @@ set -e
 # SAFE DEPLOY SCRIPT: SYNC LIVE CMS DATA FIRST BEFORE DEPLOY
 # =========================================================
 
-echo "🔄 Fetching live data from https://kor2.njaccessportal.com..."
+echo "🔄 Fetching live data from https://njaccessportal.com/ko..."
 
-LIVE_POSTS=$(curl -s "https://kor2.njaccessportal.com/api/posts.php" || echo '{"success":false}')
-LIVE_VIDEOS=$(curl -s "https://kor2.njaccessportal.com/api/videos.php" || echo '{"success":false}')
-LIVE_BILLBOARDS=$(curl -s "https://kor2.njaccessportal.com/api/billboards.php" || echo '{"success":false}')
-LIVE_BILLBOARDS2=$(curl -s "https://kor2.njaccessportal.com/api/billboards2.php" || echo '{"success":false}')
-LIVE_INQUIRIES=$(curl -s "https://kor2.njaccessportal.com/api/contact.php" || echo '{"success":false}')
+LIVE_POSTS=$(curl -s "https://njaccessportal.com/ko/api/posts.php" || echo '{"success":false}')
+LIVE_VIDEOS=$(curl -s "https://njaccessportal.com/ko/api/videos.php" || echo '{"success":false}')
+LIVE_BILLBOARDS=$(curl -s "https://njaccessportal.com/ko/api/billboards.php" || echo '{"success":false}')
+LIVE_BILLBOARDS2=$(curl -s "https://njaccessportal.com/ko/api/billboards2.php" || echo '{"success":false}')
+LIVE_INQUIRIES=$(curl -s "https://njaccessportal.com/ko/api/contact.php" || echo '{"success":false}')
 
 node -e '
 const fs = require("fs");
@@ -88,7 +88,7 @@ uniqueUploads.forEach(relPath => {
   if (!fs.existsSync(localPath) || fs.statSync(localPath).size === 0) {
     try {
       const { execSync } = require("child_process");
-      execSync(`curl -s "https://kor2.njaccessportal.com${relPath}" -o "${localPath}"`);
+      execSync(`curl -s "https://njaccessportal.com/ko${relPath}" -o "${localPath}"`);
       console.log("📥 Downloaded live media file:", relPath);
     } catch(err) {}
   }

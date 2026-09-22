@@ -588,7 +588,7 @@
                           className: "flex flex-col sm:flex-row gap-3 justify-center",
                           children: [
                             (0, s.jsx)("button", { onClick: function() { setResult(null); setStep(1); }, className: "btn-outline text-sm py-3 px-6", children: "다시 진단하기" }),
-                            (0, s.jsx)("a", { href: "https://kor2.njaccessportal.com/tool", className: "btn-primary text-sm py-3 px-6 inline-flex items-center justify-center gap-2", children: "🤖 AI 도우미 연결 (맞춤 무료 상담) →" })
+                            (0, s.jsx)("a", { href: "https://njaccessportal.com/ko/tool", className: "btn-primary text-sm py-3 px-6 inline-flex items-center justify-center gap-2", children: "🤖 AI 도우미 연결 (맞춤 무료 상담) →" })
                           ]
                         })
                       ]
@@ -624,7 +624,7 @@
                               children: "다음 단계 →"
                             }),
                             (0, s.jsx)("a", {
-                              href: "https://kor2.njaccessportal.com/tool",
+                              href: "https://njaccessportal.com/ko/tool",
                               className: "ai-single-btn",
                               children: "🤖 AI 도우미 연결 (맞춤 무료 상담) →"
                             })

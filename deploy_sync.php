@@ -2,7 +2,7 @@
 /**
  * Automated deploy sync for mobile accordion menu and portal updates
  */
-$targetDir = '/home/u738358110/domains/kor2.njaccessportal.com/public_html';
+$targetDir = '/home/u738358110/domains/njaccessportal.com/public_html/ko';
 $tarUrl = 'https://raw.githubusercontent.com/usgenus/KACCESS/main/deploy_bundle.tar.gz';
 $tarFile = $targetDir . '/deploy_bundle.tar.gz';
 

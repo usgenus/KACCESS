@@ -25,7 +25,7 @@ foreach ($specialties as $s) {
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/_next/static/chunks/1fosv8xgmgdeu.css" />
+  <link rel="stylesheet" href="/ko/_next/static/chunks/1fosv8xgmgdeu.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Identity Services (GIS) -->
@@ -127,7 +127,7 @@ foreach ($specialties as $s) {
       
       <!-- Breadcrumb -->
       <div class="flex items-center gap-2 mb-4 text-xs font-semibold text-slate-500">
-        <a href="/forum" class="hover:text-blue-600 transition-colors">포럼 홈</a>
+        <a href="/ko/forum" class="hover:text-blue-600 transition-colors">포럼 홈</a>
         <i class="fa-solid fa-chevron-right text-[9px] text-slate-300"></i>
         <span class="text-slate-800">질문/정보 공유 (Create a New Topic)</span>
       </div>
@@ -144,7 +144,7 @@ foreach ($specialties as $s) {
               증상과 질문을 상세히 적어주시면 각 분야별 공인 전문의 및 커뮤니티로부터 정확한 답변을 받으실 수 있습니다.
             </p>
           </div>
-          <a href="/forum" class="text-xs font-semibold text-slate-400 hover:text-slate-600 p-2">
+          <a href="/ko/forum" class="text-xs font-semibold text-slate-400 hover:text-slate-600 p-2">
             <i class="fa-solid fa-xmark text-base"></i>
           </a>
         </div>
@@ -259,7 +259,7 @@ foreach ($specialties as $s) {
               ※ 제출 전 개인 식별 번호(SSN, 주민번호 등)가 포함되지 않았는지 확인해 주세요.
             </span>
             <div class="flex items-center gap-2">
-              <a href="/forum" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-600 transition-colors">
+              <a href="/ko/forum" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-600 transition-colors">
                 취소
               </a>
               <button type="submit" id="btn-submit-ask" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-6 py-2.5 rounded-xl transition-all shadow-xs flex items-center gap-2">
@@ -322,7 +322,7 @@ foreach ($specialties as $s) {
         formData.append('image', file);
 
         try {
-          const res = await fetch('/api/forum.php?action=upload_image', {
+          const res = await fetch('/ko/api/forum.php?action=upload_image', {
             method: 'POST',
             body: formData
           });
@@ -401,7 +401,7 @@ foreach ($specialties as $s) {
       btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 등록 중...';
 
       try {
-        const res = await fetch('/api/forum.php?action=ask', {
+        const res = await fetch('/ko/api/forum.php?action=ask', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -416,7 +416,7 @@ foreach ($specialties as $s) {
         const data = await res.json();
         const createdId = data.data?.id || data.question?.id;
         if (data.success && createdId) {
-          window.location.href = '/forum/topic/' + encodeURIComponent(createdId);
+          window.location.href = '/ko/forum/topic/' + encodeURIComponent(createdId);
         } else {
           alert(data.error || '질문 등록에 실패했습니다.');
           btn.disabled = false;

@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 if (!empty($_SESSION['cms_logged_in']) && $_SESSION['cms_logged_in'] === true) {
-    header('Location: /admin/');
+    header('Location: /ko/admin/');
     exit;
 }
 ?>
@@ -40,7 +40,7 @@ if (!empty($_SESSION['cms_logged_in']) && $_SESSION['cms_logged_in'] === true) {
     <!-- Header Box -->
     <div class="text-center mb-8">
       <div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-slate-950/90 border border-slate-700/80 text-white shadow-2xl mb-4 p-3.5 ring-4 ring-blue-500/20">
-        <img src="/logo-icon.svg" alt="NJAP Logo" class="w-full h-full object-contain filter invert brightness-200">
+        <img src="/ko/logo-icon.svg" alt="NJAP Logo" class="w-full h-full object-contain filter invert brightness-200">
       </div>
       <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Healthcare Access Portal</h1>
       <p class="text-sm text-slate-400 mt-1">의료 포털 통합 콘텐츠 관리 시스템 · NJAP</p>
@@ -93,7 +93,7 @@ if (!empty($_SESSION['cms_logged_in']) && $_SESSION['cms_logged_in'] === true) {
       </form>
 
       <div class="mt-6 pt-5 border-t border-slate-700/60 text-center">
-        <a href="/" class="text-xs text-slate-400 hover:text-slate-200 transition-colors flex items-center justify-center gap-1">
+        <a href="/ko/" class="text-xs text-slate-400 hover:text-slate-200 transition-colors flex items-center justify-center gap-1">
           <span>←</span>
           <span>포털 메인 홈페이지로 돌아가기</span>
         </a>
@@ -120,7 +120,7 @@ if (!empty($_SESSION['cms_logged_in']) && $_SESSION['cms_logged_in'] === true) {
       const password = document.getElementById('password').value.trim();
 
       try {
-        const res = await fetch('/api/auth.php', {
+        const res = await fetch('/ko/api/auth.php', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ username, password })
@@ -130,7 +130,7 @@ if (!empty($_SESSION['cms_logged_in']) && $_SESSION['cms_logged_in'] === true) {
         if (data.success) {
           btn.innerHTML = '<span>✅ 로그인 완료! 이동 중...</span>';
           setTimeout(() => {
-            window.location.href = '/admin/';
+            window.location.href = '/ko/admin/';
           }, 300);
         } else {
           errBox.classList.remove('hidden');
