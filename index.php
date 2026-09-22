@@ -1074,7 +1074,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
             </g>
           </svg>
         </a>
-        <div class="hidden md:flex items-center">
+        <div class="hidden md:flex items-center" style="display: flex; align-items: center; gap: 26px;">
           <a class="nav-link pb-0.5 font-bold text-brand-blue cursor-pointer" href="/ko/" onclick="navigateToHome(event); return false;">홈</a>
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/blog">뉴스</a>
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/forum">커뮤니티 포럼</a>
@@ -1214,7 +1214,12 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                          webkit-playsinline 
                          preload="auto"
                          style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center;">
-                    <source src="<?= htmlspecialchars($b['mediaUrl']) ?>" type="video/mp4">
+                    <?php 
+    $mUrl = $b['mediaUrl'] ?? '';
+    $koMUrl = (strpos($mUrl, '/') === 0 && strpos($mUrl, '/ko/') !== 0) ? '/ko' . $mUrl : $mUrl;
+  ?>
+  <source src="<?= htmlspecialchars($koMUrl) ?>" type="video/mp4">
+  <source src="<?= htmlspecialchars($mUrl) ?>" type="video/mp4">
                   </video>
                   <script>
                     (function(){
@@ -2313,8 +2318,8 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
   </script>
   
 
-  <script src="/js/cms-client.js?v=<?= time() ?>"></script>
-  <script src="/js/fixes.js?v=<?= time() ?>"></script>
-<script src="/js/njap-translate.js?v=3.0.0"></script>
+  <script src="/ko/js/cms-client.js?v=<?= time() ?>"></script>
+  <script src="/ko/js/fixes.js?v=7.0.0 time() ?>"></script>
+<script src="/ko/js/njap-translate.js?v=3.0.0"></script>
 </body>
 </html>

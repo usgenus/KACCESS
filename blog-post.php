@@ -558,7 +558,7 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
             </g>
           </svg>
         </a>
-        <div class="hidden md:flex items-center">
+        <div class="hidden md:flex items-center" style="display: flex; align-items: center; gap: 26px;">
           <a class="nav-link pb-0.5 font-medium text-sm text-slate-700 hover:text-brand-blue cursor-pointer" href="/ko/" onclick="navigateToHome(event); return false;">홈</a>
           <a class="nav-link pb-0.5 font-medium text-sm text-brand-blue font-bold" href="/ko/blog">뉴스</a>
           <a class="nav-link pb-0.5 font-medium text-sm text-slate-700 hover:text-brand-blue" href="/ko/forum">커뮤니티 포럼</a>
@@ -1014,7 +1014,7 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
     </div>
   </footer>
 
-  <script src="/js/cms-client.js?v=3.5.0"></script>
+  <script src="/ko/js/cms-client.js?v=3.5.0"></script>
 
   <!-- Interactive Comments Script -->
   <script>
@@ -1432,8 +1432,8 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
       document.addEventListener('DOMContentLoaded', loadComments);
     })();
   </script>
-  <script src="/js/cms-client.js?v=3.5.0"></script>
-  <script src="/js/fixes.js?v=6.0.0"></script>
-<script src="/js/njap-translate.js?v=3.0.0"></script>
+  <script src="/ko/js/cms-client.js?v=3.5.0"></script>
+  <script src="/ko/js/fixes.js?v=7.0.0"></script>
+<script src="/ko/js/njap-translate.js?v=3.0.0"></script>
 </body>
 </html>

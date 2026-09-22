@@ -280,8 +280,11 @@
       'html.senior-mode-2 [class*="text-[18px]"] { font-size: 25.5px !important; }',
 
       /* Senior Mode Button Base (Desktop style) */
+      '  /* Desktop Navigation Gap Enforcer */',
+      '@media (min-width: 768px) { nav .hidden.md\\:flex, .desktop-nav-links { display: flex !important; align-items: center !important; gap: 26px !important; } }',
+      '  /* Senior Mode Button Base */',
       '.senior-mode-btn {',
-      '  align-items: center !important; justify-content: center !important; gap: 4px !important;',
+      '  display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 4px !important;',
       '  padding: 3px 9px !important; border-radius: 9999px !important; border: 1.5px solid #cbd5e1 !important;',
       '  background: #ffffff !important; color: #334155 !important; font-size: 11px !important; font-weight: 700 !important;',
       '  letter-spacing: -0.01em !important; cursor: pointer !important; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;',
@@ -301,7 +304,7 @@
       '   ======================================================== */',
       '@media (max-width: 767px) {',
       '  /* 1. Remove Senior Mode button completely on mobile (nav, header & dropdowns) */',
-      '  .senior-mode-btn, #senior-mode-btn, [id*="senior-mode"], .mobile-senior-box { display: none !important; }',
+      '  /* Mobile senior mode shown in drawer */',
       '',
       '  /* 2. Compact language switch */',
       '  nav #en-translate-btn { padding: 2px 7px !important; font-size: 9.5px !important; font-weight: 700 !important; height: 20px !important; line-height: 1.2 !important; border-radius: 9999px !important; border-width: 1px !important; letter-spacing: 0.02em !important; white-space: nowrap !important; }',
@@ -502,6 +505,16 @@
     var isAbout = curPath.indexOf('/about') === 0;
 
     return [
+            '<!-- Senior Mode in Mobile Dropdown -->',
+      '<div class="flex items-center justify-between py-2.5 px-3.5 mb-1.5 rounded-xl bg-slate-50 border border-slate-200/80">',
+      '  <div class="flex items-center gap-2">',
+      '    <span class="text-xs font-bold text-slate-700">화면 글자 크기</span>',
+      '  </div>',
+      '  <button type="button" class="senior-mode-btn notranslate" translate="no" onclick="window.cycleSeniorMode && window.cycleSeniorMode()" style="padding:4px 10px;font-size:12px;">',
+      '    <span class="senior-btn-label">시니어모드+</span>',
+      '    <span class="senior-step-badge" style="display:none;"></span>',
+      '  </button>',
+      '</div>',
       '<!-- 1. 홈 -->',
       '<a href="/ko/" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isHome ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
       '  <div class="flex items-center gap-3">',
@@ -943,8 +956,8 @@
         div.classList.remove('desktop-nav-links');
         continue;
       }
-      var homeA = div.querySelector('a[href="/ko/"]');
-      var blogA = div.querySelector('a[href="/ko/blog"]');
+      var homeA = div.querySelector('a[href="/ko/"], a[href="/"]');
+      var blogA = div.querySelector('a[href*="blog"]');
       if (homeA && blogA && (div.classList.contains('md:flex') || div.className.indexOf('items-center') !== -1) && !div.classList.contains('md:hidden') && div.id !== 'mobile-menu-dropdown') {
         desktopDiv = div;
         break;

@@ -830,8 +830,8 @@ function render_forum_footer() {
       </div>
     </div>
   </footer>
-  <script src="/js/njap-translate.js?v=3.0.0"></script>
-  <script src="/js/fixes.js?v=6.0.0"></script>
+  <script src="/ko/js/njap-translate.js?v=3.0.0"></script>
+  <script src="/ko/js/fixes.js?v=7.0.0"></script>
 <?php
 }
 

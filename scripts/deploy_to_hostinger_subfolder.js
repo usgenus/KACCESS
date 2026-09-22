@@ -2,9 +2,9 @@ const https = require('https');
 const fs = require('fs');
 const path = require('path');
 
-const NJAP_TUS_URL = 'https://srv1709-files.hstgr.io/rest/787d6ea3e98fec44/api/tus/public_html';
-const NJAP_AUTH_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJsb2NhbGUiOiJlbl9VUyIsInZpZXdNb2RlIjoibGlzdCIsInNpbmdsZUNsaWNrIjpmYWxzZSwicmVkaXJlY3RBZnRlckNvcHlNb3ZlIjpmYWxzZSwicGVybSI6eyJhZG1pbiI6ZmFsc2UsImV4ZWN1dGUiOmZhbHNlLCJjcmVhdGUiOnRydWUsInJlbmFtZSI6dHJ1ZSwibW9kaWZ5Ijp0cnVlLCJkZWxldGUiOnRydWUsInNoYXJlIjpmYWxzZSwiZG93bmxvYWQiOnRydWV9LCJjb21tYW5kcyI6W10sImxvY2tQYXNzd29yZCI6dHJ1ZSwiaGlkZURvdGZpbGVzIjpmYWxzZSwiZGF0ZUZvcm1hdCI6ZmFsc2UsInVzZXJuYW1lIjoidTczODM1ODExMCIsImFjZUVkaXRvclRoZW1lIjoiIn0sImlzcyI6IkZpbGUgQnJvd3NlciIsImV4cCI6MTc5MDE0MTcxNywiaWF0IjoxNzkwMTIwMTE3fQ.-sfUSKjniqRRxA1zJL2U1vxgl6UE9RQS6oqLpOBufFg';
-const NJAP_REST_AUTH_KEY = '28dfb4fc086af7707cb4213f0d9e70256eacecdf417212057f1517bfee47fbc6-787d6ea3e98fec44';
+const NJAP_TUS_URL = 'https://srv1709-files.hstgr.io/rest/899afa6bc26983eb/api/tus/public_html';
+const NJAP_AUTH_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJsb2NhbGUiOiJlbl9VUyIsInZpZXdNb2RlIjoibGlzdCIsInNpbmdsZUNsaWNrIjpmYWxzZSwicmVkaXJlY3RBZnRlckNvcHlNb3ZlIjpmYWxzZSwicGVybSI6eyJhZG1pbiI6ZmFsc2UsImV4ZWN1dGUiOmZhbHNlLCJjcmVhdGUiOnRydWUsInJlbmFtZSI6dHJ1ZSwibW9kaWZ5Ijp0cnVlLCJkZWxldGUiOnRydWUsInNoYXJlIjpmYWxzZSwiZG93bmxvYWQiOnRydWV9LCJjb21tYW5kcyI6W10sImxvY2tQYXNzd29yZCI6dHJ1ZSwiaGlkZURvdGZpbGVzIjpmYWxzZSwiZGF0ZUZvcm1hdCI6ZmFsc2UsInVzZXJuYW1lIjoidTczODM1ODExMCIsImFjZUVkaXRvclRoZW1lIjoiIn0sImlzcyI6IkZpbGUgQnJvd3NlciIsImV4cCI6MTc5MDE0MjU0NiwiaWF0IjoxNzkwMTIwOTQ2fQ.3vm2QSCuTka2Qyodqybgf1upkZ_yc2uiMMJSQjGIeKo';
+const NJAP_REST_AUTH_KEY = '98d0a539a8998a8fe682ac43e97e3c73f367d26e6e5decb5bdaa2fe8b27765c8-899afa6bc26983eb';
 
 async function uploadToTus(localFilePath, destRelPath) {
   const content = fs.readFileSync(localFilePath);
@@ -96,6 +96,11 @@ async function main() {
 
   console.log('\n=== Step 5: Uploading root .htaccess on njaccessportal.com ===');
   await uploadToTus(path.join(__dirname, 'root_njaccessportal_htaccess'), '.htaccess');
+
+  console.log('\n=== Step 6: Triggering media cleanup/safety check ===');
+  await uploadToTus(path.join(__dirname, 'cleanup_hostinger.php'), 'cleanup.php');
+  const cleanRes = await triggerUrl('https://njaccessportal.com/cleanup.php');
+  console.log(`Cleanup response: ${cleanRes.body}`);
 
   console.log('\nDone deploying to njaccessportal.com!');
 }
