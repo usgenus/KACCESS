@@ -87,7 +87,7 @@ async function loadQuestionsTable() {
   tbody.innerHTML = `<tr><td colspan="7" class="py-8 text-center text-slate-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i>질문 목록을 불러오는 중...</td></tr>`;
 
   try {
-    const url = `/api/forum_admin.php?action=questions&specialty=${encodeURIComponent(specialty)}&status=${encodeURIComponent(status)}&q=${encodeURIComponent(search)}`;
+    const url = `/ko/api/forum_admin.php?action=questions&specialty=${encodeURIComponent(specialty)}&status=${encodeURIComponent(status)}&q=${encodeURIComponent(search)}`;
     const res = await fetch(url);
     const json = await res.json();
     if (!json.success) {
@@ -150,17 +150,27 @@ async function loadQuestionsTable() {
           <td class="py-3.5 px-4 whitespace-nowrap text-slate-500">
             ${(q.createdAt || '').substring(0, 10)}
           </td>
-          <td class="py-3.5 px-4 whitespace-nowrap text-right space-x-1">
-            <button onclick='openQModal(${JSON.stringify(q).replace(/'/g, "&#39;")})' class="px-2.5 py-1 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-semibold" title="상세보기">
-              <i class="fa-regular fa-eye"></i>
-            </button>
-            ${q.status === 'active' 
-              ? `<button onclick="toggleQStatus('${q.id}', 'hidden')" class="px-2.5 py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 text-xs font-semibold" title="숨김 처리"><i class="fa-solid fa-eye-slash"></i></button>`
-              : `<button onclick="toggleQStatus('${q.id}', 'active')" class="px-2.5 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 text-xs font-semibold" title="공개 처리"><i class="fa-solid fa-check"></i></button>`
-            }
-            <button onclick="deleteQuestion('${q.id}')" class="px-2.5 py-1 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-semibold" title="삭제">
-              <i class="fa-solid fa-trash-can"></i>
-            </button>
+          <td class="py-3.5 px-4 whitespace-nowrap text-right">
+            <div class="flex items-center justify-end gap-1.5">
+              <button onclick='openQModal(${JSON.stringify(q).replace(/'/g, "&#39;")})' class="px-2.5 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-semibold flex items-center gap-1 transition-all" title="상세보기 및 진료과 변경">
+                <i class="fa-regular fa-eye text-[11px]"></i>
+                <span>상세</span>
+              </button>
+              ${q.status === 'active' 
+                ? `<button onclick="toggleQStatus('${q.id}', 'hidden')" class="px-2.5 py-1.5 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/30 text-xs font-semibold flex items-center gap-1 transition-all cursor-pointer" title="임시 숨김 처리 (목록에서 제외)">
+                    <i class="fa-solid fa-eye-slash text-[11px]"></i>
+                    <span>숨김</span>
+                   </button>`
+                : `<button onclick="toggleQStatus('${q.id}', 'active')" class="px-2.5 py-1.5 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30 text-xs font-semibold flex items-center gap-1 transition-all cursor-pointer" title="공개 복구 처리">
+                    <i class="fa-solid fa-check text-[11px]"></i>
+                    <span>공개</span>
+                   </button>`
+              }
+              <button onclick="deleteQuestion('${q.id}')" class="px-2.5 py-1.5 rounded-lg bg-red-500/20 hover:bg-red-600 text-red-200 hover:text-white border border-red-500/40 text-xs font-bold flex items-center gap-1 transition-all shadow-xs cursor-pointer" title="영구 삭제 (Erase)">
+                <i class="fa-solid fa-trash-can text-[11px]"></i>
+                <span>삭제</span>
+              </button>
+            </div>
           </td>
         </tr>
       `;
@@ -190,9 +200,9 @@ async function toggleQStatus(id, newStatus) {
   }
 }
 
-// Delete Question
+// Delete Question (Erase)
 async function deleteQuestion(id) {
-  if (!confirm('이 질문과 모든 답변을 영구적으로 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) return;
+  if (!confirm('이 질문과 등록된 모든 답변을 데이터베이스에서 영구적으로 완전히 삭제(Erase)하시겠습니까?\n이 작업은 취소할 수 없습니다.')) return;
 
   try {
     const res = await fetch('/ko/api/forum_admin.php?action=delete_question', {
@@ -228,7 +238,7 @@ async function loadAnswersTable() {
   tbody.innerHTML = `<tr><td colspan="7" class="py-8 text-center text-slate-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i>답변 목록 로딩 중...</td></tr>`;
 
   try {
-    const url = `/api/forum_admin.php?action=answers&status=${encodeURIComponent(status)}&q=${encodeURIComponent(search)}`;
+    const url = `/ko/api/forum_admin.php?action=answers&status=${encodeURIComponent(status)}&q=${encodeURIComponent(search)}`;
     const res = await fetch(url);
     const json = await res.json();
     if (!json.success) return;
@@ -248,7 +258,7 @@ async function loadAnswersTable() {
               ${escapeHtml(a.questionTitle || '원문 보기')}
             </a>
           </td>
-          <td class="py-3.5 px-4 text-slate-200 max-w-sm truncate">
+          <td class="py-3.5 px-4 text-slate-200 max-w-sm truncate cursor-pointer hover:text-white" onclick='openAModal(${JSON.stringify(a).replace(/'/g, "&#39;")})' title="답변 전체 내용 보기">
             ${escapeHtml(a.body)}
           </td>
           <td class="py-3.5 px-4 whitespace-nowrap">
@@ -269,14 +279,27 @@ async function loadAnswersTable() {
           <td class="py-3.5 px-4 whitespace-nowrap text-slate-500">
             ${(a.createdAt || '').substring(0, 10)}
           </td>
-          <td class="py-3.5 px-4 whitespace-nowrap text-right space-x-1">
-            ${a.status === 'active'
-              ? `<button onclick="toggleAnswerStatus('${a.id}', 'hidden')" class="px-2.5 py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 text-xs font-semibold" title="숨김"><i class="fa-solid fa-eye-slash"></i></button>`
-              : `<button onclick="toggleAnswerStatus('${a.id}', 'active')" class="px-2.5 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 text-xs font-semibold" title="공개"><i class="fa-solid fa-check"></i></button>`
-            }
-            <button onclick="deleteAnswer('${a.id}')" class="px-2.5 py-1 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-semibold" title="삭제">
-              <i class="fa-solid fa-trash-can"></i>
-            </button>
+          <td class="py-3.5 px-4 whitespace-nowrap text-right">
+            <div class="flex items-center justify-end gap-1.5">
+              <button onclick='openAModal(${JSON.stringify(a).replace(/'/g, "&#39;")})' class="px-2.5 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-semibold flex items-center gap-1 transition-all" title="답변 상세보기">
+                <i class="fa-regular fa-eye text-[11px]"></i>
+                <span>상세</span>
+              </button>
+              ${a.status === 'active'
+                ? `<button onclick="toggleAnswerStatus('${a.id}', 'hidden')" class="px-2.5 py-1.5 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/30 text-xs font-semibold flex items-center gap-1 transition-all cursor-pointer" title="임시 숨김 처리">
+                    <i class="fa-solid fa-eye-slash text-[11px]"></i>
+                    <span>숨김</span>
+                   </button>`
+                : `<button onclick="toggleAnswerStatus('${a.id}', 'active')" class="px-2.5 py-1.5 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30 text-xs font-semibold flex items-center gap-1 transition-all cursor-pointer" title="공개 복구 처리">
+                    <i class="fa-solid fa-check text-[11px]"></i>
+                    <span>공개</span>
+                   </button>`
+              }
+              <button onclick="deleteAnswer('${a.id}')" class="px-2.5 py-1.5 rounded-lg bg-red-500/20 hover:bg-red-600 text-red-200 hover:text-white border border-red-500/40 text-xs font-bold flex items-center gap-1 transition-all shadow-xs cursor-pointer" title="답변 영구 삭제 (Erase)">
+                <i class="fa-solid fa-trash-can text-[11px]"></i>
+                <span>삭제</span>
+              </button>
+            </div>
           </td>
         </tr>
       `;
@@ -302,7 +325,7 @@ async function toggleAnswerStatus(id, newStatus) {
 }
 
 async function deleteAnswer(id) {
-  if (!confirm('이 답변을 영구 삭제하시겠습니까?')) return;
+  if (!confirm('이 답변을 데이터베이스에서 영구적으로 삭제(Erase)하시겠습니까?\n이 작업은 되돌릴 수 없습니다.')) return;
   try {
     const res = await fetch('/ko/api/forum_admin.php?action=delete_answer', {
       method: 'POST',
@@ -311,6 +334,96 @@ async function deleteAnswer(id) {
     });
     const json = await res.json();
     if (json.success) {
+      loadAnswersTable();
+      loadDashboardStats();
+    } else {
+      alert(json.error || '답변 삭제 실패');
+    }
+  } catch(e) {
+    alert('오류가 발생했습니다.');
+  }
+}
+
+// Answer Detail Modal Handlers
+let currentModalAnswer = null;
+
+function openAModal(a) {
+  currentModalAnswer = a;
+  const statusEl = document.getElementById('modal-a-status');
+  if (statusEl) {
+    statusEl.innerText = a.status === 'active' ? '공개중' : '숨김';
+    statusEl.className = a.status === 'active' ? 'text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'text-xs font-bold px-2.5 py-1 rounded-lg bg-slate-700 text-slate-300';
+  }
+  const authorEl = document.getElementById('modal-a-author');
+  if (authorEl) authorEl.innerText = `작성자: ${a.authorName || '익명'} • 작성일: ${(a.createdAt || '').substring(0, 10)}`;
+
+  const qTitleEl = document.getElementById('modal-a-qtitle');
+  if (qTitleEl) qTitleEl.innerText = `대상 질문: ${a.questionTitle || '원문 보기'}`;
+
+  const bodyEl = document.getElementById('modal-a-body');
+  if (bodyEl) bodyEl.innerText = a.body || '';
+
+  const toggleBtn = document.getElementById('modal-a-toggle-status-btn');
+  if (toggleBtn) {
+    if (a.status === 'active') {
+      toggleBtn.innerHTML = '<i class="fa-solid fa-eye-slash"></i> <span>숨김으로 변경</span>';
+      toggleBtn.className = 'px-3.5 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer';
+    } else {
+      toggleBtn.innerHTML = '<i class="fa-solid fa-check"></i> <span>공개로 변경</span>';
+      toggleBtn.className = 'px-3.5 py-2 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer';
+    }
+  }
+
+  const modal = document.getElementById('modal-a-detail');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+}
+
+function closeAModal() {
+  const modal = document.getElementById('modal-a-detail');
+  if (modal) {
+    modal.classList.remove('flex');
+    modal.classList.add('hidden');
+  }
+}
+
+async function deleteAnswerFromModal() {
+  if (!currentModalAnswer || !currentModalAnswer.id) return;
+  if (!confirm('이 답변을 데이터베이스에서 영구적으로 삭제(Erase)하시겠습니까?\n이 작업은 취소할 수 없습니다.')) return;
+  try {
+    const res = await fetch('/ko/api/forum_admin.php?action=delete_answer', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: currentModalAnswer.id })
+    });
+    const json = await res.json();
+    if (json.success) {
+      closeAModal();
+      loadAnswersTable();
+      loadDashboardStats();
+    } else {
+      alert(json.error || '답변 삭제 실패');
+    }
+  } catch(e) {
+    alert('오류가 발생했습니다.');
+  }
+}
+
+async function toggleAnswerStatusFromModal() {
+  if (!currentModalAnswer || !currentModalAnswer.id) return;
+  const newStatus = currentModalAnswer.status === 'active' ? 'hidden' : 'active';
+  try {
+    const res = await fetch('/ko/api/forum_admin.php?action=moderate_answer', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: currentModalAnswer.id, status: newStatus })
+    });
+    const json = await res.json();
+    if (json.success) {
+      currentModalAnswer.status = newStatus;
+      openAModal(currentModalAnswer);
       loadAnswersTable();
       loadDashboardStats();
     }
@@ -569,7 +682,23 @@ function openQModal(q) {
     sel.value = currentSpecialtyId;
   }
 
-  document.getElementById('modal-q-status').innerText = q.status === 'active' ? '공개중' : (q.status === 'hidden' ? '숨김' : '신고됨');
+  const statusEl = document.getElementById('modal-q-status');
+  if (statusEl) {
+    statusEl.innerText = q.status === 'active' ? '공개중' : (q.status === 'hidden' ? '숨김' : '신고됨');
+    statusEl.className = q.status === 'active' ? 'text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'text-xs font-bold px-2.5 py-1 rounded-lg bg-slate-700 text-slate-300';
+  }
+
+  const toggleBtn = document.getElementById('modal-q-toggle-status-btn');
+  if (toggleBtn) {
+    if (q.status === 'active') {
+      toggleBtn.innerHTML = '<i class="fa-solid fa-eye-slash"></i> <span>숨김으로 변경</span>';
+      toggleBtn.className = 'px-3.5 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer';
+    } else {
+      toggleBtn.innerHTML = '<i class="fa-solid fa-check"></i> <span>공개로 변경</span>';
+      toggleBtn.className = 'px-3.5 py-2 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer';
+    }
+  }
+
   document.getElementById('modal-q-title').innerText = q.title;
   document.getElementById('modal-q-author').innerText = `작성자: ${q.authorName || '익명'}`;
   document.getElementById('modal-q-date').innerText = `작성일: ${(q.createdAt || '').substring(0, 10)}`;
@@ -578,6 +707,67 @@ function openQModal(q) {
   const modal = document.getElementById('modal-q-detail');
   modal.classList.remove('hidden');
   modal.classList.add('flex');
+}
+
+async function deleteQuestionFromModal() {
+  if (!currentModalQuestion || !currentModalQuestion.id) return;
+  if (!confirm(`'${currentModalQuestion.title || '이 질문'}'과(와) 관련된 모든 답변을 영구적으로 삭제(Erase)하시겠습니까?\n이 작업은 되돌릴 수 없습니다.`)) return;
+
+  try {
+    const res = await fetch('/ko/api/forum_admin.php?action=delete_question', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: currentModalQuestion.id })
+    });
+    const json = await res.json();
+    if (json.success) {
+      closeQModal();
+      loadQuestionsTable();
+      loadDashboardStats();
+      alert('질문 및 관련 답변이 영구 삭제되었습니다.');
+    } else {
+      alert(json.error || '삭제 실패');
+    }
+  } catch (e) {
+    alert('오류가 발생했습니다.');
+  }
+}
+
+async function toggleQStatusFromModal() {
+  if (!currentModalQuestion || !currentModalQuestion.id) return;
+  const newStatus = currentModalQuestion.status === 'active' ? 'hidden' : 'active';
+  try {
+    const res = await fetch('/ko/api/forum_admin.php?action=moderate_question', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: currentModalQuestion.id, status: newStatus })
+    });
+    const json = await res.json();
+    if (json.success) {
+      currentModalQuestion.status = newStatus;
+      const statusEl = document.getElementById('modal-q-status');
+      if (statusEl) {
+        statusEl.innerText = newStatus === 'active' ? '공개중' : '숨김';
+        statusEl.className = newStatus === 'active' ? 'text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'text-xs font-bold px-2.5 py-1 rounded-lg bg-slate-700 text-slate-300';
+      }
+      const toggleBtn = document.getElementById('modal-q-toggle-status-btn');
+      if (toggleBtn) {
+        if (newStatus === 'active') {
+          toggleBtn.innerHTML = '<i class="fa-solid fa-eye-slash"></i> <span>숨김으로 변경</span>';
+          toggleBtn.className = 'px-3.5 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer';
+        } else {
+          toggleBtn.innerHTML = '<i class="fa-solid fa-check"></i> <span>공개로 변경</span>';
+          toggleBtn.className = 'px-3.5 py-2 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer';
+        }
+      }
+      loadQuestionsTable();
+      loadDashboardStats();
+    } else {
+      alert(json.error || '상태 변경 실패');
+    }
+  } catch (e) {
+    alert('오류가 발생했습니다.');
+  }
 }
 
 async function saveQuestionSpecialty() {

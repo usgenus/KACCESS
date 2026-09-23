@@ -273,7 +273,7 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
                 <th class="py-3 px-4">답변/조회</th>
                 <th class="py-3 px-4">상태</th>
                 <th class="py-3 px-4">작성일</th>
-                <th class="py-3 px-4 text-right">관리 작업</th>
+                <th class="py-3 px-4 text-right">관리 작업 (숨김 / 영구삭제)</th>
               </tr>
             </thead>
             <tbody id="questions-tbody" class="divide-y divide-slate-700/60 font-medium">
@@ -292,7 +292,7 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
             <i class="fa-solid fa-comments text-emerald-400"></i>
             <span>답변 및 전문의 코멘트 관리</span>
           </h2>
-          <p class="text-xs text-slate-400 mt-1">등록된 답변의 상태를 변경하거나 스팸/부적절한 답변을 삭제합니다.</p>
+          <p class="text-xs text-slate-400 mt-1">등록된 답변의 상태를 변경(숨김/공개)하거나 스팸/부적절한 답변을 영구 삭제합니다.</p>
         </div>
         <button onclick="loadAnswersTable()" class="text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-3 py-2 rounded-xl flex items-center gap-1.5 self-start sm:self-auto">
           <i class="fa-solid fa-rotate-right"></i>
@@ -328,7 +328,7 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
                 <th class="py-3 px-4">추천(Upvotes)</th>
                 <th class="py-3 px-4">상태</th>
                 <th class="py-3 px-4">작성일</th>
-                <th class="py-3 px-4 text-right">작업</th>
+                <th class="py-3 px-4 text-right">관리 작업 (숨김 / 영구삭제)</th>
               </tr>
             </thead>
             <tbody id="answers-tbody" class="divide-y divide-slate-700/60 font-medium">
@@ -633,14 +633,56 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
 
       <div id="modal-q-body" class="text-xs sm:text-sm text-slate-300 whitespace-pre-line leading-relaxed mb-6 bg-slate-950/60 p-4 rounded-2xl border border-slate-800"></div>
 
-      <div class="flex items-center justify-end gap-2 pt-4 border-t border-slate-800">
-        <button onclick="closeQModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-300">
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-800">
+        <div class="flex items-center gap-2">
+          <button id="modal-q-delete-btn" onclick="deleteQuestionFromModal()" class="px-3.5 py-2 rounded-xl bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white border border-red-500/40 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-xs" title="이 질문과 모든 답변 영구 삭제">
+            <i class="fa-solid fa-trash-can"></i>
+            <span>질문 영구 삭제</span>
+          </button>
+          <button id="modal-q-toggle-status-btn" onclick="toggleQStatusFromModal()" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer border">
+            <!-- Dynamic text by JS -->
+          </button>
+        </div>
+        <button onclick="closeQModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-300 transition-all cursor-pointer">
           닫기
         </button>
       </div>
     </div>
   </div>
 
-  <script src="/ko/admin2/admin2.js"></script>
+  <!-- Answer Detail & Moderation Modal -->
+  <div id="modal-a-detail" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs hidden items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeAModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 rounded-xl cursor-pointer">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div class="flex items-center gap-2 mb-3">
+        <span id="modal-a-status" class="text-xs font-bold px-2.5 py-1 rounded-lg"></span>
+        <span id="modal-a-author" class="text-xs text-slate-400"></span>
+      </div>
+
+      <div class="text-xs text-blue-400 font-bold mb-3 pb-2 border-b border-slate-800" id="modal-a-qtitle"></div>
+
+      <div id="modal-a-body" class="text-xs sm:text-sm text-slate-200 whitespace-pre-line leading-relaxed mb-6 bg-slate-950/60 p-4 rounded-2xl border border-slate-800"></div>
+
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-800">
+        <div class="flex items-center gap-2">
+          <button id="modal-a-delete-btn" onclick="deleteAnswerFromModal()" class="px-3.5 py-2 rounded-xl bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white border border-red-500/40 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-xs" title="답변 영구 삭제">
+            <i class="fa-solid fa-trash-can"></i>
+            <span>답변 영구 삭제</span>
+          </button>
+          <button id="modal-a-toggle-status-btn" onclick="toggleAnswerStatusFromModal()" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer border">
+            <!-- Dynamic text by JS -->
+          </button>
+        </div>
+        <button onclick="closeAModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-300 transition-all cursor-pointer">
+          닫기
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/ko/admin2/admin2.js?v=2.2.0"></script>
 </body>
 </html>
