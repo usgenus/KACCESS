@@ -2,9 +2,9 @@ const https = require('https');
 const fs = require('fs');
 const path = require('path');
 
-const NJAP_TUS_URL = 'https://srv1709-files.hstgr.io/rest/899afa6bc26983eb/api/tus/public_html';
-const NJAP_AUTH_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJsb2NhbGUiOiJlbl9VUyIsInZpZXdNb2RlIjoibGlzdCIsInNpbmdsZUNsaWNrIjpmYWxzZSwicmVkaXJlY3RBZnRlckNvcHlNb3ZlIjpmYWxzZSwicGVybSI6eyJhZG1pbiI6ZmFsc2UsImV4ZWN1dGUiOmZhbHNlLCJjcmVhdGUiOnRydWUsInJlbmFtZSI6dHJ1ZSwibW9kaWZ5Ijp0cnVlLCJkZWxldGUiOnRydWUsInNoYXJlIjpmYWxzZSwiZG93bmxvYWQiOnRydWV9LCJjb21tYW5kcyI6W10sImxvY2tQYXNzd29yZCI6dHJ1ZSwiaGlkZURvdGZpbGVzIjpmYWxzZSwiZGF0ZUZvcm1hdCI6ZmFsc2UsInVzZXJuYW1lIjoidTczODM1ODExMCIsImFjZUVkaXRvclRoZW1lIjoiIn0sImlzcyI6IkZpbGUgQnJvd3NlciIsImV4cCI6MTc5MDE0MjU0NiwiaWF0IjoxNzkwMTIwOTQ2fQ.3vm2QSCuTka2Qyodqybgf1upkZ_yc2uiMMJSQjGIeKo';
-const NJAP_REST_AUTH_KEY = '98d0a539a8998a8fe682ac43e97e3c73f367d26e6e5decb5bdaa2fe8b27765c8-899afa6bc26983eb';
+const NJAP_TUS_URL = 'https://srv1709-files.hstgr.io/rest/d1d4492294c549a8/api/tus/public_html';
+const NJAP_AUTH_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJsb2NhbGUiOiJlbl9VUyIsInZpZXdNb2RlIjoibGlzdCIsInNpbmdsZUNsaWNrIjpmYWxzZSwicmVkaXJlY3RBZnRlckNvcHlNb3ZlIjpmYWxzZSwicGVybSI6eyJhZG1pbiI6ZmFsc2UsImV4ZWN1dGUiOmZhbHNlLCJjcmVhdGUiOnRydWUsInJlbmFtZSI6dHJ1ZSwibW9kaWZ5Ijp0cnVlLCJkZWxldGUiOnRydWUsInNoYXJlIjpmYWxzZSwiZG93bmxvYWQiOnRydWV9LCJjb21tYW5kcyI6W10sImxvY2tQYXNzd29yZCI6dHJ1ZSwiaGlkZURvdGZpbGVzIjpmYWxzZSwiZGF0ZUZvcm1hdCI6ZmFsc2UsInVzZXJuYW1lIjoidTczODM1ODExMCIsImFjZUVkaXRvclRoZW1lIjoiIn0sImlzcyI6IkZpbGUgQnJvd3NlciIsImV4cCI6MTc5MDE0MzI3OSwiaWF0IjoxNzkwMTIxNjc5fQ.oC4DgVum88X0yiPmVq7hTizOb8rQh3J0XObPGEuq9ug';
+const NJAP_REST_AUTH_KEY = '2210575864b1cc64770563f6561f6097591c5daff8ba3314dcc5510a4dada319-d1d4492294c549a8';
 
 async function uploadToTus(localFilePath, destRelPath) {
   const content = fs.readFileSync(localFilePath);
@@ -84,8 +84,8 @@ async function main() {
   console.log('=== Step 1: Uploading extract_ko.php ===');
   await uploadToTus(path.join(__dirname, 'extract_ko.php'), 'extract_ko.php');
 
-  console.log('\n=== Step 2: Uploading deploy_ko.zip (clean zip) ===');
-  await uploadToTus('/tmp/deploy_ko_clean.zip', 'deploy_ko.zip');
+  console.log('\n=== Step 2: Uploading deploy_ko.zip (code zip) ===');
+  await uploadToTus('/tmp/deploy_ko_code.zip', 'deploy_ko.zip');
 
   console.log('\n=== Step 3: Triggering server-side extraction into public_html/ko ===');
   const extractRes = await triggerUrl('https://njaccessportal.com/extract_ko.php');

@@ -38,7 +38,16 @@
       '  display: none !important;',
       '  visibility: hidden !important;',
       '}',
-      '#google_translate_element { display: none !important; }',
+      '#google_translate_element {',
+      '  position: absolute !important;',
+      '  left: -9999px !important;',
+      '  top: -9999px !important;',
+      '  width: 1px !important;',
+      '  height: 1px !important;',
+      '  opacity: 0 !important;',
+      '  pointer-events: none !important;',
+      '  overflow: hidden !important;',
+      '}',
       '#en-translate-btn:hover { border-color: #2563eb !important; color: #2563eb !important; }'
     ].join('\n');
     document.head.appendChild(style);
@@ -69,25 +78,36 @@
   function setTransCookie(val) {
     var domain = window.location.hostname;
     var maxAge = 60 * 60 * 24 * 30; // 30 days
-    document.cookie = COOKIE_NAME + '=' + val + '; path=/; max-age=' + maxAge;
-    document.cookie = COOKIE_NAME + '=' + val + '; path=/; domain=' + domain + '; max-age=' + maxAge;
+    var paths = ['/', '/ko', '/ko/'];
+    paths.forEach(function (p) {
+      document.cookie = COOKIE_NAME + '=' + val + '; path=' + p + '; max-age=' + maxAge;
+      document.cookie = COOKIE_NAME + '=' + val + '; path=' + p + '; domain=' + domain + '; max-age=' + maxAge;
+    });
     var parts = domain.split('.');
-    if (parts.length > 2) {
+    if (parts.length >= 2) {
       var root = parts.slice(-2).join('.');
-      document.cookie = COOKIE_NAME + '=' + val + '; path=/; domain=.' + root + '; max-age=' + maxAge;
-      document.cookie = COOKIE_NAME + '=' + val + '; path=/; domain=' + root + '; max-age=' + maxAge;
+      paths.forEach(function (p) {
+        document.cookie = COOKIE_NAME + '=' + val + '; path=' + p + '; domain=.' + root + '; max-age=' + maxAge;
+        document.cookie = COOKIE_NAME + '=' + val + '; path=' + p + '; domain=' + root + '; max-age=' + maxAge;
+      });
     }
   }
 
   function clearTransCookie() {
     var domain = window.location.hostname;
-    document.cookie = COOKIE_NAME + '=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
-    document.cookie = COOKIE_NAME + '=; path=/; domain=' + domain + '; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+    var paths = ['/', '/ko', '/ko/'];
+    var exp = '; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+    paths.forEach(function (p) {
+      document.cookie = COOKIE_NAME + '=' + exp + ' path=' + p;
+      document.cookie = COOKIE_NAME + '=' + exp + ' path=' + p + '; domain=' + domain;
+    });
     var parts = domain.split('.');
-    if (parts.length > 2) {
+    if (parts.length >= 2) {
       var root = parts.slice(-2).join('.');
-      document.cookie = COOKIE_NAME + '=; path=/; domain=.' + root + '; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
-      document.cookie = COOKIE_NAME + '=; path=/; domain=' + root + '; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+      paths.forEach(function (p) {
+        document.cookie = COOKIE_NAME + '=' + exp + ' path=' + p + '; domain=.' + root;
+        document.cookie = COOKIE_NAME + '=' + exp + ' path=' + p + '; domain=' + root;
+      });
     }
   }
 
@@ -129,8 +149,11 @@
     if (triggerGoogleTranslate(lang)) return;
     var attempts = 0;
     var interval = setInterval(function () {
-      if (triggerGoogleTranslate(lang) || ++attempts > 40) {
+      if (triggerGoogleTranslate(lang)) {
         clearInterval(interval);
+      } else if (++attempts > 25) {
+        clearInterval(interval);
+        window.location.reload();
       }
     }, 100);
   }
@@ -188,7 +211,14 @@
     if (!document.getElementById('google_translate_element')) {
       var div = document.createElement('div');
       div.id = 'google_translate_element';
-      div.style.display = 'none';
+      div.style.position = 'absolute';
+      div.style.left = '-9999px';
+      div.style.top = '-9999px';
+      div.style.width = '1px';
+      div.style.height = '1px';
+      div.style.opacity = '0';
+      div.style.pointerEvents = 'none';
+      div.style.overflow = 'hidden';
       div.className = 'notranslate';
       div.setAttribute('translate', 'no');
       document.body.appendChild(div);

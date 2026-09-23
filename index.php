@@ -1303,7 +1303,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
         <div class="bg-[#0C0C0E] text-white rounded-xl py-2.5 px-4 sm:px-6 flex items-center justify-between gap-4 text-xs font-sans shadow-sm border border-white/10">
           <div class="flex items-center gap-3 overflow-hidden">
             <span class="bg-red-600 text-white font-extrabold px-2.5 py-0.5 rounded text-[11px] tracking-wider uppercase shrink-0 animate-pulse">LIVE UPDATES</span>
-            <a id="homepage-live-link" href="<?= $liveSlug ? '/blog/' . htmlspecialchars($liveSlug) : '/blog' ?>" class="truncate text-white/90 font-medium hover:text-blue-300 transition-colors">
+            <a id="homepage-live-link" href="<?= $liveSlug ? '/ko/blog/' . htmlspecialchars($liveSlug) : '/ko/blog' ?>" class="truncate text-white/90 font-medium hover:text-blue-300 transition-colors">
               <span id="homepage-live-headline"><?= htmlspecialchars($liveHeadline) ?></span>
             </a>
           </div>
@@ -2319,7 +2319,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
   
 
   <script src="/ko/js/cms-client.js?v=<?= time() ?>"></script>
-  <script src="/ko/js/fixes.js?v=7.0.0 time() ?>"></script>
-<script src="/ko/js/njap-translate.js?v=3.0.0"></script>
+  <script src="/ko/js/fixes.js?v=8.0.0"></script>
+<script src="/ko/js/njap-translate.js?v=3.1.0"></script>
 </body>
 </html>

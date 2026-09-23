@@ -80,8 +80,20 @@ $videoUrl = $post['videoUrl'] ?? '';
 $content = $post['content'] ?? '';
 $postSlug = htmlspecialchars($post['slug'] ?? ($post['id'] ?? 'default'));
 $audioSlug = ($post['slug'] ?? '') ?: ($post['id'] ?? '');
-$audioFile = __DIR__ . '/uploads/audio/' . $audioSlug . '.mp3';
-$audioUrl = file_exists($audioFile) ? '/uploads/audio/' . rawurlencode($audioSlug) . '.mp3' : '';
+$audioCandidates = [
+    __DIR__ . '/uploads/audio/' . $audioSlug . '.mp3',
+    dirname(__DIR__) . '/uploads/audio/' . $audioSlug . '.mp3',
+    (defined('PERSISTENT_ROOT') ? PERSISTENT_ROOT . '/uploads/audio/' . $audioSlug . '.mp3' : ''),
+    dirname(__DIR__, 2) . '/uploads/audio/' . $audioSlug . '.mp3'
+];
+$audioFound = false;
+foreach ($audioCandidates as $ac) {
+    if (!empty($ac) && file_exists($ac)) {
+        $audioFound = true;
+        break;
+    }
+}
+$audioUrl = $audioFound ? '/ko/uploads/audio/' . rawurlencode($audioSlug) . '.mp3' : '';
 
 function render_article_content($content, $allImages = [], &$usedImages = []) {
     if (empty($content)) return '';
@@ -661,7 +673,7 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
     </div>
   </nav>
 
-  <div class="h-16"></div>
+  <div class="h-[109px]"></div>
 
   <!-- Main Article Content -->
   <main class="flex-1">
@@ -1433,7 +1445,7 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
     })();
   </script>
   <script src="/ko/js/cms-client.js?v=3.5.0"></script>
-  <script src="/ko/js/fixes.js?v=7.0.0"></script>
-<script src="/ko/js/njap-translate.js?v=3.0.0"></script>
+  <script src="/ko/js/fixes.js?v=8.0.0"></script>
+<script src="/ko/js/njap-translate.js?v=3.1.0"></script>
 </body>
 </html>

@@ -30,7 +30,7 @@ RewriteRule ^(medicare|blog|forum|senior-care|tool|about|matcher|calculator|dict
 # 2. Forward legacy root asset/API fallbacks to /ko/ if not found at root
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^js/(.*)$ /ko/js/# 2. Forward legacy root asset/API fallbacks to /ko/ if not found at root [L]
+RewriteRule ^js/(.*)$ /ko/js/$1 [L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

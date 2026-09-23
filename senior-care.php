@@ -2161,7 +2161,7 @@
     }
   </script>
 
-  <script src="/ko/js/fixes.js?v=7.0.0"></script>
-<script src="/ko/js/njap-translate.js?v=3.0.0"></script>
+  <script src="/ko/js/fixes.js?v=8.0.0"></script>
+<script src="/ko/js/njap-translate.js?v=3.1.0"></script>
 </body>
 </html>
