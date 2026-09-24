@@ -120,7 +120,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
 <?php /* 1.1. 의학포럼 19대 세부 전문 진료과목 Pages */ ?>
 <?php foreach ($forumSubSpecialties as $sub): ?>
   <url>
-    <loc><?= htmlspecialchars($baseUrl . '/forum?specialty=medical_health&amp;sub=' . urlencode($sub['id'])) ?></loc>
+    <loc><?= htmlspecialchars($baseUrl . '/forum?specialty=medical_health&sub=' . urlencode($sub['id'])) ?></loc>
     <lastmod><?= date('Y-m-d') ?></lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
