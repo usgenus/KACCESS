@@ -405,6 +405,67 @@ $seoDesc = $currentCategory
         </div>
       <?php endif; ?>
 
+      <!-- REQUIREMENT: For 병원/의원 추천 및 이용 후기 (hospital_reviews), show Major Hospitals & Network Quick Filter & Tags Bar -->
+      <?php if (($specialtyFilter === 'hospital_reviews') || (!empty($currentCategory) && $currentCategory['id'] === 'hospital_reviews')): ?>
+        <div class="bg-gradient-to-r from-emerald-50/90 via-white to-slate-50 border border-emerald-200/90 rounded-2xl p-4 sm:p-5 mb-6 shadow-2xs">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+            <div class="flex items-center gap-2">
+              <span class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-sm shadow-xs shrink-0">
+                <i class="fa-solid fa-hospital-user"></i>
+              </span>
+              <div>
+                <h3 class="text-sm sm:text-base font-extrabold text-slate-900 flex items-center gap-2">
+                  <span>뉴저지 6대 주요 병원 네트워크 빠른 검색 &amp; 후기 태그</span>
+                  <span class="text-[11px] font-bold bg-emerald-600 text-white px-2 py-0.5 rounded-full">지역 의료 연계</span>
+                </h3>
+                <p class="text-xs text-slate-500 mt-0.5">
+                  버겐·허드슨 카운티 및 뉴저지 주요 종합병원과 의사 네트워크별 내방 후기, 한국어 통역 및 한인 환자 프로그램 정보를 태그별로 모아보실 수 있습니다.
+                </p>
+              </div>
+            </div>
+
+            <?php if (!empty($searchQuery)): ?>
+              <a href="/ko/forum?specialty=hospital_reviews&view=topics" 
+                 class="text-xs font-bold text-emerald-700 hover:text-emerald-900 bg-white border border-emerald-200 hover:border-emerald-300 px-3 py-1.5 rounded-xl transition-all self-start sm:self-auto shrink-0 shadow-2xs flex items-center gap-1.5">
+                <i class="fa-solid fa-rotate-left text-[11px]"></i>
+                <span>전체 후기 보기</span>
+              </a>
+            <?php endif; ?>
+          </div>
+
+          <!-- Major Hospital Filter Chips -->
+          <div class="flex flex-wrap gap-2 pt-1 chips-scroll">
+            <a href="/ko/forum?specialty=hospital_reviews&view=topics" 
+               class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all border <?= empty($searchQuery) ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs' : 'bg-white text-slate-700 border-slate-200 hover:border-emerald-300 hover:bg-emerald-50/50' ?>">
+              <i class="fa-solid fa-border-all text-xs"></i>
+              <span>전체 병원후기</span>
+            </a>
+
+            <?php
+            $hospitalQuickTags = [
+              ['q' => 'Englewood', 'label' => '잉글우드 병원', 'sub' => 'Englewood Health', 'icon' => 'fa-hospital'],
+              ['q' => 'EHPN', 'label' => 'EHPN 의사망', 'sub' => 'Physician Network', 'icon' => 'fa-user-doctor'],
+              ['q' => 'Hackensack', 'label' => '해켄색 대학병원', 'sub' => 'HUMC / HMH', 'icon' => 'fa-hospital-wide'],
+              ['q' => 'Valley', 'label' => '더 밸리 병원', 'sub' => 'The Valley Hospital', 'icon' => 'fa-square-plus'],
+              ['q' => 'Pascack', 'label' => '파스카크 밸리', 'sub' => 'Pascack Valley', 'icon' => 'fa-house-medical'],
+              ['q' => 'RWJ', 'label' => 'RWJ바나바스', 'sub' => 'RWJBarnabas Health', 'icon' => 'fa-circle-nodes'],
+              ['q' => '통역', 'label' => '한국어 통역 지원', 'sub' => 'Korean Services', 'icon' => 'fa-language'],
+              ['q' => '자선진료', 'label' => '자선진료·의료비 지원', 'sub' => 'Charity Care', 'icon' => 'fa-hand-holding-dollar']
+            ];
+            foreach ($hospitalQuickTags as $tagItem):
+              $isTagActive = (stripos($searchQuery, $tagItem['q']) !== false);
+            ?>
+              <a href="/ko/forum?specialty=hospital_reviews&q=<?= urlencode($tagItem['q']) ?>&view=topics" 
+                 class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all border <?= $isTagActive ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm ring-2 ring-emerald-500/20' : 'bg-white text-slate-700 border-slate-200/90 hover:border-emerald-400 hover:text-emerald-700 hover:bg-emerald-50/30' ?>">
+                <i class="fa-solid <?= $tagItem['icon'] ?> text-xs <?= $isTagActive ? 'text-white' : 'text-emerald-600' ?>"></i>
+                <span>#<?= htmlspecialchars($tagItem['label']) ?></span>
+                <span class="text-[10px] hidden sm:inline-block font-normal <?= $isTagActive ? 'text-emerald-100' : 'text-slate-400' ?>">(<?= htmlspecialchars($tagItem['sub']) ?>)</span>
+              </a>
+            <?php endforeach; ?>
+          </div>
+        </div>
+      <?php endif; ?>
+
 
       <!-- VIEW MODE 1: Categories 2-Column Split View (The 5 Core Categories + Live Realtime Feed) -->
       <?php if ($viewMode === 'categories' && empty($specialtyFilter)): ?>
@@ -479,9 +540,14 @@ $seoDesc = $currentCategory
                     <a href="/ko/forum?specialty=medical_health&view=topics" class="text-blue-600 font-bold hover:underline text-[11px] ml-1">외 14개 진료과 모두보기 →</a>
                   </div>
                 <?php elseif ($isReviews): ?>
-                  <div class="mt-2 text-[11px] text-slate-400 flex items-center gap-2">
-                    <i class="fa-solid fa-star text-amber-400"></i>
-                    <span>버겐카운티, 포트리, 팰팍, 에디슨 등 뉴저지 한인 병원 및 주치의 실제 이용 후기</span>
+                  <div class="mt-3 pt-3 border-t border-slate-100 flex flex-wrap items-center gap-1.5 text-xs">
+                    <span class="font-bold text-slate-400 text-[11px] mr-1">주요 네트워크:</span>
+                    <a href="/ko/forum?specialty=hospital_reviews&q=Englewood&view=topics" class="px-2 py-0.5 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-md text-[11px] font-medium text-slate-600">#잉글우드병원</a>
+                    <a href="/ko/forum?specialty=hospital_reviews&q=EHPN&view=topics" class="px-2 py-0.5 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-md text-[11px] font-medium text-slate-600">#EHPN</a>
+                    <a href="/ko/forum?specialty=hospital_reviews&q=Hackensack&view=topics" class="px-2 py-0.5 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-md text-[11px] font-medium text-slate-600">#해켄색대학병원</a>
+                    <a href="/ko/forum?specialty=hospital_reviews&q=Valley&view=topics" class="px-2 py-0.5 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-md text-[11px] font-medium text-slate-600">#밸리병원</a>
+                    <a href="/ko/forum?specialty=hospital_reviews&q=Pascack&view=topics" class="px-2 py-0.5 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-md text-[11px] font-medium text-slate-600">#파스카크밸리</a>
+                    <a href="/ko/forum?specialty=hospital_reviews&q=RWJ&view=topics" class="px-2 py-0.5 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-md text-[11px] font-medium text-slate-600">#RWJ바나바스</a>
                   </div>
                 <?php elseif ($isBills): ?>
                   <div class="mt-2 text-[11px] text-slate-400 flex items-center gap-2">

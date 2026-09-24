@@ -282,12 +282,24 @@ if (!empty($rawCategory)) {
 
           <!-- 4. Tags Input -->
           <div>
-            <label for="tags" class="block text-xs sm:text-sm font-bold text-slate-800 mb-2">
-              태그 입력 (선택 사항, 쉼표로 구분)
+            <label for="tags" class="block text-xs sm:text-sm font-bold text-slate-800 mb-2 flex items-center justify-between">
+              <span>태그 입력 (선택 사항, 쉼표로 구분)</span>
+              <span class="text-xs font-normal text-slate-400">클릭하여 빠른 태그 추가 가능</span>
             </label>
             <input type="text" id="tags" name="tags" 
-              placeholder="예: 포트리내과, 메디케어, 백내장수술, 혈압약" 
+              placeholder="예: 잉글우드병원, EHPN, 해켄색대학병원, 밸리병원, 포트리내과, 메디케어" 
               class="w-full p-3.5 rounded-2xl border border-slate-300 text-xs sm:text-sm focus:outline-none focus:border-blue-600 text-slate-900 placeholder-slate-400 shadow-2xs" />
+            
+            <!-- Quick Hospital & Healthcare Network Tags helper -->
+            <div class="mt-2 flex flex-wrap items-center gap-1.5 text-xs">
+              <span class="text-slate-400 text-[11px] font-bold">주요 병원 태그:</span>
+              <button type="button" onclick="appendTag('잉글우드병원')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-blue-100 text-slate-700 hover:text-blue-700 text-[11px] font-medium transition-colors cursor-pointer">+ 잉글우드병원</button>
+              <button type="button" onclick="appendTag('EHPN')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-blue-100 text-slate-700 hover:text-blue-700 text-[11px] font-medium transition-colors cursor-pointer">+ EHPN</button>
+              <button type="button" onclick="appendTag('해켄색대학병원')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-blue-100 text-slate-700 hover:text-blue-700 text-[11px] font-medium transition-colors cursor-pointer">+ 해켄색대학병원</button>
+              <button type="button" onclick="appendTag('밸리병원')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-blue-100 text-slate-700 hover:text-blue-700 text-[11px] font-medium transition-colors cursor-pointer">+ 밸리병원</button>
+              <button type="button" onclick="appendTag('파스카크밸리')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-blue-100 text-slate-700 hover:text-blue-700 text-[11px] font-medium transition-colors cursor-pointer">+ 파스카크밸리</button>
+              <button type="button" onclick="appendTag('RWJ바나바스')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-blue-100 text-slate-700 hover:text-blue-700 text-[11px] font-medium transition-colors cursor-pointer">+ RWJ바나바스</button>
+            </div>
           </div>
 
           <!-- Senior Notice & Bottom Action Buttons -->
@@ -428,6 +440,22 @@ if (!empty($rawCategory)) {
         }
       }
     }
+
+    window.appendTag = function(tagName) {
+      const input = document.getElementById('tags');
+      if (!input) return;
+      const cur = input.value.trim();
+      if (!cur) {
+        input.value = tagName;
+      } else {
+        const parts = cur.split(',').map(s => s.trim()).filter(Boolean);
+        if (!parts.includes(tagName)) {
+          parts.push(tagName);
+          input.value = parts.join(', ');
+        }
+      }
+      input.focus();
+    };
 
     async function handleAskSubmit(e) {
       e.preventDefault();

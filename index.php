@@ -125,9 +125,9 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="google-site-verification" content="xmtfJH3AZyW8W9Do_yQyWBZBlmmTET-VSke-GzY2PPs" />
-  <title>뉴저지 의료접근센터 · 의료접근포털 | NJ Healthcare Access Center &amp; Portal (NJ Korean Outreach)</title>
-  <meta name="description" content="뉴저지 의료접근센터(의료접근포털 / NJ Healthcare Access Center &amp; Portal)는 뉴저지 한인 동포를 위한 무료 종합 의료 접근 및 한인 아웃리치(NJ Korean Outreach) 포털입니다. 뉴저지 패밀리케어(메디케이드), 메디케어, ACA 건강보험, 자선진료(Charity Care), 무료 암 검진(NJCEED), 시니어 케어, 1:1 한국어 전문 의료 상담을 제공합니다." />
-  <meta name="keywords" content="의료접근센터, 의료접근포털, 뉴저지 의료접근센터, 뉴저지 의료접근포털, nj korean outreach, 뉴저지 한인 아웃리치, healthcare access center, healthcare access portal, nj healthcare access center, nj healthcare access portal, 의료접근, 뉴저지 한인 의료, 뉴저지 건강보험, 뉴저지 패밀리케어, 메디케이드, 메디케어, ACA 오바마케어, 자선진료, charity care, 무료 암검진, NJCEED, 시니어 케어, 패밀리터치 헬스케어" />
+  <title>뉴저지 의료접근센터 · 주요 병원 네트워크 및 한인 의료 지원 | NJAP</title>
+  <meta name="description" content="뉴저지 의료접근센터(NJ Healthcare Access Center) - 잉글우드 병원(Englewood Health), EHPN, 해켄색 메리디안 헬스(HUMC), 밸리 병원(The Valley Hospital), 파스카크 밸리(HMH), RWJBarnabas 등 뉴저지 주요 의료 기관 정보와 한인 환자 프로그램, 한국어 통역, 메디케어, ACA 건강보험, 자선진료(Charity Care) 지원 포털." />
+  <meta name="keywords" content="의료접근센터, 의료접근포털, 뉴저지 의료접근센터, 뉴저지 주요 병원, Englewood Health, 잉글우드 병원, EHPN, Englewood Health Physician Network, Hackensack Meridian Health, 해켄색 메리디안 헬스, Hackensack University Medical Center, HUMC, The Valley Hospital, 밸리 병원, HMH Pascack Valley Medical Center, 파스카크 밸리, RWJBarnabas Health, RWJ바나바스 헬스 네트워크, 버겐카운티 병원, 한인 통역 병원, 뉴저지 한인 병원 후기, 메디케어, ACA 오바마케어, 자선진료, charity care" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <link rel="canonical" href="https://njaccessportal.com/ko/" />
 
@@ -210,6 +210,144 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
         "description": "뉴저지 한인 커뮤니티의 언어와 문화적 장벽을 해소하고 공공보험(메디케이드/메디케어/ACA), 자선진료(Charity Care), 무료 암검진(NJCEED), 시니어 케어를 제공하는 전문 의료접근센터 및 포털",
         "sameAs": [
           "http://pf.kakao.com/_hdxmxaX/chat"
+        ]
+      },
+      {
+        "@type": "ItemList",
+        "@id": "https://njaccessportal.com/ko/#major-hospitals",
+        "name": "뉴저지 주요 의료 기관 및 병원 네트워크 (Major Hospitals & Network List)",
+        "description": "뉴저지 한인 커뮤니티를 위한 버겐 카운티 및 뉴저지 전역의 핵심 종합병원과 전문의 네트워크 목록입니다.",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "item": {
+              "@type": "Hospital",
+              "name": "Englewood Health (잉글우드 병원)",
+              "alternateName": ["잉글우드 병원", "Englewood Hospital and Medical Center"],
+              "url": "https://www.englewoodhealth.org",
+              "telephone": "+1-201-894-3000",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "350 Engle St",
+                "addressLocality": "Englewood",
+                "addressRegion": "NJ",
+                "postalCode": "07631",
+                "addressCountry": "US"
+              },
+              "areaServed": "Bergen County, NJ",
+              "availableLanguage": ["Korean", "English"],
+              "description": "버겐 카운티 한인 밀집 지역 대표 종합병원. 한인 의료 프로그램(Korean Healthcare Program), 한국어 상주 코디네이터 통역 지원, 입원 한국식 식단 및 자선 진료(Charity Care)."
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "item": {
+              "@type": "MedicalOrganization",
+              "name": "EHPN (Englewood Health Physician Network)",
+              "alternateName": ["잉글우드 헬스 의사 네트워크", "EHPN"],
+              "url": "https://www.englewoodhealthphysicians.org",
+              "telephone": "+1-833-234-2234",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Northern New Jersey",
+                "addressRegion": "NJ",
+                "addressCountry": "US"
+              },
+              "areaServed": "Northern New Jersey (Bergen, Hudson, Passaic Counties)",
+              "availableLanguage": ["Korean", "English"],
+              "description": "잉글우드 헬스 산하 최대 의사 네트워크. 북부 뉴저지 100+ 로케이션에서 한국어 진료가 가능한 1차 내과, 소아과, 순환기내과 전문의 연계 및 메디케어/ACA 인네트워크."
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "item": {
+              "@type": "Hospital",
+              "name": "Hackensack Meridian Health / Hackensack University Medical Center (해켄색 메리디안 헬스)",
+              "alternateName": ["해켄색 대학병원", "HUMC", "Hackensack Meridian Health"],
+              "url": "https://www.hackensackmeridianhealth.org",
+              "telephone": "+1-551-996-2000",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "30 Prospect Ave",
+                "addressLocality": "Hackensack",
+                "addressRegion": "NJ",
+                "postalCode": "07601",
+                "addressCountry": "US"
+              },
+              "areaServed": "New Jersey",
+              "availableLanguage": ["Korean", "English"],
+              "description": "U.S. News 뉴저지 1위 상급 종합병원(HUMC). 존 더러 암센터(John Theurer Cancer Center), 심장혈관 연구소, 24시간 한국어 공인 의료 통역 및 레벨1 외상센터."
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "item": {
+              "@type": "Hospital",
+              "name": "The Valley Hospital (밸리 병원)",
+              "alternateName": ["밸리 병원", "The Valley Hospital Paramus", "Valley Health System"],
+              "url": "https://www.valleyhealth.com",
+              "telephone": "+1-201-447-8000",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "4 Valley Health Plaza",
+                "addressLocality": "Paramus",
+                "addressRegion": "NJ",
+                "postalCode": "07652",
+                "addressCountry": "US"
+              },
+              "areaServed": "Bergen County, NJ",
+              "availableLanguage": ["Korean", "English"],
+              "description": "버겐 카운티 패러머스 최첨단 스마트 신축 병원. 전 병실 1인실 특화 설계, 다빈치 로봇 수술 센터, 여성 및 소아 센터, 한인 환자 의료 통역 지원."
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 5,
+            "item": {
+              "@type": "Hospital",
+              "name": "HMH Pascack Valley Medical Center (파스카크 밸리 메디컬 센터)",
+              "alternateName": ["파스카크 밸리 병원", "Pascack Valley Medical Center"],
+              "url": "https://www.pascackmedicalcenter.com",
+              "telephone": "+1-201-383-1000",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "250 Old Hook Rd",
+                "addressLocality": "Westwood",
+                "addressRegion": "NJ",
+                "postalCode": "07675",
+                "addressCountry": "US"
+              },
+              "areaServed": "Bergen County, NJ",
+              "availableLanguage": ["Korean", "English"],
+              "description": "웨스트우드 위치 해켄색 메리디안 제휴 커뮤니티 종합병원. 대기 시간이 짧은 신속 응급실(Fast ER), 관절 치환술, 당일 외래 수술 및 한국어 통역 지원."
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 6,
+            "item": {
+              "@type": "MedicalOrganization",
+              "name": "RWJBarnabas Health network (RWJ바나바스 헬스 네트워크)",
+              "alternateName": ["RWJBarnabas Health", "RWJ바나바스"],
+              "url": "https://www.rwjbh.org",
+              "telephone": "+1-888-724-7123",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "95 Old Short Hills Rd",
+                "addressLocality": "West Orange",
+                "addressRegion": "NJ",
+                "postalCode": "07052",
+                "addressCountry": "US"
+              },
+              "areaServed": "New Jersey Statewide",
+              "availableLanguage": ["Korean", "English"],
+              "description": "뉴저지 최대 종합 의료 네트워크(17개 병원). 러트거스 의과대학 제휴, 심장 이식, 암 정밀 치료, 소아 특화 병원 및 주정부 자선 치료(Charity Care) 지원."
+            }
+          }
         ]
       },
       {
@@ -2180,8 +2318,577 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
           </div>
         </section>
 
-    </div>
-  </main>
+        <!-- 7. Major Hospitals and Network List (Resources) - 뉴저지 주요 의료 기관 및 병원 네트워크 안내 -->
+        <section id="major-hospitals-section" class="py-12 sm:py-16 my-8 font-sans">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            
+            <!-- Section Header -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 mb-8 border-b border-slate-200">
+              <div class="max-w-3xl">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/90 text-brand-blue text-xs font-black uppercase tracking-wider mb-3 shadow-2xs">
+                  <i class="fa-solid fa-hospital text-blue-600"></i>
+                  <span>RESOURCES · MAJOR HOSPITALS &amp; HEALTHCARE NETWORKS</span>
+                </div>
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+                  뉴저지 주요 병원 및 의료 네트워크 리소스
+                </h2>
+                <p class="text-slate-600 text-sm sm:text-base leading-relaxed mt-2.5 font-normal">
+                  뉴저지 한인 동포들이 신뢰하고 찾을 수 있는 버겐 카운티 및 뉴저지 전역의 핵심 종합병원과 전문의 네트워크 안내입니다. <strong>한인 환자 전담 서비스, 한국어 통역, 전문의 연계 및 자선 진료(Charity Care)</strong> 정보를 한눈에 비교하고 바로 연결하세요.
+                </p>
+              </div>
+
+              <!-- Quick Link to Forum Reviews -->
+              <div class="shrink-0 flex items-center gap-3">
+                <a href="/ko/forum?specialty=hospital_reviews&view=topics" 
+                   class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs sm:text-sm shadow-sm transition-all hover:shadow-md">
+                  <i class="fa-solid fa-comments"></i>
+                  <span>병원 이용 후기 &amp; 추천 포럼</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="flex flex-wrap items-center gap-2 mb-8" id="hospital-filter-bar">
+              <button type="button" onclick="filterHospitalList('all', this)" class="hospital-filter-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all border border-blue-600 bg-blue-600 text-white shadow-xs">
+                전체 병원·네트워크 (6)
+              </button>
+              <button type="button" onclick="filterHospitalList('bergen', this)" class="hospital-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all border border-slate-200 bg-white text-slate-700 hover:bg-slate-50">
+                버겐 카운티 거점
+              </button>
+              <button type="button" onclick="filterHospitalList('physician_net', this)" class="hospital-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all border border-slate-200 bg-white text-slate-700 hover:bg-slate-50">
+                1차·전문의 의사망 (EHPN)
+              </button>
+              <button type="button" onclick="filterHospitalList('tertiary', this)" class="hospital-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all border border-slate-200 bg-white text-slate-700 hover:bg-slate-50">
+                3차 상급종합병원 (HUMC · RWJ)
+              </button>
+              <button type="button" onclick="filterHospitalList('korean_program', this)" class="hospital-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all border border-slate-200 bg-white text-slate-700 hover:bg-slate-50">
+                한국어 통역 지원 병원
+              </button>
+            </div>
+
+            <!-- 6 Major Hospitals Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="hospital-cards-grid">
+
+              <!-- 1. Englewood Health (잉글우드 병원) -->
+              <div class="hospital-card border border-slate-200/90 rounded-2xl bg-white p-6 sm:p-7 shadow-xs hover:shadow-lg transition-all flex flex-col justify-between group" data-category="bergen korean_program">
+                <div>
+                  <div class="flex items-start justify-between gap-3 mb-3">
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-black bg-blue-100 text-blue-900 border border-blue-200">
+                      <i class="fa-solid fa-location-dot text-blue-600"></i>
+                      <span>버겐 카운티 · 포트리/팰팍 인근</span>
+                    </span>
+                    <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                      안전성 A등급
+                    </span>
+                  </div>
+
+                  <div class="flex items-center gap-3.5 mb-4">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition-transform shadow-2xs border border-blue-100">
+                      <i class="fa-solid fa-hospital"></i>
+                    </div>
+                    <div>
+                      <h3 class="font-black text-lg sm:text-xl text-slate-900 group-hover:text-blue-600 transition-colors tracking-tight leading-snug">
+                        Englewood Health
+                      </h3>
+                      <p class="text-xs sm:text-sm font-bold text-slate-500">잉글우드 병원</p>
+                    </div>
+                  </div>
+
+                  <!-- Short-form Local SEO Info Box -->
+                  <div class="space-y-2.5 text-xs text-slate-600 leading-relaxed bg-slate-50/80 p-4 rounded-xl border border-slate-100 mb-4">
+                    <div>
+                      <strong class="text-slate-900 font-bold block mb-0.5">🔹 한인 환자 내방 안내</strong>
+                      <span>포트리, 팰리세이즈파크 등 한인 밀집 지역과 10분 거리의 대표 종합병원으로 버겐 카운티 최초로 <strong>‘한인 의료 프로그램(Korean Healthcare Program)’</strong>을 전담 운영합니다.</span>
+                    </div>
+                    <div>
+                      <strong class="text-slate-900 font-bold block mb-0.5">🔹 언어 및 통역 지원 정보</strong>
+                      <span>한국어 상주 코디네이터 통역 동행, 입원 환자 한국식 식단 제공, 24시간 응급실(ER) 한인 전담 안내 체계를 완비했습니다.</span>
+                    </div>
+                    <div>
+                      <strong class="text-slate-900 font-bold block mb-0.5">🔹 전문의 및 주요 센터 연계</strong>
+                      <span>레슬리 사이먼 유방암 검진 센터, 심혈관 중재술 센터 및 EHPN 전문의 네트워크와 유기적으로 직결 연계됩니다.</span>
+                    </div>
+                    <div>
+                      <strong class="text-slate-900 font-bold block mb-0.5">🔹 건강보험 및 자선진료</strong>
+                      <span>메디케어, 메디케이드, ACA 오바마케어 및 무보험 환자를 위한 주정부 자선 진료(Charity Care) 지원.</span>
+                    </div>
+                  </div>
+
+                  <!-- Hashtags -->
+                  <div class="flex flex-wrap gap-1.5 mb-4">
+                    <a href="/ko/forum?specialty=hospital_reviews&q=Englewood&view=topics" class="px-2 py-0.5 rounded-md bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold text-[11px] transition-colors">#잉글우드병원</a>
+                    <a href="/ko/forum?specialty=hospital_reviews&q=한인의료프로그램&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#한인의료프로그램</a>
+                    <a href="/ko/forum?specialty=hospital_reviews&q=통역&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#한국어통역상주</a>
+                    <a href="/ko/forum?specialty=hospital_reviews&q=자선진료&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#자선진료</a>
+                  </div>
+
+                  <!-- Contact Details -->
+                  <div class="pt-3 border-t border-slate-100 text-xs text-slate-500 space-y-1 mb-4">
+                    <div class="flex items-center gap-1.5">
+                      <i class="fa-solid fa-phone text-slate-400 text-[11px]"></i>
+                      <span>대표: <a href="tel:2018943000" class="font-bold text-slate-800 hover:text-blue-600">(201) 894-3000</a></span>
+                      <span class="mx-1 text-slate-300">|</span>
+                      <span>한인 핫라인: <a href="tel:2016082346" class="font-bold text-blue-600 hover:underline">(201) 608-2346</a></span>
+                    </div>
+                    <div class="flex items-start gap-1.5">
+                      <i class="fa-solid fa-map-pin text-slate-400 text-[11px] mt-0.5"></i>
+                      <span>350 Engle St, Englewood, NJ 07631</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-100">
+                  <a href="https://www.englewoodhealth.org" target="_blank" rel="noopener noreferrer" 
+                     class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors">
+                    <span>공식 웹사이트</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                  </a>
+                  <a href="/ko/forum?specialty=hospital_reviews&q=Englewood&view=topics" 
+                     class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 font-extrabold text-xs transition-colors">
+                    <i class="fa-regular fa-comment-dots text-xs"></i>
+                    <span>후기 &amp; 질문</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- 2. EHPN (Englewood Health Physician Network) -->
+              <div class="hospital-card border border-slate-200/90 rounded-2xl bg-white p-6 sm:p-7 shadow-xs hover:shadow-lg transition-all flex flex-col justify-between group" data-category="physician_net bergen korean_program">
+                <div>
+                  <div class="flex items-start justify-between gap-3 mb-3">
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-black bg-emerald-100 text-emerald-900 border border-emerald-200">
+                      <i class="fa-solid fa-users text-emerald-600"></i>
+                      <span>북부 뉴저지 100+ 진료소 · 한인 의사망</span>
+                    </span>
+                    <span class="text-[11px] font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+                      1차 진료 네트워크
+                    </span>
+                  </div>
+
+                  <div class="flex items-center gap-3.5 mb-4">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition-transform shadow-2xs border border-emerald-100">
+                      <i class="fa-solid fa-user-doctor"></i>
+                    </div>
+                    <div>
+                      <h3 class="font-black text-lg sm:text-xl text-slate-900 group-hover:text-emerald-700 transition-colors tracking-tight leading-snug">
+                        EHPN
+                      </h3>
+                      <p class="text-xs sm:text-sm font-bold text-slate-500">Englewood Health Physician Network</p>
+                    </div>
+                  </div>
+
+                  <!-- Short-form Local SEO Info Box -->
+                  <div class="space-y-2.5 text-xs text-slate-600 leading-relaxed bg-slate-50/80 p-4 rounded-xl border border-slate-100 mb-4">
+                    <div>
+                      <strong class="text-slate-900 font-bold block mb-0.5">🔹 한인 환자 내방 안내</strong>
+                      <span>잉글우드 헬스 산하 최대 의사 네트워크로 거주지 인근 100곳 이상의 외래 클리닉에서 한인 주치의(PCP) 및 각 분야 전문의 진료를 제공합니다.</span>
+                    </div>
+                    <div>
+                      <strong class="text-slate-900 font-bold block mb-0.5">🔹 언어 및 통역 지원 정보</strong>
+                      <span>한국어가 모국어인 한인 1차 진료 내과, 소아과, 순환기내과 전문의들이 직접 진료하여 언어 장벽 없는 편안한 상담이 가능합니다.</span>
+                    </div>
+                    <div>
+                      <strong class="text-slate-900 font-bold block mb-0.5">🔹 전문의 및 주요 센터 연계</strong>
+                      <span>일반 내과, 가정의학과, 순환기내과, 당뇨내분비과, 정형외과, 혈액종양내과 등 종합병원과 즉시 연계되는 유기적 의료망.</span>
+                    </div>
+                    <div>
+                      <strong class="text-slate-900 font-bold block mb-0.5">🔹 건강보험 및 인-네트워크</strong>
+                      <span>메디케어, 메디케이드, 뉴저지 마켓플레이스(GetCoveredNJ) 플랜 및 주요 상업 보험 폭넓은 인-네트워크(In-Network).</span>
+                    </div>
+                  </div>
+
+                  <!-- Hashtags -->
+                  <div class="flex flex-wrap gap-1.5 mb-4">
+                    <a href="/ko/forum?specialty=hospital_reviews&q=EHPN&view=topics" class="px-2 py-0.5 rounded-md bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-[11px] transition-colors">#EHPN</a>
+                    <a href="/ko/forum?specialty=hospital_reviews&q=한인주치의&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#한인주치의</a>
+                    <a href="/ko/forum?specialty=hospital_reviews&q=1차내과&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#1차내과</a>
+                    <a href="/ko/forum?specialty=hospital_reviews&q=소아과&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#한인소아과</a>
+                  </div>
+
+                  <!-- Contact Details -->
+                  <div class="pt-3 border-t border-slate-100 text-xs text-slate-500 space-y-1 mb-4">
+                    <div class="flex items-center gap-1.5">
+                      <i class="fa-solid fa-phone text-slate-400 text-[11px]"></i>
+                      <span>의사 찾기 &amp; 예약: <a href="tel:8332342234" class="font-bold text-emerald-700 hover:underline">(833) 234-2234</a></span>
+                    </div>
+                    <div class="flex items-start gap-1.5">
+                      <i class="fa-solid fa-map-pin text-slate-400 text-[11px] mt-0.5"></i>
+                      <span>포트리, 팰팍, 클로스터, 테너플라이, 저지시티 등 북부 NJ</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-100">
+                  <a href="https://www.englewoodhealthphysicians.org" target="_blank" rel="noopener noreferrer" 
+                     class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors">
+                    <span>공식 웹사이트</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                  </a>
+                  <a href="/ko/forum?specialty=hospital_reviews&q=EHPN&view=topics" 
+                     class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-extrabold text-xs transition-colors">
+                    <i class="fa-regular fa-comment-dots text-xs"></i>
+                    <span>후기 &amp; 추천</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- 3. Hackensack Meridian Health / Hackensack University Medical Center -->
+              <div class="hospital-card border border-slate-200/90 rounded-2xl bg-white p-6 sm:p-7 shadow-xs hover:shadow-lg transition-all flex flex-col justify-between group" data-category="tertiary bergen korean_program">
+                <div>
+                  <div class="flex items-start justify-between gap-3 mb-3">
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-black bg-indigo-100 text-indigo-900 border border-indigo-200">
+                      <i class="fa-solid fa-award text-indigo-600"></i>
+                      <span>U.S. News 뉴저지 #1 상급종합병원</span>
+                    </span>
+                    <span class="text-[11px] font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">
+                      3차 거점 병원
+                    </span>
+                  </div>
+
+                  <div class="flex items-center gap-3.5 mb-4">
+                    <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition-transform shadow-2xs border border-indigo-100">
+                      <i class="fa-solid fa-hospital-wide"></i>
+                    </div>
+                    <div>
+                      <h3 class="font-black text-lg sm:text-xl text-slate-900 group-hover:text-indigo-700 transition-colors tracking-tight leading-snug">
+                        Hackensack Meridian Health
+                      </h3>
+                      <p class="text-xs sm:text-sm font-bold text-slate-500">해켄색 대학병원 (HUMC)</p>
+                    </div>
+                  </div>
+
+                  <!-- Short-form Local SEO Info Box -->
+                  <div class="space-y-2.5 text-xs text-slate-600 leading-relaxed bg-slate-50/80 p-4 rounded-xl border border-slate-100 mb-4">
+                    <div>
+                      <strong class="text-slate-900 font-bold block mb-0.5">🔹 한인 환자 내방 안내</strong>
+                      <span>뉴저지 최대 규모 헬스케어 시스템의 플래그십 상급 종합병원으로 중증 질환, 수술, 암 치료 시 한인 동포들이 가장 신뢰하고 찾는 3차 병원입니다.</span>
+                    </div>
+                    <div>
+                      <strong class="text-slate-900 font-bold block mb-0.5">🔹 언어 및 통역 지원 정보</strong>
+                      <span>24시간 공인 의료 통역사 상주 및 고화질 실시간 비디오 통역(VRI), 다문화 환자 지원팀(Patient Access) 상시 가동.</span>
+                    </div>
+                    <div>
+                      <strong class="text-slate-900 font-bold block mb-0.5">🔹 전문의 및 주요 센터 연계</strong>
+                      <span>세계적 명성의 <strong>존 더러 암센터(John Theurer Cancer Center)</strong>, 심장혈관 연구소, 헬렌 F. 그레이엄 소아전문병원, 레벨 1 외상센터 완비.</span>
+                    </div>
+                    <div>
+                      <strong class="text-slate-900 font-bold block mb-0.5">🔹 건강보험 및 자선진료</strong>
+                      <span>뉴저지 주정부 자선 진료(Charity Care), 재정 상담 지원 및 취약계층 분할 납부 프로그램 운영.</span>
+                    </div>
+                  </div>
+
+                  <!-- Hashtags -->
+                  <div class="flex flex-wrap gap-1.5 mb-4">
+                    <a href="/ko/forum?specialty=hospital_reviews&q=Hackensack&view=topics" class="px-2 py-0.5 rounded-md bg-indigo-50 hover:bg-indigo-100 text-indigo-800 font-bold text-[11px] transition-colors">#해켄색대학병원</a>
+                    <a href="/ko/forum?specialty=hospital_reviews&q=HUMC&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#HUMC</a>
+                    <a href="/ko/forum?specialty=hospital_reviews&q=존더러암센터&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#존더러암센터</a>
+                    <a href="/ko/forum?specialty=hospital_reviews&q=24시간통역&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#24시간한국어통역</a>
+                  </div>
+
+                  <!-- Contact Details -->
+                  <div class="pt-3 border-t border-slate-100 text-xs text-slate-500 space-y-1 mb-4">
+                    <div class="flex items-center gap-1.5">
+                      <i class="fa-solid fa-phone text-slate-400 text-[11px]"></i>
+                      <span>대표: <a href="tel:5519962000" class="font-bold text-slate-800 hover:text-indigo-600">(551) 996-2000</a></span>
+                      <span class="mx-1 text-slate-300">|</span>
+                      <span>진료예약: <a href="tel:8444649355" class="font-bold text-indigo-700 hover:underline">(844) 464-9355</a></span>
+                    </div>
+                    <div class="flex items-start gap-1.5">
+                      <i class="fa-solid fa-map-pin text-slate-400 text-[11px] mt-0.5"></i>
+                      <span>30 Prospect Ave, Hackensack, NJ 07601</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-100">
+                  <a href="https://www.hackensackmeridianhealth.org" target="_blank" rel="noopener noreferrer" 
+                     class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors">
+                    <span>공식 웹사이트</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                  </a>
+                  <a href="/ko/forum?specialty=hospital_reviews&q=Hackensack&view=topics" 
+                     class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-800 font-extrabold text-xs transition-colors">
+                    <i class="fa-regular fa-comment-dots text-xs"></i>
+                    <span>후기 &amp; 질문</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- 4. The Valley Hospital (밸리 병원) -->
+              <div class="hospital-card border border-slate-200/90 rounded-2xl bg-white p-6 sm:p-7 shadow-xs hover:shadow-lg transition-all flex flex-col justify-between group" data-category="bergen korean_program">
+                <div>
+                  <div class="flex items-start justify-between gap-3 mb-3">
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-black bg-sky-100 text-sky-900 border border-sky-200">
+                      <i class="fa-solid fa-star text-sky-600"></i>
+                      <span>패러머스 최첨단 스마트 신축 병원</span>
+                    </span>
+                    <span class="text-[11px] font-bold text-sky-700 bg-sky-50 px-2 py-0.5 rounded border border-sky-200">
+                      전 병실 1인실
+                    </span>
+                  </div>
+
+                  <div class="flex items-center gap-3.5 mb-4">
+                    <div class="w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition-transform shadow-2xs border border-sky-100">
+                      <i class="fa-solid fa-square-plus"></i>
+                    </div>
+                    <div>
+                      <h3 class="font-black text-lg sm:text-xl text-slate-900 group-hover:text-sky-600 transition-colors tracking-tight leading-snug">
+                        The Valley Hospital
+                      </h3>
+                      <p class="text-xs sm:text-sm font-bold text-slate-500">밸리 병원 (Valley Health System)</p>
+                    </div>
+                  </div>
+
+                  <!-- Short-form Local SEO Info Box -->
+                  <div class="space-y-2.5 text-xs text-slate-600 leading-relaxed bg-slate-50/80 p-4 rounded-xl border border-slate-100 mb-4">
+                    <div>
+                      <strong class="text-slate-900 font-bold block mb-0.5">🔹 한인 환자 내방 안내</strong>
+                      <span>버겐 카운티 패러머스(Paramus)에 8억 달러 규모로 최첨단 신축 이전한 프리미엄 스마트 병원으로 루트 17/4 번 고속도로와 인접하여 내방이 편리합니다.</span>
+                    </div>
+                    <div>
+                      <strong class="text-slate-900 font-bold block mb-0.5">🔹 언어 및 통역 지원 정보</strong>
+                      <span>한인 환자를 위한 다국어 의료 통역 지원 및 전문 네비게이터 팀 상주, 입원 시 프라이버시가 100% 보장되는 <strong>전 병실 1인 단독실</strong> 운영.</span>
+                    </div>
+                    <div>
+                      <strong class="text-slate-900 font-bold block mb-0.5">🔹 전문의 및 주요 센터 연계</strong>
+                      <span>최신 다빈치 로봇 수술 센터, 심장혈관 중환자실(ICU), 여성 산부인과 특화 센터, 종합 암 케어 및 클리블랜드 클리닉 심혈관 얼라이언스.</span>
+                    </div>
+                    <div>
+                      <strong class="text-slate-900 font-bold block mb-0.5">🔹 건강보험 및 자선진료</strong>
+                      <span>메디케어, 메디케이드, ACA 마켓플레이스 보험 인-네트워크 및 병원비 재정 지원 프로그램 운영.</span>
+                    </div>
+                  </div>
+
+                  <!-- Hashtags -->
+                  <div class="flex flex-wrap gap-1.5 mb-4">
+                    <a href="/ko/forum?specialty=hospital_reviews&q=Valley&view=topics" class="px-2 py-0.5 rounded-md bg-sky-50 hover:bg-sky-100 text-sky-800 font-bold text-[11px] transition-colors">#밸리병원</a>
+                    <a href="/ko/forum?specialty=hospital_reviews&q=TheValleyHospital&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#TheValleyHospital</a>
+                    <a href="/ko/forum?specialty=hospital_reviews&q=패러머스신축&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#패러머스신축</a>
+                    <a href="/ko/forum?specialty=hospital_reviews&q=1인실&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#전병실1인실</a>
+                  </div>
+
+                  <!-- Contact Details -->
+                  <div class="pt-3 border-t border-slate-100 text-xs text-slate-500 space-y-1 mb-4">
+                    <div class="flex items-center gap-1.5">
+                      <i class="fa-solid fa-phone text-slate-400 text-[11px]"></i>
+                      <span>대표: <a href="tel:2014478000" class="font-bold text-slate-800 hover:text-sky-600">(201) 447-8000</a></span>
+                      <span class="mx-1 text-slate-300">|</span>
+                      <span>환자 안내: <a href="tel:8008255391" class="font-bold text-sky-700 hover:underline">(800) 825-5391</a></span>
+                    </div>
+                    <div class="flex items-start gap-1.5">
+                      <i class="fa-solid fa-map-pin text-slate-400 text-[11px] mt-0.5"></i>
+                      <span>4 Valley Health Plaza, Paramus, NJ 07652</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-100">
+                  <a href="https://www.valleyhealth.com" target="_blank" rel="noopener noreferrer" 
+                     class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors">
+                    <span>공식 웹사이트</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                  </a>
+                  <a href="/ko/forum?specialty=hospital_reviews&q=Valley&view=topics" 
+                     class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-800 font-extrabold text-xs transition-colors">
+                    <i class="fa-regular fa-comment-dots text-xs"></i>
+                    <span>후기 &amp; 질문</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- 5. HMH Pascack Valley Medical Center (파스카크 밸리 메디컬 센터) -->
+              <div class="hospital-card border border-slate-200/90 rounded-2xl bg-white p-6 sm:p-7 shadow-xs hover:shadow-lg transition-all flex flex-col justify-between group" data-category="bergen korean_program">
+                <div>
+                  <div class="flex items-start justify-between gap-3 mb-3">
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-black bg-teal-100 text-teal-900 border border-teal-200">
+                      <i class="fa-solid fa-bolt text-teal-600"></i>
+                      <span>웨스트우드 커뮤니티 종합병원</span>
+                    </span>
+                    <span class="text-[11px] font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded border border-teal-200">
+                      신속 응급실(Fast ER)
+                    </span>
+                  </div>
+
+                  <div class="flex items-center gap-3.5 mb-4">
+                    <div class="w-12 h-12 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition-transform shadow-2xs border border-teal-100">
+                      <i class="fa-solid fa-house-medical"></i>
+                    </div>
+                    <div>
+                      <h3 class="font-black text-lg sm:text-xl text-slate-900 group-hover:text-teal-700 transition-colors tracking-tight leading-snug">
+                        HMH Pascack Valley
+                      </h3>
+                      <p class="text-xs sm:text-sm font-bold text-slate-500">파스카크 밸리 메디컬 센터</p>
+                    </div>
+                  </div>
+
+                  <!-- Short-form Local SEO Info Box -->
+                  <div class="space-y-2.5 text-xs text-slate-600 leading-relaxed bg-slate-50/80 p-4 rounded-xl border border-slate-100 mb-4">
+                    <div>
+                      <strong class="text-slate-900 font-bold block mb-0.5">🔹 한인 환자 내방 안내</strong>
+                      <span>웨스트우드(Westwood)에 위치한 해켄색 메리디안 헬스(HMH) 산하의 급성기 커뮤니티 종합병원으로 버겐 북부 한인 주민들에게 접근성이 우수합니다.</span>
+                    </div>
+                    <div>
+                      <strong class="text-slate-900 font-bold block mb-0.5">🔹 언어 및 통역 지원 정보</strong>
+                      <span>한국어 통역 지원 서비스 운영, 환자 1명당 간호사 비율이 우수하여 밀착형 맞춤 간호와 상세한 설명이 장점입니다.</span>
+                    </div>
+                    <div>
+                      <strong class="text-slate-900 font-bold block mb-0.5">🔹 전문의 및 주요 센터 연계</strong>
+                      <span>대기 시간이 극히 짧은 <strong>신속 응급실(Fast-Track ER)</strong>, 정형외과 무릎·고관절 관절 치환술, 당일 외래 수술 및 시니어 집중 재활 병동.</span>
+                    </div>
+                    <div>
+                      <strong class="text-slate-900 font-bold block mb-0.5">🔹 건강보험 및 자선진료</strong>
+                      <span>해켄색 메리디안 헬스 자선 진료 가이드라인 동일 적용, 메디케어 및 메디케이드 취약계층 재정 보조 지원.</span>
+                    </div>
+                  </div>
+
+                  <!-- Hashtags -->
+                  <div class="flex flex-wrap gap-1.5 mb-4">
+                    <a href="/ko/forum?specialty=hospital_reviews&q=Pascack&view=topics" class="px-2 py-0.5 rounded-md bg-teal-50 hover:bg-teal-100 text-teal-800 font-bold text-[11px] transition-colors">#파스카크밸리</a>
+                    <a href="/ko/forum?specialty=hospital_reviews&q=PascackValley&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#PascackValley</a>
+                    <a href="/ko/forum?specialty=hospital_reviews&q=신속응급실&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#신속응급실</a>
+                    <a href="/ko/forum?specialty=hospital_reviews&q=관절수술&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#관절치환수술</a>
+                  </div>
+
+                  <!-- Contact Details -->
+                  <div class="pt-3 border-t border-slate-100 text-xs text-slate-500 space-y-1 mb-4">
+                    <div class="flex items-center gap-1.5">
+                      <i class="fa-solid fa-phone text-slate-400 text-[11px]"></i>
+                      <span>대표: <a href="tel:2013831000" class="font-bold text-slate-800 hover:text-teal-600">(201) 383-1000</a></span>
+                      <span class="mx-1 text-slate-300">|</span>
+                      <span>응급실: <a href="tel:2013831025" class="font-bold text-teal-700 hover:underline">(201) 383-1025</a></span>
+                    </div>
+                    <div class="flex items-start gap-1.5">
+                      <i class="fa-solid fa-map-pin text-slate-400 text-[11px] mt-0.5"></i>
+                      <span>250 Old Hook Rd, Westwood, NJ 07675</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-100">
+                  <a href="https://www.pascackmedicalcenter.com" target="_blank" rel="noopener noreferrer" 
+                     class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors">
+                    <span>공식 웹사이트</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                  </a>
+                  <a href="/ko/forum?specialty=hospital_reviews&q=Pascack&view=topics" 
+                     class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-teal-50 hover:bg-teal-100 text-teal-800 font-extrabold text-xs transition-colors">
+                    <i class="fa-regular fa-comment-dots text-xs"></i>
+                    <span>후기 &amp; 질문</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- 6. RWJBarnabas Health network (RWJ바나바스 헬스 네트워크) -->
+              <div class="hospital-card border border-slate-200/90 rounded-2xl bg-white p-6 sm:p-7 shadow-xs hover:shadow-lg transition-all flex flex-col justify-between group" data-category="tertiary korean_program">
+                <div>
+                  <div class="flex items-start justify-between gap-3 mb-3">
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-black bg-rose-100 text-rose-900 border border-rose-200">
+                      <i class="fa-solid fa-circle-nodes text-rose-600"></i>
+                      <span>뉴저지 최대 광역 의료망 · 러트거스 의대 제휴</span>
+                    </span>
+                    <span class="text-[11px] font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
+                      주 전역 17개 병원
+                    </span>
+                  </div>
+
+                  <div class="flex items-center gap-3.5 mb-4">
+                    <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition-transform shadow-2xs border border-rose-100">
+                      <i class="fa-solid fa-hospital-user"></i>
+                    </div>
+                    <div>
+                      <h3 class="font-black text-lg sm:text-xl text-slate-900 group-hover:text-rose-700 transition-colors tracking-tight leading-snug">
+                        RWJBarnabas Health
+                      </h3>
+                      <p class="text-xs sm:text-sm font-bold text-slate-500">RWJ바나바스 헬스 네트워크</p>
+                    </div>
+                  </div>
+
+                  <!-- Short-form Local SEO Info Box -->
+                  <div class="space-y-2.5 text-xs text-slate-600 leading-relaxed bg-slate-50/80 p-4 rounded-xl border border-slate-100 mb-4">
+                    <div>
+                      <strong class="text-slate-900 font-bold block mb-0.5">🔹 한인 환자 내방 안내</strong>
+                      <span>뉴저지 주 전역에 17개 종합병원과 38,000명의 인력을 보유한 최대 종합 의료망으로 클라라 마스, 세인트 바나바스 메디컬 센터 등을 운영합니다.</span>
+                    </div>
+                    <div>
+                      <strong class="text-slate-900 font-bold block mb-0.5">🔹 언어 및 통역 지원 정보</strong>
+                      <span>24시간 연중무휴 한국어 전화 및 비디오 의료 통역, 다문화 환자 권익 옹호 서비스 제공.</span>
+                    </div>
+                    <div>
+                      <strong class="text-slate-900 font-bold block mb-0.5">🔹 전문의 및 주요 센터 연계</strong>
+                      <span>러트거스 의과대학(Rutgers) 공식 제휴 연구망, 주 유일의 성인·소아 심장 이식 프로그램, 브리스톨 마이어스 스큅 어린이 병원(BMSCH), 럿거스 암센터.</span>
+                    </div>
+                    <div>
+                      <strong class="text-slate-900 font-bold block mb-0.5">🔹 건강보험 및 자선진료</strong>
+                      <span>뉴저지 주 최대 규모의 자선 진료(Charity Care) 지원, 무보험 취약계층 무료 건강 검진 및 공공 복지 프로그램 적극 연계.</span>
+                    </div>
+                  </div>
+
+                  <!-- Hashtags -->
+                  <div class="flex flex-wrap gap-1.5 mb-4">
+                    <a href="/ko/forum?specialty=hospital_reviews&q=RWJ&view=topics" class="px-2 py-0.5 rounded-md bg-rose-50 hover:bg-rose-100 text-rose-800 font-bold text-[11px] transition-colors">#RWJ바나바스</a>
+                    <a href="/ko/forum?specialty=hospital_reviews&q=RWJBarnabas&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#RWJBarnabas</a>
+                    <a href="/ko/forum?specialty=hospital_reviews&q=클라라마스&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#클라라마스병원</a>
+                    <a href="/ko/forum?specialty=hospital_reviews&q=자선치료&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#자선치료</a>
+                  </div>
+
+                  <!-- Contact Details -->
+                  <div class="pt-3 border-t border-slate-100 text-xs text-slate-500 space-y-1 mb-4">
+                    <div class="flex items-center gap-1.5">
+                      <i class="fa-solid fa-phone text-slate-400 text-[11px]"></i>
+                      <span>네트워크 안내: <a href="tel:8887247123" class="font-bold text-slate-800 hover:text-rose-600">(888) 724-7123</a></span>
+                    </div>
+                    <div class="flex items-start gap-1.5">
+                      <i class="fa-solid fa-map-pin text-slate-400 text-[11px] mt-0.5"></i>
+                      <span>뉴저지 전역 17개 종합병원 (본부: 95 Old Short Hills Rd, West Orange)</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-100">
+                  <a href="https://www.rwjbh.org" target="_blank" rel="noopener noreferrer" 
+                     class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors">
+                    <span>공식 웹사이트</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                  </a>
+                  <a href="/ko/forum?specialty=hospital_reviews&q=RWJ&view=topics" 
+                     class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-800 font-extrabold text-xs transition-colors">
+                    <i class="fa-regular fa-comment-dots text-xs"></i>
+                    <span>후기 &amp; 질문</span>
+                  </a>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </section>
+
+        <script>
+          window.filterHospitalList = function(category, btnEl) {
+            document.querySelectorAll('.hospital-filter-btn').forEach(function(b) {
+              b.classList.remove('active', 'bg-blue-600', 'text-white', 'border-blue-600', 'shadow-xs');
+              b.classList.add('bg-white', 'text-slate-700', 'border-slate-200');
+            });
+            if (btnEl) {
+              btnEl.classList.add('active', 'bg-blue-600', 'text-white', 'border-blue-600', 'shadow-xs');
+              btnEl.classList.remove('bg-white', 'text-slate-700', 'border-slate-200');
+            }
+            var cards = document.querySelectorAll('.hospital-card');
+            cards.forEach(function(card) {
+              var cats = card.getAttribute('data-category') || '';
+              if (category === 'all' || cats.indexOf(category) !== -1) {
+                card.style.display = '';
+              } else {
+                card.style.display = 'none';
+              }
+            });
+          };
+        </script>
 
   <!-- Footer -->
   <footer class="bg-brand-darker text-white">
@@ -2208,6 +2915,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
           <ul class="space-y-2.5">
             <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/medicare">메디케어 안내</a></li>
             <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/medicare#aca">ACA 보험</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/#major-hospitals-section">주요 병원 네트워크</a></li>
             <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/medicare#faq">자주 묻는 질문</a></li>
           </ul>
         </div>

@@ -346,7 +346,10 @@ $forumPostingSchema = [
 
           <?php if (!empty($question['tags'])): ?>
             <?php foreach ($question['tags'] as $tag): ?>
-              <span class="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-lg">#<?= htmlspecialchars($tag) ?></span>
+              <a href="/ko/forum?specialty=<?= urlencode($category['id'] ?? '') ?>&q=<?= urlencode($tag) ?>&view=topics" 
+                 class="text-xs bg-slate-100 hover:bg-blue-50 hover:text-blue-700 text-slate-600 px-2.5 py-1 rounded-lg border border-slate-200/80 transition-colors font-medium">
+                #<?= htmlspecialchars($tag) ?>
+              </a>
             <?php endforeach; ?>
           <?php endif; ?>
         </div>
