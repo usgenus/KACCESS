@@ -2,9 +2,9 @@ const https = require('https');
 const fs = require('fs');
 const path = require('path');
 
-const NJAP_TUS_URL = 'https://srv1709-files.hstgr.io/rest/cd0acc7e122eacff/api/tus/public_html';
-const NJAP_AUTH_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJsb2NhbGUiOiJlbl9VUyIsInZpZXdNb2RlIjoibGlzdCIsInNpbmdsZUNsaWNrIjpmYWxzZSwicmVkaXJlY3RBZnRlckNvcHlNb3ZlIjpmYWxzZSwicGVybSI6eyJhZG1pbiI6ZmFsc2UsImV4ZWN1dGUiOmZhbHNlLCJjcmVhdGUiOnRydWUsInJlbmFtZSI6dHJ1ZSwibW9kaWZ5Ijp0cnVlLCJkZWxldGUiOnRydWUsInNoYXJlIjpmYWxzZSwiZG93bmxvYWQiOnRydWV9LCJjb21tYW5kcyI6W10sImxvY2tQYXNzd29yZCI6dHJ1ZSwiaGlkZURvdGZpbGVzIjpmYWxzZSwiZGF0ZUZvcm1hdCI6ZmFsc2UsInVzZXJuYW1lIjoidTczODM1ODExMCIsImFjZUVkaXRvclRoZW1lIjoiIn0sImlzcyI6IkZpbGUgQnJvd3NlciIsImV4cCI6MTc5MDIzNTQzNywiaWF0IjoxNzkwMjEzODM3fQ.9mI6bfoq3PAMZGqZI1zm8YMzSBd4eIwLwkxr0PP_HWk';
-const NJAP_REST_AUTH_KEY = 'a8cbbfa0b5b1d6f8eb8ff41c41ae7be03c96347ac4347dee5fd1c3b425b0f12e-cd0acc7e122eacff';
+const NJAP_TUS_URL = 'https://srv1709-files.hstgr.io/rest/5b4840f3729827be/api/tus/public_html';
+const NJAP_AUTH_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJsb2NhbGUiOiJlbl9VUyIsInZpZXdNb2RlIjoibGlzdCIsInNpbmdsZUNsaWNrIjpmYWxzZSwicmVkaXJlY3RBZnRlckNvcHlNb3ZlIjpmYWxzZSwicGVybSI6eyJhZG1pbiI6ZmFsc2UsImV4ZWN1dGUiOmZhbHNlLCJjcmVhdGUiOnRydWUsInJlbmFtZSI6dHJ1ZSwibW9kaWZ5Ijp0cnVlLCJkZWxldGUiOnRydWUsInNoYXJlIjpmYWxzZSwiZG93bmxvYWQiOnRydWV9LCJjb21tYW5kcyI6W10sImxvY2tQYXNzd29yZCI6dHJ1ZSwiaGlkZURvdGZpbGVzIjpmYWxzZSwiZGF0ZUZvcm1hdCI6ZmFsc2UsInVzZXJuYW1lIjoidTczODM1ODExMCIsImFjZUVkaXRvclRoZW1lIjoiIn0sImlzcyI6IkZpbGUgQnJvd3NlciIsImV4cCI6MTc5MDIzNjQwMiwiaWF0IjoxNzkwMjE0ODAyfQ.fcZN7_hluor08tAqz8UovpT4O6p5IIYUJFAgugRFrlI';
+const NJAP_REST_AUTH_KEY = '828e4bcc60fd589ee77bac6583d418ccd634035455f7c46836309713d3776d29-5b4840f3729827be';
 
 async function uploadToTus(localFilePath, destRelPath) {
   const content = fs.readFileSync(localFilePath);
@@ -93,6 +93,12 @@ async function main() {
 
   console.log('\n=== Step 4: Updating root index.html on njaccessportal.com ===');
   await uploadToTus(path.join(ROOT, 'splash.html'), 'index.html');
+
+  console.log('\n=== Step 4.1: Updating root robots.txt on njaccessportal.com ===');
+  await uploadToTus(path.join(ROOT, 'robots.txt'), 'robots.txt');
+
+  console.log('\n=== Step 4.2: Updating root sitemap.xml on njaccessportal.com ===');
+  await uploadToTus(path.join(ROOT, 'sitemap.xml'), 'sitemap.xml');
 
   console.log('\n=== Step 5: Uploading root .htaccess on njaccessportal.com ===');
   await uploadToTus(path.join(__dirname, 'root_njaccessportal_htaccess'), '.htaccess');

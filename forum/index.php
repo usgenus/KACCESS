@@ -82,7 +82,9 @@ $seoDesc = $currentCategory
   <title><?= $seoTitle ?></title>
   <meta name="description" content="<?= $seoDesc ?>" />
   <meta name="keywords" content="뉴저지 한인 포럼, 뉴저지 한인 병원 후기, 메디케어 Q&A, 메디케이드 질문, 오바마케어, 의학포럼, 한인 의사 추천, 뉴저지 의료접근센터" />
+  <!-- Directives for Googlebot & Web Crawlers -->
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <link rel="canonical" href="<?= htmlspecialchars($canonicalUrl) ?>" />
 
   <!-- OpenGraph / Social Media -->
@@ -99,7 +101,7 @@ $seoDesc = $currentCategory
   <meta name="twitter:description" content="<?= $seoDesc ?>" />
   <meta name="twitter:image" content="https://njaccessportal.com/ko/logo-icon.svg" />
 
-  <!-- Schema.org JSON-LD Structured Data -->
+  <!-- Schema.org JSON-LD Structured Data: MedicalWebPage, Breadcrumbs & ItemList -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -115,6 +117,57 @@ $seoDesc = $currentCategory
     }
   }
   </script>
+
+  <script type="application/ld+json">
+  <?= json_encode([
+      '@context' => 'https://schema.org',
+      '@type' => 'BreadcrumbList',
+      'itemListElement' => array_values(array_filter([
+          [
+              '@type' => 'ListItem',
+              'position' => 1,
+              'name' => '홈',
+              'item' => 'https://njaccessportal.com/ko/'
+          ],
+          [
+              '@type' => 'ListItem',
+              'position' => 2,
+              'name' => '커뮤니티 포럼',
+              'item' => 'https://njaccessportal.com/ko/forum'
+          ],
+          $currentCategory ? [
+              '@type' => 'ListItem',
+              'position' => 3,
+              'name' => $currentCategory['name_ko'],
+              'item' => 'https://njaccessportal.com/ko/forum?specialty=' . urlencode($currentCategory['id'])
+          ] : null,
+          $currentSub ? [
+              '@type' => 'ListItem',
+              'position' => 4,
+              'name' => $currentSub['name_ko'],
+              'item' => 'https://njaccessportal.com/ko/forum?specialty=medical_health&sub=' . urlencode($currentSub['id'])
+          ] : null
+      ]))
+  ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) ?>
+  </script>
+
+  <?php if (!empty($questions)): ?>
+  <script type="application/ld+json">
+  <?= json_encode([
+      '@context' => 'https://schema.org',
+      '@type' => 'ItemList',
+      'name' => strip_tags($pageTitle),
+      'itemListElement' => array_values(array_map(function($idx, $q) {
+          return [
+              '@type' => 'ListItem',
+              'position' => $idx + 1,
+              'name' => $q['title'],
+              'url' => 'https://njaccessportal.com/ko/forum/topic/' . urlencode($q['id'])
+          ];
+      }, array_keys(array_slice($questions, 0, 15)), array_slice($questions, 0, 15)))
+  ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) ?>
+  </script>
+  <?php endif; ?>
 
   <link rel="icon" href="/favicon.ico">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">

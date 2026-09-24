@@ -24,6 +24,10 @@ DirectoryIndex index.html index.php
 RewriteEngine On
 RewriteBase /
 
+# 0. Sitemaps and robots.txt routing
+RewriteRule ^sitemap\.xml$ /ko/sitemap.php [L]
+RewriteRule ^robots\.txt$ /ko/robots.txt [L]
+
 # 1. Forward non-prefixed portal pages to /ko/
 RewriteRule ^(medicare|blog|forum|senior-care|tool|about|matcher|calculator|dictionary|admin|admin2)(/.*)?$ /ko/$1$2 [R=301,L]
 

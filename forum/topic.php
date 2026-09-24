@@ -25,65 +25,179 @@ $relatedQuestions = array_values(array_filter($relatedQuestions, fn($q) => $q['i
 $relatedQuestions = array_slice($relatedQuestions, 0, 4);
 
 $isQuestionClinician = !empty($question['authorBadge']) && str_contains($question['authorBadge'], 'Clinician');
+
+$cleanBodyText = preg_replace('/\s+/', ' ', trim(strip_tags($question['body'])));
+$cleanTitleText = trim(strip_tags($question['title']));
+$seoDesc = mb_substr($cleanBodyText, 0, 155, 'UTF-8') . (mb_strlen($cleanBodyText, 'UTF-8') > 155 ? '...' : '');
+$topicUrl = 'https://njaccessportal.com/ko/forum/topic/' . urlencode($question['id']);
+$coverImage = !empty($question['images'][0]) ? (str_starts_with($question['images'][0], 'http') ? $question['images'][0] : 'https://njaccessportal.com/ko/' . ltrim($question['images'][0], '/')) : 'https://njaccessportal.com/ko/logo-icon.svg';
+$pubDate = date('c', strtotime($question['createdAt'] ?? 'now'));
+$modDate = date('c', strtotime($question['updatedAt'] ?? ($question['createdAt'] ?? 'now')));
+
+// Prepare answers for QAPage & DiscussionForumPosting
+$activeAnswers = array_values(array_filter($question['answers'] ?? [], fn($a) => ($a['status'] ?? 'active') === 'active'));
+$acceptedAnswerObj = null;
+$suggestedAnswerObjs = [];
+
+foreach ($activeAnswers as $ans) {
+    $isClin = !empty($ans['authorBadge']) && str_contains($ans['authorBadge'], 'Clinician');
+    $cleanAnsText = preg_replace('/\s+/', ' ', trim(strip_tags($ans['body'])));
+    $ansItem = [
+        '@type' => 'Answer',
+        'text' => $cleanAnsText,
+        'dateCreated' => date('c', strtotime($ans['createdAt'] ?? 'now')),
+        'upvoteCount' => (int)($ans['upvotes'] ?? 0),
+        'url' => $topicUrl . '#ans-' . urlencode($ans['id']),
+        'author' => [
+            '@type' => 'Person',
+            'name' => $ans['authorName'] ?? '답변자',
+            'jobTitle' => $isClin ? ($ans['clinicianTitle'] ?? '공인 전문의') : '포럼 참여자'
+        ]
+    ];
+    if ($isClin && !$acceptedAnswerObj) {
+        $acceptedAnswerObj = $ansItem;
+    } else {
+        $suggestedAnswerObjs[] = $ansItem;
+    }
+}
+
+// Question schema entity
+$questionEntity = [
+    '@type' => 'Question',
+    'name' => $cleanTitleText,
+    'text' => $cleanBodyText,
+    'answerCount' => count($activeAnswers),
+    'upvoteCount' => (int)($question['replyCount'] ?? 0),
+    'dateCreated' => $pubDate,
+    'dateModified' => $modDate,
+    'author' => [
+        '@type' => 'Person',
+        'name' => $question['authorName'] ?? '포럼 회원'
+    ]
+];
+if ($acceptedAnswerObj) {
+    $questionEntity['acceptedAnswer'] = $acceptedAnswerObj;
+}
+if (!empty($suggestedAnswerObjs)) {
+    $questionEntity['suggestedAnswer'] = $suggestedAnswerObjs;
+}
+
+// BreadcrumbList schema
+$breadcrumbList = [
+    '@context' => 'https://schema.org',
+    '@type' => 'BreadcrumbList',
+    'itemListElement' => [
+        [
+            '@type' => 'ListItem',
+            'position' => 1,
+            'name' => '홈',
+            'item' => 'https://njaccessportal.com/ko/'
+        ],
+        [
+            '@type' => 'ListItem',
+            'position' => 2,
+            'name' => '커뮤니티 포럼',
+            'item' => 'https://njaccessportal.com/ko/forum'
+        ]
+    ]
+];
+$bPos = 3;
+if ($category) {
+    $breadcrumbList['itemListElement'][] = [
+        '@type' => 'ListItem',
+        'position' => $bPos++,
+        'name' => $category['name_ko'],
+        'item' => 'https://njaccessportal.com/ko/forum?specialty=' . urlencode($category['id'])
+    ];
+}
+if ($subSpecialty) {
+    $breadcrumbList['itemListElement'][] = [
+        '@type' => 'ListItem',
+        'position' => $bPos++,
+        'name' => $subSpecialty['name_ko'],
+        'item' => 'https://njaccessportal.com/ko/forum?specialty=medical_health&sub=' . urlencode($subSpecialty['id'])
+    ];
+}
+$breadcrumbList['itemListElement'][] = [
+    '@type' => 'ListItem',
+    'position' => $bPos,
+    'name' => $cleanTitleText,
+    'item' => $topicUrl
+];
+
+// DiscussionForumPosting Schema (Google Search forum feature support)
+$forumPostingSchema = [
+    '@context' => 'https://schema.org',
+    '@type' => 'DiscussionForumPosting',
+    'headline' => $cleanTitleText,
+    'articleBody' => $cleanBodyText,
+    'datePublished' => $pubDate,
+    'dateModified' => $modDate,
+    'mainEntityOfPage' => $topicUrl,
+    'author' => [
+        '@type' => 'Person',
+        'name' => $question['authorName'] ?? '포럼 회원'
+    ],
+    'interactionStatistic' => [
+        [
+            '@type' => 'InteractionCounter',
+            'interactionType' => 'https://schema.org/CommentAction',
+            'userInteractionCount' => count($activeAnswers)
+        ],
+        [
+            '@type' => 'InteractionCounter',
+            'interactionType' => 'https://schema.org/ReadAction',
+            'userInteractionCount' => (int)($question['viewCount'] ?? 1)
+        ]
+    ]
+];
 ?>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?= htmlspecialchars($question['title']) ?> | NJAP 헬스케어 포럼</title>
-  <meta name="description" content="<?= htmlspecialchars(mb_substr(strip_tags($question['body']), 0, 160)) ?>" />
-  <meta name="keywords" content="<?= htmlspecialchars($category['name_ko'] ?? '건강 Q&A') ?>, <?= htmlspecialchars($subSpecialty['name_ko'] ?? '') ?>, 건강 포럼, 뉴저지 한인 병원 후기, 메디케어, 메디케이드" />
+  <title><?= htmlspecialchars($cleanTitleText) ?> | NJAP 헬스케어 포럼</title>
+  <meta name="description" content="<?= htmlspecialchars($seoDesc) ?>" />
+  <meta name="keywords" content="<?= htmlspecialchars($category['name_ko'] ?? '건강 Q&A') ?>, <?= htmlspecialchars($subSpecialty['name_ko'] ?? '') ?>, 건강 포럼, 뉴저지 한인 병원 후기, 메디케어, 메디케이드, 뉴저지 의료접근센터" />
+  
+  <!-- Directives for Googlebot & Web Crawlers -->
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-  <link rel="canonical" href="https://njaccessportal.com/ko/forum/topic/<?= urlencode($question['id']) ?>" />
+  <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="<?= htmlspecialchars($topicUrl) ?>" />
 
   <!-- OpenGraph / Social Media -->
   <meta property="og:site_name" content="NJAP 헬스케어 포럼 · 뉴저지 의료접근센터" />
   <meta property="og:type" content="article" />
-  <meta property="og:title" content="<?= htmlspecialchars($question['title']) ?>" />
-  <meta property="og:description" content="<?= htmlspecialchars(mb_substr(strip_tags($question['body']), 0, 160)) ?>" />
-  <meta property="og:url" content="https://njaccessportal.com/ko/forum/topic/<?= urlencode($question['id']) ?>" />
-  <meta property="og:image" content="<?= htmlspecialchars(!empty($question['images'][0]) ? (str_starts_with($question['images'][0], 'http') ? $question['images'][0] : 'https://njaccessportal.com/ko/' . ltrim($question['images'][0], '/')) : 'https://njaccessportal.com/ko/logo-icon.svg') ?>" />
-  <meta property="article:published_time" content="<?= htmlspecialchars(date('c', strtotime($question['createdAt'] ?? 'now'))) ?>" />
+  <meta property="og:title" content="<?= htmlspecialchars($cleanTitleText) ?>" />
+  <meta property="og:description" content="<?= htmlspecialchars($seoDesc) ?>" />
+  <meta property="og:url" content="<?= htmlspecialchars($topicUrl) ?>" />
+  <meta property="og:image" content="<?= htmlspecialchars($coverImage) ?>" />
+  <meta property="article:published_time" content="<?= htmlspecialchars($pubDate) ?>" />
+  <meta property="article:modified_time" content="<?= htmlspecialchars($modDate) ?>" />
   <meta property="article:section" content="<?= htmlspecialchars($category['name_ko'] ?? '건강 Q&A') ?>" />
 
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="<?= htmlspecialchars($question['title']) ?>" />
-  <meta name="twitter:description" content="<?= htmlspecialchars(mb_substr(strip_tags($question['body']), 0, 160)) ?>" />
-  <meta name="twitter:image" content="<?= htmlspecialchars(!empty($question['images'][0]) ? (str_starts_with($question['images'][0], 'http') ? $question['images'][0] : 'https://njaccessportal.com/ko/' . ltrim($question['images'][0], '/')) : 'https://njaccessportal.com/ko/logo-icon.svg') ?>" />
+  <meta name="twitter:title" content="<?= htmlspecialchars($cleanTitleText) ?>" />
+  <meta name="twitter:description" content="<?= htmlspecialchars($seoDesc) ?>" />
+  <meta name="twitter:image" content="<?= htmlspecialchars($coverImage) ?>" />
 
-  <!-- Schema.org JSON-LD Structured Data: Google QAPage Rich Results -->
+  <!-- Schema.org JSON-LD Structured Data: Google QAPage, DiscussionForumPosting & Breadcrumbs -->
   <script type="application/ld+json">
   <?= json_encode([
       '@context' => 'https://schema.org',
       '@type' => 'QAPage',
-      'mainEntity' => [
-          '@type' => 'Question',
-          'name' => $question['title'],
-          'text' => strip_tags($question['body']),
-          'answerCount' => count($question['answers'] ?? []),
-          'upvoteCount' => (int)($question['replyCount'] ?? 0),
-          'dateCreated' => date('c', strtotime($question['createdAt'] ?? 'now')),
-          'author' => [
-              '@type' => 'Person',
-              'name' => $question['authorName'] ?? '포럼 회원'
-          ],
-          'suggestedAnswer' => array_values(array_map(function($ans) use ($question) {
-              return [
-                  '@type' => 'Answer',
-                  'text' => strip_tags($ans['body']),
-                  'dateCreated' => date('c', strtotime($ans['createdAt'] ?? 'now')),
-                  'upvoteCount' => (int)($ans['upvotes'] ?? 0),
-                  'url' => 'https://njaccessportal.com/ko/forum/topic/' . urlencode($question['id']) . '#ans-' . urlencode($ans['id']),
-                  'author' => [
-                      '@type' => 'Person',
-                      'name' => $ans['authorName'] ?? '답변자'
-                  ]
-              ];
-          }, array_filter($question['answers'] ?? [], fn($a) => ($a['status'] ?? 'active') === 'active')))
-      ]
+      'mainEntity' => $questionEntity
   ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) ?>
+  </script>
+
+  <script type="application/ld+json">
+  <?= json_encode($discussionForumPosting, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) ?>
+  </script>
+
+  <script type="application/ld+json">
+  <?= json_encode($breadcrumbList, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) ?>
   </script>
 
   <link rel="icon" href="/favicon.ico">

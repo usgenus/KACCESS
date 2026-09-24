@@ -1,7 +1,22 @@
 User-agent: *
 Allow: /
+Allow: /ko/forum
+Allow: /ko/forum/
+Allow: /ko/forum/topic/
+Allow: /ko/blog
+Allow: /ko/blog/
+Allow: /ko/senior-care
+Allow: /ko/medicare
 
-# Explicit AI Crawler Directives (Allow for Search & Retrieval)
+# Explicit Directives for Googlebot
+User-agent: Googlebot
+Allow: /
+Allow: /ko/forum
+Allow: /ko/forum/
+Allow: /ko/forum/topic/
+Allow: /ko/blog
+
+# AI & Search Retrieval Crawlers
 User-agent: Google-Extended
 Allow: /
 
@@ -20,6 +35,9 @@ Allow: /
 User-agent: Claude-Web
 Allow: /
 
+User-agent: Applebot
+Allow: /
+
 User-agent: Applebot-Extended
 Allow: /
 
@@ -32,10 +50,16 @@ Allow: /
 User-agent: OAI-SearchBot
 Allow: /
 
-# Admin & API System Protection
+# Admin & Private System Protection
 Disallow: /admin/
+Disallow: /admin2/
+Disallow: /ko/admin/
+Disallow: /ko/admin2/
 Disallow: /api/
+Disallow: /ko/api/
 Disallow: /data/
+Disallow: /ko/data/
 
 # XML Sitemaps
+Sitemap: https://njaccessportal.com/sitemap.xml
 Sitemap: https://njaccessportal.com/ko/sitemap.xml
