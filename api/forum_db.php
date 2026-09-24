@@ -571,12 +571,25 @@ function get_forum_data(): array {
                         'neuro.lee@njaccess.org' => ['email' => 'neuro.lee@njaccess.org', 'title' => '신경과 전문의 (MD, PhD)', 'addedAt' => '2026-08-10T00:00:00Z']
                     ];
                 }
-                // Keep local mirror updated
-                if (!file_exists(LOCAL_FORUM_FILE) || filesize(LOCAL_FORUM_FILE) !== strlen($content)) {
-                    $dir = dirname(LOCAL_FORUM_FILE);
-                    if (!is_dir($dir)) { @mkdir($dir, 0777, true); @chmod($dir, 0777); }
-                    @file_put_contents(LOCAL_FORUM_FILE, $content, LOCK_EX);
+
+                // Merge any newly deployed seed questions from local file into persistent storage
+                if (file_exists(LOCAL_FORUM_FILE)) {
+                    $localRaw = @file_get_contents(LOCAL_FORUM_FILE);
+                    $localParsed = json_decode($localRaw, true);
+                    if (!empty($localParsed['questions']) && is_array($localParsed['questions'])) {
+                        $dirty = false;
+                        foreach ($localParsed['questions'] as $qId => $qObj) {
+                            if (!isset($data['questions'][$qId])) {
+                                $data['questions'][$qId] = $qObj;
+                                $dirty = true;
+                            }
+                        }
+                        if ($dirty) {
+                            @file_put_contents(PERSISTENT_FORUM_FILE, json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT), LOCK_EX);
+                        }
+                    }
                 }
+
                 return $data;
             }
         }
