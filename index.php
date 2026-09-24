@@ -126,8 +126,8 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="google-site-verification" content="xmtfJH3AZyW8W9Do_yQyWBZBlmmTET-VSke-GzY2PPs" />
   <title>뉴저지 의료접근센터 · 주요 병원 네트워크 및 한인 의료 지원 | NJAP</title>
-  <meta name="description" content="뉴저지 의료접근센터(NJ Healthcare Access Center) - 잉글우드 병원(Englewood Health), EHPN, 해켄색 메리디안 헬스(HUMC), 밸리 병원(The Valley Hospital), 파스카크 밸리(HMH), RWJBarnabas 등 뉴저지 주요 의료 기관 정보와 한인 환자 프로그램, 한국어 통역, 메디케어, ACA 건강보험, 자선진료(Charity Care) 지원 포털." />
-  <meta name="keywords" content="의료접근센터, 의료접근포털, 뉴저지 의료접근센터, 뉴저지 주요 병원, Englewood Health, 잉글우드 병원, EHPN, Englewood Health Physician Network, Hackensack Meridian Health, 해켄색 메리디안 헬스, Hackensack University Medical Center, HUMC, The Valley Hospital, 밸리 병원, HMH Pascack Valley Medical Center, 파스카크 밸리, RWJBarnabas Health, RWJ바나바스 헬스 네트워크, 버겐카운티 병원, 한인 통역 병원, 뉴저지 한인 병원 후기, 메디케어, ACA 오바마케어, 자선진료, charity care" />
+  <meta name="description" content="뉴저지 의료접근센터(NJ Healthcare Access Center) - 잉글우드 병원(Englewood Health), 홀리네임 병원(Holy Name Medical Center), 해켄색 메리디안 헬스(HUMC), 밸리 병원(The Valley Hospital), 파스카크 밸리(HMH), RWJBarnabas 등 뉴저지 주요 의료 기관 정보와 한인 환자 프로그램, 한국어 통역, 메디케어, ACA 건강보험, 자선진료(Charity Care) 지원 포털." />
+  <meta name="keywords" content="의료접근센터, 의료접근포털, 뉴저지 의료접근센터, 뉴저지 주요 병원, Englewood Health, 잉글우드 병원, Holy Name Medical Center, 홀리네임 병원, 코리안 메디컬 프로그램, Hackensack Meridian Health, 해켄색 메리디안 헬스, Hackensack University Medical Center, HUMC, The Valley Hospital, 밸리 병원, HMH Pascack Valley Medical Center, 파스카크 밸리, RWJBarnabas Health, RWJ바나바스 헬스 네트워크, 버겐카운티 병원, 한인 통역 병원, 뉴저지 한인 병원 후기, 메디케어, ACA 오바마케어, 자선진료, charity care" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <link rel="canonical" href="https://njaccessportal.com/ko/" />
 
@@ -244,20 +244,22 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
             "@type": "ListItem",
             "position": 2,
             "item": {
-              "@type": "MedicalOrganization",
-              "name": "EHPN (Englewood Health Physician Network)",
-              "alternateName": ["잉글우드 헬스 의사 네트워크", "EHPN"],
-              "url": "https://www.englewoodhealthphysicians.org",
-              "telephone": "+1-833-234-2234",
+              "@type": "Hospital",
+              "name": "Holy Name Medical Center (홀리네임 메디컬 센터)",
+              "alternateName": ["홀리네임 병원", "Holy Name Hospital", "Holy Name"],
+              "url": "https://www.holyname.org",
+              "telephone": "+1-201-833-3000",
               "address": {
                 "@type": "PostalAddress",
-                "addressLocality": "Northern New Jersey",
+                "streetAddress": "718 Teaneck Rd",
+                "addressLocality": "Teaneck",
                 "addressRegion": "NJ",
+                "postalCode": "07666",
                 "addressCountry": "US"
               },
-              "areaServed": "Northern New Jersey (Bergen, Hudson, Passaic Counties)",
+              "areaServed": "Bergen County, NJ",
               "availableLanguage": ["Korean", "English"],
-              "description": "잉글우드 헬스 산하 최대 의사 네트워크. 북부 뉴저지 100+ 로케이션에서 한국어 진료가 가능한 1차 내과, 소아과, 순환기내과 전문의 연계 및 메디케어/ACA 인네트워크."
+              "description": "미 동부 최초의 코리안 메디컬 프로그램(KMP)을 운영하는 버겐 카운티 티넥의 대표 종합병원. 한국어 핫라인, 상주 코디네이터 통역, 입원 환자 한국식 식단 및 자선 진료(Charity Care)."
             }
           },
           {
@@ -2350,19 +2352,16 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
             <!-- Filter Tabs -->
             <div class="flex flex-wrap items-center gap-2 mb-8" id="hospital-filter-bar">
               <button type="button" onclick="filterHospitalList('all', this)" class="hospital-filter-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all border border-blue-600 bg-blue-600 text-white shadow-xs">
-                전체 병원·네트워크 (6)
+                전체 종합병원 (6)
               </button>
               <button type="button" onclick="filterHospitalList('bergen', this)" class="hospital-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all border border-slate-200 bg-white text-slate-700 hover:bg-slate-50">
                 버겐 카운티 거점
               </button>
-              <button type="button" onclick="filterHospitalList('physician_net', this)" class="hospital-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all border border-slate-200 bg-white text-slate-700 hover:bg-slate-50">
-                1차·전문의 의사망 (EHPN)
+              <button type="button" onclick="filterHospitalList('korean_program', this)" class="hospital-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all border border-slate-200 bg-white text-slate-700 hover:bg-slate-50">
+                한인 특화 프로그램 &amp; 통역 지원
               </button>
               <button type="button" onclick="filterHospitalList('tertiary', this)" class="hospital-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all border border-slate-200 bg-white text-slate-700 hover:bg-slate-50">
                 3차 상급종합병원 (HUMC · RWJ)
-              </button>
-              <button type="button" onclick="filterHospitalList('korean_program', this)" class="hospital-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all border border-slate-200 bg-white text-slate-700 hover:bg-slate-50">
-                한국어 통역 지원 병원
               </button>
             </div>
 
@@ -2406,7 +2405,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                     </div>
                     <div>
                       <strong class="text-slate-900 font-bold block mb-0.5">🔹 전문의 및 주요 센터 연계</strong>
-                      <span>레슬리 사이먼 유방암 검진 센터, 심혈관 중재술 센터 및 EHPN 전문의 네트워크와 유기적으로 직결 연계됩니다.</span>
+                      <span>레슬리 사이먼 유방암 검진 센터, 심혈관 중재술 센터 및 잉글우드 헬스 전문의 네트워크와 유기적으로 직결 연계됩니다.</span>
                     </div>
                     <div>
                       <strong class="text-slate-900 font-bold block mb-0.5">🔹 건강보험 및 자선진료</strong>
@@ -2452,28 +2451,28 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                 </div>
               </div>
 
-              <!-- 2. EHPN (Englewood Health Physician Network) -->
-              <div class="hospital-card border border-slate-200/90 rounded-2xl bg-white p-6 sm:p-7 shadow-xs hover:shadow-lg transition-all flex flex-col justify-between group" data-category="physician_net bergen korean_program">
+              <!-- 2. Holy Name Medical Center (홀리네임 병원) -->
+              <div class="hospital-card border border-slate-200/90 rounded-2xl bg-white p-6 sm:p-7 shadow-xs hover:shadow-lg transition-all flex flex-col justify-between group" data-category="bergen korean_program">
                 <div>
                   <div class="flex items-start justify-between gap-3 mb-3">
                     <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-black bg-emerald-100 text-emerald-900 border border-emerald-200">
-                      <i class="fa-solid fa-users text-emerald-600"></i>
-                      <span>북부 뉴저지 100+ 진료소 · 한인 의사망</span>
+                      <i class="fa-solid fa-heart-pulse text-emerald-600"></i>
+                      <span>버겐 카운티 · 티넥 (팰팍/포트리 인접)</span>
                     </span>
-                    <span class="text-[11px] font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
-                      1차 진료 네트워크
+                    <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                      코리안 메디컬(KMP)
                     </span>
                   </div>
 
                   <div class="flex items-center gap-3.5 mb-4">
                     <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition-transform shadow-2xs border border-emerald-100">
-                      <i class="fa-solid fa-user-doctor"></i>
+                      <i class="fa-solid fa-hospital"></i>
                     </div>
                     <div>
                       <h3 class="font-black text-lg sm:text-xl text-slate-900 group-hover:text-emerald-700 transition-colors tracking-tight leading-snug">
-                        EHPN
+                        Holy Name Medical Center
                       </h3>
-                      <p class="text-xs sm:text-sm font-bold text-slate-500">Englewood Health Physician Network</p>
+                      <p class="text-xs sm:text-sm font-bold text-slate-500">홀리네임 병원 · 의료원</p>
                     </div>
                   </div>
 
@@ -2481,54 +2480,56 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                   <div class="space-y-2.5 text-xs text-slate-600 leading-relaxed bg-slate-50/80 p-4 rounded-xl border border-slate-100 mb-4">
                     <div>
                       <strong class="text-slate-900 font-bold block mb-0.5">🔹 한인 환자 내방 안내</strong>
-                      <span>잉글우드 헬스 산하 최대 의사 네트워크로 거주지 인근 100곳 이상의 외래 클리닉에서 한인 주치의(PCP) 및 각 분야 전문의 진료를 제공합니다.</span>
+                      <span>미 동부 최초·최대 규모의 <strong>‘코리안 메디컬 프로그램(KMP)’</strong>을 창설하여 한인 동포들에게 가장 친숙하고 신뢰받는 버겐 카운티 중심 병원입니다.</span>
                     </div>
                     <div>
                       <strong class="text-slate-900 font-bold block mb-0.5">🔹 언어 및 통역 지원 정보</strong>
-                      <span>한국어가 모국어인 한인 1차 진료 내과, 소아과, 순환기내과 전문의들이 직접 진료하여 언어 장벽 없는 편안한 상담이 가능합니다.</span>
+                      <span>24시간 한국어 핫라인 상시 가동, 외래·입원 전담 한국어 코디네이터 1:1 동행 통역, 입원 환자를 위한 매일 한국식 영양 식단 제공.</span>
                     </div>
                     <div>
                       <strong class="text-slate-900 font-bold block mb-0.5">🔹 전문의 및 주요 센터 연계</strong>
-                      <span>일반 내과, 가정의학과, 순환기내과, 당뇨내분비과, 정형외과, 혈액종양내과 등 종합병원과 즉시 연계되는 유기적 의료망.</span>
+                      <span>아시안 간질환 센터, 심혈관 중재술 센터, 유방암 검진 센터, 한인 1차 진료 내과 주치의 및 각 분과 한인 전문의 네트워크 완비.</span>
                     </div>
                     <div>
-                      <strong class="text-slate-900 font-bold block mb-0.5">🔹 건강보험 및 인-네트워크</strong>
-                      <span>메디케어, 메디케이드, 뉴저지 마켓플레이스(GetCoveredNJ) 플랜 및 주요 상업 보험 폭넓은 인-네트워크(In-Network).</span>
+                      <strong class="text-slate-900 font-bold block mb-0.5">🔹 건강보험 및 자선진료</strong>
+                      <span>메디케어, 메디케이드, ACA 오바마케어 및 무보험 동포를 위한 뉴저지 자선 진료(Charity Care), 연례 대규모 무료 건강검진 페스티벌 운영.</span>
                     </div>
                   </div>
 
                   <!-- Hashtags -->
                   <div class="flex flex-wrap gap-1.5 mb-4">
-                    <a href="/ko/forum?specialty=hospital_reviews&q=EHPN&view=topics" class="px-2 py-0.5 rounded-md bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-[11px] transition-colors">#EHPN</a>
-                    <a href="/ko/forum?specialty=hospital_reviews&q=한인주치의&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#한인주치의</a>
-                    <a href="/ko/forum?specialty=hospital_reviews&q=1차내과&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#1차내과</a>
-                    <a href="/ko/forum?specialty=hospital_reviews&q=소아과&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#한인소아과</a>
+                    <a href="/ko/forum?specialty=hospital_reviews&q=HolyName&view=topics" class="px-2 py-0.5 rounded-md bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-[11px] transition-colors">#홀리네임병원</a>
+                    <a href="/ko/forum?specialty=hospital_reviews&q=KMP&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#코리안메디컬프로그램</a>
+                    <a href="/ko/forum?specialty=hospital_reviews&q=통역&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#한국어통역상주</a>
+                    <a href="/ko/forum?specialty=hospital_reviews&q=자선진료&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#자선진료</a>
                   </div>
 
                   <!-- Contact Details -->
                   <div class="pt-3 border-t border-slate-100 text-xs text-slate-500 space-y-1 mb-4">
                     <div class="flex items-center gap-1.5">
                       <i class="fa-solid fa-phone text-slate-400 text-[11px]"></i>
-                      <span>의사 찾기 &amp; 예약: <a href="tel:8332342234" class="font-bold text-emerald-700 hover:underline">(833) 234-2234</a></span>
+                      <span>대표: <a href="tel:2018333000" class="font-bold text-slate-800 hover:text-emerald-700">(201) 833-3000</a></span>
+                      <span class="mx-1 text-slate-300">|</span>
+                      <span>한인 핫라인: <a href="tel:2018333399" class="font-bold text-emerald-700 hover:underline">(201) 833-3399</a></span>
                     </div>
                     <div class="flex items-start gap-1.5">
                       <i class="fa-solid fa-map-pin text-slate-400 text-[11px] mt-0.5"></i>
-                      <span>포트리, 팰팍, 클로스터, 테너플라이, 저지시티 등 북부 NJ</span>
+                      <span>718 Teaneck Rd, Teaneck, NJ 07666 (팰팍 5분)</span>
                     </div>
                   </div>
                 </div>
 
                 <!-- Actions -->
                 <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-100">
-                  <a href="https://www.englewoodhealthphysicians.org" target="_blank" rel="noopener noreferrer" 
+                  <a href="https://www.holyname.org" target="_blank" rel="noopener noreferrer" 
                      class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors">
                     <span>공식 웹사이트</span>
                     <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                   </a>
-                  <a href="/ko/forum?specialty=hospital_reviews&q=EHPN&view=topics" 
+                  <a href="/ko/forum?specialty=hospital_reviews&q=HolyName&view=topics" 
                      class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-extrabold text-xs transition-colors">
                     <i class="fa-regular fa-comment-dots text-xs"></i>
-                    <span>후기 &amp; 추천</span>
+                    <span>후기 &amp; 질문</span>
                   </a>
                 </div>
               </div>

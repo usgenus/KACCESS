@@ -423,7 +423,7 @@ $seoDesc = $currentCategory
             <?php
             $hospitalQuickTags = [
               ['q' => 'Englewood', 'label' => '잉글우드 병원', 'sub' => 'Englewood Health'],
-              ['q' => 'EHPN', 'label' => 'EHPN 의사망', 'sub' => 'Physician Network'],
+              ['q' => 'HolyName', 'label' => '홀리네임 병원', 'sub' => 'Holy Name (KMP)'],
               ['q' => 'Hackensack', 'label' => '해켄색 대학병원', 'sub' => 'HUMC / HMH'],
               ['q' => 'Valley', 'label' => '더 밸리 병원', 'sub' => 'The Valley Hospital'],
               ['q' => 'Pascack', 'label' => '파스카크 밸리', 'sub' => 'Pascack Valley'],
@@ -511,7 +511,7 @@ $seoDesc = $currentCategory
                   <div class="mt-3 pt-3 border-t border-slate-100 flex flex-wrap items-center gap-1.5 text-xs">
                     <span class="font-bold text-slate-400 text-[11px] mr-1">주요 네트워크:</span>
                     <a href="/ko/forum?specialty=hospital_reviews&q=Englewood&view=topics" class="px-2 py-0.5 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-md text-[11px] font-medium text-slate-600">#잉글우드병원</a>
-                    <a href="/ko/forum?specialty=hospital_reviews&q=EHPN&view=topics" class="px-2 py-0.5 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-md text-[11px] font-medium text-slate-600">#EHPN</a>
+                    <a href="/ko/forum?specialty=hospital_reviews&q=HolyName&view=topics" class="px-2 py-0.5 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-md text-[11px] font-medium text-slate-600">#홀리네임</a>
                     <a href="/ko/forum?specialty=hospital_reviews&q=Hackensack&view=topics" class="px-2 py-0.5 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-md text-[11px] font-medium text-slate-600">#해켄색대학병원</a>
                     <a href="/ko/forum?specialty=hospital_reviews&q=Valley&view=topics" class="px-2 py-0.5 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-md text-[11px] font-medium text-slate-600">#밸리병원</a>
                     <a href="/ko/forum?specialty=hospital_reviews&q=Pascack&view=topics" class="px-2 py-0.5 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-md text-[11px] font-medium text-slate-600">#파스카크밸리</a>

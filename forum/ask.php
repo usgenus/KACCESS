@@ -283,14 +283,14 @@ if (!empty($rawCategory)) {
               <span class="text-xs font-normal text-slate-400">클릭하여 빠른 태그 추가 가능</span>
             </label>
             <input type="text" id="tags" name="tags" 
-              placeholder="예: 잉글우드병원, EHPN, 해켄색대학병원, 밸리병원, 포트리내과, 메디케어" 
+              placeholder="예: 잉글우드병원, 홀리네임병원, 해켄색대학병원, 밸리병원, 포트리내과, 메디케어" 
               class="w-full p-3.5 rounded-2xl border border-slate-300 text-xs sm:text-sm focus:outline-none focus:border-blue-600 text-slate-900 placeholder-slate-400 shadow-2xs" />
             
             <!-- Quick Hospital & Healthcare Network Tags helper -->
             <div class="mt-2 flex flex-wrap items-center gap-1.5 text-xs">
               <span class="text-slate-400 text-[11px] font-bold">주요 병원 태그:</span>
               <button type="button" onclick="appendTag('잉글우드병원')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-blue-100 text-slate-700 hover:text-blue-700 text-[11px] font-medium transition-colors cursor-pointer">+ 잉글우드병원</button>
-              <button type="button" onclick="appendTag('EHPN')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-blue-100 text-slate-700 hover:text-blue-700 text-[11px] font-medium transition-colors cursor-pointer">+ EHPN</button>
+              <button type="button" onclick="appendTag('홀리네임병원')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-blue-100 text-slate-700 hover:text-blue-700 text-[11px] font-medium transition-colors cursor-pointer">+ 홀리네임병원</button>
               <button type="button" onclick="appendTag('해켄색대학병원')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-blue-100 text-slate-700 hover:text-blue-700 text-[11px] font-medium transition-colors cursor-pointer">+ 해켄색대학병원</button>
               <button type="button" onclick="appendTag('밸리병원')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-blue-100 text-slate-700 hover:text-blue-700 text-[11px] font-medium transition-colors cursor-pointer">+ 밸리병원</button>
               <button type="button" onclick="appendTag('파스카크밸리')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-blue-100 text-slate-700 hover:text-blue-700 text-[11px] font-medium transition-colors cursor-pointer">+ 파스카크밸리</button>
