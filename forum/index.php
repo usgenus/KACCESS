@@ -295,26 +295,30 @@ $seoDesc = $currentCategory
             </a>
             <span class="text-slate-300 text-xs">/</span>
             
-            <a href="/ko/forum?specialty=<?= urlencode($currentCategory['id']) ?>&view=topics" 
-               class="inline-flex items-center gap-1.5 bg-blue-50 text-blue-900 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-extrabold border border-blue-200/80 shadow-2xs hover:bg-blue-100 transition-colors">
-              <span class="w-2.5 h-2.5 rounded-full" style="background-color: <?= htmlspecialchars($currentCategory['color'] ?? '#2563eb') ?>"></span>
-              <span><?= htmlspecialchars($currentCategory['name_ko']) ?></span>
-            </a>
-
             <?php if (!empty($currentSub)): ?>
+              <a href="/ko/forum?specialty=<?= urlencode($currentCategory['id']) ?>&view=topics" 
+                 class="inline-flex items-center gap-1.5 bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-900 px-2.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold border border-slate-200 shadow-2xs transition-colors">
+                <span class="w-2.5 h-2.5 rounded-full" style="background-color: <?= htmlspecialchars($currentCategory['color'] ?? '#2563eb') ?>"></span>
+                <span><?= htmlspecialchars($currentCategory['name_ko']) ?></span>
+              </a>
               <span class="text-slate-300 text-xs">/</span>
-              <div class="inline-flex items-center gap-1.5 bg-indigo-50 text-indigo-900 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-extrabold border border-indigo-200/80 shadow-2xs">
+              <h1 class="inline-flex items-center gap-1.5 bg-indigo-50 text-indigo-900 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-extrabold border border-indigo-200/80 shadow-2xs">
                 <i class="fa-solid <?= htmlspecialchars($currentSub['icon'] ?? 'fa-stethoscope') ?> text-xs text-indigo-600"></i>
                 <span><?= htmlspecialchars($currentSub['name_ko']) ?></span>
-              </div>
+              </h1>
+            <?php else: ?>
+              <h1 class="inline-flex items-center gap-1.5 bg-blue-50 text-blue-900 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-extrabold border border-blue-200/80 shadow-2xs">
+                <span class="w-2.5 h-2.5 rounded-full" style="background-color: <?= htmlspecialchars($currentCategory['color'] ?? '#2563eb') ?>"></span>
+                <span><?= htmlspecialchars($currentCategory['name_ko']) ?></span>
+              </h1>
             <?php endif; ?>
 
           <?php else: ?>
             <div class="flex items-center gap-2.5">
               <span class="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse"></span>
-              <h2 class="text-base sm:text-lg font-black text-slate-900 tracking-tight">
+              <h1 class="text-base sm:text-lg font-black text-slate-900 tracking-tight">
                 뉴저지 한인 5대 헬스케어 포럼
-              </h2>
+              </h1>
             </div>
           <?php endif; ?>
         </div>

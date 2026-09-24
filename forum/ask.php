@@ -31,6 +31,9 @@ if (!empty($rawCategory)) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>새 글 및 질문 작성하기 | NJAP 헬스케어 포럼</title>
+  <meta name="robots" content="noindex, follow" />
+  <meta name="googlebot" content="noindex, follow" />
+  <link rel="canonical" href="https://njaccessportal.com/ko/forum/ask" />
   <link rel="icon" href="/favicon.ico">
   
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
