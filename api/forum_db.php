@@ -66,12 +66,12 @@ function forum_get_default_categories(): array {
             'hasSubList' => true
         ],
         [
-            'id' => 'announcements',
-            'slug' => 'announcements',
-            'name_ko' => '공지 및 건강 강좌',
-            'name_en' => 'Announcements & Health Seminars',
-            'description' => '뉴저지 한인 의료접근센터 공식 프로그램 공지, 건강 세미나 및 워크숍 일정 안내',
-            'icon' => 'fa-bullhorn',
+            'id' => 'events',
+            'slug' => 'events',
+            'name_ko' => '이벤트',
+            'name_en' => 'Events & Health Seminars',
+            'description' => '뉴저지 한인 의료접근센터 공식 이벤트, 세미나, 건강 강좌 및 회원 공지',
+            'icon' => 'fa-calendar-star',
             'color' => '#E11D48',
             'order' => 5,
             'isAdminOnly' => true
@@ -298,8 +298,8 @@ function forum_map_specialty_to_category(?string $specId): array {
     if (in_array($specId, ['bills_insurance', 'bills-insurance', 'medical_billing', 'medical-billing', 'health_insurance', 'health-insurance'])) {
         return ['categoryId' => 'bills_insurance', 'subSpecialtyId' => null];
     }
-    if (in_array($specId, ['announcements', 'events'])) {
-        return ['categoryId' => 'announcements', 'subSpecialtyId' => null];
+    if (in_array($specId, ['events', 'announcements'])) {
+        return ['categoryId' => 'events', 'subSpecialtyId' => null];
     }
     if ($specId === 'medical_health' || $specId === 'medical-health') {
         return ['categoryId' => 'medical_health', 'subSpecialtyId' => null];
@@ -321,6 +321,9 @@ function forum_map_specialty_to_category(?string $specId): array {
  * Get category by ID
  */
 function forum_get_category_by_id(string $catId): ?array {
+    if ($catId === 'announcements') {
+        $catId = 'events';
+    }
     $categories = forum_get_categories();
     foreach ($categories as $cat) {
         if ($cat['id'] === $catId || $cat['slug'] === $catId) {

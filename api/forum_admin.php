@@ -129,7 +129,7 @@ if ($method === 'GET') {
     if ($action === 'events') {
         $data = get_forum_data();
         $questions = array_values($data['questions'] ?? []);
-        $events = array_filter($questions, fn($q) => ($q['specialtyId'] ?? '') === 'events');
+        $events = array_filter($questions, fn($q) => in_array($q['specialtyId'] ?? '', ['events', 'announcements']) || in_array($q['categoryId'] ?? '', ['events', 'announcements']));
         usort($events, fn($a, $b) => strcmp($b['createdAt'] ?? '', $a['createdAt'] ?? ''));
         echo json_encode(['success' => true, 'data' => array_values($events)]);
         exit;

@@ -191,6 +191,9 @@ $seoDesc = $currentCategory
         display: flex !important;
         position: sticky !important;
         top: 109px !important;
+        width: 110px !important;
+        min-width: 110px !important;
+        max-width: 110px !important;
         height: calc(100vh - 109px) !important;
         transform: none !important;
       }
@@ -365,7 +368,7 @@ $seoDesc = $currentCategory
               $isReviews = ($cat['id'] === 'hospital_reviews');
               $isBills = ($cat['id'] === 'bills_insurance');
               $isCommunity = ($cat['id'] === 'general_community');
-              $isAnnounce = ($cat['id'] === 'announcements');
+              $isEvents = ($cat['id'] === 'events' || $cat['id'] === 'announcements');
             ?>
               <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 shadow-2xs hover:shadow-md transition-all group flex flex-col justify-between"
                    style="border-left: 5px solid <?= htmlspecialchars($cat['color']) ?>;">
@@ -388,9 +391,9 @@ $seoDesc = $currentCategory
                           <span class="text-[10px] font-extrabold bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full border border-blue-200">
                             19대 전문과목 포함
                           </span>
-                        <?php elseif ($isAnnounce): ?>
+                        <?php elseif ($isEvents): ?>
                           <span class="text-[10px] font-extrabold bg-rose-100 text-rose-800 px-2 py-0.5 rounded-full border border-rose-200">
-                            공식 공지
+                            공식 이벤트 &amp; 세미나
                           </span>
                         <?php endif; ?>
                       </div>
@@ -553,11 +556,17 @@ $seoDesc = $currentCategory
                 <i class="fa-solid fa-arrow-left text-xs"></i>
                 <span>전체 게시판</span>
               </a>
-              <?php if (empty($currentCategory['isAdminOnly']) && ($currentCategory['id'] ?? '') !== 'announcements'): ?>
+              <?php if (empty($currentCategory['isAdminOnly']) && !in_array($currentCategory['id'] ?? '', ['events', 'announcements'])): ?>
                 <a href="/ko/forum/ask?category=<?= urlencode($currentCategory['id']) ?><?= $currentSub ? '&sub=' . urlencode($currentSub['id']) : '' ?>" 
                    class="text-xs sm:text-sm font-extrabold text-white bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl transition-all shadow-xs flex items-center gap-2 touch-target">
                   <i class="fa-solid fa-plus text-xs"></i>
                   <span>글 작성하기</span>
+                </a>
+              <?php else: ?>
+                <a href="/ko/admin2/" target="_blank" 
+                   class="text-xs sm:text-sm font-extrabold text-white bg-rose-600 hover:bg-rose-700 px-4 py-2.5 rounded-xl transition-all shadow-xs flex items-center gap-2 touch-target">
+                  <i class="fa-solid fa-bullhorn text-xs"></i>
+                  <span>새 이벤트 등록 (CMS)</span>
                 </a>
               <?php endif; ?>
             </div>
@@ -570,14 +579,25 @@ $seoDesc = $currentCategory
           <?php if (empty($questions)): ?>
             <div class="py-16 px-4 text-center text-slate-400 text-sm">
               <i class="fa-regular fa-comment-dots text-4xl text-slate-300 mb-3 block"></i>
-              선택하신 카테고리에 등록된 질문이 아직 없습니다.<br/>
-              첫 번째 질문이나 경험을 나누어보세요!
-              <div class="mt-4">
-                <a href="/ko/forum/ask<?= $currentCategory ? '?category=' . urlencode($currentCategory['id']) : '' ?>" class="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white font-bold rounded-xl text-xs sm:text-sm shadow-xs hover:bg-blue-700 transition-colors">
-                  <i class="fa-solid fa-pen-to-square"></i>
-                  <span>첫 질문 작성하기</span>
-                </a>
-              </div>
+              <?php if (in_array($currentCategory['id'] ?? '', ['events', 'announcements'])): ?>
+                현재 등록된 공식 이벤트 및 세미나 일정이 없습니다.<br/>
+                관리자 CMS에서 새 이벤트를 등록하시면 회원들에게 이메일 알림이 발송됩니다.
+                <div class="mt-4">
+                  <a href="/ko/admin2/" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 bg-rose-600 text-white font-bold rounded-xl text-xs sm:text-sm shadow-xs hover:bg-rose-700 transition-colors">
+                    <i class="fa-solid fa-bullhorn"></i>
+                    <span>새 이벤트 등록하기 (CMS)</span>
+                  </a>
+                </div>
+              <?php else: ?>
+                선택하신 카테고리에 등록된 질문이 아직 없습니다.<br/>
+                첫 번째 질문이나 경험을 나누어보세요!
+                <div class="mt-4">
+                  <a href="/ko/forum/ask<?= $currentCategory ? '?category=' . urlencode($currentCategory['id']) : '' ?>" class="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white font-bold rounded-xl text-xs sm:text-sm shadow-xs hover:bg-blue-700 transition-colors">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    <span>첫 질문 작성하기</span>
+                  </a>
+                </div>
+              <?php endif; ?>
             </div>
           <?php else: ?>
 

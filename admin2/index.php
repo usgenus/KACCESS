@@ -488,13 +488,24 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
             <span>포럼 공식 이벤트 &amp; 회원 전체 알림 발송</span>
           </h2>
           <p class="text-xs text-slate-400 mt-1">
-            공식 이벤트 및 건강 세미나를 등록하고, 포럼에 가입한 모든 회원(구글 계정 연동자)에게 이메일 공지를 일괄 발송합니다.
+            공식 이벤트 및 건강 강좌·세미나를 등록하고, 포럼에 가입한 모든 회원에게 이메일 공지를 일괄 발송합니다. (포럼의 <strong>[이벤트]</strong> 게시판과 100% 직접 연동됩니다)
           </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="/ko/forum?specialty=events" target="_blank" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-700 text-rose-300 border border-slate-700 text-xs font-bold transition-colors inline-flex items-center gap-1.5 shadow-sm">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            <span>포럼 [이벤트] 게시판 바로가기</span>
+          </a>
         </div>
       </div>
 
       <!-- Create Event Composer Card -->
       <div class="bg-slate-800/80 border border-slate-700/80 rounded-3xl p-6 sm:p-8 shadow-xl">
+        <div class="mb-4 p-3.5 rounded-2xl bg-rose-950/40 border border-rose-800/40 text-xs text-rose-300 flex items-center gap-2.5">
+          <i class="fa-solid fa-bullhorn text-rose-400 text-sm shrink-0"></i>
+          <span>이곳에서 등록된 이벤트는 포럼 5대 핵심 카테고리 중 <strong>[이벤트]</strong> 섹션에 공식 인증 마크와 함께 실시간 게시되며, 회원 전체에게 이메일 브로드캐스트가 전송됩니다.</span>
+        </div>
+
         <h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2">
           <i class="fa-solid fa-plus-circle text-rose-400"></i>
           <span>새 이벤트 등록 및 이메일 발송</span>

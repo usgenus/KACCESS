@@ -168,13 +168,13 @@ if ($method === 'POST') {
         $specialtyId = trim($input['specialty_id'] ?? ($input['specialtyId'] ?? ($input['category_id'] ?? 'general_community')));
         $subSpecialtyId = trim($input['sub_specialty_id'] ?? ($input['subSpecialtyId'] ?? '')) ?: null;
 
-        // Admin-only gate for "announcements" / "events" category
+        // Admin-only gate for "events" / "announcements" category
         $isAdmin = !empty($_SESSION['cms_logged_in']) || !empty($_SESSION['admin_logged_in']);
-        if (($specialtyId === 'announcements' || $specialtyId === 'events') && !$isAdmin) {
+        if (($specialtyId === 'events' || $specialtyId === 'announcements') && !$isAdmin) {
             http_response_code(403);
             echo json_encode([
                 'success' => false,
-                'error' => '공지 및 건강 강좌 섹션은 관리자(HAC) 전용 등록 공간입니다. 관리자 CMS(/admin2)에서 등록해주세요.'
+                'error' => '이벤트 섹션은 공식 운영진(HAC) 전용 등록 공간입니다. 관리자 CMS(/ko/admin2)에서 등록해주세요.'
             ]);
             exit;
         }

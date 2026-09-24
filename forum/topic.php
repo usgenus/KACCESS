@@ -160,6 +160,9 @@ $isQuestionClinician = !empty($question['authorBadge']) && str_contains($questio
         display: flex !important;
         position: sticky !important;
         top: 109px !important;
+        width: 110px !important;
+        min-width: 110px !important;
+        max-width: 110px !important;
         height: calc(100vh - 109px) !important;
         transform: none !important;
       }
