@@ -331,7 +331,6 @@ $forumPostingSchema = [
           <?php if ($category): ?>
             <a href="/ko/forum?specialty=<?= urlencode($category['id']) ?>&view=topics" 
                class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-xl border bg-white text-slate-800 shadow-2xs hover:border-blue-400 transition-colors">
-              <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: <?= htmlspecialchars($category['color'] ?? '#2563eb') ?>"></span>
               <span><?= htmlspecialchars($category['name_ko']) ?></span>
             </a>
           <?php endif; ?>
@@ -339,7 +338,6 @@ $forumPostingSchema = [
           <?php if (!empty($subSpecialty)): ?>
             <a href="/ko/forum?specialty=medical_health&sub=<?= urlencode($subSpecialty['id']) ?>&view=topics"
                class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-xl border border-blue-200 bg-blue-50 text-blue-800 shadow-2xs hover:bg-blue-100 transition-colors">
-              <i class="fa-solid <?= htmlspecialchars($subSpecialty['icon'] ?? 'fa-stethoscope') ?> text-xs text-blue-600"></i>
               <span><?= htmlspecialchars($subSpecialty['name_ko']) ?></span>
             </a>
           <?php endif; ?>
@@ -419,7 +417,6 @@ $forumPostingSchema = [
                       <a href="<?= htmlspecialchars($qImg) ?>" target="_blank" class="block rounded-xl overflow-hidden border border-slate-200 aspect-video hover:opacity-90 bg-slate-100 shadow-2xs group relative">
                         <img src="<?= htmlspecialchars($qImg) ?>" class="w-full h-full object-cover" alt="상담 첨부 사진" />
                         <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-bold gap-1">
-                          <i class="fa-solid fa-magnifying-glass-plus"></i>
                           <span>확대</span>
                         </div>
                       </a>
@@ -432,13 +429,13 @@ $forumPostingSchema = [
             <!-- Bottom Action Row -->
             <div class="flex items-center justify-between pt-4 border-t border-slate-100 text-xs text-slate-500">
               <div class="flex items-center gap-2">
-                <span class="text-slate-400 flex items-center gap-1">
-                  <i class="fa-regular fa-eye text-[11px]"></i> <?= (int)($question['viewCount'] ?? 0) ?>회 조회
+                <span class="text-slate-400">
+                  <?= (int)($question['viewCount'] ?? 0) ?>회 조회
                 </span>
               </div>
               <div class="flex items-center gap-2">
-                <a href="#reply-section" class="font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1">
-                  <i class="fa-solid fa-reply"></i> 답변 작성하기
+                <a href="#reply-section" class="font-bold text-blue-600 hover:text-blue-800">
+                  답변 작성하기 →
                 </a>
               </div>
             </div>
@@ -447,7 +444,6 @@ $forumPostingSchema = [
           <!-- Answers Section Header -->
           <div class="flex items-center justify-between pt-2">
             <h2 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
-              <i class="fa-solid fa-comments text-blue-600"></i>
               <span>전문의 &amp; 커뮤니티 답변</span>
               <span class="text-xs font-extrabold bg-blue-100 text-blue-800 px-2.5 py-0.5 rounded-full">
                 <?= count($question['answers'] ?? []) ?>
@@ -458,9 +454,6 @@ $forumPostingSchema = [
           <!-- Chronological Answers Stream -->
           <?php if (empty($question['answers'])): ?>
             <div class="bg-white rounded-2xl p-8 text-center border border-slate-200/90 shadow-2xs">
-              <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-500 flex items-center justify-center mx-auto mb-3 text-lg">
-                <i class="fa-solid fa-user-doctor"></i>
-              </div>
               <p class="text-xs text-slate-600 font-bold mb-1">아직 등록된 답변이 없습니다.</p>
               <p class="text-[11px] text-slate-400">첫 번째 전문의 답변 또는 경험담을 남겨주세요!</p>
             </div>
@@ -478,7 +471,6 @@ $forumPostingSchema = [
                   <?php if ($isClinician): ?>
                     <!-- Verified Clinician Top Accent Ribbon -->
                     <div class="flex items-center gap-2 mb-3 bg-emerald-50 text-emerald-800 px-3 py-1 rounded-lg text-xs font-bold border border-emerald-200 inline-flex">
-                      <i class="fa-solid fa-circle-check text-emerald-600 text-sm"></i>
                       <span>NJAP 공인 의료 전문가 인증 답변 (Verified Clinician)</span>
                     </div>
                   <?php endif; ?>
@@ -505,7 +497,7 @@ $forumPostingSchema = [
                       <button onclick="handleUpvote('<?= htmlspecialchars($ans['id']) ?>', this)" 
                               class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-bold transition-all <?= $hasUpvoted ? 'bg-red-50 text-red-600 border-red-300' : 'bg-slate-50 hover:bg-slate-100 text-slate-600 border-slate-200' ?>"
                               title="유익한 답변 추천">
-                        <i class="fa-<?= $hasUpvoted ? 'solid' : 'regular' ?> fa-heart text-red-500"></i>
+                        <span class="text-red-500">♥</span>
                         <span class="upvote-count"><?= (int)($ans['upvotes'] ?? 0) ?></span>
                       </button>
                       <span class="text-xs text-slate-300 font-mono">#<?= $ansIndex ?></span>
@@ -524,7 +516,7 @@ $forumPostingSchema = [
                         <a href="<?= htmlspecialchars($aImg) ?>" target="_blank" class="block rounded-lg overflow-hidden border border-slate-200 aspect-video hover:opacity-90 bg-slate-100 relative group">
                           <img src="<?= htmlspecialchars($aImg) ?>" class="w-full h-full object-cover" alt="답변 첨부 이미지" />
                           <div class="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-[11px] font-bold">
-                            <i class="fa-solid fa-magnifying-glass-plus mr-1"></i> 원본보기
+                            <span>원본보기</span>
                           </div>
                         </a>
                       <?php endforeach; ?>
@@ -537,8 +529,7 @@ $forumPostingSchema = [
 
           <!-- Post Answer Composer -->
           <section id="reply-section" class="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/90 shadow-2xs">
-            <h3 class="text-base font-bold text-slate-900 mb-1 flex items-center gap-2">
-              <i class="fa-solid fa-reply text-blue-600"></i>
+            <h3 class="text-base font-bold text-slate-900 mb-1">
               <span>답변 작성하기</span>
             </h3>
             <p class="text-xs text-slate-500 mb-4">
@@ -552,7 +543,7 @@ $forumPostingSchema = [
                 <label class="block text-xs font-bold text-slate-700 mb-1.5 flex items-center justify-between">
                   <span>답변자 성함 / 닉네임 <span class="text-red-500">*</span></span>
                   <span id="reply-badge-indicator" class="text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md hidden">
-                    <i class="fa-solid fa-user-doctor mr-1"></i><span id="reply-badge-text">공인 전문의 인증 계정</span>
+                    <span id="reply-badge-text">공인 전문의 인증 계정</span>
                   </span>
                 </label>
                 <input type="text" id="reply-author-name" name="author_name" required minlength="2"
@@ -569,11 +560,10 @@ $forumPostingSchema = [
                 <input type="file" id="reply-image-input" accept="image/jpeg,image/png,image/webp" multiple class="hidden" onchange="handleReplyImageSelect(this)">
                 <div class="flex items-center gap-3">
                   <button type="button" onclick="triggerReplyImageUpload()" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-lg text-xs font-bold text-slate-700 transition-colors cursor-pointer">
-                    <i class="fa-solid fa-camera text-blue-600"></i>
                     <span>사진 첨부 (JPEG/PNG)</span>
                   </button>
                   <span id="reply-upload-spinner" class="hidden text-xs text-blue-600 font-semibold flex items-center gap-1">
-                    <i class="fa-solid fa-spinner fa-spin"></i> 업로드 중...
+                    업로드 중...
                   </span>
                 </div>
                 <div id="reply-images-preview" class="flex flex-wrap gap-2 mt-2 empty:mt-0"></div>
@@ -583,8 +573,7 @@ $forumPostingSchema = [
                 <span class="text-[11px] text-slate-400">
                   ※ 제출 전 상단의 의료 면책 조항을 확인해 주세요.
                 </span>
-                <button type="submit" id="btn-submit-reply" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition-all shadow-xs flex items-center gap-2">
-                  <i class="fa-solid fa-paper-plane"></i>
+                <button type="submit" id="btn-submit-reply" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition-all shadow-xs flex items-center">
                   <span>답변 등록하기</span>
                 </button>
               </div>

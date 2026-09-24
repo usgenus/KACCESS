@@ -140,7 +140,7 @@ if (!empty($rawCategory)) {
       <!-- Breadcrumbs -->
       <div class="flex items-center gap-2 mb-4 text-xs sm:text-sm font-bold text-slate-500">
         <a href="/ko/forum" class="hover:text-blue-600 transition-colors">포럼 홈</a>
-        <i class="fa-solid fa-chevron-right text-[10px] text-slate-300"></i>
+        <span class="text-slate-300">›</span>
         <span class="text-slate-800">새 질문 / 정보 작성하기 (Create a Topic)</span>
       </div>
 
@@ -149,16 +149,15 @@ if (!empty($rawCategory)) {
         
         <div class="flex items-center justify-between pb-5 mb-6 border-b border-slate-100">
           <div>
-            <h1 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
-              <i class="fa-solid fa-pen-to-square text-blue-600"></i>
+            <h1 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
               <span>새 글 및 질문 작성하기</span>
             </h1>
             <p class="text-xs sm:text-sm text-slate-500 mt-1">
               뉴저지 한인 동포 및 한인 의료진들과 안심하고 경험과 정보를 나누실 수 있습니다.
             </p>
           </div>
-          <a href="/ko/forum" class="text-slate-400 hover:text-slate-600 p-2 touch-target flex items-center justify-center">
-            <i class="fa-solid fa-xmark text-xl"></i>
+          <a href="/ko/forum" class="text-slate-400 hover:text-slate-600 p-2 touch-target flex items-center justify-center font-bold text-lg">
+            ✕
           </a>
         </div>
 
@@ -192,8 +191,7 @@ if (!empty($rawCategory)) {
 
             <!-- Dynamic Sub-Specialty Dropdown (Shown for 의학포럼) -->
             <div id="sub-specialty-container" class="<?= ($selectedCatId === 'medical_health') ? '' : 'hidden' ?>">
-              <label for="sub_specialty_id" class="block text-xs sm:text-sm font-bold text-blue-900 mb-2 flex items-center gap-1.5">
-                <i class="fa-solid fa-stethoscope text-blue-600"></i>
+              <label for="sub_specialty_id" class="block text-xs sm:text-sm font-bold text-blue-900 mb-2">
                 <span>세부 진료과목 선택 (19개 진료과) <span class="text-red-500">*</span></span>
               </label>
               <div class="relative">
@@ -219,7 +217,7 @@ if (!empty($rawCategory)) {
               <label for="author_name" class="block text-xs sm:text-sm font-bold text-slate-800 mb-2 flex items-center justify-between">
                 <span>작성자 닉네임 / 성함 <span class="text-red-500">*</span></span>
                 <span id="author-badge-indicator" class="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md hidden">
-                  <i class="fa-solid fa-user-doctor mr-1"></i><span id="author-badge-text">공인 전문의 인증 계정</span>
+                  <span id="author-badge-text">공인 전문의 인증 계정</span>
                 </span>
               </label>
               <input type="text" id="author_name" name="author_name" required minlength="2"
@@ -252,7 +250,7 @@ if (!empty($rawCategory)) {
           <!-- 3.1. Image Attachment (JPEG, PNG, WEBP) -->
           <div>
             <label class="block text-xs sm:text-sm font-bold text-slate-800 mb-2 flex items-center justify-between">
-              <span>📷 사진 / 서류 첨부 (선택 사항)</span>
+              <span>사진 / 서류 첨부 (선택 사항)</span>
               <span class="text-xs font-normal text-slate-400">JPEG, PNG, WEBP (최대 12MB, 최대 5장)</span>
             </label>
             
@@ -261,7 +259,6 @@ if (!empty($rawCategory)) {
             <div class="p-5 border-2 border-dashed border-slate-300 hover:border-blue-400 rounded-2xl bg-slate-50/50 hover:bg-blue-50/20 transition-all text-center">
               <div class="flex flex-col items-center justify-center gap-2">
                 <button type="button" onclick="triggerAskImageUpload()" class="inline-flex items-center gap-2 px-5 py-3 bg-white border border-slate-300 hover:border-blue-500 rounded-2xl text-xs sm:text-sm font-bold text-slate-700 hover:text-blue-600 shadow-2xs transition-all cursor-pointer touch-target">
-                  <i class="fa-solid fa-cloud-arrow-up text-blue-600 text-base"></i>
                   <span>사진 / 영수증 / 검사결과 이미지 선택</span>
                 </button>
                 <p class="text-xs text-slate-500">
@@ -271,7 +268,6 @@ if (!empty($rawCategory)) {
 
               <!-- Uploading Spinner -->
               <div id="ask-upload-spinner" class="hidden mt-3 text-xs text-blue-600 font-semibold flex items-center justify-center gap-2">
-                <i class="fa-solid fa-spinner fa-spin"></i>
                 <span>이미지 업로드 중...</span>
               </div>
 
@@ -304,8 +300,7 @@ if (!empty($rawCategory)) {
 
           <!-- Senior Notice & Bottom Action Buttons -->
           <div class="pt-4 border-t border-slate-100 space-y-4">
-            <div class="bg-slate-50 rounded-xl p-3.5 text-xs text-slate-500 flex items-start gap-2.5">
-              <i class="fa-solid fa-shield-halved text-blue-600 text-sm mt-0.5 shrink-0"></i>
+            <div class="bg-slate-50 rounded-xl p-3.5 text-xs text-slate-500">
               <span>
                 <strong>안심 안내:</strong> 포럼에 등록된 모든 글은 개인정보(주민번호, SSN, 카드번호 등)가 노출되지 않도록 주의해 주세요. 의학적 긴급 상황 시 즉시 911에 신고하십시오.
               </span>
@@ -315,8 +310,7 @@ if (!empty($rawCategory)) {
               <a href="/ko/forum" class="px-5 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-xs sm:text-sm font-bold text-slate-700 transition-colors touch-target flex items-center justify-center">
                 취소
               </a>
-              <button type="submit" id="btn-submit-ask" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-sm sm:text-base px-8 py-3.5 rounded-2xl transition-all shadow-md flex items-center gap-2 cursor-pointer touch-target">
-                <i class="fa-solid fa-paper-plane"></i>
+              <button type="submit" id="btn-submit-ask" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-sm sm:text-base px-8 py-3.5 rounded-2xl transition-all shadow-md flex items-center cursor-pointer touch-target">
                 <span>토픽 등록하기 (Post Topic)</span>
               </button>
             </div>
