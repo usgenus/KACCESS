@@ -14,9 +14,13 @@ if (!$question || (($question['status'] ?? '') === 'hidden')) {
     exit;
 }
 
-$specialties = forum_get_specialties();
-$specialty = $question['specialty'] ?? null;
-$relatedQuestions = forum_get_questions($question['specialtyId'] ?? '', 'popular', '', 'active');
+$categories = forum_get_categories();
+$specialties = $categories;
+$category = $question['category'] ?? null;
+$subSpecialty = $question['subSpecialty'] ?? null;
+$specialty = $category;
+
+$relatedQuestions = forum_get_questions($category['id'] ?? '', 'popular', '', 'active', $subSpecialty['id'] ?? '');
 $relatedQuestions = array_values(array_filter($relatedQuestions, fn($q) => $q['id'] !== $id));
 $relatedQuestions = array_slice($relatedQuestions, 0, 4);
 
@@ -27,21 +31,21 @@ $isQuestionClinician = !empty($question['authorBadge']) && str_contains($questio
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?= htmlspecialchars($question['title']) ?> | NJAP 메디컬 포럼</title>
+  <title><?= htmlspecialchars($question['title']) ?> | NJAP 헬스케어 포럼</title>
   <meta name="description" content="<?= htmlspecialchars(mb_substr(strip_tags($question['body']), 0, 160)) ?>" />
-  <meta name="keywords" content="<?= htmlspecialchars($specialty['name_ko'] ?? '전문의 상담') ?>, <?= htmlspecialchars($specialty['name_en'] ?? '') ?>, 건강 Q&A, 의료 질문 정보 나눔, 전문의 답변, 뉴저지 한인 병원" />
+  <meta name="keywords" content="<?= htmlspecialchars($category['name_ko'] ?? '건강 Q&A') ?>, <?= htmlspecialchars($subSpecialty['name_ko'] ?? '') ?>, 건강 포럼, 뉴저지 한인 병원 후기, 메디케어, 메디케이드" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <link rel="canonical" href="https://njaccessportal.com/ko/forum/topic/<?= urlencode($question['id']) ?>" />
 
   <!-- OpenGraph / Social Media -->
-  <meta property="og:site_name" content="NJAP 메디컬 포럼 · 뉴저지 의료접근센터" />
+  <meta property="og:site_name" content="NJAP 헬스케어 포럼 · 뉴저지 의료접근센터" />
   <meta property="og:type" content="article" />
   <meta property="og:title" content="<?= htmlspecialchars($question['title']) ?>" />
   <meta property="og:description" content="<?= htmlspecialchars(mb_substr(strip_tags($question['body']), 0, 160)) ?>" />
   <meta property="og:url" content="https://njaccessportal.com/ko/forum/topic/<?= urlencode($question['id']) ?>" />
   <meta property="og:image" content="<?= htmlspecialchars(!empty($question['images'][0]) ? (str_starts_with($question['images'][0], 'http') ? $question['images'][0] : 'https://njaccessportal.com/ko/' . ltrim($question['images'][0], '/')) : 'https://njaccessportal.com/ko/logo-icon.svg') ?>" />
   <meta property="article:published_time" content="<?= htmlspecialchars(date('c', strtotime($question['createdAt'] ?? 'now'))) ?>" />
-  <meta property="article:section" content="<?= htmlspecialchars($specialty['name_ko'] ?? '의학 Q&A') ?>" />
+  <meta property="article:section" content="<?= htmlspecialchars($category['name_ko'] ?? '건강 Q&A') ?>" />
 
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image" />
@@ -117,23 +121,11 @@ $isQuestionClinician = !empty($question['authorBadge']) && str_contains($questio
   <style>
     :root, html, body {
       font-family: "Pretendard Variable", Pretendard, "Noto Sans KR", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif !important;
+      font-size: 16px;
     }
     html, body {
       overflow-x: hidden !important;
       max-width: 100% !important;
-    }
-    @keyframes marqueeScroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-    .marquee-track {
-      display: inline-flex !important;
-      white-space: nowrap !important;
-      will-change: transform;
-      animation: marqueeScroll 35s linear infinite !important;
-    }
-    .marquee-track:hover {
-      animation-play-state: paused;
     }
     .h-\[109px\], .header-spacer, #header-spacer {
       height: 109px !important;
@@ -151,8 +143,8 @@ $isQuestionClinician = !empty($question['authorBadge']) && str_contains($questio
         top: 0 !important;
         bottom: 0 !important;
         left: 0 !important;
-        width: 280px !important;
-        max-width: 85vw !important;
+        width: 290px !important;
+        max-width: 88vw !important;
         height: 100vh !important;
         z-index: 100 !important;
         background-color: #ffffff !important;
@@ -172,53 +164,77 @@ $isQuestionClinician = !empty($question['authorBadge']) && str_contains($questio
         transform: none !important;
       }
     }
+    .touch-target {
+      min-height: 48px;
+    }
   </style>
 </head>
 <body class="bg-[#F8FAFC] text-slate-900 font-sans antialiased min-h-screen flex flex-col selection:bg-blue-600 selection:text-white">
 
   <!-- Top Global Header -->
-  <?php render_forum_header('', $specialty); ?>
+  <?php render_forum_header('', $category); ?>
 
   <!-- Main Forum Layout: Sidebar + Thread Content -->
   <div class="flex-1 flex w-full max-w-[1600px] mx-auto">
     
     <!-- Left Sidebar -->
-    <?php render_forum_sidebar($specialties, $question['specialtyId'] ?? '', 'latest', 'topics'); ?>
+    <?php render_forum_sidebar($categories, $category['id'] ?? '', 'latest', 'topics'); ?>
 
     <!-- Main Content Area -->
     <main class="flex-1 min-w-0 p-4 sm:p-6 lg:p-8">
       
+      <!-- Mandatory Clinical Disclaimer Banner -->
+      <?php render_forum_disclaimer_banner(); ?>
+
       <!-- Top Breadcrumbs & Back Bar -->
-      <div class="flex items-center justify-between gap-4 mb-4 text-xs font-semibold text-slate-500">
-        <a href="/ko/forum?specialty=<?= urlencode($question['specialtyId'] ?? '') ?>&view=topics" 
-           class="inline-flex items-center gap-2 hover:text-blue-600 transition-colors">
-          <i class="fa-solid fa-arrow-left"></i>
-          <span><?= $specialty ? htmlspecialchars($specialty['name_ko']) . ' 목록으로' : '포럼 목록으로' ?></span>
-        </a>
-        <span class="text-slate-400">
-          게시일: <?= date('Y.m.d H:i', strtotime($question['createdAt'] ?? 'now')) ?>
+      <div class="flex items-center justify-between gap-4 mb-4 text-xs sm:text-sm font-bold text-slate-500 flex-wrap">
+        <div class="flex items-center gap-2 flex-wrap">
+          <a href="/ko/forum" class="hover:text-blue-600 transition-colors">포럼 홈</a>
+          <span class="text-slate-300">/</span>
+          <a href="/ko/forum?specialty=<?= urlencode($category['id'] ?? '') ?>&view=topics" 
+             class="hover:text-blue-600 transition-colors">
+            <?= htmlspecialchars($category['name_ko'] ?? '게시판') ?>
+          </a>
+          <?php if (!empty($subSpecialty)): ?>
+            <span class="text-slate-300">/</span>
+            <a href="/ko/forum?specialty=medical_health&sub=<?= urlencode($subSpecialty['id']) ?>&view=topics"
+               class="text-blue-600 hover:text-blue-800 transition-colors">
+              <?= htmlspecialchars($subSpecialty['name_ko']) ?>
+            </a>
+          <?php endif; ?>
+        </div>
+        <span class="text-slate-400 font-normal">
+          작성일: <?= date('Y.m.d H:i', strtotime($question['createdAt'] ?? 'now')) ?>
         </span>
       </div>
 
       <!-- Thread Header Banner -->
       <div class="mb-6">
-        <div class="flex items-center gap-2 mb-2 flex-wrap">
-          <?php if ($specialty): ?>
-            <a href="/ko/forum?specialty=<?= urlencode($specialty['id']) ?>&view=topics" 
-               class="inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-lg border bg-white text-slate-800 shadow-2xs hover:border-blue-400 transition-colors">
-              <span class="w-2.5 h-2.5 rounded-xs shrink-0" style="background-color: <?= htmlspecialchars($specialty['color']) ?>"></span>
-              <span><?= htmlspecialchars($specialty['name_ko']) ?></span>
+        <div class="flex items-center gap-2 mb-2.5 flex-wrap">
+          <?php if ($category): ?>
+            <a href="/ko/forum?specialty=<?= urlencode($category['id']) ?>&view=topics" 
+               class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-xl border bg-white text-slate-800 shadow-2xs hover:border-blue-400 transition-colors">
+              <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: <?= htmlspecialchars($category['color'] ?? '#2563eb') ?>"></span>
+              <span><?= htmlspecialchars($category['name_ko']) ?></span>
+            </a>
+          <?php endif; ?>
+
+          <?php if (!empty($subSpecialty)): ?>
+            <a href="/ko/forum?specialty=medical_health&sub=<?= urlencode($subSpecialty['id']) ?>&view=topics"
+               class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-xl border border-blue-200 bg-blue-50 text-blue-800 shadow-2xs hover:bg-blue-100 transition-colors">
+              <i class="fa-solid <?= htmlspecialchars($subSpecialty['icon'] ?? 'fa-stethoscope') ?> text-xs text-blue-600"></i>
+              <span><?= htmlspecialchars($subSpecialty['name_ko']) ?></span>
             </a>
           <?php endif; ?>
 
           <?php if (!empty($question['tags'])): ?>
             <?php foreach ($question['tags'] as $tag): ?>
-              <span class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md">#<?= htmlspecialchars($tag) ?></span>
+              <span class="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-lg">#<?= htmlspecialchars($tag) ?></span>
             <?php endforeach; ?>
           <?php endif; ?>
         </div>
 
-        <h1 class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight leading-snug">
+        <h1 class="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 tracking-tight leading-snug">
           <?= htmlspecialchars($question['title'] ?? '') ?>
         </h1>
       </div>

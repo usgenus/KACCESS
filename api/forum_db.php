@@ -11,60 +11,88 @@ define('PERSISTENT_FORUM_FILE', PERSISTENT_ROOT . '/forum.json');
 define('LOCAL_FORUM_FILE', __DIR__ . '/../data/forum.json');
 
 /**
- * Return default 15 medical specialties required by specification
+ * Mandatory Clinical Safety Disclaimer
  */
-function forum_get_default_specialties(): array {
+define('FORUM_DEFAULT_DISCLAIMER', '본 포럼의 정보는 교육 및 일반 정보 제공 목적이며 전문 진료를 대체하지 않습니다');
+
+/**
+ * Return default 5 core forum categories required by specification
+ */
+function forum_get_default_categories(): array {
     return [
         [
-            'id' => 'events',
-            'slug' => 'events',
-            'name_ko' => '이벤트',
-            'name_en' => 'Events',
-            'description' => '뉴저지 한인 의료접근센터 공식 이벤트, 세미나, 건강 강좌 및 공지',
-            'icon' => 'fa-calendar-star',
-            'color' => '#E11D48',
-            'order' => 0,
-            'isAdminOnly' => true
+            'id' => 'general_community',
+            'slug' => 'general-community',
+            'name_ko' => '자유게시판',
+            'name_en' => 'General Community / Open Forum',
+            'description' => '일상적인 소통, 뉴저지 생활 정보 및 한인 커뮤니티 자유 열린 소통 공간',
+            'icon' => 'fa-comments',
+            'color' => '#3B82F6',
+            'order' => 1,
+            'isAdminOnly' => false
         ],
         [
-            'id' => 'medical_billing',
-            'slug' => 'medical-billing',
-            'name_ko' => '의료비/빌링',
-            'name_en' => 'Medical Bills & Billing',
-            'description' => '미국 병원비 및 검사비 청구서(Bill), 분할 납부, 재정 지원 및 네고 상담',
-            'icon' => 'fa-file-invoice-dollar',
-            'color' => '#0284C7',
-            'order' => 1
-        ],
-        [
-            'id' => 'hospital_recommendation',
-            'slug' => 'hospital-recommendation',
-            'name_ko' => '병원 추천',
-            'name_en' => 'Hospital Recommendations',
-            'description' => '지역별 우수 한인 병의원, 종합병원, 전문 클리닉 추천 및 진료 경험 공유',
+            'id' => 'hospital_reviews',
+            'slug' => 'hospital-reviews',
+            'name_ko' => '병원/의원 추천 및 이용 후기',
+            'name_en' => 'Hospital & Doctor Reviews',
+            'description' => '지역 한인 병의원, 한인 의사 추천 및 병원 진료·이용 경험 솔직 공유',
             'icon' => 'fa-hospital-user',
             'color' => '#059669',
-            'order' => 2
+            'order' => 2,
+            'isAdminOnly' => false
         ],
         [
-            'id' => 'health_insurance',
-            'slug' => 'health-insurance',
-            'name_ko' => '의료보험',
-            'name_en' => 'Health Insurance',
-            'description' => '메디케어, 메디케이드, 오바마케어(ACA) 및 직장 건강보험 가입·혜택 안내',
-            'icon' => 'fa-shield-halved',
+            'id' => 'bills_insurance',
+            'slug' => 'bills-insurance',
+            'name_ko' => '의료비·보험 및 혜택 Q&A',
+            'name_en' => 'Bills, Insurance & Assistance',
+            'description' => '메디케어, 메디케이드, ACA 건강보험, 병원비 청구서(Bill) 및 재정 지원 상담',
+            'icon' => 'fa-file-invoice-dollar',
             'color' => '#4F46E5',
-            'order' => 3
+            'order' => 3,
+            'isAdminOnly' => false
         ],
+        [
+            'id' => 'medical_health',
+            'slug' => 'medical-health',
+            'name_ko' => '의학관련 포럼',
+            'name_en' => 'Medical & Health Q&A / Information',
+            'description' => '일반적인 건강 상식, 신체 증상 문의 및 전문의 건강 정보 (의학적 면책 조항 준수 필수)',
+            'icon' => 'fa-stethoscope',
+            'color' => '#1E3A8A',
+            'order' => 4,
+            'isAdminOnly' => false,
+            'hasSubList' => true
+        ],
+        [
+            'id' => 'announcements',
+            'slug' => 'announcements',
+            'name_ko' => '공지 및 건강 강좌',
+            'name_en' => 'Announcements & Health Seminars',
+            'description' => '뉴저지 한인 의료접근센터 공식 프로그램 공지, 건강 세미나 및 워크숍 일정 안내',
+            'icon' => 'fa-bullhorn',
+            'color' => '#E11D48',
+            'order' => 5,
+            'isAdminOnly' => true
+        ]
+    ];
+}
+
+/**
+ * Return 19 Clinical Medical Sub-Specialties under '의학관련 포럼'
+ */
+function forum_get_default_sub_specialties(): array {
+    return [
         [
             'id' => 'internal_medicine',
             'slug' => 'general-internal',
-            'name_ko' => '내과 (일반·가정의학과)',
+            'name_ko' => '내과 (일반·가정)',
             'name_en' => 'Internal & Family Medicine',
             'description' => '성인 만성질환 종합관리, 정기 건강검진, 1차 진료 네비게이션',
             'icon' => 'fa-stethoscope',
             'color' => '#1E3A8A',
-            'order' => 4
+            'order' => 1
         ],
         [
             'id' => 'cardiology',
@@ -74,7 +102,7 @@ function forum_get_default_specialties(): array {
             'description' => '고혈압, 관상동맥질환, 부정맥, 심부전 및 흉통 질환',
             'icon' => 'fa-heart-pulse',
             'color' => '#EF4444',
-            'order' => 5
+            'order' => 2
         ],
         [
             'id' => 'neurology',
@@ -84,7 +112,7 @@ function forum_get_default_specialties(): array {
             'description' => '뇌졸중, 치매, 두통, 어지럼증, 파킨슨병 및 말초신경',
             'icon' => 'fa-brain',
             'color' => '#8B5CF6',
-            'order' => 6
+            'order' => 3
         ],
         [
             'id' => 'oncology',
@@ -94,7 +122,7 @@ function forum_get_default_specialties(): array {
             'description' => '암 예방, 조기 검진, 항암 치료 및 치료 후 회복 케어',
             'icon' => 'fa-ribbon',
             'color' => '#EC4899',
-            'order' => 7
+            'order' => 4
         ],
         [
             'id' => 'pediatrics',
@@ -104,7 +132,7 @@ function forum_get_default_specialties(): array {
             'description' => '영유아 발달, 예방접종, 성장, 소아 알레르기 및 급성 질환',
             'icon' => 'fa-baby',
             'color' => '#3B82F6',
-            'order' => 8
+            'order' => 5
         ],
         [
             'id' => 'dermatology',
@@ -114,7 +142,7 @@ function forum_get_default_specialties(): array {
             'description' => '아토피, 습진, 건선, 색소질환, 피부 가려움 및 피부암',
             'icon' => 'fa-hand-dots',
             'color' => '#F59E0B',
-            'order' => 9
+            'order' => 6
         ],
         [
             'id' => 'orthopedics',
@@ -124,7 +152,7 @@ function forum_get_default_specialties(): array {
             'description' => '퇴행성 관절염, 척추 디스크, 오십견, 골절 및 인대 손상',
             'icon' => 'fa-bone',
             'color' => '#10B981',
-            'order' => 10
+            'order' => 7
         ],
         [
             'id' => 'endocrinology',
@@ -134,7 +162,7 @@ function forum_get_default_specialties(): array {
             'description' => '당뇨병, 갑상선 질환, 골다공증, 비만 및 호르몬 이상',
             'icon' => 'fa-dna',
             'color' => '#06B6D4',
-            'order' => 11
+            'order' => 8
         ],
         [
             'id' => 'gastroenterology',
@@ -144,7 +172,7 @@ function forum_get_default_specialties(): array {
             'description' => '역류성 식도염, 위염, 위·대장 내시경 용종, 지방간, 췌장',
             'icon' => 'fa-virus-slash',
             'color' => '#14B8A6',
-            'order' => 12
+            'order' => 9
         ],
         [
             'id' => 'psychiatry',
@@ -154,7 +182,7 @@ function forum_get_default_specialties(): array {
             'description' => '불면증, 우울증, 불안장애, 공황장애 및 시니어 인지건강',
             'icon' => 'fa-head-side-virus',
             'color' => '#6366F1',
-            'order' => 13
+            'order' => 10
         ],
         [
             'id' => 'pulmonology',
@@ -164,7 +192,7 @@ function forum_get_default_specialties(): array {
             'description' => '천식, COPD(만성폐쇄성폐질환), 만성 기침, 폐렴, 수면무호흡',
             'icon' => 'fa-lungs',
             'color' => '#0284C7',
-            'order' => 14
+            'order' => 11
         ],
         [
             'id' => 'immunology',
@@ -174,7 +202,7 @@ function forum_get_default_specialties(): array {
             'description' => '류마티스, 자가면역질환, 백신 접종, 바이러스/세균성 감염증',
             'icon' => 'fa-shield-virus',
             'color' => '#84CC16',
-            'order' => 15
+            'order' => 12
         ],
         [
             'id' => 'obgyn',
@@ -184,7 +212,7 @@ function forum_get_default_specialties(): array {
             'description' => '여성 정기검진, 갱년기 호르몬 치료, 자궁/난소 질환, 산전 관리',
             'icon' => 'fa-venus',
             'color' => '#F43F5E',
-            'order' => 16
+            'order' => 13
         ],
         [
             'id' => 'radiology',
@@ -194,7 +222,7 @@ function forum_get_default_specialties(): array {
             'description' => 'X-ray, CT, MRI, 초음파 영상 판독 해석 및 검사 가이드',
             'icon' => 'fa-radiation',
             'color' => '#64748B',
-            'order' => 17
+            'order' => 14
         ],
         [
             'id' => 'emergency',
@@ -204,7 +232,7 @@ function forum_get_default_specialties(): array {
             'description' => '응급실(ER) 방문 기준, 급성 흉통·호흡곤란, 긴급 대처 가이드',
             'icon' => 'fa-truck-medical',
             'color' => '#DC2626',
-            'order' => 18
+            'order' => 15
         ],
         [
             'id' => 'nursing_home',
@@ -214,7 +242,7 @@ function forum_get_default_specialties(): array {
             'description' => '너싱홈 입소 절차, 재활 간호, 메디케이드/메디케어 혜택 및 장기요양 돌봄',
             'icon' => 'fa-house-medical',
             'color' => '#059669',
-            'order' => 19
+            'order' => 16
         ],
         [
             'id' => 'hospice',
@@ -224,29 +252,115 @@ function forum_get_default_specialties(): array {
             'description' => '완화의료, 통증 조절, 가정 호스피스, 임종 돌봄 및 가족 심리 상담',
             'icon' => 'fa-hand-holding-heart',
             'color' => '#7C3AED',
-            'order' => 20
+            'order' => 17
         ],
         [
             'id' => 'pharmacy',
             'slug' => 'pharmacy',
             'name_ko' => '약국',
             'name_en' => 'Pharmacy',
-            'description' => '처방약 복약 지도, 일반의약품(OTC), 영양제 상호작용 및 미국 약국(CVS, Walgreens 등) 이용 안내',
+            'description' => '처방약 복약 지도, 일반의약품(OTC), 영양제 상호작용 및 미국 약국 이용 안내',
             'icon' => 'fa-pills',
             'color' => '#0D9488',
-            'order' => 21
+            'order' => 18
         ],
         [
             'id' => 'korean_medicine',
             'slug' => 'korean-medicine',
             'name_ko' => '한의학',
-            'name_en' => 'Korean Traditional Medicine / Acupuncture',
+            'name_en' => 'Korean Traditional Medicine',
             'description' => '한방 진료, 침구·부항 치료, 체질 맞춤 한약, 만성 통증 완화 및 한방 건강관리 안내',
             'icon' => 'fa-leaf',
             'color' => '#B45309',
-            'order' => 22
+            'order' => 19
         ]
     ];
+}
+
+/**
+ * Return default 5 categories for backwards compatibility
+ */
+function forum_get_default_specialties(): array {
+    return forum_get_default_categories();
+}
+
+/**
+ * Maps any specialtyId or slug to a unified category and subSpecialty
+ */
+function forum_map_specialty_to_category(?string $specId): array {
+    $specId = trim($specId ?? '');
+    if (in_array($specId, ['general_community', 'general-community', 'community'])) {
+        return ['categoryId' => 'general_community', 'subSpecialtyId' => null];
+    }
+    if (in_array($specId, ['hospital_reviews', 'hospital-reviews', 'hospital_recommendation', 'hospital-recommendation'])) {
+        return ['categoryId' => 'hospital_reviews', 'subSpecialtyId' => null];
+    }
+    if (in_array($specId, ['bills_insurance', 'bills-insurance', 'medical_billing', 'medical-billing', 'health_insurance', 'health-insurance'])) {
+        return ['categoryId' => 'bills_insurance', 'subSpecialtyId' => null];
+    }
+    if (in_array($specId, ['announcements', 'events'])) {
+        return ['categoryId' => 'announcements', 'subSpecialtyId' => null];
+    }
+    if ($specId === 'medical_health' || $specId === 'medical-health') {
+        return ['categoryId' => 'medical_health', 'subSpecialtyId' => null];
+    }
+
+    // Check if it's one of the 19 sub-specialties
+    $subList = forum_get_default_sub_specialties();
+    foreach ($subList as $sub) {
+        if ($sub['id'] === $specId || $sub['slug'] === $specId) {
+            return ['categoryId' => 'medical_health', 'subSpecialtyId' => $sub['id']];
+        }
+    }
+
+    // Default to general_community if unknown
+    return ['categoryId' => 'general_community', 'subSpecialtyId' => null];
+}
+
+/**
+ * Get category by ID
+ */
+function forum_get_category_by_id(string $catId): ?array {
+    $categories = forum_get_categories();
+    foreach ($categories as $cat) {
+        if ($cat['id'] === $catId || $cat['slug'] === $catId) {
+            return $cat;
+        }
+    }
+    return null;
+}
+
+/**
+ * Get sub-specialty by ID
+ */
+function forum_get_sub_specialty_by_id(string $subId): ?array {
+    $subs = forum_get_sub_specialties();
+    foreach ($subs as $s) {
+        if ($s['id'] === $subId || $s['slug'] === $subId) {
+            return $s;
+        }
+    }
+    return null;
+}
+
+/**
+ * Get current disclaimer text (from CMS settings or default)
+ */
+function forum_get_disclaimer(): string {
+    $data = get_forum_data();
+    return $data['settings']['disclaimer'] ?? FORUM_DEFAULT_DISCLAIMER;
+}
+
+/**
+ * Update disclaimer text in CMS
+ */
+function forum_update_disclaimer(string $disclaimer): bool {
+    $data = get_forum_data();
+    if (!isset($data['settings'])) {
+        $data['settings'] = [];
+    }
+    $data['settings']['disclaimer'] = trim($disclaimer);
+    return save_forum_data($data);
 }
 
 /**
@@ -514,75 +628,83 @@ function save_forum_data(array $data): bool {
 }
 
 /**
- * Get all 15 medical specialties with live thread and answer counts
+ * Get all 5 core categories with aggregated question counts
  */
-function forum_get_specialties(): array {
+function forum_get_categories(): array {
     $data = get_forum_data();
-    $specialties = $data['specialties'] ?? forum_get_default_specialties();
+    $categories = forum_get_default_categories();
     $questions = $data['questions'] ?? [];
-
-    // Ensure all default specialties exist and sync orders & names
-    $defaults = forum_get_default_specialties();
-    $existingMap = [];
-    foreach ($specialties as $s) {
-        $existingMap[$s['id']] = $s;
-    }
-
-    $merged = [];
-    $needsSave = false;
-    foreach ($defaults as $def) {
-        $id = $def['id'];
-        if (isset($existingMap[$id])) {
-            $sp = array_merge($existingMap[$id], $def);
-            if (($existingMap[$id]['order'] ?? null) !== $def['order'] || ($existingMap[$id]['name_ko'] ?? '') !== $def['name_ko']) {
-                $needsSave = true;
-            }
-        } else {
-            $sp = $def;
-            $needsSave = true;
-        }
-        $merged[$id] = $sp;
-    }
-
-    // Retain any custom specialties if created
-    foreach ($existingMap as $id => $sp) {
-        if (!isset($merged[$id])) {
-            $merged[$id] = $sp;
-        }
-    }
-    $specialties = array_values($merged);
-
-    if ($needsSave && !empty($data)) {
-        $data['specialties'] = $specialties;
-        save_forum_data($data);
-    }
 
     $counts = [];
     foreach ($questions as $q) {
         if (($q['status'] ?? 'active') === 'active') {
-            $sId = $q['specialtyId'] ?? '';
-            $counts[$sId] = ($counts[$sId] ?? 0) + 1;
+            $catInfo = forum_map_specialty_to_category($q['specialtyId'] ?? '');
+            $cId = $catInfo['categoryId'];
+            $counts[$cId] = ($counts[$cId] ?? 0) + 1;
         }
     }
 
-    foreach ($specialties as &$s) {
+    foreach ($categories as &$cat) {
+        $cat['questionCount'] = $counts[$cat['id']] ?? 0;
+    }
+    unset($cat);
+
+    usort($categories, fn($a, $b) => ($a['order'] ?? 0) <=> ($b['order'] ?? 0));
+    return $categories;
+}
+
+/**
+ * Get 19 clinical sub-specialties with live thread counts
+ */
+function forum_get_sub_specialties(): array {
+    $data = get_forum_data();
+    $subs = forum_get_default_sub_specialties();
+    $questions = $data['questions'] ?? [];
+
+    $counts = [];
+    foreach ($questions as $q) {
+        if (($q['status'] ?? 'active') === 'active') {
+            $catInfo = forum_map_specialty_to_category($q['specialtyId'] ?? '');
+            $sId = $q['subSpecialtyId'] ?? $catInfo['subSpecialtyId'];
+            if ($sId) {
+                $counts[$sId] = ($counts[$sId] ?? 0) + 1;
+            }
+        }
+    }
+
+    foreach ($subs as &$s) {
         $s['questionCount'] = $counts[$s['id']] ?? 0;
     }
     unset($s);
 
-    usort($specialties, fn($a, $b) => ($a['order'] ?? 0) <=> ($b['order'] ?? 0));
-    return $specialties;
+    usort($subs, fn($a, $b) => ($a['order'] ?? 0) <=> ($b['order'] ?? 0));
+    return $subs;
 }
 
 /**
- * Query questions with filtering, search, and sorting
+ * Get categories (aliased to forum_get_categories for backwards compatibility)
  */
-function forum_get_questions($specialty = '', $sort = 'latest', $search = '', $status = 'active'): array {
+function forum_get_specialties(): array {
+    return forum_get_categories();
+}
+
+/**
+ * Query questions with filtering by category, sub-specialty, search query, status, and sorting
+ */
+function forum_get_questions($specialty = '', $sort = 'latest', $search = '', $status = 'active', $subSpecialty = ''): array {
     $data = get_forum_data();
     $questions = array_values($data['questions'] ?? []);
-    $specialtiesMap = [];
-    foreach (($data['specialties'] ?? []) as $s) {
-        $specialtiesMap[$s['id']] = $s;
+
+    $catMap = [];
+    foreach (forum_get_categories() as $c) {
+        $catMap[$c['id']] = $c;
+        $catMap[$c['slug']] = $c;
+    }
+
+    $subMap = [];
+    foreach (forum_get_sub_specialties() as $s) {
+        $subMap[$s['id']] = $s;
+        $subMap[$s['slug']] = $s;
     }
 
     // Filter by status (unless 'all' requested by moderator)
@@ -590,10 +712,36 @@ function forum_get_questions($specialty = '', $sort = 'latest', $search = '', $s
         $questions = array_filter($questions, fn($q) => ($q['status'] ?? 'active') === $status);
     }
 
-    // Filter by specialty
-    if (!empty($specialty) && $specialty !== 'all') {
-        $questions = array_filter($questions, function($q) use ($specialty) {
-            return ($q['specialtyId'] ?? '') === $specialty || ($q['specialtySlug'] ?? '') === $specialty;
+    // Filter by category and/or subSpecialty
+    $specKey = trim($specialty ?? '');
+    $subKey = trim($subSpecialty ?? '');
+
+    if (!empty($specKey) && $specKey !== 'all') {
+        $targetCatInfo = forum_map_specialty_to_category($specKey);
+        $targetCatId = $targetCatInfo['categoryId'];
+        $directSubId = $targetCatInfo['subSpecialtyId']; // If user requested /forum?specialty=cardiology directly
+
+        $questions = array_filter($questions, function($q) use ($targetCatId, $directSubId, $subKey) {
+            $qCatInfo = forum_map_specialty_to_category($q['specialtyId'] ?? '');
+            $qCatId = $q['categoryId'] ?? $qCatInfo['categoryId'];
+            $qSubId = $q['subSpecialtyId'] ?? $qCatInfo['subSpecialtyId'];
+
+            // Must match target category
+            if ($qCatId !== $targetCatId) {
+                return false;
+            }
+
+            // If direct sub-specialty requested via primary filter (e.g. ?specialty=cardiology)
+            if ($directSubId !== null && $qSubId !== $directSubId) {
+                return false;
+            }
+
+            // If explicit subSpecialty passed (e.g. ?specialty=medical_health&sub=cardiology)
+            if (!empty($subKey) && $subKey !== 'all' && $qSubId !== $subKey) {
+                return false;
+            }
+
+            return true;
         });
     }
 
@@ -608,16 +756,22 @@ function forum_get_questions($specialty = '', $sort = 'latest', $search = '', $s
         });
     }
 
-    // Augment with specialty info, participants, and clinician answers
+    // Augment with category, subSpecialty, participants, and clinician answers
     $answers = $data['answers'] ?? [];
     foreach ($questions as &$q) {
-        $sInfo = $specialtiesMap[$q['specialtyId'] ?? ''] ?? null;
-        $q['specialty'] = $sInfo;
-        
+        $qCatInfo = forum_map_specialty_to_category($q['specialtyId'] ?? '');
+        $catId = $q['categoryId'] ?? $qCatInfo['categoryId'];
+        $subId = $q['subSpecialtyId'] ?? $qCatInfo['subSpecialtyId'];
+
+        $q['category'] = $catMap[$catId] ?? null;
+        $q['subSpecialty'] = $subId ? ($subMap[$subId] ?? null) : null;
+        // For template backward compatibility: if subSpecialty exists, provide it; otherwise provide category
+        $q['specialty'] = $q['subSpecialty'] ?? $q['category'];
+
         // Count answers and check for clinician answer
         $qAnswers = array_values(array_filter($answers, fn($a) => ($a['questionId'] ?? '') === $q['id'] && ($a['status'] ?? 'active') === 'active'));
         $q['replyCount'] = count($qAnswers);
-        
+
         // Participants avatar list (Author first, then commenters up to 5)
         $participants = [];
         $seenAvatars = [];
@@ -656,7 +810,7 @@ function forum_get_questions($specialty = '', $sort = 'latest', $search = '', $s
     }
     unset($q);
 
-    // Filter by verified if requested
+    // Sorting
     if ($sort === 'verified') {
         $questions = array_filter($questions, fn($q) => !empty($q['hasClinicianAnswer']));
         usort($questions, fn($a, $b) => strcmp($b['latestActivityAt'] ?? '', $a['latestActivityAt'] ?? ''));
@@ -688,11 +842,13 @@ function forum_get_question(string $id, bool $incrementView = true): ?array {
     }
 
     $q = $data['questions'][$id];
-    $specialtiesMap = [];
-    foreach (($data['specialties'] ?? []) as $s) {
-        $specialtiesMap[$s['id']] = $s;
-    }
-    $q['specialty'] = $specialtiesMap[$q['specialtyId'] ?? ''] ?? null;
+    $catInfo = forum_map_specialty_to_category($q['specialtyId'] ?? '');
+    $catId = $q['categoryId'] ?? $catInfo['categoryId'];
+    $subId = $q['subSpecialtyId'] ?? $catInfo['subSpecialtyId'];
+
+    $q['category'] = forum_get_category_by_id($catId);
+    $q['subSpecialty'] = $subId ? forum_get_sub_specialty_by_id($subId) : null;
+    $q['specialty'] = $q['subSpecialty'] ?? $q['category'];
 
     // Get answers
     $answers = [];
@@ -709,9 +865,9 @@ function forum_get_question(string $id, bool $incrementView = true): ?array {
 }
 
 /**
- * Add a new question (supports custom author name/nickname)
+ * Add a new question (supports category & subSpecialty)
  */
-function forum_add_question(string $title, string $body, string $specialtyId, array $user, ?string $customAuthorName = null, array $images = []): array {
+function forum_add_question(string $title, string $body, string $specialtyId, array $user, ?string $customAuthorName = null, array $images = [], ?string $subSpecialtyId = null): array {
     $data = get_forum_data();
     $id = 'q_' . bin2hex(random_bytes(6));
     $now = date('c');
@@ -732,11 +888,17 @@ function forum_add_question(string $title, string $body, string $specialtyId, ar
         }
     }
 
+    $catInfo = forum_map_specialty_to_category($specialtyId);
+    $finalCatId = $catInfo['categoryId'];
+    $finalSubId = $subSpecialtyId ?? $catInfo['subSpecialtyId'];
+
     $newQ = [
         'id' => $id,
         'title' => trim($title),
         'body' => trim($body),
         'specialtyId' => $specialtyId,
+        'categoryId' => $finalCatId,
+        'subSpecialtyId' => $finalSubId,
         'authorId' => $user['id'],
         'authorName' => $authorName,
         'authorAvatar' => $user['avatar'] ?? 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&q=80',
@@ -1163,11 +1325,25 @@ function forum_get_stats(): array {
     $verifiedClinicians = count(array_filter($users, fn($u) => !empty($u['isVerifiedClinician'])));
     $bannedUsers = count(array_filter($users, fn($u) => !empty($u['isBanned'])));
 
-    // Breakdown per 15 specialties
-    $specialties = forum_get_specialties();
-    $specialtyBreakdown = [];
-    foreach ($specialties as $s) {
-        $specialtyBreakdown[$s['id']] = [
+    // Breakdown per 5 core categories
+    $categories = forum_get_categories();
+    $categoryBreakdown = [];
+    foreach ($categories as $c) {
+        $categoryBreakdown[] = [
+            'id' => $c['id'],
+            'name_ko' => $c['name_ko'],
+            'name_en' => $c['name_en'],
+            'color' => $c['color'],
+            'icon' => $c['icon'],
+            'count' => $c['questionCount'] ?? 0
+        ];
+    }
+
+    // Breakdown per 19 clinical sub-specialties
+    $subSpecialties = forum_get_sub_specialties();
+    $subBreakdown = [];
+    foreach ($subSpecialties as $s) {
+        $subBreakdown[] = [
             'id' => $s['id'],
             'name_ko' => $s['name_ko'],
             'name_en' => $s['name_en'],
@@ -1188,7 +1364,10 @@ function forum_get_stats(): array {
         'totalUsers' => $totalUsers,
         'verifiedClinicians' => $verifiedClinicians,
         'bannedUsers' => $bannedUsers,
-        'specialties' => array_values($specialtyBreakdown)
+        'categories' => $categoryBreakdown,
+        'subSpecialties' => $subBreakdown,
+        'specialties' => $categoryBreakdown,
+        'disclaimer' => forum_get_disclaimer()
     ];
 }
 

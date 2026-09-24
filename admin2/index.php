@@ -102,8 +102,12 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
           <span>이벤트 관리</span>
         </button>
         <button onclick="switchTab('specialties')" id="nav-specialties" class="tab-btn px-3 py-2 rounded-xl transition-all flex items-center gap-1.5">
-          <i class="fa-solid fa-stethoscope"></i>
-          <span>전문 진료과·케어</span>
+          <i class="fa-solid fa-layer-group"></i>
+          <span>5대 카테고리·진료과</span>
+        </button>
+        <button onclick="switchTab('settings')" id="nav-settings" class="tab-btn px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 text-blue-400 hover:text-blue-300">
+          <i class="fa-solid fa-sliders"></i>
+          <span>포럼 CMS 설정</span>
         </button>
       </nav>
 
@@ -131,7 +135,8 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
       <button onclick="switchTab('answers')" id="nav-m-answers" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg">답변 관리</button>
       <button onclick="switchTab('users')" id="nav-m-users" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg">전문가 &amp; 회원</button>
       <button onclick="switchTab('events')" id="nav-m-events" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-rose-400">이벤트 관리</button>
-      <button onclick="switchTab('specialties')" id="nav-m-specialties" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg">전문 진료과·케어</button>
+      <button onclick="switchTab('specialties')" id="nav-m-specialties" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg">5대 카테고리·진료과</button>
+      <button onclick="switchTab('settings')" id="nav-m-settings" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-blue-400">포럼 설정</button>
     </div>
   </header>
 
@@ -149,7 +154,7 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
           </span>
           <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">메디컬 포럼 CMS 관제 센터</h1>
           <p class="text-slate-300 text-sm mt-2 leading-relaxed">
-            전문 진료과 및 시니어 케어 분야별 의료 질문/정보 나눔 및 전문의 인증 답변을 실시간으로 모니터링하고, 부적절한 게시글 삭제/숨김 및 전문의 인증 배지를 관리할 수 있습니다.
+            5대 핵심 오픈 포럼(자유게시판, 병원후기, 의료비/보험, 의학포럼 19개 진료과, 공지/강좌) 게시물과 전문의 답변을 실시간 모니터링하고 CMS 설정을 관리합니다.
           </p>
         </div>
       </div>
@@ -205,17 +210,31 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
         </div>
       </div>
 
-      <!-- Specialties Discussion Breakdown Grid -->
-      <div class="bg-slate-800/80 border border-slate-700/80 rounded-3xl p-6 sm:p-8">
-        <div class="flex items-center justify-between mb-6">
-          <h2 class="text-lg font-bold text-white flex items-center gap-2">
-            <i class="fa-solid fa-stethoscope text-blue-400"></i>
-            <span>전문 진료과 및 시니어 케어 분야별 현황</span>
-          </h2>
-          <span class="text-xs text-slate-400">실시간 집계</span>
+      <!-- Categories & Specialties Discussion Breakdown Grid -->
+      <div class="bg-slate-800/80 border border-slate-700/80 rounded-3xl p-6 sm:p-8 space-y-6">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-layer-group text-blue-400"></i>
+              <span>5대 핵심 오픈 포럼 카테고리 현황</span>
+            </h2>
+            <span class="text-xs text-slate-400">실시간 집계</span>
+          </div>
+          <div id="categories-dashboard-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+            <!-- Populated by JS -->
+          </div>
         </div>
-        <div id="specialties-dashboard-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-          <!-- Populated by JS -->
+
+        <div class="pt-6 border-t border-slate-700/60">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-sm font-bold text-slate-300 flex items-center gap-2">
+              <i class="fa-solid fa-stethoscope text-cyan-400"></i>
+              <span>의학포럼 19대 세부 전문 진료과목 현황</span>
+            </h3>
+          </div>
+          <div id="specialties-dashboard-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+            <!-- Populated by JS -->
+          </div>
         </div>
       </div>
     </section>
@@ -594,6 +613,47 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
               <!-- Rendered via JS -->
             </tbody>
           </table>
+        </div>
+      </div>
+    <!-- TAB 7: SETTINGS & CLINICAL DISCLAIMER MANAGEMENT -->
+    <section id="tab-settings" class="tab-pane hidden space-y-6">
+      <div class="flex items-center justify-between flex-wrap gap-4">
+        <div>
+          <h2 class="text-xl font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-sliders text-blue-400"></i>
+            <span>포럼 운영 및 법적 면책 조항 (Disclaimer) 설정</span>
+          </h2>
+          <p class="text-xs text-slate-400 mt-1">
+            각 게시판 및 글 작성 페이지 상단에 고정 노출되는 공식 의료 면책 조항 문구를 관리합니다.
+          </p>
+        </div>
+      </div>
+
+      <div class="bg-slate-800/80 border border-slate-700/80 rounded-3xl p-6 sm:p-8 shadow-xl max-w-4xl space-y-6">
+        <div>
+          <label class="block text-xs sm:text-sm font-bold text-slate-200 mb-2 flex items-center justify-between">
+            <span class="flex items-center gap-2">
+              <i class="fa-solid fa-triangle-exclamation text-amber-400"></i>
+              <span>포럼 공통 면책 조항 문구 (Clinical Disclaimer Text)</span>
+            </span>
+            <span class="text-[11px] font-semibold text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-2.5 py-0.5 rounded-full">실시간 전체 반영</span>
+          </label>
+          <textarea id="setting-disclaimer-input" rows="4" 
+            class="w-full p-4 rounded-2xl bg-slate-900 border border-slate-700 text-xs sm:text-sm text-white focus:outline-none focus:border-blue-500 leading-relaxed font-sans placeholder-slate-500"
+            placeholder="본 포럼의 정보는 교육 및 일반 정보 제공 목적이며 전문 진료를 대체하지 않습니다"></textarea>
+          <p class="text-xs text-slate-400 mt-2">
+            ※ 위 문구는 포럼 메인화면, 게시판 목록, 질문 상세, 글 작성 화면 상단의 면책 배너에 즉시 노출됩니다.
+          </p>
+        </div>
+
+        <div class="flex items-center justify-between pt-4 border-t border-slate-700/60 flex-wrap gap-3">
+          <button type="button" onclick="resetDefaultDisclaimer()" class="text-xs font-semibold text-slate-400 hover:text-slate-200 px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 transition-colors">
+            기본 문구로 복원
+          </button>
+          <button type="button" id="btn-save-disclaimer" onclick="handleSaveDisclaimer()" class="px-6 py-3 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-xs sm:text-sm transition-all shadow-md flex items-center gap-2 cursor-pointer">
+            <i class="fa-solid fa-floppy-disk"></i>
+            <span>면책 조항 설정 저장</span>
+          </button>
         </div>
       </div>
     </section>

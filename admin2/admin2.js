@@ -6,6 +6,9 @@ let allQuestions = [];
 let allAnswers = [];
 let allUsers = [];
 let allSpecialties = [];
+let allCategories = [];
+let allSubSpecialties = [];
+let currentDisclaimer = '';
 
 // Tab Switching
 function switchTab(tabId) {
@@ -28,6 +31,7 @@ function switchTab(tabId) {
   if (tabId === 'users') loadUsersTable();
   if (tabId === 'events') loadEventsSection();
   if (tabId === 'specialties') loadSpecialtiesGrid();
+  if (tabId === 'settings') loadSettingsTab();
 }
 
 // 1. Load Dashboard Statistics
@@ -49,18 +53,47 @@ async function loadDashboardStats() {
     document.getElementById('stat-flagged-questions').innerText = (data.flaggedQuestions + (data.flaggedAnswers ?? 0));
     document.getElementById('stat-hidden-questions').innerText = data.hiddenQuestions ?? 0;
 
-    // Render 15 Specialties distribution grid
+    allCategories = data.categories || [];
+    allSubSpecialties = data.subSpecialties || [];
+    allSpecialties = allCategories;
+    currentDisclaimer = data.disclaimer || '본 포럼의 정보는 교육 및 일반 정보 제공 목적이며 전문 진료를 대체하지 않습니다';
+
+    // Populate Disclaimer input if on settings page
+    const discInput = document.getElementById('setting-disclaimer-input');
+    if (discInput && !discInput.value) {
+      discInput.value = currentDisclaimer;
+    }
+
+    // Render 5 Core Categories grid
+    const catGrid = document.getElementById('categories-dashboard-grid');
+    if (catGrid && Array.isArray(allCategories)) {
+      catGrid.innerHTML = allCategories.map(cat => `
+        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 flex items-center gap-3" style="border-left: 4px solid ${cat.color || '#3b82f6'};">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center text-base shrink-0" style="background-color: ${cat.color}22; color: ${cat.color}">
+            <i class="fa-solid ${cat.icon || 'fa-layer-group'}"></i>
+          </div>
+          <div class="overflow-hidden min-w-0 flex-1">
+            <h4 class="text-xs font-bold text-white truncate">${escapeHtml(cat.name_ko)}</h4>
+            <div class="flex items-center justify-between mt-1">
+              <span class="text-[10px] text-slate-400 font-mono truncate">${escapeHtml(cat.name_en || '')}</span>
+              <span class="text-xs font-extrabold text-blue-400">${cat.questionCount ?? (cat.count ?? 0)}건</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Render 19 Medical Sub-Specialties distribution grid
     const specGrid = document.getElementById('specialties-dashboard-grid');
-    if (specGrid && Array.isArray(data.specialties)) {
-      allSpecialties = data.specialties;
-      specGrid.innerHTML = data.specialties.map(sp => `
-        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-3.5 flex items-center gap-3">
-          <div class="w-9 h-9 rounded-xl flex items-center justify-center text-sm shrink-0" style="background-color: ${sp.color}22; color: ${sp.color}">
+    if (specGrid && Array.isArray(allSubSpecialties)) {
+      specGrid.innerHTML = allSubSpecialties.map(sp => `
+        <div class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-3 flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl flex items-center justify-center text-xs shrink-0" style="background-color: ${sp.color}22; color: ${sp.color}">
             <i class="fa-solid ${sp.icon || 'fa-stethoscope'}"></i>
           </div>
-          <div class="overflow-hidden">
-            <h4 class="text-xs font-bold text-white truncate">${sp.name_ko}</h4>
-            <span class="text-[11px] text-slate-400 font-semibold">${sp.count ?? 0}건</span>
+          <div class="overflow-hidden min-w-0 flex-1">
+            <h4 class="text-xs font-bold text-white truncate">${escapeHtml(sp.name_ko)}</h4>
+            <span class="text-[10px] text-slate-400 font-semibold">${sp.questionCount ?? (sp.count ?? 0)}건</span>
           </div>
         </div>
       `).join('');
@@ -99,13 +132,29 @@ async function loadQuestionsTable() {
 
     // Populate specialty filter dropdown if empty
     const sel = document.getElementById('q-filter-specialty');
-    if (sel && sel.options.length <= 1 && allSpecialties.length > 0) {
-      allSpecialties.forEach(sp => {
-        const opt = document.createElement('option');
-        opt.value = sp.id;
-        opt.innerText = sp.name_ko;
-        sel.appendChild(opt);
-      });
+    if (sel && sel.options.length <= 1) {
+      if (allCategories.length > 0) {
+        const catGroup = document.createElement('optgroup');
+        catGroup.label = '5대 핵심 오픈 포럼';
+        allCategories.forEach(cat => {
+          const opt = document.createElement('option');
+          opt.value = cat.id;
+          opt.innerText = cat.name_ko;
+          catGroup.appendChild(opt);
+        });
+        sel.appendChild(catGroup);
+      }
+      if (allSubSpecialties.length > 0) {
+        const subGroup = document.createElement('optgroup');
+        subGroup.label = '의학포럼 19대 전문 진료과목';
+        allSubSpecialties.forEach(sub => {
+          const opt = document.createElement('option');
+          opt.value = sub.id;
+          opt.innerText = '↳ ' + sub.name_ko;
+          subGroup.appendChild(opt);
+        });
+        sel.appendChild(subGroup);
+      }
     }
 
     if (allQuestions.length === 0) {
@@ -114,7 +163,8 @@ async function loadQuestionsTable() {
     }
 
     tbody.innerHTML = allQuestions.map(q => {
-      const s = q.specialty || {};
+      const cat = q.category || q.specialty || {};
+      const sub = q.subSpecialty || null;
       const statusPill = (q.status === 'active')
         ? `<span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-full text-[10px] font-bold">공개</span>`
         : (q.status === 'flagged')
@@ -124,10 +174,13 @@ async function loadQuestionsTable() {
       return `
         <tr class="hover:bg-slate-700/30 transition-colors">
           <td class="py-3.5 px-4 font-bold text-blue-400 whitespace-nowrap">
-            <span class="inline-flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full" style="background-color: ${s.color || '#3b82f6'}"></span>
-              ${s.name_ko || '일반내과'}
-            </span>
+            <div class="flex flex-col gap-1">
+              <span class="inline-flex items-center gap-1.5 text-xs text-white">
+                <span class="w-2 h-2 rounded-full shrink-0" style="background-color: ${cat.color || '#3b82f6'}"></span>
+                <span>${escapeHtml(cat.name_ko || '게시판')}</span>
+              </span>
+              ${sub ? `<span class="text-[10px] text-cyan-300 bg-cyan-950/60 px-1.5 py-0.2 rounded border border-cyan-800/60 self-start">↳ ${escapeHtml(sub.name_ko)}</span>` : ''}
+            </div>
           </td>
           <td class="py-3.5 px-4">
             <div class="font-bold text-white max-w-md truncate hover:text-blue-300 cursor-pointer" onclick='openQModal(${JSON.stringify(q).replace(/'/g, "&#39;")})'>
@@ -629,28 +682,115 @@ async function toggleBanUser(userId, isBanned) {
   } catch(e) {}
 }
 
-// 5. Load 15 Specialties Grid
+// 5. Load 5 Core Categories & 19 Medical Sub-Specialties Grid
 function loadSpecialtiesGrid() {
   const container = document.getElementById('specialties-full-grid');
-  if (!container || allSpecialties.length === 0) return;
+  if (!container) return;
 
-  container.innerHTML = allSpecialties.map(sp => `
-    <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 relative overflow-hidden">
-      <div class="flex items-center gap-3 mb-3">
-        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-lg text-white shadow" style="background-color: ${sp.color}">
-          <i class="fa-solid ${sp.icon || 'fa-stethoscope'}"></i>
-        </div>
-        <div>
-          <h3 class="font-bold text-white text-sm">${sp.name_ko}</h3>
-          <p class="text-xs text-slate-400 font-mono">${sp.name_en}</p>
-        </div>
-        <span class="ml-auto text-xs font-extrabold px-2.5 py-1 rounded-full bg-slate-900 border border-slate-700 text-blue-400">
-          ${sp.count ?? 0}건
-        </span>
-      </div>
-      <p class="text-xs text-slate-300 leading-relaxed">${sp.description || ''}</p>
+  let html = `
+    <div class="col-span-full mb-2">
+      <h3 class="text-sm font-extrabold text-blue-400 flex items-center gap-2 mb-1">
+        <i class="fa-solid fa-layer-group"></i>
+        <span>5대 핵심 오픈 포럼 카테고리 (5 Core Categories)</span>
+      </h3>
+      <p class="text-xs text-slate-400">커뮤니티 단순화 및 SEO 최적화를 위해 통합된 5대 핵심 카테고리입니다.</p>
     </div>
-  `).join('');
+  `;
+
+  if (allCategories.length > 0) {
+    html += allCategories.map(cat => `
+      <div class="bg-slate-800/90 border border-slate-700/90 rounded-2xl p-5 relative overflow-hidden" style="border-left: 4px solid ${cat.color || '#3b82f6'};">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-11 h-11 rounded-xl flex items-center justify-center text-lg text-white shadow" style="background-color: ${cat.color}">
+            <i class="fa-solid ${cat.icon || 'fa-layer-group'}"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-white text-sm">${escapeHtml(cat.name_ko)}</h3>
+            <p class="text-xs text-slate-400 font-mono">${escapeHtml(cat.name_en || '')}</p>
+          </div>
+          <span class="ml-auto text-xs font-extrabold px-2.5 py-1 rounded-full bg-slate-900 border border-slate-700 text-blue-400">
+            ${cat.questionCount ?? (cat.count ?? 0)}건
+          </span>
+        </div>
+        <p class="text-xs text-slate-300 leading-relaxed">${escapeHtml(cat.description || '')}</p>
+      </div>
+    `).join('');
+  }
+
+  html += `
+    <div class="col-span-full mt-6 mb-2 pt-6 border-t border-slate-700">
+      <h3 class="text-sm font-extrabold text-cyan-400 flex items-center gap-2 mb-1">
+        <i class="fa-solid fa-stethoscope"></i>
+        <span>의학포럼 19대 세부 전문 진료과목 (19 Sub-Specialties)</span>
+      </h3>
+      <p class="text-xs text-slate-400">사용자가 '의학포럼'을 열었을 때 상단에 표시되는 19개 진료과 서브 리스트입니다.</p>
+    </div>
+  `;
+
+  if (allSubSpecialties.length > 0) {
+    html += allSubSpecialties.map(sub => `
+      <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-3.5 flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center text-sm shrink-0" style="background-color: ${sub.color}22; color: ${sub.color}">
+          <i class="fa-solid ${sub.icon || 'fa-stethoscope'}"></i>
+        </div>
+        <div class="min-w-0 flex-1">
+          <h4 class="text-xs font-bold text-white truncate">${escapeHtml(sub.name_ko)}</h4>
+          <span class="text-[10px] text-slate-400 font-mono truncate block">${escapeHtml(sub.name_en || '')}</span>
+        </div>
+        <span class="text-xs font-bold text-cyan-400 shrink-0">${sub.questionCount ?? 0}건</span>
+      </div>
+    `).join('');
+  }
+
+  container.innerHTML = html;
+}
+
+// Settings Tab: Clinical Disclaimer Management
+function loadSettingsTab() {
+  const input = document.getElementById('setting-disclaimer-input');
+  if (input && currentDisclaimer) {
+    input.value = currentDisclaimer;
+  }
+}
+
+function resetDefaultDisclaimer() {
+  const input = document.getElementById('setting-disclaimer-input');
+  if (input) {
+    input.value = '본 포럼의 정보는 교육 및 일반 정보 제공 목적이며 전문 진료를 대체하지 않습니다';
+  }
+}
+
+async function handleSaveDisclaimer() {
+  const input = document.getElementById('setting-disclaimer-input');
+  const btn = document.getElementById('btn-save-disclaimer');
+  const text = input ? input.value.trim() : '';
+  if (!text) {
+    alert('면책 조항 문구를 입력해 주세요.');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 저장 중...';
+
+  try {
+    const res = await fetch('/ko/api/forum_admin.php?action=update_disclaimer', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ disclaimer: text })
+    });
+    const data = await res.json();
+    if (data.success) {
+      currentDisclaimer = text;
+      alert('면책 조항 설정이 성공적으로 저장되었습니다.\n포럼 전역(메인, 카테고리, 질문 상세, 글작성)에 실시간 반영됩니다.');
+    } else {
+      alert(data.error || '저장에 실패했습니다.');
+    }
+  } catch (err) {
+    alert('저장 통신 오류가 발생했습니다.');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> <span>면책 조항 설정 저장</span>';
+  }
 }
 
 // Question Detail Modal
@@ -658,27 +798,39 @@ let currentModalQuestion = null;
 
 function openQModal(q) {
   currentModalQuestion = q;
-  const s = q.specialty || {};
-  const currentSpecialtyId = q.specialtyId || s.id || '';
+  const cat = q.category || q.specialty || {};
+  const sub = q.subSpecialty || null;
+  const currentSpecialtyId = q.subSpecialtyId || q.specialtyId || cat.id || '';
 
   const specialtyBadge = document.getElementById('modal-q-specialty');
   if (specialtyBadge) {
-    specialtyBadge.innerText = s.name_ko || '진료과';
-    if (s.color) {
-      specialtyBadge.style.backgroundColor = s.color + '22';
-      specialtyBadge.style.color = s.color;
-      specialtyBadge.style.borderColor = s.color + '44';
+    specialtyBadge.innerText = sub ? `${cat.name_ko} > ${sub.name_ko}` : (cat.name_ko || '게시판');
+    if (cat.color) {
+      specialtyBadge.style.backgroundColor = cat.color + '22';
+      specialtyBadge.style.color = cat.color;
+      specialtyBadge.style.borderColor = cat.color + '44';
     }
   }
 
-  // Populate specialty select options
+  // Populate specialty select options with optgroups
   const sel = document.getElementById('modal-q-specialty-select');
   if (sel) {
-    sel.innerHTML = allSpecialties.map(sp => `
-      <option value="${sp.id}" ${sp.id === currentSpecialtyId ? 'selected' : ''}>
-        ${sp.name_ko} (${sp.name_en || sp.id})
-      </option>
-    `).join('');
+    let optionsHtml = '';
+    if (allCategories.length > 0) {
+      optionsHtml += '<optgroup label="5대 핵심 카테고리">';
+      allCategories.forEach(c => {
+        optionsHtml += `<option value="${c.id}" ${c.id === currentSpecialtyId ? 'selected' : ''}>${escapeHtml(c.name_ko)} (${escapeHtml(c.name_en || c.id)})</option>`;
+      });
+      optionsHtml += '</optgroup>';
+    }
+    if (allSubSpecialties.length > 0) {
+      optionsHtml += '<optgroup label="의학포럼 19대 전문 진료과목">';
+      allSubSpecialties.forEach(s => {
+        optionsHtml += `<option value="${s.id}" ${s.id === currentSpecialtyId ? 'selected' : ''}>↳ ${escapeHtml(s.name_ko)} (${escapeHtml(s.name_en || s.id)})</option>`;
+      });
+      optionsHtml += '</optgroup>';
+    }
+    sel.innerHTML = optionsHtml;
     sel.value = currentSpecialtyId;
   }
 
@@ -795,19 +947,18 @@ async function saveQuestionSpecialty() {
       return;
     }
 
-    // Find new specialty info
-    const matched = allSpecialties.find(sp => sp.id === newSpecialtyId);
+    // Find new category or sub-specialty info
+    const matched = allCategories.find(sp => sp.id === newSpecialtyId) || allSubSpecialties.find(sp => sp.id === newSpecialtyId);
     if (matched) {
       currentModalQuestion.specialtyId = newSpecialtyId;
-      currentModalQuestion.specialtySlug = matched.slug;
       currentModalQuestion.specialty = matched;
 
       const badge = document.getElementById('modal-q-specialty');
       if (badge) {
         badge.innerText = matched.name_ko;
-        badge.style.backgroundColor = matched.color + '22';
-        badge.style.color = matched.color;
-        badge.style.borderColor = matched.color + '44';
+        badge.style.backgroundColor = (matched.color || '#3b82f6') + '22';
+        badge.style.color = matched.color || '#3b82f6';
+        badge.style.borderColor = (matched.color || '#3b82f6') + '44';
       }
     }
 

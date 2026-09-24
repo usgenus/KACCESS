@@ -241,6 +241,19 @@ if ($method === 'POST') {
         exit;
     }
 
+    // 1.4 Update Forum Disclaimer
+    if ($action === 'update_disclaimer') {
+        $disclaimer = trim($input['disclaimer'] ?? '');
+        if (mb_strlen($disclaimer) < 5) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => '면책 조항 문구를 5자 이상 입력해주세요.']);
+            exit;
+        }
+        $res = forum_update_disclaimer($disclaimer);
+        echo json_encode(['success' => $res, 'message' => '포럼 의료 면책 조항이 업데이트되었습니다.', 'disclaimer' => $disclaimer]);
+        exit;
+    }
+
     // 1.5 Update Question Specialty / Category
     if ($action === 'update_question_specialty') {
         $id = trim($input['id'] ?? '');
@@ -248,18 +261,18 @@ if ($method === 'POST') {
 
         if (empty($id) || empty($specialtyId)) {
             http_response_code(400);
-            echo json_encode(['success' => false, 'error' => '질문 ID와 변경할 진료과를 선택해주세요.']);
+            echo json_encode(['success' => false, 'error' => '질문 ID와 변경할 진료과/카테고리를 선택해주세요.']);
             exit;
         }
 
         $res = forum_update_question_specialty($id, $specialtyId);
         if (!$res) {
             http_response_code(400);
-            echo json_encode(['success' => false, 'error' => '진료과 변경에 실패했습니다. 유효한 진료과인지 확인해주세요.']);
+            echo json_encode(['success' => false, 'error' => '카테고리 변경에 실패했습니다. 유효한 카테고리인지 확인해주세요.']);
             exit;
         }
 
-        echo json_encode(['success' => true, 'message' => '질문의 전문 진료과/카테고리가 성공적으로 변경되었습니다.']);
+        echo json_encode(['success' => true, 'message' => '질문의 카테고리가 성공적으로 변경되었습니다.']);
         exit;
     }
 

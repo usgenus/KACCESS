@@ -18,9 +18,11 @@ $publishedPosts = array_values(array_filter($posts, function($p) {
     return ($p['status'] ?? 'published') === 'published';
 }));
 
-// Fetch all active forum topics and specialties
+// Fetch all active forum topics, 5 core categories, and 19 sub-specialties
 $forumQuestions = forum_get_questions('', 'latest', '', 'active');
-$forumSpecialties = forum_get_specialties();
+$forumCategories = forum_get_categories();
+$forumSubSpecialties = forum_get_sub_specialties();
+$forumSpecialties = $forumCategories;
 
 // Core portal pages
 $corePages = [
@@ -105,10 +107,20 @@ echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
   </url>
 <?php endforeach; ?>
 
-<?php /* 1. Specialty Category Pages */ ?>
-<?php foreach ($forumSpecialties as $sp): ?>
+<?php /* 1. 5 Core Forum Category Pages */ ?>
+<?php foreach ($forumCategories as $cat): ?>
   <url>
-    <loc><?= htmlspecialchars($baseUrl . '/forum?specialty=' . urlencode($sp['id'])) ?></loc>
+    <loc><?= htmlspecialchars($baseUrl . '/forum?specialty=' . urlencode($cat['id'])) ?></loc>
+    <lastmod><?= date('Y-m-d') ?></lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+<?php endforeach; ?>
+
+<?php /* 1.1. 의학포럼 19대 세부 전문 진료과목 Pages */ ?>
+<?php foreach ($forumSubSpecialties as $sub): ?>
+  <url>
+    <loc><?= htmlspecialchars($baseUrl . '/forum?specialty=medical_health&amp;sub=' . urlencode($sub['id'])) ?></loc>
     <lastmod><?= date('Y-m-d') ?></lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>

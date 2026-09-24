@@ -331,86 +331,144 @@ function render_forum_header(string $searchQuery = '', ?array $currentSpecialty 
 <?php
 }
 
-function render_forum_sidebar(array $specialties, string $activeSpecialty = '', string $activeSort = 'latest', string $activeView = 'categories') {
+/**
+ * Universal Clinical Disclaimer Banner displayed prominently on all forum pages
+ */
+function render_forum_disclaimer_banner(string $extraClass = '') {
+    $disclaimer = forum_get_disclaimer();
+?>
+  <!-- Clinical Safety & Educational Disclaimer Ribbon -->
+  <div class="bg-gradient-to-r from-blue-50 via-indigo-50/50 to-slate-50 border border-blue-200/90 rounded-2xl p-4 sm:p-4.5 mb-6 shadow-2xs <?= $extraClass ?>">
+    <div class="flex items-start sm:items-center justify-between gap-3 text-xs sm:text-sm text-slate-800">
+      <div class="flex items-start sm:items-center gap-3 min-w-0">
+        <div class="w-9 h-9 rounded-xl bg-blue-600/10 text-blue-700 flex items-center justify-center shrink-0 text-base mt-0.5 sm:mt-0">
+          <i class="fa-solid fa-shield-heart text-blue-600"></i>
+        </div>
+        <div class="leading-relaxed">
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <span class="inline-block bg-blue-600 text-white text-[10px] font-extrabold px-1.5 py-0.5 rounded-sm uppercase tracking-wider">필독 면책 안내</span>
+            <strong class="text-slate-900 font-bold text-xs sm:text-sm"><?= htmlspecialchars($disclaimer) ?></strong>
+          </div>
+          <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">
+            본 포럼의 모든 질문 및 답변은 비대면 정보 나눔이며 개별 의학적 진단이나 처방을 대신하지 않습니다. 긴급을 요하는 응급 증상은 즉시 911에 연락하십시오.
+          </p>
+        </div>
+      </div>
+      <a href="/ko/about" class="text-xs font-bold text-blue-700 hover:text-blue-900 shrink-0 whitespace-nowrap hidden lg:inline-flex items-center gap-1 bg-white px-2.5 py-1.5 rounded-lg border border-blue-200/60 shadow-2xs">
+        <span>이용 가이드</span>
+        <i class="fa-solid fa-angle-right text-[10px]"></i>
+      </a>
+    </div>
+  </div>
+<?php
+}
+
+function render_forum_sidebar(array $categories, string $activeSpecialty = '', string $activeSort = 'latest', string $activeView = 'categories', string $activeSub = '') {
+    $catInfo = forum_map_specialty_to_category($activeSpecialty);
+    $activeCatId = $catInfo['categoryId'];
+    $subSpecialties = forum_get_sub_specialties();
 ?>
   <!-- Discourse Sidebar Backdrop for Mobile Drawer -->
   <div id="sidebar-backdrop" onclick="toggleForumSidebar()" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-40 hidden md:hidden transition-opacity"></div>
 
   <!-- Discourse Left Sidebar -->
-  <aside id="forum-sidebar" class="sidebar-closed w-64 bg-slate-50/70 border-r border-slate-200/90 shrink-0 overflow-y-auto p-4 z-40 flex flex-col justify-between">
+  <aside id="forum-sidebar" class="sidebar-closed w-68 bg-slate-50/80 border-r border-slate-200/90 shrink-0 overflow-y-auto p-4 z-40 flex flex-col justify-between">
     
     <!-- Mobile Drawer Close Header -->
     <div class="flex md:hidden items-center justify-between pb-3 mb-3 border-b border-slate-200 shrink-0">
       <div class="flex items-center gap-2">
         <img src="/ko/logo-icon.svg" class="w-5 h-5" alt="Logo">
-        <span class="font-bold text-xs text-slate-900">전문 진료과목 &amp; 이벤트</span>
+        <span class="font-bold text-sm text-slate-900">커뮤니티 포럼 메뉴</span>
       </div>
-      <button onclick="toggleForumSidebar()" class="w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100" aria-label="메뉴 닫기">
-        <i class="fa-solid fa-xmark text-sm"></i>
+      <button onclick="toggleForumSidebar()" class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100" aria-label="메뉴 닫기">
+        <i class="fa-solid fa-xmark text-base"></i>
       </button>
     </div>
 
-    <div class="space-y-6">
+    <div class="space-y-5">
       <!-- Main Nav Links -->
-      <div class="space-y-0.5">
+      <div class="space-y-1">
         <a href="/ko/forum?view=categories" 
-           class="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-bold transition-colors <?= ($activeView === 'categories' && empty($activeSpecialty)) ? 'bg-blue-50 text-blue-700' : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900' ?>">
-          <i class="fa-solid fa-house text-sm w-4 text-center <?= ($activeView === 'categories' && empty($activeSpecialty)) ? 'text-blue-600' : 'text-slate-400' ?>"></i>
+           class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-colors <?= ($activeView === 'categories' && empty($activeSpecialty)) ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900' ?>">
+          <i class="fa-solid fa-house text-sm w-4 text-center <?= ($activeView === 'categories' && empty($activeSpecialty)) ? 'text-white' : 'text-slate-400' ?>"></i>
           <span>포럼 홈 (Home)</span>
+        </a>
+
+        <a href="/ko/forum?view=topics" 
+           class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-colors <?= ($activeView === 'topics' && empty($activeSpecialty)) ? 'bg-blue-50 text-blue-700 border border-blue-200/60' : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900' ?>">
+          <i class="fa-solid fa-bolt text-sm w-4 text-center text-amber-500"></i>
+          <span>실시간 최신 글 피드</span>
         </a>
       </div>
 
-      <!-- Categories with Discourse Colored Squares & Events Highlight -->
+      <!-- 5 Core Categories Section -->
       <div>
         <div class="flex items-center justify-between px-3 mb-2 text-slate-400">
-          <span class="text-[11px] font-bold uppercase tracking-wider">진료과목 &amp; 이벤트</span>
-          <span class="text-[10px] bg-slate-200/80 text-slate-600 px-1.5 py-0.2 rounded font-bold"><?= count($specialties) ?></span>
+          <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-500">5대 핵심 포럼 카테고리</span>
+          <span class="text-[10px] bg-slate-200 text-slate-700 px-1.5 py-0.2 rounded-full font-bold">5개 통합</span>
         </div>
         
-        <div class="space-y-0.5">
-          <?php foreach ($specialties as $sp): 
-            $isActive = ($activeSpecialty === $sp['id'] || $activeSpecialty === $sp['slug']);
-            $isEvents = ($sp['id'] === 'events');
+        <div class="space-y-1">
+          <?php foreach ($categories as $cat): 
+            $isCatActive = ($activeCatId === $cat['id'] || $activeSpecialty === $cat['id'] || $activeSpecialty === $cat['slug']);
+            $isEvents = ($cat['id'] === 'announcements' || $cat['id'] === 'events');
+            $isMedical = ($cat['id'] === 'medical_health');
           ?>
-            <a href="/ko/forum?specialty=<?= urlencode($sp['id']) ?>&view=topics" 
-               class="flex items-center justify-between px-3 py-1.5 rounded-lg text-xs transition-colors <?= $isActive ? ($isEvents ? 'bg-rose-600 text-white font-bold shadow-xs' : 'bg-blue-600 text-white font-bold shadow-xs') : ($isEvents ? 'bg-rose-50/80 hover:bg-rose-100/70 text-rose-900 font-bold border border-rose-200/60' : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900 font-medium') ?>"
-               title="<?= htmlspecialchars($sp['name_ko']) ?> (<?= htmlspecialchars($sp['name_en']) ?>)">
-              <div class="flex items-center gap-2.5 truncate">
-                <?php if ($isEvents): ?>
-                  <i class="fa-solid fa-calendar-star text-rose-600 shrink-0 text-xs <?= $isActive ? 'text-white' : '' ?>"></i>
-                  <span class="truncate"><?= htmlspecialchars($sp['name_ko']) ?></span>
-                  <span class="text-[9px] px-1 py-0.2 rounded font-extrabold uppercase <?= $isActive ? 'bg-white/25 text-white' : 'bg-rose-600 text-white' ?>">공식</span>
-                <?php else: ?>
-                  <span class="w-2.5 h-2.5 rounded-xs shrink-0" style="background-color: <?= htmlspecialchars($sp['color']) ?>"></span>
-                  <span class="truncate"><?= htmlspecialchars($sp['name_ko']) ?></span>
-                <?php endif; ?>
-              </div>
-              <span class="text-[10px] px-1.5 py-0.2 rounded font-semibold <?= $isActive ? 'bg-white/20 text-white' : ($isEvents ? 'text-rose-600 bg-rose-100/80' : 'text-slate-400') ?>">
-                <?= (int)($sp['questionCount'] ?? 0) ?>
-              </span>
-            </a>
-          <?php endforeach; ?>
+            <div>
+              <a href="/ko/forum?specialty=<?= urlencode($cat['id']) ?>&view=topics" 
+                 class="flex items-center justify-between px-3 py-2.5 rounded-xl text-xs sm:text-sm transition-all <?= $isCatActive ? ($isEvents ? 'bg-rose-600 text-white font-bold shadow-xs' : 'bg-blue-600 text-white font-bold shadow-xs') : ($isEvents ? 'bg-rose-50/90 hover:bg-rose-100 text-rose-900 font-bold border border-rose-200/70' : 'text-slate-700 hover:bg-slate-100/90 hover:text-slate-900 font-semibold') ?>"
+                 title="<?= htmlspecialchars($cat['name_ko']) ?> (<?= htmlspecialchars($cat['name_en']) ?>)">
+                <div class="flex items-center gap-2.5 truncate">
+                  <i class="fa-solid <?= htmlspecialchars($cat['icon'] ?? 'fa-folder') ?> text-xs w-4 text-center shrink-0 <?= $isCatActive ? 'text-white' : '' ?>" style="<?= !$isCatActive ? 'color:' . htmlspecialchars($cat['color']) : '' ?>"></i>
+                  <span class="truncate"><?= htmlspecialchars($cat['name_ko']) ?></span>
+                  <?php if ($isEvents): ?>
+                    <span class="text-[9px] px-1 py-0.2 rounded font-extrabold uppercase <?= $isCatActive ? 'bg-white/25 text-white' : 'bg-rose-600 text-white' ?>">공식</span>
+                  <?php endif; ?>
+                </div>
+                <span class="text-[11px] px-2 py-0.5 rounded-full font-bold <?= $isCatActive ? 'bg-white/20 text-white' : ($isEvents ? 'text-rose-700 bg-rose-100' : 'text-slate-500 bg-slate-200/70') ?>">
+                  <?= (int)($cat['questionCount'] ?? 0) ?>
+                </span>
+              </a>
 
-          <a href="/ko/forum?view=categories" 
-             class="flex items-center gap-2.5 px-3 py-1.5 text-xs text-slate-500 hover:text-blue-600 transition-colors font-semibold mt-1">
-            <i class="fa-solid fa-list-ul text-[11px] text-slate-400"></i>
-            <span>전체 카테고리 (All Categories)</span>
-          </a>
+              <!-- Sub-list nested for Medical Health when active -->
+              <?php if ($isMedical && $isCatActive): ?>
+                <div class="mt-1.5 ml-4 pl-2.5 border-l-2 border-blue-200 space-y-0.5">
+                  <div class="text-[10px] font-bold text-slate-400 uppercase py-1">진료과목 서브 리스트</div>
+                  <a href="/ko/forum?specialty=medical_health&view=topics" 
+                     class="block px-2 py-1 rounded text-xs <?= empty($activeSub) ? 'text-blue-700 font-bold bg-blue-50' : 'text-slate-600 hover:text-blue-600' ?>">
+                    • 전체 의학 질문 보기
+                  </a>
+                  <?php foreach (array_slice($subSpecialties, 0, 8) as $sub): 
+                    $isSubActive = ($activeSub === $sub['id'] || $activeSpecialty === $sub['id']);
+                  ?>
+                    <a href="/ko/forum?specialty=medical_health&sub=<?= urlencode($sub['id']) ?>&view=topics" 
+                       class="flex items-center justify-between px-2 py-1 rounded text-xs <?= $isSubActive ? 'text-blue-700 font-bold bg-blue-50' : 'text-slate-600 hover:text-blue-600' ?>">
+                      <span class="truncate"><?= htmlspecialchars($sub['name_ko']) ?></span>
+                      <span class="text-[10px] text-slate-400"><?= (int)($sub['questionCount'] ?? 0) ?></span>
+                    </a>
+                  <?php endforeach; ?>
+                  <a href="/ko/forum?specialty=medical_health&view=topics" class="block px-2 py-1 text-[11px] text-blue-600 font-bold hover:underline">
+                    + 19개 진료과 전체보기 →
+                  </a>
+                </div>
+              <?php endif; ?>
+            </div>
+          <?php endforeach; ?>
         </div>
       </div>
 
-      <!-- Discourse Tags Section -->
+      <!-- Quick Helpful Senior Tags -->
       <div>
         <div class="flex items-center justify-between px-3 mb-2 text-slate-400">
-          <span class="text-[11px] font-bold uppercase tracking-wider">주요 건강 태그 (Tags)</span>
+          <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500">인기 검색 키워드</span>
         </div>
-        <div class="flex flex-wrap gap-1 px-2">
+        <div class="flex flex-wrap gap-1.5 px-1">
           <?php 
-          $tags = ['혈압약', '당뇨전단계', '예방접종', '경도인지장애', '소아과', '응급실', '콜레스테롤', '영상의학'];
+          $tags = ['메디케어', '병원비할인', '한인의사추천', '혈압약', '당뇨관리', '치매검사', '정형외과', '무료진료'];
           foreach ($tags as $tag):
           ?>
             <a href="/ko/forum?q=<?= urlencode($tag) ?>&view=topics" 
-               class="text-[11px] px-2 py-0.5 rounded bg-white hover:bg-blue-50 text-slate-600 hover:text-blue-700 border border-slate-200 transition-colors">
+               class="text-xs px-2.5 py-1 rounded-lg bg-white hover:bg-blue-50 text-slate-600 hover:text-blue-700 border border-slate-200 transition-colors shadow-2xs">
               #<?= htmlspecialchars($tag) ?>
             </a>
           <?php endforeach; ?>
@@ -420,23 +478,31 @@ function render_forum_sidebar(array $specialties, string $activeSpecialty = '', 
     </div>
 
     <!-- Bottom Links (About / CMS) -->
-    <div class="pt-4 mt-6 border-t border-slate-200 text-[11px] text-slate-400 space-y-1.5">
-      <div class="flex items-center justify-between px-3">
-        <a href="/ko/about" class="hover:text-slate-600 transition-colors flex items-center gap-1.5">
-          <i class="fa-solid fa-circle-info text-[10px]"></i>
+    <div class="pt-4 mt-6 border-t border-slate-200 text-xs text-slate-400 space-y-2">
+      <div class="flex items-center justify-between px-2">
+        <a href="/ko/about" class="hover:text-slate-600 transition-colors flex items-center gap-1.5 font-medium">
+          <i class="fa-solid fa-circle-info text-xs"></i>
           <span>포럼 안내 &amp; 면책조항</span>
         </a>
         <a href="/ko/admin2/" class="hover:text-blue-600 transition-colors font-bold flex items-center gap-1">
-          <i class="fa-solid fa-lock text-[9px]"></i>
-          <span>관리자 CMS</span>
+          <i class="fa-solid fa-lock text-[10px]"></i>
+          <span>CMS 관제</span>
         </a>
       </div>
-      <p class="px-3 text-[10px] text-slate-400 leading-tight">
+      <p class="px-2 text-[11px] text-slate-400 leading-tight">
         © 2026 NJ Healthcare Access Portal
       </p>
     </div>
 
   </aside>
+
+  <!-- Mobile Floating Senior-Friendly Write Button -->
+  <a href="/ko/forum/ask<?= ($activeSpecialty && ($activeSpecialty !== 'events' && $activeSpecialty !== 'announcements')) ? '?specialty=' . urlencode($activeSpecialty) : '' ?>" 
+     class="fixed bottom-6 right-5 sm:hidden z-40 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-extrabold text-sm px-4.5 py-3 rounded-full shadow-2xl flex items-center gap-2 border-2 border-white transition-transform"
+     title="새 질문/정보 등록하기" aria-label="새 질문 작성하기">
+    <i class="fa-solid fa-pen-to-square text-base"></i>
+    <span>질문하기</span>
+  </a>
 <?php
 }
 

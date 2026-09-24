@@ -32,13 +32,35 @@ function get_current_forum_user() {
 }
 
 // -------------------------------------------------------------
+// -------------------------------------------------------------
 // GET ACTIONS (Public read-only, no authentication required)
 // -------------------------------------------------------------
 if ($method === 'GET') {
-    // 1. Get all 15 medical specialties
+    // 1. Get all 5 categories & 19 sub-specialties
     if ($action === 'categories' || $action === 'specialties') {
-        $specialties = forum_get_specialties();
-        echo json_encode(['success' => true, 'data' => $specialties]);
+        $categories = forum_get_categories();
+        $subSpecialties = forum_get_sub_specialties();
+        $disclaimer = forum_get_disclaimer();
+        echo json_encode([
+            'success' => true,
+            'data' => $categories,
+            'categories' => $categories,
+            'sub_specialties' => $subSpecialties,
+            'disclaimer' => $disclaimer
+        ]);
+        exit;
+    }
+
+    // 1.5 Get sub-specialties list directly
+    if ($action === 'sub_specialties') {
+        $subs = forum_get_sub_specialties();
+        echo json_encode(['success' => true, 'data' => $subs]);
+        exit;
+    }
+
+    // 1.6 Get disclaimer
+    if ($action === 'disclaimer') {
+        echo json_encode(['success' => true, 'disclaimer' => forum_get_disclaimer()]);
         exit;
     }
 
@@ -67,19 +89,21 @@ if ($method === 'GET') {
             }
         }
 
-        echo json_encode(['success' => true, 'data' => $thread]);
+        echo json_encode(['success' => true, 'data' => $thread, 'disclaimer' => forum_get_disclaimer()]);
         exit;
     }
 
     // 3. Get questions list (default action)
-    $specialty = trim($_GET['specialty'] ?? '');
+    $specialty = trim($_GET['specialty'] ?? ($_GET['category'] ?? ''));
+    $subSpecialty = trim($_GET['sub'] ?? ($_GET['sub_specialty'] ?? ($_GET['subSpecialty'] ?? '')));
     $sort = trim($_GET['sort'] ?? 'latest');
     $search = trim($_GET['q'] ?? ($_GET['search'] ?? ''));
 
-    $questions = forum_get_questions($specialty, $sort, $search, 'active');
+    $questions = forum_get_questions($specialty, $sort, $search, 'active', $subSpecialty);
     echo json_encode([
         'success' => true,
         'count' => count($questions),
+        'disclaimer' => forum_get_disclaimer(),
         'data' => $questions
     ]);
     exit;
@@ -141,15 +165,16 @@ if ($method === 'POST') {
     if ($action === 'ask' || $action === 'create_thread') {
         $title = trim($input['title'] ?? '');
         $body = trim($input['body'] ?? '');
-        $specialtyId = trim($input['specialty_id'] ?? ($input['specialtyId'] ?? 'general-internal'));
+        $specialtyId = trim($input['specialty_id'] ?? ($input['specialtyId'] ?? ($input['category_id'] ?? 'general_community')));
+        $subSpecialtyId = trim($input['sub_specialty_id'] ?? ($input['subSpecialtyId'] ?? '')) ?: null;
 
-        // Admin-only gate for "events" category
+        // Admin-only gate for "announcements" / "events" category
         $isAdmin = !empty($_SESSION['cms_logged_in']) || !empty($_SESSION['admin_logged_in']);
-        if ($specialtyId === 'events' && !$isAdmin) {
+        if (($specialtyId === 'announcements' || $specialtyId === 'events') && !$isAdmin) {
             http_response_code(403);
             echo json_encode([
                 'success' => false,
-                'error' => '이벤트 섹션은 관리자(HAC) 전용 등록 공간입니다. 관리자 CMS(/admin2)에서 등록해주세요.'
+                'error' => '공지 및 건강 강좌 섹션은 관리자(HAC) 전용 등록 공간입니다. 관리자 CMS(/admin2)에서 등록해주세요.'
             ]);
             exit;
         }
@@ -166,12 +191,6 @@ if ($method === 'POST') {
             exit;
         }
 
-        // Validate specialty ID
-        $validSpecialties = array_column(forum_get_default_specialties(), 'id');
-        if (!in_array($specialtyId, $validSpecialties)) {
-            $specialtyId = 'internal_medicine';
-        }
-
         // Parse images
         $images = $input['images'] ?? [];
         if (is_string($images)) {
@@ -180,10 +199,10 @@ if ($method === 'POST') {
         }
 
         $authorName = trim($input['author_name'] ?? ($input['name'] ?? ($input['nickname'] ?? '')));
-        $question = forum_add_question($title, $body, $specialtyId, $user, $authorName ?: null, $images);
+        $question = forum_add_question($title, $body, $specialtyId, $user, $authorName ?: null, $images, $subSpecialtyId);
         echo json_encode([
             'success' => true,
-            'message' => '의료 질문/정보 나눔 게시물이 성공적으로 등록되었습니다.',
+            'message' => '질문/정보 나눔 게시물이 성공적으로 등록되었습니다.',
             'data' => $question
         ]);
         exit;

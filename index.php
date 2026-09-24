@@ -1550,14 +1550,14 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
               </div>
             </div>
 
-            <!-- Specialties Quick Navigation Bar (Bottom of Section) -->
+            <!-- 5 Core Categories Quick Navigation Bar (Bottom of Section) -->
             <div style="padding-top: 22px !important;">
               <div class="flex items-center justify-between mb-2.5">
                 <span class="text-[11px] font-bold uppercase tracking-wider flex items-center gap-1.5" style="color: #475569 !important;">
-                  <i class="fa-solid fa-stethoscope text-blue-600" style="color: #2563eb !important;"></i>
-                  <span>전문 진료과 및 시니어 케어 바로가기</span>
+                  <i class="fa-solid fa-layer-group text-blue-600" style="color: #2563eb !important;"></i>
+                  <span>뉴저지 5대 핵심 헬스케어 포럼 바로가기</span>
                 </span>
-                <span class="text-[11px] font-medium" style="color: #64748b !important;">전체 <?= count($forumSpecialties) ?>개 분야</span>
+                <span class="text-[11px] font-medium" style="color: #64748b !important;">5대 핵심 오픈 게시판</span>
               </div>
               <div class="flex flex-wrap items-center gap-2 text-xs font-bold">
                 <?php foreach ($forumSpecialties as $fsp): ?>
