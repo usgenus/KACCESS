@@ -12,20 +12,22 @@
   var KAKAO_URL = 'http://pf.kakao.com/_hdxmxaX/chat';
   var KAKAO_ICON = '/kakaotalk-icon.png';
 
-  // Instant Senior Mode class application on initial load (Desktop default: 1단계, Mobile default: 0단계)
+  // Instant Senior Mode class application on initial load (Default: 0단계 - 표준 크기)
   (function applyImmediateSeniorMode() {
     try {
       var userChosen = sessionStorage.getItem('njap_senior_user_chosen') || localStorage.getItem('njap_senior_user_chosen');
-      var isDesktop = typeof window !== 'undefined' && window.innerWidth >= 768;
-      var s;
+      var s = 0;
       if (userChosen === '1') {
         var raw = sessionStorage.getItem('njap_senior_mode') || localStorage.getItem('njap_senior_mode');
         s = parseInt(raw, 10);
         if (isNaN(s) || (s !== 1 && s !== 2)) s = 0;
       } else {
-        // Unconfigured default: Desktop is 1단계 (+18%), mobile is standard (0)
-        s = isDesktop ? 1 : 0;
-        sessionStorage.setItem('njap_senior_mode', String(s));
+        // Unconfigured default: Standard size (0단계)
+        s = 0;
+        try {
+          sessionStorage.setItem('njap_senior_mode', '0');
+          localStorage.setItem('njap_senior_mode', '0');
+        } catch(e) {}
       }
       if (s === 1) {
         document.documentElement.classList.add('senior-mode-1');
@@ -1034,15 +1036,14 @@
   function getSeniorModeStep() {
     try {
       var userChosen = sessionStorage.getItem('njap_senior_user_chosen') || localStorage.getItem('njap_senior_user_chosen');
-      var isDesktop = typeof window !== 'undefined' && window.innerWidth >= 768;
       if (userChosen !== '1') {
-        return isDesktop ? 1 : 0;
+        return 0;
       }
       var val = sessionStorage.getItem('njap_senior_mode') || localStorage.getItem('njap_senior_mode');
       var s = parseInt(val, 10);
       return (s === 1 || s === 2) ? s : 0;
     } catch(e) {
-      return (typeof window !== 'undefined' && window.innerWidth >= 768) ? 1 : 0;
+      return 0;
     }
   }
 
@@ -1152,7 +1153,7 @@
     };
   }
 
-  // When window resizes and user hasn't explicitly chosen a mode, adapt between desktop (1단계) and mobile (0단계)
+  // When window resizes and user hasn't explicitly chosen a mode, default remains 0
   var seniorResizeTimer = null;
   window.addEventListener('resize', function() {
     if (seniorResizeTimer) clearTimeout(seniorResizeTimer);
@@ -1160,8 +1161,7 @@
       try {
         var userChosen = sessionStorage.getItem('njap_senior_user_chosen') || localStorage.getItem('njap_senior_user_chosen');
         if (userChosen !== '1') {
-          var step = (window.innerWidth >= 768) ? 1 : 0;
-          applySeniorMode(step, false);
+          applySeniorMode(0, false);
         }
       } catch(e) {}
     }, 150);
