@@ -503,21 +503,21 @@ $seoDesc = $currentCategory
               <?php endif; ?>
             </div>
 
-            <!-- Quick Action Box for Seniors -->
-            <div class="bg-gradient-to-br from-blue-900 to-indigo-950 rounded-2xl p-5 text-white shadow-sm space-y-3">
-              <div class="flex items-center gap-2 text-blue-300 text-xs font-bold uppercase tracking-wider">
-                <i class="fa-solid fa-circle-info"></i>
-                <span>처음 이용하시나요?</span>
+            <!-- Quick Action Box for Seniors (High-contrast, Senior-friendly) -->
+            <div class="rounded-2xl p-5 shadow-xs space-y-3 border" style="background-color: #eff6ff !important; border: 1.5px solid #bfdbfe !important;">
+              <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider" style="color: #1d4ed8 !important;">
+                <i class="fa-solid fa-circle-info text-blue-600"></i>
+                <span style="color: #1d4ed8 !important;">처음 이용하시나요?</span>
               </div>
-              <h4 class="text-sm sm:text-base font-extrabold leading-snug">
-                뉴저지 거주 한인 동포를 위한<br/>안전한 헬스케어 상담 & 정보 나눔
+              <h4 class="text-base sm:text-lg font-black leading-snug" style="color: #0f172a !important;">
+                뉴저지 거주 한인 동포를 위한<br/>안전한 헬스케어 상담 &amp; 정보 나눔
               </h4>
-              <p class="text-xs text-blue-200/90 leading-relaxed">
+              <p class="text-xs sm:text-sm leading-relaxed" style="color: #334155 !important;">
                 복잡한 미국 의료비, 병원 선택, 보험 혜택 고민을 익명으로 안전하게 나누고 공인 한인 전문의의 조언을 받아보세요.
               </p>
-              <a href="/ko/forum/ask" class="inline-flex items-center justify-center gap-2 w-full py-3 bg-blue-500 hover:bg-blue-400 text-white rounded-xl text-xs sm:text-sm font-bold transition-all shadow-md touch-target">
+              <a href="/ko/forum/ask" class="inline-flex items-center justify-center gap-2 w-full py-3 text-white rounded-xl text-xs sm:text-sm font-bold transition-all shadow-sm touch-target" style="background-color: #2563eb !important; color: #ffffff !important;">
                 <i class="fa-solid fa-pen-to-square"></i>
-                <span>새 질문 또는 후기 남기기</span>
+                <span style="color: #ffffff !important;">새 질문 또는 후기 남기기</span>
               </a>
             </div>
 
