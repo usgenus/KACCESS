@@ -754,6 +754,6 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
     </div>
   </div>
 
-  <script src="/ko/admin2/admin2.js?v=2.2.0"></script>
+  <script src="/ko/admin2/admin2.js?v=2.3.0"></script>
 </body>
 </html>
