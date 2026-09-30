@@ -512,86 +512,113 @@
   // 3. MOBILE MENU — matching desktop list with no sub-menus
   // ─────────────────────────────────────────────────────────────
   function buildAccordionMenuHTML(curPath) {
-    var isHome = curPath === '/' || curPath === '';
-    var isBlog = curPath.indexOf('/blog') === 0;
-    var isForum = curPath.indexOf('/forum') === 0;
-    var isSenior = curPath.indexOf('/senior-care') === 0;
-    var isMedicare = curPath.indexOf('/medicare') === 0;
-    var isTool = curPath.indexOf('/tool') === 0 || curPath.indexOf('/matcher') === 0 || curPath.indexOf('/calculator') === 0 || curPath.indexOf('/dictionary') === 0;
-    var isAbout = curPath.indexOf('/about') === 0;
+    var isEn = (curPath.indexOf('/en') === 0) || (document.documentElement && document.documentElement.lang === 'en');
+    var base = isEn ? '/en' : '/ko';
+
+    var cleanPath = curPath.replace(/^\/(en|ko)/, '') || '/';
+    var isHome = cleanPath === '/' || cleanPath === '';
+    var isBlog = cleanPath.indexOf('/blog') === 0;
+    var isForum = cleanPath.indexOf('/forum') === 0;
+    var isSenior = cleanPath.indexOf('/senior-care') === 0;
+    var isMedicare = cleanPath.indexOf('/medicare') === 0;
+    var isTool = cleanPath.indexOf('/tool') === 0 || cleanPath.indexOf('/matcher') === 0 || cleanPath.indexOf('/calculator') === 0 || cleanPath.indexOf('/dictionary') === 0;
+    var isAbout = cleanPath.indexOf('/about') === 0;
+
+    var langRowHTML = isEn ? [
+      '<!-- Language Switcher in Mobile Menu -->',
+      '<div class="flex items-center justify-between py-2.5 px-3.5 mb-1.5 rounded-xl bg-blue-50/60 border border-blue-100">',
+      '  <div class="flex items-center gap-2">',
+      '    <span class="text-xs font-bold text-slate-700">Language / 언어</span>',
+      '  </div>',
+      '  <button type="button" class="notranslate" translate="no" onclick="location.href=\'https://njaccessportal.com/ko/\';" style="padding:4px 12px;font-size:12px;font-weight:700;border-radius:999px;border:1.5px solid #2563eb;background:#2563eb;color:#ffffff;display:inline-flex;align-items:center;gap:4px;cursor:pointer;">',
+      '    <span>🌐</span> <span>한국어 (KR)</span>',
+      '  </button>',
+      '</div>'
+    ].join('\n') : [
+      '<!-- Language Switcher in Mobile Menu -->',
+      '<div class="flex items-center justify-between py-2.5 px-3.5 mb-1.5 rounded-xl bg-blue-50/60 border border-blue-100">',
+      '  <div class="flex items-center gap-2">',
+      '    <span class="text-xs font-bold text-slate-700">언어 / Language</span>',
+      '  </div>',
+      '  <button type="button" class="notranslate" translate="no" onclick="if(window.toggleTranslation){window.toggleTranslation();}else{location.href=\'/en/\';}" style="padding:4px 12px;font-size:12px;font-weight:700;border-radius:999px;border:1.5px solid #2563eb;background:#2563eb;color:#ffffff;display:inline-flex;align-items:center;gap:4px;cursor:pointer;">',
+      '    <span>🌐</span> <span>English</span>',
+      '  </button>',
+      '</div>'
+    ].join('\n');
 
     return [
-      '<!-- 1. 홈 -->',
-      '<a href="/ko/" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isHome ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
+      langRowHTML,
+      '<!-- 1. Home -->',
+      '<a href="' + base + '/" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isHome ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
       '  <div class="flex items-center gap-3">',
       '    <svg class="w-5 h-5 ' + (isHome ? 'text-brand-blue' : 'text-slate-400') + ' shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>',
-      '    <span class="text-[15px]">홈</span>',
+      '    <span class="text-[15px]">' + (isEn ? 'Home' : '홈') + '</span>',
       '  </div>',
       '  <svg class="w-4 h-4 ' + (isHome ? 'text-brand-blue' : 'text-slate-300') + '" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>',
       '</a>',
-
-      '<!-- 2. 뉴스 -->',
-      '<a href="/ko/blog" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isBlog ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
+      '',
+      '<!-- 2. News -->',
+      '<a href="' + base + '/blog" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isBlog ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
       '  <div class="flex items-center gap-3">',
       '    <svg class="w-5 h-5 ' + (isBlog ? 'text-brand-blue' : 'text-slate-400') + ' shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>',
-      '    <span class="text-[15px]">뉴스</span>',
+      '    <span class="text-[15px]">' + (isEn ? 'News' : '뉴스') + '</span>',
       '  </div>',
       '  <svg class="w-4 h-4 ' + (isBlog ? 'text-brand-blue' : 'text-slate-300') + '" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>',
       '</a>',
-
-      '<!-- 2.5 커뮤니티 포럼 -->',
-      '<a href="/ko/forum" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isForum ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
+      '',
+      '<!-- 2.5 Community Forum -->',
+      '<a href="' + base + '/forum" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isForum ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
       '  <div class="flex items-center gap-3">',
       '    <svg class="w-5 h-5 ' + (isForum ? 'text-brand-blue' : 'text-slate-400') + ' shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>',
-      '    <span class="text-[15px]">커뮤니티 포럼</span>',
+      '    <span class="text-[15px]">' + (isEn ? 'Community Forum' : '커뮤니티 포럼') + '</span>',
       '  </div>',
       '  <svg class="w-4 h-4 ' + (isForum ? 'text-brand-blue' : 'text-slate-300') + '" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>',
       '</a>',
-
-      '<!-- 3. 시니어 케어 -->',
-      '<a href="/ko/senior-care" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isSenior ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
+      '',
+      '<!-- 3. Senior Care -->',
+      '<a href="' + base + '/senior-care" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isSenior ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
       '  <div class="flex items-center gap-3">',
       '    <svg class="w-5 h-5 ' + (isSenior ? 'text-brand-blue' : 'text-slate-400') + ' shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>',
-      '    <span class="text-[15px]">시니어 케어</span>',
+      '    <span class="text-[15px]">' + (isEn ? 'Senior Care' : '시니어 케어') + '</span>',
       '  </div>',
       '  <svg class="w-4 h-4 ' + (isSenior ? 'text-brand-blue' : 'text-slate-300') + '" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>',
       '</a>',
-
-      '<!-- 4. 메디케어 & ACA -->',
-      '<a href="/ko/medicare" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isMedicare ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
+      '',
+      '<!-- 4. Medicare & ACA -->',
+      '<a href="' + base + '/medicare" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isMedicare ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
       '  <div class="flex items-center gap-3">',
       '    <svg class="w-5 h-5 ' + (isMedicare ? 'text-brand-blue' : 'text-slate-400') + ' shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>',
-      '    <span class="text-[15px]">메디케어 &amp; ACA</span>',
+      '    <span class="text-[15px]">' + (isEn ? 'Medicare & ACA' : '메디케어 & ACA') + '</span>',
       '  </div>',
       '  <svg class="w-4 h-4 ' + (isMedicare ? 'text-brand-blue' : 'text-slate-300') + '" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>',
       '</a>',
-
-      '<!-- 5. 환자도우미 -->',
-      '<a href="/ko/tool" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isTool ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
+      '',
+      '<!-- 5. Patient Tools -->',
+      '<a href="' + base + '/tool" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isTool ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
       '  <div class="flex items-center gap-3">',
       '    <svg class="w-5 h-5 ' + (isTool ? 'text-brand-blue' : 'text-slate-400') + ' shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>',
-      '    <span class="text-[15px]">환자도우미</span>',
+      '    <span class="text-[15px]">' + (isEn ? 'Patient Tools' : '환자도우미') + '</span>',
       '  </div>',
       '  <svg class="w-4 h-4 ' + (isTool ? 'text-brand-blue' : 'text-slate-300') + '" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>',
       '</a>',
-
-      '<!-- 6. 소개 -->',
-      '<a href="/ko/about" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isAbout ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
+      '',
+      '<!-- 6. About -->',
+      '<a href="' + base + '/about" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isAbout ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
       '  <div class="flex items-center gap-3">',
       '    <svg class="w-5 h-5 ' + (isAbout ? 'text-brand-blue' : 'text-slate-400') + ' shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
-      '    <span class="text-[15px]">소개</span>',
+      '    <span class="text-[15px]">' + (isEn ? 'About' : '소개') + '</span>',
       '  </div>',
       '  <svg class="w-4 h-4 ' + (isAbout ? 'text-brand-blue' : 'text-slate-300') + '" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>',
       '</a>',
-
-      '<!-- 하단 CTA: 카카오톡 1:1 상담 바로가기 -->',
+      '',
+      '<!-- Bottom CTA: KakaoTalk Consultation -->',
       '<div class="pt-2 pb-1">',
       '  <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3.5 bg-[#FEE500] hover:bg-[#FDD835] active:bg-[#FBC02D] text-[#191919] rounded-xl font-bold text-sm shadow-xs transition-all cursor-pointer">',
       '    <div class="flex items-center gap-2.5">',
       '      <img src="/ko/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" />',
       '      <div class="flex flex-col text-left">',
-      '        <span class="text-sm font-bold leading-tight">카카오톡 1:1 상담 바로가기</span>',
-      '        <span class="text-[11px] font-medium text-black/70">의료 복지 및 시니어 케어 실시간 문의</span>',
+      '        <span class="text-sm font-bold leading-tight">' + (isEn ? '1:1 Consultation (KakaoTalk)' : '카카오톡 1:1 상담 바로가기') + '</span>',
+      '        <span class="text-[11px] font-medium text-black/70">' + (isEn ? 'Healthcare Navigation & Senior Care Support' : '의료 복지 및 시니어 케어 실시간 문의') + '</span>',
       '      </div>',
       '    </div>',
       '    <svg class="w-4 h-4 text-black/60 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>',

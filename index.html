@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>뉴저지 한인 의료 접근센터 &amp; 주요 병원 네트워크 | Healthcare Access Portal</title>
-  <meta name="description" content="뉴저지 한인을 위한 무료 종합 의료 접근 및 한인 아웃리치 포털. 잉글우드 병원(Englewood Health), 홀리네임 병원(Holy Name Medical Center), 해켄색 메리디안(HUMC), 더 밸리 병원(The Valley Hospital), 파스카크 밸리, RWJ바나바스 헬스 등 뉴저지 주요 의료 기관 정보와 한인 통역, 메디케어, ACA 건강보험, 커뮤니티 포럼 제공." />
-  <meta name="keywords" content="뉴저지 한인 병원, 잉글우드 병원, Englewood Health, Holy Name Medical Center, 홀리네임 병원, 해켄색 메리디안, Hackensack University Medical Center, 밸리 병원, The Valley Hospital, 파스카크 밸리, RWJBarnabas, 버겐카운티 병원, 한국어 통역 병원, 메디케어, ACA 건강보험, 뉴저지 의료접근센터" />
+  <title>뉴저지 한인 의료 접근센터 | Healthcare Access Portal</title>
+  <meta name="description" content="뉴저지 한인을 위한 무료 종합 의료 접근 및 한인 아웃리치 포털. 메디케어, ACA 건강보험, 환자도우미 및 전문의 커뮤니티 포럼." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
@@ -718,202 +717,6 @@
         font-size: 11px;
       }
     }
-
-    /* ============================================================
-       LOGO ANIMATION SYSTEM
-       ============================================================ */
-
-    /* Outer glow ring that pulses as logo assembles */
-    @keyframes logoGlowRing {
-      0%   { opacity: 0; transform: scale(0.6); }
-      30%  { opacity: 1; transform: scale(1.08); }
-      60%  { opacity: 0.7; transform: scale(1.0); }
-      100% { opacity: 0; transform: scale(1.4); }
-    }
-
-    /* SVG stroke draw-on (icon frame, door, details) */
-    @keyframes strokeDraw {
-      from { stroke-dashoffset: var(--dash-len, 400); }
-      to   { stroke-dashoffset: 0; }
-    }
-
-    /* Glow pulse after stroke draws in */
-    @keyframes strokeGlow {
-      0%   { filter: drop-shadow(0 0 0px rgba(0, 242, 254, 0)); }
-      40%  { filter: drop-shadow(0 0 14px rgba(0, 242, 254, 0.95)) drop-shadow(0 0 28px rgba(79, 172, 254, 0.6)); }
-      100% { filter: drop-shadow(0 0 4px rgba(0, 242, 254, 0.25)); }
-    }
-
-    /* Red keyhole/key stroke draw */
-    @keyframes redStrokeDraw {
-      from { stroke-dashoffset: var(--dash-len, 200); }
-      to   { stroke-dashoffset: 0; }
-    }
-
-    @keyframes redStrokeGlow {
-      0%   { filter: drop-shadow(0 0 0px rgba(239, 68, 68, 0)); }
-      50%  { filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.9)) drop-shadow(0 0 24px rgba(239, 68, 68, 0.4)); }
-      100% { filter: drop-shadow(0 0 3px rgba(239, 68, 68, 0.2)); }
-    }
-
-    /* NJAP text stamp */
-    @keyframes textStamp {
-      0%   { opacity: 0; transform: scale(1.4); letter-spacing: 8px; }
-      60%  { opacity: 1; transform: scale(1.0); letter-spacing: 1.5px; }
-      100% { opacity: 1; transform: scale(1.0); letter-spacing: 1.5px; }
-    }
-
-    /* Shimmer scan wipe for typography */
-    @keyframes shimmerWipe {
-      0%   { clip-path: inset(0 100% 0 0); opacity: 0; }
-      10%  { opacity: 1; }
-      100% { clip-path: inset(0 0% 0 0); opacity: 1; }
-    }
-
-    /* Shimmer light sweep overlay */
-    @keyframes shimmerSweep {
-      0%   { left: -100%; }
-      100% { left: 200%; }
-    }
-
-    /* Sub-text fade */
-    @keyframes subFadeUp {
-      from { opacity: 0; transform: translateY(6px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Full logo wrapper entrance */
-    @keyframes logoEnter {
-      from { opacity: 0; transform: translateY(-10px) scale(0.92); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    /* Ambient scan line across the whole logo */
-    @keyframes scanLine {
-      0%   { top: -4px; opacity: 0; }
-      5%   { opacity: 1; }
-      95%  { opacity: 1; }
-      100% { top: calc(100% + 4px); opacity: 0; }
-    }
-
-    /* Final settle glow on the full logo after everything assembles */
-    @keyframes logoSettle {
-      0%   { filter: drop-shadow(0 0 20px rgba(0, 242, 254, 0.8)); }
-      100% { filter: drop-shadow(0 0 3px rgba(0, 242, 254, 0.15)); }
-    }
-
-    /* ---- Container ---- */
-    .logo-anim-wrap {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 22px;
-      animation: logoEnter 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
-    }
-
-    /* Outer ambient ring */
-    .logo-glow-ring {
-      position: absolute;
-      inset: -24px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(0, 242, 254, 0.18) 0%, transparent 70%);
-      animation: logoGlowRing 2.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
-      pointer-events: none;
-    }
-
-    /* Scan line */
-    .logo-scan-line {
-      position: absolute;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(0, 242, 254, 0.9), rgba(79, 172, 254, 0.9), transparent);
-      box-shadow: 0 0 12px rgba(0, 242, 254, 0.8);
-      animation: scanLine 1.6s cubic-bezier(0.4, 0, 0.6, 1) 0.4s both;
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    /* SVG logo container */
-    .logo-svg-wrap {
-      position: relative;
-      width: 280px;
-      height: auto;
-      animation: logoSettle 1.2s ease-out 2.4s both;
-      overflow: visible;
-    }
-
-    @media (max-width: 480px) {
-      .logo-svg-wrap { width: 220px; }
-    }
-
-    /* ---- Icon group strokes (white door/frame parts) ---- */
-    .logo-icon-white-stroke {
-      stroke-dasharray: var(--dash-len, 400);
-      stroke-dashoffset: var(--dash-len, 400);
-      animation:
-        strokeDraw 0.9s cubic-bezier(0.4, 0, 0.2, 1) var(--delay, 0.5s) both,
-        strokeGlow 1.0s ease-out calc(var(--delay, 0.5s) + 0.8s) both;
-    }
-
-    /* ---- Red keyhole / key strokes ---- */
-    .logo-icon-red-stroke {
-      stroke-dasharray: var(--dash-len, 200);
-      stroke-dashoffset: var(--dash-len, 200);
-      animation:
-        redStrokeDraw 0.7s cubic-bezier(0.4, 0, 0.2, 1) var(--delay, 1.2s) both,
-        redStrokeGlow 1.0s ease-out calc(var(--delay, 1.2s) + 0.6s) both;
-    }
-
-    /* ---- NJAP stamp text ---- */
-    .logo-icon-njap {
-      opacity: 0;
-      animation: textStamp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 1.7s both;
-    }
-
-    /* ---- Main typography: Shimmer wipe ---- */
-    .logo-type-main-wrap {
-      position: relative;
-      overflow: hidden;
-    }
-    .logo-type-main {
-      animation: shimmerWipe 0.8s cubic-bezier(0.22, 1, 0.36, 1) 1.85s both;
-    }
-    .logo-type-shimmer {
-      position: absolute;
-      top: 0; bottom: 0;
-      width: 60px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent);
-      animation: shimmerSweep 0.7s ease-out 2.0s both;
-      pointer-events: none;
-      z-index: 3;
-    }
-
-    /* ---- Sub-text fade ---- */
-    .logo-type-sub {
-      animation: subFadeUp 0.6s ease-out 2.3s both;
-    }
-  </style>
-  <script>
-    (function() {
-      try {
-        var userChosen = sessionStorage.getItem('njap_senior_user_chosen') || localStorage.getItem('njap_senior_user_chosen');
-        var s = 0;
-        if (userChosen === '1') {
-          var val = sessionStorage.getItem('njap_senior_mode') || localStorage.getItem('njap_senior_mode');
-          s = parseInt(val, 10);
-        }
-        if (s === 1) document.documentElement.classList.add('senior-mode-1');
-        else if (s === 2) document.documentElement.classList.add('senior-mode-2');
-      } catch(e) {}
-    })();
-  </script>
-  <style id="njap-senior-mode-base-css">
-    html.senior-mode-1 { font-size: 118% !important; }
-    html.senior-mode-2 { font-size: 135% !important; }
-    html.senior-mode-1 .header-spacer, html.senior-mode-1 .h-\[109px\], html.senior-mode-1 #header-spacer { height: 120px !important; min-height: 120px !important; }
-    html.senior-mode-2 .header-spacer, html.senior-mode-2 .h-\[109px\], html.senior-mode-2 #header-spacer { height: 132px !important; min-height: 132px !important; }
   </style>
 </head>
 <body>
@@ -921,97 +724,8 @@
   <!-- Initial Cinematic Intro Start Overlay (Korean & English) -->
   <div class="intro-start-overlay" id="introStartOverlay">
     <div class="intro-start-modal">
-
-      <!-- =========================================================
-           ANIMATED LOGO — draws itself on page open, then stays as PNG
-           ========================================================= -->
-      <div class="logo-anim-wrap" aria-label="Healthcare Access Portal 로고">
-        <!-- Ambient glow ring -->
-        <div class="logo-glow-ring"></div>
-        <!-- Scan line effect -->
-        <div class="logo-scan-line"></div>
-
-        <!-- Inline SVG so we can animate individual strokes -->
-        <svg class="logo-svg-wrap" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 60" fill="none" role="img" aria-label="NJ Healthcare Access Portal Logo">
-
-          <!-- === ICON MARK: Door + Key === -->
-          <g transform="translate(4, 2) scale(0.56)" stroke-linecap="round" stroke-linejoin="round">
-
-            <!-- Left margin line -->
-            <line class="logo-icon-white-stroke"
-              style="--dash-len:80px; --delay:0.45s;"
-              x1="20" y1="12" x2="20" y2="88"
-              stroke="#FFFFFF" stroke-width="3.5" />
-
-            <!-- Outer Door Frame -->
-            <rect class="logo-icon-white-stroke"
-              style="--dash-len:270px; --delay:0.55s;"
-              x="25" y="12" width="55" height="76" rx="2"
-              stroke="#FFFFFF" stroke-width="4" fill="none" />
-
-            <!-- Inner Door Perspective Lines -->
-            <polyline class="logo-icon-white-stroke"
-              style="--dash-len:60px; --delay:0.9s;"
-              points="25,16 52,25 52,36"
-              stroke="#FFFFFF" stroke-width="3.5" />
-
-            <!-- Keyhole (red) -->
-            <path class="logo-icon-red-stroke"
-              style="--dash-len:120px; --delay:1.15s;"
-              d="M 43,45 A 7,7 0 1,1 53,45 L 56,64 L 40,64 Z"
-              stroke="#EF4444" stroke-width="3.5" fill="none" />
-
-            <!-- Key shaft (red) -->
-            <line class="logo-icon-red-stroke"
-              style="--dash-len:25px; --delay:1.35s;"
-              x1="47" y1="45" x2="67.5" y2="45"
-              stroke="#EF4444" stroke-width="3.5" />
-
-            <!-- Key circle (red) -->
-            <circle class="logo-icon-red-stroke"
-              style="--dash-len:45px; --delay:1.5s;"
-              cx="74" cy="45" r="6.5"
-              stroke="#EF4444" stroke-width="3.5" fill="none" />
-
-            <!-- Key teeth (red) -->
-            <line class="logo-icon-red-stroke"
-              style="--dash-len:10px; --delay:1.62s;"
-              x1="49" y1="45" x2="49" y2="49"
-              stroke="#EF4444" stroke-width="3.5" />
-            <line class="logo-icon-red-stroke"
-              style="--dash-len:8px; --delay:1.68s;"
-              x1="53" y1="45" x2="53" y2="48"
-              stroke="#EF4444" stroke-width="3" />
-
-            <!-- NJAP stamp -->
-            <text class="logo-icon-njap"
-              x="52.5" y="81"
-              font-family="'Times New Roman', serif"
-              font-size="13.5" font-weight="900" letter-spacing="1.5"
-              fill="#FFFFFF" stroke="none" text-anchor="middle">NJAP</text>
-          </g>
-
-          <!-- === TYPOGRAPHY === -->
-          <!-- Main title with shimmer wipe -->
-          <g class="logo-type-main-wrap">
-            <text class="logo-type-main"
-              x="64" y="27"
-              font-family="Pretendard, -apple-system, system-ui, sans-serif"
-              font-size="18" font-weight="900" fill="#FFFFFF" letter-spacing="-0.5">Healthcare Access Portal</text>
-            <!-- shimmer bar is a separate overlay element below -->
-          </g>
-
-          <!-- Sub-text -->
-          <text class="logo-type-sub"
-            x="64" y="44"
-            font-family="Pretendard, -apple-system, system-ui, sans-serif"
-            font-size="10.5" font-weight="500" fill="#94A3B8" letter-spacing="0.2">뉴저지 한인 의료 정보 포털 · NJAP</text>
-
-        </svg>
-      </div>
-      <!-- End logo animation -->
-
-      <h2 class="intro-korean-title" style="margin-top:4px;">뉴저지 한인 의료 접근센터</h2>
+      <div class="intro-badge">NEW JERSEY HEALTHCARE ACCESS CENTER</div>
+      <h2 class="intro-korean-title">뉴저지 한인 의료 접근센터</h2>
       <p class="intro-english-title">Healthcare Access Portal</p>
       
       <button class="intro-start-btn" id="introStartBtn" aria-label="소리와 함께 인트로 보기 / Watch Intro with Sound">
@@ -1036,7 +750,7 @@
   <div class="video-viewport">
     <video id="bgVideo" autoplay muted playsinline webkit-playsinline loop preload="auto">
       <!-- Local ultra-fast video source -->
-      <source src="/ko/uploads/videos/splash-video.mp4" type="video/mp4" />
+      <source src="/uploads/videos/splash-video.mp4" type="video/mp4" />
       <source src="uploads/videos/splash-video.mp4" type="video/mp4" />
       <!-- Fallback direct stream from Google Drive -->
       <source src="https://drive.usercontent.google.com/download?id=1ARUAgh6VJ5ckKoGjxyTdZtampzIva5AY&export=download" type="video/mp4" />
@@ -1077,6 +791,13 @@
     </div>
   </div>
 
+  <!-- Top Right Language Switcher on Splash -->
+  <div style="position:fixed; top:18px; right:18px; z-index:999999; display:flex; align-items:center; gap:8px;">
+    <a href="/en/" class="notranslate" style="display:inline-flex;align-items:center;gap:5px;padding:6px 14px;border-radius:999px;background:rgba(15,23,42,0.85);backdrop-filter:blur(10px);border:1.5px solid rgba(255,255,255,0.4);color:#ffffff;font-size:12px;font-weight:700;text-decoration:none;transition:all 0.2s ease;box-shadow:0 4px 12px rgba(0,0,0,0.3);" onmouseover="this.style.background='#2563eb';this.style.borderColor='#2563eb';" onmouseout="this.style.background='rgba(15,23,42,0.85)';this.style.borderColor='rgba(255,255,255,0.4)';">
+      <span class="notranslate">🌐</span> <span class="notranslate">English Portal</span>
+    </a>
+  </div>
+
   <!-- Interactive Stage Overlay -->
   <main class="splash-stage">
     <div class="content-box">
@@ -1102,46 +823,47 @@
       <nav class="buttons-container" id="buttonsContainer" aria-label="주요 포털 바로가기">
         
         <!-- 1. 홈페이지 (Home) -->
-        <a href="https://njaccessportal.com/ko/" class="portal-pop-btn" id="btnHome" title="의료접근포털 홈페이지">
+        <a href="/ko/" class="portal-pop-btn" id="btnHome" title="의료접근포털 한국어 홈페이지">
           <div class="btn-text-col">
             <span class="btn-main-label">홈페이지</span>
-            <span class="btn-sub-label">공식 메인 포털</span>
+            <span class="btn-sub-label">공식 메인 포털 (KR)</span>
+          </div>
+        </a>
+
+        <!-- 1-B. English Portal -->
+        <a href="/en/" class="portal-pop-btn" id="btnEnglishHome" title="English Healthcare Access Portal" style="border: 1.5px solid rgba(59, 130, 246, 0.8);">
+          <div class="btn-text-col">
+            <span class="btn-main-label" style="color: #60a5fa;">English Portal</span>
+            <span class="btn-sub-label">Main Portal (EN)</span>
           </div>
         </a>
 
         <!-- 2. 메디케어 & ACA -->
-        <a href="https://njaccessportal.com/ko/medicare" class="portal-pop-btn" id="btnMedicare" title="메디케어 & ACA 건강보험 안내">
+        <a href="/ko/medicare" class="portal-pop-btn" id="btnMedicare" title="메디케어 & ACA 건강보험 안내">
           <div class="btn-text-col">
             <span class="btn-main-label">메디케어 &amp; ACA</span>
             <span class="btn-sub-label">건강보험 종합 가이드</span>
           </div>
         </a>
 
-        <!-- 3. 뉴저지 의료/정보 나눔 포럼 -->
-        <a href="https://njaccessportal.com/ko/forum" class="portal-pop-btn" id="btnForum" title="뉴저지 의료/정보 나눔 포럼">
+        <!-- 3. 뉴저지 커뮤니티 포럼, 정보공유 -->
+        <a href="/ko/forum" class="portal-pop-btn" id="btnForum" title="뉴저지 커뮤니티 포럼, 정보공유">
           <div class="btn-text-col">
-            <span class="btn-main-label">뉴저지 의료/정보 나눔 포럼</span>
+            <span class="btn-main-label">뉴저지 커뮤니티 포럼</span>
+            <span class="btn-sub-label">정보공유</span>
           </div>
         </a>
 
         <!-- 4. 환자도우미 -->
-        <a href="https://njaccessportal.com/ko/tool" class="portal-pop-btn" id="btnTool" title="환자 맞춤형 복지 및 네비게이션 도우미">
+        <a href="/ko/tool" class="portal-pop-btn" id="btnTool" title="환자 맞춤형 복지 및 네비게이션 도우미">
           <div class="btn-text-col">
             <span class="btn-main-label">환자도우미</span>
             <span class="btn-sub-label">의료비·자선진료 네비게이터</span>
           </div>
         </a>
 
-        <!-- 5. 주요 병원 네트워크 리소스 -->
-        <a href="https://njaccessportal.com/ko/#major-hospitals-section" class="portal-pop-btn" id="btnHospitals" title="뉴저지 주요 병원 및 의료 네트워크 리소스">
-          <div class="btn-text-col">
-            <span class="btn-main-label">주요 병원 네트워크</span>
-            <span class="btn-sub-label">Major Hospitals &amp; Networks</span>
-          </div>
-        </a>
-
-        <!-- 6. For Hospitals and Physician Groups -->
-        <a href="https://engine.njaccessportal.com/" target="_blank" rel="noopener" class="portal-pop-btn btn-enterprise" id="btnEnterprise" title="의료기관 및 병원 그룹 파트너십">
+        <!-- 5. For Hospitals and Physician Groups -->
+        <a href="/engine/" class="portal-pop-btn btn-enterprise" id="btnEnterprise" title="의료기관 및 병원 그룹 파트너십">
           <div class="btn-text-col">
             <span class="btn-main-label">For Hospitals &amp; Physicians</span>
             <span class="btn-sub-label">Provider Enterprise Network</span>
@@ -1332,6 +1054,5 @@
 
     })();
   </script>
-  <script src="/ko/js/fixes.js?v=7.0.0"></script>
 </body>
 </html>

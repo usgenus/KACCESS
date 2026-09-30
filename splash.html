@@ -791,6 +791,13 @@
     </div>
   </div>
 
+  <!-- Top Right Language Switcher on Splash -->
+  <div style="position:fixed; top:18px; right:18px; z-index:999999; display:flex; align-items:center; gap:8px;">
+    <a href="/en/" class="notranslate" style="display:inline-flex;align-items:center;gap:5px;padding:6px 14px;border-radius:999px;background:rgba(15,23,42,0.85);backdrop-filter:blur(10px);border:1.5px solid rgba(255,255,255,0.4);color:#ffffff;font-size:12px;font-weight:700;text-decoration:none;transition:all 0.2s ease;box-shadow:0 4px 12px rgba(0,0,0,0.3);" onmouseover="this.style.background='#2563eb';this.style.borderColor='#2563eb';" onmouseout="this.style.background='rgba(15,23,42,0.85)';this.style.borderColor='rgba(255,255,255,0.4)';">
+      <span class="notranslate">🌐</span> <span class="notranslate">English Portal</span>
+    </a>
+  </div>
+
   <!-- Interactive Stage Overlay -->
   <main class="splash-stage">
     <div class="content-box">
@@ -816,10 +823,18 @@
       <nav class="buttons-container" id="buttonsContainer" aria-label="주요 포털 바로가기">
         
         <!-- 1. 홈페이지 (Home) -->
-        <a href="/ko/" class="portal-pop-btn" id="btnHome" title="의료접근포털 홈페이지">
+        <a href="/ko/" class="portal-pop-btn" id="btnHome" title="의료접근포털 한국어 홈페이지">
           <div class="btn-text-col">
             <span class="btn-main-label">홈페이지</span>
-            <span class="btn-sub-label">공식 메인 포털</span>
+            <span class="btn-sub-label">공식 메인 포털 (KR)</span>
+          </div>
+        </a>
+
+        <!-- 1-B. English Portal -->
+        <a href="/en/" class="portal-pop-btn" id="btnEnglishHome" title="English Healthcare Access Portal" style="border: 1.5px solid rgba(59, 130, 246, 0.8);">
+          <div class="btn-text-col">
+            <span class="btn-main-label" style="color: #60a5fa;">English Portal</span>
+            <span class="btn-sub-label">Main Portal (EN)</span>
           </div>
         </a>
 
@@ -831,10 +846,11 @@
           </div>
         </a>
 
-        <!-- 3. 뉴저지 의료/정보 나눔 포럼 -->
-        <a href="/ko/forum" class="portal-pop-btn" id="btnForum" title="뉴저지 의료/정보 나눔 포럼">
+        <!-- 3. 뉴저지 커뮤니티 포럼, 정보공유 -->
+        <a href="/ko/forum" class="portal-pop-btn" id="btnForum" title="뉴저지 커뮤니티 포럼, 정보공유">
           <div class="btn-text-col">
-            <span class="btn-main-label">뉴저지 의료/정보 나눔 포럼</span>
+            <span class="btn-main-label">뉴저지 커뮤니티 포럼</span>
+            <span class="btn-sub-label">정보공유</span>
           </div>
         </a>
 
