@@ -1,11 +1,10 @@
-DirectoryIndex index.php index.html
+DirectoryIndex index.html index.php
 
 <IfModule mod_headers.c>
-  # Default for web documents
   Header set Cache-Control "no-cache, must-revalidate, max-age=0"
   Header set Pragma "no-cache"
 
-  # Media files MUST have byte-range caching for HTML5 video/audio streaming (no-store breaks Safari & Chromium)
+  # Media files byte-range caching
   <FilesMatch "\.(mp4|webm|ogv|mov|m4v|mp3|ogg|wav)$">
     Header set Cache-Control "public, max-age=2592000"
     Header set Accept-Ranges "bytes"
@@ -13,7 +12,7 @@ DirectoryIndex index.php index.html
     Header unset Expires
   </FilesMatch>
 
-  # Static assets (images, fonts, scripts, styles)
+  # Static assets
   <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|ico|woff|woff2|ttf|eot|css|js)$">
     Header set Cache-Control "public, max-age=604800"
     Header unset Pragma
@@ -23,43 +22,40 @@ DirectoryIndex index.php index.html
 
 <IfModule mod_rewrite.c>
 RewriteEngine On
-RewriteBase /ko/
+RewriteBase /
 
-# Redirect index.html to /
-RewriteRule ^index\.html$ /ko/ [R=301,L]
+# 0. Sitemaps and robots.txt routing
+RewriteRule ^sitemap\.xml$ /ko/sitemap.php [L]
+RewriteRule ^robots\.txt$ /ko/robots.txt [L]
 
-# Admin clean URL
-RewriteRule ^admin/?$ admin/index.php [L]
-RewriteRule ^admin2/?$ admin2/index.php [L]
+# 1. Forward direct request for root index.php to /ko/
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s/+index\.php[\s?] [NC]
+RewriteRule ^index\.php$ /ko/ [R=301,L]
 
-# Medical Forum clean URLs
-RewriteRule ^forum/?$ forum/index.php [L]
-RewriteRule ^forum/ask/?$ forum/ask.php [L]
-RewriteRule ^forum/category/([^/]+)/?$ forum/index.php?specialty=$1 [L]
-RewriteRule ^forum/topic/([^/]+)/?$ forum/topic.php?id=$1 [L]
+# 2. Forward non-prefixed portal pages to /ko/
+RewriteRule ^(medicare|blog|forum|senior-care|tool|about|matcher|calculator|dictionary|admin|admin2)(/.*)?$ /ko/$1$2 [R=301,L]
 
-# Protect data folder
-RewriteRule ^data/.*$ - [F,L]
-
-# Auto-recovery for uploaded images and videos if missing on disk
+# 3. Forward legacy root asset/API fallbacks to /ko/ if not found at root
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^uploads/(images|videos)/(.+)$ api/media.php?file=$2 [L]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^js/(.*)$ /ko/js/$1 [L]
 
-RewriteRule ^sitemap\.xml$ sitemap.php [L]
-RewriteRule ^medicare/?$ medicare.html [L]
-RewriteRule ^matcher/?$ matcher.html [L]
-RewriteRule ^calculator/?$ calculator.html [L]
-RewriteRule ^dictionary/?$ dictionary.html [L]
-RewriteRule ^blog/?$ blog.php [L]
-RewriteRule ^senior-care/?$ senior-care.php [L]
-RewriteRule ^tool/?$ tool.html [L]
-RewriteRule ^about/?$ about.html [L]
-RewriteRule ^404/?$ 404.html [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^api/(.*)$ /ko/api/$1 [L,QSA]
 
-# Dynamic blog post handler (MUST BE BEFORE static file/dir checks)
-RewriteRule ^blog/([^/]+)/?$ blog-post.php?slug=$1 [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^uploads/(images|videos|audio)/(.+)$ /ko/uploads/$1/$2 [L]
 
-# If requested file or directory exists, serve it
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^_next/(.*)$ /ko/_next/$1 [L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(favicon\.(ico|svg|png)|favicon-.*\.png|apple-touch-icon\.png|logo.*|kakao.*)$ /ko/$1 [L]
+
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]

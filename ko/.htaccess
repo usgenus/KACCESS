@@ -1,0 +1,74 @@
+DirectoryIndex index.php index.html
+
+<IfModule mod_headers.c>
+  # Default for web documents
+  Header set Cache-Control "no-cache, must-revalidate, max-age=0"
+  Header set Pragma "no-cache"
+
+  # Media files MUST have byte-range caching for HTML5 video/audio streaming (no-store breaks Safari & Chromium)
+  <FilesMatch "\.(mp4|webm|ogv|mov|m4v|mp3|ogg|wav)$">
+    Header set Cache-Control "public, max-age=2592000"
+    Header set Accept-Ranges "bytes"
+    Header unset Pragma
+    Header unset Expires
+  </FilesMatch>
+
+  # Static assets (images, fonts, scripts, styles)
+  <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|ico|woff|woff2|ttf|eot|css|js)$">
+    Header set Cache-Control "public, max-age=604800"
+    Header unset Pragma
+    Header unset Expires
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /ko/
+
+# Redirect index.html to /ko/
+RewriteRule ^index\.html$ /ko/ [R=301,L]
+
+# Admin clean URL
+RewriteRule ^admin/?$ admin/index.php [L]
+RewriteRule ^admin2/?$ admin2/index.php [L]
+
+# Medical Forum clean URLs
+RewriteRule ^forum/?$ forum/index.php [L]
+RewriteRule ^forum/ask/?$ forum/ask.php [L]
+RewriteRule ^forum/category/([^/]+)/?$ forum/index.php?specialty=$1 [L]
+RewriteRule ^forum/topic/([^/]+)/?$ forum/topic.php?id=$1 [L]
+
+# Protect data folder
+RewriteRule ^data/.*$ - [F,L]
+
+# Auto-recovery for uploaded images and videos if missing on disk
+# 1. Direct serve from /ko/uploads/ if exists there
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{DOCUMENT_ROOT}/ko/uploads/$1/$2 -f
+RewriteRule ^uploads/(images|videos)/(.+)$ ko/uploads/$1/$2 [L]
+
+# 2. Universal media streamer & multi-source recovery
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^uploads/(images|videos)/(.+)$ api/media.php?file=$2 [L]
+
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+RewriteRule ^medicare/?$ medicare.html [L]
+RewriteRule ^matcher/?$ matcher.html [L]
+RewriteRule ^calculator/?$ calculator.html [L]
+RewriteRule ^dictionary/?$ dictionary.html [L]
+RewriteRule ^blog/?$ blog.php [L]
+RewriteRule ^senior-care/?$ senior-care.php [L]
+RewriteRule ^tool/?$ tool.html [L]
+RewriteRule ^about/?$ about.html [L]
+RewriteRule ^404/?$ 404.html [L]
+
+# Dynamic blog post handler (MUST BE BEFORE static file/dir checks)
+RewriteRule ^blog/([^/]+)/?$ blog-post.php?slug=$1 [L]
+
+# If requested file or directory exists, serve it
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+</IfModule>
+
+ErrorDocument 404 /ko/404.html
