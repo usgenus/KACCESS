@@ -9,12 +9,21 @@ const AUTH_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJsb
 const REST_AUTH_KEY = '78b255418fe9c6e4dd08b4efda5c1e72aa994400f67f42fe302172d856b69cf8-e7931418e95de9aa';
 
 const filesToUpload = [
+  '_next/static/chunks/1fosv8xgmgdeu.css',
   'resource-center.html',
   'medicare.html',
   'medicare/index.html',
   'js/resource_center.js',
   'js/fixes.js',
-  'ko/js/fixes.js'
+  'ko/js/fixes.js',
+  'about.html',
+  'about/index.html',
+  'index.php',
+  'ko/index.html',
+  'matcher.html',
+  'calculator.html',
+  'dictionary.html',
+  'tool.html'
 ];
 
 async function uploadFile(relPath) {

@@ -18,6 +18,9 @@ function getHeader(title) {
   .hub-tab-inactive { background: rgba(255,255,255,0.12) !important; color: #ffffff !important; border: 1px solid rgba(255,255,255,0.25) !important; }
   .hub-tab-inactive:hover { background: rgba(255,255,255,0.25) !important; color: #ffffff !important; }
   .tool-card { background: #ffffff; border-radius: 20px; border: 1px solid #e2e8f0; box-shadow: 0 4px 14px rgba(0,0,0,0.05); }
+  .btn-primary { background: #1a5cf6 !important; background: linear-gradient(135deg, #1a5cf6 0%, #8b17a8 100%) !important; background-color: #1a5cf6 !important; color: #ffffff !important; display: inline-flex; align-items: center; border-radius: 9999px; font-weight: 600; text-decoration: none; transition: all 0.2s; }
+  .btn-primary:hover { background: #164ed1 !important; background: linear-gradient(135deg, #164ed1 0%, #761490 100%) !important; background-color: #164ed1 !important; color: #ffffff !important; }
+  .btn-primary:disabled, button:disabled.btn-primary { background: #cbd5e1 !important; color: #64748b !important; border-color: #cbd5e1 !important; cursor: not-allowed !important; opacity: 0.75 !important; box-shadow: none !important; }
 </style>
 </head>
 <body class="min-h-full flex flex-col bg-slate-50">
@@ -135,7 +138,7 @@ function getHeader(title) {
 function getSubNav(activeKey) {
   return `
   <!-- Top Header & Tabs with Solid Guaranteed Gradient Background -->
-  <section class="py-10 sm:py-14 border-b border-white/10" style="background: linear-gradient(135deg, #091e42 0%, #1e1b4b 60%, #1e293b 100%) !important; color: #ffffff !important;">
+  <section class="py-10 sm:py-14 border-b border-white/10" style="background: #091e42; background: linear-gradient(135deg, #091e42 0%, #1e1b4b 60%, #1e293b 100%) !important; background-color: #091e42 !important; color: #ffffff !important;">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <span class="inline-block text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider mb-2" style="background: rgba(59, 130, 246, 0.3) !important; color: #93c5fd !important; border: 1px solid rgba(147, 197, 253, 0.4) !important;">ONE-STOP PATIENT SERVICES</span>
       <h1 class="font-serif text-3xl sm:text-4xl mb-2 font-bold" style="color: #ffffff !important;">원스톱 의료 접근 &amp; 환자 종합 센터</h1>

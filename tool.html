@@ -1,135 +1,158 @@
-<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0; url=/"><script>location.replace('/');</script>  <style id="njap-logo-anim-styles">
-    .njap-brand-link {
-      display: inline-flex !important;
-      align-items: center !important;
-      flex-shrink: 0 !important;
-    }
-    .njap-brand-link img,
-    .njap-brand-link svg {
-      height: 52px !important;
-      max-height: 54px !important;
-      width: auto !important;
-      object-fit: contain !important;
-    }
-    @media (max-width: 640px) {
-      .njap-brand-link img,
-      .njap-brand-link svg {
-        height: 40px !important;
-        max-height: 42px !important;
-        width: auto !important;
-      }
-    }
-    @media (max-width: 375px) {
-      .njap-brand-link img,
-      .njap-brand-link svg {
-        height: 34px !important;
-        max-height: 36px !important;
-      }
-    }
 
-    /* ============================================================
-       NAVBAR BRAND LOGO INLINE ANIMATION
-       - Door: visible & stable with subtle gentle entry
-       - Key: moves smoothly from right side into the door keyhole
-       - Keyhole: subtle light glow reaction when key enters
-       - Texts: sequentially slide in from the right after key enters
-       - Stays as is permanently
-       ============================================================ */
-    @keyframes njapNavKeySlide {
-      0% {
-        opacity: 0;
-        transform: translate(670px, 0);
-      }
-      15% {
-        opacity: 1;
-      }
-      75% {
-        transform: translate(0, 0);
-      }
-      86% {
-        transform: translate(-3.5px, 0);
-      }
-      100% {
-        opacity: 1;
-        transform: translate(0, 0);
-      }
-    }
+<!DOCTYPE html><html lang="ko" class="h-full antialiased"><head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="/_next/static/chunks/1fosv8xgmgdeu.css" />
+<title>스마트 환자 서비스 & AI 의료 질문 센터 | NJ Access Portal · 뉴저지 한인 의료접근포털</title>
+<meta name="description" content="뉴저지 한인 커뮤니티를 위한 의료 접근 및 건강 정보 포털. 메디케어, ACA, 의료 상담을 한국어로 제공합니다."/>
+<link rel="icon" href="/favicon.ico" sizes="256x256" type="image/x-icon"/>
+<style>
+  :root, html, body { font-family: "Pretendard Variable", Pretendard, "Noto Sans KR", sans-serif !important; }
+  .hub-tab-btn { padding: 10px 18px; border-radius: 9999px; font-weight: 700; font-size: 13px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; }
+  .hub-tab-active { background: #2563eb !important; color: #ffffff !important; border: 1.5px solid #93c5fd !important; box-shadow: 0 4px 14px rgba(37,99,235,0.4); }
+  .hub-tab-inactive { background: rgba(255,255,255,0.12) !important; color: #ffffff !important; border: 1px solid rgba(255,255,255,0.25) !important; }
+  .hub-tab-inactive:hover { background: rgba(255,255,255,0.25) !important; color: #ffffff !important; }
+  .tool-card { background: #ffffff; border-radius: 20px; border: 1px solid #e2e8f0; box-shadow: 0 4px 14px rgba(0,0,0,0.05); }
+  .btn-primary { background: #1a5cf6 !important; background: linear-gradient(135deg, #1a5cf6 0%, #8b17a8 100%) !important; background-color: #1a5cf6 !important; color: #ffffff !important; display: inline-flex; align-items: center; border-radius: 9999px; font-weight: 600; text-decoration: none; transition: all 0.2s; }
+  .btn-primary:hover { background: #164ed1 !important; background: linear-gradient(135deg, #164ed1 0%, #761490 100%) !important; background-color: #164ed1 !important; color: #ffffff !important; }
+  .btn-primary:disabled, button:disabled.btn-primary { background: #cbd5e1 !important; color: #64748b !important; border-color: #cbd5e1 !important; cursor: not-allowed !important; opacity: 0.75 !important; box-shadow: none !important; }
+</style>
+</head>
+<body class="min-h-full flex flex-col bg-slate-50">
+<div class="fixed top-0 left-0 right-0 z-50 h-[45px] overflow-hidden flex items-center" style="background:#000000">
+  <div class="marquee-track whitespace-nowrap">
+    <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12">✦ 의료접근포탈: &quot;비영리기관(한인 커뮤니티센터)들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료시스템 전문가들이 제공하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot; ✦</span>
+  </div>
+</div>
+<nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/90 backdrop-blur-sm border-b border-slate-200" style="top:45px">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <a class="flex-shrink-0 group flex items-center gap-2.5" href="/">
+        <div class="w-8 h-8 flex items-center justify-center flex-shrink-0">
+          <img src="/logo-icon.svg" alt="NJAP Logo" class="w-full h-full object-contain"/>
+        </div>
+        <div>
+          <span class="font-serif text-xl text-brand-dark group-hover:text-brand-blue transition-colors duration-200 block">Healthcare Access Portal</span>
+          <span class="block text-[10px] font-sans text-brand-muted leading-tight -mt-0.5">뉴저지 한인 의료 접근 포털</span>
+        </div>
+      </a>
+      <div class="hidden md:flex items-center" style="display: flex; align-items: center; gap: 26px;">
+        <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/">홈</a>
+        <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/blog">뉴스</a>
+        <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/senior-care">시니어 케어</a>
+        <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/medicare">메디케어 &amp; ACA</a>
+        <a class="nav-link pb-0.5 font-bold text-brand-blue" href="/tool">환자도우미</a>
+        <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/about">소개</a>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity cursor-pointer" title="카카오톡 1:1 상담 바로가기"><img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" /><span class="text-xs sm:text-sm font-bold text-slate-800 hover:text-brand-blue tracking-tight whitespace-nowrap">1:1 상담</span></a>
+        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors" aria-label="Menu">
+          <div class="w-5 h-4 flex flex-col justify-between">
+            <span class="block h-0.5 bg-brand-dark rounded-full"></span>
+            <span class="block h-0.5 bg-brand-dark rounded-full"></span>
+            <span class="block h-0.5 bg-brand-dark rounded-full"></span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div id="mobile-menu-dropdown" class="md:hidden overflow-hidden transition-all duration-300 max-h-0 opacity-0 bg-white/98 backdrop-blur-md border-t border-brand-border px-4 py-3 flex flex-col gap-1" style="-webkit-overflow-scrolling: touch;">
+    <!-- 1. 홈 -->
+    <a href="/" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <div class="flex items-center gap-3">
+        <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span class="text-[15px]">홈</span>
+      </div>
+      <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    </a>
 
-    @keyframes njapNavKeyholePulse {
-      0%, 70% {
-        stroke: #DC2626;
-        filter: drop-shadow(0 0 0 transparent);
-      }
-      82% {
-        stroke: #EF4444;
-        filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.85));
-      }
-      100% {
-        stroke: #DC2626;
-        filter: drop-shadow(0 0 0 transparent);
-      }
-    }
+    <!-- 2. 뉴스 -->
+    <a href="/blog" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <div class="flex items-center gap-3">
+        <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+        <span class="text-[15px]">뉴스</span>
+      </div>
+      <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    </a>
 
-    @keyframes njapNavDoorAppear {
-      0% {
-        opacity: 0;
-        transform: scale(0.96);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
+    <!-- 3. 시니어 케어 -->
+    <a href="/senior-care" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <div class="flex items-center gap-3">
+        <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+        <span class="text-[15px]">시니어 케어</span>
+      </div>
+      <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    </a>
 
-    @keyframes njapNavTextMain {
-      0% {
-        opacity: 0;
-        transform: translate(45px, 0);
-      }
-      100% {
-        opacity: 1;
-        transform: translate(0, 0);
-      }
-    }
+    <!-- 4. 메디케어 & ACA -->
+    <a href="/medicare" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <div class="flex items-center gap-3">
+        <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        <span class="text-[15px]">메디케어 &amp; ACA</span>
+      </div>
+      <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    </a>
 
-    @keyframes njapNavTextSub {
-      0% {
-        opacity: 0;
-        transform: translate(35px, 0);
-      }
-      100% {
-        opacity: 1;
-        transform: translate(0, 0);
-      }
-    }
+    <!-- 5. 환자도우미 -->
+    <a href="/tool" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-bold text-brand-blue bg-blue-50/70">
+      <div class="flex items-center gap-3">
+        <svg class="w-5 h-5 text-brand-blue shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        <span class="text-[15px]">환자도우미</span>
+      </div>
+      <svg class="w-4 h-4 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    </a>
 
-    .njap-nav-door {
-      transform-origin: 40px 45px;
-      animation: njapNavDoorAppear 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
-    }
+    <!-- 6. 소개 -->
+    <a href="/about" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <div class="flex items-center gap-3">
+        <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span class="text-[15px]">소개</span>
+      </div>
+      <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    </a>
 
-    .njap-nav-key {
-      animation: njapNavKeySlide 2.18s cubic-bezier(0.22, 1, 0.36, 1) 0.22s both;
-    }
+    <!-- 카카오톡 1:1 상담 바로가기 -->
+    <div class="pt-2 pb-1">
+      <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3.5 bg-[#FEE500] hover:bg-[#FDD835] active:bg-[#FBC02D] text-[#191919] rounded-xl font-bold text-sm shadow-xs transition-all cursor-pointer">
+        <div class="flex items-center gap-2.5">
+          <img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" />
+          <div class="flex flex-col text-left">
+            <span class="text-sm font-bold leading-tight">카카오톡 1:1 상담 바로가기</span>
+            <span class="text-[11px] font-medium text-black/70">의료 복지 및 시니어 케어 실시간 문의</span>
+          </div>
+        </div>
+        <svg class="w-4 h-4 text-black/60 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</nav>
+<div class="h-[109px]"></div>
 
-    .njap-nav-keyhole {
-      animation: njapNavKeyholePulse 2.4s ease-out 0.22s both;
-    }
+<main class="flex-1 flex flex-col bg-slate-950">
+  <section class="py-3 px-4 sm:px-8 border-b border-white/10" style="background: linear-gradient(135deg, #091e42 0%, #1e1b4b 60%, #1e293b 100%) !important; color: #ffffff !important;">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+      <div class="flex items-center gap-2">
+        <span class="inline-block text-[11px] font-extrabold px-2.5 py-0.5 rounded-full uppercase" style="background: rgba(59, 130, 246, 0.3) !important; color: #93c5fd !important; border: 1px solid rgba(147, 197, 253, 0.4) !important;">AI TOOL 4</span>
+        <h1 class="font-serif text-base sm:text-lg font-bold" style="color: #ffffff !important;">스마트 환자 서비스 &amp; AI 의료 질문 센터</h1>
+      </div>
+      <div class="flex flex-wrap gap-1.5 sm:gap-2">
+        <a href="/matcher" class="hub-tab-btn hub-tab-inactive" style="padding: 6px 12px; font-size: 12px;"><span>🏥</span> 1. 자격 진단</a>
+        <a href="/calculator" class="hub-tab-btn hub-tab-inactive" style="padding: 6px 12px; font-size: 12px;"><span>🧮</span> 2. 보조금 계산기</a>
+        <a href="/dictionary" class="hub-tab-btn hub-tab-inactive" style="padding: 6px 12px; font-size: 12px;"><span>📖</span> 3. 의학 용어 사전</a>
+        <a href="/tool" class="hub-tab-btn hub-tab-active" style="padding: 6px 12px; font-size: 12px;"><span>🤖</span> 4. AI 질문 센터</a>
+      </div>
+    </div>
+  </section>
 
-    .njap-nav-text-main {
-      animation: njapNavTextMain 1.0s cubic-bezier(0.16, 1, 0.3, 1) 2.18s both;
-    }
-
-    .njap-nav-text-sub {
-      animation: njapNavTextSub 1.0s cubic-bezier(0.16, 1, 0.3, 1) 2.48s both;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .njap-nav-door, .njap-nav-key, .njap-nav-keyhole, .njap-nav-text-main, .njap-nav-text-sub {
-        animation: none !important;
-        opacity: 1 !important;
-        transform: none !important;
-      }
-    }
-  </style>
-</head><body>Redirecting to <a href="/">NJ Access Portal</a>...</body></html>
+  <div class="w-full flex-1 relative bg-slate-950" style="height: calc(100vh - 160px); min-height: 900px;">
+    <div id="tool-loading-overlay" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-950 text-white z-10 font-sans transition-opacity duration-300">
+      <div class="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+      <p class="font-serif text-lg font-medium" style="color:#ffffff;">스마트 환자 서비스 불러오는 중...</p>
+      <p class="text-white/60 text-xs mt-1">hacgenini.ai.studio 의료 접근 포털을 준비하고 있습니다.</p>
+    </div>
+    <iframe id="tool-ai-frame" src="https://hacgenini.ai.studio" title="Healthcare Access Portal 질문센터" class="w-full h-full border-0 block" style="width: 100%; height: 100%; min-height: 900px;" onload="var o=document.getElementById('tool-loading-overlay');if(o){o.style.opacity='0';setTimeout(function(){o.style.display='none';},350);}" allow="camera *; microphone *; geolocation *; display-capture *; clipboard-write *"></iframe>
+  </div>
+</main>
+<script src="/js/cms-client.js?v=3.6.0"></script>
+<script src="/js/fixes.js?v=1.2"></script>
+</body></html>

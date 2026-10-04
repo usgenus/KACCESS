@@ -1,0 +1,725 @@
+{
+  "https://njaccessportal.com/": [
+    {
+      "selector": "span",
+      "text": "건너뛰기 Skip",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(243, 243, 245)",
+      "ratio": "1.11",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span.hero-pill-badge",
+      "text": "2026 메디케어 중점 가이드",
+      "textColor": "rgba(255, 255, 255, 0.95)",
+      "bgColor": "rgba(255, 255, 255, 0.1)",
+      "ratio": "1.00",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "h1#hero-single-h1",
+      "text": "메디케어 오픈 인롤먼트\n                  10월 15일 – 12월 7일 완벽 가이드",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(243, 243, 245)",
+      "ratio": "1.11",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span.hero-gradient-accent",
+      "text": "10월 15일 – 12월 7일 완벽 가이드",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(243, 243, 245)",
+      "ratio": "1.11",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "p.hero-main-desc",
+      "text": "파트 D $2,100 약값 상한제, 파트 B $202.90 — 2026년 변경 사항과 플랜 비교 체크리스트를",
+      "textColor": "rgba(255, 255, 255, 0.85)",
+      "bgColor": "rgb(243, 243, 245)",
+      "ratio": "1.11",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span.hero-tab-sub",
+      "text": "하이라이트 01",
+      "textColor": "rgb(127, 200, 192)",
+      "bgColor": "rgba(255, 255, 255, 0.08)",
+      "ratio": "1.92",
+      "type": "DARK_ON_DARK"
+    },
+    {
+      "selector": "span.hero-tab-title",
+      "text": "메디케어 & ACA",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgba(255, 255, 255, 0.08)",
+      "ratio": "1.00",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span.hero-tab-sub",
+      "text": "하이라이트 02",
+      "textColor": "rgba(255, 255, 255, 0.45)",
+      "bgColor": "rgb(243, 243, 245)",
+      "ratio": "1.11",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span.hero-tab-title",
+      "text": "환자 내비게이션",
+      "textColor": "rgba(255, 255, 255, 0.65)",
+      "bgColor": "rgb(243, 243, 245)",
+      "ratio": "1.11",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "h3.font-extrabold.text-base.sm:text-2xl",
+      "text": "Healthcare Access Center",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(243, 243, 245)",
+      "ratio": "1.11",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span#medical-videos-count-badge",
+      "text": "91개 영상",
+      "textColor": "rgb(17, 17, 17)",
+      "bgColor": "rgb(24, 24, 24)",
+      "ratio": "1.06",
+      "type": "DARK_ON_DARK"
+    }
+  ],
+  "https://njaccessportal.com/medicare": [
+    {
+      "selector": "span.hero-pill-badge",
+      "text": "2026 연방정부 및 뉴저지 공식 개정",
+      "textColor": "rgba(255, 255, 255, 0.95)",
+      "bgColor": "rgba(255, 255, 255, 0.1)",
+      "ratio": "1.00",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "div.hero-main-title",
+      "text": "메디케어 오픈 인롤먼트 & ACA\n                2026 핵심 변경 사항 완벽 총정리",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.06",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span.hero-gradient-accent",
+      "text": "2026 핵심 변경 사항 완벽 총정리",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.06",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "p.hero-main-desc",
+      "text": "인플레이션 감축법(IRA) 파트 D 약값 상한제 $2,100, 파트 B 표준 보험료 $202.90, 오리지널",
+      "textColor": "rgba(255, 255, 255, 0.85)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.06",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span.hero-tab-sub",
+      "text": "하이라이트 01",
+      "textColor": "rgba(255, 255, 255, 0.55)",
+      "bgColor": "rgba(255, 255, 255, 0.05)",
+      "ratio": "1.00",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span.hero-tab-title",
+      "text": "자격확인 계산기",
+      "textColor": "rgba(255, 255, 255, 0.75)",
+      "bgColor": "rgba(255, 255, 255, 0.05)",
+      "ratio": "1.00",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span.hero-tab-sub",
+      "text": "하이라이트 03",
+      "textColor": "rgb(127, 200, 192)",
+      "bgColor": "rgba(255, 255, 255, 0.14)",
+      "ratio": "1.92",
+      "type": "DARK_ON_DARK"
+    },
+    {
+      "selector": "span.hero-tab-title",
+      "text": "메디케어 & ACA",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgba(255, 255, 255, 0.14)",
+      "ratio": "1.00",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "h3.text-2xl.sm:text-3xl.font-serif",
+      "text": "메디케어 오픈 인롤먼트 2026: 10월 15일~12월 7일 4단계 체크리스트",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.06",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "p.text-xs.sm:text-sm.text-slate-300",
+      "text": "매년 가을, 메디케어는 1년에 단 한 번 보장 내용을 재검토하고 최적의 플랜으로 변경할 수 있는 기회를 제공",
+      "textColor": "rgb(203, 213, 225)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.40",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "strong",
+      "text": "2026년 10월 15일부터 12월 7일까지",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.06",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span.text-[11px].font-extrabold.uppercase",
+      "text": "STEP 1",
+      "textColor": "rgb(191, 219, 254)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.34",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span.text-xs.text-amber-300.font-semibold",
+      "text": "9월 말 ~ 10월 초 우편 수령",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.06",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "h5.text-base.font-bold.text-white",
+      "text": "1. Annual Notice of Change(ANOC) 안내문을 확인하세요",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.06",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "p.text-xs.text-slate-300.leading-relaxed",
+      "text": "현재 가입된 보험사가 9월 말~10월 초에 우편으로 발송합니다. 내년도 월 보험료, 코페이, 약 목록(포뮬러",
+      "textColor": "rgb(203, 213, 225)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.40",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span.text-xs.text-emerald-300.font-semibold",
+      "text": "의사·병원·약국 대조",
+      "textColor": "rgb(110, 231, 183)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.43",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span.text-xs.text-purple-300.font-semibold",
+      "text": "연간 총비용 계산",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.06",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span.text-xs.text-sky-300.font-semibold",
+      "text": "medicare.gov 1~5점",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.06",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "h5.text-sm.font-bold.text-white",
+      "text": "지금 할 일: ANOC 우편물, 복용 약 목록, 주치의 명단을 준비하세요",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.06",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "p.text-xs.text-slate-300",
+      "text": "저희 NJAP 내비게이션 팀이 한국어 또는 영어로 맞춤 플랜 비교를 도와드립니다. 상담 및 비교 분석은 10",
+      "textColor": "rgb(203, 213, 225)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.40",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span",
+      "text": "카카오톡 1:1 무료 상담 신청",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.06",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span.text-xs.font-extrabold.px-3",
+      "text": "2026 Inflation Reduction Act (IRA) · 처방약 구조 전면 개편",
+      "textColor": "rgb(191, 219, 254)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.34",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "strong",
+      "text": "$2,100에 도달하면, 그 해 나머지 기간 동안 보장 약값 본인부담은 100% $0(무료)",
+      "textColor": "rgb(203, 213, 225)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.40",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "h5.text-sm.font-bold.text-blue-200",
+      "text": "1. 처방약 연간 본인부담 상한: $2,000 → $2,100",
+      "textColor": "rgb(191, 219, 254)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.34",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "div.p-4.rounded-xl.bg-amber-500/20",
+      "text": "⚠️ 단독 파트 D 플랜 선택지 축소 주의:\n          올해 단독 파트 D 플랜 수가 전국 464개에",
+      "textColor": "rgb(226, 232, 240)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.16",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "strong.text-amber-300.block.mb-1",
+      "text": "⚠️ 단독 파트 D 플랜 선택지 축소 주의:",
+      "textColor": "rgb(226, 232, 240)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.16",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "strong",
+      "text": "포뮬러리(약 목록)",
+      "textColor": "rgb(226, 232, 240)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.16",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span.text-xs.font-extrabold.px-3",
+      "text": "경로 2",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(255, 255, 255)",
+      "ratio": "1.00",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "th.p-4.w-2/5.bg-indigo-950",
+      "text": "경로 2: 메디케어 어드밴티지 (Part C)",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(255, 255, 255)",
+      "ratio": "1.00",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "h4.text-xl.sm:text-2xl.font-serif",
+      "text": "어려운 메디케어 & ACA, 한국어로 편안하게 상담받으세요",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.06",
+      "type": "LIGHT_ON_LIGHT"
+    }
+  ],
+  "https://njaccessportal.com/dictionary": [
+    {
+      "selector": "h1.font-serif.text-3xl.sm:text-4xl",
+      "text": "원스톱 의료 접근 & 환자 종합 센터",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.06",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "p.text-xs.sm:text-sm.max-w-2xl",
+      "text": "보험 자격 진단, 2026 ACA 보조금 계산, 영-한 의학 용어 사전을 자유롭게 이용하세요.",
+      "textColor": "rgba(255, 255, 255, 0.85)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.06",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "a.hub-tab-btn.hub-tab-inactive",
+      "text": "🏥 1. 메디케어 & ACA 자격 진단",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgba(255, 255, 255, 0.12)",
+      "ratio": "1.00",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span",
+      "text": "🏥",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgba(255, 255, 255, 0.12)",
+      "ratio": "1.00",
+      "type": "LIGHT_ON_LIGHT"
+    }
+  ],
+  "https://njaccessportal.com/tool": [
+    {
+      "selector": "span",
+      "text": "건너뛰기 Skip",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(243, 243, 245)",
+      "ratio": "1.11",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span.hero-pill-badge",
+      "text": "2026 메디케어 중점 가이드",
+      "textColor": "rgba(255, 255, 255, 0.95)",
+      "bgColor": "rgba(255, 255, 255, 0.1)",
+      "ratio": "1.00",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "h1#hero-single-h1",
+      "text": "메디케어 오픈 인롤먼트\n                  10월 15일 – 12월 7일 완벽 가이드",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(243, 243, 245)",
+      "ratio": "1.11",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span.hero-gradient-accent",
+      "text": "10월 15일 – 12월 7일 완벽 가이드",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(243, 243, 245)",
+      "ratio": "1.11",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "p.hero-main-desc",
+      "text": "파트 D $2,100 약값 상한제, 파트 B $202.90 — 2026년 변경 사항과 플랜 비교 체크리스트를",
+      "textColor": "rgba(255, 255, 255, 0.85)",
+      "bgColor": "rgb(243, 243, 245)",
+      "ratio": "1.11",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span.hero-tab-sub",
+      "text": "하이라이트 01",
+      "textColor": "rgb(127, 200, 192)",
+      "bgColor": "rgba(255, 255, 255, 0.08)",
+      "ratio": "1.92",
+      "type": "DARK_ON_DARK"
+    },
+    {
+      "selector": "span.hero-tab-title",
+      "text": "메디케어 & ACA",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgba(255, 255, 255, 0.08)",
+      "ratio": "1.00",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span.hero-tab-sub",
+      "text": "하이라이트 02",
+      "textColor": "rgba(255, 255, 255, 0.45)",
+      "bgColor": "rgb(243, 243, 245)",
+      "ratio": "1.11",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span.hero-tab-title",
+      "text": "환자 내비게이션",
+      "textColor": "rgba(255, 255, 255, 0.65)",
+      "bgColor": "rgb(243, 243, 245)",
+      "ratio": "1.11",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "h3.font-extrabold.text-base.sm:text-2xl",
+      "text": "Healthcare Access Center",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(243, 243, 245)",
+      "ratio": "1.11",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span#medical-videos-count-badge",
+      "text": "91개 영상",
+      "textColor": "rgb(17, 17, 17)",
+      "bgColor": "rgb(24, 24, 24)",
+      "ratio": "1.06",
+      "type": "DARK_ON_DARK"
+    }
+  ],
+  "https://njaccessportal.com/calculator": [
+    {
+      "selector": "h1.font-serif.text-3xl.sm:text-4xl",
+      "text": "원스톱 의료 접근 & 환자 종합 센터",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.06",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "p.text-xs.sm:text-sm.max-w-2xl",
+      "text": "보험 자격 진단, 2026 ACA 보조금 계산, 영-한 의학 용어 사전을 자유롭게 이용하세요.",
+      "textColor": "rgba(255, 255, 255, 0.85)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.06",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "a.hub-tab-btn.hub-tab-inactive",
+      "text": "🏥 1. 메디케어 & ACA 자격 진단",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgba(255, 255, 255, 0.12)",
+      "ratio": "1.00",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span",
+      "text": "🏥",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgba(255, 255, 255, 0.12)",
+      "ratio": "1.00",
+      "type": "LIGHT_ON_LIGHT"
+    }
+  ],
+  "https://njaccessportal.com/matcher": [
+    {
+      "selector": "h1.font-serif.text-3xl.sm:text-4xl",
+      "text": "원스톱 의료 접근 & 환자 종합 센터",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.06",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "p.text-xs.sm:text-sm.max-w-2xl",
+      "text": "보험 자격 진단, 2026 ACA 보조금 계산, 영-한 의학 용어 사전을 자유롭게 이용하세요.",
+      "textColor": "rgba(255, 255, 255, 0.85)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.06",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "a.hub-tab-btn.hub-tab-inactive",
+      "text": "🧮 2. ACA 보험료 보조금 계산기",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgba(255, 255, 255, 0.12)",
+      "ratio": "1.00",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span",
+      "text": "🧮",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgba(255, 255, 255, 0.12)",
+      "ratio": "1.00",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "button.btn-primary.w-full.justify-center",
+      "text": "다음 단계 →",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(255, 255, 255)",
+      "ratio": "1.00",
+      "type": "LIGHT_ON_LIGHT"
+    }
+  ],
+  "https://njaccessportal.com/senior-care": [
+    {
+      "selector": "span",
+      "text": "건너뛰기 Skip",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(243, 243, 245)",
+      "ratio": "1.11",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span.hero-pill-badge",
+      "text": "2026 메디케어 중점 가이드",
+      "textColor": "rgba(255, 255, 255, 0.95)",
+      "bgColor": "rgba(255, 255, 255, 0.1)",
+      "ratio": "1.00",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "h1#hero-single-h1",
+      "text": "메디케어 오픈 인롤먼트\n                  10월 15일 – 12월 7일 완벽 가이드",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(243, 243, 245)",
+      "ratio": "1.11",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span.hero-gradient-accent",
+      "text": "10월 15일 – 12월 7일 완벽 가이드",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(243, 243, 245)",
+      "ratio": "1.11",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "p.hero-main-desc",
+      "text": "파트 D $2,100 약값 상한제, 파트 B $202.90 — 2026년 변경 사항과 플랜 비교 체크리스트를",
+      "textColor": "rgba(255, 255, 255, 0.85)",
+      "bgColor": "rgb(243, 243, 245)",
+      "ratio": "1.11",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span.hero-tab-sub",
+      "text": "하이라이트 01",
+      "textColor": "rgb(127, 200, 192)",
+      "bgColor": "rgba(255, 255, 255, 0.08)",
+      "ratio": "1.92",
+      "type": "DARK_ON_DARK"
+    },
+    {
+      "selector": "span.hero-tab-title",
+      "text": "메디케어 & ACA",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgba(255, 255, 255, 0.08)",
+      "ratio": "1.00",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span.hero-tab-sub",
+      "text": "하이라이트 02",
+      "textColor": "rgba(255, 255, 255, 0.45)",
+      "bgColor": "rgb(243, 243, 245)",
+      "ratio": "1.11",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span.hero-tab-title",
+      "text": "환자 내비게이션",
+      "textColor": "rgba(255, 255, 255, 0.65)",
+      "bgColor": "rgb(243, 243, 245)",
+      "ratio": "1.11",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "h3.font-extrabold.text-base.sm:text-2xl",
+      "text": "Healthcare Access Center",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(243, 243, 245)",
+      "ratio": "1.11",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span#medical-videos-count-badge",
+      "text": "91개 영상",
+      "textColor": "rgb(17, 17, 17)",
+      "bgColor": "rgb(24, 24, 24)",
+      "ratio": "1.06",
+      "type": "DARK_ON_DARK"
+    }
+  ],
+  "https://njaccessportal.com/about": [
+    {
+      "selector": "span",
+      "text": "여러분의 든든한 건강 동반자",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgba(255, 255, 255, 0.22)",
+      "ratio": "1.00",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "h1.about-hero-title.text-3xl.sm:text-5xl",
+      "text": "복잡한 병원 이용, 이제 혼자 고민하지 마세요",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.06",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "p.about-hero-sub.max-w-2xl.text-base",
+      "text": "언어 장벽과 복잡한 절차 속에서 여러분을 따뜻하게 안내해 드립니다",
+      "textColor": "rgb(240, 249, 255)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.00",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "div.font-extrabold.text-sm.sm:text-base",
+      "text": "01. 의사 연계",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgba(255, 255, 255, 0.15)",
+      "ratio": "1.00",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "div.text-xs.text-sky-100/90.mt-1",
+      "text": "한국어 가능 전문의 매칭",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgba(255, 255, 255, 0.15)",
+      "ratio": "1.00",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span.about-step-pill",
+      "text": "STEP 01 · 의사 연계 & 통역 동행",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(248, 250, 252)",
+      "ratio": "1.05",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "span.inline-flex.items-center.gap-2",
+      "text": "✨ New Jersey Healthcare Access Center",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.06",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "h2.about-cta-title-text.mb-5",
+      "text": "건강한 삶의 시작, 지금 함께하세요",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.06",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "p.about-cta-desc-text.max-w-2xl.mb-10",
+      "text": "여러분의 건강과 행복을 위해 언제나 곁에서 든든한 길잡이가 되어 드리겠습니다.",
+      "textColor": "rgb(240, 249, 255)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.00",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "p.text-xs.text-sky-100/80.mt-6",
+      "text": "※ 본 상담 및 문의 안내는 뉴저지 동포들을 위한 무료 지원 서비스입니다.",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(248, 248, 246)",
+      "ratio": "1.06",
+      "type": "LIGHT_ON_LIGHT"
+    },
+    {
+      "selector": "button.btn-primary.w-full.justify-center",
+      "text": "문의 제출하기",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(255, 255, 255)",
+      "ratio": "1.00",
+      "type": "LIGHT_ON_LIGHT"
+    }
+  ],
+  "https://njaccessportal.com/blog": [
+    {
+      "selector": "button.category-filter-btn.text-xs.sm:text-sm",
+      "text": "전체",
+      "textColor": "rgb(255, 255, 255)",
+      "bgColor": "rgb(255, 255, 255)",
+      "ratio": "1.00",
+      "type": "LIGHT_ON_LIGHT"
+    }
+  ],
+  "https://njaccessportal.com/forum": []
+}

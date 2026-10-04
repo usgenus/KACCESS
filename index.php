@@ -2990,7 +2990,7 @@ html, body {
             <!-- Section Title Bar -->
             <div class="flex items-center justify-between mb-5 pb-3 border-b border-[#333333]">
               <h2 class="font-extrabold text-2xl sm:text-3xl lg:text-4xl text-white tracking-tight">의학비디오뉴스</h2>
-              <span id="medical-videos-count-badge" class="text-xs font-semibold text-slate-400 bg-[#282828] px-3 py-1 rounded-full border border-[#383838]"><?= count($activeVideos) ?>개 영상</span>
+              <span id="medical-videos-count-badge" class="text-xs font-semibold text-slate-400 bg-[#282828] px-3 py-1 rounded-full border border-[#383838]" style="background-color: #282828 !important; color: #cbd5e1 !important; border: 1px solid #383838 !important;"><?= count($activeVideos) ?>개 영상</span>
             </div>
 
             <!-- Video Player Widget Container (Attached Design Theme) -->
@@ -3127,7 +3127,8 @@ html, body {
               <!-- Quick Link to Forum Reviews -->
               <div class="shrink-0 flex items-center gap-3">
                 <a href="/forum?specialty=hospital_reviews&view=topics" 
-                   class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs sm:text-sm shadow-sm transition-all hover:shadow-md">
+                   class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs sm:text-sm shadow-sm transition-all hover:shadow-md"
+                   style="background-color: #059669 !important; color: #ffffff !important;">
                   <i class="fa-solid fa-comments"></i>
                   <span>병원 이용 후기 &amp; 추천 포럼</span>
                 </a>

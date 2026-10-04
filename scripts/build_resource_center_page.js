@@ -1257,6 +1257,7 @@ const html = `<!DOCTYPE html>
 
     /* 2026 AEP Section */
     #section-open-enrollment {
+      background-color: #0B192C !important;
       background: linear-gradient(135deg, #0B192C 0%, #10233d 50%, #0B192C 100%) !important;
       color: #ffffff !important;
       border: 1px solid rgba(30, 58, 138, 0.6) !important;
@@ -1309,14 +1310,17 @@ const html = `<!DOCTYPE html>
 
     /* Medicare & ACA Dark Heroic Containers & Utility fallbacks */
     .medicare-dark-navy {
+      background-color: #071322 !important;
       background: linear-gradient(135deg, #071322 0%, #0F2342 55%, #1B2A4A 100%) !important;
       color: #ffffff !important;
     }
     .medicare-dark-blue {
+      background-color: #071933 !important;
       background: linear-gradient(135deg, #071933 0%, #0f2d57 50%, #17427d 100%) !important;
       color: #ffffff !important;
     }
     .medicare-dark-banner {
+      background-color: #081a33 !important;
       background: linear-gradient(135deg, #081a33 0%, #0e2b54 60%, #163d74 100%) !important;
       color: #ffffff !important;
     }
