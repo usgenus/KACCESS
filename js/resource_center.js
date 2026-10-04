@@ -56,7 +56,8 @@
 
   function handleHashRouting() {
     if (isSwitchingTab) return;
-    let hash = window.location.hash.replace('#', '') || 'calculator';
+    const defaultTab = (window.location.pathname.indexOf('medicare') !== -1) ? 'medicare' : 'calculator';
+    let hash = window.location.hash.replace('#', '') || defaultTab;
     // Backwards compatibility aliases
     if (hash === 'directory' || hash === 'housing') hash = 'resources';
 

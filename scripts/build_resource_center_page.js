@@ -5,26 +5,8 @@ const BASE_DIR = '/Users/ejyoon/Desktop/KACCESS';
 const medicareHtmlPath = path.join(BASE_DIR, 'medicare.html');
 const destHtmlPath = path.join(BASE_DIR, 'resource-center.html');
 
-// Read existing medicare page to extract its rich sections (AEP, CMS numbers, Parts, IRA, Comparison, etc.)
-let medicareHtml = '';
-try {
-  medicareHtml = fs.readFileSync(medicareHtmlPath, 'utf8');
-} catch (e) {
-  console.warn('Could not read medicare.html directly, using empty fallback');
-}
-
-// Extract the body content of medicare sections
-let medicareSectionsHtml = '';
-const aepMatch = medicareHtml.match(/<!-- ========================================================\s*FEATURE 1: 2026 AEP OPEN ENROLLMENT[\s\S]*?<!-- ========================================================\s*FEATURE 4: 2026 IRA DEEP DIVE[\s\S]*?<\/div>\s*<\/div>\s*<\/div>/);
-if (aepMatch) {
-  medicareSectionsHtml = aepMatch[0];
-} else {
-  const startIdx = medicareHtml.indexOf('<div id="section-open-enrollment"');
-  const endIdx = medicareHtml.indexOf('</main>');
-  if (startIdx !== -1 && endIdx !== -1) {
-    medicareSectionsHtml = medicareHtml.slice(startIdx, endIdx);
-  }
-}
+const { generateMedicareAcaHtml } = require('./generate_medicare_aca_content.js');
+const medicareSectionsHtml = generateMedicareAcaHtml();
 
 // Generate the complete resource-center.html
 const html = `<!DOCTYPE html>
@@ -1304,6 +1286,94 @@ const html = `<!DOCTYPE html>
     }
     .ira-card-title { color: #93c5fd !important; font-size: 16px !important; font-weight: 700 !important; }
     .ira-card-desc { color: #e2e8f0 !important; font-size: 13.5px !important; }
+
+    /* Medicare & ACA Section Clean Styles */
+    .medicare-guide-container details > summary {
+      cursor: pointer;
+      user-select: none;
+      list-style: none;
+    }
+    .medicare-guide-container details > summary::-webkit-details-marker {
+      display: none !important;
+    }
+    .medicare-guide-container details > summary::marker {
+      display: none !important;
+    }
+    .medicare-guide-container details[open] summary svg.accordion-chevron {
+      transform: rotate(180deg);
+    }
+    .medicare-guide-container table {
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    /* Medicare & ACA Dark Heroic Containers & Utility fallbacks */
+    .medicare-dark-navy {
+      background: linear-gradient(135deg, #071322 0%, #0F2342 55%, #1B2A4A 100%) !important;
+      color: #ffffff !important;
+    }
+    .medicare-dark-blue {
+      background: linear-gradient(135deg, #071933 0%, #0f2d57 50%, #17427d 100%) !important;
+      color: #ffffff !important;
+    }
+    .medicare-dark-banner {
+      background: linear-gradient(135deg, #081a33 0%, #0e2b54 60%, #163d74 100%) !important;
+      color: #ffffff !important;
+    }
+    .medicare-guide-container .bg-white\/10 {
+      background-color: rgba(255, 255, 255, 0.1) !important;
+    }
+    .medicare-guide-container .bg-white\/8 {
+      background-color: rgba(255, 255, 255, 0.08) !important;
+    }
+    .medicare-guide-container .bg-white\/5 {
+      background-color: rgba(255, 255, 255, 0.05) !important;
+    }
+    .medicare-guide-container .bg-white\/12:hover {
+      background-color: rgba(255, 255, 255, 0.12) !important;
+    }
+    .medicare-guide-container .border-white\/10 {
+      border-color: rgba(255, 255, 255, 0.1) !important;
+    }
+    .medicare-guide-container .border-white\/15 {
+      border-color: rgba(255, 255, 255, 0.15) !important;
+    }
+    .medicare-guide-container .border-white\/20 {
+      border-color: rgba(255, 255, 255, 0.2) !important;
+    }
+    .medicare-guide-container .text-slate-300 {
+      color: #cbd5e1 !important;
+    }
+    .medicare-guide-container .text-slate-200 {
+      color: #e2e8f0 !important;
+    }
+    .medicare-guide-container .text-blue-200 {
+      color: #bfdbfe !important;
+    }
+    .medicare-guide-container .text-blue-300 {
+      color: #93c5fd !important;
+    }
+    .medicare-guide-container .text-emerald-200 {
+      color: #a7f3d0 !important;
+    }
+    .medicare-guide-container .text-emerald-300 {
+      color: #6ee7b7 !important;
+    }
+    .medicare-guide-container .bg-emerald-950\/40 {
+      background-color: rgba(2, 44, 34, 0.5) !important;
+    }
+    .medicare-guide-container .bg-blue-950\/40 {
+      background-color: rgba(23, 37, 84, 0.5) !important;
+    }
+    .medicare-guide-container .bg-emerald-500\/30 {
+      background-color: rgba(16, 185, 129, 0.3) !important;
+    }
+    .medicare-guide-container .bg-red-900\/40 {
+      background-color: rgba(127, 29, 29, 0.4) !important;
+    }
+    .medicare-guide-container .bg-red-500\/20 {
+      background-color: rgba(239, 68, 68, 0.2) !important;
+    }
   </style>
   <style id="njap-logo-anim-styles">
     .njap-brand-link {
@@ -2448,9 +2518,9 @@ const html = `<!DOCTYPE html>
   </footer>
 
   <!-- Scripts -->
-  <script src="/data/resource_center_data.js?v=20261004_no_icons_v1"></script>
-  <script src="/js/resource_calculator.js?v=20261004_no_icons_v1"></script>
-  <script src="/js/resource_center.js?v=20261004_no_icons_v1"></script>
+  <script src="/data/resource_center_data.js?v=20261004_medicare_aca_v1"></script>
+  <script src="/js/resource_calculator.js?v=20261004_medicare_aca_v1"></script>
+  <script src="/js/resource_center.js?v=20261004_medicare_aca_v1"></script>
   <script src="/js/fixes.js?v=8.1.0"></script>
 </body>
 </html>
