@@ -247,32 +247,124 @@ if (!empty($rawCategory)) {
               class="w-full p-4 rounded-2xl border border-slate-300 text-sm sm:text-base focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20 leading-relaxed font-sans placeholder-slate-400 shadow-2xs"></textarea>
           </div>
 
-          <!-- 3.1. Image Attachment (JPEG, PNG, WEBP) -->
-          <div>
-            <label class="block text-xs sm:text-sm font-bold text-slate-800 mb-2 flex items-center justify-between">
-              <span>사진 / 서류 첨부 (선택 사항)</span>
-              <span class="text-xs font-normal text-slate-400">JPEG, PNG, WEBP (최대 12MB, 최대 5장)</span>
-            </label>
-            
-            <input type="file" id="ask-image-input" accept="image/jpeg,image/png,image/webp" multiple class="hidden" onchange="handleAskImageSelect(this)">
-            
-            <div class="p-5 border-2 border-dashed border-slate-300 hover:border-blue-400 rounded-2xl bg-slate-50/50 hover:bg-blue-50/20 transition-all text-center">
+          <!-- 3.1. Attachment Options: 사진 첨부, 비디오링크, 웹링크 only -->
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <label class="block text-xs sm:text-sm font-bold text-slate-800">
+                첨부 옵션 (선택 사항)
+              </label>
+              <span class="text-xs font-normal text-slate-400">사진 첨부 · 비디오링크 · 웹링크</span>
+            </div>
+
+            <!-- Tab Buttons for the 3 options -->
+            <div class="flex items-center gap-1.5 p-1 bg-slate-100 rounded-2xl border border-slate-200">
+              <button type="button" onclick="switchAttachTab('photo')" id="attach-tab-btn-photo"
+                      class="flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-1.5 bg-white text-blue-600 shadow-xs cursor-pointer">
+                <i class="fa-regular fa-image"></i>
+                <span>사진 첨부</span>
+                <span id="badge-photo-count" class="hidden ml-1 px-1.5 py-0.2 rounded-full bg-blue-100 text-blue-700 text-[10px] font-black">0</span>
+              </button>
+
+              <button type="button" onclick="switchAttachTab('video')" id="attach-tab-btn-video"
+                      class="flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 cursor-pointer">
+                <i class="fa-solid fa-play"></i>
+                <span>비디오링크</span>
+                <span id="badge-video-active" class="hidden ml-1 px-1.5 py-0.2 rounded-full bg-emerald-100 text-emerald-700 text-[10px] font-black">✓</span>
+              </button>
+
+              <button type="button" onclick="switchAttachTab('link')" id="attach-tab-btn-link"
+                      class="flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 cursor-pointer">
+                <i class="fa-solid fa-link"></i>
+                <span>웹링크</span>
+                <span id="badge-link-active" class="hidden ml-1 px-1.5 py-0.2 rounded-full bg-emerald-100 text-emerald-700 text-[10px] font-black">✓</span>
+              </button>
+            </div>
+
+            <!-- Panel 1: 사진 첨부 -->
+            <div id="attach-panel-photo" class="p-5 border-2 border-dashed border-slate-300 hover:border-blue-400 rounded-2xl bg-slate-50/50 hover:bg-blue-50/20 transition-all text-center">
+              <input type="file" id="ask-image-input" accept="image/jpeg,image/png,image/webp" multiple class="hidden" onchange="handleAskImageSelect(this)">
               <div class="flex flex-col items-center justify-center gap-2">
                 <button type="button" onclick="triggerAskImageUpload()" class="inline-flex items-center gap-2 px-5 py-3 bg-white border border-slate-300 hover:border-blue-500 rounded-2xl text-xs sm:text-sm font-bold text-slate-700 hover:text-blue-600 shadow-2xs transition-all cursor-pointer touch-target">
-                  <span>사진 / 영수증 / 검사결과 이미지 선택</span>
+                  <i class="fa-regular fa-image text-blue-600"></i>
+                  <span>사진 파일 선택</span>
                 </button>
-                <p class="text-xs text-slate-500">
-                  병원 청구서(빌), 처방전, 환부 사진 등 상담에 필요한 사진을 첨부하실 수 있습니다.
+                <p class="text-xs text-slate-400">
+                  JPEG, PNG, WEBP (최대 12MB, 최대 5장)
                 </p>
               </div>
 
               <!-- Uploading Spinner -->
               <div id="ask-upload-spinner" class="hidden mt-3 text-xs text-blue-600 font-semibold flex items-center justify-center gap-2">
-                <span>이미지 업로드 중...</span>
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                <span>사진 업로드 중...</span>
               </div>
 
               <!-- Preview Grid -->
               <div id="ask-images-preview" class="flex flex-wrap gap-3 mt-4 empty:mt-0 justify-center"></div>
+            </div>
+
+            <!-- Panel 2: 비디오링크 -->
+            <div id="attach-panel-video" class="hidden p-5 border border-slate-200 rounded-2xl bg-white shadow-2xs">
+              <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                  <label for="ask-video-url" class="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                    <i class="fa-brands fa-youtube text-red-600 text-sm"></i>
+                    <span>비디오 URL 입력</span>
+                  </label>
+                  <span class="text-[11px] text-slate-400">YouTube, Vimeo, Shorts 등</span>
+                </div>
+                <div class="flex gap-2">
+                  <input type="url" id="ask-video-url" placeholder="https://www.youtube.com/watch?v=... 또는 https://youtu.be/..." 
+                         class="flex-1 px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs sm:text-sm focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
+                         oninput="handleVideoUrlChange(this.value)">
+                  <button type="button" onclick="clearVideoUrl()" class="px-3 py-2 rounded-xl border border-slate-200 text-xs text-slate-500 hover:bg-slate-50 hover:text-slate-800 cursor-pointer">
+                    지우기
+                  </button>
+                </div>
+                <div id="video-preview-container" class="hidden mt-3">
+                  <div class="text-[11px] font-bold text-slate-500 mb-1.5">미리보기</div>
+                  <div id="video-preview-inner" class="rounded-xl overflow-hidden border border-slate-200 bg-black aspect-video max-w-md mx-auto"></div>
+                </div>
+                <p class="text-[11px] text-slate-400">
+                  게시글 본문 하단에 비디오 플레이어가 함께 임베드됩니다.
+                </p>
+              </div>
+            </div>
+
+            <!-- Panel 3: 웹링크 -->
+            <div id="attach-panel-link" class="hidden p-5 border border-slate-200 rounded-2xl bg-white shadow-2xs">
+              <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                  <label for="ask-web-link" class="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                    <i class="fa-solid fa-link text-blue-600 text-sm"></i>
+                    <span>웹사이트 URL 입력</span>
+                  </label>
+                  <span class="text-[11px] text-slate-400">관련 기사, 웹사이트 등</span>
+                </div>
+                <div class="flex gap-2">
+                  <input type="url" id="ask-web-link" placeholder="https://example.com/..." 
+                         class="flex-1 px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs sm:text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+                         oninput="handleWebLinkChange(this.value)">
+                  <button type="button" onclick="clearWebLink()" class="px-3 py-2 rounded-xl border border-slate-200 text-xs text-slate-500 hover:bg-slate-50 hover:text-slate-800 cursor-pointer">
+                    지우기
+                  </button>
+                </div>
+                <div id="web-link-preview-container" class="hidden mt-3">
+                  <div class="text-[11px] font-bold text-slate-500 mb-1.5">미리보기</div>
+                  <div class="p-3 rounded-xl border border-blue-200 bg-blue-50/50 flex items-center justify-between gap-3 text-xs">
+                    <div class="flex items-center gap-2 min-w-0">
+                      <i class="fa-solid fa-globe text-blue-600 shrink-0"></i>
+                      <span id="web-link-preview-text" class="text-slate-800 font-medium truncate"></span>
+                    </div>
+                    <a id="web-link-preview-btn" href="#" target="_blank" rel="noopener noreferrer" class="shrink-0 text-blue-600 font-bold hover:underline flex items-center gap-1">
+                      확인 <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    </a>
+                  </div>
+                </div>
+                <p class="text-[11px] text-slate-400">
+                  게시글 본문 하단에 바로가기 링크 카드로 표시됩니다.
+                </p>
+              </div>
             </div>
           </div>
 
@@ -397,12 +489,101 @@ if (!empty($rawCategory)) {
       input.value = '';
     }
 
+    // Tab switcher for attachment options (사진 첨부, 비디오링크, 웹링크)
+    function switchAttachTab(tab) {
+      const tabs = ['photo', 'video', 'link'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`attach-tab-btn-${t}`);
+        const panel = document.getElementById(`attach-panel-${t}`);
+        if (!btn || !panel) return;
+
+        if (t === tab) {
+          btn.className = "flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-1.5 bg-white text-blue-600 shadow-xs cursor-pointer";
+          panel.classList.remove('hidden');
+        } else {
+          btn.className = "flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 cursor-pointer";
+          panel.classList.add('hidden');
+        }
+      });
+    }
+
+    function extractYouTubeId(url) {
+      if (!url) return null;
+      const match = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts|live)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i);
+      return match ? match[1] : null;
+    }
+
+    function handleVideoUrlChange(val) {
+      const trimmed = (val || '').trim();
+      const badge = document.getElementById('badge-video-active');
+      const container = document.getElementById('video-preview-container');
+      const inner = document.getElementById('video-preview-inner');
+
+      if (!trimmed) {
+        if (badge) badge.classList.add('hidden');
+        if (container) container.classList.add('hidden');
+        if (inner) inner.innerHTML = '';
+        return;
+      }
+
+      if (badge) badge.classList.remove('hidden');
+      const ytId = extractYouTubeId(trimmed);
+
+      if (ytId && inner && container) {
+        inner.innerHTML = `<iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/${ytId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+        container.classList.remove('hidden');
+      } else if (container) {
+        container.classList.add('hidden');
+      }
+    }
+
+    function clearVideoUrl() {
+      const input = document.getElementById('ask-video-url');
+      if (input) input.value = '';
+      handleVideoUrlChange('');
+    }
+
+    function handleWebLinkChange(val) {
+      const trimmed = (val || '').trim();
+      const badge = document.getElementById('badge-link-active');
+      const container = document.getElementById('web-link-preview-container');
+      const text = document.getElementById('web-link-preview-text');
+      const btn = document.getElementById('web-link-preview-btn');
+
+      if (!trimmed || (!trimmed.startsWith('http://') && !trimmed.startsWith('https://'))) {
+        if (badge) badge.classList.add('hidden');
+        if (container) container.classList.add('hidden');
+        return;
+      }
+
+      if (badge) badge.classList.remove('hidden');
+      if (container) container.classList.remove('hidden');
+      if (text) text.textContent = trimmed;
+      if (btn) btn.href = trimmed;
+    }
+
+    function clearWebLink() {
+      const input = document.getElementById('ask-web-link');
+      if (input) input.value = '';
+      handleWebLinkChange('');
+    }
+
     function removeAskImage(index) {
       uploadedImages.splice(index, 1);
       renderAskImagePreviews();
     }
 
     function renderAskImagePreviews() {
+      const countBadge = document.getElementById('badge-photo-count');
+      if (countBadge) {
+        if (uploadedImages.length > 0) {
+          countBadge.textContent = uploadedImages.length;
+          countBadge.classList.remove('hidden');
+        } else {
+          countBadge.classList.add('hidden');
+        }
+      }
+
       const previewBox = document.getElementById('ask-images-preview');
       if (!previewBox) return;
 
@@ -445,8 +626,8 @@ if (!empty($rawCategory)) {
         const parts = cur.split(',').map(s => s.trim()).filter(Boolean);
         if (!parts.includes(tagName)) {
           parts.push(tagName);
-          input.value = parts.join(', ');
         }
+        input.value = parts.join(', ');
       }
       input.focus();
     };
@@ -465,6 +646,8 @@ if (!empty($rawCategory)) {
       const body = document.getElementById('body').value.trim();
       const rawTags = document.getElementById('tags')?.value.trim() || '';
       const tags = rawTags.split(',').map(t => t.trim()).filter(Boolean);
+      const videoUrl = document.getElementById('ask-video-url')?.value.trim() || '';
+      const webLink = document.getElementById('ask-web-link')?.value.trim() || '';
 
       if (!title || !body) return;
 
@@ -484,7 +667,9 @@ if (!empty($rawCategory)) {
             specialty_id: (categoryId === 'medical_health' && subSpecialtyId) ? subSpecialtyId : categoryId,
             author_name: authorName,
             tags: tags,
-            images: uploadedImages
+            images: uploadedImages,
+            video_url: videoUrl,
+            web_link: webLink
           })
         });
         const data = await res.json();

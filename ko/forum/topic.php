@@ -396,6 +396,55 @@ $forumPostingSchema = [
               <?= htmlspecialchars($question['body'] ?? '') ?>
             </div>
 
+            <!-- Attached Video Display -->
+            <?php if (!empty($question['videoUrl'])): 
+              $videoUrl = $question['videoUrl'];
+              $ytId = '';
+              if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts|live)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i', $videoUrl, $m)) {
+                $ytId = $m[1];
+              }
+            ?>
+              <div class="mt-4 mb-4">
+                <?php if ($ytId): ?>
+                  <div class="relative w-full aspect-video rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-black">
+                    <iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/<?= htmlspecialchars($ytId) ?>" title="비디오 플레이어" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                  </div>
+                <?php else: ?>
+                  <a href="<?= htmlspecialchars($videoUrl) ?>" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-3.5 rounded-2xl border border-red-200 bg-red-50/50 hover:bg-red-50 transition-all text-slate-800 group">
+                    <div class="w-10 h-10 rounded-xl bg-red-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                      <i class="fa-solid fa-play"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <div class="text-xs font-bold text-red-700">비디오 링크</div>
+                      <div class="text-xs sm:text-sm text-slate-700 truncate"><?= htmlspecialchars($videoUrl) ?></div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-red-600 mr-1"></i>
+                  </a>
+                <?php endif; ?>
+              </div>
+            <?php endif; ?>
+
+            <!-- Attached Web Link Display -->
+            <?php if (!empty($question['webLink'])): 
+              $linkUrl = $question['webLink'];
+              $parsedHost = parse_url($linkUrl, PHP_URL_HOST) ?: $linkUrl;
+            ?>
+              <div class="mt-3 mb-4">
+                <a href="<?= htmlspecialchars($linkUrl) ?>" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-3.5 rounded-2xl border border-blue-200 bg-blue-50/40 hover:bg-blue-50 transition-all text-slate-800 group shadow-2xs">
+                  <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                    <i class="fa-solid fa-link"></i>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <div class="text-[11px] font-bold text-blue-700 uppercase tracking-wider"><?= htmlspecialchars($parsedHost) ?></div>
+                    <div class="text-xs sm:text-sm text-slate-800 font-semibold truncate"><?= htmlspecialchars($linkUrl) ?></div>
+                  </div>
+                  <span class="hidden sm:inline-flex items-center gap-1 text-xs font-bold text-blue-600 group-hover:text-blue-800">
+                    웹링크 방문 <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                  </span>
+                </a>
+              </div>
+            <?php endif; ?>
+
             <!-- Question Images / Poster Display -->
             <?php if (!empty($question['images'])): ?>
               <div class="mt-4 mb-5">
@@ -414,11 +463,11 @@ $forumPostingSchema = [
                     </div>
                   <?php endif; ?>
                 <?php else: ?>
-                  <!-- Medical Question Attached Photos Grid -->
+                  <!-- Attached Photos Grid -->
                   <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
                     <?php foreach ($question['images'] as $qImg): ?>
                       <a href="<?= htmlspecialchars($qImg) ?>" target="_blank" class="block rounded-xl overflow-hidden border border-slate-200 aspect-video hover:opacity-90 bg-slate-100 shadow-2xs group relative">
-                        <img src="<?= htmlspecialchars($qImg) ?>" class="w-full h-full object-cover" alt="상담 첨부 사진" />
+                        <img src="<?= htmlspecialchars($qImg) ?>" class="w-full h-full object-cover" alt="첨부 사진" />
                         <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-bold gap-1">
                           <span>확대</span>
                         </div>

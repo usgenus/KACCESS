@@ -1045,7 +1045,7 @@ function forum_get_question(string $id, bool $incrementView = true): ?array {
 /**
  * Add a new question (supports category & subSpecialty)
  */
-function forum_add_question(string $title, string $body, string $specialtyId, array $user, ?string $customAuthorName = null, array $images = [], ?string $subSpecialtyId = null): array {
+function forum_add_question(string $title, string $body, string $specialtyId, array $user, ?string $customAuthorName = null, array $images = [], ?string $subSpecialtyId = null, ?string $videoUrl = null, ?string $webLink = null): array {
     $data = get_forum_data();
     $id = 'q_' . bin2hex(random_bytes(6));
     $now = date('c');
@@ -1082,6 +1082,8 @@ function forum_add_question(string $title, string $body, string $specialtyId, ar
         'authorAvatar' => $user['avatar'] ?? 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&q=80',
         'authorBadge' => $isClinician ? 'Verified Clinician' : null,
         'images' => $cleanImages,
+        'videoUrl' => $videoUrl ? trim($videoUrl) : null,
+        'webLink' => $webLink ? trim($webLink) : null,
         'viewCount' => 0,
         'replyCount' => 0,
         'status' => 'active',

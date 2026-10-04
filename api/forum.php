@@ -198,8 +198,11 @@ if ($method === 'POST') {
             $images = is_array($decoded) ? $decoded : ($images ? [$images] : []);
         }
 
+        $videoUrl = trim($input['video_url'] ?? ($input['videoUrl'] ?? ''));
+        $webLink = trim($input['web_link'] ?? ($input['webLink'] ?? ''));
+
         $authorName = trim($input['author_name'] ?? ($input['name'] ?? ($input['nickname'] ?? '')));
-        $question = forum_add_question($title, $body, $specialtyId, $user, $authorName ?: null, $images, $subSpecialtyId);
+        $question = forum_add_question($title, $body, $specialtyId, $user, $authorName ?: null, $images, $subSpecialtyId, $videoUrl ?: null, $webLink ?: null);
         echo json_encode([
             'success' => true,
             'message' => '질문/정보 나눔 게시물이 성공적으로 등록되었습니다.',
