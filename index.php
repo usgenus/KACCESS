@@ -1197,7 +1197,10 @@ html, body {
           <a class="nav-link pb-0.5 font-bold text-brand-blue cursor-pointer" href="/" onclick="navigateToHome(event); return false;">홈</a>
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/blog">뉴스</a>
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/forum">커뮤니티 포럼</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/resource-center">의료정보센터</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue flex flex-col items-center justify-center leading-tight text-center" href="/resource-center">
+            <span class="text-[12px] leading-tight font-semibold">의료&amp;커뮤니티</span>
+            <span class="text-[14px] leading-tight font-bold">정보센터</span>
+          </a>
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/about">의료 접근센터</a>
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue flex flex-col items-center justify-center leading-tight group" href="/engine" target="_self" title="Universal Access Engine (Marketing Client)">
             <span class="text-[13.5px] font-bold text-slate-800 group-hover:text-brand-blue tracking-tight">Engine</span>
@@ -1245,11 +1248,14 @@ html, body {
         <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
 
-      <!-- 4. 의료정보센터 -->
+      <!-- 4. 의료&커뮤니티 정보센터 -->
       <a href="/resource-center" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-          <span class="text-[15px]">의료정보센터</span>
+          <div class="flex flex-col text-left leading-tight">
+            <span class="text-[12px] text-slate-500 font-medium">의료&amp;커뮤니티</span>
+            <span class="text-[15px] font-bold text-slate-800">정보센터</span>
+          </div>
         </div>
         <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>

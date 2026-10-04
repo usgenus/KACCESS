@@ -421,7 +421,7 @@
     var isHome = cleanPath === '/' || cleanPath === '';
     var isBlog = cleanPath.indexOf('/blog') === 0;
     var isForum = cleanPath.indexOf('/forum') === 0;
-    var isMedicare = cleanPath.indexOf('/medicare') === 0;
+    var isMedicare = cleanPath.indexOf('/medicare') === 0 || cleanPath.indexOf('/resource-center') === 0;
     var isAbout = cleanPath.indexOf('/about') === 0;
     var isEngine = cleanPath.indexOf('/engine') === 0;
 
@@ -453,11 +453,14 @@
       '  <svg class="w-4 h-4 ' + (isForum ? 'text-brand-blue' : 'text-slate-300') + '" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>',
       '</a>',
       '',
-      '<!-- 4. Medicare & ACA -->',
-      '<a href="' + base + '/medicare" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isMedicare ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
+      '<!-- 4. 의료&커뮤니티 정보센터 -->',
+      '<a href="' + base + '/resource-center" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 ' + (isMedicare ? 'font-bold text-brand-blue bg-blue-50/70' : 'font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50') + '">',
       '  <div class="flex items-center gap-3">',
       '    <svg class="w-5 h-5 ' + (isMedicare ? 'text-brand-blue' : 'text-slate-400') + ' shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>',
-      '    <span class="text-[15px]">메디케어 & ACA</span>',
+      '    <div class="flex flex-col text-left leading-tight">',
+      '      <span class="text-[12px] ' + (isMedicare ? 'text-blue-600' : 'text-slate-500') + ' font-medium">의료&amp;커뮤니티</span>',
+      '      <span class="text-[15px] ' + (isMedicare ? 'text-brand-blue font-bold' : 'text-slate-800 font-bold') + '">정보센터</span>',
+      '    </div>',
       '  </div>',
       '  <svg class="w-4 h-4 ' + (isMedicare ? 'text-brand-blue' : 'text-slate-300') + '" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>',
       '</a>',
@@ -890,11 +893,12 @@
         if (t === '시니어 케어' || t === '환자도우미') a.remove();
       });
 
-      // Convert Medicare & ACA to 의료정보센터 (/resource-center)
+      // Convert Medicare & ACA to 의료&커뮤니티 정보센터 (/resource-center)
       var medLinks = desktopDiv.querySelectorAll('a[href*="/medicare"]');
       medLinks.forEach(function(a) {
         a.setAttribute('href', '/resource-center');
-        a.textContent = '의료정보센터';
+        a.className = 'nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue flex flex-col items-center justify-center leading-tight text-center';
+        a.innerHTML = '<span class="text-[12px] leading-tight font-semibold">의료&amp;커뮤니티</span><span class="text-[14px] leading-tight font-bold">정보센터</span>';
       });
 
       // Ensure /resource-center exists
@@ -902,15 +906,19 @@
       if (!rcLink) {
         var forumLink = desktopDiv.querySelector('a[href*="/forum"]');
         var newRc = document.createElement('a');
-        newRc.className = 'nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue';
+        newRc.className = 'nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue flex flex-col items-center justify-center leading-tight text-center';
         newRc.href = '/resource-center';
-        newRc.textContent = '의료정보센터';
+        newRc.innerHTML = '<span class="text-[12px] leading-tight font-semibold">의료&amp;커뮤니티</span><span class="text-[14px] leading-tight font-bold">정보센터</span>';
         if (forumLink && forumLink.nextSibling) {
           desktopDiv.insertBefore(newRc, forumLink.nextSibling);
         } else {
           var aboutLink = desktopDiv.querySelector('a[href*="/about"]');
           if (aboutLink) desktopDiv.insertBefore(newRc, aboutLink);
           else desktopDiv.appendChild(newRc);
+        }
+      } else {
+        if (!rcLink.querySelector('span') || rcLink.textContent.indexOf('의료&커뮤니티') === -1) {
+          rcLink.innerHTML = '<span class="text-[12px] leading-tight font-semibold">의료&amp;커뮤니티</span><span class="text-[14px] leading-tight font-bold">정보센터</span>';
         }
       }
 
@@ -930,9 +938,9 @@
       }
       if (aRc) {
         if (isRc) {
-          aRc.className = 'nav-link pb-0.5 font-bold text-brand-blue';
+          aRc.className = 'nav-link pb-0.5 font-bold text-brand-blue flex flex-col items-center justify-center leading-tight text-center';
         } else {
-          aRc.className = 'nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue';
+          aRc.className = 'nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue flex flex-col items-center justify-center leading-tight text-center';
         }
       }
     }
@@ -949,15 +957,16 @@
       });
 
       // Convert Medicare link to Resource Center
-      var mMed = mobileDropdown.querySelectorAll('a[href*="/medicare"]');
+      var mMed = mobileDropdown.querySelectorAll('a[href*="/medicare"], a[href*="/resource-center"]');
       mMed.forEach(function(a) {
         a.setAttribute('href', '/resource-center');
-        var spans = a.querySelectorAll('span');
-        spans.forEach(function(sp) {
-          if (sp.textContent.indexOf('메디케어') !== -1) {
-            sp.textContent = '의료정보센터';
+        var textWrap = a.querySelector('.flex-col');
+        if (!textWrap) {
+          var sp = a.querySelector('span');
+          if (sp && (sp.textContent.indexOf('메디케어') !== -1 || sp.textContent.indexOf('의료정보센터') !== -1 || sp.textContent.indexOf('정보센터') !== -1)) {
+            sp.outerHTML = '<div class="flex flex-col text-left leading-tight"><span class="text-[12px] text-slate-500 font-medium">의료&amp;커뮤니티</span><span class="text-[15px] font-bold text-slate-800">정보센터</span></div>';
           }
-        });
+        }
       });
 
       // Update About link in mobile dropdown to 의료 접근센터

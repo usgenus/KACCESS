@@ -1155,7 +1155,10 @@ const html = `<!DOCTYPE html>
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/">홈</a>
           <a class="nav-link pb-0.5 text-slate-700 hover:text-brand-blue" href="/blog">뉴스</a>
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/forum">커뮤니티 포럼</a>
-          <a class="nav-link pb-0.5 font-bold text-brand-blue" href="/resource-center">의료정보센터</a>
+          <a class="nav-link pb-0.5 font-bold text-brand-blue flex flex-col items-center justify-center leading-tight text-center" href="/resource-center">
+            <span class="text-[12px] leading-tight font-semibold">의료&amp;커뮤니티</span>
+            <span class="text-[14px] leading-tight font-bold">정보센터</span>
+          </a>
           <a class="nav-link pb-0.5 text-slate-700 hover:text-brand-blue" href="/about">의료 접근센터</a>
           <a class="nav-link pb-0.5 text-slate-700 hover:text-brand-blue flex flex-col items-center justify-center leading-tight" href="/engine">
             <span class="text-[13.5px] font-bold text-slate-800">Engine</span>
@@ -1176,6 +1179,67 @@ const html = `<!DOCTYPE html>
           </button>
         </div>
       </div>
+    </div>
+    <div id="mobile-menu-dropdown" class="md:hidden overflow-hidden transition-all duration-300 max-h-0 opacity-0 bg-white/98 backdrop-blur-md border-t border-brand-border px-4 py-3 flex flex-col gap-1" style="-webkit-overflow-scrolling: touch;">
+      <!-- 1. 홈 -->
+      <a href="/" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          <span class="text-[15px]">홈</span>
+        </div>
+        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+
+      <!-- 2. 뉴스 -->
+      <a href="/blog" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+          <span class="text-[15px]">뉴스</span>
+        </div>
+        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+
+      <!-- 2.5. 커뮤니티 포럼 -->
+      <a href="/forum" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>
+          <span class="text-[15px]">커뮤니티 포럼</span>
+        </div>
+        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+
+      <!-- 4. 의료&커뮤니티 정보센터 -->
+      <a href="/resource-center" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-bold text-brand-blue bg-blue-50/70">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-brand-blue shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          <div class="flex flex-col text-left leading-tight">
+            <span class="text-[12px] text-blue-600 font-medium">의료&amp;커뮤니티</span>
+            <span class="text-[15px] font-bold text-brand-blue">정보센터</span>
+          </div>
+        </div>
+        <svg class="w-4 h-4 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+
+      <!-- 6. 의료 접근센터 -->
+      <a href="/about" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <span class="text-[15px]">의료 접근센터</span>
+        </div>
+        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+
+      <!-- 7. Engine (Marketing Client) -->
+      <a href="/engine" target="_self" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          <div class="flex flex-col text-left">
+            <span class="text-[15px] font-bold text-slate-800">Engine</span>
+            <span class="text-[10px] font-semibold text-slate-400 leading-none">Marketing Client</span>
+          </div>
+        </div>
+        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
     </div>
   </nav>
 

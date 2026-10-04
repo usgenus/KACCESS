@@ -12,10 +12,19 @@ const filesToUpload = [
   'data/resource_center_data.js',
   'js/resource_calculator.js',
   'js/resource_center.js',
+  'js/fixes.js',
+  'ko/js/fixes.js',
   'resource-center.html',
   'medicare.html',
   'medicare/index.html',
   'index.php',
+  'about.html',
+  'about/index.html',
+  'forum/components.php',
+  'ko/forum/components.php',
+  'blog.php',
+  'blog-post.php',
+  'calculator.html',
   '.htaccess'
 ];
 
