@@ -31,7 +31,6 @@ const corePages = [
   { loc: baseUrl + '/senior-care', priority: '0.9', changefreq: 'weekly', lastmod: today },
   { loc: baseUrl + '/medicare', priority: '0.85', changefreq: 'weekly', lastmod: today },
   { loc: baseUrl + '/tool', priority: '0.8', changefreq: 'monthly', lastmod: today },
-  { loc: baseUrl + '/matcher', priority: '0.7', changefreq: 'monthly', lastmod: today },
   { loc: baseUrl + '/calculator', priority: '0.7', changefreq: 'monthly', lastmod: today },
   { loc: baseUrl + '/dictionary', priority: '0.7', changefreq: 'monthly', lastmod: today },
   { loc: baseUrl + '/about', priority: '0.8', changefreq: 'monthly', lastmod: today }

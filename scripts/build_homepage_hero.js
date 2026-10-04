@@ -469,19 +469,19 @@ const heroHTML = `      <!-- 1. Two-Phase Homepage Hero: Video Intro -> 5-Servic
                 <div>
                   <span class="hero-pill-badge">
                     <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-                    무료 자격 진단
+                    2026 복지 혜택 계산기
                   </span>
                 </div>
                 <div class="hero-main-title">
                   나에게 맞는 혜택을<br>
-                  <span class="hero-gradient-accent">5개 질문으로 확인</span>
+                  <span class="hero-gradient-accent">실시간 맞춤 계산기로 확인</span>
                 </div>
                 <p class="hero-main-desc">
-                  메디케어·메디케이드·Charity Care·ACA 중 받을 수 있는 혜택을 바로 확인하세요.
+                  메디케어·메디케이드·시니어 SNAP·PAAD 중 지원받을 수 있는 혜택을 즉시 계산하세요.
                 </p>
                 <div class="hero-btn-row">
-                  <a href="/matcher" class="hero-btn-primary">
-                    <span>자격 확인하기</span>
+                  <a href="/resource-center?tab=calculator" class="hero-btn-primary">
+                    <span>자격 계산하기</span>
                     <svg class="hero-btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
                   </a>
                 </div>
@@ -497,7 +497,7 @@ const heroHTML = `      <!-- 1. Two-Phase Homepage Hero: Video Intro -> 5-Servic
                 <img id="hero-visual-2" src="/uploads/images/hero_slide_2.jpg" alt="찾아가는 맞춤 내비게이션" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
                 <img id="hero-visual-3" src="/uploads/images/hero_slide_forum.jpg?v=1" alt="5개 게시판 · 실시간 소통" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
                 <img id="hero-visual-4" src="/uploads/images/hero_slide_4.jpg" alt="TOP 10 의료 칼럼" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
-                <img id="hero-visual-5" src="/uploads/images/hero_slide_5.jpg" alt="5분 무료 자격 진단" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
+                <img id="hero-visual-5" src="/uploads/images/hero_slide_5.jpg" alt="2026 복지 혜택 자격 계산기" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
                 
                 <!-- Bottom Caption Bar -->
                 <div class="hero-card-caption-bar">
@@ -582,7 +582,7 @@ const heroHTML = `      <!-- 1. Two-Phase Homepage Hero: Video Intro -> 5-Servic
               '찾아가는 맞춤 내비게이션',
               '5개 게시판 · 실시간 소통',
               'TOP 10 의료 칼럼',
-              '5분 무료 자격 진단'
+              '2026 복지 혜택 자격 계산기'
             ];
 
             var slideHeadlines = [
@@ -590,7 +590,7 @@ const heroHTML = `      <!-- 1. Two-Phase Homepage Hero: Video Intro -> 5-Servic
               '병원 찾기가 막막하다면<br><span class="hero-gradient-accent">전문 내비게이터와 함께</span>',
               '궁금한 건강 정보를<br><span class="hero-gradient-accent">커뮤니티에 물어보세요</span>',
               '한인 건강 뉴스를<br><span class="hero-gradient-accent">한눈에 확인하세요</span>',
-              '나에게 맞는 혜택을<br><span class="hero-gradient-accent">5개 질문으로 확인</span>'
+              '나에게 맞는 혜택을<br><span class="hero-gradient-accent">실시간 맞춤 계산기로 확인</span>'
             ];
 
             function transitionToBillboard() {

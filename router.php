@@ -97,7 +97,7 @@ if (preg_match('#^/dictionary/?$#', $uri)) {
 }
 
 if (preg_match('#^/matcher/?$#', $uri)) {
-    readfile(__DIR__ . '/matcher.html');
+    header('Location: /resource-center?tab=calculator', true, 301);
     exit;
 }
 

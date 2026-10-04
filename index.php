@@ -1902,19 +1902,19 @@ html, body {
                 <div>
                   <span class="hero-pill-badge">
                     <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-                    무료 자격 진단
+                    2026 복지 혜택 계산기
                   </span>
                 </div>
                 <div class="hero-main-title">
                   나에게 맞는 혜택을<br>
-                  <span class="hero-gradient-accent">5개 질문으로 확인</span>
+                  <span class="hero-gradient-accent">실시간 맞춤 계산기로 확인</span>
                 </div>
                 <p class="hero-main-desc">
-                  메디케어·메디케이드·Charity Care·ACA 중 받을 수 있는 혜택을 바로 확인하세요.
+                  메디케어·메디케이드·시니어 SNAP·PAAD 중 지원받을 수 있는 혜택을 즉시 계산하세요.
                 </p>
                 <div class="hero-btn-row">
-                  <a href="/matcher" class="hero-btn-primary">
-                    <span>자격 확인하기</span>
+                  <a href="/resource-center?tab=calculator" class="hero-btn-primary">
+                    <span>자격 계산하기</span>
                     <svg class="hero-btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
                   </a>
                 </div>
@@ -1930,7 +1930,7 @@ html, body {
                 <img id="hero-visual-2" src="/uploads/images/hero_slide_2.jpg" alt="찾아가는 맞춤 내비게이션" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
                 <img id="hero-visual-3" src="/uploads/images/hero_slide_forum.jpg?v=1" alt="5개 게시판 · 실시간 소통" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
                 <img id="hero-visual-4" src="/uploads/images/hero_slide_recall.jpg?v=<?= time() ?>" alt="긴급 식품·의약품 리콜 속보" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
-                <img id="hero-visual-5" src="/uploads/images/hero_slide_5.jpg" alt="5분 무료 자격 진단" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
+                <img id="hero-visual-5" src="/uploads/images/hero_slide_5.jpg" alt="2026 복지 혜택 자격 계산기" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
                 
                 <!-- Bottom Caption Bar -->
                 <div class="hero-card-caption-bar">
@@ -2015,7 +2015,7 @@ html, body {
               '찾아가는 맞춤 내비게이션',
               '5개 게시판 · 실시간 소통',
               '긴급 식품·의약품 리콜 속보',
-              '5분 무료 자격 진단'
+              '2026 복지 혜택 자격 계산기'
             ];
 
             var slideHeadlines = [
@@ -2023,7 +2023,7 @@ html, body {
               '병원 찾기가 막막하다면<br><span class="hero-gradient-accent">전문 내비게이터와 함께</span>',
               '궁금한 건강 정보를<br><span class="hero-gradient-accent">커뮤니티에 물어보세요</span>',
               '한인 건강 뉴스를<br><span class="hero-gradient-accent">한눈에 확인하세요</span>',
-              '나에게 맞는 혜택을<br><span class="hero-gradient-accent">5개 질문으로 확인</span>'
+              '나에게 맞는 혜택을<br><span class="hero-gradient-accent">실시간 맞춤 계산기로 확인</span>'
             ];
 
             function transitionToBillboard() {
@@ -2611,25 +2611,15 @@ html, body {
           <div class="max-w-3xl mb-8">
             <span class="bg-blue-500/20 text-blue-300 border border-blue-400/30 text-xs font-extrabold uppercase tracking-widest px-3 py-1 rounded-full inline-block mb-3">SPECIAL COVERAGE &amp; PATIENT SERVICES</span>
             <h2 class="font-extrabold text-3xl sm:text-4xl text-white mb-3">원스톱 의료 접근 &amp; 환자 종합 센터</h2>
-            <p class="text-white/70 text-sm sm:text-base leading-relaxed">2026 복지 혜택 계산기부터 건강보험 자격 진단, ACA 보조금 계산, 의학 용어 사전까지 한곳에서 편리하게 이용하실 수 있습니다.</p>
+            <p class="text-white/70 text-sm sm:text-base leading-relaxed">2026 복지 혜택 &amp; 의료 자격확인 계산기부터 ACA 보조금 계산, 영-한 의학 용어 사전까지 한곳에서 편리하게 이용하실 수 있습니다.</p>
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-5">
             <a class="group" href="/resource-center?tab=calculator">
               <div class="bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl p-5 h-full flex flex-col justify-between transition-all duration-300 group-hover:border-blue-400/50">
                 <div>
                   <div class="flex items-center justify-start mb-4"><span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-400/30">BENEFITS SCREENER</span></div>
                   <h3 class="font-bold text-lg text-white mb-2 group-hover:text-blue-300 transition-colors">2026 복지 혜택 &amp; 의료 자격확인 계산기</h3>
                   <p class="text-xs text-white/60 leading-relaxed mb-4">가구원 수와 월 소득으로 메디케이드, 시니어 SNAP, PAAD 등 맞춤 공공 혜택 자격을 즉시 진단합니다.</p>
-                </div>
-                <div class="text-xs font-bold text-blue-400 group-hover:translate-x-1 transition-transform flex items-center gap-1">서비스 바로가기 →</div>
-              </div>
-            </a>
-            <a class="group" href="/matcher">
-              <div class="bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl p-5 h-full flex flex-col justify-between transition-all duration-300 group-hover:border-blue-400/50">
-                <div>
-                  <div class="flex items-center justify-start mb-4"><span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-white/10 text-white/80">INSURANCE MATCHER</span></div>
-                  <h3 class="font-bold text-lg text-white mb-2 group-hover:text-blue-300 transition-colors">메디케어 &amp; ACA 자격 진단</h3>
-                  <p class="text-xs text-white/60 leading-relaxed mb-4">나이, 소득, 신분 상태에 따른 맞춤형 건강보험 혜택 및 보조금을 즉시 진단하세요.</p>
                 </div>
                 <div class="text-xs font-bold text-blue-400 group-hover:translate-x-1 transition-transform flex items-center gap-1">서비스 바로가기 →</div>
               </div>
@@ -3719,7 +3709,7 @@ html, body {
         <div>
           <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">스마트 의료 도구</p>
           <ul class="space-y-2.5">
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/matcher">보험 자격 진단</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/resource-center?tab=calculator">자격확인 계산기</a></li>
             <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/calculator">보조금 계산기</a></li>
             <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/dictionary">의학 용어 사전</a></li>
           </ul>

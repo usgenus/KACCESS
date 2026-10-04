@@ -62,12 +62,7 @@ $coreRoutes = [
         'changefreq' => 'monthly',
         'lastmod' => date('Y-m-d')
     ],
-    [
-        'path' => '/matcher',
-        'priority' => '0.7',
-        'changefreq' => 'monthly',
-        'lastmod' => date('Y-m-d')
-    ],
+
     [
         'path' => '/calculator',
         'priority' => '0.7',
