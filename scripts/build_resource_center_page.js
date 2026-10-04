@@ -272,12 +272,13 @@ const html = `<!DOCTYPE html>
     }
     .rc-hero-tabs-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 12px;
       width: 100%;
     }
-    @media (max-width: 639px) {
+    @media (max-width: 768px) {
       .rc-hero-tabs-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 8px;
       }
     }
@@ -1285,6 +1286,32 @@ const html = `<!DOCTYPE html>
               </div>
             </div>
 
+            <!-- SLIDE 04: 시니어 -->
+            <div id="rc-hero-slide-4" class="hero-slide hidden opacity-0 translate-y-3" data-slide="4">
+              <div>
+                <span class="hero-pill-badge">
+                  <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                  뉴저지 65세 이상 어르신 맞춤 복지 &amp; 생활
+                </span>
+              </div>
+              <div class="hero-main-title">
+                시니어 주거·처방약·재택돌봄·세금동결<br>
+                <span class="hero-gradient-accent">뉴저지 시니어 복지 핵심 가이드</span>
+              </div>
+              <p class="hero-main-desc">
+                HUD 202 독립 시니어 아파트, PAAD $5 약값 상한제, PPP 가족 간병인 유급 지원, 65세 이상 재산세 동결(Senior Freeze) 및 성인 데이케어까지 한눈에 확인하세요.
+              </p>
+              <div class="hero-btn-row">
+                <button type="button" onclick="window.rcHeroTabClick('senior', true)" class="hero-btn-primary">
+                  <span>시니어 리소스 둘러보기</span>
+                  <svg class="hero-btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                </button>
+                <button type="button" onclick="window.rcHeroTabClick('senior', true)" class="hero-btn-white">
+                  <span>시니어 6대 분야별 보기</span>
+                </button>
+              </div>
+            </div>
+
           </div>
 
           <!-- Right Column: Visual Card with Caption -->
@@ -1294,6 +1321,7 @@ const html = `<!DOCTYPE html>
               <img id="rc-hero-visual-1" src="/uploads/images/hero_slide_5.jpg" alt="2026 복지 혜택 자격확인 계산기" class="hero-visual-img" style="opacity: 1; transform: scale(1.0); z-index: 10;" />
               <img id="rc-hero-visual-2" src="/uploads/images/hero_slide_2.jpg" alt="시니어 주거 및 커뮤니티 리소스" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
               <img id="rc-hero-visual-3" src="/uploads/images/hero_slide_1.jpg" alt="2026 메디케어 및 ACA 완벽 가이드" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
+              <img id="rc-hero-visual-4" src="/uploads/images/hero_slide_3.jpg" alt="뉴저지 시니어 복지 및 생활 리소스" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
               
               <!-- Bottom Caption Bar -->
               <div class="hero-card-caption-bar">
@@ -1301,7 +1329,7 @@ const html = `<!DOCTYPE html>
                   2026 연방 빈곤선(FPL) 기준 실시간 자동 판정
                 </span>
                 <span class="hero-card-caption-num">
-                  <span id="rc-hero-visual-num">01</span> / 03
+                  <span id="rc-hero-visual-num">01</span> / 04
                 </span>
               </div>
             </div>
@@ -1309,7 +1337,7 @@ const html = `<!DOCTYPE html>
 
         </div>
 
-        <!-- Bottom: The 3 Button Relative Slide Navigator (Role tablist matching index.php billboard style) -->
+        <!-- Bottom: The 4 Button Relative Slide Navigator (Role tablist matching index.php billboard style) -->
         <div class="mt-6 pt-3 sm:pt-4 border-t border-white/10 w-full">
           <div role="tablist" aria-label="의료정보센터 주요 서비스 하이라이트" class="rc-hero-tabs-grid">
             
@@ -1331,6 +1359,13 @@ const html = `<!DOCTYPE html>
             <button role="tab" id="rc-billboard-tab-3" aria-controls="rc-hero-slide-3" aria-selected="false" tabindex="-1" onclick="window.rcHeroTabClick('medicare', false)" class="hero-tab-item rc-hero-tab" data-slide="3" data-tab="medicare">
               <span class="hero-tab-sub">하이라이트 03</span>
               <span class="hero-tab-title">메디케어 &amp; ACA</span>
+              <div class="hero-tab-bar"></div>
+            </button>
+
+            <!-- Button 4: 시니어 -->
+            <button role="tab" id="rc-billboard-tab-4" aria-controls="rc-hero-slide-4" aria-selected="false" tabindex="-1" onclick="window.rcHeroTabClick('senior', false)" class="hero-tab-item rc-hero-tab" data-slide="4" data-tab="senior">
+              <span class="hero-tab-sub">하이라이트 04</span>
+              <span class="hero-tab-title">시니어</span>
               <div class="hero-tab-bar"></div>
             </button>
 
@@ -1822,6 +1857,158 @@ const html = `<!DOCTYPE html>
         </div>
       </section>
 
+      <!-- ========================================================
+           TAB 4: SENIOR RESOURCES (6 CATEGORIES & INLINE READER)
+           ======================================================== -->
+      <section id="tab-view-senior" class="rc-tab-view hidden">
+        <div class="mb-8">
+          <span class="text-xs font-bold uppercase tracking-widest text-amber-600 block mb-1">New Jersey Senior Care &amp; Advocacy Hub</span>
+          <h2 class="text-2xl sm:text-3xl font-serif font-bold text-slate-900">
+            뉴저지 시니어 복지 &amp; 시니어 전용 생활 가이드
+          </h2>
+          <p class="text-sm text-slate-600 mt-1">
+            65세 이상 어르신과 가족을 위한 주거(시니어 아파트), 처방약 $5 상한제(PAAD), 가족 간병비(PPP), 재산세 동결(Senior Freeze), 어덜트 데이케어 및 법률 권익 보호를 6대 핵심 분야별로 분류하여 제공합니다.
+          </p>
+        </div>
+
+        <!-- 4 Senior Highlights / Key Takeaway Cards -->
+        <div class="rc-grid-4 mb-8">
+          <div class="p-4 rounded-2xl bg-amber-50/60 border border-amber-200/80">
+            <div class="flex items-center gap-2 mb-1.5">
+              <span class="text-xl">🏢</span>
+              <span class="text-xs font-extrabold text-amber-900">시니어 아파트</span>
+            </div>
+            <p class="text-xs text-amber-950 font-semibold mb-1">소득의 30% 저렴한 렌트비</p>
+            <p class="text-[11px] text-amber-800 leading-relaxed">HUD 202 및 HABC 버겐카운티 타운별 단지 신청 (만 62세 이상).</p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-purple-50/60 border border-purple-200/80">
+            <div class="flex items-center gap-2 mb-1.5">
+              <span class="text-xl">💊</span>
+              <span class="text-xs font-extrabold text-purple-900">PAAD 처방약 지원</span>
+            </div>
+            <p class="text-xs text-purple-950 font-semibold mb-1">처방약 1종당 $5 / $7 상한</p>
+            <p class="text-[11px] text-purple-800 leading-relaxed">1인 연소득 $54,936 이하 65세 이상 어르신 약값 획기적 절감.</p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-blue-50/60 border border-blue-200/80">
+            <div class="flex items-center gap-2 mb-1.5">
+              <span class="text-xl">🤝</span>
+              <span class="text-xs font-extrabold text-blue-900">가족 간병비 (PPP)</span>
+            </div>
+            <p class="text-xs text-blue-950 font-semibold mb-1">월 최대 $2,000~$3,500 지원</p>
+            <p class="text-[11px] text-blue-800 leading-relaxed">자녀나 가족을 합법적 유급 간병인으로 지정하여 시급 지급.</p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-teal-50/60 border border-teal-200/80">
+            <div class="flex items-center gap-2 mb-1.5">
+              <span class="text-xl">🏛️</span>
+              <span class="text-xs font-extrabold text-teal-900">Senior Freeze (PTR)</span>
+            </div>
+            <p class="text-xs text-teal-950 font-semibold mb-1">인상된 재산세 100% 동결 환급</p>
+            <p class="text-[11px] text-teal-800 leading-relaxed">1인 소득 $163,050 이하 65세 이상 주택 소유자 전액 환급 지원.</p>
+          </div>
+        </div>
+
+        <!-- 6 Categorized Choices Grid (Navigation Cards) -->
+        <div class="mb-8">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">시니어 관심 분야를 선택하세요 (6대 카테고리)</span>
+            <button type="button" onclick="window.filterBySeniorCategory('all')" id="btnShowAllSeniorResources" class="text-xs font-semibold text-blue-600 hover:text-blue-800 underline cursor-pointer">전체 시니어 가이드 보기</button>
+          </div>
+          <div id="seniorCategoryChoicesContainer" class="rc-choices-grid">
+            <!-- 6 Senior Category Choice Cards injected dynamically -->
+          </div>
+        </div>
+
+        <!-- Inline Senior Guide Reader Container (NO POP UP!) -->
+        <div id="inlineSeniorReader" class="hidden mb-10 p-6 sm:p-8 rounded-3xl bg-white border-2 border-amber-500/40 shadow-xl transition-all">
+          <div class="flex items-center justify-between pb-4 mb-6 border-b border-slate-100">
+            <div class="flex items-center gap-2">
+              <span id="inlineSeniorReaderCatBadge" class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800">시니어 카테고리</span>
+              <span class="text-xs text-slate-400">|</span>
+              <span class="text-xs font-medium text-slate-500">뉴저지 시니어 공식 리서치 브리핑</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <button type="button" onclick="window.print()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 flex items-center gap-1.5 cursor-pointer">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                <span>인쇄 / PDF</span>
+              </button>
+              <button type="button" onclick="closeSeniorInlineReader()" class="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold flex items-center gap-1 cursor-pointer">
+                <span>✕ 닫기</span>
+              </button>
+            </div>
+          </div>
+          <div id="inlineSeniorReaderContent" class="text-slate-800 text-sm sm:text-base leading-relaxed">
+            <!-- Full rewritten guide content injected dynamically -->
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100 flex justify-end">
+            <button type="button" onclick="closeSeniorInlineReader()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 cursor-pointer">
+              ▲ 시니어 가이드 접기 (목록으로 돌아가기)
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter Bar & Search for Senior Guides -->
+        <div id="seniorFilterBar" class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-xs mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="relative w-full sm:w-80">
+            <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <input type="text" id="seniorSearchInput" placeholder="시니어 가이드 실시간 검색 (예: PAAD, 시니어 아파트, PPP)..." class="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 text-sm focus:border-amber-500 focus:outline-none" />
+          </div>
+          <div class="flex items-center gap-2">
+            <span id="activeSeniorCategoryBadge" class="text-xs font-bold px-3 py-1 rounded-full bg-amber-50 text-amber-900 border border-amber-200">전체 시니어 가이드</span>
+            <span id="seniorCountLabel" class="text-xs font-bold text-slate-500 whitespace-nowrap">총 54개 가이드</span>
+          </div>
+        </div>
+
+        <!-- Senior Articles Grid -->
+        <div id="seniorArticlesGrid" class="rc-grid-3 mb-10">
+          <!-- Injected dynamically via JS -->
+        </div>
+
+        <!-- Senior Official Hotlines & Support Callout -->
+        <div class="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-6 sm:p-8 text-white shadow-xl">
+          <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div>
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30 mb-2">
+                📞 뉴저지 시니어 공식 직통 핫라인
+              </span>
+              <h3 class="text-xl font-bold text-white mb-2">시니어 복지 신청 및 긴급 상담</h3>
+              <p class="text-xs text-slate-300 max-w-2xl leading-relaxed">
+                시니어 아파트 대기자 명단 확인, PAAD 신청서 접수, PPP 가족 간병인 평가 등 혼자 진행하기 어려운 절차는 공공 전문 기관 및 NJAP 상담을 통해 지원받으실 수 있습니다.
+              </p>
+            </div>
+            <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="hero-btn-kakao shrink-0">
+              <img src="/kakaotalk-icon.png" alt="Kakao" class="w-4 h-4 rounded object-contain" />
+              <span>카카오톡 1:1 시니어 무료 상담</span>
+            </a>
+          </div>
+          <div class="mt-6 pt-6 border-t border-slate-700/80 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+            <div class="p-3 rounded-xl bg-white/5 border border-white/10">
+              <div class="text-slate-400 font-semibold mb-0.5">버겐카운티 노인복지국</div>
+              <div class="text-base font-bold text-white">201-336-7400</div>
+              <div class="text-[11px] text-slate-400">시니어 서비스 및 프로그램 안내</div>
+            </div>
+            <div class="p-3 rounded-xl bg-white/5 border border-white/10">
+              <div class="text-slate-400 font-semibold mb-0.5">주정부 PAAD 약값 핫라인</div>
+              <div class="text-base font-bold text-white">1-800-792-9745</div>
+              <div class="text-[11px] text-slate-400">NJSave 통합 처방약 지원</div>
+            </div>
+            <div class="p-3 rounded-xl bg-white/5 border border-white/10">
+              <div class="text-slate-400 font-semibold mb-0.5">Meals on Wheels 도시락</div>
+              <div class="text-base font-bold text-white">201-336-7420</div>
+              <div class="text-[11px] text-slate-400">어르신 자택 식사 배달 접수</div>
+            </div>
+            <div class="p-3 rounded-xl bg-white/5 border border-white/10">
+              <div class="text-slate-400 font-semibold mb-0.5">성인보호국 (APS)</div>
+              <div class="text-base font-bold text-white">201-368-4300</div>
+              <div class="text-[11px] text-slate-400">어르신 학대·방임·사기 긴급 보호</div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
     </div>
   </main>
 
@@ -1857,6 +2044,7 @@ const html = `<!DOCTYPE html>
             <li><a href="/resource-center#calculator" class="hover:text-white">자격확인 계산기 (Benefits Screener)</a></li>
             <li><a href="/resource-center#resources" class="hover:text-white">커뮤니티 리소스 &amp; 시니어 주택</a></li>
             <li><a href="/resource-center#medicare" class="hover:text-white">2026 메디케어 &amp; ACA 완전 가이드</a></li>
+            <li><a href="/resource-center#senior" class="hover:text-white">뉴저지 시니어 복지 가이드</a></li>
             <li><a href="/forum" class="hover:text-white">커뮤니티 포럼 Q&amp;A</a></li>
           </ul>
         </div>
@@ -1879,7 +2067,7 @@ const html = `<!DOCTYPE html>
   <!-- Scripts -->
   <script src="/data/resource_center_data.js"></script>
   <script src="/js/resource_calculator.js"></script>
-  <script src="/js/resource_center.js?v=20261004_win_2"></script>
+  <script src="/js/resource_center.js?v=20261004_senior_v1"></script>
   <script src="/js/fixes.js?v=8.1.0"></script>
 </body>
 </html>
