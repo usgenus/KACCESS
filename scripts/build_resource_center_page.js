@@ -1288,6 +1288,27 @@ const html = `<!DOCTYPE html>
     .ira-card-title { color: #93c5fd !important; font-size: 16px !important; font-weight: 700 !important; }
     .ira-card-desc { color: #e2e8f0 !important; font-size: 13.5px !important; }
 
+    /* Medicare & ACA Section Generous Spacing */
+    .medicare-guide-container {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 5rem !important; /* 80px on mobile */
+    }
+    @media (min-width: 640px) {
+      .medicare-guide-container {
+        gap: 6.5rem !important; /* 104px on tablet */
+      }
+    }
+    @media (min-width: 1024px) {
+      .medicare-guide-container {
+        gap: 8rem !important; /* 128px on desktop */
+      }
+    }
+    .medicare-guide-container > * {
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+
     /* Medicare & ACA Section Clean Styles */
     .medicare-guide-container details > summary {
       cursor: pointer;
@@ -2306,7 +2327,7 @@ const html = `<!DOCTYPE html>
            TAB 3: MEDICARE & ACA (MERGED)
            ======================================================== -->
       <section id="tab-view-medicare" class="rc-tab-view hidden">
-        <div class="mb-8">
+        <div class="mb-12 sm:mb-14">
           <span class="text-xs font-bold uppercase tracking-widest text-blue-600 block mb-1">Comprehensive Healthcare</span>
           <h2 class="text-2xl sm:text-3xl font-serif font-bold text-slate-900">
             2026 메디케어 &amp; ACA 건강보험 완전 가이드

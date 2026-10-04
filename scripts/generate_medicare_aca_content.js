@@ -8,11 +8,11 @@ function generateMedicareAcaHtml() {
     <!-- ========================================================
          2026 MEDICARE & ACA SECTION WRAPPER
          ======================================================== -->
-    <div class="medicare-guide-container space-y-12">
+    <div class="medicare-guide-container">
       
       <!-- 0. TOP QUICK JUMP PILL NAVIGATION -->
-      <nav class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs" aria-label="메디케어 및 ACA 빠른 이동">
-        <div class="flex items-center justify-between mb-2">
+      <nav class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-xs" aria-label="메디케어 및 ACA 빠른 이동">
+        <div class="flex items-center justify-between mb-3">
           <span class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
             <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
             빠른 목차 바로가기 (주제별 클릭)
@@ -36,8 +36,8 @@ function generateMedicareAcaHtml() {
       <!-- ========================================================
            ILLUSTRATION 1 & INTRO: MEDICARE VS ACA AT-A-GLANCE
            ======================================================== -->
-      <section id="section-compare-intro" class="bg-white rounded-3xl p-6 sm:p-9 border border-slate-200 shadow-sm">
-        <div class="max-w-3xl mb-6">
+      <section id="section-compare-intro" class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-sm">
+        <div class="max-w-3xl mb-8">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-800 mb-2">
             <span>한눈에 이해하는 미국 의료보험 지도</span>
           </div>
@@ -50,7 +50,7 @@ function generateMedicareAcaHtml() {
         </div>
 
         <!-- Custom SVG Visual Diagram: Medicare vs ACA -->
-        <div class="mb-8 p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-slate-50 to-blue-50/40 border border-slate-200">
+        <div class="mb-8 sm:mb-10 p-5 sm:p-7 rounded-2xl bg-gradient-to-br from-slate-50 to-blue-50/40 border border-slate-200">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 relative">
             
             <!-- Left Card: Medicare -->
@@ -152,7 +152,7 @@ function generateMedicareAcaHtml() {
       <!-- ========================================================
            FEATURE 1: 2026 AEP OPEN ENROLLMENT & 4-STEP CHECKLIST
            ======================================================== -->
-      <section id="section-open-enrollment" class="medicare-dark-navy p-6 sm:p-9 rounded-3xl text-white shadow-xl border border-blue-900/60 relative overflow-hidden">
+      <section id="section-open-enrollment" class="medicare-dark-navy p-6 sm:p-10 rounded-3xl text-white shadow-xl border border-blue-900/60 relative overflow-hidden">
         <!-- Ambient Radial Glow -->
         <div style="position:absolute;top:-80px;right:-80px;width:320px;height:320px;background:radial-gradient(circle,rgba(59,130,246,0.22) 0%,transparent 70%);border-radius:50%;pointer-events:none;"></div>
 
@@ -169,12 +169,12 @@ function generateMedicareAcaHtml() {
         <h3 class="text-2xl sm:text-3xl font-serif font-bold text-white mb-3">
           메디케어 오픈 인롤먼트 2026: 10월 15일~12월 7일 4단계 체크리스트
         </h3>
-        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-3xl mb-6">
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-3xl mb-8">
           매년 가을, 메디케어는 1년에 단 한 번 보장 내용을 재검토하고 최적의 플랜으로 변경할 수 있는 기회를 제공합니다. 2027년도 보장을 위한 연간 가입 기간은 <strong>2026년 10월 15일부터 12월 7일까지</strong>이며, 변경된 사항은 <strong>2027년 1월 1일부터 적용</strong>됩니다.
         </p>
 
         <!-- What you can do during AEP -->
-        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-5 mb-7 border border-white/15">
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 mb-8 border border-white/15">
           <h4 class="text-sm font-bold text-blue-300 mb-3 flex items-center gap-2">
             <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             이 기간에 할 수 있는 일 (연례 변경 권한):
@@ -188,7 +188,7 @@ function generateMedicareAcaHtml() {
         </div>
 
         <!-- 4-Step Checklist Grid with Visual Badges -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-7">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
           <!-- Step 1 -->
           <div class="bg-white/8 rounded-2xl p-5 border border-white/10 flex flex-col justify-between hover:bg-white/12 transition-colors">
             <div>
@@ -247,9 +247,9 @@ function generateMedicareAcaHtml() {
         </div>
 
         <!-- Free Assistance Banner -->
-        <div class="p-5 rounded-2xl bg-gradient-to-r from-blue-600/30 to-indigo-600/30 border border-blue-400/40 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="p-6 sm:p-7 rounded-2xl bg-gradient-to-r from-blue-600/30 to-indigo-600/30 border border-blue-400/40 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
-            <h5 class="text-sm font-bold text-white mb-1">지금 할 일: ANOC 우편물, 복용 약 목록, 주치의 명단을 준비하세요</h5>
+            <h5 class="text-sm sm:text-base font-bold text-white mb-1">지금 할 일: ANOC 우편물, 복용 약 목록, 주치의 명단을 준비하세요</h5>
             <p class="text-xs text-slate-300">저희 NJAP 내비게이션 팀이 한국어 또는 영어로 맞춤 플랜 비교를 도와드립니다. <strong>상담 및 비교 분석은 100% 무료입니다.</strong></p>
           </div>
           <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="shrink-0 px-5 py-2.5 rounded-xl bg-[#FEE500] hover:bg-[#FDD835] text-[#191919] font-bold text-xs shadow-md transition-all flex items-center justify-center cursor-pointer">
@@ -266,11 +266,11 @@ function generateMedicareAcaHtml() {
           <span style="width:10px;height:22px;background:#1a5cf6;border-radius:99px;display:inline-block;"></span>
           2. 올해 알아둘 2026년 메디케어 공식 기본 수치 (CMS 확정치)
         </h3>
-        <p class="text-xs sm:text-sm text-slate-600 mb-6">
+        <p class="text-xs sm:text-sm text-slate-600 mb-6 sm:mb-8">
           2026년 10월 기준 연방 메디케어·메디케이드 서비스 센터(CMS) 공식 발표 수치로 완벽 검증된 핵심 재정 지표입니다.
         </p>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           <!-- Metric 1: Part B Premium -->
           <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between hover:border-blue-400 transition-colors">
             <div>
@@ -345,11 +345,11 @@ function generateMedicareAcaHtml() {
           <span style="width:10px;height:22px;background:#1a5cf6;border-radius:99px;display:inline-block;"></span>
           3. 메디케어 파트별 기본 구조 (A, B, C, D 알기 쉬운 일러스트)
         </h3>
-        <p class="text-xs sm:text-sm text-slate-600 mb-6">
+        <p class="text-xs sm:text-sm text-slate-600 mb-6 sm:mb-8">
           메디케어는 크게 4개의 알파벳 파트로 구성되어 있습니다. 각 파트의 역할과 비용 구조를 시각적으로 정리했습니다.
         </p>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
           <!-- Part A -->
           <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between hover:border-blue-500 transition-all">
             <div>
@@ -456,7 +456,7 @@ function generateMedicareAcaHtml() {
       <!-- ========================================================
            ILLUSTRATION 3 & FEATURE 4: 2026 IRA DEEP DIVE ($2,100 CAP & DONUT HOLE GONE)
            ======================================================== -->
-      <section id="section-ira" class="medicare-dark-blue p-6 sm:p-9 rounded-3xl text-white shadow-xl border border-blue-900">
+      <section id="section-ira" class="medicare-dark-blue p-6 sm:p-10 rounded-3xl text-white shadow-xl border border-blue-900">
         <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
           <span class="text-xs font-extrabold px-3 py-1 rounded-full bg-blue-500/30 text-blue-200 border border-blue-400/30">
             2026 Inflation Reduction Act (IRA) · 처방약 구조 전면 개편
@@ -466,12 +466,12 @@ function generateMedicareAcaHtml() {
         <h3 class="text-2xl sm:text-3xl font-serif font-bold text-white mb-2">
           4. 2026년 파트 D 핵심: $2,100 약값 상한제와 도넛홀(Donut Hole) 완전 폐지
         </h3>
-        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-3xl mb-8">
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-3xl mb-8 sm:mb-10">
           처방약을 복용하신다면, 2026년은 메디케어 역사상 약 보장에 가장 큰 혜택이 생긴 해입니다. 디덕터블·코페이·코인슈어런스 합계가 <strong>$2,100에 도달하면, 그 해 나머지 기간 동안 보장 약값 본인부담은 100% $0(무료)</strong>입니다.
         </p>
 
         <!-- Custom Diagram: Before vs After 2026 Part D Illustration -->
-        <div class="bg-white/10 rounded-2xl p-5 sm:p-7 border border-white/15 mb-8">
+        <div class="bg-white/10 rounded-2xl p-5 sm:p-7 border border-white/15 mb-8 sm:mb-10">
           <h4 class="text-sm sm:text-base font-bold text-blue-200 mb-4 flex items-center gap-2">
             <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
             처방약 비용 구조 비교 인포그래픽: 과거 4단계 vs 2026년 혁신
@@ -513,7 +513,7 @@ function generateMedicareAcaHtml() {
         </div>
 
         <!-- 4 Key Provisions Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-7 sm:mb-8">
           <div class="p-5 rounded-2xl bg-white/8 border border-white/10">
             <h5 class="text-sm font-bold text-blue-200 mb-1.5">1. 처방약 연간 본인부담 상한: $2,000 → $2,100</h5>
             <p class="text-xs text-slate-300 leading-relaxed">
@@ -544,7 +544,7 @@ function generateMedicareAcaHtml() {
         </div>
 
         <!-- Standalone Caution Note -->
-        <div class="p-4 rounded-xl bg-amber-500/20 border border-amber-400/30 text-xs text-slate-200 leading-relaxed">
+        <div class="p-4 sm:p-5 rounded-xl bg-amber-500/20 border border-amber-400/30 text-xs text-slate-200 leading-relaxed">
           <strong class="text-amber-300 block mb-1">⚠️ 단독 파트 D 플랜 선택지 축소 주의:</strong>
           올해 단독 파트 D 플랜 수가 전국 464개에서 약 360개로 감소했습니다. 본인의 복용약이 내년 플랜의 <strong>포뮬러리(약 목록)</strong>에 있는지, 몇 등급(Tier)인지, 사전 승인이 필요한지 반드시 사전에 확인하세요.
         </div>
@@ -558,12 +558,12 @@ function generateMedicareAcaHtml() {
           <span style="width:10px;height:22px;background:#1a5cf6;border-radius:99px;display:inline-block;"></span>
           5. 오리지널 메디케어 vs 메디케어 어드밴티지: 실전 선택 가이드
         </h3>
-        <p class="text-xs sm:text-sm text-slate-600 mb-6">
+        <p class="text-xs sm:text-sm text-slate-600 mb-6 sm:mb-8">
           가장 많은 분들이 고민하는 두 가지 경로입니다. 의사결정 흐름도와 비교표를 통해 본인에게 가장 적합한 경로를 선택해 보세요.
         </p>
 
         <!-- Decision Flowchart Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 sm:mb-10">
           <!-- Option A -->
           <div class="p-6 rounded-3xl bg-white border-2 border-slate-300 hover:border-blue-600 transition-all shadow-xs flex flex-col justify-between">
             <div>
@@ -610,7 +610,7 @@ function generateMedicareAcaHtml() {
         </div>
 
         <!-- Comparison Table -->
-        <div class="overflow-x-auto bg-white rounded-3xl border border-slate-200 shadow-xs mb-8">
+        <div class="overflow-x-auto bg-white rounded-3xl border border-slate-200 shadow-xs">
           <table class="w-full text-left font-sans text-xs sm:text-sm border-collapse medicare-table">
             <thead>
               <tr class="text-white">
@@ -653,12 +653,12 @@ function generateMedicareAcaHtml() {
       <!-- ========================================================
            FEATURE 6: 65세 신규 가입 & 평생 벌금 방지
            ======================================================== -->
-      <section id="section-enrollment-timeline" class="bg-white rounded-3xl p-6 sm:p-9 border border-slate-200 shadow-sm">
+      <section id="section-enrollment-timeline" class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-sm">
         <h3 class="font-serif text-xl sm:text-2xl text-slate-900 font-bold mb-2 flex items-center gap-2">
           <span style="width:10px;height:22px;background:#1a5cf6;border-radius:99px;display:inline-block;"></span>
           6. 65세 가입 기간(IEP 7개월) &amp; 평생 지연 벌금 방지 가이드
         </h3>
-        <p class="text-xs sm:text-sm text-slate-600 mb-6">
+        <p class="text-xs sm:text-sm text-slate-600 mb-6 sm:mb-8">
           만 65세가 되거나 직장 보험 퇴직을 앞두고 계신다면, 정해진 기한 내에 가입해야 평생 부과되는 지연 벌금을 피할 수 있습니다.
         </p>
 
@@ -698,8 +698,8 @@ function generateMedicareAcaHtml() {
       <!-- ========================================================
            ILLUSTRATION 5 & FEATURE 7: 2026 ACA (GETCOVEREDNJ) GUIDE
            ======================================================== -->
-      <section id="section-aca-guide" class="bg-white rounded-3xl p-6 sm:p-9 border border-slate-200 shadow-sm">
-        <div class="max-w-3xl mb-6">
+      <section id="section-aca-guide" class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-sm">
+        <div class="max-w-3xl mb-8">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-800 mb-2">
             <span>만 19~64세 뉴저지 주민 필독 가이드</span>
           </div>
@@ -712,15 +712,15 @@ function generateMedicareAcaHtml() {
         </div>
 
         <!-- Custom Diagram: Income Tiers & CSR Benefits -->
-        <div class="mb-8 p-5 sm:p-7 rounded-2xl bg-gradient-to-br from-indigo-50/50 to-purple-50/40 border border-indigo-200">
+        <div class="mb-8 sm:mb-10 p-5 sm:p-8 rounded-2xl bg-gradient-to-br from-indigo-50/50 to-purple-50/40 border border-indigo-200">
           <h4 class="text-base font-bold text-indigo-950 mb-4 flex items-center gap-2">
             <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             2026 연방 빈곤선(FPL) 소득별 계단식 정부 지원 체계
           </h4>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
             <!-- Tier 1 -->
-            <div class="bg-white p-4 rounded-xl border border-indigo-100 shadow-2xs">
+            <div class="bg-white p-5 rounded-xl border border-indigo-100 shadow-2xs">
               <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-800">FPL 138% 이하</span>
               <h5 class="text-sm font-bold text-slate-900 mt-2 mb-1">NJ FamilyCare (메디케이드)</h5>
               <div class="text-xs text-slate-600 leading-relaxed">
@@ -729,7 +729,7 @@ function generateMedicareAcaHtml() {
             </div>
 
             <!-- Tier 2 (Highlight: Silver CSR) -->
-            <div class="bg-white p-4 rounded-xl border-2 border-indigo-500 shadow-xs relative">
+            <div class="bg-white p-5 rounded-xl border-2 border-indigo-500 shadow-xs relative">
               <span class="absolute -top-2.5 right-3 text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-indigo-600 text-white">가장 추천</span>
               <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-indigo-100 text-indigo-800">FPL 138% ~ 250%</span>
               <h5 class="text-sm font-bold text-slate-900 mt-2 mb-1">실버 플랜 CSR (비용분담 할인)</h5>
@@ -739,7 +739,7 @@ function generateMedicareAcaHtml() {
             </div>
 
             <!-- Tier 3 -->
-            <div class="bg-white p-4 rounded-xl border border-indigo-100 shadow-2xs">
+            <div class="bg-white p-5 rounded-xl border border-indigo-100 shadow-2xs">
               <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-purple-100 text-purple-800">FPL 250% ~ 400%+</span>
               <h5 class="text-sm font-bold text-slate-900 mt-2 mb-1">프리미엄 세액공제 (APTC)</h5>
               <div class="text-xs text-slate-600 leading-relaxed">
@@ -748,27 +748,27 @@ function generateMedicareAcaHtml() {
             </div>
           </div>
 
-          <div class="mt-4 pt-3 border-t border-indigo-200/60 text-xs text-indigo-900 flex items-center justify-between flex-wrap gap-2">
+          <div class="mt-5 pt-4 border-t border-indigo-200/60 text-xs text-indigo-900 flex items-center justify-between flex-wrap gap-2">
             <span>📌 <strong>뉴저지 의무가입 조항:</strong> 뉴저지는 건강보험 미가입 시 주 세금 보고 시 벌금(Individual Mandate Penalty)이 부과됩니다.</span>
             <span class="font-bold text-indigo-700">오픈 인롤먼트: 11월 1일 ~ 1월 31일</span>
           </div>
         </div>
 
         <!-- 4 Metal Tiers Guide -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="p-4 rounded-2xl bg-amber-50/60 border border-amber-200/80">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div class="p-5 rounded-2xl bg-amber-50/60 border border-amber-200/80">
             <span class="text-xs font-extrabold text-amber-900">브론즈 (Bronze)</span>
             <p class="text-xs text-slate-600 mt-1">월 보험료가 가장 저렴하지만 디덕터블이 높음. 만약을 대비한 건강한 분께 적합.</p>
           </div>
-          <div class="p-4 rounded-2xl bg-indigo-50 border-2 border-indigo-300">
+          <div class="p-5 rounded-2xl bg-indigo-50 border-2 border-indigo-300">
             <span class="text-xs font-extrabold text-indigo-900">실버 (Silver) ★ 추천</span>
             <p class="text-xs text-slate-600 mt-1">정부 추가 보조금(CSR)이 유일하게 적용되는 등급. 코페이·디덕터블 혜택 극대화.</p>
           </div>
-          <div class="p-4 rounded-2xl bg-yellow-50/70 border border-yellow-200">
+          <div class="p-5 rounded-2xl bg-yellow-50/70 border border-yellow-200">
             <span class="text-xs font-extrabold text-yellow-900">골드 (Gold)</span>
             <p class="text-xs text-slate-600 mt-1">월 보험료는 다소 높으나 디덕터블이 낮고 정기적인 진료가 많은 분께 유리.</p>
           </div>
-          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+          <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200">
             <span class="text-xs font-extrabold text-slate-800">플래티넘 (Platinum)</span>
             <p class="text-xs text-slate-600 mt-1">월 보험료가 가장 높고 진료 시 본인부담금이 거의 없음. 수술·중증 질환자용.</p>
           </div>
@@ -778,12 +778,12 @@ function generateMedicareAcaHtml() {
       <!-- ========================================================
            FEATURE 8: NJ SENIOR SUPPORT (MSP, PAAD, SENIOR GOLD)
            ======================================================== -->
-      <section id="section-senior-support" class="bg-white rounded-3xl p-6 sm:p-9 border border-slate-200 shadow-sm">
+      <section id="section-senior-support" class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-sm">
         <h3 class="font-serif text-xl sm:text-2xl text-slate-900 font-bold mb-2 flex items-center gap-2">
           <span style="width:10px;height:22px;background:#1a5cf6;border-radius:99px;display:inline-block;"></span>
           8. 뉴저지 시니어 주정부 3대 특별 지원 (MSP, PAAD, Senior Gold)
         </h3>
-        <p class="text-xs sm:text-sm text-slate-600 mb-6">
+        <p class="text-xs sm:text-sm text-slate-600 mb-6 sm:mb-8">
           메디케이드 자격 기준을 살짝 초과하는 한인 어르신을 위해 뉴저지 주정부가 운영하는 대표적인 3대 의료비 지원 제도입니다.
         </p>
 
@@ -835,16 +835,16 @@ function generateMedicareAcaHtml() {
       <!-- ========================================================
            FEATURE 9: INTERACTIVE FAQ (ACCORDION)
            ======================================================== -->
-      <section id="section-medicare-faq" class="bg-white rounded-3xl p-6 sm:p-9 border border-slate-200 shadow-sm">
+      <section id="section-medicare-faq" class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-sm">
         <h3 class="font-serif text-xl sm:text-2xl text-slate-900 font-bold mb-2 flex items-center gap-2">
           <span style="width:10px;height:22px;background:#1a5cf6;border-radius:99px;display:inline-block;"></span>
           9. 뉴저지 한인이 가장 많이 묻는 메디케어 &amp; ACA 자주 묻는 질문 (FAQ)
         </h3>
-        <p class="text-xs sm:text-sm text-slate-600 mb-6">
+        <p class="text-xs sm:text-sm text-slate-600 mb-6 sm:mb-8">
           실제 상담 과정에서 가장 많이 묻는 8대 질문과 명쾌한 실전 답변을 정리했습니다. 항목을 클릭하면 답변이 열립니다.
         </p>
 
-        <div class="space-y-3">
+        <div class="space-y-4">
           <!-- FAQ 1 -->
           <details class="clean-details group rounded-2xl border border-slate-200 bg-slate-50/60 p-4 transition-all">
             <summary class="flex items-center justify-between font-bold text-sm sm:text-base text-slate-900 cursor-pointer list-none">
@@ -938,7 +938,7 @@ function generateMedicareAcaHtml() {
       <!-- ========================================================
            1:1 FREE CONSULTATION BANNER
            ======================================================== -->
-      <section class="medicare-dark-banner p-6 sm:p-8 rounded-3xl text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 border border-blue-800">
+      <section class="medicare-dark-banner p-8 sm:p-10 rounded-3xl text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 border border-blue-800">
         <div>
           <span class="text-xs font-bold text-blue-300 bg-white/10 px-3 py-1 rounded-full border border-white/15 mb-2 inline-block">100% 무료 비영리 지원 서비스</span>
           <h4 class="text-xl sm:text-2xl font-serif font-bold text-white mb-2">어려운 메디케어 &amp; ACA, 한국어로 편안하게 상담받으세요</h4>
