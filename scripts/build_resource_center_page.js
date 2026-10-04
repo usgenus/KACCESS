@@ -967,6 +967,9 @@ const html = `<!DOCTYPE html>
       color: #1e3a8a;
       margin-bottom: 10px;
     }
+    .rc-callout-icon {
+      display: none !important;
+    }
     .rc-callout-list {
       margin: 0;
       padding-left: 18px;
@@ -1192,10 +1195,9 @@ const html = `<!DOCTYPE html>
         <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
           <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-blue-500/20 text-blue-300 border border-blue-400/30 backdrop-blur-md">
             <span class="w-2 h-2 rounded-full bg-[#7FC8C0] animate-pulse"></span>
-            ★ 2026/2027 New Jersey Official Knowledge Hub
+            2026/2027 New Jersey Official Knowledge Hub
           </span>
           <button type="button" onclick="openSearchModal()" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white/10 hover:bg-white/15 text-slate-200 border border-white/20 transition-all cursor-pointer backdrop-blur-md">
-            <svg style="width: 14px; height: 14px; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             <span>전체 가이드 실시간 검색</span>
             <span class="px-1.5 py-0.5 rounded bg-white/20 text-[10px] font-mono">⌘K</span>
           </button>
@@ -1225,7 +1227,6 @@ const html = `<!DOCTYPE html>
               <div class="hero-btn-row">
                 <button type="button" onclick="window.rcHeroTabClick('calculator', true)" class="hero-btn-primary">
                   <span>계산기 시작하기</span>
-                  <svg class="hero-btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
                 </button>
                 <button type="button" onclick="window.rcHeroTabClick('calculator', true)" class="hero-btn-white">
                   <span>수혜 기준표 보기</span>
@@ -1251,7 +1252,6 @@ const html = `<!DOCTYPE html>
               <div class="hero-btn-row">
                 <button type="button" onclick="window.rcHeroTabClick('resources', true)" class="hero-btn-primary">
                   <span>커뮤니티 리소스 둘러보기</span>
-                  <svg class="hero-btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
                 </button>
                 <button type="button" onclick="window.rcHeroJumpHousing()" class="hero-btn-white">
                   <span>타운별 시니어 아파트</span>
@@ -1277,10 +1277,8 @@ const html = `<!DOCTYPE html>
               <div class="hero-btn-row">
                 <button type="button" onclick="window.rcHeroTabClick('medicare', true)" class="hero-btn-primary">
                   <span>메디케어 가이드 읽기</span>
-                  <svg class="hero-btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
                 </button>
                 <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="hero-btn-kakao">
-                  <img src="/kakaotalk-icon.png" alt="Kakao" class="w-4 h-4 rounded object-contain" />
                   <span>카카오톡 1:1 상담</span>
                 </a>
               </div>
@@ -1304,7 +1302,6 @@ const html = `<!DOCTYPE html>
               <div class="hero-btn-row">
                 <button type="button" onclick="window.rcHeroTabClick('senior', true)" class="hero-btn-primary">
                   <span>시니어 리소스 둘러보기</span>
-                  <svg class="hero-btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
                 </button>
                 <button type="button" onclick="window.rcHeroTabClick('senior', true)" class="hero-btn-white">
                   <span>시니어 6대 분야별 보기</span>
@@ -1546,8 +1543,7 @@ const html = `<!DOCTYPE html>
               <span class="text-xs font-medium text-slate-500">뉴저지 공식 리서치 브리핑</span>
             </div>
             <div class="flex items-center gap-2">
-              <button type="button" onclick="window.print()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 flex items-center gap-1.5 cursor-pointer">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+              <button type="button" onclick="window.print()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 flex items-center justify-center cursor-pointer">
                 <span>인쇄 / PDF</span>
               </button>
               <button type="button" onclick="closeInlineReader()" class="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold flex items-center gap-1 cursor-pointer">
@@ -1569,8 +1565,7 @@ const html = `<!DOCTYPE html>
         <div id="housingSpecialSection" class="mb-10">
           <!-- 4-Step Checklist for Housing Application -->
           <div class="bg-white p-6 sm:p-7 rounded-2xl border border-slate-200 shadow-xs mb-8">
-            <h3 class="text-lg font-serif font-bold text-slate-900 mb-4 flex items-center gap-2">
-              <span class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold">✓</span>
+            <h3 class="text-lg font-serif font-bold text-slate-900 mb-4">
               시니어 아파트 &amp; 어포더블 하우징 4단계 한국어 신청 가이드
             </h3>
             <div class="rc-grid-4 text-xs">
@@ -1822,8 +1817,7 @@ const html = `<!DOCTYPE html>
         <!-- Filter Bar & Search for Guides -->
         <div id="resourcesFilterBar" class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-xs mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div class="relative w-full sm:w-80">
-            <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-            <input type="text" id="resourcesSearchInput" placeholder="제목 또는 키워드 실시간 검색 (예: 메디케이드, SNAP, PAAD)..." class="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 text-sm focus:border-blue-500 focus:outline-none" />
+            <input type="text" id="resourcesSearchInput" placeholder="제목 또는 키워드 실시간 검색 (예: 메디케이드, SNAP, PAAD)..." class="w-full px-4 py-2 rounded-xl border border-slate-200 text-sm focus:border-blue-500 focus:outline-none" />
           </div>
           <div class="flex items-center gap-2">
             <span id="activeCategoryBadge" class="text-xs font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-800">전체 가이드</span>
@@ -1875,7 +1869,6 @@ const html = `<!DOCTYPE html>
         <div class="rc-grid-4 mb-8">
           <div class="p-4 rounded-2xl bg-amber-50/60 border border-amber-200/80">
             <div class="flex items-center gap-2 mb-1.5">
-              <span class="text-xl">🏢</span>
               <span class="text-xs font-extrabold text-amber-900">시니어 아파트</span>
             </div>
             <p class="text-xs text-amber-950 font-semibold mb-1">소득의 30% 저렴한 렌트비</p>
@@ -1884,7 +1877,6 @@ const html = `<!DOCTYPE html>
 
           <div class="p-4 rounded-2xl bg-purple-50/60 border border-purple-200/80">
             <div class="flex items-center gap-2 mb-1.5">
-              <span class="text-xl">💊</span>
               <span class="text-xs font-extrabold text-purple-900">PAAD 처방약 지원</span>
             </div>
             <p class="text-xs text-purple-950 font-semibold mb-1">처방약 1종당 $5 / $7 상한</p>
@@ -1893,7 +1885,6 @@ const html = `<!DOCTYPE html>
 
           <div class="p-4 rounded-2xl bg-blue-50/60 border border-blue-200/80">
             <div class="flex items-center gap-2 mb-1.5">
-              <span class="text-xl">🤝</span>
               <span class="text-xs font-extrabold text-blue-900">가족 간병비 (PPP)</span>
             </div>
             <p class="text-xs text-blue-950 font-semibold mb-1">월 최대 $2,000~$3,500 지원</p>
@@ -1902,7 +1893,6 @@ const html = `<!DOCTYPE html>
 
           <div class="p-4 rounded-2xl bg-teal-50/60 border border-teal-200/80">
             <div class="flex items-center gap-2 mb-1.5">
-              <span class="text-xl">🏛️</span>
               <span class="text-xs font-extrabold text-teal-900">Senior Freeze (PTR)</span>
             </div>
             <p class="text-xs text-teal-950 font-semibold mb-1">인상된 재산세 100% 동결 환급</p>
@@ -1930,8 +1920,7 @@ const html = `<!DOCTYPE html>
               <span class="text-xs font-medium text-slate-500">뉴저지 시니어 공식 리서치 브리핑</span>
             </div>
             <div class="flex items-center gap-2">
-              <button type="button" onclick="window.print()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 flex items-center gap-1.5 cursor-pointer">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+              <button type="button" onclick="window.print()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 flex items-center justify-center cursor-pointer">
                 <span>인쇄 / PDF</span>
               </button>
               <button type="button" onclick="closeSeniorInlineReader()" class="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold flex items-center gap-1 cursor-pointer">
@@ -1952,8 +1941,7 @@ const html = `<!DOCTYPE html>
         <!-- Filter Bar & Search for Senior Guides -->
         <div id="seniorFilterBar" class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-xs mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div class="relative w-full sm:w-80">
-            <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-            <input type="text" id="seniorSearchInput" placeholder="시니어 가이드 실시간 검색 (예: PAAD, 시니어 아파트, PPP)..." class="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 text-sm focus:border-amber-500 focus:outline-none" />
+            <input type="text" id="seniorSearchInput" placeholder="시니어 가이드 실시간 검색 (예: PAAD, 시니어 아파트, PPP)..." class="w-full px-4 py-2 rounded-xl border border-slate-200 text-sm focus:border-amber-500 focus:outline-none" />
           </div>
           <div class="flex items-center gap-2">
             <span id="activeSeniorCategoryBadge" class="text-xs font-bold px-3 py-1 rounded-full bg-amber-50 text-amber-900 border border-amber-200">전체 시니어 가이드</span>
@@ -1971,7 +1959,7 @@ const html = `<!DOCTYPE html>
           <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div>
               <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30 mb-2">
-                📞 뉴저지 시니어 공식 직통 핫라인
+                뉴저지 시니어 공식 직통 핫라인
               </span>
               <h3 class="text-xl font-bold text-white mb-2">시니어 복지 신청 및 긴급 상담</h3>
               <p class="text-xs text-slate-300 max-w-2xl leading-relaxed">
@@ -1979,7 +1967,6 @@ const html = `<!DOCTYPE html>
               </p>
             </div>
             <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="hero-btn-kakao shrink-0">
-              <img src="/kakaotalk-icon.png" alt="Kakao" class="w-4 h-4 rounded object-contain" />
               <span>카카오톡 1:1 시니어 무료 상담</span>
             </a>
           </div>
@@ -2018,7 +2005,6 @@ const html = `<!DOCTYPE html>
   <div id="rcSearchModal" class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-xs flex items-start justify-center p-4 pt-20 hidden">
     <div class="bg-white rounded-2xl max-w-2xl w-full shadow-2xl border border-slate-200 overflow-hidden">
       <div class="p-4 border-b border-slate-100 flex items-center gap-3">
-        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
         <input type="text" id="rcSearchModalInput" placeholder="가이드, 시니어 주택, 계산기 항목 실시간 검색..." class="w-full text-base font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none" />
         <button type="button" onclick="closeSearchModal()" class="text-xs font-semibold px-2 py-1 rounded bg-slate-100 text-slate-500 hover:bg-slate-200">ESC</button>
       </div>
@@ -2065,9 +2051,9 @@ const html = `<!DOCTYPE html>
   </footer>
 
   <!-- Scripts -->
-  <script src="/data/resource_center_data.js"></script>
-  <script src="/js/resource_calculator.js"></script>
-  <script src="/js/resource_center.js?v=20261004_senior_v2"></script>
+  <script src="/data/resource_center_data.js?v=20261004_no_icons_v1"></script>
+  <script src="/js/resource_calculator.js?v=20261004_no_icons_v1"></script>
+  <script src="/js/resource_center.js?v=20261004_no_icons_v1"></script>
   <script src="/js/fixes.js?v=8.1.0"></script>
 </body>
 </html>
@@ -2075,3 +2061,13 @@ const html = `<!DOCTYPE html>
 
 fs.writeFileSync(destHtmlPath, html, 'utf8');
 console.log(`[SUCCESS] Rebuilt ${destHtmlPath} (${Buffer.byteLength(html, 'utf8')} bytes).`);
+
+fs.writeFileSync(medicareHtmlPath, html, 'utf8');
+console.log(`[SUCCESS] Synced ${medicareHtmlPath}`);
+
+const medicareIndexPath = path.join(BASE_DIR, 'medicare', 'index.html');
+if (fs.existsSync(path.dirname(medicareIndexPath))) {
+  fs.writeFileSync(medicareIndexPath, html, 'utf8');
+  console.log(`[SUCCESS] Synced ${medicareIndexPath}`);
+}
+

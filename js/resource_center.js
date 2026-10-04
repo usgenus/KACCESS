@@ -342,63 +342,55 @@
       return {
         key: 'care',
         categoryName: '장기 요양 & 재택 간병',
-        enName: 'Managed Long-Term Care (MLTSS)',
-        icon: '🤝'
+        enName: 'Managed Long-Term Care (MLTSS)'
       };
     }
     if (id.includes('medicaid')) {
       return {
         key: 'medical',
         categoryName: '의료 보장 · 메디케이드',
-        enName: 'NJ FamilyCare / Medicaid',
-        icon: '🩺'
+        enName: 'NJ FamilyCare / Medicaid'
       };
     }
     if (id.includes('paad') || id.includes('msp') || id.includes('senior-gold') || id.includes('drug')) {
       return {
         key: 'prescription',
         categoryName: '처방약 & 메디케어 저축',
-        enName: 'Medicare Savings & Prescription (PAAD)',
-        icon: '💊'
+        enName: 'Medicare Savings & Prescription (PAAD)'
       };
     }
     if (id.includes('snap') || id.includes('food')) {
       return {
         key: 'nutrition',
         categoryName: '식품 & 영양 지원',
-        enName: 'Nutrition Assistance (SNAP)',
-        icon: '🍚'
+        enName: 'Nutrition Assistance (SNAP)'
       };
     }
     if (id.includes('housing') || id.includes('apt')) {
       return {
         key: 'housing',
         categoryName: '시니어 아파트 & 주거',
-        enName: 'Senior & Affordable Housing',
-        icon: '🏢'
+        enName: 'Senior & Affordable Housing'
       };
     }
     if (id.includes('liheap') || id.includes('energy') || id.includes('utility')) {
       return {
         key: 'utility',
         categoryName: '공과금 & 난방비 감면',
-        enName: 'Energy & Utility Assistance (LIHEAP)',
-        icon: '⚡'
+        enName: 'Energy & Utility Assistance (LIHEAP)'
       };
     }
     if (id.includes('freeze') || id.includes('tax') || id.includes('anchor')) {
       return {
         key: 'tax',
         categoryName: '재산세 환급 & 동결',
-        enName: 'Property Tax Reimbursement',
-        icon: '🏛️'
+        enName: 'Property Tax Reimbursement'
       };
     }
     return {
       key: 'medical',
       categoryName: '정부 복지 프로그램',
-      enName: 'Public Assistance Program',
-      icon: '★'
+      enName: 'Public Assistance Program'
     };
   }
 
@@ -433,7 +425,6 @@
               <span class="rc-dot rc-dot-green"></span>
             </div>
             <div class="rc-win-category">
-              <span class="rc-win-icon">${theme.icon}</span>
               <span class="rc-win-cat-title">${theme.categoryName}</span>
               <span class="rc-win-cat-sub">· ${item.title_en || theme.enName}</span>
             </div>
@@ -453,7 +444,6 @@
             <p class="rc-win-benefit">${item.benefit_ko}</p>
             <div class="rc-win-criteria">
               <div class="rc-criteria-label">
-                <svg style="width: 13px; height: 13px; flex-shrink: 0;" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
                 <span>적격 기준 요건</span>
               </div>
               <div class="rc-criteria-text">${item.criteria_ko}</div>
@@ -464,8 +454,7 @@
           <div class="rc-win-footer">
             <span class="rc-win-help-hint">※ 가구 소득·나이·자격 조건 부합</span>
             <button type="button" onclick="window.handleCalculatorServiceClick('${item.id}')" class="rc-win-action-btn">
-              <span>관련 안내 및 신청 가이드 바로보기</span>
-              <svg style="width: 14px; height: 14px; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+              <span>관련 안내 및 신청 가이드 바로보기 &rarr;</span>
             </button>
           </div>
         </div>
@@ -534,8 +523,7 @@
 
     container.innerHTML = categories.map(cat => `
       <div class="rc-choice-card ${currentCategory === cat.id ? 'active' : ''}" onclick="window.filterByCategory('${cat.id}')">
-        <div class="flex items-center justify-between">
-          <span class="text-2xl">${cat.icon}</span>
+        <div class="flex items-center justify-between mb-2">
           <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">${cat.badge}</span>
         </div>
         <div class="text-sm font-bold text-slate-900 mt-1">${cat.title_ko}</div>
@@ -561,7 +549,7 @@
         badge.textContent = '전체 가이드';
       } else {
         const cat = (window.COMMUNITY_RESOURCES_DATA?.categories || []).find(c => c.id === catId);
-        badge.textContent = cat ? `${cat.icon} ${cat.title_ko}` : catId;
+        badge.textContent = cat ? cat.title_ko : catId;
       }
     }
 
@@ -616,9 +604,8 @@
       <div class="editorial-card flex flex-col justify-between hover:border-blue-400 hover:shadow-md transition-all cursor-pointer group" onclick="window.openArticleInline('${art.id}')">
         <div>
           <div class="flex items-center justify-between gap-2 mb-2.5">
-            <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-800 border border-blue-100 flex items-center gap-1">
-              <span>${art.category_icon || '📋'}</span>
-              <span>${art.category_name}</span>
+            <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-800 border border-blue-100">
+              ${art.category_name}
             </span>
             <span class="text-[11px] font-bold text-slate-400">2026 규정</span>
           </div>
@@ -653,7 +640,7 @@
 
     if (!readerEl || !contentEl) return;
 
-    if (badgeEl) badgeEl.textContent = `${art.category_icon || '📋'} ${art.category_name}`;
+    if (badgeEl) badgeEl.textContent = art.category_name;
     contentEl.innerHTML = art.content_html;
 
     readerEl.classList.remove('hidden');
@@ -703,7 +690,6 @@
       id: 'senior-housing',
       title_ko: '시니어 주거 & 아파트',
       title_en: 'Senior Housing & Living',
-      icon: '🏢',
       badge: 'HUD 202 · 62+ 독립 아파트',
       desc: '버겐카운티 타운별 시니어 아파트(포트리, 팰팍 등), HUD Section 202 소득의 30% 렌트, LIHTC 및 어시스티드 리빙.',
       articleIds: ['art-1', 'art-2', 'art-3', 'art-7', 'art-67', 'art-69', 'art-70', 'art-71']
@@ -712,7 +698,6 @@
       id: 'senior-rx',
       title_ko: '처방약 & 의료비 저축',
       title_en: 'Prescription & Healthcare Savings',
-      icon: '💊',
       badge: 'PAAD $5 · Senior Gold · LIS',
       desc: '뉴저지 PAAD(처방약 1종당 $5/$7), Senior Gold, 메디케어 파트 D 저소득 보조금(Extra Help/LIS), MSP 및 보청기 지원.',
       articleIds: ['art-27', 'art-28', 'art-29', 'art-52', 'art-53', 'art-57', 'art-61']
@@ -721,7 +706,6 @@
       id: 'senior-care',
       title_ko: '재택 돌봄 & 가족 간병비',
       title_en: 'In-Home Care & Family PPP',
-      icon: '🤝',
       badge: 'PPP 가족간병 시급 · Meals on Wheels',
       desc: '개인선호프로그램(PPP)으로 가족/자녀를 간병인으로 지정하여 월 최대 $2,000~$3,500 시급 지급, JACC, 간병인 휴식 지원, 도시락 배달.',
       articleIds: ['art-30', 'art-31', 'art-32', 'art-33', 'art-34', 'art-72']
@@ -730,7 +714,6 @@
       id: 'senior-tax',
       title_ko: '재산세 동결 & 세금 감면',
       title_en: 'Property Tax Relief & Income',
-      icon: '🏛️',
       badge: 'Senior Freeze · Stay NJ · ANCHOR',
       desc: '65세 이상 재산세 동결(Senior Freeze/PTR), Stay NJ(50% 감면), ANCHOR 환급금, SSI 및 소셜시큐리티 연금.',
       articleIds: ['art-4', 'art-5', 'art-6', 'art-68', 'art-9', 'art-12', 'art-11', 'art-49']
@@ -739,7 +722,6 @@
       id: 'senior-daycare',
       title_ko: '성인 데이케어 & 장기 요양',
       title_en: 'Adult Day Care & MLTSS',
-      icon: '👵',
       badge: '주간보호 · MLTSS 롱텀케어',
       desc: '어덜트 데이 케어(Adult Day Care) 차량 픽업 및 식사, MLTSS 메디케이드 롱텀케어, 널싱홈 요양원 및 D-SNP 듀얼 플랜.',
       articleIds: ['art-35', 'art-36', 'art-37', 'art-38', 'art-20', 'art-24', 'art-26', 'art-65', 'art-66']
@@ -748,7 +730,6 @@
       id: 'senior-legal',
       title_ko: '권익 보호 & 은퇴 법률',
       title_en: 'Senior Rights & Legal Protection',
-      icon: '⚖️',
       badge: '위임장(POA) · Living Will · APS',
       desc: '위임장(POA), 사전의료의향서(Living Will), 유언장, 리빙 트러스트, 성인보호국(APS), 시니어 사기 예방, 타운 시니어 교통 버스.',
       articleIds: ['art-40', 'art-41', 'art-42', 'art-43', 'art-44', 'art-45', 'art-46', 'art-47', 'art-48', 'art-73', 'art-74', 'art-75', 'art-77', 'art-78', 'art-79', 'art-80']
@@ -776,8 +757,7 @@
 
     container.innerHTML = categories.map(cat => `
       <div class="rc-choice-card ${currentSeniorCategory === cat.id ? 'active' : ''}" onclick="window.filterBySeniorCategory('${cat.id}')">
-        <div class="flex items-center justify-between">
-          <span class="text-2xl">${cat.icon}</span>
+        <div class="flex items-center justify-between mb-2">
           <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200">${cat.badge}</span>
         </div>
         <div class="text-sm font-bold text-slate-900 mt-1">${cat.title_ko}</div>
@@ -805,7 +785,7 @@
         badge.textContent = '전체 시니어 가이드';
       } else {
         const cat = SENIOR_CATEGORIES.find(c => c.id === catId);
-        badge.textContent = cat ? `${cat.icon} ${cat.title_ko}` : catId;
+        badge.textContent = cat ? cat.title_ko : catId;
       }
     }
 
@@ -862,9 +842,8 @@
       <div class="editorial-card flex flex-col justify-between hover:border-amber-400 hover:shadow-md transition-all cursor-pointer group" onclick="window.openSeniorArticleInline('${art.id}')">
         <div>
           <div class="flex items-center justify-between gap-2 mb-2.5">
-            <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-900 border border-amber-200 flex items-center gap-1">
-              <span>${art.category_icon || '👵'}</span>
-              <span>${art.category_name}</span>
+            <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-900 border border-amber-200">
+              ${art.category_name}
             </span>
             <span class="text-[11px] font-bold text-amber-700 bg-amber-50/70 px-2 py-0.5 rounded">65세+ 시니어</span>
           </div>
@@ -899,7 +878,7 @@
 
     if (!readerEl || !contentEl) return;
 
-    if (badgeEl) badgeEl.textContent = `${art.category_icon || '👵'} ${art.category_name} · 시니어 특별 가이드`;
+    if (badgeEl) badgeEl.textContent = `${art.category_name} · 시니어 특별 가이드`;
     contentEl.innerHTML = art.content_html;
 
     readerEl.classList.remove('hidden');
