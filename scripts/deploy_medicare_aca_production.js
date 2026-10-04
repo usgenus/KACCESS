@@ -12,7 +12,9 @@ const filesToUpload = [
   'resource-center.html',
   'medicare.html',
   'medicare/index.html',
-  'js/resource_center.js'
+  'js/resource_center.js',
+  'js/fixes.js',
+  'ko/js/fixes.js'
 ];
 
 async function uploadFile(relPath) {

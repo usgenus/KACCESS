@@ -241,6 +241,17 @@
     });
   }
 
+  // Sections inside hidden tabs never trigger the scroll-based slide-in observer,
+  // so force them visible as soon as their tab becomes active.
+  function revealTabContent(tabId) {
+    const view = document.getElementById(`tab-view-${tabId}`);
+    if (!view) return;
+    view.querySelectorAll('.fx-slide').forEach(el => {
+      el.style.transitionDelay = '0ms';
+      el.classList.add('fx-in');
+    });
+  }
+
   function switchTab(tabId, shouldScroll = false) {
     const isAlreadyActive = activeTab === tabId &&
       document.getElementById(`tab-view-${tabId}`) &&
@@ -264,6 +275,8 @@
         view.classList.toggle('hidden', view.id !== `tab-view-${tabId}`);
       });
     }
+
+    revealTabContent(tabId);
 
     if (shouldScroll) {
       scrollToContent();

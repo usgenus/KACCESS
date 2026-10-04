@@ -147,6 +147,18 @@
       '  transition: opacity .45s cubic-bezier(.22,1,.36,1), transform .45s cubic-bezier(.22,1,.36,1); }',
       '.fx-slide.fx-in { opacity:1; transform:none; }',
       '#cms-blog-main-section, section:has(#cms-blog-posts-grid), #cms-blog-posts-grid, .blog-post-card-item, .blog-post-card-item article { opacity: 1 !important; visibility: visible !important; transform: none !important; }',
+      '#rc-main-content section, .rc-tab-view section { opacity: 1 !important; visibility: visible !important; transform: none !important; }',
+
+      /* Global Dark Background & Contrast Fallback for uncompiled Next.js utility classes & Footer */
+      'footer, .bg-brand-darker, .bg-slate-900, .bg-slate-800, [class*="bg-\\[\\#0B192C\\]"], [class*="bg-[#0B192C]"], [class*="bg-\\[\\#071322\\]"], [class*="bg-[#071322]"], .medicare-dark-navy {',
+      '  background-color: #071322 !important;',
+      '  color: #ffffff !important;',
+      '}',
+      'footer a { color: #94a3b8 !important; }',
+      'footer a:hover { color: #ffffff !important; }',
+      'footer p, footer span { color: #94a3b8; }',
+      'footer h3, footer h4, footer .text-white { color: #ffffff !important; }',
+      '[class*="from-slate-900"] { background: linear-gradient(135deg, #071322 0%, #0F2342 55%, #1B2A4A 100%) !important; color: #ffffff !important; }',
 
       /* body fade-in: only apply to pages with explicit FOUC guard class, NOT globally (opacity:0 blocks Safari autoplay) */
       '@keyframes bodyFadeIn { from { opacity:0; } to { opacity:1; } }',
@@ -714,7 +726,7 @@
     var sections = [];
     for (var k = 0; k < raw.length; k++) {
       var node = raw[k];
-      if (node.querySelector('#cms-blog-posts-grid') || node.id === 'cms-blog-main-section' || node.id === 'cms-blog-posts-grid' || node.closest('#cms-blog-posts-grid') || node.classList.contains('blog-post-card-item') || node.closest('.blog-post-card-item')) {
+      if (node.querySelector('#cms-blog-posts-grid') || node.id === 'cms-blog-main-section' || node.id === 'cms-blog-posts-grid' || node.closest('#cms-blog-posts-grid') || node.classList.contains('blog-post-card-item') || node.closest('.blog-post-card-item') || node.closest('.rc-tab-view') || node.closest('#rc-main-content') || node.id === 'rc-main-content') {
         continue;
       }
       sections.push(node);

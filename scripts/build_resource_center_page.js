@@ -1806,28 +1806,28 @@ const html = `<!DOCTYPE html>
           <div role="tablist" aria-label="의료정보센터 주요 서비스 하이라이트" class="rc-hero-tabs-grid">
             
             <!-- Button 1: 자격확인 계산기 -->
-            <button role="tab" id="rc-billboard-tab-1" aria-controls="rc-hero-slide-1" aria-selected="true" tabindex="0" onclick="window.rcHeroTabClick('calculator', false)" class="hero-tab-item rc-hero-tab active" data-slide="1" data-tab="calculator">
+            <button role="tab" id="rc-billboard-tab-1" aria-controls="rc-hero-slide-1" aria-selected="true" tabindex="0" onclick="window.rcHeroTabClick('calculator', true)" class="hero-tab-item rc-hero-tab active" data-slide="1" data-tab="calculator">
               <span class="hero-tab-sub">하이라이트 01</span>
               <span class="hero-tab-title">자격확인 계산기</span>
               <div class="hero-tab-bar"></div>
             </button>
 
             <!-- Button 2: 커뮤니티 리소스 -->
-            <button role="tab" id="rc-billboard-tab-2" aria-controls="rc-hero-slide-2" aria-selected="false" tabindex="-1" onclick="window.rcHeroTabClick('resources', false)" class="hero-tab-item rc-hero-tab" data-slide="2" data-tab="resources">
+            <button role="tab" id="rc-billboard-tab-2" aria-controls="rc-hero-slide-2" aria-selected="false" tabindex="-1" onclick="window.rcHeroTabClick('resources', true)" class="hero-tab-item rc-hero-tab" data-slide="2" data-tab="resources">
               <span class="hero-tab-sub">하이라이트 02</span>
               <span class="hero-tab-title">커뮤니티 리소스</span>
               <div class="hero-tab-bar"></div>
             </button>
 
             <!-- Button 3: 메디케어 & ACA -->
-            <button role="tab" id="rc-billboard-tab-3" aria-controls="rc-hero-slide-3" aria-selected="false" tabindex="-1" onclick="window.rcHeroTabClick('medicare', false)" class="hero-tab-item rc-hero-tab" data-slide="3" data-tab="medicare">
+            <button role="tab" id="rc-billboard-tab-3" aria-controls="rc-hero-slide-3" aria-selected="false" tabindex="-1" onclick="window.rcHeroTabClick('medicare', true)" class="hero-tab-item rc-hero-tab" data-slide="3" data-tab="medicare">
               <span class="hero-tab-sub">하이라이트 03</span>
               <span class="hero-tab-title">메디케어 &amp; ACA</span>
               <div class="hero-tab-bar"></div>
             </button>
 
             <!-- Button 4: 시니어 -->
-            <button role="tab" id="rc-billboard-tab-4" aria-controls="rc-hero-slide-4" aria-selected="false" tabindex="-1" onclick="window.rcHeroTabClick('senior', false)" class="hero-tab-item rc-hero-tab" data-slide="4" data-tab="senior">
+            <button role="tab" id="rc-billboard-tab-4" aria-controls="rc-hero-slide-4" aria-selected="false" tabindex="-1" onclick="window.rcHeroTabClick('senior', true)" class="hero-tab-item rc-hero-tab" data-slide="4" data-tab="senior">
               <span class="hero-tab-sub">하이라이트 04</span>
               <span class="hero-tab-title">시니어</span>
               <div class="hero-tab-bar"></div>
@@ -2422,14 +2422,14 @@ const html = `<!DOCTYPE html>
         </div>
 
         <!-- Senior Official Hotlines & Support Callout -->
-        <div class="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-6 sm:p-8 text-white shadow-xl">
+        <div class="medicare-dark-navy rounded-2xl p-6 sm:p-8 text-white shadow-xl" style="background: linear-gradient(135deg, #071322 0%, #0F2342 55%, #1B2A4A 100%) !important; color: #ffffff !important;">
           <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div>
               <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30 mb-2">
                 뉴저지 시니어 공식 직통 핫라인
               </span>
-              <h3 class="text-xl font-bold text-white mb-2">시니어 복지 신청 및 긴급 상담</h3>
-              <p class="text-xs text-slate-300 max-w-2xl leading-relaxed">
+              <h3 class="text-xl font-bold text-white mb-2" style="color: #ffffff !important;">시니어 복지 신청 및 긴급 상담</h3>
+              <p class="text-xs text-slate-300 max-w-2xl leading-relaxed" style="color: #cbd5e1 !important;">
                 시니어 아파트 대기자 명단 확인, PAAD 신청서 접수, PPP 가족 간병인 평가 등 혼자 진행하기 어려운 절차는 공공 전문 기관 및 NJAP 상담을 통해 지원받으실 수 있습니다.
               </p>
             </div>
@@ -2438,25 +2438,25 @@ const html = `<!DOCTYPE html>
             </a>
           </div>
           <div class="mt-6 pt-6 border-t border-slate-700/80 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
-            <div class="p-3 rounded-xl bg-white/5 border border-white/10">
-              <div class="text-slate-400 font-semibold mb-0.5">버겐카운티 노인복지국</div>
-              <div class="text-base font-bold text-white">201-336-7400</div>
-              <div class="text-[11px] text-slate-400">시니어 서비스 및 프로그램 안내</div>
+            <div class="p-3 rounded-xl border" style="background: rgba(255, 255, 255, 0.08) !important; border: 1px solid rgba(255, 255, 255, 0.15) !important;">
+              <div class="font-semibold mb-0.5" style="color: #cbd5e1 !important;">버겐카운티 노인복지국</div>
+              <div class="text-base font-bold text-white" style="color: #ffffff !important;">201-336-7400</div>
+              <div class="text-[11px]" style="color: #94a3b8 !important;">시니어 서비스 및 프로그램 안내</div>
             </div>
-            <div class="p-3 rounded-xl bg-white/5 border border-white/10">
-              <div class="text-slate-400 font-semibold mb-0.5">주정부 PAAD 약값 핫라인</div>
-              <div class="text-base font-bold text-white">1-800-792-9745</div>
-              <div class="text-[11px] text-slate-400">NJSave 통합 처방약 지원</div>
+            <div class="p-3 rounded-xl border" style="background: rgba(255, 255, 255, 0.08) !important; border: 1px solid rgba(255, 255, 255, 0.15) !important;">
+              <div class="font-semibold mb-0.5" style="color: #cbd5e1 !important;">주정부 PAAD 약값 핫라인</div>
+              <div class="text-base font-bold text-white" style="color: #ffffff !important;">1-800-792-9745</div>
+              <div class="text-[11px]" style="color: #94a3b8 !important;">NJSave 통합 처방약 지원</div>
             </div>
-            <div class="p-3 rounded-xl bg-white/5 border border-white/10">
-              <div class="text-slate-400 font-semibold mb-0.5">Meals on Wheels 도시락</div>
-              <div class="text-base font-bold text-white">201-336-7420</div>
-              <div class="text-[11px] text-slate-400">어르신 자택 식사 배달 접수</div>
+            <div class="p-3 rounded-xl border" style="background: rgba(255, 255, 255, 0.08) !important; border: 1px solid rgba(255, 255, 255, 0.15) !important;">
+              <div class="font-semibold mb-0.5" style="color: #cbd5e1 !important;">Meals on Wheels 도시락</div>
+              <div class="text-base font-bold text-white" style="color: #ffffff !important;">201-336-7420</div>
+              <div class="text-[11px]" style="color: #94a3b8 !important;">어르신 자택 식사 배달 접수</div>
             </div>
-            <div class="p-3 rounded-xl bg-white/5 border border-white/10">
-              <div class="text-slate-400 font-semibold mb-0.5">성인보호국 (APS)</div>
-              <div class="text-base font-bold text-white">201-368-4300</div>
-              <div class="text-[11px] text-slate-400">어르신 학대·방임·사기 긴급 보호</div>
+            <div class="p-3 rounded-xl border" style="background: rgba(255, 255, 255, 0.08) !important; border: 1px solid rgba(255, 255, 255, 0.15) !important;">
+              <div class="font-semibold mb-0.5" style="color: #cbd5e1 !important;">성인보호국 (APS)</div>
+              <div class="text-base font-bold text-white" style="color: #ffffff !important;">201-368-4300</div>
+              <div class="text-[11px]" style="color: #94a3b8 !important;">어르신 학대·방임·사기 긴급 보호</div>
             </div>
           </div>
         </div>
@@ -2482,28 +2482,28 @@ const html = `<!DOCTYPE html>
   </div>
 
   <!-- FOOTER -->
-  <footer class="bg-[#0B192C] text-white py-12 border-t border-slate-800">
+  <footer class="bg-brand-darker text-white py-12 border-t border-slate-800" style="background-color: #071322 !important; background: #071322 !important; color: #ffffff !important;">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
         <div>
-          <div class="font-bold text-lg mb-2">NJ Access Portal 의료정보센터</div>
-          <p class="text-xs text-slate-400 leading-relaxed">
+          <div class="font-bold text-lg mb-2 text-white" style="color: #ffffff !important;">NJ Access Portal 의료정보센터</div>
+          <p class="text-xs text-slate-400 leading-relaxed" style="color: #94a3b8 !important;">
             뉴저지 한인 동포의 의료 접근성과 권익 신장을 위해 최신 연방 및 주정부 의료·복지 가이드라인과 타운별 주거 정보를 정확하고 투명하게 제공합니다.
           </p>
         </div>
         <div>
-          <div class="font-bold text-sm mb-2 text-slate-200">바로가기</div>
-          <ul class="text-xs text-slate-400 space-y-1.5">
-            <li><a href="/resource-center#calculator" class="hover:text-white">자격확인 계산기 (Benefits Screener)</a></li>
-            <li><a href="/resource-center#resources" class="hover:text-white">커뮤니티 리소스 &amp; 시니어 주택</a></li>
-            <li><a href="/resource-center#medicare" class="hover:text-white">2026 메디케어 &amp; ACA 완전 가이드</a></li>
-            <li><a href="/resource-center#senior" class="hover:text-white">뉴저지 시니어 복지 가이드</a></li>
-            <li><a href="/forum" class="hover:text-white">커뮤니티 포럼 Q&amp;A</a></li>
+          <div class="font-bold text-sm mb-2 text-slate-200" style="color: #e2e8f0 !important;">바로가기</div>
+          <ul class="text-xs text-slate-400 space-y-1.5" style="color: #94a3b8 !important;">
+            <li><a href="/resource-center#calculator" class="hover:text-white" style="color: #94a3b8 !important;">자격확인 계산기 (Benefits Screener)</a></li>
+            <li><a href="/resource-center#resources" class="hover:text-white" style="color: #94a3b8 !important;">커뮤니티 리소스 &amp; 시니어 주택</a></li>
+            <li><a href="/resource-center#medicare" class="hover:text-white" style="color: #94a3b8 !important;">2026 메디케어 &amp; ACA 완전 가이드</a></li>
+            <li><a href="/resource-center#senior" class="hover:text-white" style="color: #94a3b8 !important;">뉴저지 시니어 복지 가이드</a></li>
+            <li><a href="/forum" class="hover:text-white" style="color: #94a3b8 !important;">커뮤니티 포럼 Q&amp;A</a></li>
           </ul>
         </div>
         <div>
-          <div class="font-bold text-sm mb-2 text-slate-200">상담 및 문의</div>
-          <div class="text-xs text-slate-400 space-y-1">
+          <div class="font-bold text-sm mb-2 text-slate-200" style="color: #e2e8f0 !important;">상담 및 문의</div>
+          <div class="text-xs text-slate-400 space-y-1" style="color: #94a3b8 !important;">
             <div>• 카카오톡: NJAP 1:1 무료 상담</div>
             <div>• 뉴저지 버겐카운티 시니어 서비스: 201-336-7400</div>
             <div>• 주정부 처방약 핫라인(NJSave): 1-800-792-9745</div>
@@ -2511,7 +2511,7 @@ const html = `<!DOCTYPE html>
           </div>
         </div>
       </div>
-      <div class="pt-6 border-t border-slate-800 text-center text-xs text-slate-500">
+      <div class="pt-6 border-t border-slate-800 text-center text-xs text-slate-500" style="color: #64748b !important; border-top: 1px solid rgba(255,255,255,0.1) !important;">
         &copy; 2026 NJ Access Portal (뉴저지 한인 의료접근포털). All rights reserved. 본 정보는 공공 복지 정보 안내용이며 최종 자격 심사는 관할 주정부 및 주택청의 규정에 따릅니다.
       </div>
     </div>
