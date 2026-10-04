@@ -398,7 +398,7 @@ const heroHTML = `      <!-- 1. Two-Phase Homepage Hero: Video Intro -> 5-Servic
                   <span class="hero-gradient-accent">전문 내비게이터와 함께</span>
                 </div>
                 <p class="hero-main-desc">
-                  의사 찾기, 통역 동행 예약, 보험 가입, 청구 문제 해결까지 4단계로 도와드립니다.
+                  의사 찾기, 병원 예약 지원, 보험 가입, 청구 문제 해결까지 4단계로 도와드립니다.
                 </p>
                 <div class="hero-btn-row">
                   <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="hero-btn-primary">
