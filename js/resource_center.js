@@ -313,6 +313,72 @@
     runEvaluation();
   }
 
+  function getServiceTheme(item) {
+    const id = (item.id || '').toLowerCase();
+    if (id.includes('mltss') || id.includes('care')) {
+      return {
+        key: 'care',
+        categoryName: '장기 요양 & 재택 간병',
+        enName: 'Managed Long-Term Care (MLTSS)',
+        icon: '🤝'
+      };
+    }
+    if (id.includes('medicaid')) {
+      return {
+        key: 'medical',
+        categoryName: '의료 보장 · 메디케이드',
+        enName: 'NJ FamilyCare / Medicaid',
+        icon: '🩺'
+      };
+    }
+    if (id.includes('paad') || id.includes('msp') || id.includes('senior-gold') || id.includes('drug')) {
+      return {
+        key: 'prescription',
+        categoryName: '처방약 & 메디케어 저축',
+        enName: 'Medicare Savings & Prescription (PAAD)',
+        icon: '💊'
+      };
+    }
+    if (id.includes('snap') || id.includes('food')) {
+      return {
+        key: 'nutrition',
+        categoryName: '식품 & 영양 지원',
+        enName: 'Nutrition Assistance (SNAP)',
+        icon: '🍚'
+      };
+    }
+    if (id.includes('housing') || id.includes('apt')) {
+      return {
+        key: 'housing',
+        categoryName: '시니어 아파트 & 주거',
+        enName: 'Senior & Affordable Housing',
+        icon: '🏢'
+      };
+    }
+    if (id.includes('liheap') || id.includes('energy') || id.includes('utility')) {
+      return {
+        key: 'utility',
+        categoryName: '공과금 & 난방비 감면',
+        enName: 'Energy & Utility Assistance (LIHEAP)',
+        icon: '⚡'
+      };
+    }
+    if (id.includes('freeze') || id.includes('tax') || id.includes('anchor')) {
+      return {
+        key: 'tax',
+        categoryName: '재산세 환급 & 동결',
+        enName: 'Property Tax Reimbursement',
+        icon: '🏛️'
+      };
+    }
+    return {
+      key: 'medical',
+      categoryName: '정부 복지 프로그램',
+      enName: 'Public Assistance Program',
+      icon: '★'
+    };
+  }
+
   function renderCalculatorResults(res) {
     const countEl = document.getElementById('calcEligibleCount');
     const fplInfoEl = document.getElementById('calcFplInfo');
@@ -332,31 +398,56 @@
       return;
     }
 
-    container.innerHTML = res.results.map(item => `
-      <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-blue-300 transition-all flex flex-col justify-between gap-3">
-        <div>
-          <div class="flex items-center justify-between gap-2 mb-2">
-            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full ${item.status === 'eligible' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-amber-50 text-amber-800 border border-amber-200'}">
-              ${item.status_ko}
-            </span>
-            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">
-              ${item.badge || '공식 혜택'}
-            </span>
+    container.innerHTML = res.results.map(item => {
+      const theme = getServiceTheme(item);
+      return `
+        <div class="rc-win-frame rc-win-${theme.key}" id="result-${item.id}">
+          <!-- Window Header Bar (macOS style window frame) -->
+          <div class="rc-win-header">
+            <div class="rc-win-dots">
+              <span class="rc-dot rc-dot-red"></span>
+              <span class="rc-dot rc-dot-yellow"></span>
+              <span class="rc-dot rc-dot-green"></span>
+            </div>
+            <div class="rc-win-category">
+              <span class="rc-win-icon">${theme.icon}</span>
+              <span class="rc-win-cat-title">${theme.categoryName}</span>
+              <span class="rc-win-cat-sub">· ${item.title_en || theme.enName}</span>
+            </div>
+            <div class="rc-win-badge">
+              <span class="rc-status-pill ${item.status === 'eligible' ? 'rc-status-eligible' : 'rc-status-cond'}">
+                ${item.status_ko}
+              </span>
+            </div>
           </div>
-          <h4 class="text-base font-bold text-slate-900 mb-1.5">${item.title_ko}</h4>
-          <p class="text-xs text-slate-600 leading-relaxed mb-2">${item.benefit_ko}</p>
-          <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 text-[11.5px] text-slate-700">
-            <strong>적격 기준:</strong> ${item.criteria_ko}
+
+          <!-- Window Body -->
+          <div class="rc-win-body">
+            <div class="rc-win-title-row">
+              <h4 class="rc-win-title">${item.title_ko}</h4>
+              <span class="rc-win-highlight-badge">${item.badge || '공식 혜택'}</span>
+            </div>
+            <p class="rc-win-benefit">${item.benefit_ko}</p>
+            <div class="rc-win-criteria">
+              <div class="rc-criteria-label">
+                <svg style="width: 13px; height: 13px; flex-shrink: 0;" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                <span>적격 기준 요건</span>
+              </div>
+              <div class="rc-criteria-text">${item.criteria_ko}</div>
+            </div>
+          </div>
+
+          <!-- Window Footer Action Bar -->
+          <div class="rc-win-footer">
+            <span class="rc-win-help-hint">※ 가구 소득·나이·자격 조건 부합</span>
+            <button type="button" onclick="window.handleCalculatorServiceClick('${item.id}')" class="rc-win-action-btn">
+              <span>관련 안내 및 신청 가이드 바로보기</span>
+              <svg style="width: 14px; height: 14px; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+            </button>
           </div>
         </div>
-        <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
-          <span class="text-xs text-slate-400 font-medium">${item.title_en || ''}</span>
-          <button type="button" onclick="window.handleCalculatorServiceClick('${item.id}')" class="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 cursor-pointer">
-            관련 안내 및 신청 가이드 바로보기 &rarr;
-          </button>
-        </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
   }
 
   // Calculator Service Linking to Resources

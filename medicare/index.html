@@ -416,6 +416,395 @@
       color: #0f172a;
     }
 
+    /* Color Coded Window Frames for Calculator Results */
+    .rc-win-frame {
+      border-radius: 16px;
+      overflow: hidden;
+      background: #ffffff;
+      border-width: 1.5px;
+      border-style: solid;
+      box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+    .rc-win-frame:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px -4px rgba(0, 0, 0, 0.1), 0 4px 10px -2px rgba(0, 0, 0, 0.06);
+    }
+
+    .rc-win-header {
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border-bottom-width: 1px;
+      border-bottom-style: solid;
+      user-select: none;
+    }
+    .rc-win-dots {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+    .rc-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 9999px;
+      display: inline-block;
+    }
+    .rc-dot-red { background: #ff5f56; }
+    .rc-dot-yellow { background: #ffbd2e; }
+    .rc-dot-green { background: #27c93f; }
+
+    .rc-win-category {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+      min-width: 0;
+    }
+    .rc-win-icon {
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+    .rc-win-cat-title {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+    .rc-win-cat-sub {
+      font-size: 11px;
+      opacity: 0.7;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    @media (max-width: 640px) {
+      .rc-win-cat-sub { display: none; }
+    }
+
+    .rc-status-pill {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 9px;
+      border-radius: 9999px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .rc-status-eligible {
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+    .rc-status-cond {
+      background: #fffbeb;
+      color: #92400e;
+      border: 1px solid #fde68a;
+    }
+
+    .rc-win-body {
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .rc-win-title-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .rc-win-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.35;
+      margin: 0;
+    }
+    .rc-win-highlight-badge {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .rc-win-benefit {
+      font-size: 13px;
+      color: #334155;
+      line-height: 1.6;
+      margin: 0;
+    }
+    .rc-win-criteria {
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    .rc-criteria-label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .rc-criteria-text {
+      color: #475569;
+    }
+
+    .rc-win-footer {
+      padding: 10px 18px 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border-top-width: 1px;
+      border-top-style: solid;
+      flex-wrap: wrap;
+    }
+    .rc-win-help-hint {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+    .rc-win-action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 6px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      border: 1px solid transparent;
+      text-decoration: none;
+    }
+    .rc-win-action-btn:hover {
+      transform: translateX(2px);
+    }
+
+    /* THEME 1: Medical / Medicaid (Blue) */
+    .rc-win-medical {
+      border-color: #38bdf8 !important;
+      border-left: 6px solid #0284c7 !important;
+    }
+    .rc-win-medical .rc-win-header {
+      background: #f0f9ff;
+      border-color: #bae6fd;
+      color: #0369a1;
+    }
+    .rc-win-medical .rc-win-highlight-badge {
+      background: #e0f2fe;
+      color: #0284c7;
+      border: 1px solid #bae6fd;
+    }
+    .rc-win-medical .rc-win-criteria {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      color: #0369a1;
+    }
+    .rc-win-medical .rc-win-footer {
+      border-color: #f1f5f9;
+    }
+    .rc-win-medical .rc-win-action-btn {
+      background: #0284c7;
+      color: #ffffff !important;
+    }
+    .rc-win-medical .rc-win-action-btn:hover {
+      background: #0369a1;
+    }
+
+    /* THEME 2: Prescription / MSP / PAAD (Purple) */
+    .rc-win-prescription {
+      border-color: #c084fc !important;
+      border-left: 6px solid #7e22ce !important;
+    }
+    .rc-win-prescription .rc-win-header {
+      background: #faf5ff;
+      border-color: #e9d5ff;
+      color: #7e22ce;
+    }
+    .rc-win-prescription .rc-win-highlight-badge {
+      background: #f3e8ff;
+      color: #6b21a8;
+      border: 1px solid #d8b4fe;
+    }
+    .rc-win-prescription .rc-win-criteria {
+      background: #faf5ff;
+      border: 1px solid #f3e8ff;
+      color: #7e22ce;
+    }
+    .rc-win-prescription .rc-win-footer {
+      border-color: #f3e8ff;
+    }
+    .rc-win-prescription .rc-win-action-btn {
+      background: #7e22ce;
+      color: #ffffff !important;
+    }
+    .rc-win-prescription .rc-win-action-btn:hover {
+      background: #6b21a8;
+    }
+
+    /* THEME 3: Nutrition / Food / SNAP (Orange) */
+    .rc-win-nutrition {
+      border-color: #fb923c !important;
+      border-left: 6px solid #ea580c !important;
+    }
+    .rc-win-nutrition .rc-win-header {
+      background: #fff7ed;
+      border-color: #fed7aa;
+      color: #c2410c;
+    }
+    .rc-win-nutrition .rc-win-highlight-badge {
+      background: #ffedd5;
+      color: #9a3412;
+      border: 1px solid #fdba74;
+    }
+    .rc-win-nutrition .rc-win-criteria {
+      background: #fffbeb;
+      border: 1px solid #fef3c7;
+      color: #c2410c;
+    }
+    .rc-win-nutrition .rc-win-footer {
+      border-color: #fed7aa;
+    }
+    .rc-win-nutrition .rc-win-action-btn {
+      background: #ea580c;
+      color: #ffffff !important;
+    }
+    .rc-win-nutrition .rc-win-action-btn:hover {
+      background: #c2410c;
+    }
+
+    /* THEME 4: Housing / Senior Housing (Emerald Green) */
+    .rc-win-housing {
+      border-color: #34d399 !important;
+      border-left: 6px solid #059669 !important;
+    }
+    .rc-win-housing .rc-win-header {
+      background: #ecfdf5;
+      border-color: #a7f3d0;
+      color: #047857;
+    }
+    .rc-win-housing .rc-win-highlight-badge {
+      background: #d1fae5;
+      color: #065f46;
+      border: 1px solid #6ee7b7;
+    }
+    .rc-win-housing .rc-win-criteria {
+      background: #f0fdf4;
+      border: 1px solid #dcfce7;
+      color: #047857;
+    }
+    .rc-win-housing .rc-win-footer {
+      border-color: #a7f3d0;
+    }
+    .rc-win-housing .rc-win-action-btn {
+      background: #059669;
+      color: #ffffff !important;
+    }
+    .rc-win-housing .rc-win-action-btn:hover {
+      background: #047857;
+    }
+
+    /* THEME 5: Utility / LIHEAP / Energy (Rose Red) */
+    .rc-win-utility {
+      border-color: #fb7185 !important;
+      border-left: 6px solid #e11d48 !important;
+    }
+    .rc-win-utility .rc-win-header {
+      background: #fff1f2;
+      border-color: #fecdd3;
+      color: #be123c;
+    }
+    .rc-win-utility .rc-win-highlight-badge {
+      background: #ffe4e6;
+      color: #9f1239;
+      border: 1px solid #fda4af;
+    }
+    .rc-win-utility .rc-win-criteria {
+      background: #fff1f2;
+      border: 1px solid #ffe4e6;
+      color: #be123c;
+    }
+    .rc-win-utility .rc-win-footer {
+      border-color: #fecdd3;
+    }
+    .rc-win-utility .rc-win-action-btn {
+      background: #e11d48;
+      color: #ffffff !important;
+    }
+    .rc-win-utility .rc-win-action-btn:hover {
+      background: #be123c;
+    }
+
+    /* THEME 6: Tax Relief / Senior Freeze / ANCHOR (Teal) */
+    .rc-win-tax {
+      border-color: #2dd4bf !important;
+      border-left: 6px solid #0f766e !important;
+    }
+    .rc-win-tax .rc-win-header {
+      background: #f0fdfa;
+      border-color: #99f6e4;
+      color: #0f766e;
+    }
+    .rc-win-tax .rc-win-highlight-badge {
+      background: #ccfbf1;
+      color: #115e59;
+      border: 1px solid #5eead4;
+    }
+    .rc-win-tax .rc-win-criteria {
+      background: #f0fdfa;
+      border: 1px solid #ccfbf1;
+      color: #0f766e;
+    }
+    .rc-win-tax .rc-win-footer {
+      border-color: #99f6e4;
+    }
+    .rc-win-tax .rc-win-action-btn {
+      background: #0f766e;
+      color: #ffffff !important;
+    }
+    .rc-win-tax .rc-win-action-btn:hover {
+      background: #115e59;
+    }
+
+    /* THEME 7: Care / MLTSS / In-Home Caregiver (Indigo) */
+    .rc-win-care {
+      border-color: #818cf8 !important;
+      border-left: 6px solid #4338ca !important;
+    }
+    .rc-win-care .rc-win-header {
+      background: #eef2ff;
+      border-color: #c7d2fe;
+      color: #3730a3;
+    }
+    .rc-win-care .rc-win-highlight-badge {
+      background: #e0e7ff;
+      color: #312e81;
+      border: 1px solid #a5b4fc;
+    }
+    .rc-win-care .rc-win-criteria {
+      background: #eef2ff;
+      border: 1px solid #e0e7ff;
+      color: #3730a3;
+    }
+    .rc-win-care .rc-win-footer {
+      border-color: #c7d2fe;
+    }
+    .rc-win-care .rc-win-action-btn {
+      background: #4338ca;
+      color: #ffffff !important;
+    }
+    .rc-win-care .rc-win-action-btn:hover {
+      background: #3730a3;
+    }
+
     /* Editorial Card */
     .editorial-card {
       background: #ffffff;
@@ -1864,7 +2253,7 @@
   <!-- Scripts -->
   <script src="/data/resource_center_data.js"></script>
   <script src="/js/resource_calculator.js"></script>
-  <script src="/js/resource_center.js"></script>
+  <script src="/js/resource_center.js?v=20261004_win_2"></script>
   <script src="/js/fixes.js?v=8.1.0"></script>
 </body>
 </html>
