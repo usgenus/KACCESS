@@ -1,6 +1,6 @@
 <?php
 /**
- * Healthcare Access Portal - Main Homepage (Instant Dynamic PHP Engine)
+ * NJ Access Portal - Main Homepage (Instant Dynamic PHP Engine)
  * Renders the latest CMS Billboard, Top Story, Real-time News, Policy Reports, and Video News directly on the server.
  */
 require_once __DIR__ . '/api/db.php';
@@ -89,11 +89,11 @@ $latestNews = array_values(array_filter($posts, function($p) use ($topStory) {
 }));
 $latestNews = array_slice($latestNews, 0, 6);
 
-// 3. Recalls & Food Safety (Strictly show ONLY posts check-marked with isPolicyReport === true, Max 4)
+// 3. Recalls & Food Safety (Strictly show ONLY posts check-marked with isPolicyReport === true, Max 6)
 $reportNews = array_values(array_filter($posts, function($p) {
     return !empty($p['isPolicyReport']) && $p['isPolicyReport'] !== 'false' && $p['isPolicyReport'] !== false && $p['isPolicyReport'] !== 0 && $p['isPolicyReport'] !== '0';
 }));
-$reportNews = array_slice($reportNews, 0, 4);
+$reportNews = array_slice($reportNews, 0, 6);
 
 // Live update headline (Strictly latest post with isLiveUpdate or isTopStory)
 $liveUpdatePost = null;
@@ -129,24 +129,21 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
   <meta name="description" content="뉴저지 의료접근센터(NJ Healthcare Access Center) - 잉글우드 병원(Englewood Health), 홀리네임 병원(Holy Name Medical Center), 해켄색 메리디안 헬스(HUMC), 밸리 병원(The Valley Hospital), 파스카크 밸리(HMH), RWJBarnabas 등 뉴저지 주요 의료 기관 정보와 한인 환자 프로그램, 한국어 통역, 메디케어, ACA 건강보험, 자선진료(Charity Care) 지원 포털." />
   <meta name="keywords" content="의료접근센터, 의료접근포털, 뉴저지 의료접근센터, 뉴저지 주요 병원, Englewood Health, 잉글우드 병원, Holy Name Medical Center, 홀리네임 병원, 코리안 메디컬 프로그램, Hackensack Meridian Health, 해켄색 메리디안 헬스, Hackensack University Medical Center, HUMC, The Valley Hospital, 밸리 병원, HMH Pascack Valley Medical Center, 파스카크 밸리, RWJBarnabas Health, RWJ바나바스 헬스 네트워크, 버겐카운티 병원, 한인 통역 병원, 뉴저지 한인 병원 후기, 메디케어, ACA 오바마케어, 자선진료, charity care" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-  <link rel="canonical" href="https://njaccessportal.com/ko/" />
-  <link rel="alternate" hreflang="ko" href="https://njaccessportal.com/ko/" />
-  <link rel="alternate" hreflang="en" href="https://njaccessportal.com/en/" />
-  <link rel="alternate" hreflang="x-default" href="https://njaccessportal.com/ko/" />
+  <link rel="canonical" href="https://njaccessportal.com/" />
 
   <!-- OpenGraph / Social Media -->
-  <meta property="og:site_name" content="뉴저지 의료접근센터 · NJ Healthcare Access Center" />
+  <meta property="og:site_name" content="NJ Access Portal · 뉴저지 한인 의료접근포털" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://njaccessportal.com/ko/" />
+  <meta property="og:url" content="https://njaccessportal.com/" />
   <meta property="og:title" content="뉴저지 의료접근센터 · 의료접근포털 | NJ Healthcare Access Center &amp; Portal" />
   <meta property="og:description" content="뉴저지 의료접근센터 (NJ Healthcare Access Center / Portal / NJ Korean Outreach) - 뉴저지 한인 커뮤니티를 위한 무료 의료 접근, 메디케어, ACA, 자선진료, 무료 암검진 및 건강 상담 포털." />
-  <meta property="og:image" content="<?= htmlspecialchars(!empty($topStory['coverImage']) ? $topStory['coverImage'] : 'https://njaccessportal.com/ko/logo-icon.svg') ?>" />
+  <meta property="og:image" content="<?= htmlspecialchars(!empty($topStory['coverImage']) ? $topStory['coverImage'] : 'https://njaccessportal.com/logo-icon.svg') ?>" />
 
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="뉴저지 의료접근센터 · 의료접근포털 | NJ Healthcare Access Center" />
-  <meta name="twitter:description" content="뉴저지 한인을 위한 무료 프리미엄 의료 접근·네비게이션 서비스 및 한인 아웃리치 (Healthcare Access Portal)" />
-  <meta name="twitter:image" content="<?= htmlspecialchars(!empty($topStory['coverImage']) ? $topStory['coverImage'] : 'https://njaccessportal.com/ko/logo-icon.svg') ?>" />
+  <meta name="twitter:description" content="뉴저지 한인을 위한 무료 프리미엄 의료 접근·네비게이션 서비스 및 한인 아웃리치 (NJ Access Portal · 뉴저지 한인 의료접근포털)" />
+  <meta name="twitter:image" content="<?= htmlspecialchars(!empty($topStory['coverImage']) ? $topStory['coverImage'] : 'https://njaccessportal.com/logo-icon.svg') ?>" />
 
   <!-- Schema.org JSON-LD Structured Data for Google Search & AI Search -->
   <script type="application/ld+json">
@@ -155,8 +152,8 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
     "@graph": [
       {
         "@type": "WebSite",
-        "@id": "https://njaccessportal.com/ko/#website",
-        "url": "https://njaccessportal.com/ko/",
+        "@id": "https://njaccessportal.com/#website",
+        "url": "https://njaccessportal.com/",
         "name": "뉴저지 의료접근센터 · 의료접근포털 (NJ Healthcare Access Center & Portal)",
         "alternateName": [
           "의료접근센터",
@@ -168,7 +165,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
           "Healthcare Access Center",
           "Healthcare Access Portal",
           "NJ Healthcare Access Center",
-          "NJ Healthcare Access Portal",
+          "NJ Access Portal",
           "의료접근",
           "패밀리터치 헬스케어 액세스 센터"
         ],
@@ -176,25 +173,25 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
         "inLanguage": ["ko", "en"],
         "potentialAction": {
           "@type": "SearchAction",
-          "target": "https://njaccessportal.com/ko/blog?q={search_term_string}",
+          "target": "https://njaccessportal.com/blog?q={search_term_string}",
           "query-input": "required name=search_term_string"
         }
       },
       {
         "@type": "MedicalOrganization",
-        "@id": "https://njaccessportal.com/ko/#organization",
+        "@id": "https://njaccessportal.com/#organization",
         "name": "뉴저지 의료접근센터 (NJ Healthcare Access Center & Portal)",
         "alternateName": [
           "의료접근센터",
           "의료접근포털",
           "뉴저지 의료접근포털",
           "Healthcare Access Center",
-          "NJ Healthcare Access Portal",
+          "NJ Access Portal",
           "NJ Korean Outreach",
           "뉴저지 한인 아웃리치"
         ],
-        "url": "https://njaccessportal.com/ko",
-        "logo": "https://njaccessportal.com/ko/logo-icon.svg",
+        "url": "https://njaccessportal.com",
+        "logo": "https://njaccessportal.com/logo-icon.svg",
         "email": "njaccessportal@gmail.com",
         "telephone": "+1-551-285-0800",
         "address": {
@@ -210,14 +207,14 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
           "name": "New Jersey"
         },
         "knowsLanguage": ["ko", "en"],
-        "description": "뉴저지 한인 커뮤니티의 언어와 문화적 장벽을 해소하고 공공보험(메디케이드/메디케어/ACA), 자선진료(Charity Care), 무료 암검진(NJCEED), 시니어 케어를 제공하는 전문 의료접근센터 및 포털",
+        "description": "뉴저지 한인 커뮤니티의 언어와 문화적 장벽을 해소하고 공공보험(메디케이드/메디케어/ACA), 자선진료(Charity Care), 무료 암검진(NJCEED)를 제공하는 전문 의료접근센터 및 포털",
         "sameAs": [
           "http://pf.kakao.com/_hdxmxaX/chat"
         ]
       },
       {
         "@type": "ItemList",
-        "@id": "https://njaccessportal.com/ko/#major-hospitals",
+        "@id": "https://njaccessportal.com/#major-hospitals",
         "name": "뉴저지 주요 의료 기관 및 병원 네트워크 (Major Hospitals & Network List)",
         "description": "뉴저지 한인 커뮤니티를 위한 버겐 카운티 및 뉴저지 전역의 핵심 종합병원과 전문의 네트워크 목록입니다.",
         "itemListElement": [
@@ -357,7 +354,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
       },
       {
         "@type": "FAQPage",
-        "@id": "https://njaccessportal.com/ko/#faq",
+        "@id": "https://njaccessportal.com/#faq",
         "mainEntity": [
           {
             "@type": "Question",
@@ -471,32 +468,13 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/ko/_next/static/chunks/1fosv8xgmgdeu.css" />
-
-  <script>
-    (function() {
-      try {
-        var userChosen = sessionStorage.getItem('njap_senior_user_chosen') || localStorage.getItem('njap_senior_user_chosen');
-        var s = 0;
-        if (userChosen === '1') {
-          var val = sessionStorage.getItem('njap_senior_mode') || localStorage.getItem('njap_senior_mode');
-          s = parseInt(val, 10);
-        }
-        if (s === 1) document.documentElement.classList.add('senior-mode-1');
-        else if (s === 2) document.documentElement.classList.add('senior-mode-2');
-      } catch(e) {}
-    })();
-  </script>
+  <link rel="stylesheet" href="/_next/static/chunks/1fosv8xgmgdeu.css" />
 
   <style>
     :root, html, body {
       font-family: "Pretendard Variable", Pretendard, "Noto Sans KR", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif !important;
     }
-    html.senior-mode-1 { font-size: 118% !important; }
-    html.senior-mode-2 { font-size: 135% !important; }
-    html.senior-mode-1 .header-spacer, html.senior-mode-1 .h-\[109px\], html.senior-mode-1 #header-spacer { height: 120px !important; min-height: 120px !important; }
-    html.senior-mode-2 .header-spacer, html.senior-mode-2 .h-\[109px\], html.senior-mode-2 #header-spacer { height: 132px !important; min-height: 132px !important; }
-    html, body {
+html, body {
       overflow-x: hidden !important;
       max-width: 100% !important;
     }
@@ -1171,7 +1149,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
     <div class="marquee-track whitespace-nowrap">
       <?php for ($i = 0; $i < 6; $i++): ?>
         <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12">
-          <span class="opacity-60 mr-3">✦</span>의료접근포탈: &quot;비영리 기관들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot;<span class="opacity-60 ml-3">✦</span>
+          <span class="opacity-60 mr-3">✦</span>의료접근포탈: &quot;비영리기관(한인 커뮤니티센터)들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료시스템 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot;<span class="opacity-60 ml-3">✦</span>
         </span>
       <?php endfor; ?>
     </div>
@@ -1181,9 +1159,9 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
   <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/80 backdrop-blur-sm" style="top:45px">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
-        <a class="flex items-center cursor-pointer njap-brand-link flex-shrink-0 group" href="/ko/" onclick="navigateToHome(event); return false;" title="Healthcare Access Portal">
-          <svg class="h-8 sm:h-10 md:h-11 w-auto object-contain transition-transform group-hover:scale-102" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Healthcare Access Portal · 뉴저지 한인 의료 정보 포털 · NJAP" style="overflow: visible;">
-            <title>Healthcare Access Portal · 뉴저지 한인 의료 정보 포털 · NJAP</title>
+        <a class="flex items-center cursor-pointer njap-brand-link flex-shrink-0 group" href="/" onclick="navigateToHome(event); return false;" title="NJ Access Portal · 뉴저지 한인 의료접근포털">
+          <svg class="h-8 sm:h-10 md:h-11 w-auto object-contain transition-transform group-hover:scale-102" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NJ Access Portal · 뉴저지 한인 의료접근포털" style="overflow: visible;">
+            <title>NJ Access Portal · 뉴저지 한인 의료접근포털</title>
             <!-- Icon Mark (Door + Key + NJAP) -->
             <g transform="translate(4, 2) scale(0.56)" stroke-linecap="round" stroke-linejoin="round">
               <!-- Door Frame & NJAP Text -->
@@ -1208,28 +1186,27 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
 
             <!-- Typography: slides in from right after key enters -->
             <g class="njap-nav-text-main">
-              <text x="64" y="27" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="18" font-weight="900" fill="#0B192C" letter-spacing="-0.5">Healthcare Access Portal</text>
+              <text x="64" y="27" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="18" font-weight="900" fill="#0B192C" letter-spacing="-0.5">NJ Access Portal</text>
             </g>
             <g class="njap-nav-text-sub">
-              <text x="64" y="44" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="10.5" font-weight="600" fill="#64748B" letter-spacing="0.2">뉴저지 한인 의료 정보 포털 · NJAP</text>
+              <text x="64" y="44" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="10.5" font-weight="600" fill="#64748B" letter-spacing="0.2">뉴저지 한인 의료접근포털</text>
             </g>
           </svg>
         </a>
         <div class="hidden md:flex items-center" style="display: flex; align-items: center; gap: 26px;">
-          <a class="nav-link pb-0.5 font-bold text-brand-blue cursor-pointer" href="/ko/" onclick="navigateToHome(event); return false;">홈</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/blog">뉴스</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/forum">커뮤니티 포럼</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/senior-care">시니어 케어</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/medicare">메디케어 &amp; ACA</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/tool">환자도우미</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/about">소개</a>
+          <a class="nav-link pb-0.5 font-bold text-brand-blue cursor-pointer" href="/" onclick="navigateToHome(event); return false;">홈</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/blog">뉴스</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/forum">커뮤니티 포럼</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/resource-center">의료정보센터</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/about">소개</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue flex flex-col items-center justify-center leading-tight group" href="/engine" target="_self" title="Universal Access Engine (Marketing Client)">
+            <span class="text-[13.5px] font-bold text-slate-800 group-hover:text-brand-blue tracking-tight">Engine</span>
+            <span class="text-[9px] font-semibold text-slate-400 group-hover:text-brand-blue tracking-tighter -mt-0.5">Marketing Client</span>
+          </a>
         </div>
         <div class="flex items-center gap-2 sm:gap-3">
           <!-- KakaoTalk 1:1 Chat Button (Top Nav) -->
-          <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity cursor-pointer" title="카카오톡 1:1 상담 바로가기"><img src="/ko/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" /><span class="text-xs sm:text-sm font-bold text-slate-800 hover:text-brand-blue tracking-tight whitespace-nowrap">1:1 상담</span></a>
-          <!-- Senior Mode (시니어모드+) 3-Step Toggle Button -->
-          <button id="senior-mode-btn" class="senior-mode-btn notranslate" translate="no" type="button" onclick="window.cycleSeniorMode && window.cycleSeniorMode()" title="시니어모드+ (글자 크기 3단계 조절)" aria-label="시니어모드 글자 크기 조절"><span class="senior-btn-label">시니어모드+</span><span class="senior-step-badge" style="display:none;"></span></button>
-          <button id="en-translate-btn" class="notranslate" translate="no" onclick="if(window.toggleTranslation){window.toggleTranslation();}else{location.href='/en/';}" title="Switch Language (EN / KR)" aria-label="Language Toggle" style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;border:1.5px solid #cbd5e1;font-size:11px;font-weight:700;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s ease;background:transparent;color:#475569;white-space:nowrap;flex-shrink:0;line-height:1.4;"><span class="notranslate" translate="no">🌐</span> <span class="notranslate en-btn-label" translate="no">EN</span></button>
+          <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity cursor-pointer" title="카카오톡 1:1 상담 바로가기"><img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" /><span class="text-xs sm:text-sm font-bold text-slate-800 hover:text-brand-blue tracking-tight whitespace-nowrap">1:1 상담</span></a>
           <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors" aria-label="Menu">
             <div class="w-5 h-4 flex flex-col justify-between">
               <span class="block h-0.5 bg-brand-dark rounded-full"></span>
@@ -1240,28 +1217,9 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
         </div>
       </div>
     </div>
-                <div id="mobile-menu-dropdown" class="md:hidden overflow-hidden transition-all duration-300 max-h-0 opacity-0 bg-white/98 backdrop-blur-md border-t border-brand-border px-4 py-3 flex flex-col gap-1" style="-webkit-overflow-scrolling: touch;">
-      <!-- Senior Mode in Mobile Menu -->
-      <div class="flex items-center justify-between py-2.5 px-3.5 mb-1.5 rounded-xl bg-slate-50 border border-slate-200/80">
-        <div class="flex items-center gap-2">
-          <span class="text-xs font-bold text-slate-700">화면 글자 크기</span>
-        </div>
-        <button type="button" class="senior-mode-btn notranslate" translate="no" onclick="window.cycleSeniorMode && window.cycleSeniorMode()" style="padding:4px 10px;font-size:12px;">
-          <span class="senior-btn-label">시니어모드+</span>
-          <span class="senior-step-badge" style="display:none;"></span>
-        </button>
-      </div>
-      <!-- Language Switcher in Mobile Menu -->
-      <div class="flex items-center justify-between py-2.5 px-3.5 mb-1.5 rounded-xl bg-blue-50/60 border border-blue-100">
-        <div class="flex items-center gap-2">
-          <span class="text-xs font-bold text-slate-700">언어 / Language</span>
-        </div>
-        <button type="button" class="notranslate" translate="no" onclick="if(window.toggleTranslation){window.toggleTranslation();}else{location.href='/en/';}" style="padding:4px 12px;font-size:12px;font-weight:700;border-radius:999px;border:1.5px solid #2563eb;background:#2563eb;color:#ffffff;display:inline-flex;align-items:center;gap:4px;cursor:pointer;">
-          <span>🌐</span> <span>English</span>
-        </button>
-      </div>
+                                                <div id="mobile-menu-dropdown" class="md:hidden overflow-hidden transition-all duration-300 max-h-0 opacity-0 bg-white/98 backdrop-blur-md border-t border-brand-border px-4 py-3 flex flex-col gap-1" style="-webkit-overflow-scrolling: touch;">
       <!-- 1. 홈 -->
-      <a href="/ko/" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-bold text-brand-blue bg-blue-50/70">
+      <a href="/" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-bold text-brand-blue bg-blue-50/70">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-brand-blue shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
           <span class="text-[15px]">홈</span>
@@ -1270,7 +1228,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
       </a>
 
       <!-- 2. 뉴스 -->
-      <a href="/ko/blog" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/blog" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
           <span class="text-[15px]">뉴스</span>
@@ -1279,7 +1237,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
       </a>
 
       <!-- 2.5. 커뮤니티 포럼 -->
-      <a href="/ko/forum" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/forum" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>
           <span class="text-[15px]">커뮤니티 포럼</span>
@@ -1287,38 +1245,32 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
         <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
 
-      <!-- 3. 시니어 케어 -->
-      <a href="/ko/senior-care" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
-        <div class="flex items-center gap-3">
-          <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
-          <span class="text-[15px]">시니어 케어</span>
-        </div>
-        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-      </a>
-
-      <!-- 4. 메디케어 & ACA -->
-      <a href="/ko/medicare" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <!-- 4. 의료정보센터 -->
+      <a href="/resource-center" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-          <span class="text-[15px]">메디케어 &amp; ACA</span>
-        </div>
-        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-      </a>
-
-      <!-- 5. 환자도우미 -->
-      <a href="/ko/tool" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
-        <div class="flex items-center gap-3">
-          <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-          <span class="text-[15px]">환자도우미</span>
+          <span class="text-[15px]">의료정보센터</span>
         </div>
         <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
 
       <!-- 6. 소개 -->
-      <a href="/ko/about" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/about" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
           <span class="text-[15px]">소개</span>
+        </div>
+        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+
+      <!-- 7. Engine (Marketing Client) -->
+      <a href="/engine" target="_self" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          <div class="flex flex-col text-left">
+            <span class="text-[15px] font-bold text-slate-800">Engine</span>
+            <span class="text-[10px] font-semibold text-slate-400 leading-none">Marketing Client</span>
+          </div>
         </div>
         <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
@@ -1327,10 +1279,10 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
       <div class="pt-2 pb-1">
         <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3.5 bg-[#FEE500] hover:bg-[#FDD835] active:bg-[#FBC02D] text-[#191919] rounded-xl font-bold text-sm shadow-xs transition-all cursor-pointer">
           <div class="flex items-center gap-2.5">
-            <img src="/ko/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" />
+            <img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" />
             <div class="flex flex-col text-left">
               <span class="text-sm font-bold leading-tight">카카오톡 1:1 상담 바로가기</span>
-              <span class="text-[11px] font-medium text-black/70">의료 복지 및 시니어 케어 실시간 문의</span>
+              <span class="text-[11px] font-medium text-black/70">의료 복지 및 건강 상담 실시간 문의</span>
             </div>
           </div>
           <svg class="w-4 h-4 text-black/60 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
@@ -1344,106 +1296,799 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
   <main class="flex-1">
     <div class="flex flex-col bg-[#F3F3F5] min-h-screen text-[#111111] font-sans">
       
-      <!-- 1. 100vw Panoramic Billboard Section (At Top) -->
-      <section id="gallery-billboard-section" class="w-full font-sans bg-slate-950 mb-6" style="width:100vw; max-width:100vw; position:relative; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw;">
-        <div id="gallery-billboard-container" class="w-full relative group">
-          <?php if (!empty($activeBillboards)): 
-            $b = $activeBillboards[0];
-            $isVideo = ($b['mediaType'] ?? '') === 'video' || (isset($b['mediaUrl']) && (str_ends_with($b['mediaUrl'], '.mp4') || str_ends_with($b['mediaUrl'], '.webm')));
-          ?>
-          <div class="relative w-full overflow-hidden bg-slate-950 select-none group" style="height: clamp(300px, 38.32vw, 624px); min-height: 300px; max-height: 624px; width: 100%; position: relative; overflow: hidden;">
-            <a href="<?= htmlspecialchars($b['linkUrl'] ?? '/about#contact') ?>" class="block absolute inset-0 w-full h-full cursor-pointer select-none" title="<?= htmlspecialchars($b['title'] ?? '') ?>" onclick="var v=this.querySelector('video');if(v&&v.paused){event.preventDefault();event.stopPropagation();v.defaultMuted=true;v.muted=true;v.play();return false;}">
-              <div class="absolute inset-0 w-full h-full overflow-hidden" style="position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1;">
-                <?php if ($isVideo): ?>
-                  <video id="billboard-active-video" 
-                         class="w-full h-full object-cover" 
-                         muted 
-                         autoplay 
-                         <?= count($activeBillboards) <= 1 ? 'loop' : '' ?> 
-                         playsinline 
-                         webkit-playsinline 
-                         preload="auto"
-                         style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center;">
-                    <?php 
-    $mUrl = $b['mediaUrl'] ?? '';
-    $koMUrl = (strpos($mUrl, '/') === 0 && strpos($mUrl, '/ko/') !== 0) ? '/ko' . $mUrl : $mUrl;
-  ?>
-  <source src="<?= htmlspecialchars($koMUrl) ?>" type="video/mp4">
-  <source src="<?= htmlspecialchars($mUrl) ?>" type="video/mp4">
-                  </video>
-                  <script>
-                    (function(){
-                      var v = document.getElementById('billboard-active-video');
-                      if (!v) return;
-                      v.defaultMuted = true;
-                      v.muted = true;
-                      v.volume = 0;
-                      v.playsInline = true;
-                      var triggerPlay = function() {
-                        if (v.paused) {
-                          var p = v.play();
-                          if (p && p.catch) p.catch(function(){});
-                        }
-                      };
-                      if (v.readyState >= 2) {
-                        triggerPlay();
-                      } else {
-                        v.addEventListener('canplay', triggerPlay, { once: true });
-                        v.addEventListener('loadeddata', triggerPlay, { once: true });
-                      }
-                      v.addEventListener('ended', function() {
-                        if (typeof window.cmsNextBillboard === 'function') {
-                          window.cmsNextBillboard();
-                        }
-                      });
-                    })();
-                  </script>
-                <?php else: ?>
-                  <img id="billboard-active-img" 
-                    src="<?= htmlspecialchars($b['mediaUrl'] ?: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=2000&q=85&auto=format') ?>" 
-                    alt="<?= htmlspecialchars($b['title'] ?? '') ?>" 
-                    class="w-full h-full object-cover transform scale-100 group-hover:scale-103 transition-transform duration-1000 ease-out"
-                    style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
-                <?php endif; ?>
-                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent pointer-events-none" style="z-index: 2;"></div>
-                <div class="absolute inset-0 bg-gradient-to-r from-black/65 via-transparent to-black/20 pointer-events-none" style="z-index: 2;"></div>
-                <div class="absolute inset-0 billboard1-vignette" style="z-index: 3;"></div>
-              </div>
+                                                      <!-- 1. Two-Phase Homepage Hero: Video Intro -> 5-Service Rotating Billboard (Shrinks Vertically by 35% on Transition) -->
+      <section id="homepage-hero-billboard-section" class="w-full mb-8 overflow-hidden select-none hero-phase-video" style="width:100vw; max-width:100vw; position:relative; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw; background: linear-gradient(135deg, #071322 0%, #0F2342 55%, #1B2A4A 100%); font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;" aria-label="NJ Access Portal 주요 서비스 하이라이트">
+        <style>
+          #homepage-hero-billboard-section {
+            --brand-navy: #0F2342;
+            --brand-navy-deep: #071322;
+            --brand-navy-light: #1B2A4A;
+            --brand-blue: #1B6FA8;
+            --brand-blue-hover: #155987;
+            --accent-teal: #7FC8C0;
+            --accent-sky: #4FA3D1;
+            box-sizing: border-box;
+            transition: min-height 650ms cubic-bezier(0.16, 1, 0.3, 1), height 650ms cubic-bezier(0.16, 1, 0.3, 1);
+          }
+          #homepage-hero-billboard-section * {
+            box-sizing: border-box;
+          }
 
-              <!-- Top Layer (Layer 3): Text, Badges, and Action Buttons -->
-              <div class="absolute inset-0 flex items-end billboard-text-layer pointer-events-none" style="position: absolute; inset: 0; display: flex; align-items: flex-end; z-index: 10;">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-4 sm:pb-6 flex items-end justify-between gap-4 pointer-events-auto">
-                  <div class="max-w-3xl space-y-1 sm:space-y-2">
-                    <div class="flex items-center gap-2">
-                      <span class="bg-red-600 text-white text-[10px] sm:text-xs font-extrabold px-3 py-0.5 sm:py-1 rounded-full uppercase tracking-wider shadow">
-                        <?= htmlspecialchars(!empty($b['subtitle']) ? $b['subtitle'] : ($b['category'] ?? 'SPECIAL CAMPAIGN')) ?>
-                      </span>
-                    </div>
-                    <h3 class="font-extrabold text-base sm:text-2xl md:text-3xl text-white tracking-tight leading-snug drop-shadow-md group-hover:text-blue-300 transition-colors line-clamp-1">
-                      <?= htmlspecialchars($b['title'] ?? '') ?>
-                    </h3>
-                  </div>
+          /* Phase 1 Height (Cinematic Video Full Billboard) */
+          #homepage-hero-billboard-section.hero-phase-video {
+            min-height: clamp(560px, 52vw, 700px);
+            height: clamp(560px, 52vw, 700px);
+          }
 
-                  <div class="flex items-center gap-2 shrink-0">
-                    <span class="inline-flex items-center gap-1.5 bg-gradient-to-r from-red-600 to-brand-blue text-white font-extrabold text-xs sm:text-sm px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl shadow-xl">
-                      <span><?= htmlspecialchars($b['linkText'] ?? '자세히 보기') ?></span>
-                      <span>→</span>
-                    </span>
-                  </div>
+          /* Phase 2 Height (Shrinks Vertically by 35% -> exactly 65% of Phase 1) */
+          #homepage-hero-billboard-section.hero-phase-billboard {
+            min-height: clamp(365px, 34vw, 455px);
+            height: auto;
+          }
+
+          .hero-main-title {
+            font-size: 38px;
+            font-weight: 800;
+            line-height: 1.18;
+            letter-spacing: -0.025em;
+            color: #ffffff;
+            margin: 0 0 12px 0;
+          }
+          @media (max-width: 1024px) {
+            .hero-main-title {
+              font-size: 32px;
+            }
+          }
+          @media (max-width: 640px) {
+            .hero-main-title {
+              font-size: 26px;
+              line-height: 1.22;
+              margin: 0 0 10px 0;
+            }
+          }
+          .hero-gradient-accent {
+            background: linear-gradient(90deg, #7FC8C0 0%, #4FA3D1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+          }
+          .hero-main-desc {
+            font-size: 14.5px;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.55;
+            max-width: 520px;
+            margin: 0 0 20px 0;
+          }
+          @media (max-width: 640px) {
+            .hero-main-desc {
+              font-size: 13.5px;
+              line-height: 1.5;
+              margin: 0 0 16px 0;
+            }
+          }
+          .hero-btn-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+          }
+          .hero-pill-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 700;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            background: rgba(255, 255, 255, 0.10);
+            color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+            margin-bottom: 10px;
+          }
+          .hero-btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: #1B6FA8;
+            color: #ffffff !important;
+            padding: 11px 22px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 14.5px;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(27, 111, 168, 0.4);
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+          }
+          .hero-btn-primary:hover {
+            background: #155987;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(27, 111, 168, 0.6);
+          }
+          .hero-btn-white {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: #ffffff;
+            color: #0F2342 !important;
+            padding: 11px 22px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 14.5px;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+          }
+          .hero-btn-white:hover {
+            background: #f1f5f9;
+            transform: translateY(-1px);
+          }
+          .hero-btn-outline {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            color: #ffffff !important;
+            padding: 11px 22px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 14.5px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+          }
+          .hero-btn-outline:hover {
+            border-color: #ffffff;
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-1px);
+          }
+          .hero-btn-kakao {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: #FEE500;
+            color: #3C1E1E !important;
+            padding: 11px 22px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 14.5px;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(254, 229, 0, 0.35);
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+          }
+          .hero-btn-kakao:hover {
+            background: #FADA0A;
+            transform: translateY(-1px);
+          }
+          .hero-btn-icon {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+          }
+          .hero-card-container {
+            position: relative;
+            width: 100%;
+            max-width: 440px;
+            height: 235px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.75), 0 0 25px rgba(31, 111, 168, 0.25);
+            background: #0B192C;
+          }
+          @media (max-width: 1023px) {
+            .hero-card-container {
+              max-width: 480px;
+              height: 220px;
+              margin: 0 auto;
+            }
+          }
+          @media (max-width: 639px) {
+            .hero-card-container {
+              height: 180px;
+              border-radius: 16px;
+            }
+          }
+          .hero-visual-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 450ms ease, transform 450ms ease;
+          }
+          .hero-card-caption-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.55) 65%, transparent 100%);
+            padding: 12px 16px;
+            z-index: 25;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-sizing: border-box;
+          }
+          .hero-card-caption-text {
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+          }
+          .hero-card-caption-num {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 11px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-weight: 600;
+          }
+          .hero-slide {
+            transition: opacity 350ms cubic-bezier(0.16, 1, 0.3, 1), transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
+          }
+          .hero-tabs-grid {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 10px;
+            width: 100%;
+          }
+          @media (max-width: 639px) {
+            .hero-tabs-grid {
+              display: flex;
+              overflow-x: auto;
+              gap: 8px;
+              padding-bottom: 4px;
+              margin-left: -16px;
+              margin-right: -16px;
+              padding-left: 16px;
+              padding-right: 16px;
+              scrollbar-width: none;
+              -webkit-overflow-scrolling: touch;
+            }
+            .hero-tab-item {
+              flex: 0 0 140px;
+            }
+          }
+          .hero-tab-item {
+            text-align: left;
+            padding: 8px 12px;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            outline: none;
+          }
+          .hero-tab-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+          }
+          .hero-tab-item[aria-selected="true"] {
+            background: rgba(255, 255, 255, 0.08);
+          }
+          .hero-tab-sub {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.45);
+            display: block;
+            margin-bottom: 2px;
+          }
+          .hero-tab-item[aria-selected="true"] .hero-tab-sub {
+            color: #7FC8C0;
+          }
+          .hero-tab-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.65);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+          }
+          .hero-tab-item[aria-selected="true"] .hero-tab-title {
+            color: #ffffff;
+          }
+          .hero-tab-bar {
+            height: 3px;
+            border-radius: 9999px;
+            margin-top: 6px;
+            background: transparent;
+            transition: all 0.3s ease;
+          }
+          .hero-tab-item[aria-selected="true"] .hero-tab-bar {
+            background: linear-gradient(90deg, #7FC8C0, #4FA3D1);
+            box-shadow: 0 0 10px rgba(127, 200, 192, 0.85);
+          }
+        </style>
+
+        <!-- Ambient radial glow overlay for visual depth -->
+        <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(circle at 75% 35%, rgba(31, 111, 168, 0.28) 0%, rgba(15, 35, 66, 0) 70%); z-index: 1;"></div>
+        <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(circle at 20% 80%, rgba(127, 200, 192, 0.1) 0%, transparent 50%); z-index: 1;"></div>
+
+        <!-- PHASE 1: Video Intro Layer -->
+        <div id="hero-video-phase" class="absolute inset-0 w-full h-full z-30 transition-opacity duration-500 overflow-hidden bg-slate-950 flex items-center justify-center">
+          <video id="hero-intro-video" 
+                 class="w-full h-full object-cover" 
+                 autoplay 
+                 muted 
+                 playsinline 
+                 webkit-playsinline 
+                 preload="auto" 
+                 poster="/uploads/images/billboard_video_poster.jpg"
+                 style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+            <source src="/uploads/videos/videos_20260922_014616_9f2834.mp4" type="video/mp4">
+          </video>
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-slate-950/30 pointer-events-none"></div>
+
+          <!-- Small Skip Button -->
+          <button id="hero-video-skip-btn" type="button" class="absolute top-4 right-4 sm:top-6 sm:right-8 z-40 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-black/65 hover:bg-black/90 backdrop-blur-md border border-white/25 text-white text-xs sm:text-sm font-semibold flex items-center gap-1.5 shadow-xl transition-all active:scale-95 cursor-pointer" aria-label="비디오 건너뛰기">
+            <span>건너뛰기 Skip</span>
+            <svg class="w-3.5 h-3.5 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 5l7 7-7 7M5 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+
+        <!-- PHASE 2: Rotating Service Billboard Layer (Shrunk Vertically by 35%) -->
+        <div id="hero-billboard-phase" class="relative w-full h-full z-10 opacity-0 pointer-events-none transition-opacity duration-500 flex flex-col justify-between py-5 sm:py-7 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" style="min-height: clamp(365px, 34vw, 455px);">
+          
+          <!-- Top Row: Left Content Column & Right Visual Card Column -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center flex-1 my-auto">
+            
+            <!-- Left Column: Content Panels (Pre-rendered in DOM, only active slide visible) -->
+            <div class="order-1 lg:order-1 lg:col-span-7 flex flex-col justify-center relative min-h-[240px] sm:min-h-[260px]">
+              
+              <!-- SLIDE 01: 메디케어 & ACA 가이드 -->
+              <div id="hero-slide-1" class="hero-slide" data-slide="1">
+                <div>
+                  <span class="hero-pill-badge">
+                    <span class="w-2 h-2 rounded-full bg-[#7FC8C0] animate-pulse"></span>
+                    2026 메디케어 중점 가이드
+                  </span>
+                </div>
+                <!-- Authoritative Page single <h1> for SEO -->
+                <h1 id="hero-single-h1" class="hero-main-title">
+                  메디케어 오픈 인롤먼트<br>
+                  <span class="hero-gradient-accent">10월 15일 – 12월 7일 완벽 가이드</span>
+                </h1>
+                <p class="hero-main-desc">
+                  파트 D $2,100 약값 상한제, 파트 B $202.90 — 2026년 변경 사항과 플랜 비교 체크리스트를 확인하세요.
+                </p>
+                <div class="hero-btn-row">
+                  <a href="/resources/medicare" class="hero-btn-primary">
+                    <span>메디케어 가이드 보기</span>
+                    <svg class="hero-btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                  </a>
+                  <a href="/calculator" class="hero-btn-white">
+                    <span>자격 확인 계산기</span>
+                  </a>
                 </div>
               </div>
-            </a>
 
-            <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
-              <?php foreach ($activeBillboards as $idx => $dummy): ?>
-                <button onclick="event.stopPropagation(); event.preventDefault(); window.cmsGoBillboard(<?= $idx ?>);" 
-                  class="transition-all duration-300 <?= $idx === 0 ? 'w-6 h-1.5 sm:w-8 sm:h-2 bg-white rounded-full shadow-lg ring-1 ring-white/50' : 'w-2 h-1.5 sm:w-2.5 sm:h-2 bg-white/40 hover:bg-white/80 rounded-full' ?>">
-                </button>
-              <?php endforeach; ?>
+              <!-- SLIDE 02: 환자 내비게이션 서비스 -->
+              <div id="hero-slide-2" class="hero-slide hidden opacity-0 translate-y-3" data-slide="2">
+                <div>
+                  <span class="hero-pill-badge">
+                    <span class="w-2 h-2 rounded-full bg-[#4FA3D1] animate-pulse"></span>
+                    1:1 환자 내비게이션
+                  </span>
+                </div>
+                <div class="hero-main-title">
+                  병원 찾기가 막막하다면<br>
+                  <span class="hero-gradient-accent">전문 내비게이터와 함께</span>
+                </div>
+                <p class="hero-main-desc">
+                  의사 찾기, 통역 동행 예약, 보험 가입, 청구 문제 해결까지 4단계로 도와드립니다.
+                </p>
+                <div class="hero-btn-row">
+                  <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="hero-btn-primary">
+                    <span>내비게이션 신청</span>
+                    <svg class="hero-btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                  </a>
+                  <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="hero-btn-kakao">
+                    <img src="/kakaotalk-icon.png" alt="Kakao" class="w-4 h-4 rounded object-contain" />
+                    <span>카카오톡 상담</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- SLIDE 03: 커뮤니티 포럼 -->
+              <div id="hero-slide-3" class="hero-slide hidden opacity-0 translate-y-3" data-slide="3">
+                <div>
+                  <span class="hero-pill-badge">
+                    <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
+                    이웃과 함께
+                  </span>
+                </div>
+                <div class="hero-main-title">
+                  궁금한 건강 정보를<br>
+                  <span class="hero-gradient-accent">커뮤니티에 물어보세요</span>
+                </div>
+                <p class="hero-main-desc">
+                  병원 후기, 보험·청구 Q&A, 진료과별 의학 상담 — 5개 게시판에서 실시간으로 소통하세요.
+                </p>
+                <div class="hero-btn-row">
+                  <a href="/forum" class="hero-btn-primary">
+                    <span>포럼 둘러보기</span>
+                    <svg class="hero-btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                  </a>
+                  <a href="/forum/ask" class="hero-btn-white">
+                    <span>질문하기</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- SLIDE 04: 건강 뉴스 -->
+              <div id="hero-slide-4" class="hero-slide hidden opacity-0 translate-y-3" data-slide="4">
+                <div>
+                  <span class="hero-pill-badge">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    매일 업데이트
+                  </span>
+                </div>
+                <div class="hero-main-title">
+                  한인 건강 뉴스를<br>
+                  <span class="hero-gradient-accent">한눈에 확인하세요</span>
+                </div>
+                <p class="hero-main-desc">
+                  의료 칼럼 TOP 10, 리콜 속보, 보험 정책 변화까지 매일 업데이트됩니다.
+                </p>
+                <div class="hero-btn-row">
+                  <a href="/news" class="hero-btn-primary">
+                    <span>뉴스 보기</span>
+                    <svg class="hero-btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                  </a>
+                  <a href="/resources/medicare" class="hero-btn-outline">
+                    <span>전체 가이드</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- SLIDE 05: 실시간 자격 확인 -->
+              <div id="hero-slide-5" class="hero-slide hidden opacity-0 translate-y-3" data-slide="5">
+                <div>
+                  <span class="hero-pill-badge">
+                    <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                    무료 자격 진단
+                  </span>
+                </div>
+                <div class="hero-main-title">
+                  나에게 맞는 혜택을<br>
+                  <span class="hero-gradient-accent">5개 질문으로 확인</span>
+                </div>
+                <p class="hero-main-desc">
+                  메디케어·메디케이드·Charity Care·ACA 중 받을 수 있는 혜택을 바로 확인하세요.
+                </p>
+                <div class="hero-btn-row">
+                  <a href="/matcher" class="hero-btn-primary">
+                    <span>자격 확인하기</span>
+                    <svg class="hero-btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                  </a>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Right Column: Visual Card with Caption -->
+            <div class="order-2 lg:order-2 lg:col-span-5 flex justify-center w-full">
+              <div class="hero-card-container">
+                <!-- Images (All 5 pre-rendered) -->
+                <img id="hero-visual-1" src="/uploads/images/hero_slide_1.jpg" alt="2026 메디케어 변경 사항 한눈에" class="hero-visual-img" style="opacity: 1; transform: scale(1.0); z-index: 10;" />
+                <img id="hero-visual-2" src="/uploads/images/hero_slide_2.jpg" alt="찾아가는 맞춤 내비게이션" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
+                <img id="hero-visual-3" src="/uploads/images/hero_slide_forum.jpg?v=1" alt="5개 게시판 · 실시간 소통" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
+                <img id="hero-visual-4" src="/uploads/images/hero_slide_recall.jpg?v=<?= time() ?>" alt="긴급 식품·의약품 리콜 속보" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
+                <img id="hero-visual-5" src="/uploads/images/hero_slide_5.jpg" alt="5분 무료 자격 진단" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
+                
+                <!-- Bottom Caption Bar -->
+                <div class="hero-card-caption-bar">
+                  <span id="hero-visual-caption" class="hero-card-caption-text">
+                    2026 메디케어 변경 사항 한눈에
+                  </span>
+                  <span class="hero-card-caption-num">
+                    <span id="hero-visual-num">01</span> / 05
+                  </span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom: Highlight Tab Bar (role="tablist", aria-selected, arrow-key navigation) -->
+          <div class="mt-6 pt-3 border-t border-white/10 w-full">
+            <div role="tablist" aria-label="NJ Access Portal 서비스 하이라이트" class="hero-tabs-grid">
+              
+              <!-- Tab 1 -->
+              <button role="tab" id="hero-tab-1" aria-controls="hero-slide-1" aria-selected="true" tabindex="0" onclick="window.njapHeroGoto(1)" class="hero-tab-item active">
+                <span class="hero-tab-sub">하이라이트 01</span>
+                <span class="hero-tab-title">메디케어 & ACA</span>
+                <div class="hero-tab-bar"></div>
+              </button>
+
+              <!-- Tab 2 -->
+              <button role="tab" id="hero-tab-2" aria-controls="hero-slide-2" aria-selected="false" tabindex="-1" onclick="window.njapHeroGoto(2)" class="hero-tab-item">
+                <span class="hero-tab-sub">하이라이트 02</span>
+                <span class="hero-tab-title">환자 내비게이션</span>
+                <div class="hero-tab-bar"></div>
+              </button>
+
+              <!-- Tab 3 -->
+              <button role="tab" id="hero-tab-3" aria-controls="hero-slide-3" aria-selected="false" tabindex="-1" onclick="window.njapHeroGoto(3)" class="hero-tab-item">
+                <span class="hero-tab-sub">하이라이트 03</span>
+                <span class="hero-tab-title">커뮤니티 포럼</span>
+                <div class="hero-tab-bar"></div>
+              </button>
+
+              <!-- Tab 4 -->
+              <button role="tab" id="hero-tab-4" aria-controls="hero-slide-4" aria-selected="false" tabindex="-1" onclick="window.njapHeroGoto(4)" class="hero-tab-item">
+                <span class="hero-tab-sub">하이라이트 04</span>
+                <span class="hero-tab-title">건강 뉴스</span>
+                <div class="hero-tab-bar"></div>
+              </button>
+
+              <!-- Tab 5 -->
+              <button role="tab" id="hero-tab-5" aria-controls="hero-slide-5" aria-selected="false" tabindex="-1" onclick="window.njapHeroGoto(5)" class="hero-tab-item">
+                <span class="hero-tab-sub">하이라이트 05</span>
+                <span class="hero-tab-title">실시간 자격 확인</span>
+                <div class="hero-tab-bar"></div>
+              </button>
+
             </div>
           </div>
-          <?php endif; ?>
+
         </div>
+
+        <script>
+          (function initHeroBillboard() {
+            var heroSection = document.getElementById('homepage-hero-billboard-section');
+            if (!heroSection) return;
+
+            var videoPhase = document.getElementById('hero-video-phase');
+            var billboardPhase = document.getElementById('hero-billboard-phase');
+            var video = document.getElementById('hero-intro-video');
+            var skipBtn = document.getElementById('hero-video-skip-btn');
+            var visualCaption = document.getElementById('hero-visual-caption');
+            var visualNum = document.getElementById('hero-visual-num');
+            var singleH1 = document.getElementById('hero-single-h1');
+            
+            var currentSlide = 1;
+            var totalSlides = 5;
+            var rotateTimer = null;
+            var isTransitioned = false;
+            var isPaused = false;
+            var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            var captions = [
+              '2026 메디케어 변경 사항 한눈에',
+              '찾아가는 맞춤 내비게이션',
+              '5개 게시판 · 실시간 소통',
+              '긴급 식품·의약품 리콜 속보',
+              '5분 무료 자격 진단'
+            ];
+
+            var slideHeadlines = [
+              '메디케어 오픈 인롤먼트<br><span class="hero-gradient-accent">10월 15일 – 12월 7일 완벽 가이드</span>',
+              '병원 찾기가 막막하다면<br><span class="hero-gradient-accent">전문 내비게이터와 함께</span>',
+              '궁금한 건강 정보를<br><span class="hero-gradient-accent">커뮤니티에 물어보세요</span>',
+              '한인 건강 뉴스를<br><span class="hero-gradient-accent">한눈에 확인하세요</span>',
+              '나에게 맞는 혜택을<br><span class="hero-gradient-accent">5개 질문으로 확인</span>'
+            ];
+
+            function transitionToBillboard() {
+              if (isTransitioned) return;
+              isTransitioned = true;
+
+              if (video) {
+                try { video.pause(); } catch(e) {}
+              }
+
+              // Vertically shrink billboard by 35%
+              heroSection.classList.remove('hero-phase-video');
+              heroSection.classList.add('hero-phase-billboard');
+
+              if (videoPhase) {
+                videoPhase.style.opacity = '0';
+                videoPhase.style.pointerEvents = 'none';
+                setTimeout(function() {
+                  if (videoPhase && videoPhase.parentNode) {
+                    videoPhase.style.display = 'none';
+                  }
+                }, 450);
+              }
+
+              if (billboardPhase) {
+                billboardPhase.style.opacity = '1';
+                billboardPhase.style.pointerEvents = 'auto';
+              }
+
+              if (!prefersReducedMotion) {
+                startRotation();
+              }
+            }
+
+            // Phase 1 triggers
+            if (prefersReducedMotion) {
+              transitionToBillboard();
+            } else if (video) {
+              video.defaultMuted = true;
+              video.muted = true;
+              video.volume = 0;
+              video.playsInline = true;
+
+              var triggerPlay = function() {
+                var p = video.play();
+                if (p && p.catch) {
+                  p.catch(function() {
+                    transitionToBillboard();
+                  });
+                }
+              };
+
+              if (video.readyState >= 2) {
+                triggerPlay();
+              } else {
+                video.addEventListener('canplay', triggerPlay, { once: true });
+                video.addEventListener('loadeddata', triggerPlay, { once: true });
+              }
+
+              video.addEventListener('ended', transitionToBillboard);
+              video.addEventListener('error', transitionToBillboard);
+
+              // Safety timeout: transition after 12 seconds max
+              setTimeout(function() {
+                if (!isTransitioned) transitionToBillboard();
+              }, 12000);
+            } else {
+              transitionToBillboard();
+            }
+
+            if (skipBtn) {
+              skipBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                transitionToBillboard();
+              });
+            }
+
+            // Slide navigation
+            function goToSlide(n) {
+              if (n < 1) n = totalSlides;
+              if (n > totalSlides) n = 1;
+              currentSlide = n;
+
+              // Update single H1 text for SEO and screen readers
+              if (singleH1 && slideHeadlines[currentSlide - 1]) {
+                singleH1.innerHTML = slideHeadlines[currentSlide - 1];
+              }
+
+              // Update slides
+              for (var i = 1; i <= totalSlides; i++) {
+                var slide = document.getElementById('hero-slide-' + i);
+                var img = document.getElementById('hero-visual-' + i);
+                var tab = document.getElementById('hero-tab-' + i);
+
+                if (slide) {
+                  if (i === currentSlide) {
+                    slide.classList.remove('hidden');
+                    void slide.offsetWidth;
+                    slide.style.opacity = '1';
+                    slide.style.transform = 'translateY(0)';
+                  } else {
+                    slide.style.opacity = '0';
+                    slide.style.transform = 'translateY(12px)';
+                    slide.classList.add('hidden');
+                  }
+                }
+
+                if (img) {
+                  if (i === currentSlide) {
+                    img.style.opacity = '1';
+                    img.style.transform = 'scale(1.0)';
+                    img.style.zIndex = '10';
+                  } else {
+                    img.style.opacity = '0';
+                    img.style.transform = 'scale(1.02)';
+                    img.style.zIndex = '1';
+                  }
+                }
+
+                if (tab) {
+                  if (i === currentSlide) {
+                    tab.setAttribute('aria-selected', 'true');
+                    tab.setAttribute('tabindex', '0');
+                    tab.classList.add('active');
+                  } else {
+                    tab.setAttribute('aria-selected', 'false');
+                    tab.setAttribute('tabindex', '-1');
+                    tab.classList.remove('active');
+                  }
+                }
+              }
+
+              if (visualCaption) {
+                visualCaption.textContent = captions[currentSlide - 1];
+              }
+              if (visualNum) {
+                visualNum.textContent = '0' + currentSlide;
+              }
+            }
+
+            window.njapHeroGoto = function(n) {
+              goToSlide(n);
+              resetTimer();
+            };
+
+            function startRotation() {
+              stopRotation();
+              if (prefersReducedMotion) return;
+              rotateTimer = setInterval(function() {
+                if (!isPaused) {
+                  goToSlide(currentSlide + 1);
+                }
+              }, 4000);
+            }
+
+            function stopRotation() {
+              if (rotateTimer) {
+                clearInterval(rotateTimer);
+                rotateTimer = null;
+              }
+            }
+
+            function resetTimer() {
+              stopRotation();
+              startRotation();
+            }
+
+            // Hover & Focus pause/resume
+            heroSection.addEventListener('mouseenter', function() { isPaused = true; });
+            heroSection.addEventListener('mouseleave', function() { isPaused = false; });
+            heroSection.addEventListener('focusin', function() { isPaused = true; });
+            heroSection.addEventListener('focusout', function() { isPaused = false; });
+
+            // Keyboard arrow navigation
+            var tablist = heroSection.querySelector('[role="tablist"]');
+            if (tablist) {
+              tablist.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowRight') {
+                  e.preventDefault();
+                  var next = currentSlide === totalSlides ? 1 : currentSlide + 1;
+                  window.njapHeroGoto(next);
+                  var t = document.getElementById('hero-tab-' + next);
+                  if (t) t.focus();
+                } else if (e.key === 'ArrowLeft') {
+                  e.preventDefault();
+                  var prev = currentSlide === 1 ? totalSlides : currentSlide - 1;
+                  window.njapHeroGoto(prev);
+                  var t = document.getElementById('hero-tab-' + prev);
+                  if (t) t.focus();
+                } else if (e.key === 'Home') {
+                  e.preventDefault();
+                  window.njapHeroGoto(1);
+                  var t = document.getElementById('hero-tab-1');
+                  if (t) t.focus();
+                } else if (e.key === 'End') {
+                  e.preventDefault();
+                  window.njapHeroGoto(totalSlides);
+                  var t = document.getElementById('hero-tab-' + totalSlides);
+                  if (t) t.focus();
+                }
+              });
+            }
+          })();
+        </script>
       </section>
 
       <!-- Main Centered Content Container (Exact matching width with Medical Videos max-w-7xl) -->
@@ -1453,11 +2098,11 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
         <div class="bg-[#0C0C0E] text-white rounded-xl py-2.5 px-4 sm:px-6 flex items-center justify-between gap-4 text-xs font-sans shadow-sm border border-white/10">
           <div class="flex items-center gap-3 overflow-hidden">
             <span class="bg-red-600 text-white font-extrabold px-2.5 py-0.5 rounded text-[11px] tracking-wider uppercase shrink-0 animate-pulse">LIVE UPDATES</span>
-            <a id="homepage-live-link" href="<?= $liveSlug ? '/ko/blog/' . htmlspecialchars($liveSlug) : '/ko/blog' ?>" class="truncate text-white/90 font-medium hover:text-blue-300 transition-colors">
+            <a id="homepage-live-link" href="<?= $liveSlug ? '/blog/' . htmlspecialchars($liveSlug) : '/blog' ?>" class="truncate text-white/90 font-medium hover:text-blue-300 transition-colors">
               <span id="homepage-live-headline"><?= htmlspecialchars($liveHeadline) ?></span>
             </a>
           </div>
-          <a class="shrink-0 text-white/70 hover:text-white transition-colors underline font-medium" href="/ko/blog">전체 뉴스 →</a>
+          <a class="shrink-0 text-white/70 hover:text-white transition-colors underline font-medium" href="/blog">전체 뉴스 →</a>
         </div>
 
         <!-- 3. Top Story, Real-time Latest News & Doctor's Column Grid (3 Columns) -->
@@ -1509,16 +2154,16 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
               $topCover = $topStory['coverImage'] ?: (!empty($topStory['images'][0]) ? $topStory['images'][0] : 'https://images.unsplash.com/photo-1628771065117-74ccb5690668?w=1200&q=80&auto=format');
             ?>
             <div id="homepage-top-story-box" class="news-col-left flex flex-col justify-between pb-6 lg:pb-0">
-              <a class="group block" href="/ko/blog/<?= htmlspecialchars($topStory['slug'] ?: $topStory['id']) ?>">
+              <a class="group block" href="/blog/<?= htmlspecialchars($topStory['slug'] ?: $topStory['id']) ?>">
                 <div class="flex items-center gap-2 mb-2">
                   <span class="w-2.5 h-2.5 bg-red-600 inline-block"></span>
                   <span class="text-xs sm:text-sm font-black text-red-600 uppercase tracking-widest whitespace-nowrap"><?= htmlspecialchars($topStory['category'] ?: '주요 뉴스') ?></span>
                   <span class="text-xs text-gray-400">·</span>
                   <span class="text-xs sm:text-sm text-gray-500 whitespace-nowrap"><?= htmlspecialchars($topStory['date'] ?: date('Y-m-d')) ?></span>
                 </div>
-                <h1 class="font-serif font-black text-2xl sm:text-3xl lg:text-4xl text-gray-950 leading-tight mb-3 tracking-tight group-hover:text-brand-blue transition-colors">
+                <h2 class="font-serif font-black text-2xl sm:text-3xl lg:text-4xl text-gray-950 leading-tight mb-3 tracking-tight group-hover:text-brand-blue transition-colors">
                   <?= htmlspecialchars($topStory['title'] ?? '') ?>
-                </h1>
+                </h2>
                 <div class="relative w-full aspect-[16/10] overflow-hidden mb-2.5 bg-gray-100 shadow-xs rounded-sm">
                   <img src="<?= htmlspecialchars($topCover) ?>" 
                     alt="<?= htmlspecialchars($topStory['title'] ?? '') ?>" 
@@ -1565,7 +2210,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                   <?php foreach ($latestNews as $item): 
                     $itemCover = $item['coverImage'] ?: (!empty($item['images'][0]) ? $item['images'][0] : 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&q=80');
                   ?>
-                    <a class="group py-3.5 first:pt-0 last:pb-0 flex gap-3 items-start justify-between" href="/ko/blog/<?= htmlspecialchars($item['slug'] ?: $item['id']) ?>">
+                    <a class="group py-3.5 first:pt-0 last:pb-0 flex gap-3 items-start justify-between" href="/blog/<?= htmlspecialchars($item['slug'] ?: $item['id']) ?>">
                       <div class="flex-1 min-w-0 pr-1">
                         <span class="text-[11px] sm:text-xs font-black text-red-600 uppercase tracking-wider block mb-1 whitespace-nowrap">
                           <?= htmlspecialchars($item['category'] ?: '뉴스') ?>
@@ -1599,7 +2244,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                   <?php foreach (array_slice($doctorPosts, 0, 10) as $dIdx => $dItem): 
                     $dCover = $dItem['coverImage'] ?: (!empty($dItem['images'][0]) ? $dItem['images'][0] : 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=300&q=80');
                   ?>
-                    <a class="group py-2.5 first:pt-0 last:pb-0 flex gap-2.5 items-start justify-between cursor-pointer" href="/ko/blog/<?= htmlspecialchars($dItem['slug'] ?: $dItem['id']) ?>">
+                    <a class="group py-2.5 first:pt-0 last:pb-0 flex gap-2.5 items-start justify-between cursor-pointer" href="/blog/<?= htmlspecialchars($dItem['slug'] ?: $dItem['id']) ?>">
                       <div class="flex gap-2 items-start flex-1 min-w-0 pr-1">
                         <span class="text-lg sm:text-xl font-serif font-black text-red-600 leading-none w-4 shrink-0 mt-0.5 select-none">
                           <?= $dIdx + 1 ?>
@@ -1629,13 +2274,13 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
         <section>
           <div class="flex items-center justify-between mb-4 pb-2 border-b-2 border-gray-900">
             <h2 class="font-extrabold text-xl text-gray-950 uppercase tracking-wider">리콜(Recalls and Food Safety)</h2>
-            <a class="text-xs font-bold text-brand-blue hover:underline" href="/ko/blog">전체보기 →</a>
+            <a class="text-xs font-bold text-brand-blue hover:underline" href="/blog">전체보기 →</a>
           </div>
-          <div id="homepage-reports-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div id="homepage-reports-grid" class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-5">
             <?php foreach ($reportNews as $p): 
               $pCover = $p['coverImage'] ?: (!empty($p['images'][0]) ? $p['images'][0] : 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=800&q=80');
             ?>
-              <a class="group card-hover" href="/ko/blog/<?= htmlspecialchars($p['slug'] ?: $p['id']) ?>">
+              <a class="group card-hover" href="/blog/<?= htmlspecialchars($p['slug'] ?: $p['id']) ?>">
                 <article class="bg-white rounded-2xl p-4 border border-gray-200/90 h-full flex flex-col justify-between shadow-sm">
                   <div>
                     <div class="relative h-40 w-full rounded-xl overflow-hidden mb-3 bg-gray-100">
@@ -1680,12 +2325,12 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                 </p>
 
                 <div style="display: flex !important; align-items: center !important; gap: 12px !important; flex-wrap: wrap !important;">
-                  <a href="/ko/forum/ask" 
+                  <a href="/forum/ask" 
                      style="display: inline-flex !important; align-items: center !important; gap: 8px !important; background: #2563eb !important; color: #ffffff !important; padding: 10px 20px !important; border-radius: 12px !important; font-size: 13.5px !important; font-weight: 700 !important; text-decoration: none !important; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25) !important; transition: all 0.2s ease !important;">
                     <i class="fa-solid fa-pen-to-square"></i>
                     <span>질문/정보 공유</span>
                   </a>
-                  <a href="/ko/forum" 
+                  <a href="/forum" 
                      style="display: inline-flex !important; align-items: center !important; gap: 6px !important; background: #ffffff !important; color: #0f172a !important; border: 1.5px solid #cbd5e1 !important; padding: 9px 18px !important; border-radius: 12px !important; font-size: 13.5px !important; font-weight: 700 !important; text-decoration: none !important; box-shadow: 0 2px 6px rgba(0,0,0,0.04) !important; transition: all 0.2s ease !important;">
                     <span>포럼 전체보기 →</span>
                   </a>
@@ -1694,7 +2339,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
 
               <!-- Right Side: Community Illustration (Larger & Prominent) -->
               <div style="flex: 1 1 520px !important; max-width: 600px !important; min-width: 280px !important; display: flex !important; justify-content: center !important; align-items: center !important;">
-                <img src="/ko/uploads/images/forum_community_banner.jpg" 
+                <img src="/uploads/images/forum_community_banner.jpg" 
                      alt="뉴저지 의료/정보 나눔 커뮤니티" 
                      style="width: 100% !important; height: auto !important; max-height: 290px !important; object-fit: contain !important; border-radius: 20px !important; border: 1px solid #cbd5e1 !important; background: #ffffff !important; padding: 8px !important; box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08) !important;">
               </div>
@@ -1711,7 +2356,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
               </div>
               <div class="flex flex-wrap items-center gap-2 text-xs font-bold">
                 <?php foreach ($forumSpecialties as $fsp): ?>
-                  <a href="/ko/forum?specialty=<?= urlencode($fsp['id']) ?>" 
+                  <a href="/forum?specialty=<?= urlencode($fsp['id']) ?>" 
                      class="px-2.5 py-1.5 rounded-lg transition-all flex items-center gap-1.5 shadow-2xs hover:shadow-xs"
                      style="background: #ffffff !important; color: #1e293b !important; border: 1px solid #cbd5e1 !important; padding: 6px 12px !important; border-radius: 10px !important; text-decoration: none !important; font-size: 12px !important; font-weight: 700 !important; box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;">
                     <span class="w-2 h-2 rounded-full shrink-0" style="background-color: <?= htmlspecialchars($fsp['color']) ?>"></span>
@@ -1826,10 +2471,10 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
           <div class="max-w-3xl mb-8">
             <span class="bg-blue-500/20 text-blue-300 border border-blue-400/30 text-xs font-extrabold uppercase tracking-widest px-3 py-1 rounded-full inline-block mb-3">SPECIAL COVERAGE &amp; PATIENT SERVICES</span>
             <h2 class="font-extrabold text-3xl sm:text-4xl text-white mb-3">원스톱 의료 접근 &amp; 환자 종합 센터</h2>
-            <p class="text-white/70 text-sm sm:text-base leading-relaxed">보험 자격 진단부터 병원 사전접수, 의학 용어 사전 및 의료비 지원 신청까지 한곳에서 이용하실 수 있습니다.</p>
+            <p class="text-white/70 text-sm sm:text-base leading-relaxed">보험 자격 진단부터 ACA 보조금 계산, 의학 용어 사전까지 한곳에서 편리하게 이용하실 수 있습니다.</p>
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            <a class="group" href="/ko/matcher">
+          <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-5">
+            <a class="group" href="/matcher">
               <div class="bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl p-5 h-full flex flex-col justify-between transition-all duration-300 group-hover:border-blue-400/50">
                 <div>
                   <div class="flex items-center justify-start mb-4"><span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-white/10 text-white/80">INSURANCE MATCHER</span></div>
@@ -1839,7 +2484,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                 <div class="text-xs font-bold text-blue-400 group-hover:translate-x-1 transition-transform flex items-center gap-1">서비스 바로가기 →</div>
               </div>
             </a>
-            <a class="group" href="/ko/calculator">
+            <a class="group" href="/calculator">
               <div class="bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl p-5 h-full flex flex-col justify-between transition-all duration-300 group-hover:border-blue-400/50">
                 <div>
                   <div class="flex items-center justify-start mb-4"><span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-white/10 text-white/80">CALCULATOR</span></div>
@@ -1849,22 +2494,12 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                 <div class="text-xs font-bold text-blue-400 group-hover:translate-x-1 transition-transform flex items-center gap-1">서비스 바로가기 →</div>
               </div>
             </a>
-            <a class="group" href="/ko/dictionary">
+            <a class="group" href="/dictionary">
               <div class="bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl p-5 h-full flex flex-col justify-between transition-all duration-300 group-hover:border-blue-400/50">
                 <div>
                   <div class="flex items-center justify-start mb-4"><span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-white/10 text-white/80">DICTIONARY</span></div>
                   <h3 class="font-bold text-lg text-white mb-2 group-hover:text-blue-300 transition-colors">영-한 의학 용어 사전</h3>
                   <p class="text-xs text-white/60 leading-relaxed mb-4">미국 병원 진료실에서 자주 쓰는 필수 영문 의학 표현과 한국어 해설 모음.</p>
-                </div>
-                <div class="text-xs font-bold text-blue-400 group-hover:translate-x-1 transition-transform flex items-center gap-1">서비스 바로가기 →</div>
-              </div>
-            </a>
-            <a class="group" href="/ko/tool">
-              <div class="bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl p-5 h-full flex flex-col justify-between transition-all duration-300 group-hover:border-blue-400/50">
-                <div>
-                  <div class="flex items-center justify-start mb-4"><span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-white/10 text-white/80">PATIENT PORTAL</span></div>
-                  <h3 class="font-bold text-lg text-white mb-2 group-hover:text-blue-300 transition-colors">스마트 환자 서비스 &amp; 사전접수</h3>
-                  <p class="text-xs text-white/60 leading-relaxed mb-4">병원 사전접수 차트 작성, 피검사 입력 및 의료비 탕감 지원 신청을 한곳에서 제공합니다.</p>
                 </div>
                 <div class="text-xs font-bold text-blue-400 group-hover:translate-x-1 transition-transform flex items-center gap-1">서비스 바로가기 →</div>
               </div>
@@ -2351,7 +2986,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
 
               <!-- Quick Link to Forum Reviews -->
               <div class="shrink-0 flex items-center gap-3">
-                <a href="/ko/forum?specialty=hospital_reviews&view=topics" 
+                <a href="/forum?specialty=hospital_reviews&view=topics" 
                    class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs sm:text-sm shadow-sm transition-all hover:shadow-md">
                   <i class="fa-solid fa-comments"></i>
                   <span>병원 이용 후기 &amp; 추천 포럼</span>
@@ -2425,10 +3060,10 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
 
                   <!-- Hashtags -->
                   <div class="flex flex-wrap gap-1.5 mb-4">
-                    <a href="/ko/forum?specialty=hospital_reviews&q=Englewood&view=topics" class="px-2 py-0.5 rounded-md bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold text-[11px] transition-colors">#잉글우드병원</a>
-                    <a href="/ko/forum?specialty=hospital_reviews&q=한인의료프로그램&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#한인의료프로그램</a>
-                    <a href="/ko/forum?specialty=hospital_reviews&q=통역&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#한국어통역상주</a>
-                    <a href="/ko/forum?specialty=hospital_reviews&q=자선진료&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#자선진료</a>
+                    <a href="/forum?specialty=hospital_reviews&q=Englewood&view=topics" class="px-2 py-0.5 rounded-md bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold text-[11px] transition-colors">#잉글우드병원</a>
+                    <a href="/forum?specialty=hospital_reviews&q=한인의료프로그램&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#한인의료프로그램</a>
+                    <a href="/forum?specialty=hospital_reviews&q=통역&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#한국어통역상주</a>
+                    <a href="/forum?specialty=hospital_reviews&q=자선진료&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#자선진료</a>
                   </div>
 
                   <!-- Contact Details -->
@@ -2453,7 +3088,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                     <span>공식 웹사이트</span>
                     <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                   </a>
-                  <a href="/ko/forum?specialty=hospital_reviews&q=Englewood&view=topics" 
+                  <a href="/forum?specialty=hospital_reviews&q=Englewood&view=topics" 
                      class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 font-extrabold text-xs transition-colors">
                     <i class="fa-regular fa-comment-dots text-xs"></i>
                     <span>후기 &amp; 질문</span>
@@ -2508,10 +3143,10 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
 
                   <!-- Hashtags -->
                   <div class="flex flex-wrap gap-1.5 mb-4">
-                    <a href="/ko/forum?specialty=hospital_reviews&q=HolyName&view=topics" class="px-2 py-0.5 rounded-md bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-[11px] transition-colors">#홀리네임병원</a>
-                    <a href="/ko/forum?specialty=hospital_reviews&q=KMP&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#코리안메디컬프로그램</a>
-                    <a href="/ko/forum?specialty=hospital_reviews&q=통역&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#한국어통역상주</a>
-                    <a href="/ko/forum?specialty=hospital_reviews&q=자선진료&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#자선진료</a>
+                    <a href="/forum?specialty=hospital_reviews&q=HolyName&view=topics" class="px-2 py-0.5 rounded-md bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-[11px] transition-colors">#홀리네임병원</a>
+                    <a href="/forum?specialty=hospital_reviews&q=KMP&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#코리안메디컬프로그램</a>
+                    <a href="/forum?specialty=hospital_reviews&q=통역&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#한국어통역상주</a>
+                    <a href="/forum?specialty=hospital_reviews&q=자선진료&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#자선진료</a>
                   </div>
 
                   <!-- Contact Details -->
@@ -2536,7 +3171,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                     <span>공식 웹사이트</span>
                     <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                   </a>
-                  <a href="/ko/forum?specialty=hospital_reviews&q=HolyName&view=topics" 
+                  <a href="/forum?specialty=hospital_reviews&q=HolyName&view=topics" 
                      class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-extrabold text-xs transition-colors">
                     <i class="fa-regular fa-comment-dots text-xs"></i>
                     <span>후기 &amp; 질문</span>
@@ -2591,10 +3226,10 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
 
                   <!-- Hashtags -->
                   <div class="flex flex-wrap gap-1.5 mb-4">
-                    <a href="/ko/forum?specialty=hospital_reviews&q=Hackensack&view=topics" class="px-2 py-0.5 rounded-md bg-indigo-50 hover:bg-indigo-100 text-indigo-800 font-bold text-[11px] transition-colors">#해켄색대학병원</a>
-                    <a href="/ko/forum?specialty=hospital_reviews&q=HUMC&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#HUMC</a>
-                    <a href="/ko/forum?specialty=hospital_reviews&q=존더러암센터&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#존더러암센터</a>
-                    <a href="/ko/forum?specialty=hospital_reviews&q=24시간통역&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#24시간한국어통역</a>
+                    <a href="/forum?specialty=hospital_reviews&q=Hackensack&view=topics" class="px-2 py-0.5 rounded-md bg-indigo-50 hover:bg-indigo-100 text-indigo-800 font-bold text-[11px] transition-colors">#해켄색대학병원</a>
+                    <a href="/forum?specialty=hospital_reviews&q=HUMC&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#HUMC</a>
+                    <a href="/forum?specialty=hospital_reviews&q=존더러암센터&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#존더러암센터</a>
+                    <a href="/forum?specialty=hospital_reviews&q=24시간통역&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#24시간한국어통역</a>
                   </div>
 
                   <!-- Contact Details -->
@@ -2619,7 +3254,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                     <span>공식 웹사이트</span>
                     <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                   </a>
-                  <a href="/ko/forum?specialty=hospital_reviews&q=Hackensack&view=topics" 
+                  <a href="/forum?specialty=hospital_reviews&q=Hackensack&view=topics" 
                      class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-800 font-extrabold text-xs transition-colors">
                     <i class="fa-regular fa-comment-dots text-xs"></i>
                     <span>후기 &amp; 질문</span>
@@ -2674,10 +3309,10 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
 
                   <!-- Hashtags -->
                   <div class="flex flex-wrap gap-1.5 mb-4">
-                    <a href="/ko/forum?specialty=hospital_reviews&q=Valley&view=topics" class="px-2 py-0.5 rounded-md bg-sky-50 hover:bg-sky-100 text-sky-800 font-bold text-[11px] transition-colors">#밸리병원</a>
-                    <a href="/ko/forum?specialty=hospital_reviews&q=TheValleyHospital&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#TheValleyHospital</a>
-                    <a href="/ko/forum?specialty=hospital_reviews&q=패러머스신축&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#패러머스신축</a>
-                    <a href="/ko/forum?specialty=hospital_reviews&q=1인실&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#전병실1인실</a>
+                    <a href="/forum?specialty=hospital_reviews&q=Valley&view=topics" class="px-2 py-0.5 rounded-md bg-sky-50 hover:bg-sky-100 text-sky-800 font-bold text-[11px] transition-colors">#밸리병원</a>
+                    <a href="/forum?specialty=hospital_reviews&q=TheValleyHospital&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#TheValleyHospital</a>
+                    <a href="/forum?specialty=hospital_reviews&q=패러머스신축&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#패러머스신축</a>
+                    <a href="/forum?specialty=hospital_reviews&q=1인실&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#전병실1인실</a>
                   </div>
 
                   <!-- Contact Details -->
@@ -2702,7 +3337,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                     <span>공식 웹사이트</span>
                     <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                   </a>
-                  <a href="/ko/forum?specialty=hospital_reviews&q=Valley&view=topics" 
+                  <a href="/forum?specialty=hospital_reviews&q=Valley&view=topics" 
                      class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-800 font-extrabold text-xs transition-colors">
                     <i class="fa-regular fa-comment-dots text-xs"></i>
                     <span>후기 &amp; 질문</span>
@@ -2757,10 +3392,10 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
 
                   <!-- Hashtags -->
                   <div class="flex flex-wrap gap-1.5 mb-4">
-                    <a href="/ko/forum?specialty=hospital_reviews&q=Pascack&view=topics" class="px-2 py-0.5 rounded-md bg-teal-50 hover:bg-teal-100 text-teal-800 font-bold text-[11px] transition-colors">#파스카크밸리</a>
-                    <a href="/ko/forum?specialty=hospital_reviews&q=PascackValley&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#PascackValley</a>
-                    <a href="/ko/forum?specialty=hospital_reviews&q=신속응급실&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#신속응급실</a>
-                    <a href="/ko/forum?specialty=hospital_reviews&q=관절수술&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#관절치환수술</a>
+                    <a href="/forum?specialty=hospital_reviews&q=Pascack&view=topics" class="px-2 py-0.5 rounded-md bg-teal-50 hover:bg-teal-100 text-teal-800 font-bold text-[11px] transition-colors">#파스카크밸리</a>
+                    <a href="/forum?specialty=hospital_reviews&q=PascackValley&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#PascackValley</a>
+                    <a href="/forum?specialty=hospital_reviews&q=신속응급실&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#신속응급실</a>
+                    <a href="/forum?specialty=hospital_reviews&q=관절수술&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#관절치환수술</a>
                   </div>
 
                   <!-- Contact Details -->
@@ -2785,7 +3420,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                     <span>공식 웹사이트</span>
                     <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                   </a>
-                  <a href="/ko/forum?specialty=hospital_reviews&q=Pascack&view=topics" 
+                  <a href="/forum?specialty=hospital_reviews&q=Pascack&view=topics" 
                      class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-teal-50 hover:bg-teal-100 text-teal-800 font-extrabold text-xs transition-colors">
                     <i class="fa-regular fa-comment-dots text-xs"></i>
                     <span>후기 &amp; 질문</span>
@@ -2840,10 +3475,10 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
 
                   <!-- Hashtags -->
                   <div class="flex flex-wrap gap-1.5 mb-4">
-                    <a href="/ko/forum?specialty=hospital_reviews&q=RWJ&view=topics" class="px-2 py-0.5 rounded-md bg-rose-50 hover:bg-rose-100 text-rose-800 font-bold text-[11px] transition-colors">#RWJ바나바스</a>
-                    <a href="/ko/forum?specialty=hospital_reviews&q=RWJBarnabas&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#RWJBarnabas</a>
-                    <a href="/ko/forum?specialty=hospital_reviews&q=클라라마스&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#클라라마스병원</a>
-                    <a href="/ko/forum?specialty=hospital_reviews&q=자선치료&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#자선치료</a>
+                    <a href="/forum?specialty=hospital_reviews&q=RWJ&view=topics" class="px-2 py-0.5 rounded-md bg-rose-50 hover:bg-rose-100 text-rose-800 font-bold text-[11px] transition-colors">#RWJ바나바스</a>
+                    <a href="/forum?specialty=hospital_reviews&q=RWJBarnabas&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#RWJBarnabas</a>
+                    <a href="/forum?specialty=hospital_reviews&q=클라라마스&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#클라라마스병원</a>
+                    <a href="/forum?specialty=hospital_reviews&q=자선치료&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#자선치료</a>
                   </div>
 
                   <!-- Contact Details -->
@@ -2866,7 +3501,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
                     <span>공식 웹사이트</span>
                     <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                   </a>
-                  <a href="/ko/forum?specialty=hospital_reviews&q=RWJ&view=topics" 
+                  <a href="/forum?specialty=hospital_reviews&q=RWJ&view=topics" 
                      class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-800 font-extrabold text-xs transition-colors">
                     <i class="fa-regular fa-comment-dots text-xs"></i>
                     <span>후기 &amp; 질문</span>
@@ -2906,36 +3541,36 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-10">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
         <div class="lg:col-span-2">
-          <a class="inline-flex items-center mb-4 group cursor-pointer njap-brand-link" href="/ko/" onclick="navigateToHome(event); return false;" title="Healthcare Access Portal">
-            <img src="/ko/logo-white.png" alt="Healthcare Access Portal · 뉴저지 한인 의료 정보 포털" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
+          <a class="inline-flex items-center mb-4 group cursor-pointer njap-brand-link" href="/" onclick="navigateToHome(event); return false;" title="NJ Access Portal · 뉴저지 한인 의료접근포털">
+            <img src="/logo-white.png" alt="NJ Access Portal · 뉴저지 한인 의료접근포털" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
           </a>
           <p class="text-sm text-white/60 font-sans leading-relaxed max-w-xs mb-6">뉴저지 한인 커뮤니티를 위한 의료 접근 및 건강 정보 포털. 메디케어, ACA, 의료 상담을 한국어로 제공합니다.</p>
         </div>
         <div>
           <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">정보</p>
           <ul class="space-y-2.5">
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200 cursor-pointer" href="/ko/" onclick="navigateToHome(event); return false;">홈</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/about">소개</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/blog">건강 뉴스</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/forum">커뮤니티 포럼</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/senior-care">시니어 케어</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200 cursor-pointer" href="/" onclick="navigateToHome(event); return false;">홈</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/about">소개</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200 inline-flex items-center gap-1.5" href="/engine" target="_self">Engine <span class="text-[10px] text-white/40 font-normal">Marketing Client</span></a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/blog">건강 뉴스</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/forum">커뮤니티 포럼</a></li>
           </ul>
         </div>
         <div>
           <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">의료 가이드</p>
           <ul class="space-y-2.5">
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/medicare">메디케어 안내</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/medicare#aca">ACA 보험</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/#major-hospitals-section">주요 병원 네트워크</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/medicare#faq">자주 묻는 질문</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/medicare">메디케어 안내</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/medicare#aca">ACA 보험</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/#major-hospitals-section">주요 병원 네트워크</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/medicare#faq">자주 묻는 질문</a></li>
           </ul>
         </div>
         <div>
-          <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">환자도우미</p>
+          <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">스마트 의료 도구</p>
           <ul class="space-y-2.5">
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/matcher">보험 자격 진단</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/calculator">보조금 계산기</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/dictionary">의학 용어 사전</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/matcher">보험 자격 진단</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/calculator">보조금 계산기</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/dictionary">의학 용어 사전</a></li>
           </ul>
         </div>
       </div>
@@ -2943,7 +3578,7 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
         <div class="text-xs font-sans text-white/30 max-w-2xl leading-relaxed">
           <span class="font-semibold text-white/40">⚠ 의료 면책 조항:</span> 이 웹사이트의 정보는 교육 목적으로만 제공됩니다. 의료 결정은 반드시 자격을 갖춘 의료 전문가와 상담하십시오.
         </div>
-        <p class="text-xs font-sans text-white/30 whitespace-nowrap">© 2026 Healthcare Access Portal</p>
+        <p class="text-xs font-sans text-white/30 whitespace-nowrap">© 2026 NJ Access Portal · 뉴저지 한인 의료접근센터</p>
       </div>
     </div>
   </footer>
@@ -3037,8 +3672,8 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
   </script>
   
 
-  <script src="/ko/js/cms-client.js?v=<?= time() ?>"></script>
-  <script src="/ko/js/fixes.js?v=8.0.0"></script>
-<script src="/ko/js/njap-translate.js?v=3.1.0"></script>
+  <script src="/js/cms-client.js?v=20261004_v9"></script>
+  <script src="/js/fixes.js?v=20261004_v9"></script>
+<script src="/js/njap-notifications.js?v=1.0.0"></script>
 </body>
 </html>

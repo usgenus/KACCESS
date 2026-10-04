@@ -24,7 +24,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   
   <!-- Next.js Tailwind CSS Export -->
-  <link rel="stylesheet" href="/ko/_next/static/chunks/1fosv8xgmgdeu.css" />
+  <link rel="stylesheet" href="/_next/static/chunks/1fosv8xgmgdeu.css" />
 
   <style>
     :root, html, body {
@@ -59,26 +59,7 @@
     }
 
     /* Senior Mode Base Styles */
-    html.senior-mode-1 { font-size: 118% !important; }
-    html.senior-mode-2 { font-size: 135% !important; }
-    html.senior-mode-1 .header-spacer, html.senior-mode-1 .h-\[109px\], html.senior-mode-1 #header-spacer { height: 120px !important; min-height: 120px !important; }
-    html.senior-mode-2 .header-spacer, html.senior-mode-2 .h-\[109px\], html.senior-mode-2 #header-spacer { height: 132px !important; min-height: 132px !important; }
-  </style>
-
-  <script>
-    (function() {
-      try {
-        var userChosen = sessionStorage.getItem('njap_senior_user_chosen') || localStorage.getItem('njap_senior_user_chosen');
-        var s = 0;
-        if (userChosen === '1') {
-          var val = sessionStorage.getItem('njap_senior_mode') || localStorage.getItem('njap_senior_mode');
-          s = parseInt(val, 10);
-        }
-        if (s === 1) document.documentElement.classList.add('senior-mode-1');
-        else if (s === 2) document.documentElement.classList.add('senior-mode-2');
-      } catch(e) {}
-    })();
-  </script>
+</style>
   <script>
     (function() {
       try {
@@ -262,9 +243,9 @@
       <div class="flex items-center justify-between h-16">
         
         <!-- Logo -->
-        <a class="flex items-center cursor-pointer njap-brand-link flex-shrink-0 group" href="/ko/" onclick="navigateToHome(event); return false;" title="Healthcare Access Portal">
-          <svg class="h-8 sm:h-10 md:h-11 w-auto object-contain transition-transform group-hover:scale-102" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Healthcare Access Portal · 뉴저지 한인 의료 정보 포털 · NJAP" style="overflow: visible;">
-            <title>Healthcare Access Portal · 뉴저지 한인 의료 정보 포털 · NJAP</title>
+        <a class="flex items-center cursor-pointer njap-brand-link flex-shrink-0 group" href="/" onclick="navigateToHome(event); return false;" title="NJ Access Portal · 뉴저지 한인 의료접근포털">
+          <svg class="h-8 sm:h-10 md:h-11 w-auto object-contain transition-transform group-hover:scale-102" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NJ Access Portal · 뉴저지 한인 의료접근포털" style="overflow: visible;">
+            <title>NJ Access Portal · 뉴저지 한인 의료접근포털</title>
             <!-- Icon Mark (Door + Key + NJAP) -->
             <g transform="translate(4, 2) scale(0.56)" stroke-linecap="round" stroke-linejoin="round">
               <!-- Door Frame & NJAP Text -->
@@ -289,18 +270,18 @@
 
             <!-- Typography: slides in from right after key enters -->
             <g class="njap-nav-text-main">
-              <text x="64" y="27" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="18" font-weight="900" fill="#0B192C" letter-spacing="-0.5">Healthcare Access Portal</text>
+              <text x="64" y="27" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="18" font-weight="900" fill="#0B192C" letter-spacing="-0.5">NJ Access Portal</text>
             </g>
             <g class="njap-nav-text-sub">
-              <text x="64" y="44" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="10.5" font-weight="600" fill="#64748B" letter-spacing="0.2">뉴저지 한인 의료 정보 포털 · NJAP</text>
+              <text x="64" y="44" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="10.5" font-weight="600" fill="#64748B" letter-spacing="0.2">뉴저지 한인 의료접근포털</text>
             </g>
           </svg>
         </a>
 
         <!-- Desktop Navigation Items -->
         <div class="hidden md:flex items-center gap-1 lg:gap-2" style="display: flex; align-items: center; gap: 26px;">
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue px-2.5 py-1" href="/ko/">홈</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue px-2.5 py-1" href="/ko/blog">뉴스</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue px-2.5 py-1" href="/">홈</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue px-2.5 py-1" href="/blog">뉴스</a>
           
           <!-- The Health Bridge (Active Item) -->
           <a class="nav-link pb-0.5 font-bold text-blue-700 bg-blue-50/80 border border-blue-200/80 rounded-full px-3 py-1 flex items-center gap-1.5 shadow-2xs" href="/ko/the-health-bridge">
@@ -308,25 +289,15 @@
             <span>The Health Bridge</span>
           </a>
 
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue px-2.5 py-1" href="/ko/forum">커뮤니티 포럼</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue px-2.5 py-1" href="/ko/senior-care">시니어 케어</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue px-2.5 py-1" href="/ko/medicare">메디케어 &amp; ACA</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue px-2.5 py-1" href="/ko/tool">환자도우미</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue px-2.5 py-1" href="/ko/about">소개</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue px-2.5 py-1" href="/forum">커뮤니티 포럼</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue px-2.5 py-1" href="/medicare">메디케어 &amp; ACA</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue px-2.5 py-1" href="/about">소개</a>
         </div>
 
         <!-- Right Tools -->
         <div class="flex items-center gap-2.5 sm:gap-3">
-          <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 hover:opacity-80 transition-opacity cursor-pointer flex-shrink-0" title="카카오톡 1:1 상담 바로가기"><img src="/ko/kakaotalk-icon.png" alt="KakaoTalk" class="w-5 h-5 sm:w-6 sm:h-6 rounded-md shrink-0 object-contain shadow-2xs" /><span class="hidden xs:inline text-xs sm:text-sm font-bold text-slate-800 hover:text-brand-blue tracking-tight whitespace-nowrap">1:1 상담</span></a>
+          <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 hover:opacity-80 transition-opacity cursor-pointer flex-shrink-0" title="카카오톡 1:1 상담 바로가기"><img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-5 h-5 sm:w-6 sm:h-6 rounded-md shrink-0 object-contain shadow-2xs" /><span class="hidden xs:inline text-xs sm:text-sm font-bold text-slate-800 hover:text-brand-blue tracking-tight whitespace-nowrap">1:1 상담</span></a>
 
-          <button id="senior-mode-btn" class="senior-mode-btn notranslate" translate="no" type="button" onclick="window.cycleSeniorMode && window.cycleSeniorMode()" title="시니어모드+ (글자 크기 3단계 조절)" aria-label="시니어모드 글자 크기 조절">
-            <span class="senior-btn-label">시니어모드+</span>
-            <span class="senior-step-badge" style="display:none;"></span>
-          </button>
-
-          <button id="en-translate-btn" class="notranslate" translate="no" onclick="window.toggleTranslation && window.toggleTranslation()" title="Switch Language (EN / KR)" aria-label="Language Toggle" style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;border:1.5px solid #cbd5e1;font-size:11px;font-weight:700;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s ease;background:transparent;color:#475569;white-space:nowrap;flex-shrink:0;line-height:1.4;">
-            <span class="notranslate" translate="no">🌐</span> <span class="notranslate en-btn-label" translate="no">EN</span>
-          </button>
           <button id="dark-mode-btn" class="dark-mode-btn notranslate" translate="no" type="button" onclick="window.toggleDarkMode && window.toggleDarkMode()" title="다크 모드로 전환" aria-label="다크 모드 전환"><svg class="dark-mode-moon-icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" /></svg><svg class="dark-mode-sun-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button>
 
           <!-- Mobile Hamburger -->
@@ -343,58 +314,77 @@
     </div>
 
     <!-- Mobile Dropdown Menu -->
-    <div id="mobile-menu-dropdown" class="md:hidden overflow-hidden transition-all duration-300 max-h-0 opacity-0 bg-white/98 backdrop-blur-md border-t border-slate-200 px-4 py-3 flex flex-col gap-1">
-      <!-- Dark Mode in Mobile Menu -->
-      <div class="flex items-center justify-between py-2.5 px-3.5 mb-1.5 rounded-xl bg-slate-50 border border-slate-200/80">
-        <div class="flex items-center gap-2">
-          <span class="text-xs font-bold text-slate-700">화면 모드 (다크/라이트)</span>
+                                                    <div id="mobile-menu-dropdown" class="md:hidden overflow-hidden transition-all duration-300 max-h-0 opacity-0 bg-white/98 backdrop-blur-md border-t border-brand-border px-4 py-3 flex flex-col gap-1" style="-webkit-overflow-scrolling: touch;">
+      <!-- 1. 홈 -->
+      <a href="/" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          <span class="text-[15px]">홈</span>
         </div>
-        <button type="button" class="dark-mode-btn notranslate" translate="no" onclick="window.toggleDarkMode && window.toggleDarkMode()" aria-label="다크 모드 전환" title="다크 모드 전환">
-          <svg class="dark-mode-moon-icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
-            <path d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
-          </svg>
-          <svg class="dark-mode-sun-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="4"></circle>
-            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
-          </svg>
-        </button>
-      </div>
+        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
 
-      <a href="/ko/" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:bg-slate-50">
-        <span>홈</span>
-        <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+      <!-- 2. 뉴스 -->
+      <a href="/blog" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+          <span class="text-[15px]">뉴스</span>
+        </div>
+        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
-      <a href="/ko/blog" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:bg-slate-50">
-        <span>뉴스</span>
-        <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+
+      <!-- 2.5. 커뮤니티 포럼 -->
+      <a href="/forum" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>
+          <span class="text-[15px]">커뮤니티 포럼</span>
+        </div>
+        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
-      <a href="/ko/the-health-bridge" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors border-b border-slate-100 font-bold text-blue-700 bg-blue-50/80">
-        <span class="flex items-center gap-2">
-          <i class="fa-solid fa-bridge text-blue-600"></i>
-          <span>The Health Bridge</span>
-        </span>
-        <span class="text-[10px] font-extrabold bg-blue-600 text-white px-2 py-0.5 rounded-full">NEW</span>
+
+      <!-- 4. 메디케어 & ACA -->
+      <a href="/medicare" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          <span class="text-[15px]">메디케어 &amp; ACA</span>
+        </div>
+        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
-      <a href="/ko/forum" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:bg-slate-50">
-        <span>커뮤니티 포럼</span>
-        <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+
+      <!-- 6. 소개 -->
+      <a href="/about" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-bold text-brand-blue bg-blue-50/70">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-brand-blue shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <span class="text-[15px]">소개</span>
+        </div>
+        <svg class="w-4 h-4 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
-      <a href="/ko/senior-care" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:bg-slate-50">
-        <span>시니어 케어</span>
-        <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+
+      <!-- 7. Engine (Marketing Client) -->
+      <a href="/engine" target="_self" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          <div class="flex flex-col text-left">
+            <span class="text-[15px] font-bold text-slate-800">Engine</span>
+            <span class="text-[10px] font-semibold text-slate-400 leading-none">Marketing Client</span>
+          </div>
+        </div>
+        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
-      <a href="/ko/medicare" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:bg-slate-50">
-        <span>메디케어 &amp; ACA</span>
-        <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
-      </a>
-      <a href="/ko/tool" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:bg-slate-50">
-        <span>환자도우미</span>
-        <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
-      </a>
-      <a href="/ko/about" class="flex items-center justify-between py-2.5 px-3 rounded-xl transition-colors font-semibold text-slate-800 hover:bg-slate-50">
-        <span>소개</span>
-        <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
-      </a>
+
+      <!-- 카카오톡 1:1 상담 바로가기 -->
+      <div class="pt-2 pb-1">
+        <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3.5 bg-[#FEE500] hover:bg-[#FDD835] active:bg-[#FBC02D] text-[#191919] rounded-xl font-bold text-sm shadow-xs transition-all cursor-pointer">
+          <div class="flex items-center gap-2.5">
+            <img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" />
+            <div class="flex flex-col text-left">
+              <span class="text-sm font-bold leading-tight">카카오톡 1:1 상담 바로가기</span>
+              <span class="text-[11px] font-medium text-black/70">의료 복지 및 건강 상담 실시간 문의</span>
+            </div>
+          </div>
+          <svg class="w-4 h-4 text-black/60 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
     </div>
   </nav>
 
@@ -915,8 +905,8 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
         
         <div class="lg:col-span-2">
-          <a class="inline-flex items-center mb-4 group cursor-pointer njap-brand-link" href="/ko/" onclick="navigateToHome(event); return false;" title="Healthcare Access Portal">
-            <img src="/ko/logo-white.png" alt="Healthcare Access Portal · 뉴저지 한인 의료 정보 포털" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
+          <a class="inline-flex items-center mb-4 group cursor-pointer njap-brand-link" href="/" onclick="navigateToHome(event); return false;" title="NJ Access Portal · 뉴저지 한인 의료접근포털">
+            <img src="/logo-white.png" alt="NJ Access Portal · 뉴저지 한인 의료접근포털" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
           </a>
           <p class="text-sm text-white/60 font-sans leading-relaxed max-w-xs mb-6">
             뉴저지 한인 커뮤니티를 위한 의료 접근 및 건강 정보 포털. 메디케어, ACA, 의료 상담을 한국어로 제공합니다.
@@ -933,23 +923,21 @@
         <div>
           <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">포털 바로가기</p>
           <ul class="space-y-2.5">
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors" href="/ko/">홈</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors" href="/ko/blog">건강 뉴스</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors" href="/">홈</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors" href="/blog">건강 뉴스</a></li>
             <li><a class="text-sm font-sans text-blue-400 font-bold hover:text-white transition-colors" href="/ko/the-health-bridge">The Health Bridge</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors" href="/ko/forum">커뮤니티 포럼</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors" href="/ko/senior-care">시니어 케어</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors" href="/ko/about">소개</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors" href="/forum">커뮤니티 포럼</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors" href="/about">소개</a></li>
           </ul>
         </div>
 
         <div>
           <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">환자 가이드</p>
           <ul class="space-y-2.5">
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors" href="/ko/medicare">메디케어 &amp; ACA</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors" href="/ko/tool">환자도우미 도구</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors" href="/ko/calculator">보조금 계산기</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors" href="/ko/dictionary">의학용어 사전</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors" href="/ko/forum/ask">전문의 상담 질문하기</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors" href="/medicare">메디케어 &amp; ACA</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors" href="/calculator">보조금 계산기</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors" href="/dictionary">의학용어 사전</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors" href="/forum/ask">전문의 상담 질문하기</a></li>
           </ul>
         </div>
 
@@ -960,7 +948,7 @@
             이메일: njaccessportal@gmail.com
           </p>
           <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-400 text-slate-900 font-bold text-xs hover:bg-amber-300 transition-all">
-            <img src="/ko/kakaotalk-icon.png" class="w-4 h-4 rounded" alt="" />
+            <img src="/kakaotalk-icon.png" class="w-4 h-4 rounded" alt="" />
             <span>카카오톡 1:1 상담</span>
           </a>
         </div>
@@ -968,15 +956,14 @@
       </div>
 
       <div class="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-sans text-white/40">
-        <p>© 2026 Healthcare Access Portal (NJAP). All rights reserved.</p>
+        <p>© 2026 NJ Access Portal · 뉴저지 한인 의료접근센터 (NJAP). All rights reserved.</p>
         <p>※ The Health Bridge는 오프라인 사전 검토용 샘플 페이지입니다.</p>
       </div>
     </div>
   </footer>
 
   <!-- Scripts for interactivity & Senior Mode -->
-  <script src="/ko/js/fixes.js?v=8.0.0"></script>
-  <script src="/ko/js/njap-translate.js?v=3.1.0"></script>
+  <script src="/js/fixes.js?v=20261004_v9"></script>
   <script>
     function toggleMobileMenu() {
       var dropdown = document.getElementById('mobile-menu-dropdown');
