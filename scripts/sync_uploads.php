@@ -1,42 +1,62 @@
 <?php
 header('Content-Type: text/plain; charset=utf-8');
 
-$src = '/home/u738358110/domains/kor2.njaccessportal.com/public_html/uploads';
-$destKo = '/home/u738358110/domains/njaccessportal.com/public_html/ko/uploads';
-$destRoot = '/home/u738358110/domains/njaccessportal.com/public_html/uploads';
+$domainRoot = '/home/u738358110/domains/njaccessportal.com';
+$publicRoot = $domainRoot . '/public_html';
+$pStorage = $domainRoot . '/persistent_storage';
 
-function copy_dir($src, $dst) {
-    if (!is_dir($src)) return 0;
-    $dir = opendir($src);
-    @mkdir($dst, 0755, true);
-    $count = 0;
-    while (false !== ($file = readdir($dir))) {
-        if ($file != '.' && $file != '..') {
-            if (is_dir($src . '/' . $file)) {
-                $count += copy_dir($src . '/' . $file, $dst . '/' . $file);
-            } else {
-                if (copy($src . '/' . $file, $dst . '/' . $file)) {
-                    $count++;
-                }
+$koImages = $publicRoot . '/uploads/images';
+$rootImages = $publicRoot . '/uploads/images';
+$pImages = $pStorage . '/uploads/images';
+
+if (!is_dir($rootImages)) { @mkdir($rootImages, 0777, true); @chmod($rootImages, 0777); }
+if (!is_dir($pImages)) { @mkdir($pImages, 0777, true); @chmod($pImages, 0777); }
+
+$copiedRoot = 0;
+$copiedP = 0;
+
+if (is_dir($koImages)) {
+    $files = scandir($koImages);
+    foreach ($files as $f) {
+        if ($f === '.' || $f === '..' || $f === '.htaccess' || is_dir($koImages . '/' . $f)) continue;
+        $src = $koImages . '/' . $f;
+        $dstRoot = $rootImages . '/' . $f;
+        $dstP = $pImages . '/' . $f;
+
+        if (!file_exists($dstRoot) || filesize($dstRoot) !== filesize($src)) {
+            if (@copy($src, $dstRoot)) {
+                @chmod($dstRoot, 0666);
+                $copiedRoot++;
+                echo "Copied to root: $f (" . filesize($src) . " bytes)\n";
+            }
+        }
+        if (!file_exists($dstP) || filesize($dstP) !== filesize($src)) {
+            if (@copy($src, $dstP)) {
+                @chmod($dstP, 0666);
+                $copiedP++;
+                echo "Copied to persistent: $f\n";
             }
         }
     }
-    closedir($dir);
-    return $count;
 }
 
-$c1 = copy_dir($src, $destKo);
-echo "SUCCESS: Copied $c1 files to $destKo\n";
+echo "\nSummary: Copied $copiedRoot files to root uploads/images, $copiedP files to persistent storage.\n";
 
-$c2 = copy_dir($src, $destRoot);
-echo "SUCCESS: Copied $c2 files to $destRoot\n";
+// Sync content.json
+$pContent = $pStorage . '/content.json';
+$rootContent = $publicRoot . '/data/content.json';
+$koContent = $publicRoot . '/ko/data/content.json';
 
-// Also sync persistent storage if it exists
-$pSrc = '/home/u738358110/domains/kor2.njaccessportal.com/persistent_storage';
-$pDst = '/home/u738358110/domains/njaccessportal.com/persistent_storage';
-if (is_dir($pSrc)) {
-    $c3 = copy_dir($pSrc, $pDst);
-    echo "SUCCESS: Copied $c3 persistent files to $pDst\n";
+if (file_exists($pContent)) {
+    $pData = @file_get_contents($pContent);
+    if ($pData && strlen($pData) > 1000) {
+        if (!file_exists($rootContent) || filesize($rootContent) !== strlen($pData)) {
+            @file_put_contents($rootContent, $pData, LOCK_EX);
+            echo "Synced persistent content.json to root data/content.json (" . strlen($pData) . " bytes)\n";
+        }
+        if (!file_exists($koContent) || filesize($koContent) !== strlen($pData)) {
+            @file_put_contents($koContent, $pData, LOCK_EX);
+            echo "Synced persistent content.json to ko/data/content.json\n";
+        }
+    }
 }
-
-@unlink(__FILE__);

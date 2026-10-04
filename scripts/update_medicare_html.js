@@ -6,7 +6,7 @@ const generateCompleteMedicareHtml = () => `<!DOCTYPE html>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>메디케어 &amp; ACA 건강보험 완전 가이드 | Healthcare Access Portal</title>
+  <title>메디케어 &amp; ACA 건강보험 완전 가이드 | NJ Access Portal · 뉴저지 한인 의료접근포털</title>
   <meta name="description" content="뉴저지 한인 동포를 위한 주정부 건강보험(GetCoveredNJ), 메디케이드(NJ FamilyCare), 2026년 메디케어 최신 개정 규정 및 주정부 시니어 특별 지원 프로그램(MSP·PAAD) 완벽 총정리" />
   <link rel="icon" href="/favicon.ico" sizes="256x256" type="image/x-icon" />
 
@@ -234,13 +234,13 @@ const generateCompleteMedicareHtml = () => `<!DOCTYPE html>
   <div class="fixed top-0 left-0 right-0 z-50 h-[45px] overflow-hidden flex items-center marquee-bar">
     <div class="marquee-track whitespace-nowrap">
       <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12">
-        의료접근포탈: &quot;비영리 기관들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot;
+        의료접근포탈: &quot;비영리기관(한인 커뮤니티센터)들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료시스템 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot;
       </span>
       <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12">
-        의료접근포탈: &quot;비영리 기관들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot;
+        의료접근포탈: &quot;비영리기관(한인 커뮤니티센터)들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료시스템 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot;
       </span>
       <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12">
-        의료접근포탈: &quot;비영리 기관들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot;
+        의료접근포탈: &quot;비영리기관(한인 커뮤니티센터)들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료시스템 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot;
       </span>
     </div>
   </div>
@@ -800,7 +800,7 @@ const generateCompleteMedicareHtml = () => `<!DOCTYPE html>
         <div class="text-xs font-sans text-white/30 max-w-2xl leading-relaxed">
           <span class="font-semibold text-white/40">의료 면책 조항:</span> 이 웹사이트의 정보는 교육 목적으로만 제공됩니다. 의료 결정은 반드시 자격을 갖춘 의료 전문가와 상담하십시오.
         </div>
-        <p class="text-xs font-sans text-white/30 whitespace-nowrap">© 2026 Healthcare Access Portal</p>
+        <p class="text-xs font-sans text-white/30 whitespace-nowrap">© 2026 NJ Access Portal · 뉴저지 한인 의료접근센터</p>
       </div>
     </div>
   </footer>

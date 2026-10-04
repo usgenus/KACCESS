@@ -62,17 +62,22 @@ if (preg_match('#^/the-health-bridge/?$#', $uri)) {
 }
 
 if (preg_match('#^/senior-care/?$#', $uri)) {
-    require __DIR__ . '/senior-care.php';
+    header("Location: /", true, 301);
     exit;
 }
 
-if (preg_match('#^/medicare/?$#', $uri)) {
+if (preg_match('#^/medicare/?$#', $uri) || preg_match('#^/resources/medicare/?$#', $uri)) {
     readfile(__DIR__ . '/medicare.html');
     exit;
 }
 
-if (preg_match('#^/tool/?$#', $uri)) {
-    readfile(__DIR__ . '/tool.html');
+if (preg_match('#^/tool/?$#', $uri) || preg_match('#^/navigation/?$#', $uri)) {
+    header("Location: /", true, 301);
+    exit;
+}
+
+if (preg_match('#^/news/?$#', $uri)) {
+    require __DIR__ . '/blog.php';
     exit;
 }
 

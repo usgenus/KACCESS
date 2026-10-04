@@ -79,11 +79,11 @@ async function fetchAllData() {
   try {
     const t = Date.now();
     const [bRes, b2Res, vRes, pRes, inqRes] = await Promise.all([
-      fetch(`/ko/api/billboards.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false })),
-      fetch(`/ko/api/billboards2.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false })),
-      fetch(`/ko/api/videos.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false })),
-      fetch(`/ko/api/posts.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false })),
-      fetch(`/ko/api/contact.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false }))
+      fetch(`/api/billboards.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false })),
+      fetch(`/api/billboards2.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false })),
+      fetch(`/api/videos.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false })),
+      fetch(`/api/posts.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false })),
+      fetch(`/api/contact.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false }))
     ]);
 
     if (bRes.success) {
@@ -122,10 +122,10 @@ async function fetchAllData() {
 async function handleLogout() {
   if (!confirm('로그아웃 하시겠습니까?')) return;
   try {
-    await fetch('/ko/api/auth.php?action=logout');
-    window.location.href = '/ko/admin/login.php';
+    await fetch('/api/auth.php?action=logout');
+    window.location.href = '/admin/login.php';
   } catch (err) {
-    window.location.href = '/ko/admin/login.php';
+    window.location.href = '/admin/login.php';
   }
 }
 
@@ -332,7 +332,7 @@ async function handleSaveBillboard(e) {
   };
 
   try {
-    const res = await fetch('/ko/api/billboards.php', {
+    const res = await fetch('/api/billboards.php', {
       method: isEdit ? 'PUT' : 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
@@ -354,7 +354,7 @@ async function handleSaveBillboard(e) {
 async function deleteBillboard(id) {
   if (!confirm('이 갤러리 빌보드를 삭제하시겠습니까?')) return;
   try {
-    const res = await fetch(`/ko/api/billboards.php?id=${id}`, { method: 'DELETE' });
+    const res = await fetch(`/api/billboards.php?id=${id}`, { method: 'DELETE' });
     const data = await res.json();
     if (data.success) {
       showToast('빌보드가 삭제되었습니다.');
@@ -461,7 +461,7 @@ function editBillboard2(id) {
   document.getElementById('billboard2-media-input').value = b.mediaUrl || '';
   document.getElementById('billboard2-linkurl-input').value = b.linkUrl || '/tool';
   const linkTextEl = document.getElementById('billboard2-linktext-input-2') || document.getElementById('billboard2-linktext-input');
-  if (linkTextEl) linkTextEl.value = b.linkText || '환자도우미 바로가기 →';
+  if (linkTextEl) linkTextEl.value = b.linkText || '바로가기 →';
   document.getElementById('billboard2-active-input').checked = b.active !== false;
 
   const preview = document.getElementById('billboard2-media-preview');
@@ -505,7 +505,7 @@ async function handleSaveBillboard2(e) {
   };
 
   try {
-    const res = await fetch('/ko/api/billboards2.php', {
+    const res = await fetch('/api/billboards2.php', {
       method: isEdit ? 'PUT' : 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
@@ -526,7 +526,7 @@ async function handleSaveBillboard2(e) {
 async function deleteBillboard2(id) {
   if (!confirm('이 갤러리 빌보드 2를 삭제하시겠습니까?')) return;
   try {
-    const res = await fetch(`/ko/api/billboards2.php?id=${id}`, { method: 'DELETE' });
+    const res = await fetch(`/api/billboards2.php?id=${id}`, { method: 'DELETE' });
     const data = await res.json();
     if (data.success) {
       showToast('빌보드 2가 삭제되었습니다.');
@@ -698,7 +698,7 @@ async function handleSaveVideo(e) {
   };
 
   try {
-    const res = await fetch('/ko/api/videos.php', {
+    const res = await fetch('/api/videos.php', {
       method: isEdit ? 'PUT' : 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
@@ -720,7 +720,7 @@ async function handleSaveVideo(e) {
 async function deleteVideo(id) {
   if (!confirm('이 의학비디오를 삭제하시겠습니까?')) return;
   try {
-    const res = await fetch(`/ko/api/videos.php?id=${id}`, { method: 'DELETE' });
+    const res = await fetch(`/api/videos.php?id=${id}`, { method: 'DELETE' });
     const data = await res.json();
     if (data.success) {
       showToast('의학비디오가 삭제되었습니다.');
@@ -837,12 +837,12 @@ function renderPosts() {
       </div>
 
       <div class="px-5 pb-5 pt-2 flex items-center justify-between border-t border-slate-700/40">
-        <a href="/ko/blog/${p.slug || p.id}" target="_blank" class="text-[11px] text-blue-400 hover:text-blue-300 font-mono truncate max-w-[120px] flex items-center gap-1 hover:underline">
+        <a href="/blog/${p.slug || p.id}" target="_blank" class="text-[11px] text-blue-400 hover:text-blue-300 font-mono truncate max-w-[120px] flex items-center gap-1 hover:underline">
           <span>/${p.slug || ''}</span>
           <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
         </a>
         <div class="flex items-center gap-2">
-          <a href="/ko/blog/${p.slug || p.id}" target="_blank" class="px-2.5 py-1.5 bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 rounded-xl text-xs font-semibold flex items-center gap-1 transition-all">
+          <a href="/blog/${p.slug || p.id}" target="_blank" class="px-2.5 py-1.5 bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 rounded-xl text-xs font-semibold flex items-center gap-1 transition-all">
             <span>보기 ↗</span>
           </a>
           <button onclick="editPost('${p.id}')" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-white rounded-xl text-xs font-semibold flex items-center gap-1 transition-all">
@@ -896,9 +896,9 @@ function handleExposureCheckboxChange(input) {
     input.checked = false;
     showToast('의료칼럼 슬롯이 최대 10개로 꽉 찼습니다.', false);
   }
-  if (input.id === 'post-policyreport-input' && input.checked && reportCount >= 4) {
+  if (input.id === 'post-policyreport-input' && input.checked && reportCount >= 6) {
     input.checked = false;
-    showToast('리콜(Recalls and Food Safety) 슬롯이 최대 4개로 꽉 찼습니다.', false);
+    showToast('리콜(Recalls and Food Safety) 슬롯이 최대 6개로 꽉 찼습니다.', false);
   }
 
   updateExposureCheckboxLimits(currentId);
@@ -989,22 +989,22 @@ function updateExposureCheckboxLimits(currentEditingPostId) {
     }
   }
 
-  // 리콜(Recalls and Food Safety) (Max 4 slots on front page)
+  // 리콜(Recalls and Food Safety) (Max 6 slots on front page)
   if (reportInput && reportLabel) {
-    if (reportCount >= 4 && !reportInput.checked) {
+    if (reportCount >= 6 && !reportInput.checked) {
       reportInput.checked = false;
       reportInput.disabled = true;
       reportInput.parentElement.classList.add('opacity-40', 'cursor-not-allowed');
-      reportLabel.innerHTML = '📋 리콜(Recalls and Food Safety) <span class="text-xs text-amber-400 font-bold block sm:inline">(메인 4개 슬롯 꽉 참)</span>';
-    } else if (reportCount >= 4 && reportInput.checked) {
+      reportLabel.innerHTML = '📋 리콜(Recalls and Food Safety) <span class="text-xs text-amber-400 font-bold block sm:inline">(메인 6개 슬롯 꽉 참)</span>';
+    } else if (reportCount >= 6 && reportInput.checked) {
       reportInput.disabled = false;
       reportInput.parentElement.classList.remove('opacity-40', 'cursor-not-allowed');
-      reportLabel.innerHTML = '📋 리콜(Recalls and Food Safety) <span class="text-xs text-emerald-400 font-bold">(4/4개)</span>';
+      reportLabel.innerHTML = '📋 리콜(Recalls and Food Safety) <span class="text-xs text-emerald-400 font-bold">(6/6개)</span>';
     } else {
       reportInput.disabled = false;
       reportInput.parentElement.classList.remove('opacity-40', 'cursor-not-allowed');
       const currentVal = reportInput.checked ? reportCount + 1 : reportCount;
-      reportLabel.innerHTML = '📋 리콜(Recalls and Food Safety) <span class="text-xs text-emerald-400 font-bold">(' + currentVal + '/4개)</span>';
+      reportLabel.innerHTML = '📋 리콜(Recalls and Food Safety) <span class="text-xs text-emerald-400 font-bold">(' + currentVal + '/6개)</span>';
     }
   }
 }
@@ -1409,6 +1409,52 @@ function renderPostImagesGrid() {
   }).join('');
 }
 
+// Helper to compress an image File into a fast, lightweight WebP/JPEG Blob before network upload
+function compressImageFileToBlob(file, maxDimension = 1600, quality = 0.85) {
+  return new Promise((resolve) => {
+    if (!file || !file.type || !file.type.startsWith('image/') || file.type === 'image/svg+xml') {
+      return resolve(file);
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        let w = img.width;
+        let h = img.height;
+        if (w > maxDimension || h > maxDimension) {
+          if (w > h) {
+            h = Math.round((h * maxDimension) / w);
+            w = maxDimension;
+          } else {
+            w = Math.round((w * maxDimension) / h);
+            h = maxDimension;
+          }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, w, h);
+
+        const outType = file.type === 'image/png' ? 'image/png' : 'image/jpeg';
+        canvas.toBlob((blob) => {
+          if (blob && (blob.size < file.size || file.size > 1024 * 1024)) {
+            const ext = outType === 'image/png' ? '.png' : '.jpg';
+            const compressedFile = new File([blob], file.name.replace(/\.[^.]+$/, ext), { type: outType });
+            resolve(compressedFile);
+          } else {
+            resolve(file);
+          }
+        }, outType, quality);
+      };
+      img.onerror = () => resolve(file);
+      img.src = e.target.result;
+    };
+    reader.onerror = () => resolve(file);
+    reader.readAsDataURL(file);
+  });
+}
+
 function compressImageToDataUrl(file, maxWidth = 1200, maxHeight = 1200, quality = 0.85) {
   return new Promise((resolve) => {
     if (!file || !file.type || !file.type.startsWith('image/')) {
@@ -1458,29 +1504,36 @@ async function uploadMultiplePostImages(input) {
   const files = Array.from(input.files);
   showToast(`${files.length}개의 사진을 업로드하는 중입니다...`);
 
+  let successCount = 0;
   for (let i = 0; i < files.length; i++) {
-    const file = files[i];
+    const rawFile = files[i];
     try {
+      showToast(`사진 ${i + 1}/${files.length} 최적화 및 업로드 중...`);
+      const fileToUpload = await compressImageFileToBlob(rawFile, 1600, 0.85);
+
       const formData = new FormData();
-      formData.append('file', file);
-      const res = await fetch('/ko/api/upload.php', { method: 'POST', body: formData });
+      formData.append('file', fileToUpload);
+      const res = await fetch('/api/upload.php', { method: 'POST', body: formData });
       const data = await res.json();
       if (data.success && data.url) {
         currentPostImages.push(data.url);
+        successCount++;
       } else {
-        const dataUrl = await compressImageToDataUrl(file, 1200, 1200, 0.85);
-        if (dataUrl) currentPostImages.push(dataUrl);
+        throw new Error(data.error || '업로드 실패');
       }
     } catch (e) {
-      console.error('Image upload error:', e);
+      console.warn('Direct upload error, falling back to data URL:', e);
       try {
-        const dataUrl = await compressImageToDataUrl(file, 1200, 1200, 0.85);
-        if (dataUrl) currentPostImages.push(dataUrl);
+        const dataUrl = await compressImageToDataUrl(rawFile, 1200, 1200, 0.82);
+        if (dataUrl) {
+          currentPostImages.push(dataUrl);
+          successCount++;
+        }
       } catch (err) {}
     }
   }
 
-  showToast(`${files.length}개 사진 등록 완료!`);
+  showToast(`${successCount}개 사진 등록 완료!`);
   input.value = '';
   renderPostImagesGrid();
 }
@@ -1517,13 +1570,18 @@ function movePostImage(index, direction) {
 
 async function handleSavePost(e) {
   e.preventDefault();
+  const form = e.target;
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const origBtnHtml = submitBtn ? submitBtn.innerHTML : '';
+
   const id = document.getElementById('post-id').value;
   const isEdit = Boolean(id);
   const existingPost = isEdit ? state.posts.find(p => p.id === id) : null;
 
+  // Auto-fill a high quality medical cover image if no photo is attached
+  const defaultMedicalCover = 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&q=80';
   if (currentPostImages.length === 0) {
-    showToast('최소 1개 이상의 기사 사진을 등록해주세요.', false);
-    return;
+    currentPostImages.push(defaultMedicalCover);
   }
 
   const summaryPointsInput = document.getElementById('post-summarypoints-input');
@@ -1537,7 +1595,7 @@ async function handleSavePost(e) {
     category: document.getElementById('post-category-input').value,
     date: document.getElementById('post-date-input').value,
     author: document.getElementById('post-author-input').value,
-    coverImage: currentPostImages[0] || '',
+    coverImage: currentPostImages[0] || defaultMedicalCover,
     images: currentPostImages,
     videoUrl: document.getElementById('post-videourl-input').value,
     excerpt: document.getElementById('post-excerpt-input').value,
@@ -1549,13 +1607,24 @@ async function handleSavePost(e) {
     isPolicyReport: document.getElementById('post-policyreport-input') ? document.getElementById('post-policyreport-input').checked : false
   };
 
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1.5"></i> 기사 발행 중...';
+  }
+
   try {
-    const res = await fetch('/ko/api/posts.php', {
+    const res = await fetch('/api/posts.php', {
       method: isEdit ? 'PUT' : 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
-    const data = await res.json();
+    
+    let data;
+    try {
+      data = await res.json();
+    } catch(parseErr) {
+      throw new Error(`서버 응답 오류 (HTTP ${res.status})`);
+    }
 
     if (data.success) {
       showToast(isEdit ? '기사가 수정되었습니다.' : '새 기사가 발행되었습니다.');
@@ -1565,14 +1634,20 @@ async function handleSavePost(e) {
       showToast(data.error || '저장 실패', false);
     }
   } catch (err) {
-    showToast('통신 오류가 발생했습니다.', false);
+    console.error('Post save error:', err);
+    showToast(err.message || '통신 오류가 발생했습니다.', false);
+  } finally {
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = origBtnHtml;
+    }
   }
 }
 
 async function deletePost(id) {
   if (!confirm('이 기사를 삭제하시겠습니까?')) return;
   try {
-    const res = await fetch(`/ko/api/posts.php?id=${id}`, { method: 'DELETE' });
+    const res = await fetch(`/api/posts.php?id=${id}`, { method: 'DELETE' });
     const data = await res.json();
     if (data.success) {
       showToast('기사가 삭제되었습니다.');
@@ -1590,7 +1665,7 @@ async function deletePost(id) {
 // =========================================================
 async function fetchMediaFiles() {
   try {
-    const res = await fetch('/ko/api/upload.php?action=list');
+    const res = await fetch('/api/upload.php?action=list');
     const data = await res.json();
     let files = (data.success && data.files) ? data.files : [];
 
@@ -1682,7 +1757,7 @@ function copyMediaUrl(url) {
 async function deleteMediaFile(url) {
   if (!confirm('이 미디어 파일을 삭제하시겠습니까?')) return;
   try {
-    const res = await fetch(`/ko/api/upload.php?action=delete&url=${encodeURIComponent(url)}`, { method: 'DELETE' });
+    const res = await fetch(`/api/upload.php?action=delete&url=${encodeURIComponent(url)}`, { method: 'DELETE' });
     const data = await res.json();
     if (data.success) {
       showToast('파일이 삭제되었습니다.');
@@ -1707,7 +1782,7 @@ async function uploadFieldFile(input, targetInputId, previewId) {
   try {
     const formData = new FormData();
     formData.append('file', file);
-    const res = await fetch('/ko/api/upload.php', { method: 'POST', body: formData });
+    const res = await fetch('/api/upload.php', { method: 'POST', body: formData });
     const data = await res.json();
 
     if (data.success && data.url) {
@@ -1767,7 +1842,7 @@ async function handleDirectFileUpload(files) {
     try {
       const formData = new FormData();
       formData.append('file', file);
-      await fetch('/ko/api/upload.php', { method: 'POST', body: formData });
+      await fetch('/api/upload.php', { method: 'POST', body: formData });
     } catch (e) {}
   }
 
@@ -1814,7 +1889,7 @@ function closeModal(id) {
 async function fetchInquiries(showNotification = false) {
   try {
     const t = Date.now();
-    const res = await fetch(`/ko/api/contact.php?_t=${t}`, { cache: 'no-store' });
+    const res = await fetch(`/api/contact.php?_t=${t}`, { cache: 'no-store' });
     const data = await res.json();
     if (data.success) {
       state.inquiries = data.data || [];
@@ -1863,7 +1938,7 @@ async function toggleInquiryResolved(e, id) {
     e.stopPropagation();
   }
   try {
-    const res = await fetch('/ko/api/contact.php?action=toggle_resolved', {
+    const res = await fetch('/api/contact.php?action=toggle_resolved', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id })
@@ -1895,7 +1970,7 @@ async function deleteInquiry(e, id) {
   if (!confirm(`'${name}' 님의 문의 내역을 영구히 삭제하시겠습니까?`)) return;
 
   try {
-    const res = await fetch('/ko/api/contact.php?action=delete', {
+    const res = await fetch('/api/contact.php?action=delete', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id })

@@ -1,0 +1,2316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Community Photo Gallery &amp; Multimedia Vault | NJ Access Portal</title>
+  <meta name="description" content="Explore our interactive high-resolution gallery of medical seminars, community health fairs, physician profiles, keynote galas, and multimedia archives.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Barlow+Condensed:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=20260925_white_mobile_menu_v2">
+  <style>
+    /* Royal Gold brand logo on header */
+    .site-header .brand-text,
+    .site-header .brand-logo,
+    .site-header .njap-char,
+    .mobile-menu .brand-text,
+    .mobile-menu .njap-char {
+      color: #FAF7F2 !important;
+      font-family: 'Barlow Condensed', -apple-system, BlinkMacSystemFont, sans-serif !important;
+      font-size: 1.42rem !important;
+      letter-spacing: 0.08em !important;
+    }
+    .brand-text .njap-char {
+      font-weight: 400 !important;
+    }
+    .footer-brand-logo .brand-text,
+    .footer-brand-logo .brand-logo,
+    .footer-brand-logo .njap-char {
+      color: #FAF7F2 !important;
+    }
+    body.bright-theme .site-header .njap-char.brand-engine,
+    body.bright-theme .site-header .brand-text .brand-engine,
+    body.bright-theme .mobile-menu .njap-char.brand-engine,
+    body.bright-theme .footer-brand-logo .njap-char.brand-engine,
+    body.bright-theme .brand-engine,
+    body.bright-theme .njap-char.brand-engine,
+    .brand-engine,
+    .brand-text .brand-engine,
+    .site-header .brand-engine,
+    .njap-char.brand-engine {
+      font-weight: 800 !important;
+      color: #E5C158 !important;
+    }
+
+    /* Mobile Drawer Menu White Text Guarantee */
+    .mobile-menu {
+      z-index: 2500 !important;
+      background: #091024 !important;
+      border-left: 1px solid rgba(212, 175, 55, 0.3) !important;
+      color: #FFFFFF !important;
+    }
+    .mobile-menu.open,
+    .mobile-menu.active {
+      right: 0 !important;
+    }
+    .mobile-menu .brand-text,
+    .mobile-menu .brand-text .njap-char,
+    .mobile-menu .njap-char,
+    .mobile-menu .close-menu-btn {
+      color: #FFFFFF !important;
+      -webkit-text-fill-color: #FFFFFF !important;
+    }
+    .mobile-menu .brand-engine,
+    .mobile-menu .njap-char.brand-engine {
+      color: #E5C158 !important;
+      -webkit-text-fill-color: #E5C158 !important;
+    }
+    .mobile-menu .close-menu-btn:hover {
+      color: #E5C158 !important;
+      -webkit-text-fill-color: #E5C158 !important;
+    }
+    .mobile-menu .mobile-link,
+    .mobile-menu a.mobile-link,
+    .mobile-menu .mobile-links a {
+      color: #FFFFFF !important;
+      -webkit-text-fill-color: #FFFFFF !important;
+      font-size: 1.25rem !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.08em !important;
+      text-decoration: none !important;
+      transition: all 0.2s ease !important;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+    }
+    .mobile-menu .mobile-link:visited,
+    .mobile-menu a.mobile-link:visited,
+    .mobile-menu .mobile-links a:visited {
+      color: #FFFFFF !important;
+      -webkit-text-fill-color: #FFFFFF !important;
+    }
+    .mobile-menu .mobile-link:hover,
+    .mobile-menu .mobile-link:focus,
+    .mobile-menu a.mobile-link:hover,
+    .mobile-menu a.mobile-link:focus {
+      color: #FFFFFF !important;
+      -webkit-text-fill-color: #FFFFFF !important;
+      text-shadow: 0 0 12px rgba(255, 255, 255, 0.8) !important;
+    }
+    .mobile-menu .mobile-link.active,
+    .mobile-menu a.mobile-link.active,
+    .mobile-menu .mobile-links a.active {
+      color: #FFFFFF !important;
+      -webkit-text-fill-color: #FFFFFF !important;
+      font-weight: 800 !important;
+    }
+    .mobile-menu .mobile-link.active::before,
+    .mobile-menu a.mobile-link.active::before,
+    .mobile-menu .mobile-links a.active::before {
+      content: '▸ ' !important;
+      color: #E5C158 !important;
+      -webkit-text-fill-color: #E5C158 !important;
+      font-size: 1.1em !important;
+      font-weight: 900 !important;
+      margin-right: 0.35rem !important;
+    }
+    .mobile-menu .mobile-link.cta-mobile,
+    .mobile-menu a.mobile-link.cta-mobile {
+      color: #0A1128 !important;
+      -webkit-text-fill-color: #0A1128 !important;
+      background: linear-gradient(135deg, #D4AF37 0%, #E5C158 100%) !important;
+      padding: 0.85rem 1.4rem !important;
+      border-radius: 6px !important;
+      text-align: center !important;
+      font-weight: 800 !important;
+    }
+    .mobile-menu .mobile-link.cta-mobile::before,
+    .mobile-menu a.mobile-link.cta-mobile::before {
+      display: none !important;
+    }
+    .mobile-menu .telemetry-tag,
+    .mobile-menu .direct-contact {
+      color: #FFFFFF !important;
+      -webkit-text-fill-color: #FFFFFF !important;
+    }
+
+    @media (max-width: 992px) {
+      .header-inner {
+        padding: 0 1rem !important;
+      }
+      .nav-actions {
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
+      }
+      .nav-cta,
+      #nav-cta-btn {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0.35rem 0.65rem !important;
+        font-size: 0.68rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.04em !important;
+        line-height: 1.15 !important;
+        border-radius: 4px !important;
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+      }
+      .hamburger-btn,
+      #hamburger-btn {
+        display: flex !important;
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        min-height: 38px !important;
+        flex-shrink: 0 !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-inner {
+        padding: 0 0.55rem !important;
+      }
+      .brand-text {
+        font-size: 1.05rem !important;
+      }
+      .brand-logo-svg {
+        width: 24px !important;
+        height: 24px !important;
+      }
+      .nav-actions {
+        gap: 0.35rem !important;
+      }
+      .nav-cta,
+      #nav-cta-btn {
+        padding: 0.3rem 0.48rem !important;
+        font-size: 0.62rem !important;
+      }
+      .hamburger-btn,
+      #hamburger-btn {
+        width: 35px !important;
+        height: 35px !important;
+        min-width: 35px !important;
+        min-height: 35px !important;
+      }
+    }
+    :root {
+      --primary-blue: #D4AF37;
+      --primary-dark: #FAF7F2;
+      --accent-blue: #E5C158;
+      --accent-indigo: #AA820A;
+      --border-light: rgba(212, 175, 55, 0.2);
+      --border-medium: rgba(212, 175, 55, 0.35);
+      --bg-page: #091024;
+      --text-primary: #FAF7F2;
+      --text-secondary: #CBD5E1;
+      --text-muted: #94A3B8;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.6), 0 2px 4px -2px rgba(0,0,0,0.4);
+      --shadow-lg: 0 10px 25px -3px rgba(0,0,0,0.7), 0 4px 6px -4px rgba(0,0,0,0.4);
+      --shadow-xl: 0 20px 35px -5px rgba(0,0,0,0.8);
+      --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-hero: 'Barlow Condensed', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-primary);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .portfolio-hero {
+      background: linear-gradient(180deg, #0E1834 0%, #091024 100%);
+      padding-top: calc(var(--header-height, 70px) + 3rem);
+      padding-bottom: 3.5rem;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+      text-align: center;
+      position: relative;
+    }
+    
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(212, 175, 55, 0.15);
+      color: #E5C158;
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.9rem;
+      border-radius: 30px;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+    }
+
+    .portfolio-title {
+      font-family: var(--font-hero);
+      font-size: 3.4rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      color: var(--primary-dark);
+      margin: 0 0 0.75rem 0;
+      line-height: 1.1;
+    }
+
+    .portfolio-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 760px;
+      margin: 0 auto 2rem auto;
+      line-height: 1.6;
+    }
+
+    /* Sub Menu Tabs: Photo vs Video */
+    .portfolio-main-submenu {
+      display: inline-flex;
+      background: #111D3B;
+      padding: 0.4rem;
+      border-radius: 40px;
+      gap: 0.5rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      margin-bottom: 2.2rem;
+    }
+    .submenu-btn {
+      background: transparent;
+      border: none;
+      color: #94A3B8;
+      padding: 0.7rem 1.8rem;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 0.9rem;
+      border-radius: 30px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .submenu-btn:hover {
+      color: #FAF7F2;
+    }
+    .submenu-btn.active {
+      background: #D4AF37;
+      color: #0A1128;
+      box-shadow: 0 4px 18px rgba(212, 175, 55, 0.45);
+    }
+    .submenu-badge {
+      background: rgba(255, 255, 255, 0.22);
+      color: #ffffff;
+      font-size: 0.72rem;
+      padding: 0.15rem 0.55rem;
+      border-radius: 12px;
+      font-weight: 700;
+    }
+
+    .portfolio-controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.3rem;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    .portfolio-search-box {
+      width: 100%;
+      max-width: 480px;
+      position: relative;
+    }
+    .portfolio-search-input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.8rem 1.4rem 0.8rem 2.8rem;
+      border: 1px solid var(--border-medium);
+      border-radius: 30px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      background: rgba(20, 34, 71, 0.9) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23E5C158' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'/%3E%3C/svg%3E") no-repeat 1.1rem center;
+      color: #FAF7F2;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+    .portfolio-search-input:focus {
+      border-color: #D4AF37;
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+    }
+    .portfolio-filter-bar {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      background: rgba(20, 34, 71, 0.8);
+      border: 1px solid var(--border-medium);
+      color: var(--text-secondary);
+      padding: 0.55rem 1.15rem;
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      border-radius: 24px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .filter-btn .cat-count {
+      background: rgba(212, 175, 55, 0.15);
+      color: #E5C158;
+      font-size: 0.7rem;
+      padding: 0.1rem 0.45rem;
+      border-radius: 10px;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover {
+      border-color: var(--primary-blue);
+      color: var(--primary-blue);
+      transform: translateY(-1px);
+    }
+    .filter-btn.active {
+      background: var(--primary-blue);
+      border-color: var(--primary-blue);
+      color: #0A1128;
+      box-shadow: 0 4px 14px rgba(212, 175, 55, 0.35);
+    }
+    .filter-btn.active .cat-count {
+      background: rgba(10, 17, 40, 0.3);
+      color: #0A1128;
+    }
+
+    .portfolio-grid-section {
+      padding: 3.5rem 0 6rem 0;
+      background: var(--bg-page);
+    }
+    .section-container {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    
+    
+    
+
+    .portfolio-masonry-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+    .portfolio-photo-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+    .portfolio-item-card {
+      background: #0E1834;
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      position: relative;
+    }
+    .portfolio-item-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-xl);
+      border-color: #D4AF37;
+    }
+    .item-media-container {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: #0f172a;
+      overflow: hidden;
+    }
+    .item-photo-container {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      background: #0f172a;
+      overflow: hidden;
+    }
+    .item-media-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      display: block;
+    }
+    .portfolio-item-card:hover .item-media-img {
+      transform: scale(1.06);
+    }
+    .media-type-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(4px);
+      color: #ffffff;
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      z-index: 2;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .author-badge {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      background: rgba(0, 0, 0, 0.8);
+      color: #cbd5e1;
+      font-size: 0.68rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      z-index: 2;
+    }
+    .play-icon-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50px;
+      height: 50px;
+      background: rgba(220, 38, 38, 0.95);
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      transition: transform 0.2s ease, background 0.2s ease;
+      z-index: 2;
+      font-size: 1.1rem;
+    }
+    .portfolio-item-card:hover .play-icon-overlay {
+      transform: translate(-50%, -50%) scale(1.12);
+      background: #dc2626;
+    }
+    
+    .zoom-hover-hint {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 2;
+    }
+    .zoom-hover-hint span {
+      background: rgba(255, 255, 255, 0.95);
+      color: #0f172a;
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.4rem 0.9rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    }
+    .portfolio-item-card:hover .zoom-hover-hint {
+      opacity: 1;
+    }
+
+    .item-card-body {
+      padding: 0.75rem 1rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .item-desc-text {
+      display: none !important;
+    }
+    .item-cat {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: #E5C158 !important;
+      margin-bottom: 0.4rem;
+      display: inline-block;
+    }
+    .item-heading {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #FAF7F2 !important;
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin: 0 0 0.5rem 0;
+    }
+    .item-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: #94A3B8 !important;
+      font-weight: 600;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(212, 175, 55, 0.2) !important;
+    }
+    .item-card-footer .action-prompt {
+      color: #E5C158 !important;
+      font-weight: 700;
+    }
+
+    .load-more-container {
+      text-align: center;
+      margin-top: 3.5rem;
+    }
+    .btn-load-more {
+      background: #D4AF37;
+      color: #0A1128;
+      border: none;
+      padding: 0.85rem 2.2rem;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(212, 175, 55, 0.35);
+      transition: all 0.25s ease;
+    }
+    .btn-load-more:hover {
+      background: #E5C158;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.45);
+    }
+
+    /* Lightbox Modal */
+    .lightbox-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(5, 10, 22, 0.96);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      z-index: 99999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      box-sizing: border-box;
+    }
+    .lightbox-modal.open {
+      display: flex;
+    }
+    .lightbox-content {
+      max-width: 1080px;
+      width: 100%;
+      background: #0E1834;
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.8);
+      display: flex;
+      flex-direction: column;
+      animation: modalScaleIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes modalScaleIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .lightbox-header {
+      padding: 1rem 1.5rem;
+      background: #111D3B;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+    }
+    .lightbox-header-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      max-width: 80%;
+    }
+    .lightbox-counter-badge {
+      background: #D4AF37;
+      color: #0A1128;
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 12px;
+      white-space: nowrap;
+    }
+    .lightbox-header h4 {
+      color: #FAF7F2;
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .lightbox-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .lightbox-action-btn {
+      background: rgba(20, 34, 71, 0.8);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      color: #FAF7F2;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s;
+    }
+    .lightbox-action-btn:hover {
+      background: rgba(212, 175, 55, 0.15);
+      color: #E5C158;
+    }
+    .lightbox-close {
+      font-size: 1.8rem;
+      color: #94A3B8;
+      background: none;
+      border: none;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0 0.3rem;
+      transition: color 0.2s;
+    }
+    .lightbox-close:hover {
+      color: #E5C158;
+    }
+    .lightbox-media-wrapper {
+      position: relative;
+      width: 100%;
+      background: #091024;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 380px;
+    }
+    .lightbox-media-holder {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox-media-holder iframe {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: none;
+    }
+    .lightbox-media-holder img {
+      max-width: 100%;
+      max-height: 68vh;
+      object-fit: contain;
+    }
+    
+    /* Prev/Next Nav Arrows */
+    .lightbox-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(10, 18, 40, 0.9);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      color: #FAF7F2;
+      font-size: 1.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      z-index: 10;
+      user-select: none;
+    }
+    .lightbox-nav-btn:hover {
+      background: #D4AF37;
+      border-color: #D4AF37;
+      color: #0A1128;
+      transform: translateY(-50%) scale(1.1);
+    }
+    .lightbox-nav-prev { left: 16px; }
+    .lightbox-nav-next { right: 16px; }
+
+    .lightbox-caption {
+      padding: 1.25rem 1.75rem;
+      background: #ffffff;
+    }
+    .lightbox-caption-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.4rem;
+    }
+    .lightbox-meta-cat {
+      background: #e0f2fe;
+      color: #0369a1;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+    }
+    .lightbox-caption h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 0 0 0.4rem 0;
+    }
+    .lightbox-caption p {
+      font-size: 0.9rem;
+      color: #475569;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    @media (max-width: 1200px) {
+      .portfolio-masonry-grid, .portfolio-photo-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .portfolio-title {
+        font-size: 2.3rem;
+      }
+      .portfolio-masonry-grid, .portfolio-photo-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+    }
+
+    /* MOBILE VIEW: Clean Image Thumbnails Only (Forget Text) */
+    @media (max-width: 768px) {
+      .portfolio-title {
+        font-size: 1.85rem;
+      }
+      .section-container {
+        padding: 0 0.85rem;
+      }
+      .portfolio-grid-section {
+        padding: 1.5rem 0 4rem 0;
+      }
+      .portfolio-masonry-grid, .portfolio-photo-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.65rem !important;
+      }
+      /* Clean card styling without text */
+      .portfolio-item-card {
+        border-radius: 8px !important;
+        border: 1px solid rgba(0, 0, 0, 0.08) !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+        background: #0f172a !important;
+        overflow: hidden !important;
+        margin: 0 !important;
+      }
+      .portfolio-item-card:hover {
+        transform: none !important;
+      }
+      /* Hide all card body text on mobile */
+      .portfolio-item-card .item-card-body {
+        display: none !important;
+      }
+      /* Hide text badges for clean uncluttered visual thumbnails */
+      .portfolio-item-card .media-type-badge,
+      .portfolio-item-card .author-badge,
+      .portfolio-item-card .zoom-hover-hint {
+        display: none !important;
+      }
+      /* Clean image containers with 1:1 square aspect ratio */
+      .item-media-container,
+      .item-photo-container {
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 1 / 1 !important;
+        position: relative !important;
+        overflow: hidden !important;
+        background: #1e293b !important;
+      }
+      .item-media-img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        display: block !important;
+      }
+      /* Subtle, clean centered play icon for videos */
+      .play-icon-overlay {
+        width: 38px !important;
+        height: 38px !important;
+        font-size: 0.85rem !important;
+        background: rgba(0, 0, 0, 0.65) !important;
+        backdrop-filter: blur(4px) !important;
+        border: 1.5px solid rgba(255, 255, 255, 0.9) !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+      }
+      .lightbox-nav-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 1.3rem;
+      }
+      .lightbox-modal {
+        padding: 0.5rem;
+      }
+      .lightbox-header-actions {
+        display: none;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .section-container {
+        padding: 0 0.5rem;
+      }
+      .portfolio-masonry-grid, .portfolio-photo-grid {
+        gap: 0.45rem !important;
+      }
+    }
+  
+    /* --- SECTION 1 & 2 COMPACT STYLING --- */
+    .brief-section {
+      padding: 3.5rem 0 4rem 0;
+      border-bottom: 1px solid var(--border-light);
+      background: #ffffff;
+    }
+    .brief-section.alt-bg {
+      background: #f8fafc;
+    }
+    .section-header-compact {
+      text-align: center;
+      margin-bottom: 2.25rem;
+    }
+    .section-num-tag {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      color: var(--primary-blue);
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+    .section-title-compact {
+      font-family: var(--font-hero);
+      font-size: 2.6rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      color: var(--primary-dark);
+      margin: 0;
+      line-height: 1.1;
+    }
+    .section-desc-compact {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      max-width: 650px;
+      margin: 0.5rem auto 0 auto;
+    }
+
+    /* --- MODERN MINIMAL MILESTONES & HONORS SECTION --- */
+    .milestones-toggle-bar {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+      max-width: 950px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .milestone-toggle-btn {
+      display: flex;
+      align-items: center;
+      gap: 1.15rem;
+      background: #ffffff;
+      border: 1.5px solid var(--border-light);
+      border-radius: 12px;
+      padding: 1.15rem 1.4rem;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.25s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .milestone-toggle-btn:hover {
+      border-color: var(--primary-blue);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .milestone-toggle-btn.active {
+      background: #f8fafc;
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.15);
+    }
+
+    .btn-toggle-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .btn-toggle-icon svg {
+      width: 22px;
+      height: 22px;
+      display: block;
+    }
+
+    .btn-toggle-icon.icon-history {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      color: #0284c7;
+      border: 1px solid #bae6fd;
+      box-shadow: 0 2px 6px rgba(2, 132, 199, 0.08);
+    }
+
+    .btn-toggle-icon.icon-awards {
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      color: #d97706;
+      border: 1px solid #fde68a;
+      box-shadow: 0 2px 6px rgba(217, 119, 6, 0.08);
+    }
+
+    .milestone-toggle-btn:hover .btn-toggle-icon {
+      transform: scale(1.06);
+    }
+
+    .milestone-toggle-btn:hover .btn-toggle-icon.icon-history {
+      background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+      box-shadow: 0 4px 10px rgba(2, 132, 199, 0.16);
+    }
+
+    .milestone-toggle-btn:hover .btn-toggle-icon.icon-awards {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      box-shadow: 0 4px 10px rgba(217, 119, 6, 0.16);
+    }
+
+    .milestone-toggle-btn.active .btn-toggle-icon.icon-history {
+      background: #0284c7;
+      color: #ffffff;
+      border-color: #0284c7;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+    }
+
+    .milestone-toggle-btn.active .btn-toggle-icon.icon-awards {
+      background: #d97706;
+      color: #ffffff;
+      border-color: #d97706;
+      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
+    }
+
+    .btn-toggle-info {
+      flex: 1;
+    }
+
+    .btn-toggle-heading {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      line-height: 1.25;
+      margin-bottom: 0.2rem;
+    }
+
+    .btn-toggle-sub {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .btn-toggle-indicator {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--primary-blue);
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      padding: 0.35rem 0.65rem;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .milestone-toggle-btn.active .btn-toggle-indicator {
+      background: var(--primary-blue);
+      color: #ffffff;
+      border-color: var(--primary-blue);
+    }
+
+    .milestone-expand-panel {
+      max-width: 950px;
+      margin-left: auto;
+      margin-right: auto;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .milestone-card-inner {
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      border-radius: 14px;
+      padding: 2rem 2.25rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .milestone-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 1.25rem;
+      margin-bottom: 1.75rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .panel-section-title {
+      font-family: var(--font-hero);
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin: 0;
+      letter-spacing: 0.01em;
+    }
+
+    .panel-badge-pill {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary-blue);
+      background: #e0f2fe;
+      padding: 0.3rem 0.75rem;
+      border-radius: 20px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    /* Timeline List for HUBS */
+    .hub-timeline-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      position: relative;
+    }
+
+    .hub-timeline-item {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      position: relative;
+    }
+
+    .hub-year-pill {
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--primary-blue);
+      background: #f0f9ff;
+      border: 1.5px solid #bae6fd;
+      padding: 0.4rem 0.85rem;
+      border-radius: 8px;
+      white-space: nowrap;
+      min-width: 110px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .hub-item-content {
+      flex: 1;
+    }
+
+    .hub-item-title {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin: 0 0 0.25rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .hub-status-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #0369a1;
+      background: #e0f2fe;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+    }
+
+    .hub-item-loc {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--primary-blue);
+      margin: 0 0 0.35rem 0;
+    }
+
+    .hub-item-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* Awards Showcase Grid */
+    .awards-showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+    }
+
+    .award-showcase-card {
+      background: #f8fafc;
+      border: 1px solid var(--border-light);
+      border-radius: 10px;
+      padding: 1.35rem 1.25rem;
+      transition: all 0.2s ease;
+    }
+
+    .award-showcase-card:hover {
+      background: #ffffff;
+      border-color: var(--primary-blue);
+      box-shadow: var(--shadow-sm);
+      transform: translateY(-2px);
+    }
+
+    .award-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.65rem;
+    }
+
+    .award-badge-year {
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--primary-blue);
+      background: #e0f2fe;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+    }
+
+    .award-org {
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .award-title {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin: 0 0 0.2rem 0;
+    }
+
+    .award-subtitle {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary-blue);
+      margin: 0 0 0.45rem 0;
+    }
+
+    .award-desc {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    .community-awards-list {
+      list-style: none;
+      padding: 0;
+      margin: 0.45rem 0 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .community-awards-list li {
+      font-size: 0.82rem;
+      color: var(--text-primary);
+      line-height: 1.4;
+    }
+
+    .community-awards-list strong {
+      color: var(--primary-blue);
+    }
+
+    @media (max-width: 840px) {
+      .milestones-toggle-bar {
+        grid-template-columns: 1fr;
+      }
+      .awards-showcase-grid {
+        grid-template-columns: 1fr;
+      }
+      .hub-timeline-item {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .milestone-card-inner {
+        padding: 1.5rem 1.25rem;
+      }
+    }
+
+  
+    /* Press Release Modal & Card Additions */
+    .press-modal-preview {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 760px;
+      padding: 1.5rem;
+      background: #ffffff;
+      border-radius: 12px;
+      gap: 1.25rem;
+      box-shadow: var(--shadow-md);
+      box-sizing: border-box;
+    }
+    .press-modal-img {
+      max-height: 380px;
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+      border-radius: 8px;
+      border: 1px solid var(--border-light);
+    }
+    .press-modal-action-box {
+      text-align: center;
+      width: 100%;
+    }
+    .press-modal-publisher {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--primary-blue);
+      margin-bottom: 0.35rem;
+    }
+    .press-modal-url {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      word-break: break-all;
+      margin-bottom: 1.15rem;
+    }
+    .press-modal-open-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      font-size: 0.9rem;
+    }
+    .press-item-card {
+      cursor: pointer;
+    }
+    .press-item-card:hover .item-media-img {
+      transform: scale(1.04);
+    }
+    .press-url-tag {
+      font-size: 0.72rem;
+      color: var(--primary-blue);
+      font-weight: 600;
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+    }
+
+  </style>
+
+  <!-- Client Password Gate Overlay Styles -->
+  <style id="engine-client-gate-styles">
+    html.engine-locked, html.engine-locked body {
+      overflow: hidden !important;
+      height: 100vh !important;
+    }
+    #engine-client-gate {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 99999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 50% 38%, rgba(16, 28, 62, 0.97), rgba(6, 11, 24, 0.99));
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      padding: 20px;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    .gate-card {
+      background: rgba(13, 22, 48, 0.9);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      border-radius: 24px;
+      box-shadow: 0 30px 70px -15px rgba(0, 0, 0, 0.85), 0 0 45px rgba(212, 175, 55, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      width: 100%;
+      max-width: 410px;
+      padding: 38px 32px 34px;
+      text-align: center;
+      color: #FAF7F2;
+      animation: gateModalPop 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      transform-origin: center;
+      box-sizing: border-box;
+    }
+    @keyframes gateModalPop {
+      0% { opacity: 0; transform: scale(0.92) translateY(14px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .gate-shake {
+      animation: gateShake 0.45s ease !important;
+    }
+    @keyframes gateShake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-8px); }
+      40%, 80% { transform: translateX(8px); }
+    }
+    .gate-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: #D4AF37;
+      text-transform: uppercase;
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+    }
+    .gate-icon-wrap {
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.22), rgba(56, 189, 248, 0.12));
+      border: 1.5px solid rgba(212, 175, 55, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px;
+      color: #D4AF37;
+      box-shadow: 0 0 24px rgba(212, 175, 55, 0.28);
+    }
+    .gate-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: #FAF7F2;
+      margin: 0 0 8px 0;
+      letter-spacing: -0.02em;
+    }
+    .gate-desc {
+      font-size: 13.5px;
+      color: #94A3B8;
+      margin: 0 0 24px 0;
+      line-height: 1.5;
+    }
+    .gate-input-wrap {
+      position: relative;
+      margin-bottom: 12px;
+    }
+    #gate-pass-input {
+      width: 100%;
+      box-sizing: border-box;
+      background: rgba(7, 12, 26, 0.92);
+      border: 1.5px solid rgba(212, 175, 55, 0.3);
+      border-radius: 14px;
+      padding: 14px 18px;
+      font-size: 22px;
+      color: #FAF7F2;
+      text-align: center;
+      letter-spacing: 0.22em;
+      outline: none;
+      transition: all 0.2s ease;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    #gate-pass-input:focus {
+      border-color: #D4AF37;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 0 3px rgba(212, 175, 55, 0.25);
+    }
+    .gate-error {
+      color: #f87171;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .gate-btn {
+      width: 100%;
+      box-sizing: border-box;
+      background: linear-gradient(135deg, #D4AF37 0%, #E5C158 50%, #B89628 100%);
+      color: #070C1A;
+      font-size: 15px;
+      font-weight: 700;
+      border: none;
+      border-radius: 13px;
+      padding: 14px 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+      box-shadow: 0 8px 22px -4px rgba(212, 175, 55, 0.45);
+    }
+    .gate-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 28px -4px rgba(212, 175, 55, 0.6);
+      filter: brightness(1.05);
+    }
+    .gate-btn:active {
+      transform: translateY(0);
+    }
+  </style>
+
+  <!-- Pre-check Script: Synchronously hides gate if already unlocked -->
+  <script>
+    (function() {
+      try {
+        if (sessionStorage.getItem('njap_engine_client_pw') === '7777') {
+          document.write('<style>#engine-client-gate{display:none!important;}</style>');
+        } else {
+          document.documentElement.classList.add('engine-locked');
+        }
+      } catch (e) {
+        document.documentElement.classList.add('engine-locked');
+      }
+    })();
+  </script>
+</head>
+<body class="bright-theme">
+
+  <!-- Client Password Gate Modal -->
+  <div id="engine-client-gate">
+    <div id="engine-gate-card" class="gate-card">
+      <div class="gate-badge">SECURE CLIENT PORTAL</div>
+      <div class="gate-icon-wrap">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+      </div>
+      <h2 class="gate-title">Client Password</h2>
+      <p class="gate-desc">Enter the client password to open the website.</p>
+      
+      <form id="engine-gate-form" autocomplete="off" onsubmit="return false;">
+        <div class="gate-input-wrap">
+          <input type="password" id="gate-pass-input" placeholder="••••" maxlength="16" autofocus inputmode="numeric" autocomplete="current-password" aria-label="Client Password" />
+        </div>
+        <div id="gate-error-msg" class="gate-error" style="display: none;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          Incorrect password. Please try again.
+        </div>
+        <button type="submit" id="gate-submit-btn" class="gate-btn">
+          <span>Enter Website</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Subtle Ambient Canvas -->
+  <canvas id="bg-canvas" class="bg-canvas"></canvas>
+
+  <!-- Clean Frosted Header -->
+  <header id="site-header" class="site-header">
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo" id="brand-logo-link" aria-label="Access Engine Homepage">
+        <svg class="brand-logo-svg" viewBox="0 0 95 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Access Engine Logo">
+          <g stroke-linecap="round" stroke-linejoin="round">
+            <g class="njap-nav-door">
+              <line x1="20" y1="12" x2="20" y2="88" stroke="#1E3A8A" stroke-width="3.5" />
+              <rect x="25" y="12" width="55" height="76" rx="2" stroke="#1E3A8A" stroke-width="4" fill="#FFFFFF" />
+              <polyline points="25,16 52,25 52,36" stroke="#1E3A8A" stroke-width="3.5" fill="none" />
+              <text x="52.5" y="81" font-family="'Times New Roman', serif" font-size="13.5" font-weight="400" letter-spacing="1.5" fill="#1E3A8A" stroke="none" text-anchor="middle">NJAP</text>
+            </g>
+            <path class="njap-nav-keyhole" d="M 43,45 A 7,7 0 1,1 53,45 L 56,64 L 40,64 Z" stroke="#DC2626" stroke-width="3.5" fill="#FFFFFF" />
+            <g class="njap-nav-key">
+              <circle cx="74" cy="45" r="6.5" stroke="#DC2626" stroke-width="3.5" fill="#FFFFFF" />
+              <line x1="47" y1="45" x2="67.5" y2="45" stroke="#DC2626" stroke-width="3.5" />
+              <line x1="49" y1="45" x2="49" y2="49" stroke="#DC2626" stroke-width="3.5" />
+              <line x1="53" y1="45" x2="53" y2="48" stroke="#DC2626" stroke-width="3" />
+            </g>
+          </g>
+        </svg>
+        <span class="brand-text">
+          <span class="njap-char" style="--i:0">A</span><span class="njap-char" style="--i:1">C</span><span class="njap-char" style="--i:2">C</span><span class="njap-char" style="--i:3">E</span><span class="njap-char" style="--i:4">S</span><span class="njap-char" style="--i:5">S</span><span class="njap-char-space">&nbsp;</span><span class="njap-char brand-engine" style="--i:6">E</span><span class="njap-char brand-engine" style="--i:7">N</span><span class="njap-char brand-engine" style="--i:8">G</span><span class="njap-char brand-engine" style="--i:9">I</span><span class="njap-char brand-engine" style="--i:10">N</span><span class="njap-char brand-engine" style="--i:11">E</span>
+        </span>
+      </a>
+
+      <nav class="desktop-nav" id="desktop-nav" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link">HOME</a>
+        <a href="index.html#about-team" class="nav-link">ABOUT US</a>
+        <a href="services.html" class="nav-link">SERVICES</a>
+        <a href="portfolio.html" class="nav-link active">PORTFOLIO</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="index.html#lead-intake" class="btn btn-primary nav-cta" id="nav-cta-btn">ENGAGE CONSULTANCY</a>
+        <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle Navigation Menu">
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Fullscreen Mobile Drawer -->
+  <div id="mobile-menu" class="mobile-menu">
+    <div class="mobile-menu-inner">
+      <div class="mobile-menu-header">
+        <div class="mobile-brand">
+          <svg class="brand-logo-svg" viewBox="0 0 95 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Access Engine Logo">
+            <g stroke-linecap="round" stroke-linejoin="round">
+              <g class="njap-nav-door">
+                <line x1="20" y1="12" x2="20" y2="88" stroke="#FFFFFF" stroke-width="3.5" />
+                <rect x="25" y="12" width="55" height="76" rx="2" stroke="#1E3A8A" stroke-width="4" fill="#FFFFFF" />
+                <polyline points="25,16 52,25 52,36" stroke="#1E3A8A" stroke-width="3.5" fill="none" />
+                <text x="52.5" y="81" font-family="'Times New Roman', serif" font-size="13.5" font-weight="400" letter-spacing="1.5" fill="#1E3A8A" stroke="none" text-anchor="middle">NJAP</text>
+              </g>
+              <path class="njap-nav-keyhole" d="M 43,45 A 7,7 0 1,1 53,45 L 56,64 L 40,64 Z" stroke="#DC2626" stroke-width="3.5" fill="#FFFFFF" />
+              <g class="njap-nav-key">
+                <circle cx="74" cy="45" r="6.5" stroke="#DC2626" stroke-width="3.5" fill="#FFFFFF" />
+                <line x1="47" y1="45" x2="67.5" y2="45" stroke="#DC2626" stroke-width="3.5" />
+                <line x1="49" y1="45" x2="49" y2="49" stroke="#DC2626" stroke-width="3.5" />
+                <line x1="53" y1="45" x2="53" y2="48" stroke="#DC2626" stroke-width="3" />
+              </g>
+            </g>
+          </svg>
+          <span class="brand-text">
+            <span class="njap-char" style="--i:0">A</span><span class="njap-char" style="--i:1">C</span><span class="njap-char" style="--i:2">C</span><span class="njap-char" style="--i:3">E</span><span class="njap-char" style="--i:4">S</span><span class="njap-char" style="--i:5">S</span><span class="njap-char-space">&nbsp;</span><span class="njap-char brand-engine" style="--i:6">E</span><span class="njap-char brand-engine" style="--i:7">N</span><span class="njap-char brand-engine" style="--i:8">G</span><span class="njap-char brand-engine" style="--i:9">I</span><span class="njap-char brand-engine" style="--i:10">N</span><span class="njap-char brand-engine" style="--i:11">E</span>
+          </span>
+        </div>
+        <button id="close-menu-btn" class="close-menu-btn" aria-label="Close Menu">✕</button>
+      </div>
+      <div class="mobile-links">
+        <a href="index.html" class="mobile-link">HOME</a>
+        <a href="index.html#about-team" class="mobile-link">ABOUT US</a>
+        <a href="services.html" class="mobile-link">SERVICES</a>
+        <a href="portfolio.html" class="mobile-link active">PORTFOLIO</a>
+        <a href="index.html#lead-intake" class="mobile-link cta-mobile">ENGAGE CONSULTANCY</a>
+      </div>
+      <div class="mobile-menu-footer">
+        <p class="telemetry-tag">STATUS: ACTIVE // 50,000+ NAVIGATIONS</p>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <!-- MEDIA GALLERY (from media.njaccessportal.com) -->
+    <section id="portfolio-vault-section" class="portfolio-hero">
+      <div class="section-container">
+        <div class="section-header-compact" style="margin-bottom: 1.5rem;">
+          <span class="section-num-tag">Media Gallery &amp; Press Vault</span>
+          <h2 class="portfolio-title">Media Gallery &amp; Press</h2>
+          <p class="section-desc-compact" style="margin-top:0.5rem;">Photos, videos, and press coverage from NJ Access Portal community programs.</p>
+        </div>
+        <!-- SUB MENU TOGGLE: Photo vs Multimedia -->
+        <div class="portfolio-main-submenu">
+          <button id="tab-btn-photo" class="submenu-btn active" onclick="switchMainSubmenu('photo')">
+            <span>📷 Photos</span>
+          </button>
+          <button id="tab-btn-video" class="submenu-btn" onclick="switchMainSubmenu('video')">
+            <span>🎬 Videos</span>
+          </button>
+          <button id="tab-btn-press" class="submenu-btn" onclick="switchMainSubmenu('press')">
+            <span>📰 Press</span>
+          </button>
+        </div>
+
+        <!-- Controls: Category Filters & Search (Photo) -->
+        <div class="portfolio-controls" id="photo-controls-box">
+          <div class="portfolio-filter-bar">
+            <button class="filter-btn active" data-photo-filter="all">ALL PHOTOS <span class="cat-count">121</span></button>
+            <button class="filter-btn" data-photo-filter="Special seminars and medical talkshows">Medical Seminars &amp; Talkshows <span class="cat-count">42</span></button>
+            <button class="filter-btn" data-photo-filter="Hero shots">Hero Shots &amp; Keynotes <span class="cat-count">21</span></button>
+            <button class="filter-btn" data-photo-filter="healthfair and special education">Health Fairs &amp; Education <span class="cat-count">18</span></button>
+            <button class="filter-btn" data-photo-filter="healthcare worker headshots">Healthcare Team Portraits <span class="cat-count">15</span></button>
+            <button class="filter-btn" data-photo-filter="Asan Hospital US Tour">Asan Hospital US Tour <span class="cat-count">10</span></button>
+            <button class="filter-btn" data-photo-filter="Special Events posters">Event Posters &amp; Campaigns <span class="cat-count">7</span></button>
+            <button class="filter-btn" data-photo-filter="Chinese Health Fair">Chinese Community Health Fair <span class="cat-count">3</span></button>
+            <button class="filter-btn" data-photo-filter="Chinese Health Seminar">Chinese Community Seminar <span class="cat-count">2</span></button>
+            <button class="filter-btn" data-photo-filter="Chinese drchenlecture">Dr. Chen Medical Lectures <span class="cat-count">2</span></button>
+            <button class="filter-btn" data-photo-filter="Chinese TV">Broadcast &amp; TV Coverage <span class="cat-count">1</span></button>
+          </div>
+        </div>
+
+        
+        <!-- Controls: Category Filters (Press Releases) -->
+        <div class="portfolio-controls" id="press-controls-box" style="display: none;">
+          <div class="portfolio-filter-bar">
+            <button class="filter-btn active" data-press-filter="all">ALL ARTICLES <span class="cat-count">18</span></button>
+            <button class="filter-btn" data-press-filter="The Korea Daily">Korea Daily <span class="cat-count">13</span></button>
+            <button class="filter-btn" data-press-filter="The Korea Times">Korea Times <span class="cat-count">4</span></button>
+            <button class="filter-btn" data-press-filter="Broadcast News">Broadcast News (KBTV) <span class="cat-count">1</span></button>
+          </div>
+        </div>
+
+        <!-- Controls: Search & Category Filters (Video) -->
+        <div class="portfolio-controls" id="video-controls-box" style="display: none;">
+          <div class="portfolio-filter-bar">
+            <button class="filter-btn active" data-filter="all">ALL VIDEOS <span class="cat-count">89</span></button>
+            <button class="filter-btn" data-filter="Health Info &amp; Medical Q&amp;A">Health Info</button>
+            <button class="filter-btn" data-filter="Neurology &amp; Dementia">Neurology &amp; Dementia</button>
+            <button class="filter-btn" data-filter="Cancer Prevention &amp; Screening">Cancer Prevention</button>
+            <button class="filter-btn" data-filter="Chronic Disease &amp; Diabetes">Chronic Disease</button>
+            <button class="filter-btn" data-filter="Heart &amp; Vascular Health">Heart &amp; Vascular</button>
+            <button class="filter-btn" data-filter="Infectious Disease &amp; Vaccines">Vaccines</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PORTFOLIO GRID SECTION -->
+    <section class="portfolio-grid-section">
+      <div class="section-container">
+        
+        <!-- 1. PHOTO GRID (Default view) -->
+        <div id="photo-section-view">
+
+          <div class="portfolio-photo-grid" id="photo-grid">
+            <!-- Photos populated dynamically -->
+          </div>
+
+          <div class="load-more-container" id="photo-load-more-container">
+            <button class="btn-load-more" id="photo-load-more-btn">Load More Photos (+24)</button>
+          </div>
+        </div>
+
+        
+        <!-- 3. PRESS RELEASES GRID -->
+        <div id="press-section-view" style="display: none;">
+          <div class="portfolio-photo-grid" id="press-grid">
+            <!-- Press Articles populated dynamically -->
+          </div>
+
+          <div class="load-more-container" id="press-load-more-container">
+            <button class="btn-load-more" id="press-load-more-btn">Load More Articles</button>
+          </div>
+        </div>
+
+        <!-- 2. VIDEO GRID -->
+        <div id="video-section-view" style="display: none;">
+
+          <div class="portfolio-masonry-grid" id="portfolio-grid">
+            <!-- Videos populated dynamically -->
+          </div>
+
+          <div class="load-more-container" id="load-more-container">
+            <button class="btn-load-more" id="load-more-btn">Load More Videos (+24)</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Lightbox Modal for Popup Video & Photo Playback -->
+  <div id="lightbox-modal" class="lightbox-modal" aria-hidden="true" onclick="closeLightbox(event)">
+    <div class="lightbox-content" onclick="event.stopPropagation()">
+      <div class="lightbox-header">
+        <div class="lightbox-header-info">
+          <span class="lightbox-counter-badge" id="lightbox-counter-badge">1 / 111</span>
+          <h4 id="lightbox-header-title">Media Viewer</h4>
+        </div>
+        <div class="lightbox-header-actions">
+          <a href="#" target="_blank" class="lightbox-action-btn" id="lightbox-download-btn">
+            <span>↗ Full HD</span>
+          </a>
+          <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close Lightbox">&times;</button>
+        </div>
+      </div>
+      
+      <div class="lightbox-media-wrapper">
+        <button class="lightbox-nav-btn lightbox-nav-prev" id="lightbox-btn-prev" onclick="navigateLightbox(-1)" aria-label="Previous Image">&#8249;</button>
+        
+        <div class="lightbox-media-holder" id="lightbox-media-holder">
+          <!-- Injected dynamically -->
+        </div>
+        
+        <button class="lightbox-nav-btn lightbox-nav-next" id="lightbox-btn-next" onclick="navigateLightbox(1)" aria-label="Next Image">&#8250;</button>
+      </div>
+
+      <div class="lightbox-caption">
+        <div class="lightbox-caption-meta">
+          <span class="lightbox-meta-cat" id="lightbox-caption-cat">Photo</span>
+        </div>
+        <h3 id="lightbox-caption-title">Media Title</h3>
+        <p id="lightbox-caption-desc">Media Description</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="spacex-footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <a href="index.html" class="brand-logo footer-brand-logo">
+          <svg class="brand-logo-svg" viewBox="0 0 95 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Access Engine Logo">
+            <g stroke-linecap="round" stroke-linejoin="round">
+              <g class="njap-nav-door">
+                <line x1="20" y1="12" x2="20" y2="88" stroke="#FFFFFF" stroke-width="3.5" />
+                <rect x="25" y="12" width="55" height="76" rx="2" stroke="#1E3A8A" stroke-width="4" fill="#FFFFFF" />
+                <polyline points="25,16 52,25 52,36" stroke="#1E3A8A" stroke-width="3.5" fill="none" />
+                <text x="52.5" y="81" font-family="'Times New Roman', serif" font-size="13.5" font-weight="400" letter-spacing="1.5" fill="#1E3A8A" stroke="none" text-anchor="middle">NJAP</text>
+              </g>
+              <path class="njap-nav-keyhole" d="M 43,45 A 7,7 0 1,1 53,45 L 56,64 L 40,64 Z" stroke="#DC2626" stroke-width="3.5" fill="#FFFFFF" />
+              <g class="njap-nav-key">
+                <circle cx="74" cy="45" r="6.5" stroke="#DC2626" stroke-width="3.5" fill="#FFFFFF" />
+                <line x1="47" y1="45" x2="67.5" y2="45" stroke="#DC2626" stroke-width="3.5" />
+                <line x1="49" y1="45" x2="49" y2="49" stroke="#DC2626" stroke-width="3.5" />
+                <line x1="53" y1="45" x2="53" y2="48" stroke="#DC2626" stroke-width="3" />
+              </g>
+            </g>
+          </svg>
+          <span class="brand-text">
+            <span class="njap-char" style="--i:0">A</span><span class="njap-char" style="--i:1">C</span><span class="njap-char" style="--i:2">C</span><span class="njap-char" style="--i:3">E</span><span class="njap-char" style="--i:4">S</span><span class="njap-char" style="--i:5">S</span><span class="njap-char-space">&nbsp;</span><span class="njap-char brand-engine" style="--i:6">E</span><span class="njap-char brand-engine" style="--i:7">N</span><span class="njap-char brand-engine" style="--i:8">G</span><span class="njap-char brand-engine" style="--i:9">I</span><span class="njap-char brand-engine" style="--i:10">N</span><span class="njap-char brand-engine" style="--i:11">E</span>
+          </span>
+        </a>
+        <span class="footer-copy">&copy; 2026 Universal Healthcare Access Engine. All rights reserved.</span>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">HOME</a>
+        <a href="services.html">SERVICES</a>
+        <a href="portfolio.html">PORTFOLIO</a>
+        <a href="index.html#lead-intake">ENGAGE CONSULTANCY</a>
+        <a href="mailto:njaccessportal@gmail.com">DIRECT CONTACT</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+        const ALL_PRESS_ARTICLES = [{"id": "press-1", "url": "https://www.koreadaily.com/article/20251107074409842", "title": "Englewood Hospital Hosts \"Hooney & Bumy\" Medical Seminar", "publisher": "The Korea Daily", "category": "The Korea Daily", "date": "", "description": "Englewood Hospital hosted a free medical seminar on November 8 (Sat.), National Lung Cancer Screening Day, beginning at 10 a.m. in the hospital auditorium (350 Engle St.).", "imageUrl": "https://www.koreadaily.com/resources/usa/thumbnail_image/2025/11/08/c1efbe3f-8859-4a73-81c9-e8ecca89df7c.jpg"}, {"id": "press-2", "url": "https://www.koreadaily.com/article/20231114215715953", "title": "Englewood Hospital Korean Health Center Hosts Dementia Seminar for Seniors", "publisher": "The Korea Daily", "category": "The Korea Daily", "date": "", "description": "Englewood Hospital Korean Health Center hosted a comprehensive dementia education seminar featuring clinical specialists Dr. Yoon-Bum Choi, Prof. Geon-Ho Lee, and Prof. Hye-Ok Lee.", "imageUrl": "https://www.koreadaily.com/data/photo/thumbnail/2023/11/15/7fd874b6-654f-41d3-9960-40b2dbff85c5.jpg"}, {"id": "press-3", "url": "https://www.youtube.com/watch?v=CPq2tjRaXH0", "title": "[Englewood Hospital Medical Seminar] KBTV News9 Headline Broadcast Coverage", "publisher": "KBTV News (KBS America)", "category": "Broadcast News", "date": "", "description": "KBTV News9 broadcast coverage of Englewood Hospital's Korean community medical seminar and healthcare outreach program.", "imageUrl": "https://i.ytimg.com/vi/CPq2tjRaXH0/hqdefault.jpg", "youtubeId": "CPq2tjRaXH0"}, {"id": "press-4", "url": "http://www.koreatimes.com/article/20170327/1047304", "title": "Englewood Hospital Hosts Community Diabetes Seminar", "publisher": "The Korea Times", "category": "The Korea Times", "date": "", "description": "The Korean Health Center at Englewood Hospital in New Jersey held a free medical seminar for Korean Americans themed \"Can Diabetes Be Cured?\" with lectures by specialist physicians, diabetes educators, and dietitians.", "imageUrl": "http://mimg.koreatimes.com/286/172/article/2017/03/27/20170327070733581.gif"}, {"id": "press-5", "url": "https://www.koreadaily.com/article/20241119195440995", "title": "Medical Seminar on Lung Health and Cancer Prevention", "publisher": "The Korea Daily", "category": "The Korea Daily", "date": "", "description": "The 47th Englewood Hospital Medical Seminar in Englewood, NJ featured thoracic surgeon Dr. Sevak Keshishian presenting on \"Lung Cancer: The Silent Disease Threatening Healthy Breathing.\"", "imageUrl": "https://www.koreadaily.com/data/photo/thumbnail/2024/11/20/2bf3feed-8945-4af9-96bf-7a3ce6a12fc9.jpg"}, {"id": "press-6", "url": "https://www.koreadaily.com/article/20241007212221263", "title": "Englewood Hospital Medical Seminar: Overcoming Cancer with Modern Oncology", "publisher": "The Korea Daily", "category": "The Korea Daily", "date": "", "description": "The 46th Englewood Hospital Medical Seminar provided valuable medical information to the Korean American community, focusing on effective early treatment strategies and modern oncology care.", "imageUrl": "https://www.koreadaily.com/data/photo/thumbnail/2024/10/08/fd9323a0-0f8e-432b-b547-8cce7658d16b.jpg"}, {"id": "press-7", "url": "https://www.koreadaily.com/article/7892765", "title": "Englewood Hospital Seminar on Medication Safety and Side Effects", "publisher": "The Korea Daily", "category": "The Korea Daily", "date": "", "description": "A community seminar on the importance and potential side effects of prescription medications, organized by Englewood Hospital's Korean Health Center.", "imageUrl": "https://www.koreadaily.com/data/photo/thumbnail/2021/11/14/ab31c32f-e62d-48b5-96f9-c99259ee4801.jpg"}, {"id": "press-8", "url": "https://www.koreadaily.com/article/20240225175159444", "title": "Englewood Hospital Medical Seminar Series Resumes to Large Attendance", "publisher": "The Korea Daily", "category": "The Korea Daily", "date": "", "description": "Englewood Hospital, one of northern New Jersey's premier medical centers, resumed its in-person community medical seminar series to an enthusiastic response from local Korean American residents.", "imageUrl": "https://www.koreadaily.com/data/photo/thumbnail/2024/02/26/e5ddabe0-9207-47aa-bbb4-6bf38375cbbc.jpg"}, {"id": "press-9", "url": "https://www.koreadaily.com/article/20250119192025872", "title": "Englewood Hospital Medical Seminar and Lunar New Year Community Gathering", "publisher": "The Korea Daily", "category": "The Korea Daily", "date": "", "description": "For its 49th edition, Englewood Hospital hosted a special medical seminar together with a Lunar New Year tteokguk celebration for community members to start the new year with health commitments.", "imageUrl": "https://www.koreadaily.com/data/photo/thumbnail/2025/01/20/86cb6d23-7b0e-4000-8ea8-c203cb57b23a.jpg"}, {"id": "press-10", "url": "http://www.koreatimes.com/article/1512309", "title": "\"Golden Time is Life Time: Critical Windows in Emergency Care\"", "publisher": "The Korea Times", "category": "The Korea Times", "date": "", "description": "Hospitalist Dr. Jae-Hwan Jeong spoke to over 200 attendees on the crucial \"golden hour\" for stroke, arrhythmia, sepsis, and gastrointestinal emergencies at Englewood Hospital.", "imageUrl": "http://mimg.koreatimes.com/286/172/article/2024/04/30/20240430075159661.jpg"}, {"id": "press-11", "url": "https://www.koreadaily.com/article/7965223", "title": "\"Healthy Aging and Longevity: The Vital Role of Dental and Oral Health\"", "publisher": "The Korea Daily", "category": "The Korea Daily", "date": "", "description": "The 41st Englewood Hospital Medical Seminar highlighted the correlation between oral health and cognitive longevity, showing that maintaining teeth reduces dementia risk in seniors.", "imageUrl": "https://www.koreadaily.com/data/photo/thumbnail/2021/11/14/73e2d904-6dd1-41ef-aa22-1e94050c7c70.jpg"}, {"id": "press-12", "url": "https://www.koreadaily.com/article/20240327213056538", "title": "Englewood Hospital Medical Seminar on Colorectal Cancer Prevention", "publisher": "The Korea Daily", "category": "The Korea Daily", "date": "", "description": "Detailed clinical guidelines on early screening and surgical therapies for colorectal cancer — a high-risk malignancy among Asian Americans — presented in the hospital auditorium.", "imageUrl": "https://www.koreadaily.com/data/photo/thumbnail/2024/03/29/17f2f553-f8c7-4262-a072-0915f07fb1da.jpg"}, {"id": "press-13", "url": "http://www.koreatimes.com/article/20240228/1503991", "title": "\"Early Detection Saves Lives: Why Regular Screenings Matter\"", "publisher": "The Korea Times", "category": "The Korea Times", "date": "", "description": "Around 250 attendees joined specialists in neurology, cardiology, and family medicine at Englewood Hospital to discuss preventive wellness checkups, screening protocols, and Epic health records.", "imageUrl": "http://mimg.koreatimes.com/286/172/article/2024/02/28/20240228073522651.jpg"}, {"id": "press-14", "url": "https://www.koreadaily.com/article/20260630210720010", "title": "AWCA and Englewood Hospital Partner for Community Medical Seminar", "publisher": "The Korea Daily", "category": "The Korea Daily", "date": "", "description": "AWCA and Englewood Hospital joined forces to deliver bilingual healthcare education and community clinical outreach at Englewood Hospital.", "imageUrl": "https://www.koreadaily.com/resources/usa/thumbnail_image/2026/07/01/7aa91184-06cc-44ed-99c4-f4de38a850a3.jpg"}, {"id": "press-15", "url": "https://www.koreadaily.com/article/20240219171453792", "title": "Englewood Hospital In-Person Medical Seminar Series Resumes", "publisher": "The Korea Daily", "category": "The Korea Daily", "date": "", "description": "Englewood Hospital announced the resumption of its renowned community health lecture series in the main auditorium after a multi-year pandemic suspension.", "imageUrl": "https://www.koreadaily.com/data/photo/thumbnail/2024/02/20/7c88e849-121b-4d1f-b1a1-785f9749053f.jpg"}, {"id": "press-16", "url": "http://www.koreatimes.com/article/20190129/1228169", "title": "Englewood Hospital Korean Health Center Hosts Cardiovascular Health Seminar", "publisher": "The Korea Times", "category": "The Korea Times", "date": "", "description": "Englewood Hospital's Korean Health Center hosted a focused cardiovascular seminar featuring leading cardiologists and internists sharing heart disease prevention guidelines.", "imageUrl": "http://mimg.koreatimes.com/286/172/article/2019/01/29/201901290835465c1.jpg"}, {"id": "press-17", "url": "https://www.koreadaily.com/article/20250130211924093", "title": "Englewood Hospital Medical Seminar and New Year Health Celebration", "publisher": "The Korea Daily", "category": "The Korea Daily", "date": "", "description": "Englewood Hospital gathered community members for clinical wellness insights alongside traditional New Year festivities celebrating healthy living.", "imageUrl": "https://www.koreadaily.com/data/photo/thumbnail/2025/01/31/9f7ba6ae-7b52-4abc-ada6-4990a958aa5d.jpg"}, {"id": "press-18", "url": "https://www.koreadaily.com/article/20260804173948800", "title": "AWCA and Englewood Hospital Launch Chronic Disease Management Initiative", "publisher": "The Korea Daily", "category": "The Korea Daily", "date": "", "description": "AWCA and Englewood Hospital partnered to deliver a structured, bilingual chronic disease management program supporting hypertension, diabetes, and cardiovascular wellness.", "imageUrl": "https://www.koreadaily.com/resources/usa/thumbnail_image/2026/08/05/7504948d-0d7b-48d3-9591-e09e32c5c16e.jpg"}];
+    const ALL_VIDEOS = [{"id": "vid-drive-1", "driveId": "19GyI75s5XpqHV-hqyYU3d_Rz5KTeL16q", "title": "Englewood Hospital Medical Seminar & Clinical Showcase", "author": "Englewood Health / Medical Team", "thumbnail": "assets/videos/thumbs/video_1_thumb.jpg", "category": "Medical Seminars", "url": "https://drive.google.com/file/d/19GyI75s5XpqHV-hqyYU3d_Rz5KTeL16q/view?usp=sharing", "isDrive": true}, {"id": "vid-drive-2", "driveId": "1nq7cDq5PKCF7s-IJtUBoUzMemEN1daeU", "title": "Medical Seminar #44 Introduction & Clinical Overview", "author": "Englewood Health / Medical Team", "thumbnail": "assets/videos/thumbs/video_2_thumb.jpg", "category": "Medical Seminars", "url": "https://drive.google.com/file/d/1nq7cDq5PKCF7s-IJtUBoUzMemEN1daeU/view?usp=sharing", "isDrive": true}, {"id": "vid-drive-3", "driveId": "1P4pLA7DT6gNq45O6ypiIIVlDcpAcq9Yt", "title": "Depression & Mental Health Awareness Seminar", "author": "Englewood Health / Medical Team", "thumbnail": "assets/videos/thumbs/video_3_thumb.jpg", "category": "Medical Seminars", "url": "https://drive.google.com/file/d/1P4pLA7DT6gNq45O6ypiIIVlDcpAcq9Yt/view?usp=sharing", "isDrive": true}, {"id": "vid-drive-4", "driveId": "1QlwUg0P5LWwhe1Szyk_owR3kJobLxMAK", "title": "Highlights of Medical Seminar #42", "author": "Englewood Health / Medical Team", "thumbnail": "assets/videos/thumbs/video_4_thumb.jpg", "category": "Medical Seminars", "url": "https://drive.google.com/file/d/1QlwUg0P5LWwhe1Szyk_owR3kJobLxMAK/view?usp=sharing", "isDrive": true}, {"id": "vid-1", "youtubeId": "Xi78p1AMK8Y", "title": "Aspirin for Heart Disease and Cancer Prevention: Who Should and Shouldn't Take It?", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/Xi78p1AMK8Y/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=Xi78p1AMK8Y"}, {"id": "vid-2", "youtubeId": "LDM2Kf8col0", "title": "AstraZeneca Vaccine Safety and Blood Clot Side Effects Explained", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/LDM2Kf8col0/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=LDM2Kf8col0"}, {"id": "vid-3", "youtubeId": "auLOq0X876M", "title": "AWCA Annual Benefit Gala 2019 Highlights", "author": "Englewood Health", "thumbnail": "https://i.ytimg.com/vi/auLOq0X876M/hqdefault.jpg", "category": "Events & Galas", "url": "https://www.youtube.com/watch?v=auLOq0X876M"}, {"id": "vid-4", "youtubeId": "EOSC9ycPgsg", "title": "Survivor's Rock Celebration: Introduction & Inspiring Stories", "author": "Englewood Health", "thumbnail": "https://i.ytimg.com/vi/EOSC9ycPgsg/hqdefault.jpg", "category": "Events & Galas", "url": "https://www.youtube.com/watch?v=EOSC9ycPgsg"}, {"id": "vid-5", "youtubeId": "5nz-fhFAV14", "title": "AWCA Annual Gala 2018: Community Healthcare Partnership", "author": "Englewood Health", "thumbnail": "https://i.ytimg.com/vi/5nz-fhFAV14/hqdefault.jpg", "category": "Events & Galas", "url": "https://www.youtube.com/watch?v=5nz-fhFAV14"}, {"id": "vid-6", "youtubeId": "fb-cfkPog6s", "title": "Leslie Simon Breast Care Center Medical Seminar Intro", "author": "Englewood Health", "thumbnail": "https://i.ytimg.com/vi/fb-cfkPog6s/hqdefault.jpg", "category": "Medical Seminars", "url": "https://www.youtube.com/watch?v=fb-cfkPog6s"}, {"id": "vid-7", "youtubeId": "qPjqgbsYvjc", "title": "Urology Clinical Seminar: Physician Expert Interview", "author": "Englewood Health", "thumbnail": "https://i.ytimg.com/vi/qPjqgbsYvjc/hqdefault.jpg", "category": "Medical Seminars", "url": "https://www.youtube.com/watch?v=qPjqgbsYvjc"}, {"id": "vid-8", "youtubeId": "p5GU_4SVsCg", "title": "AWCA Youth Summer Education & Community Program 2019", "author": "Englewood Health", "thumbnail": "https://i.ytimg.com/vi/p5GU_4SVsCg/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=p5GU_4SVsCg"}, {"id": "vid-9", "youtubeId": "Px0QiLLCBrw", "title": "Orthopedic Knee Surgery & Joint Replacement Seminar Intro", "author": "Englewood Health", "thumbnail": "https://i.ytimg.com/vi/Px0QiLLCBrw/hqdefault.jpg", "category": "Medical Seminars", "url": "https://www.youtube.com/watch?v=Px0QiLLCBrw"}, {"id": "vid-10", "youtubeId": "0ui9VK19RP0", "title": "Ophthalmology & Eye Health Seminar: Vision Care Intro", "author": "Englewood Health", "thumbnail": "https://i.ytimg.com/vi/0ui9VK19RP0/hqdefault.jpg", "category": "Medical Seminars", "url": "https://www.youtube.com/watch?v=0ui9VK19RP0"}, {"id": "vid-11", "youtubeId": "9UUz1hIrWV4", "title": "Multilingual Healthcare Seminar: Chinese Community Physician Interview", "author": "Englewood Health", "thumbnail": "https://i.ytimg.com/vi/9UUz1hIrWV4/hqdefault.jpg", "category": "Medical Seminars", "url": "https://www.youtube.com/watch?v=9UUz1hIrWV4"}, {"id": "vid-12", "youtubeId": "qQFmBFI8QzI", "title": "Summer Community Health & Wellness Seminar Intro", "author": "Englewood Health", "thumbnail": "https://i.ytimg.com/vi/qQFmBFI8QzI/hqdefault.jpg", "category": "Medical Seminars", "url": "https://www.youtube.com/watch?v=qQFmBFI8QzI"}, {"id": "vid-13", "youtubeId": "jsVYUGSm8mk", "title": "AWCA Senior Brain Health & Memory Olympics Seminar", "author": "Englewood Health", "thumbnail": "https://i.ytimg.com/vi/jsVYUGSm8mk/hqdefault.jpg", "category": "Medical Seminars", "url": "https://www.youtube.com/watch?v=jsVYUGSm8mk"}, {"id": "vid-14", "youtubeId": "3kz6MZXzaZQ", "title": "Clinical Perspectives: Two MD Panel Interview for Community Seminar", "author": "Englewood Health", "thumbnail": "https://i.ytimg.com/vi/3kz6MZXzaZQ/hqdefault.jpg", "category": "Medical Seminars", "url": "https://www.youtube.com/watch?v=3kz6MZXzaZQ"}, {"id": "vid-15", "youtubeId": "Z5tIi5wSc5M", "title": "Englewood Health MD Partners Clinical Collaboration", "author": "Englewood Health", "thumbnail": "https://i.ytimg.com/vi/Z5tIi5wSc5M/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=Z5tIi5wSc5M"}, {"id": "vid-16", "youtubeId": "IvouL0gV9f0", "title": "Healthy Living Series: Nutrition and Antioxidant Wellness", "author": "Englewood Health", "thumbnail": "https://i.ytimg.com/vi/IvouL0gV9f0/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=IvouL0gV9f0"}, {"id": "vid-17", "youtubeId": "4S4wtBAFCds", "title": "Dr. Arnofsky Interview: Advanced Surgical and Clinical Care", "author": "Englewood Health", "thumbnail": "https://i.ytimg.com/vi/4S4wtBAFCds/hqdefault.jpg", "category": "Medical Seminars", "url": "https://www.youtube.com/watch?v=4S4wtBAFCds"}, {"id": "vid-18", "youtubeId": "uXpyZFTl6uE", "title": "Comprehensive Health Screening & Preventive Care Seminar", "author": "Englewood Health", "thumbnail": "https://i.ytimg.com/vi/uXpyZFTl6uE/hqdefault.jpg", "category": "Medical Seminars", "url": "https://www.youtube.com/watch?v=uXpyZFTl6uE"}, {"id": "vid-19", "youtubeId": "mK1ClXJjEns", "title": "Englewood Health Stayminar: At-Home Wellness & Clinical Care", "author": "Englewood Health", "thumbnail": "https://i.ytimg.com/vi/mK1ClXJjEns/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=mK1ClXJjEns"}, {"id": "vid-20", "youtubeId": "z0Vmk9QaW98", "title": "Patient Journey & Clinical Recovery Story at Englewood Health", "author": "Englewood Health", "thumbnail": "https://i.ytimg.com/vi/z0Vmk9QaW98/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=z0Vmk9QaW98"}, {"id": "vid-21", "youtubeId": "ChKDP8dtepg", "title": "Nanum Foundation Annual Charity & Healthcare Gala", "author": "Englewood Health", "thumbnail": "https://i.ytimg.com/vi/ChKDP8dtepg/hqdefault.jpg", "category": "Events & Galas", "url": "https://www.youtube.com/watch?v=ChKDP8dtepg"}, {"id": "vid-22", "youtubeId": "Wq0JG_NsT2E", "title": "Cardiovascular Health & Heart Seminar Introduction", "author": "Englewood Health", "thumbnail": "https://i.ytimg.com/vi/Wq0JG_NsT2E/hqdefault.jpg", "category": "Medical Seminars", "url": "https://www.youtube.com/watch?v=Wq0JG_NsT2E"}, {"id": "vid-23", "youtubeId": "IXan1mpMNsk", "title": "Mobile Patient Outreach & Community Channel Overview", "author": "Englewood Health", "thumbnail": "https://i.ytimg.com/vi/IXan1mpMNsk/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=IXan1mpMNsk"}, {"id": "vid-24", "youtubeId": "e6P2XqkNo_0", "title": "Patient Experience Interview: Navigating Hospital Care", "author": "Englewood Health", "thumbnail": "https://i.ytimg.com/vi/e6P2XqkNo_0/hqdefault.jpg", "category": "Medical Seminars", "url": "https://www.youtube.com/watch?v=e6P2XqkNo_0"}, {"id": "vid-25", "youtubeId": "pEl1jWvgUcI", "title": "Conversations With Doctors: Clinical Insights and Patient Care", "author": "Englewood Health", "thumbnail": "https://i.ytimg.com/vi/pEl1jWvgUcI/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=pEl1jWvgUcI"}, {"id": "vid-26", "youtubeId": "USO48_378n8", "title": "Preventing Chronic Illness for Centenarians: Mastering Stroke and Heart Attacks", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/USO48_378n8/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=USO48_378n8"}, {"id": "vid-27", "youtubeId": "vrExyR0guJo", "title": "Early Warning Signs of Stroke and the 4.5-Hour Golden Window Secret", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/vrExyR0guJo/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=vrExyR0guJo"}, {"id": "vid-28", "youtubeId": "jJSXVrXI1mE", "title": "8 Essential Habits for Cardiovascular Health and Dementia Prevention", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/jJSXVrXI1mE/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=jJSXVrXI1mE"}, {"id": "vid-29", "youtubeId": "3TgEBuofm9k", "title": "The Truth About Thyroid Cancer: Detection, Treatment & Survival Rates", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/3TgEBuofm9k/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=3TgEBuofm9k"}, {"id": "vid-30", "youtubeId": "tpQqEaRX6nY", "title": "5 Daily Habits to Prevent 90% of Diabetes: Blood Sugar & Lifestyle Secrets", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/tpQqEaRX6nY/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=tpQqEaRX6nY"}, {"id": "vid-31", "youtubeId": "7IQEE9z9g3w", "title": "Live Clinical Q&A: 3 Core Health Strategies for Heart, Lungs, and Dementia", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/7IQEE9z9g3w/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=7IQEE9z9g3w"}, {"id": "vid-32", "youtubeId": "q2NcAxdEHw4", "title": "National Lung Cancer Screening Day: Low-Dose CT Guidelines & Eligibility", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/q2NcAxdEHw4/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=q2NcAxdEHw4"}, {"id": "vid-33", "youtubeId": "P3RVGPKKIsU", "title": "Heart Health 101: Preventing Heart Attacks, High Cholesterol & Statins", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/P3RVGPKKIsU/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=P3RVGPKKIsU"}, {"id": "vid-34", "youtubeId": "lT4XNvab6D8", "title": "How Dementia Begins: Dementia 101, Early Symptoms & Alzheimer's Care", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/lT4XNvab6D8/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=lT4XNvab6D8"}, {"id": "vid-35", "youtubeId": "7RRJ4x-1Spo", "title": "FDA-Approved Lumipulse Blood Test: Early Alzheimer's Diagnostic Breakthrough", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/7RRJ4x-1Spo/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=7RRJ4x-1Spo"}, {"id": "vid-36", "youtubeId": "ONpaoMFESJI", "title": "Wegovy & Zepbound: Cardiovascular and Dementia Benefits vs. Bariatric Surgery", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/ONpaoMFESJI/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=ONpaoMFESJI"}, {"id": "vid-37", "youtubeId": "zPjZIgCiwQg", "title": "WATCHMAN Procedure: Protecting Heart Health Safely Without Blood Thinners", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/zPjZIgCiwQg/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=zPjZIgCiwQg"}, {"id": "vid-38", "youtubeId": "qBE2ZUPAPgQ", "title": "Microplastics in the Body: Impact on Heart, Brain, and Major Organs", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/qBE2ZUPAPgQ/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=qBE2ZUPAPgQ"}, {"id": "vid-39", "youtubeId": "9elQm8Unqx8", "title": "Key Strengths of the US Healthcare Delivery System #Shorts", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/9elQm8Unqx8/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=9elQm8Unqx8"}, {"id": "vid-40", "youtubeId": "F0ChLHuO6b4", "title": "Overcoming Cancer with Modern Oncology: Advanced Surgical & Medical Therapies", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/F0ChLHuO6b4/hqdefault.jpg", "category": "Medical Seminars", "url": "https://www.youtube.com/watch?v=F0ChLHuO6b4"}, {"id": "vid-41", "youtubeId": "tcZecAn9rQs", "title": "Medical Training & Career Paths: Comparing Practice in the US and Korea", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/tcZecAn9rQs/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=tcZecAn9rQs"}, {"id": "vid-42", "youtubeId": "DINMCNIxyIo", "title": "Early Colorectal Cancer Detection: Blood Tests vs. Traditional Colonoscopy", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/DINMCNIxyIo/hqdefault.jpg", "category": "Healthcare System", "url": "https://www.youtube.com/watch?v=DINMCNIxyIo"}, {"id": "vid-43", "youtubeId": "k9lFjP2MkhY", "title": "Omega-3 Fatty Acids: Evidence, Cardiovascular Health, and Clinical Myths", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/k9lFjP2MkhY/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=k9lFjP2MkhY"}, {"id": "vid-44", "youtubeId": "CvdAXJYIgXw", "title": "Lecanemab (Leqembi): Breakthrough Alzheimer's Treatment Approved in US & Asia", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/CvdAXJYIgXw/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=CvdAXJYIgXw"}, {"id": "vid-45", "youtubeId": "OvT72_I8phA", "title": "Predicting Heart Health 10 Years Ahead: Coronary Calcium Score CT Exam", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/OvT72_I8phA/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=OvT72_I8phA"}, {"id": "vid-46", "youtubeId": "h-pvzFku_t4", "title": "Treating and Preventing RSV and Mycoplasma Pneumonia: Vaccines & Therapies", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/h-pvzFku_t4/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=h-pvzFku_t4"}, {"id": "vid-47", "youtubeId": "AAGjezfOKgs", "title": "Weight-Loss & Diabetes Injections: Ozempic/Wegovy vs. Zepbound 3-Month Clinical Review", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/AAGjezfOKgs/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=AAGjezfOKgs"}, {"id": "vid-48", "youtubeId": "Nb1WRWaYEIo", "title": "Everything About Blood Pressure: Management, Medications, and Side Effects", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/Nb1WRWaYEIo/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=Nb1WRWaYEIo"}, {"id": "vid-49", "youtubeId": "1mebfgt6w8s", "title": "GLP-1 Injections for Weight Loss: Real Clinical Experiences with Ozempic & Wegovy", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/1mebfgt6w8s/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=1mebfgt6w8s"}, {"id": "vid-50", "youtubeId": "u4kPFn3MKmc", "title": "Aspartame and Carcinogenicity Classifications: Is Diet Soda Safe to Drink?", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/u4kPFn3MKmc/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=u4kPFn3MKmc"}, {"id": "vid-51", "youtubeId": "OQijY_cFkzo", "title": "Upper Endoscopy (EGD): Preparation Guide and Tips for a Smooth Procedure", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/OQijY_cFkzo/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=OQijY_cFkzo"}, {"id": "vid-52", "youtubeId": "Lv6MpQV_oc0", "title": "Post-COVID Transitions: New Variants, Evolving Symptoms & Recovery", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/Lv6MpQV_oc0/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=Lv6MpQV_oc0"}, {"id": "vid-53", "youtubeId": "V1F2sA12mYA", "title": "Proper Antibiotic Use: Minimizing Drug Resistance and Adverse Reactions", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/V1F2sA12mYA/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=V1F2sA12mYA"}, {"id": "vid-54", "youtubeId": "hWKOhaEp4gE", "title": "Rapidly Spreading COVID XBB.1.5 Variant: Symptoms & Immune Escape", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/hWKOhaEp4gE/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=hWKOhaEp4gE"}, {"id": "vid-55", "youtubeId": "gjQ459pEwsE", "title": "Delirium in Elderly & Hospitalized Patients: Causes, Diagnosis & Prevention", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/gjQ459pEwsE/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=gjQ459pEwsE"}, {"id": "vid-56", "youtubeId": "3zeOJ4e_Ieg", "title": "Acute vs. Chronic Pain: Treating Cervical Disc Issues and Back Pain", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/3zeOJ4e_Ieg/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=3zeOJ4e_Ieg"}, {"id": "vid-57", "youtubeId": "7lqXo4iuAy8", "title": "Is Colonoscopy Essential? Essential Tips for Pre- and Post-Procedure Prep", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/7lqXo4iuAy8/hqdefault.jpg", "category": "Healthcare System", "url": "https://www.youtube.com/watch?v=7lqXo4iuAy8"}, {"id": "vid-58", "youtubeId": "qp-8Fqg7GlA", "title": "Co-Administering Flu and Bivalent COVID Vaccines on the Same Day", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/qp-8Fqg7GlA/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=qp-8Fqg7GlA"}, {"id": "vid-59", "youtubeId": "W-Pgs-iz20Y", "title": "Autism Spectrum & Asperger's Syndrome: Symptoms, Diagnostics & Support", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/W-Pgs-iz20Y/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=W-Pgs-iz20Y"}, {"id": "vid-60", "youtubeId": "vFScyPQ33lY", "title": "Bivalent Omicron Vaccines (BA.4/BA.5): Efficacy, Side Effects & Second Boosters", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/vFScyPQ33lY/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=vFScyPQ33lY"}, {"id": "vid-61", "youtubeId": "AzYVXSnvgEE", "title": "Cerebral Aneurysms: Warning Signs, Diagnosis, and Emergency Treatment", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/AzYVXSnvgEE/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=AzYVXSnvgEE"}, {"id": "vid-62", "youtubeId": "50B1WJmlgq4", "title": "Summer Stroke Risks and Transient Ischemic Attack (TIA Mini-Stroke) Signs", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/50B1WJmlgq4/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=50B1WJmlgq4"}, {"id": "vid-63", "youtubeId": "ABlPKGSJPY8", "title": "Diabetes Mellitus: Symptoms, Diagnostic Criteria, and Modern Medications", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/ABlPKGSJPY8/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=ABlPKGSJPY8"}, {"id": "vid-64", "youtubeId": "5Zu9uh9NG58", "title": "Long COVID Sequelae: Symptoms Requiring Medical Evaluation and Treatment", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/5Zu9uh9NG58/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=5Zu9uh9NG58"}, {"id": "vid-65", "youtubeId": "1hJ9NCicey4", "title": "Fourth Vaccine Dose Eligibility & Hybrid Immunity for Breakthrough Infections", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/1hJ9NCicey4/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=1hJ9NCicey4"}, {"id": "vid-66", "youtubeId": "WHxyC0aJ1So", "title": "Natural Resistance and Immune Cells: Understanding NK Cells and Genetics", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/WHxyC0aJ1So/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=WHxyC0aJ1So"}, {"id": "vid-67", "youtubeId": "T3ykR2QDCL8", "title": "Omicron BA.2 Stealth Variant: Transmission Differences and Home Care Kit", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/T3ykR2QDCL8/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=T3ykR2QDCL8"}, {"id": "vid-68", "youtubeId": "5wGT0YkdDG8", "title": "Home Recovery Medications: Famotidine (Pepcid) Efficacy and Safety Profile", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/5wGT0YkdDG8/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=5wGT0YkdDG8"}, {"id": "vid-69", "youtubeId": "vUEOG4fi7Ig", "title": "Cardiovascular Post-COVID Complications: Myocarditis and Pericarditis Signs", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/vUEOG4fi7Ig/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=vUEOG4fi7Ig"}, {"id": "vid-70", "youtubeId": "i-LxZ1z2IAQ", "title": "Novavax Protein Subunit Vaccine: Safety, Mechanism, and Heterologous Dosing", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/i-LxZ1z2IAQ/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=i-LxZ1z2IAQ"}, {"id": "vid-71", "youtubeId": "jZC0PMNIp0k", "title": "Oral Antivirals: Paxlovid and Molnupiravir Side Effects and Interactions", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/jZC0PMNIp0k/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=jZC0PMNIp0k"}, {"id": "vid-72", "youtubeId": "_f5-IsdSVc4", "title": "Omicron Clinical Manifestations and Vaccine Booster Considerations", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/_f5-IsdSVc4/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=_f5-IsdSVc4"}, {"id": "vid-73", "youtubeId": "frojCmVRcSk", "title": "Addressing Vaccine Concerns: Booster Recommendations and Clinical Risk Review", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/frojCmVRcSk/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=frojCmVRcSk"}, {"id": "vid-74", "youtubeId": "5DIBDfzLi2A", "title": "Evaluating Third Booster Doses Against Omicron Breakthrough Transmission", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/5DIBDfzLi2A/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=5DIBDfzLi2A"}, {"id": "vid-75", "youtubeId": "AauI8SPBbyM", "title": "Pfizer vs. Moderna Third Booster Dose: Side Effects and Target Groups", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/AauI8SPBbyM/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=AauI8SPBbyM"}, {"id": "vid-76", "youtubeId": "UBA_ERXEhWE", "title": "Third Booster Experience: Hour-by-Hour Symptoms and Post-Vaccine Recovery", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/UBA_ERXEhWE/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=UBA_ERXEhWE"}, {"id": "vid-77", "youtubeId": "kVV0ruy8NFw", "title": "Moderna vs. Pfizer: Mortality and Hospitalization Protection Data", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/kVV0ruy8NFw/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=kVV0ruy8NFw"}, {"id": "vid-78", "youtubeId": "Mr_BQm0NI2A", "title": "Natural Immunity vs. Vaccine Immunity: Antibody Longevity & Boosters", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/Mr_BQm0NI2A/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=Mr_BQm0NI2A"}, {"id": "vid-79", "youtubeId": "FSqklB1BgAA", "title": "Analyzing Myocarditis Rates in mRNA Vaccines: Moderna vs. Pfizer Clinical Data", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/FSqklB1BgAA/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=FSqklB1BgAA"}, {"id": "vid-80", "youtubeId": "E6-1j5LOGYo", "title": "12 Clinically Proven Strategies to Prevent Dementia in Senior Years", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/E6-1j5LOGYo/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=E6-1j5LOGYo"}, {"id": "vid-81", "youtubeId": "mjbGY9vDToU", "title": "Pfizer Booster Shot Experience: 24-Hour Side Effects and Relief Measures", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/mjbGY9vDToU/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=mjbGY9vDToU"}, {"id": "vid-82", "youtubeId": "HKeQNsNhwZY", "title": "Sleep Apnea, Stroke, and Cardiovascular Disease: Clinical Interconnections", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/HKeQNsNhwZY/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=HKeQNsNhwZY"}, {"id": "vid-83", "youtubeId": "nMQ0JNm-ykA", "title": "Long-Term Sequelae, Steroid Protocols, and Delta Variant Booster Timing", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/nMQ0JNm-ykA/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=nMQ0JNm-ykA"}, {"id": "vid-84", "youtubeId": "gFhvjbr2iPs", "title": "Delta & Lambda Variants: Myocarditis Symptoms and Post-Vaccine Pain Relief", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/gFhvjbr2iPs/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=gFhvjbr2iPs"}, {"id": "vid-85", "youtubeId": "dzU0oIfOhlE", "title": "mRNA Vaccine Considerations for Adolescents and Young Adults (Ages 16-24)", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/dzU0oIfOhlE/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=dzU0oIfOhlE"}, {"id": "vid-86", "youtubeId": "IYQukWQNuNU", "title": "Aducanumab for Alzheimer's: Clinical Trial Findings and Mechanism of Action", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/IYQukWQNuNU/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=IYQukWQNuNU"}, {"id": "vid-87", "youtubeId": "LaFyM-0XPz8", "title": "Delta Variant Infectivity and Efficacy of Heterologous mRNA Vaccination", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/LaFyM-0XPz8/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=LaFyM-0XPz8"}, {"id": "vid-88", "youtubeId": "n3S1yszqDsg", "title": "Vaccination During Pregnancy and Breastfeeding: Maternal and Neonatal Antibodies", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/n3S1yszqDsg/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=n3S1yszqDsg"}, {"id": "vid-89", "youtubeId": "k8YS9ODl_ws", "title": "Heterologous COVID-19 Vaccine Mix-and-Match: Efficacy and Safety Profile", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/k8YS9ODl_ws/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=k8YS9ODl_ws"}, {"id": "vid-90", "youtubeId": "7oNkW_LBncs", "title": "Clinical Guidance on Patient Eligibility and Contraindications for Vaccines", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/7oNkW_LBncs/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=7oNkW_LBncs"}, {"id": "vid-91", "youtubeId": "E47M5DfKjFI", "title": "Post-Infection Myocardial and Pericardial Recovery: High-Risk Cohorts", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/E47M5DfKjFI/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=E47M5DfKjFI"}, {"id": "vid-92", "youtubeId": "L2ilIVv0alM", "title": "Neurological Protection: Why Vaccination Guards Against Cognitive Sequelae", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/L2ilIVv0alM/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=L2ilIVv0alM"}, {"id": "vid-93", "youtubeId": "Sah2ZE3PNJY", "title": "Pfizer Oral Antiviral Therapies and Managing Thrombosis Risk Factors", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/Sah2ZE3PNJY/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=Sah2ZE3PNJY"}, {"id": "vid-94", "youtubeId": "GF1KyaqwbFU", "title": "Thrombosis Incidence: Infection-Induced Clots vs. Vaccine-Associated Risks", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/GF1KyaqwbFU/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=GF1KyaqwbFU"}, {"id": "vid-95", "youtubeId": "uaSWUk0WQSo", "title": "Thrombosis with Thrombocytopenia Syndrome (TTS): Early Signs and Treatment", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/uaSWUk0WQSo/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=uaSWUk0WQSo"}, {"id": "vid-96", "youtubeId": "n3H_l6sYK9w", "title": "Pathophysiology and Management of Vaccine-Induced Immune Thrombosis", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/n3H_l6sYK9w/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=n3H_l6sYK9w"}, {"id": "vid-97", "youtubeId": "bd0TvOxnX_I", "title": "Self-Screening for Respiratory Symptoms: When to Seek Clinical Testing", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/bd0TvOxnX_I/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=bd0TvOxnX_I"}, {"id": "vid-98", "youtubeId": "p4P0K8rc4XU", "title": "Evaluating Viral Vector vs. mRNA Platforms: Efficacy Against Emerging Strains", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/p4P0K8rc4XU/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=p4P0K8rc4XU"}, {"id": "vid-99", "youtubeId": "hdkEpqKU_Kg", "title": "Managing Post-Vaccination Symptoms: Tylenol vs. Ibuprofen Guidelines", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/hdkEpqKU_Kg/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=hdkEpqKU_Kg"}, {"id": "vid-100", "youtubeId": "yu0Raoj9-5A", "title": "Navigating Healthcare Portals: Registering and Scheduling Clinical Appointments", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/yu0Raoj9-5A/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=yu0Raoj9-5A"}, {"id": "vid-101", "youtubeId": "D6Fjhhpy2tY", "title": "Physician Experience: Completing Second mRNA Vaccine Doses & Symptom Management", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/D6Fjhhpy2tY/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=D6Fjhhpy2tY"}, {"id": "vid-102", "youtubeId": "GLZp0wO9540", "title": "Physician Perspectives Part 2: Clinical Team Experiences Post-Vaccination", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/GLZp0wO9540/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=GLZp0wO9540"}, {"id": "vid-103", "youtubeId": "5jsfbqyJSiA", "title": "Variant Strains and Neutralizing Antibodies: Debunking Clinical Misconceptions", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/5jsfbqyJSiA/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=5jsfbqyJSiA"}, {"id": "vid-104", "youtubeId": "wOy5gvxSIBs", "title": "Completing Two-Dose Primary Series: Detailed Clinical Recovery Timeline", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/wOy5gvxSIBs/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=wOy5gvxSIBs"}, {"id": "vid-105", "youtubeId": "5OjWGYfILe4", "title": "Clarifying Common Myths and Medical Facts Regarding mRNA Platforms", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/5OjWGYfILe4/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=5OjWGYfILe4"}, {"id": "vid-106", "youtubeId": "fF2r-XJNU2Y", "title": "Clinical Q&A: Mechanism, Antibody Efficacy, and Side Effect Management", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/fF2r-XJNU2Y/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=fF2r-XJNU2Y"}, {"id": "vid-107", "youtubeId": "Peyi-TojiMY", "title": "Second Dose Immunization: Side Effect Timeline and Physician Feedback", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/Peyi-TojiMY/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=Peyi-TojiMY"}, {"id": "vid-108", "youtubeId": "I1bCmYh2L04", "title": "Why Vaccination Matters: Physicians' Perspective on Community Health Protection", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/I1bCmYh2L04/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=I1bCmYh2L04"}, {"id": "vid-109", "youtubeId": "Yl4wjgmX6rU", "title": "FDA Emergency Use Authorization: Reviewing Efficacy and Safety Benchmarks", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/Yl4wjgmX6rU/hqdefault.jpg", "category": "Doctor Spotlights", "url": "https://www.youtube.com/watch?v=Yl4wjgmX6rU"}, {"id": "vid-110", "youtubeId": "Km6dMtmkgEs", "title": "US Healthcare System Explained: Insurance, Medical Billing & Patient Guidance", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/Km6dMtmkgEs/hqdefault.jpg", "category": "Healthcare System", "url": "https://www.youtube.com/watch?v=Km6dMtmkgEs"}, {"id": "vid-111", "youtubeId": "GpyTov3JIkE", "title": "Comprehensive Health Screenings and Primary Care Physician (PCP) Systems Compared", "author": "Dr. Hoon & Dr. Bum (MD)", "thumbnail": "https://i.ytimg.com/vi/GpyTov3JIkE/hqdefault.jpg", "category": "Healthcare System", "url": "https://www.youtube.com/watch?v=GpyTov3JIkE"}];
+    const ALL_PHOTOS = [{"id": "photo-1", "title": "Chinese Health Fair", "category": "Chinese Health Fair", "imageUrl": "assets/gallery/full/photo_001_chinese_health_fair_3.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_001_chinese_health_fair_3_thumb.jpg", "originalFilename": "Chinese Health Fair 3.JPG", "description": "Multicultural health fair and clinical screening outreach for Chinese-speaking community members."}, {"id": "photo-2", "title": "Chinese Health Fair", "category": "Chinese Health Fair", "imageUrl": "assets/gallery/full/photo_002_chinese_health_fair_4.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_002_chinese_health_fair_4_thumb.jpg", "originalFilename": "Chinese Health Fair 4.JPG", "description": "Multicultural health fair and clinical screening outreach for Chinese-speaking community members."}, {"id": "photo-3", "title": "Chinese Health Seminar", "category": "Chinese Health Seminar", "imageUrl": "assets/gallery/full/photo_003_chinese_health_seminar_1.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_003_chinese_health_seminar_1_thumb.jpg", "originalFilename": "Chinese Health Seminar 1.JPG", "description": "Bilingual medical seminar and physician health lecture for the community."}, {"id": "photo-4", "title": "Chinese Health Seminar", "category": "Chinese Health Seminar", "imageUrl": "assets/gallery/full/photo_004_chinese_health_seminar_2.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_004_chinese_health_seminar_2_thumb.jpg", "originalFilename": "Chinese Health Seminar 2.JPG", "description": "Bilingual medical seminar and physician health lecture for the community."}, {"id": "photo-5", "title": "Chinese TV", "category": "Chinese TV", "imageUrl": "assets/gallery/full/photo_005_chinese_tv_1.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_005_chinese_tv_1_thumb.jpg", "originalFilename": "Chinese TV 1.JPG", "description": "Multicultural medical broadcast and television health program outreach."}, {"id": "photo-6", "title": "Chinese drchenlecture", "category": "Chinese drchenlecture", "imageUrl": "assets/gallery/full/photo_006_chinese_drchenlecture_2025_1.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_006_chinese_drchenlecture_2025_1_thumb.jpg", "originalFilename": "Chinese drchenlecture 2025_1.jpeg", "description": "Dr. Chen specialized clinical medical lecture and health guidance session."}, {"id": "photo-7", "title": "Chinese drchenlecture", "category": "Chinese drchenlecture", "imageUrl": "assets/gallery/full/photo_007_chinese_drchenlecture_2025_2.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_007_chinese_drchenlecture_2025_2_thumb.jpg", "originalFilename": "Chinese drchenlecture 2025_2.jpeg", "description": "Dr. Chen specialized clinical medical lecture and health guidance session."}, {"id": "photo-8", "title": "Chinese healthfair", "category": "Chinese Health Fair", "imageUrl": "assets/gallery/full/photo_008_chinese_healthfair_2018.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_008_chinese_healthfair_2018_thumb.jpg", "originalFilename": "Chinese healthfair_2018.jpg", "description": "Community health fair and wellness screening outreach."}, {"id": "photo-9", "title": "Hero shots", "category": "Hero shots", "imageUrl": "assets/gallery/full/photo_009_hero_shots00001.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_009_hero_shots00001_thumb.jpg", "originalFilename": "Hero shots00001.JPG", "description": "Community leadership summit, healthcare partnership initiatives, and keynote presentation."}, {"id": "photo-10", "title": "Hero shots", "category": "Hero shots", "imageUrl": "assets/gallery/full/photo_010_hero_shots00002.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_010_hero_shots00002_thumb.jpg", "originalFilename": "Hero shots00002.JPG", "description": "Community leadership summit, healthcare partnership initiatives, and keynote presentation."}, {"id": "photo-11", "title": "Hero shots", "category": "Hero shots", "imageUrl": "assets/gallery/full/photo_011_hero_shots00003.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_011_hero_shots00003_thumb.jpg", "originalFilename": "Hero shots00003.JPG", "description": "Community leadership summit, healthcare partnership initiatives, and keynote presentation."}, {"id": "photo-12", "title": "Hero shots", "category": "Hero shots", "imageUrl": "assets/gallery/full/photo_012_hero_shots00004.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_012_hero_shots00004_thumb.jpg", "originalFilename": "Hero shots00004.JPG", "description": "Community leadership summit, healthcare partnership initiatives, and keynote presentation."}, {"id": "photo-13", "title": "Hero shots", "category": "Hero shots", "imageUrl": "assets/gallery/full/photo_013_hero_shots00005.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_013_hero_shots00005_thumb.jpg", "originalFilename": "Hero shots00005.JPG", "description": "Community leadership summit, healthcare partnership initiatives, and keynote presentation."}, {"id": "photo-14", "title": "Hero shots", "category": "Hero shots", "imageUrl": "assets/gallery/full/photo_014_hero_shots00006.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_014_hero_shots00006_thumb.jpg", "originalFilename": "Hero shots00006.JPG", "description": "Community leadership summit, healthcare partnership initiatives, and keynote presentation."}, {"id": "photo-15", "title": "Hero shots", "category": "Hero shots", "imageUrl": "assets/gallery/full/photo_015_hero_shots00007.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_015_hero_shots00007_thumb.jpg", "originalFilename": "Hero shots00007.JPG", "description": "Community leadership summit, healthcare partnership initiatives, and keynote presentation."}, {"id": "photo-16", "title": "Hero shots", "category": "Hero shots", "imageUrl": "assets/gallery/full/photo_016_hero_shots00008.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_016_hero_shots00008_thumb.jpg", "originalFilename": "Hero shots00008.JPG", "description": "Community leadership summit, healthcare partnership initiatives, and keynote presentation."}, {"id": "photo-17", "title": "Hero shots", "category": "Hero shots", "imageUrl": "assets/gallery/full/photo_017_hero_shots00009.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_017_hero_shots00009_thumb.jpg", "originalFilename": "Hero shots00009.JPG", "description": "Community leadership summit, healthcare partnership initiatives, and keynote presentation."}, {"id": "photo-18", "title": "Hero shots", "category": "Hero shots", "imageUrl": "assets/gallery/full/photo_018_hero_shots00010.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_018_hero_shots00010_thumb.jpg", "originalFilename": "Hero shots00010.JPG", "description": "Community leadership summit, healthcare partnership initiatives, and keynote presentation."}, {"id": "photo-19", "title": "Hero shots", "category": "Hero shots", "imageUrl": "assets/gallery/full/photo_019_hero_shots00011.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_019_hero_shots00011_thumb.jpg", "originalFilename": "Hero shots00011.JPG", "description": "Community leadership summit, healthcare partnership initiatives, and keynote presentation."}, {"id": "photo-20", "title": "Hero shots", "category": "Hero shots", "imageUrl": "assets/gallery/full/photo_020_hero_shots00012.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_020_hero_shots00012_thumb.jpg", "originalFilename": "Hero shots00012.JPG", "description": "Community leadership summit, healthcare partnership initiatives, and keynote presentation."}, {"id": "photo-21", "title": "Hero shots", "category": "Hero shots", "imageUrl": "assets/gallery/full/photo_021_hero_shots0001200001.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_021_hero_shots0001200001_thumb.jpg", "originalFilename": "Hero shots0001200001.jpg", "description": "Community leadership summit, healthcare partnership initiatives, and keynote presentation."}, {"id": "photo-22", "title": "Hero shots", "category": "Hero shots", "imageUrl": "assets/gallery/full/photo_022_hero_shots0001200002.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_022_hero_shots0001200002_thumb.jpg", "originalFilename": "Hero shots0001200002.jpg", "description": "Community leadership summit, healthcare partnership initiatives, and keynote presentation."}, {"id": "photo-23", "title": "Hero shots", "category": "Hero shots", "imageUrl": "assets/gallery/full/photo_023_hero_shots0001200003.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_023_hero_shots0001200003_thumb.jpg", "originalFilename": "Hero shots0001200003.jpg", "description": "Community leadership summit, healthcare partnership initiatives, and keynote presentation."}, {"id": "photo-24", "title": "Hero shots", "category": "Hero shots", "imageUrl": "assets/gallery/full/photo_024_hero_shots00013.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_024_hero_shots00013_thumb.jpg", "originalFilename": "Hero shots00013.JPG", "description": "Community leadership summit, healthcare partnership initiatives, and keynote presentation."}, {"id": "photo-25", "title": "Hero shots", "category": "Hero shots", "imageUrl": "assets/gallery/full/photo_025_hero_shots00014.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_025_hero_shots00014_thumb.jpg", "originalFilename": "Hero shots00014.JPG", "description": "Community leadership summit, healthcare partnership initiatives, and keynote presentation."}, {"id": "photo-26", "title": "Hero shots", "category": "Hero shots", "imageUrl": "assets/gallery/full/photo_026_hero_shots00015.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_026_hero_shots00015_thumb.jpg", "originalFilename": "Hero shots00015.JPG", "description": "Community leadership summit, healthcare partnership initiatives, and keynote presentation."}, {"id": "photo-27", "title": "Hero shots", "category": "Hero shots", "imageUrl": "assets/gallery/full/photo_027_hero_shots00016.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_027_hero_shots00016_thumb.jpg", "originalFilename": "Hero shots00016.JPG", "description": "Community leadership summit, healthcare partnership initiatives, and keynote presentation."}, {"id": "photo-28", "title": "Hero shots", "category": "Hero shots", "imageUrl": "assets/gallery/full/photo_028_hero_shots00017.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_028_hero_shots00017_thumb.jpg", "originalFilename": "Hero shots00017.JPG", "description": "Community leadership summit, healthcare partnership initiatives, and keynote presentation."}, {"id": "photo-29", "title": "Hero shots", "category": "Hero shots", "imageUrl": "assets/gallery/full/photo_029_hero_shots00018.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_029_hero_shots00018_thumb.jpg", "originalFilename": "Hero shots00018.JPG", "description": "Community leadership summit, healthcare partnership initiatives, and keynote presentation."}, {"id": "photo-30", "title": "Special Events posters", "category": "Special Events posters", "imageUrl": "assets/gallery/full/photo_030_special_events_posters00001.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_030_special_events_posters00001_thumb.jpg", "originalFilename": "Special Events posters00001.pdf", "description": "Official announcement poster and schedule for medical seminars and community events."}, {"id": "photo-31", "title": "Special Events posters", "category": "Special Events posters", "imageUrl": "assets/gallery/full/photo_031_special_events_posters00002.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_031_special_events_posters00002_thumb.jpg", "originalFilename": "Special Events posters00002.jpg", "description": "Official announcement poster and schedule for medical seminars and community events."}, {"id": "photo-32", "title": "Special Events posters", "category": "Special Events posters", "imageUrl": "assets/gallery/full/photo_032_special_events_posters00003.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_032_special_events_posters00003_thumb.jpg", "originalFilename": "Special Events posters00003.pdf", "description": "Official announcement poster and schedule for medical seminars and community events."}, {"id": "photo-33", "title": "Special Events posters", "category": "Special Events posters", "imageUrl": "assets/gallery/full/photo_033_special_events_posters00004.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_033_special_events_posters00004_thumb.jpg", "originalFilename": "Special Events posters00004.pdf", "description": "Official announcement poster and schedule for medical seminars and community events."}, {"id": "photo-34", "title": "Special Events posters", "category": "Special Events posters", "imageUrl": "assets/gallery/full/photo_034_special_events_posters00005.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_034_special_events_posters00005_thumb.jpg", "originalFilename": "Special Events posters00005.pdf", "description": "Official announcement poster and schedule for medical seminars and community events."}, {"id": "photo-35", "title": "Special Events posters", "category": "Special Events posters", "imageUrl": "assets/gallery/full/photo_035_special_events_posters00006.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_035_special_events_posters00006_thumb.jpg", "originalFilename": "Special Events posters00006.pdf", "description": "Official announcement poster and schedule for medical seminars and community events."}, {"id": "photo-36", "title": "Special Events posters", "category": "Special Events posters", "imageUrl": "assets/gallery/full/photo_036_special_events_posters00007.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_036_special_events_posters00007_thumb.jpg", "originalFilename": "Special Events posters00007.pdf", "description": "Official announcement poster and schedule for medical seminars and community events."}, {"id": "photo-37", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_037_special_seminars_and_medical_talkshows00001.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_037_special_seminars_and_medical_talkshows00001_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00001.jpg", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-38", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_038_special_seminars_and_medical_talkshows00002.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_038_special_seminars_and_medical_talkshows00002_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00002.jpg", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-39", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_039_special_seminars_and_medical_talkshows00004.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_039_special_seminars_and_medical_talkshows00004_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00004.JPG", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-40", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_040_special_seminars_and_medical_talkshows00005.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_040_special_seminars_and_medical_talkshows00005_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00005.JPG", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-41", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_041_special_seminars_and_medical_talkshows00007.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_041_special_seminars_and_medical_talkshows00007_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00007.JPG", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-42", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_042_special_seminars_and_medical_talkshows00009.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_042_special_seminars_and_medical_talkshows00009_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00009.JPG", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-43", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_043_special_seminars_and_medical_talkshows00011.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_043_special_seminars_and_medical_talkshows00011_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00011.JPG", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-44", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_044_special_seminars_and_medical_talkshows00015.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_044_special_seminars_and_medical_talkshows00015_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00015.JPG", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-45", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_045_special_seminars_and_medical_talkshows00016.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_045_special_seminars_and_medical_talkshows00016_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00016.JPG", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-46", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_046_special_seminars_and_medical_talkshows00017.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_046_special_seminars_and_medical_talkshows00017_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00017.jpg", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-47", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_047_special_seminars_and_medical_talkshows00018.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_047_special_seminars_and_medical_talkshows00018_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00018.jpg", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-48", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_048_special_seminars_and_medical_talkshows00019.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_048_special_seminars_and_medical_talkshows00019_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00019.JPG", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-49", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_049_special_seminars_and_medical_talkshows00021.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_049_special_seminars_and_medical_talkshows00021_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00021.jpg", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-50", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_050_special_seminars_and_medical_talkshows00023.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_050_special_seminars_and_medical_talkshows00023_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00023.jpg", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-51", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_051_special_seminars_and_medical_talkshows00025.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_051_special_seminars_and_medical_talkshows00025_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00025.jpg", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-52", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_052_special_seminars_and_medical_talkshows00026.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_052_special_seminars_and_medical_talkshows00026_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00026.jpg", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-53", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_053_special_seminars_and_medical_talkshows00032.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_053_special_seminars_and_medical_talkshows00032_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00032.JPG", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-54", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_054_special_seminars_and_medical_talkshows00033.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_054_special_seminars_and_medical_talkshows00033_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00033.JPG", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-55", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_055_special_seminars_and_medical_talkshows00034.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_055_special_seminars_and_medical_talkshows00034_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00034.JPG", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-asan-1", "title": "Asan Medical Center US Tour & Clinical Collaboration", "category": "Asan Hospital US Tour", "imageUrl": "assets/gallery/full/photo_asan_001.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_asan_001_thumb.jpg", "originalFilename": "Asan Hospital US tour00001.JPG", "description": "Asan Medical Center clinical delegation US tour, hospital partnership exchange, and healthcare facility conference."}, {"id": "photo-asan-2", "title": "Asan Medical Center US Tour & Clinical Collaboration", "category": "Asan Hospital US Tour", "imageUrl": "assets/gallery/full/photo_asan_002.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_asan_002_thumb.jpg", "originalFilename": "Asan Hospital US tour00002.JPG", "description": "Asan Medical Center clinical delegation US tour, hospital partnership exchange, and healthcare facility conference."}, {"id": "photo-asan-3", "title": "Asan Medical Center US Tour & Clinical Collaboration", "category": "Asan Hospital US Tour", "imageUrl": "assets/gallery/full/photo_asan_003.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_asan_003_thumb.jpg", "originalFilename": "Asan Hospital US tour00003.JPG", "description": "Asan Medical Center clinical delegation US tour, hospital partnership exchange, and healthcare facility conference."}, {"id": "photo-asan-4", "title": "Asan Medical Center US Tour & Clinical Collaboration", "category": "Asan Hospital US Tour", "imageUrl": "assets/gallery/full/photo_asan_004.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_asan_004_thumb.jpg", "originalFilename": "Asan Hospital US tour00004.JPG", "description": "Asan Medical Center clinical delegation US tour, hospital partnership exchange, and healthcare facility conference."}, {"id": "photo-asan-5", "title": "Asan Medical Center US Tour & Clinical Collaboration", "category": "Asan Hospital US Tour", "imageUrl": "assets/gallery/full/photo_asan_005.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_asan_005_thumb.jpg", "originalFilename": "Asan Hospital US tour00005.JPG", "description": "Asan Medical Center clinical delegation US tour, hospital partnership exchange, and healthcare facility conference."}, {"id": "photo-asan-6", "title": "Asan Medical Center US Tour & Clinical Collaboration", "category": "Asan Hospital US Tour", "imageUrl": "assets/gallery/full/photo_asan_006.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_asan_006_thumb.jpg", "originalFilename": "Asan Hospital US tour00006.JPG", "description": "Asan Medical Center clinical delegation US tour, hospital partnership exchange, and healthcare facility conference."}, {"id": "photo-asan-7", "title": "Asan Medical Center US Tour & Clinical Collaboration", "category": "Asan Hospital US Tour", "imageUrl": "assets/gallery/full/photo_asan_007.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_asan_007_thumb.jpg", "originalFilename": "Asan Hospital US tour00007.JPG", "description": "Asan Medical Center clinical delegation US tour, hospital partnership exchange, and healthcare facility conference."}, {"id": "photo-asan-8", "title": "Asan Medical Center US Tour & Clinical Collaboration", "category": "Asan Hospital US Tour", "imageUrl": "assets/gallery/full/photo_asan_008.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_asan_008_thumb.jpg", "originalFilename": "Asan Hospital US tour00008.JPG", "description": "Asan Medical Center clinical delegation US tour, hospital partnership exchange, and healthcare facility conference."}, {"id": "photo-asan-9", "title": "Asan Medical Center US Tour & Clinical Collaboration", "category": "Asan Hospital US Tour", "imageUrl": "assets/gallery/full/photo_asan_009.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_asan_009_thumb.jpg", "originalFilename": "Asan Hospital US tour00009.JPG", "description": "Asan Medical Center clinical delegation US tour, hospital partnership exchange, and healthcare facility conference."}, {"id": "photo-asan-10", "title": "Asan Medical Center US Tour & Clinical Collaboration", "category": "Asan Hospital US Tour", "imageUrl": "assets/gallery/full/photo_asan_010.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_asan_010_thumb.jpg", "originalFilename": "Asan Hospital US tour00010.JPG", "description": "Asan Medical Center clinical delegation US tour, hospital partnership exchange, and healthcare facility conference."}, {"id": "photo-56", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_056_special_seminars_and_medical_talkshows00043.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_056_special_seminars_and_medical_talkshows00043_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00043.jpg", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-57", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_057_special_seminars_and_medical_talkshows00047.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_057_special_seminars_and_medical_talkshows00047_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00047.JPG", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-58", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_058_special_seminars_and_medical_talkshows00048.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_058_special_seminars_and_medical_talkshows00048_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00048.JPG", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-59", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_059_special_seminars_and_medical_talkshows00050.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_059_special_seminars_and_medical_talkshows00050_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00050.JPG", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-60", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_060_special_seminars_and_medical_talkshows00051.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_060_special_seminars_and_medical_talkshows00051_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00051.JPG", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-61", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_061_special_seminars_and_medical_talkshows00052.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_061_special_seminars_and_medical_talkshows00052_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00052.jpg", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-62", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_062_special_seminars_and_medical_talkshows00053.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_062_special_seminars_and_medical_talkshows00053_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00053.JPG", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-63", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_063_special_seminars_and_medical_talkshows00054.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_063_special_seminars_and_medical_talkshows00054_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00054.JPG", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-64", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_064_special_seminars_and_medical_talkshows0005400001.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_064_special_seminars_and_medical_talkshows0005400001_thumb.jpg", "originalFilename": "Special seminars and medical talkshows0005400001.jpg", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-65", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_065_special_seminars_and_medical_talkshows0005400002.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_065_special_seminars_and_medical_talkshows0005400002_thumb.jpg", "originalFilename": "Special seminars and medical talkshows0005400002.jpg", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-66", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_066_special_seminars_and_medical_talkshows00054100001.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_066_special_seminars_and_medical_talkshows00054100001_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00054100001.jpg", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-67", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_067_special_seminars_and_medical_talkshows00054100002.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_067_special_seminars_and_medical_talkshows00054100002_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00054100002.jpg", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-68", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_068_special_seminars_and_medical_talkshows00054100003.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_068_special_seminars_and_medical_talkshows00054100003_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00054100003.jpg", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-69", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_069_special_seminars_and_medical_talkshows00054100004.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_069_special_seminars_and_medical_talkshows00054100004_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00054100004.jpg", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-70", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_070_special_seminars_and_medical_talkshows00054100005.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_070_special_seminars_and_medical_talkshows00054100005_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00054100005.jpg", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-71", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_071_special_seminars_and_medical_talkshows00054100006.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_071_special_seminars_and_medical_talkshows00054100006_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00054100006.jpg", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-72", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_072_special_seminars_and_medical_talkshows00054100007.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_072_special_seminars_and_medical_talkshows00054100007_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00054100007.JPG", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-73", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_073_special_seminars_and_medical_talkshows00054200001.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_073_special_seminars_and_medical_talkshows00054200001_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00054200001.jpg", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-74", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_074_special_seminars_and_medical_talkshows00054200002.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_074_special_seminars_and_medical_talkshows00054200002_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00054200002.jpg", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-75", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_075_special_seminars_and_medical_talkshows00054200003.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_075_special_seminars_and_medical_talkshows00054200003_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00054200003.jpg", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-76", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_076_special_seminars_and_medical_talkshows00054200004.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_076_special_seminars_and_medical_talkshows00054200004_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00054200004.jpg", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-77", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_077_special_seminars_and_medical_talkshows00054200005.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_077_special_seminars_and_medical_talkshows00054200005_thumb.jpg", "originalFilename": "Special seminars and medical talkshows00054200005.jpg", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-78", "title": "Special seminars and medical talkshows", "category": "Special seminars and medical talkshows", "imageUrl": "assets/gallery/full/photo_078_special_seminars_and_medical_talkshows000543.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_078_special_seminars_and_medical_talkshows000543_thumb.jpg", "originalFilename": "Special seminars and medical talkshows000543.jpg", "description": "Clinical seminar and medical talkshow series presented by board-certified physicians."}, {"id": "photo-79", "title": "healthcare worker headshots", "category": "healthcare worker headshots", "imageUrl": "assets/gallery/full/photo_079_healthcare_worker_headshots00001.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_079_healthcare_worker_headshots00001_thumb.jpg", "originalFilename": "healthcare worker headshots00001.JPG", "description": "Healthcare provider, clinical coordinator, nurse, and patient navigator profile portrait."}, {"id": "photo-80", "title": "healthcare worker headshots", "category": "healthcare worker headshots", "imageUrl": "assets/gallery/full/photo_080_healthcare_worker_headshots00002.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_080_healthcare_worker_headshots00002_thumb.jpg", "originalFilename": "healthcare worker headshots00002.JPG", "description": "Healthcare provider, clinical coordinator, nurse, and patient navigator profile portrait."}, {"id": "photo-81", "title": "healthcare worker headshots", "category": "healthcare worker headshots", "imageUrl": "assets/gallery/full/photo_081_healthcare_worker_headshots00003.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_081_healthcare_worker_headshots00003_thumb.jpg", "originalFilename": "healthcare worker headshots00003.JPG", "description": "Healthcare provider, clinical coordinator, nurse, and patient navigator profile portrait."}, {"id": "photo-82", "title": "healthcare worker headshots", "category": "healthcare worker headshots", "imageUrl": "assets/gallery/full/photo_082_healthcare_worker_headshots00004.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_082_healthcare_worker_headshots00004_thumb.jpg", "originalFilename": "healthcare worker headshots00004.JPG", "description": "Healthcare provider, clinical coordinator, nurse, and patient navigator profile portrait."}, {"id": "photo-83", "title": "healthcare worker headshots", "category": "healthcare worker headshots", "imageUrl": "assets/gallery/full/photo_083_healthcare_worker_headshots00005.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_083_healthcare_worker_headshots00005_thumb.jpg", "originalFilename": "healthcare worker headshots00005.JPG", "description": "Healthcare provider, clinical coordinator, nurse, and patient navigator profile portrait."}, {"id": "photo-84", "title": "healthcare worker headshots", "category": "healthcare worker headshots", "imageUrl": "assets/gallery/full/photo_084_healthcare_worker_headshots00006.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_084_healthcare_worker_headshots00006_thumb.jpg", "originalFilename": "healthcare worker headshots00006.JPG", "description": "Healthcare provider, clinical coordinator, nurse, and patient navigator profile portrait."}, {"id": "photo-85", "title": "healthcare worker headshots", "category": "healthcare worker headshots", "imageUrl": "assets/gallery/full/photo_085_healthcare_worker_headshots00007.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_085_healthcare_worker_headshots00007_thumb.jpg", "originalFilename": "healthcare worker headshots00007.JPG", "description": "Healthcare provider, clinical coordinator, nurse, and patient navigator profile portrait."}, {"id": "photo-86", "title": "healthcare worker headshots", "category": "healthcare worker headshots", "imageUrl": "assets/gallery/full/photo_086_healthcare_worker_headshots00008.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_086_healthcare_worker_headshots00008_thumb.jpg", "originalFilename": "healthcare worker headshots00008.JPG", "description": "Healthcare provider, clinical coordinator, nurse, and patient navigator profile portrait."}, {"id": "photo-87", "title": "healthcare worker headshots", "category": "healthcare worker headshots", "imageUrl": "assets/gallery/full/photo_087_healthcare_worker_headshots00009.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_087_healthcare_worker_headshots00009_thumb.jpg", "originalFilename": "healthcare worker headshots00009.JPG", "description": "Healthcare provider, clinical coordinator, nurse, and patient navigator profile portrait."}, {"id": "photo-88", "title": "healthcare worker headshots", "category": "healthcare worker headshots", "imageUrl": "assets/gallery/full/photo_088_healthcare_worker_headshots00010.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_088_healthcare_worker_headshots00010_thumb.jpg", "originalFilename": "healthcare worker headshots00010.JPG", "description": "Healthcare provider, clinical coordinator, nurse, and patient navigator profile portrait."}, {"id": "photo-89", "title": "healthcare worker headshots", "category": "healthcare worker headshots", "imageUrl": "assets/gallery/full/photo_089_healthcare_worker_headshots00011.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_089_healthcare_worker_headshots00011_thumb.jpg", "originalFilename": "healthcare worker headshots00011.JPG", "description": "Healthcare provider, clinical coordinator, nurse, and patient navigator profile portrait."}, {"id": "photo-90", "title": "healthcare worker headshots", "category": "healthcare worker headshots", "imageUrl": "assets/gallery/full/photo_090_healthcare_worker_headshots00012.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_090_healthcare_worker_headshots00012_thumb.jpg", "originalFilename": "healthcare worker headshots00012.JPG", "description": "Healthcare provider, clinical coordinator, nurse, and patient navigator profile portrait."}, {"id": "photo-91", "title": "healthcare worker headshots", "category": "healthcare worker headshots", "imageUrl": "assets/gallery/full/photo_091_healthcare_worker_headshots00013.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_091_healthcare_worker_headshots00013_thumb.jpg", "originalFilename": "healthcare worker headshots00013.JPG", "description": "Healthcare provider, clinical coordinator, nurse, and patient navigator profile portrait."}, {"id": "photo-92", "title": "healthcare worker headshots", "category": "healthcare worker headshots", "imageUrl": "assets/gallery/full/photo_092_healthcare_worker_headshots00014.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_092_healthcare_worker_headshots00014_thumb.jpg", "originalFilename": "healthcare worker headshots00014.JPG", "description": "Healthcare provider, clinical coordinator, nurse, and patient navigator profile portrait."}, {"id": "photo-93", "title": "healthcare worker headshots", "category": "healthcare worker headshots", "imageUrl": "assets/gallery/full/photo_093_healthcare_worker_headshots00015.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_093_healthcare_worker_headshots00015_thumb.jpg", "originalFilename": "healthcare worker headshots00015.JPG", "description": "Healthcare provider, clinical coordinator, nurse, and patient navigator profile portrait."}, {"id": "photo-94", "title": "healthfair and special education", "category": "healthfair and special education", "imageUrl": "assets/gallery/full/photo_094_healthfair_and_special_education00001.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_094_healthfair_and_special_education00001_thumb.jpg", "originalFilename": "healthfair and special education00001.jpg", "description": "Community health fair, free health screenings, vital checks, and educational workshops."}, {"id": "photo-95", "title": "healthfair and special education", "category": "healthfair and special education", "imageUrl": "assets/gallery/full/photo_095_healthfair_and_special_education00002.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_095_healthfair_and_special_education00002_thumb.jpg", "originalFilename": "healthfair and special education00002.jpg", "description": "Community health fair, free health screenings, vital checks, and educational workshops."}, {"id": "photo-96", "title": "healthfair and special education", "category": "healthfair and special education", "imageUrl": "assets/gallery/full/photo_096_healthfair_and_special_education00003.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_096_healthfair_and_special_education00003_thumb.jpg", "originalFilename": "healthfair and special education00003.jpg", "description": "Community health fair, free health screenings, vital checks, and educational workshops."}, {"id": "photo-97", "title": "healthfair and special education", "category": "healthfair and special education", "imageUrl": "assets/gallery/full/photo_097_healthfair_and_special_education00004.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_097_healthfair_and_special_education00004_thumb.jpg", "originalFilename": "healthfair and special education00004.jpg", "description": "Community health fair, free health screenings, vital checks, and educational workshops."}, {"id": "photo-98", "title": "healthfair and special education", "category": "healthfair and special education", "imageUrl": "assets/gallery/full/photo_098_healthfair_and_special_education00005.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_098_healthfair_and_special_education00005_thumb.jpg", "originalFilename": "healthfair and special education00005.jpg", "description": "Community health fair, free health screenings, vital checks, and educational workshops."}, {"id": "photo-99", "title": "healthfair and special education", "category": "healthfair and special education", "imageUrl": "assets/gallery/full/photo_099_healthfair_and_special_education00006.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_099_healthfair_and_special_education00006_thumb.jpg", "originalFilename": "healthfair and special education00006.jpg", "description": "Community health fair, free health screenings, vital checks, and educational workshops."}, {"id": "photo-100", "title": "healthfair and special education", "category": "healthfair and special education", "imageUrl": "assets/gallery/full/photo_100_healthfair_and_special_education00007.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_100_healthfair_and_special_education00007_thumb.jpg", "originalFilename": "healthfair and special education00007.jpg", "description": "Community health fair, free health screenings, vital checks, and educational workshops."}, {"id": "photo-101", "title": "healthfair and special education", "category": "healthfair and special education", "imageUrl": "assets/gallery/full/photo_101_healthfair_and_special_education00008.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_101_healthfair_and_special_education00008_thumb.jpg", "originalFilename": "healthfair and special education00008.jpg", "description": "Community health fair, free health screenings, vital checks, and educational workshops."}, {"id": "photo-102", "title": "healthfair and special education", "category": "healthfair and special education", "imageUrl": "assets/gallery/full/photo_102_healthfair_and_special_education00009.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_102_healthfair_and_special_education00009_thumb.jpg", "originalFilename": "healthfair and special education00009.jpg", "description": "Community health fair, free health screenings, vital checks, and educational workshops."}, {"id": "photo-103", "title": "healthfair and special education", "category": "healthfair and special education", "imageUrl": "assets/gallery/full/photo_103_healthfair_and_special_education00010.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_103_healthfair_and_special_education00010_thumb.jpg", "originalFilename": "healthfair and special education00010.jpg", "description": "Community health fair, free health screenings, vital checks, and educational workshops."}, {"id": "photo-104", "title": "healthfair and special education", "category": "healthfair and special education", "imageUrl": "assets/gallery/full/photo_104_healthfair_and_special_education00012.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_104_healthfair_and_special_education00012_thumb.jpg", "originalFilename": "healthfair and special education00012.jpg", "description": "Community health fair, free health screenings, vital checks, and educational workshops."}, {"id": "photo-105", "title": "healthfair and special education", "category": "healthfair and special education", "imageUrl": "assets/gallery/full/photo_105_healthfair_and_special_education00013.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_105_healthfair_and_special_education00013_thumb.jpg", "originalFilename": "healthfair and special education00013.jpg", "description": "Community health fair, free health screenings, vital checks, and educational workshops."}, {"id": "photo-106", "title": "healthfair and special education", "category": "healthfair and special education", "imageUrl": "assets/gallery/full/photo_106_healthfair_and_special_education00014.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_106_healthfair_and_special_education00014_thumb.jpg", "originalFilename": "healthfair and special education00014.jpg", "description": "Community health fair, free health screenings, vital checks, and educational workshops."}, {"id": "photo-107", "title": "healthfair and special education", "category": "healthfair and special education", "imageUrl": "assets/gallery/full/photo_107_healthfair_and_special_education00015.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_107_healthfair_and_special_education00015_thumb.jpg", "originalFilename": "healthfair and special education00015.jpg", "description": "Community health fair, free health screenings, vital checks, and educational workshops."}, {"id": "photo-108", "title": "healthfair and special education", "category": "healthfair and special education", "imageUrl": "assets/gallery/full/photo_108_healthfair_and_special_education00016.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_108_healthfair_and_special_education00016_thumb.jpg", "originalFilename": "healthfair and special education00016.jpg", "description": "Community health fair, free health screenings, vital checks, and educational workshops."}, {"id": "photo-109", "title": "healthfair and special education", "category": "healthfair and special education", "imageUrl": "assets/gallery/full/photo_109_healthfair_and_special_education00017.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_109_healthfair_and_special_education00017_thumb.jpg", "originalFilename": "healthfair and special education00017.jpg", "description": "Community health fair, free health screenings, vital checks, and educational workshops."}, {"id": "photo-110", "title": "healthfair and special education", "category": "healthfair and special education", "imageUrl": "assets/gallery/full/photo_110_healthfair_and_special_education00018.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_110_healthfair_and_special_education00018_thumb.jpg", "originalFilename": "healthfair and special education00018.JPG", "description": "Community health fair, free health screenings, vital checks, and educational workshops."}, {"id": "photo-111", "title": "healthfair and special education", "category": "healthfair and special education", "imageUrl": "assets/gallery/full/photo_111_healthfair_and_special_education00019.jpg", "thumbnailUrl": "assets/gallery/thumbs/photo_111_healthfair_and_special_education00019_thumb.jpg", "originalFilename": "healthfair and special education00019.jpg", "description": "Community health fair, free health screenings, vital checks, and educational workshops."}];
+
+    let activeSubmenu = 'photo';
+    let currentFilter = 'all';
+    let currentPhotoFilter = 'all';
+    let searchQuery = '';
+    let photoSearchQuery = '';
+    let visibleCount = 24;
+    let photoVisibleCount = 24;
+    let currentLightboxList = [];
+    let currentLightboxIndex = 0;
+
+    const gridEl = document.getElementById('portfolio-grid');
+    const photoGridEl = document.getElementById('photo-grid');
+    const loadMoreBtn = document.getElementById('load-more-btn');
+    const loadMoreContainer = document.getElementById('load-more-container');
+    const photoLoadMoreBtn = document.getElementById('photo-load-more-btn');
+    const photoLoadMoreContainer = document.getElementById('photo-load-more-container');
+    
+            
+    const filterBtns = document.querySelectorAll('#video-controls-box .filter-btn');
+    const photoFilterBtns = document.querySelectorAll('#photo-controls-box .filter-btn');
+
+
+    // ── Media Portal Integration ──────────────────────────────────────────────
+    // Translate Korean media portal categories → English and merge/replace video data
+    const MEDIA_CAT_MAP = {
+      '건강검진 & 의료정보': 'Health Info & Medical Q&A',
+      '뇌신경 & 치매':       'Neurology & Dementia',
+      '암 예방 & 검진':      'Cancer Prevention & Screening',
+      '만성질환 & 당뇨':     'Chronic Disease & Diabetes',
+      '심장 & 혈관':         'Heart & Vascular Health',
+      '감염병 & 백신':       'Infectious Disease & Vaccines',
+      // already-English passthrough
+      'Doctor Spotlights':              'Health Info & Medical Q&A',
+      'Medical Seminars':               'Health Info & Medical Q&A',
+      'Healthcare System':              'Health Info & Medical Q&A',
+      'Events & Galas':                 'Health Info & Medical Q&A',
+    };
+    // Re-categorize ALL_VIDEOS to match media portal English categories
+    ALL_VIDEOS.forEach(v => {
+      v.category = MEDIA_CAT_MAP[v.category] || v.category;
+    });
+
+    // Photo category display names (Korean → English)
+    const PHOTO_CAT_MAP = {
+      'Special seminars and medical talkshows': 'Medical Seminars & Talkshows',
+      'Hero shots':                             'Hero Shots & Keynotes',
+      'healthfair and special education':       'Health Fairs & Education',
+      'healthcare worker headshots':            'Healthcare Team Portraits',
+      'Asan Hospital US Tour':                  'Asan Hospital US Tour',
+      'Special Events posters':                 'Event Posters & Campaigns',
+      'Chinese Health Fair':                    'Chinese Community Health Fair',
+      'Chinese Health Seminar':                 'Chinese Community Seminar',
+      'Chinese drchenlecture':                  'Dr. Chen Medical Lectures',
+      'Chinese TV':                             'Broadcast & TV Coverage',
+    };
+    // Re-label photo categories to English display names
+    ALL_PHOTOS.forEach(p => {
+      p.displayCategory = PHOTO_CAT_MAP[p.category] || p.category;
+    });
+
+    function switchMainSubmenu(tab) {
+      activeSubmenu = tab;
+      const tabVideoBtn = document.getElementById('tab-btn-video');
+      const tabPhotoBtn = document.getElementById('tab-btn-photo');
+      const tabPressBtn = document.getElementById('tab-btn-press');
+      const videoControls = document.getElementById('video-controls-box');
+      const photoControls = document.getElementById('photo-controls-box');
+      const pressControls = document.getElementById('press-controls-box');
+      const videoView = document.getElementById('video-section-view');
+      const photoView = document.getElementById('photo-section-view');
+      const pressView = document.getElementById('press-section-view');
+
+      if (tabVideoBtn) tabVideoBtn.classList.remove('active');
+      if (tabPhotoBtn) tabPhotoBtn.classList.remove('active');
+      if (tabPressBtn) tabPressBtn.classList.remove('active');
+
+      if (videoControls) videoControls.style.display = 'none';
+      if (photoControls) photoControls.style.display = 'none';
+      if (pressControls) pressControls.style.display = 'none';
+
+      if (videoView) videoView.style.display = 'none';
+      if (photoView) photoView.style.display = 'none';
+      if (pressView) pressView.style.display = 'none';
+
+      if (tab === 'video') {
+        if (tabVideoBtn) tabVideoBtn.classList.add('active');
+        if (videoControls) videoControls.style.display = 'flex';
+        if (videoView) videoView.style.display = 'block';
+        renderVideos();
+    renderPress();
+      } else if (tab === 'press') {
+        if (tabPressBtn) tabPressBtn.classList.add('active');
+        if (pressControls) pressControls.style.display = 'flex';
+        if (pressView) pressView.style.display = 'block';
+        renderPress();
+      } else {
+        if (tabPhotoBtn) tabPhotoBtn.classList.add('active');
+        if (photoControls) photoControls.style.display = 'flex';
+        if (photoView) photoView.style.display = 'block';
+        renderPhotos();
+      }
+    }
+
+    function getFilteredVideos() {
+      return ALL_VIDEOS.filter(v => {
+        const matchCat = currentFilter === 'all' || v.category === currentFilter;
+        const q = searchQuery.toLowerCase().trim();
+        const matchQ = !q || v.title.toLowerCase().includes(q) || (v.author && v.author.toLowerCase().includes(q));
+        return matchCat && matchQ;
+      });
+    }
+
+    function renderVideos() {
+      const filtered = getFilteredVideos();
+      const slice = filtered.slice(0, visibleCount);
+
+      if (slice.length === 0) {
+        gridEl.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 4rem 1rem; color: #64748b;"><h3 style="font-size: 1.25rem; font-weight: 700; color: #1e293b; margin-bottom: 0.5rem;">No videos found</h3><p>Try searching for different keywords or select a different category filter.</p></div>';
+        loadMoreContainer.style.display = 'none';
+        return;
+      }
+
+      gridEl.innerHTML = slice.map((video, idx) => {
+        const isDrive = video.isDrive ? true : false;
+        const videoId = isDrive ? video.driveId : video.youtubeId;
+        const thumbUrl = video.thumbnail || `https://i.ytimg.com/vi/${video.youtubeId}/hqdefault.jpg`;
+        const fallbackImg = isDrive ? 'assets/hero_bg.jpg' : `https://img.youtube.com/vi/${video.youtubeId}/mqdefault.jpg`;
+        const author = video.author || 'NJ Access Portal / Healthcare Team';
+        const titleSafe = video.title.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        const badgeTag = isDrive ? 'Special Feature' : 'HD Video';
+        return `
+          <div class="portfolio-item-card" onclick="openVideoLightbox('${videoId}', '${titleSafe}', '${author}', ${isDrive})">
+            <div class="item-media-container">
+              <img src="${thumbUrl}" alt="${titleSafe}" class="item-media-img" loading="lazy" onerror="this.src='${fallbackImg}'">
+              <div class="media-type-badge">🎥 VIDEO</div>
+              <div class="play-icon-overlay">▶</div>
+              <div class="author-badge">${author}</div>
+            </div>
+            <div class="item-card-body">
+              <div>
+                <span class="item-cat">${video.category}</span>
+                <h3 class="item-heading">${video.title}</h3>
+              </div>
+              <div class="item-card-footer">
+                <span class="action-prompt">▶ Watch Video Player</span>
+                <span>${badgeTag}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      if (visibleCount >= filtered.length) {
+        loadMoreContainer.style.display = 'none';
+      } else {
+        loadMoreContainer.style.display = 'block';
+        loadMoreBtn.textContent = `Load More Videos (${slice.length} / ${filtered.length})`;
+      }
+    }
+
+    function getFilteredPhotos() {
+      return ALL_PHOTOS.filter(p => {
+        const matchCat = currentPhotoFilter === 'all' || p.category === currentPhotoFilter;
+        const q = photoSearchQuery.toLowerCase().trim();
+        const matchQ = !q || 
+          p.title.toLowerCase().includes(q) || 
+          (p.description && p.description.toLowerCase().includes(q)) || 
+          p.category.toLowerCase().includes(q);
+        return matchCat && matchQ;
+      });
+    }
+
+    function renderPhotos() {
+      const filtered = getFilteredPhotos();
+      currentLightboxList = filtered;
+      const slice = filtered.slice(0, photoVisibleCount);
+
+      if (slice.length === 0) {
+        photoGridEl.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 4rem 1rem; color: #64748b;"><h3 style="font-size: 1.25rem; font-weight: 700; color: #1e293b; margin-bottom: 0.5rem;">No photos found</h3><p>Try searching for other keywords or select a different category filter.</p></div>';
+        photoLoadMoreContainer.style.display = 'none';
+        return;
+      }
+
+      photoGridEl.innerHTML = slice.map((photo, idx) => {
+        const titleSafe = photo.title.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        const descSafe = (photo.description || '').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        const thumbUrl = photo.thumbnailUrl || photo.imageUrl;
+        return `
+          <div class="portfolio-item-card" onclick="openPhotoLightboxByIndex(${idx})">
+            <div class="item-photo-container">
+              <img src="${thumbUrl}" alt="${titleSafe}" class="item-media-img" loading="lazy" onerror="this.src='${photo.imageUrl}'">
+              <div class="media-type-badge">📷 ${photo.category}</div>
+              <div class="zoom-hover-hint"><span>🔍 Click to Zoom</span></div>
+            </div>
+            <div class="item-card-body">
+              <div>
+                <span class="item-cat">${photo.displayCategory || photo.category}</span>
+                <h3 class="item-heading">${photo.title}</h3>
+              </div>
+              <div class="item-card-footer">
+                <span class="action-prompt">🔍 High-Res Zoom</span>
+                <span>${photo.displayCategory || photo.category}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      if (photoVisibleCount >= filtered.length) {
+        photoLoadMoreContainer.style.display = 'none';
+      } else {
+        photoLoadMoreContainer.style.display = 'block';
+        photoLoadMoreBtn.textContent = `Load More Photos (${slice.length} / ${filtered.length})`;
+      }
+    }
+
+    // Filter Buttons (Video)
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.getAttribute('data-filter');
+        visibleCount = 24;
+        renderVideos();
+    renderPress();
+      });
+    });
+
+    // Filter Buttons (Photo)
+    photoFilterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        photoFilterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentPhotoFilter = btn.getAttribute('data-photo-filter');
+        photoVisibleCount = 24;
+        renderPhotos();
+      });
+    });
+
+
+
+    // Load More (Video)
+    loadMoreBtn.addEventListener('click', () => {
+      visibleCount += 24;
+      renderVideos();
+    renderPress();
+    });
+
+    // Load More (Photo)
+    photoLoadMoreBtn.addEventListener('click', () => {
+      photoVisibleCount += 24;
+      renderPhotos();
+    });
+
+    
+    let currentPressFilter = 'all';
+    let pressVisibleCount = 24;
+
+    function getFilteredPress() {
+      return ALL_PRESS_ARTICLES.filter(p => {
+        if (currentPressFilter === 'all') return true;
+        return p.category === currentPressFilter || 
+               p.publisher === currentPressFilter ||
+               (p.publisher && p.publisher.includes(currentPressFilter)) ||
+               (p.category && p.category.includes(currentPressFilter));
+      });
+    }
+
+    function renderPress() {
+      const pressGridEl = document.getElementById('press-grid');
+      const pressLoadMoreContainer = document.getElementById('press-load-more-container');
+      const pressLoadMoreBtn = document.getElementById('press-load-more-btn');
+      if (!pressGridEl) return;
+
+      const filtered = getFilteredPress();
+      const slice = filtered.slice(0, pressVisibleCount);
+
+      if (slice.length === 0) {
+        pressGridEl.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 4rem 1rem; color: #64748b;"><h3 style="font-size: 1.25rem; font-weight: 700; color: #1e293b; margin-bottom: 0.5rem;">No press releases found</h3></div>';
+        if (pressLoadMoreContainer) pressLoadMoreContainer.style.display = 'none';
+        return;
+      }
+
+      pressGridEl.innerHTML = slice.map((article, idx) => {
+        const titleSafe = article.title.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        const descSafe = (article.description || '').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        let domain = '';
+        try {
+          domain = new URL(article.url).hostname.replace('www.', '');
+        } catch(e) {
+          domain = article.publisher;
+        }
+
+        return `
+          <div class="portfolio-item-card press-item-card" onclick="openPressArticle('${article.url}')">
+            <div class="item-photo-container">
+              <img src="${article.imageUrl}" alt="${titleSafe}" class="item-media-img" loading="lazy" onerror="this.src='assets/hero_bg.jpg'">
+              <div class="media-type-badge">📰 ${article.publisher}</div>
+              <div class="zoom-hover-hint"><span>↗ Open Article</span></div>
+            </div>
+            <div class="item-card-body">
+              <div>
+                <span class="item-cat">${article.publisher}</span>
+                <h3 class="item-heading">${titleSafe}</h3>
+              </div>
+              <div class="item-card-footer">
+                <span class="action-prompt">↗ Open Article</span>
+                <span class="press-url-tag">${domain}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      if (pressLoadMoreContainer && pressLoadMoreBtn) {
+        if (pressVisibleCount >= filtered.length) {
+          pressLoadMoreContainer.style.display = 'none';
+        } else {
+          pressLoadMoreContainer.style.display = 'block';
+          pressLoadMoreBtn.textContent = `Load More Articles (${slice.length} / ${filtered.length})`;
+        }
+      }
+    }
+
+    function openPressArticle(url) {
+      if (!url) return;
+      window.open(url, '_blank', 'width=1120,height=850,top=50,left=100,resizable=yes,scrollbars=yes');
+    }
+
+    // Filter Buttons (Press Releases)
+    const pressFilterBtns = document.querySelectorAll('#press-controls-box .filter-btn');
+    pressFilterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        pressFilterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentPressFilter = btn.getAttribute('data-press-filter');
+        pressVisibleCount = 24;
+        renderPress();
+      });
+    });
+
+    const pressLoadMoreBtn = document.getElementById('press-load-more-btn');
+    if (pressLoadMoreBtn) {
+      pressLoadMoreBtn.addEventListener('click', () => {
+        pressVisibleCount += 24;
+        renderPress();
+      });
+    }
+
+
+    // Lightbox Popup Handlers
+    function openVideoLightbox(videoSrc, title, author, isDrive) {
+      const modal = document.getElementById('lightbox-modal');
+      const holder = document.getElementById('lightbox-media-holder');
+      const headerTitle = document.getElementById('lightbox-header-title');
+      const titleEl = document.getElementById('lightbox-caption-title');
+      const descEl = document.getElementById('lightbox-caption-desc');
+      const catEl = document.getElementById('lightbox-caption-cat');
+      const counterBadge = document.getElementById('lightbox-counter-badge');
+      const dlBtn = document.getElementById('lightbox-download-btn');
+      const prevBtn = document.getElementById('lightbox-btn-prev');
+      const nextBtn = document.getElementById('lightbox-btn-next');
+
+      headerTitle.textContent = title;
+      titleEl.textContent = title;
+      descEl.textContent = `Medical Seminar Video Broadcast by ${author}.`;
+      catEl.textContent = 'Video Seminar';
+      counterBadge.textContent = '🎥 Video';
+
+      if (isDrive) {
+        dlBtn.href = `https://drive.google.com/file/d/${videoSrc}/view`;
+        dlBtn.innerHTML = '<span>↗ Open Video Source</span>';
+        holder.innerHTML = `<iframe src="https://drive.google.com/file/d/${videoSrc}/preview" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+      } else {
+        dlBtn.href = `https://www.youtube.com/watch?v=${videoSrc}`;
+        dlBtn.innerHTML = '<span>↗ Watch on YouTube</span>';
+        holder.innerHTML = `<iframe id="portfolio-yt-iframe" src="https://www.youtube-nocookie.com/embed/${videoSrc}?autoplay=1&rel=0&enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+        
+        const ytFrame = document.getElementById('portfolio-yt-iframe');
+        if (ytFrame) {
+          const setAudio = () => {
+            try {
+              ytFrame.contentWindow.postMessage(JSON.stringify({ event: "command", func: "unMute" }), "*");
+              ytFrame.contentWindow.postMessage(JSON.stringify({ event: "command", func: "setVolume", args: [40] }), "*");
+            } catch(e) {}
+          };
+          ytFrame.addEventListener("load", () => {
+            setTimeout(setAudio, 300);
+            setTimeout(setAudio, 1000);
+          });
+          setTimeout(setAudio, 500);
+          setTimeout(setAudio, 1200);
+        }
+      }
+
+      prevBtn.style.display = 'none';
+      nextBtn.style.display = 'none';
+
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function openPhotoLightboxByIndex(index) {
+      if (!currentLightboxList || currentLightboxList.length === 0) return;
+      currentLightboxIndex = index;
+      if (currentLightboxIndex < 0) currentLightboxIndex = currentLightboxList.length - 1;
+      if (currentLightboxIndex >= currentLightboxList.length) currentLightboxIndex = 0;
+
+      const photo = currentLightboxList[currentLightboxIndex];
+      const modal = document.getElementById('lightbox-modal');
+      const holder = document.getElementById('lightbox-media-holder');
+      const headerTitle = document.getElementById('lightbox-header-title');
+      const titleEl = document.getElementById('lightbox-caption-title');
+      const descEl = document.getElementById('lightbox-caption-desc');
+      const catEl = document.getElementById('lightbox-caption-cat');
+      const counterBadge = document.getElementById('lightbox-counter-badge');
+      const dlBtn = document.getElementById('lightbox-download-btn');
+      const prevBtn = document.getElementById('lightbox-btn-prev');
+      const nextBtn = document.getElementById('lightbox-btn-next');
+
+      headerTitle.textContent = photo.title;
+      titleEl.textContent = photo.title;
+      descEl.textContent = photo.description || '';
+      catEl.textContent = photo.category;
+      counterBadge.textContent = `📷 ${currentLightboxIndex + 1} / ${currentLightboxList.length}`;
+      dlBtn.href = photo.imageUrl;
+      dlBtn.innerHTML = '<span>↗ Full HD</span>';
+
+      prevBtn.style.display = currentLightboxList.length > 1 ? 'flex' : 'none';
+      nextBtn.style.display = currentLightboxList.length > 1 ? 'flex' : 'none';
+
+      holder.innerHTML = `<img src="${photo.imageUrl}" alt="${photo.title.replace(/"/g, '&quot;')}">`;
+
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function navigateLightbox(dir) {
+      openPhotoLightboxByIndex(currentLightboxIndex + dir);
+    }
+
+    function closeLightbox(e) {
+      const modal = document.getElementById('lightbox-modal');
+      const holder = document.getElementById('lightbox-media-holder');
+      modal.classList.remove('open');
+      holder.innerHTML = '';
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      const modal = document.getElementById('lightbox-modal');
+      if (!modal.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') navigateLightbox(-1);
+      if (e.key === 'ArrowRight') navigateLightbox(1);
+    });
+
+    // Touch Swipe Support for Lightbox
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const modalContent = document.querySelector('.lightbox-content');
+    if (modalContent) {
+      modalContent.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+      modalContent.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        if (touchEndX < touchStartX - 50) navigateLightbox(1);
+        if (touchEndX > touchStartX + 50) navigateLightbox(-1);
+      }, { passive: true });
+    }
+
+    
+    // Initial render
+    renderPhotos();
+    renderVideos();
+    renderPress();
+
+    // Mobile drawer toggle
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const closeMenuBtn = document.getElementById('close-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (hamburgerBtn && mobileMenu) {
+      hamburgerBtn.addEventListener('click', () => mobileMenu.classList.add('open'));
+    }
+    if (closeMenuBtn && mobileMenu) {
+      closeMenuBtn.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    }
+  </script>
+  <script src="js/client-auth.js?v=20261004_v1"></script>
+</body>
+</html>

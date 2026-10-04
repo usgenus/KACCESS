@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const baseUrl = 'https://njaccessportal.com/ko';
+const baseUrl = 'https://njaccessportal.com';
 const dataPath = path.join(__dirname, '../data/content.json');
 const forumPath = path.join(__dirname, '../data/forum.json');
 

@@ -1198,7 +1198,7 @@ html, body {
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/blog">뉴스</a>
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/forum">커뮤니티 포럼</a>
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/resource-center">의료정보센터</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/about">소개</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/about">의료 접근센터</a>
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue flex flex-col items-center justify-center leading-tight group" href="/engine" target="_self" title="Universal Access Engine (Marketing Client)">
             <span class="text-[13.5px] font-bold text-slate-800 group-hover:text-brand-blue tracking-tight">Engine</span>
             <span class="text-[9px] font-semibold text-slate-400 group-hover:text-brand-blue tracking-tighter -mt-0.5">Marketing Client</span>
@@ -1254,11 +1254,11 @@ html, body {
         <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
 
-      <!-- 6. 소개 -->
+      <!-- 6. 의료 접근센터 -->
       <a href="/about" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          <span class="text-[15px]">소개</span>
+          <span class="text-[15px]">의료 접근센터</span>
         </div>
         <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
@@ -3550,7 +3550,7 @@ html, body {
           <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">정보</p>
           <ul class="space-y-2.5">
             <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200 cursor-pointer" href="/" onclick="navigateToHome(event); return false;">홈</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/about">소개</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/about">의료 접근센터</a></li>
             <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200 inline-flex items-center gap-1.5" href="/engine" target="_self">Engine <span class="text-[10px] text-white/40 font-normal">Marketing Client</span></a></li>
             <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/blog">건강 뉴스</a></li>
             <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/forum">커뮤니티 포럼</a></li>
@@ -3673,7 +3673,7 @@ html, body {
   
 
   <script src="/js/cms-client.js?v=20261004_v9"></script>
-  <script src="/js/fixes.js?v=20261004_v9"></script>
+  <script src="/js/fixes.js?v=20261004_v10"></script>
 <script src="/js/njap-notifications.js?v=1.0.0"></script>
 </body>
 </html>

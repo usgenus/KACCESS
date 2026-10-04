@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ko" class="h-full antialiased">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>404: 페이지를 찾을 수 없습니다 | NJ Access Portal · 뉴저지 한인 의료접근포털</title>
+  <meta name="robots" content="noindex" />
+    <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
+<link rel="icon" href="/favicon.ico?v=2" sizes="256x256" type="image/x-icon" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/ko/_next/static/chunks/1fosv8xgmgdeu.css" />
+
+  <style>
+    :root, html, body {
+      font-family: "Pretendard Variable", Pretendard, "Noto Sans KR", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif !important;
+    }
+    .marquee-bar { background: #000000; }
+    .nav-top-offset { top: 45px; }
+    .logo-footer { width: 36px; height: 36px; object-fit: contain; filter: invert(1) brightness(2); flex-shrink: 0; }
+    .next-err-wrap { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; height: 60vh; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .next-err-h1-wrap { display: inline-block; margin: 0 20px 0 0; padding: 0 23px 0 0; font-size: 32px; font-weight: 700; vertical-align: top; line-height: 49px; border-right: 1px solid rgba(0,0,0,.2); }
+    .next-err-h2-wrap { display: inline-block; }
+    .next-err-h2-text { font-size: 16px; font-weight: 400; line-height: 49px; margin: 0; }
+  </style>
+
+  <!-- Logo Animation Styles -->
+  <style id="njap-logo-anim-styles">
+    .njap-brand-link {
+      display: inline-flex !important;
+      align-items: center !important;
+      flex-shrink: 0 !important;
+    }
+    .njap-brand-link img,
+    .njap-brand-link svg {
+      height: 52px !important;
+      max-height: 54px !important;
+      width: auto !important;
+      object-fit: contain !important;
+    }
+    @media (max-width: 640px) {
+      .njap-brand-link img,
+      .njap-brand-link svg {
+        height: 40px !important;
+        max-height: 42px !important;
+        width: auto !important;
+      }
+    }
+    @media (max-width: 375px) {
+      .njap-brand-link img,
+      .njap-brand-link svg {
+        height: 34px !important;
+        max-height: 36px !important;
+      }
+    }
+
+    @keyframes njapNavKeySlide {
+      0% {
+        opacity: 0;
+        transform: translate(670px, 0);
+      }
+      15% {
+        opacity: 1;
+      }
+      75% {
+        transform: translate(0, 0);
+      }
+      86% {
+        transform: translate(-3.5px, 0);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+    }
+
+    @keyframes njapNavKeyholePulse {
+      0%, 70% {
+        stroke: #DC2626;
+        filter: drop-shadow(0 0 0 transparent);
+      }
+      82% {
+        stroke: #EF4444;
+        filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.85));
+      }
+      100% {
+        stroke: #DC2626;
+        filter: drop-shadow(0 0 0 transparent);
+      }
+    }
+
+    @keyframes njapNavDoorAppear {
+      0% {
+        opacity: 0;
+        transform: scale(0.96);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes njapNavTextMain {
+      0% {
+        opacity: 0;
+        transform: translate(45px, 0);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+    }
+
+    @keyframes njapNavTextSub {
+      0% {
+        opacity: 0;
+        transform: translate(35px, 0);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+    }
+
+    .njap-nav-door {
+      transform-origin: 40px 45px;
+      animation: njapNavDoorAppear 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .njap-nav-key {
+      animation: njapNavKeySlide 2.18s cubic-bezier(0.22, 1, 0.36, 1) 0.22s both;
+    }
+
+    .njap-nav-keyhole {
+      animation: njapNavKeyholePulse 2.4s ease-out 0.22s both;
+    }
+
+    .njap-nav-text-main {
+      animation: njapNavTextMain 1.0s cubic-bezier(0.16, 1, 0.3, 1) 2.18s both;
+    }
+
+    .njap-nav-text-sub {
+      animation: njapNavTextSub 1.0s cubic-bezier(0.16, 1, 0.3, 1) 2.48s both;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .njap-nav-door, .njap-nav-key, .njap-nav-keyhole, .njap-nav-text-main, .njap-nav-text-sub {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+  </style>
+
+</head>
+<body class="min-h-full flex flex-col bg-brand-light">
+<div hidden=""><!--$--><!--/$--></div><div class="fixed top-0 left-0 right-0 z-50 h-[45px] overflow-hidden flex items-center marquee-bar"><div class="marquee-track whitespace-nowrap"><span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12"><span class="opacity-60 mr-3">✦</span>의료접근포탈: &quot;비영리기관(한인 커뮤니티센터)들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료시스템 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot;<span class="opacity-60 ml-3">✦</span></span><span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12"><span class="opacity-60 mr-3">✦</span>의료접근포탈: &quot;비영리기관(한인 커뮤니티센터)들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료시스템 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot;<span class="opacity-60 ml-3">✦</span></span><span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12"><span class="opacity-60 mr-3">✦</span>의료접근포탈: &quot;비영리기관(한인 커뮤니티센터)들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료시스템 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot;<span class="opacity-60 ml-3">✦</span></span><span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12"><span class="opacity-60 mr-3">✦</span>의료접근포탈: &quot;비영리기관(한인 커뮤니티센터)들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료시스템 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot;<span class="opacity-60 ml-3">✦</span></span><span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12"><span class="opacity-60 mr-3">✦</span>의료접근포탈: &quot;비영리기관(한인 커뮤니티센터)들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료시스템 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot;<span class="opacity-60 ml-3">✦</span></span><span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12"><span class="opacity-60 mr-3">✦</span>의료접근포탈: &quot;비영리기관(한인 커뮤니티센터)들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료시스템 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot;<span class="opacity-60 ml-3">✦</span></span><span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12"><span class="opacity-60 mr-3">✦</span>의료접근포탈: &quot;비영리기관(한인 커뮤니티센터)들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료시스템 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot;<span class="opacity-60 ml-3">✦</span></span><span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12"><span class="opacity-60 mr-3">✦</span>의료접근포탈: &quot;비영리기관(한인 커뮤니티센터)들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료시스템 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot;<span class="opacity-60 ml-3">✦</span></span></div></div><nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/80 backdrop-blur-sm nav-top-offset"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div class="flex items-center justify-between h-16"><a class="flex items-center cursor-pointer njap-brand-link flex-shrink-0 group" href="/ko/" onclick="navigateToHome(event); return false;" title="NJ Access Portal · 뉴저지 한인 의료접근포털">
+          <svg class="h-8 sm:h-10 md:h-11 w-auto object-contain transition-transform group-hover:scale-102" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NJ Access Portal · 뉴저지 한인 의료접근포털" style="overflow: visible;">
+            <title>NJ Access Portal · 뉴저지 한인 의료접근포털</title>
+            <!-- Icon Mark (Door + Key + NJAP) -->
+            <g transform="translate(4, 2) scale(0.56)" stroke-linecap="round" stroke-linejoin="round">
+              <!-- Door Frame & NJAP Text -->
+              <g class="njap-nav-door" stroke="#1E3A8A">
+                <line x1="20" y1="12" x2="20" y2="88" stroke-width="3.5" />
+                <rect x="25" y="12" width="55" height="76" rx="2" stroke-width="4" fill="none" />
+                <polyline points="25,16 52,25 52,36" stroke-width="3.5" />
+                <text x="52.5" y="81" font-family="'Times New Roman', serif" font-size="13.5" font-weight="900" letter-spacing="1.5" fill="#1E3A8A" stroke="none" text-anchor="middle">NJAP</text>
+              </g>
+              
+              <!-- Keyhole -->
+              <path class="njap-nav-keyhole" d="M 43,45 A 7,7 0 1,1 53,45 L 56,64 L 40,64 Z" stroke="#DC2626" stroke-width="3.5" fill="none" />
+              
+              <!-- Key: enters from right side into the door -->
+              <g class="njap-nav-key">
+                <circle cx="74" cy="45" r="6.5" stroke="#DC2626" stroke-width="3.5" fill="none" />
+                <line x1="47" y1="45" x2="67.5" y2="45" stroke="#DC2626" stroke-width="3.5" />
+                <line x1="49" y1="45" x2="49" y2="49" stroke="#DC2626" stroke-width="3.5" />
+                <line x1="53" y1="45" x2="53" y2="48" stroke="#DC2626" stroke-width="3" />
+              </g>
+            </g>
+
+            <!-- Typography: slides in from right after key enters -->
+            <g class="njap-nav-text-main">
+              <text x="64" y="27" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="18" font-weight="900" fill="#0B192C" letter-spacing="-0.5">NJ Access Portal</text>
+            </g>
+            <g class="njap-nav-text-sub">
+              <text x="64" y="44" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="10.5" font-weight="600" fill="#64748B" letter-spacing="0.2">뉴저지 한인 의료접근포털</text>
+            </g>
+          </svg>
+        </a><div class="hidden md:flex items-center" style="display: flex; align-items: center; gap: 26px;"><a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/">홈</a><a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/blog">뉴스</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/forum">커뮤니티 포럼</a><a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/medicare">메디케어 &amp; ACA</a><a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/about">소개</a></div><div class="flex items-center gap-4"><button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors" aria-label="Menu"><div class="w-5 h-4 flex flex-col justify-between"><span class="block h-0.5 bg-brand-dark rounded-full transition-all duration-300 "></span><span class="block h-0.5 bg-brand-dark rounded-full transition-all duration-300 "></span><span class="block h-0.5 bg-brand-dark rounded-full transition-all duration-300 "></span></div></button></div></div></div><div class="md:hidden overflow-hidden transition-all duration-300 max-h-0 opacity-0"><div class="bg-white/95 backdrop-blur-md border-t border-brand-border px-4 py-4 flex flex-col gap-3"><a class="font-sans text-sm font-medium text-brand-dark hover:text-brand-blue py-2 border-b border-brand-border/50 transition-colors" href="/ko/">홈</a><a class="font-sans text-sm font-medium text-brand-dark hover:text-brand-blue py-2 border-b border-brand-border/50 transition-colors" href="/ko/blog">뉴스</a><a class="font-sans text-sm font-medium text-brand-dark hover:text-brand-blue py-2 border-b border-brand-border/50 transition-colors" href="/ko/medicare">메디케어 &amp; ACA</a><a class="font-sans text-sm font-medium text-brand-dark hover:text-brand-blue py-2 border-b border-brand-border/50 transition-colors" href="/ko/about">소개</a></div></div></nav><div class="h-[109px]"></div><main class="flex-1"><div class="next-err-wrap"><div><style>body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}</style><h1 class="next-error-h1 next-err-h1-wrap">404</h1><div class="next-err-h2-wrap"><h2 class="next-err-h2-text">This page could not be found.</h2></div></div></div><!--$--><!--/$--></main><footer class="bg-brand-darker text-white"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-10"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10"><div class="lg:col-span-2"><a class="inline-flex items-center mb-4 group cursor-pointer njap-brand-link" href="/ko/" onclick="navigateToHome(event); return false;" title="NJ Access Portal · 뉴저지 한인 의료접근포털">
+            <img src="/ko/logo-white.png" alt="NJ Access Portal · 뉴저지 한인 의료접근포털" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
+          </a><p class="text-sm text-white/60 font-sans leading-relaxed max-w-xs mb-6">뉴저지 한인 커뮤니티를 위한 의료 접근 및 건강 정보 포털. 메디케어, ACA, 의료 상담을 한국어로 제공합니다.</p><div><p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-3">뉴스레터 구독</p><form class="flex gap-2"><input type="email" placeholder="이메일 주소" class="flex-1 text-sm font-sans bg-white/10 border border-white/20 rounded-full px-4 py-2 text-white placeholder-white/40 outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all" value=""/><button type="submit" class="text-sm font-sans font-medium bg-brand-gradient text-white px-4 py-2 rounded-full hover:opacity-90 transition-opacity whitespace-nowrap">구독</button></form></div></div><div><p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">정보</p><ul class="space-y-2.5"><li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/">홈</a></li><li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/about">소개</a></li><li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/blog">건강 뉴스</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/forum">커뮤니티 포럼</a></li></ul></div><div><p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">의료 가이드</p><ul class="space-y-2.5"><li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/medicare">메디케어 안내</a></li><li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/medicare#aca">ACA 보험</a></li><li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/medicare#faq">자주 묻는 질문</a></li></ul></div><div><p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">스마트 의료 도구</p><ul class="space-y-2.5"><li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/matcher">보험 자격 진단</a></li><li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/calculator">보조금 계산기</a></li><li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/dictionary">의학 용어 사전</a></li></ul></div></div><div class="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4"><div class="text-xs font-sans text-white/30 max-w-2xl leading-relaxed"><span class="font-semibold text-white/40">⚠ 의료 면책 조항:</span> 이 웹사이트의 정보는 교육 목적으로만 제공됩니다. 의료 결정은 반드시 자격을 갖춘 의료 전문가와 상담하십시오.</div><p class="text-xs font-sans text-white/30 whitespace-nowrap">© 2026 NJ Access Portal · 뉴저지 한인 의료접근센터</p></div></div></footer>
+
+  <script src="/ko/js/cms-client.js?v=3.6.0"></script>
+  <script src="/ko/js/fixes.js?v=6.0.0"></script>
+</body>
+</html>

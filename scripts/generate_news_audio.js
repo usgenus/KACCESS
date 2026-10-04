@@ -24,9 +24,14 @@ function cleanArticleBody(content) {
   text = text.replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '$1');
   // Strip URLs
   text = text.replace(/https?:\/\/\S+/gi, '');
-  // Skip words in parentheses: both ASCII () and full-width （）
-  text = text.replace(/\([^)]*\)/g, ' ');
-  text = text.replace(/（[^）]*）/g, ' ');
+
+  // Skip words inside parentheses without breaking trailing Korean particles
+  const particles = '(?:은|는|이|가|을|를|의|에|에서|에서는|에도|에만|에의|에게|으로|로|으로는|로는|으로도|로도|와|과|도|만|뿐|부터|까지|이나|나|이며|며|이란|란|이라|라|라서|이라서|처럼|같이|마저|조차)';
+  text = text.replace(new RegExp('\\s*\\([^)]*\\)(?=' + particles + ')', 'gu'), '');
+  text = text.replace(new RegExp('\\s*（[^）]*）(?=' + particles + ')', 'gu'), '');
+  text = text.replace(/\s*\([^)]*\)/gu, ' ');
+  text = text.replace(/\s*（[^）]*）/gu, ' ');
+
   // Sanitize characters that break SSML/XML
   text = text.replace(/[《》]/g, '"');
   text = text.replace(/&/g, ' 그리고 ');

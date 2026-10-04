@@ -12,11 +12,11 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Healthcare Access Portal — 포털 콘텐츠 관리자 CMS</title>
+  <title>NJ Access Portal · 뉴저지 한인 의료접근포털</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="/ko/admin/admin.css?v=<?= time() ?>">
+  <link rel="stylesheet" href="/admin/admin.css?v=<?= time() ?>">
   <script>
     tailwind.config = {
       theme: {
@@ -45,13 +45,13 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
   <header class="bg-slate-900/90 border-b border-slate-800 backdrop-blur-md sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <a href="/ko/admin/" class="flex items-center gap-3 group">
+        <a href="/admin/" class="flex items-center gap-3 group">
           <div class="w-10 h-10 rounded-xl bg-slate-950 border border-slate-700/80 flex items-center justify-center p-1.5 shadow-md group-hover:scale-105 transition-transform text-white">
-            <img src="/ko/logo-icon.svg" alt="NJAP Logo" class="w-full h-full object-contain filter invert brightness-200">
+            <img src="/logo-icon.svg" alt="NJAP Logo" class="w-full h-full object-contain filter invert brightness-200">
           </div>
           <div>
             <div class="font-extrabold text-base tracking-tight text-white flex items-center gap-2">
-              Healthcare Access Portal
+              NJ Access Portal
               <span class="text-[10px] bg-red-600/90 text-white font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">CMS 2.0</span>
             </div>
             <p class="text-[11px] text-slate-400">포털 실시간 통합 콘텐츠 관리 · NJAP</p>
@@ -94,7 +94,7 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
 
       <!-- Right Action Tools -->
       <div class="flex items-center gap-3">
-        <a href="/ko/" target="_blank" class="text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-3.5 py-2 rounded-xl transition-all flex items-center gap-1.5 shadow-sm">
+        <a href="/" target="_blank" class="text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-3.5 py-2 rounded-xl transition-all flex items-center gap-1.5 shadow-sm">
           <span>사이트 보기</span>
           <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-slate-400"></i>
         </a>
@@ -659,12 +659,12 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label class="block font-bold text-slate-300 mb-1.5">버튼 클릭 이동 링크 (Link URL)</label>
-            <input type="text" id="billboard2-linkurl-input" name="linkUrl" value="/tool"
+            <input type="text" id="billboard2-linkurl-input" name="linkUrl" value="/calculator"
               class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-indigo-500">
           </div>
           <div>
             <label class="block font-bold text-slate-300 mb-1.5">버튼 표시 문구 (Button Text)</label>
-            <input type="text" id="billboard2-linktext-input-2" name="linkText" value="환자도우미 바로가기 →"
+            <input type="text" id="billboard2-linktext-input-2" name="linkText" value="바로가기 →"
               class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-indigo-500">
           </div>
         </div>
@@ -1049,6 +1049,6 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
     <div class="flex-1 text-xs font-semibold" id="toast-msg">작업이 완료되었습니다.</div>
   </div>
 
-  <script src="/ko/admin/admin.js?v=<?= time() ?>"></script>
+  <script src="/admin/admin.js?v=<?= time() ?>"></script>
 </body>
 </html>

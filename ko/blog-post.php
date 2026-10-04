@@ -1,0 +1,1577 @@
+<?php
+require_once __DIR__ . '/api/db.php';
+
+$slug = $_GET['slug'] ?? '';
+$id = $_GET['id'] ?? '';
+
+$db = get_db_data();
+$posts = $db['posts'] ?? [];
+
+$post = null;
+$prevPost = null;
+$nextPost = null;
+$relatedPosts = [];
+
+if ($slug || $id) {
+    foreach ($posts as $idx => $p) {
+        if (($slug && ($p['slug'] ?? '') === $slug) || ($id && ($p['id'] ?? '') === $id)) {
+            $post = $p;
+            $prevPost = $posts[$idx + 1] ?? null;
+            $nextPost = $posts[$idx - 1] ?? null;
+            break;
+        }
+    }
+}
+
+if (!$post) {
+    http_response_code(404);
+    include __DIR__ . '/404.html';
+    exit;
+}
+
+// Find 2 related articles
+foreach ($posts as $p) {
+    if (($p['id'] ?? '') !== ($post['id'] ?? '') && count($relatedPosts) < 2) {
+        $relatedPosts[] = $p;
+    }
+}
+
+$title = htmlspecialchars($post['title'] ?? '건강 의료 뉴스');
+$category = htmlspecialchars($post['category'] ?? '의료칼럼');
+$date = htmlspecialchars($post['date'] ?? date('Y-m-d'));
+$author = htmlspecialchars($post['author'] ?? '편집부');
+$readTime = htmlspecialchars($post['readTime'] ?? '3분');
+$excerpt = htmlspecialchars($post['excerpt'] ?? '');
+$images = $post['images'] ?? [];
+if (empty($images) && !empty($post['coverImage'])) {
+    $images = [$post['coverImage']];
+}
+$coverImage = htmlspecialchars(!empty($images[0]) ? $images[0] : ($post['coverImage'] ?: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&q=80&auto=format'));
+$articleImages = array_slice($images, 1);
+$summaryPoints = $post['summaryPoints'] ?? [];
+if (is_string($summaryPoints)) {
+    $trimmed = trim($summaryPoints);
+    if (strpos($trimmed, '[') === 0 || strpos($trimmed, '{') === 0) {
+        $decoded = json_decode($trimmed, true);
+        if (is_array($decoded)) $summaryPoints = $decoded;
+        else $summaryPoints = explode("\n", $summaryPoints);
+    } else {
+        $summaryPoints = explode("\n", $summaryPoints);
+    }
+}
+if (is_array($summaryPoints)) {
+    $cleanPoints = [];
+    foreach ($summaryPoints as $pt) {
+        if (is_array($pt)) {
+            $pt = implode(' ', array_filter($pt, 'is_string'));
+        }
+        if (is_string($pt)) {
+            $t = trim($pt);
+            if ($t !== '' && $t !== '[object Object]' && strpos($t, '[object Object]') === false) {
+                $cleanPoints[] = $t;
+            }
+        }
+    }
+    $summaryPoints = $cleanPoints;
+} else {
+    $summaryPoints = [];
+}
+$videoUrl = $post['videoUrl'] ?? '';
+$content = $post['content'] ?? '';
+$postSlug = htmlspecialchars($post['slug'] ?? ($post['id'] ?? 'default'));
+$audioSlug = ($post['slug'] ?? '') ?: ($post['id'] ?? '');
+$audioCandidates = [
+    __DIR__ . '/uploads/audio/' . $audioSlug . '.mp3',
+    dirname(__DIR__) . '/uploads/audio/' . $audioSlug . '.mp3',
+    (defined('PERSISTENT_ROOT') ? PERSISTENT_ROOT . '/uploads/audio/' . $audioSlug . '.mp3' : ''),
+    dirname(__DIR__, 2) . '/uploads/audio/' . $audioSlug . '.mp3'
+];
+$audioFound = false;
+$audioMtime = 0;
+foreach ($audioCandidates as $ac) {
+    if (!empty($ac) && file_exists($ac) && filesize($ac) > 500) {
+        $audioFound = true;
+        $audioMtime = filemtime($ac);
+        break;
+    }
+}
+$audioUrl = $audioFound ? ('/uploads/audio/' . rawurlencode($audioSlug) . '.mp3?v=' . ($audioMtime ?: time())) : '';
+
+function render_article_content($content, $allImages = [], &$usedImages = []) {
+    if (empty($content)) return '';
+
+    // Standardize newlines
+    $content = str_replace(["\r\n", "\r"], "\n", $content);
+
+    // If it contains existing full HTML block tags
+    $hasBlockHtml = preg_match('~<(p|div|h1|h2|h3|h4|ul|ol|blockquote|table|figure)[^>]*>~i', $content);
+    if ($hasBlockHtml) {
+        return strip_tags($content, '<h1><h2><h3><h4><h5><h6><p><br><hr><strong><b><em><i><u><strike><del><s><span><mark><big><small><blockquote><ul><ol><li><a><img><div><figure><figcaption><table><thead><tbody><tr><th><td><code><pre>');
+    }
+
+    $formatInline = function($str) {
+        $str = strip_tags($str, '<strong><b><em><i><u><mark><big><small><span><a><code><del><strike><br><hr>');
+        
+        // Markdown bold **text** or __text__
+        $str = preg_replace('~\*\*(.+?)\*\*~s', '<strong class="font-bold text-slate-950">$1</strong>', $str);
+        $str = preg_replace('~__(.+?)__~s', '<strong class="font-bold text-slate-950">$1</strong>', $str);
+        
+        // Markdown highlight ==text==
+        $str = preg_replace('~==(.+?)==~s', '<mark class="bg-yellow-200 text-slate-950 px-1.5 py-0.5 rounded font-bold shadow-2xs">$1</mark>', $str);
+        
+        // Markdown large text ++text++
+        $str = preg_replace('~\+\+(.+?)\+\+~s', '<span class="text-lg sm:text-xl font-bold text-slate-950 leading-relaxed">$1</span>', $str);
+
+        // Markdown small text --text--
+        $str = preg_replace('~--(.+?)--~s', '<span class="text-xs sm:text-sm text-slate-500 font-normal leading-normal">$1</span>', $str);
+        
+        // Markdown italic (single asterisk only)
+        $str = preg_replace('~(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)~s', '<em class="italic text-slate-700">$1</em>', $str);
+
+        // Normalize mark, big, and small tags if present
+        $str = preg_replace('~<mark(?:\s+[^>]*)?>~i', '<mark class="bg-yellow-200 text-slate-950 px-1.5 py-0.5 rounded font-bold shadow-2xs">', $str);
+        $str = preg_replace('~<big>~i', '<span class="text-lg sm:text-xl font-bold text-slate-950">', $str);
+        $str = preg_replace('~</big>~i', '</span>', $str);
+        $str = preg_replace('~<small>~i', '<span class="text-xs sm:text-sm text-slate-500 font-normal">', $str);
+        $str = preg_replace('~</small>~i', '</span>', $str);
+
+        return $str;
+    };
+
+    // Pre-process Special Box (:::box ... :::)
+    $content = preg_replace_callback('~:::box\s*(.*?)\s*:::~s', function($matches) use ($formatInline) {
+        $inner = trim($matches[1]);
+        $lines = explode("\n", $inner);
+        $formattedLines = array_map(function($l) use ($formatInline) {
+            return $formatInline(trim($l));
+        }, $lines);
+        $body = implode('<br>', $formattedLines);
+        return "\n\n<DIV_BOX>" . $body . "</DIV_BOX>\n\n";
+    }, $content);
+
+    // Resolve shorthand [사진1], [사진 1], [사진1: 캡션] or [PHOTO1]
+    $content = preg_replace_callback('~\[(?:사진|PHOTO)\s*([0-9]+)(?:\s*:\s*([^\]]+))?\]~u', function($matches) use ($allImages, &$usedImages) {
+        $idx = intval($matches[1]) - 1;
+        $url = $allImages[$idx] ?? '';
+        $caption = isset($matches[2]) ? trim($matches[2]) : ('관련 사진 #' . ($idx + 1));
+        if (!empty($url)) {
+            $usedImages[] = $url;
+            return '![' . $caption . '](' . $url . ')';
+        }
+        return '';
+    }, $content);
+
+    // Pre-process In-text Centered Images (![caption](url))
+    $content = preg_replace_callback('~!\[(.*?)\]\((.*?)\)~s', function($matches) use (&$usedImages) {
+        $caption = htmlspecialchars(trim($matches[1]));
+        $url = htmlspecialchars(trim($matches[2]));
+        $usedImages[] = $url;
+        $captionHtml = !empty($caption) ? '<figcaption class="text-xs text-slate-500 font-medium mt-2.5 text-center">▲ ' . $caption . '</figcaption>' : '';
+        $fig = '<figure class="my-8 mx-auto max-w-2xl text-center flex flex-col items-center"><div class="rounded-2xl overflow-hidden shadow-md border border-slate-200 bg-slate-50 w-full"><img src="' . $url . '" alt="' . $caption . '" class="w-full h-auto max-h-[460px] object-cover mx-auto"></div>' . $captionHtml . '</figure>';
+        return "\n\n<DIV_FIG>" . $fig . "</DIV_FIG>\n\n";
+    }, $content);
+
+    $lines = explode("\n", $content);
+    $html = '';
+    $inList = false;
+    $inQuote = false;
+    $quoteBuffer = [];
+    $paraBuffer = [];
+
+    $flushPara = function() use (&$paraBuffer, &$html, $formatInline) {
+        if (!empty($paraBuffer)) {
+            $joined = implode('<br>', $paraBuffer);
+            $formatted = $formatInline($joined);
+            $html .= '<p class="leading-relaxed text-slate-800 text-base sm:text-lg mb-6">' . $formatted . '</p>';
+            $paraBuffer = [];
+        }
+    };
+
+    $flushQuote = function() use (&$quoteBuffer, &$html, $formatInline) {
+        if (!empty($quoteBuffer)) {
+            $joined = implode('<br>', $quoteBuffer);
+            $formatted = $formatInline($joined);
+            $html .= '<blockquote class="border-l-4 border-brand-blue pl-4 py-3 my-6 bg-blue-50/70 rounded-r-2xl font-medium text-slate-800 italic text-base sm:text-lg shadow-2xs">' . $formatted . '</blockquote>';
+            $quoteBuffer = [];
+        }
+    };
+
+    foreach ($lines as $line) {
+        $trimmed = trim($line);
+        if ($trimmed === '') {
+            if ($inList) { $html .= '</ul>'; $inList = false; }
+            if ($inQuote) { $flushQuote(); $inQuote = false; }
+            $flushPara();
+            continue;
+        }
+
+        // Check for pre-processed Box
+        if (strpos($trimmed, '<DIV_BOX>') !== false) {
+            if ($inList) { $html .= '</ul>'; $inList = false; }
+            if ($inQuote) { $flushQuote(); $inQuote = false; }
+            $flushPara();
+            $boxContent = str_replace(['<DIV_BOX>', '</DIV_BOX>'], '', $trimmed);
+            $html .= '<div class="my-8 p-6 rounded-2xl bg-gradient-to-br from-blue-50/90 via-slate-50 to-indigo-50/70 border-2 border-brand-blue/30 shadow-sm text-slate-800"><div class="flex items-center gap-2 mb-2.5 text-brand-blue font-extrabold text-sm tracking-wide"><span class="w-2.5 h-2.5 rounded-full bg-brand-blue animate-pulse"></span><span>📢 특별 안내 / 중요 공지</span></div><div class="text-base sm:text-lg leading-relaxed font-medium text-slate-800">' . $boxContent . '</div></div>';
+            continue;
+        }
+
+        // Check for pre-processed Figure
+        if (strpos($trimmed, '<DIV_FIG>') !== false) {
+            if ($inList) { $html .= '</ul>'; $inList = false; }
+            if ($inQuote) { $flushQuote(); $inQuote = false; }
+            $flushPara();
+            $figContent = str_replace(['<DIV_FIG>', '</DIV_FIG>'], '', $trimmed);
+            $html .= $figContent;
+            continue;
+        }
+
+        // Horizontal Rule / Divider (--- or *** or ___)
+        if (preg_match('~^(?:---|___|\*\*\*)$~', $trimmed)) {
+            if ($inList) { $html .= '</ul>'; $inList = false; }
+            if ($inQuote) { $flushQuote(); $inQuote = false; }
+            $flushPara();
+            $html .= '<hr class="my-8 border-t-2 border-slate-200">';
+            continue;
+        }
+
+        // Heading 3 (###)
+        if (preg_match('~^###\s+(.*)$~', $trimmed, $m)) {
+            if ($inList) { $html .= '</ul>'; $inList = false; }
+            if ($inQuote) { $flushQuote(); $inQuote = false; }
+            $flushPara();
+            $html .= '<h3 class="font-serif text-xl sm:text-2xl font-bold text-slate-900 mt-8 mb-3">' . $formatInline($m[1]) . '</h3>';
+            continue;
+        }
+        // Heading 2 (##)
+        if (preg_match('~^##\s+(.*)$~', $trimmed, $m)) {
+            if ($inList) { $html .= '</ul>'; $inList = false; }
+            if ($inQuote) { $flushQuote(); $inQuote = false; }
+            $flushPara();
+            $html .= '<h2 class="font-serif text-2xl sm:text-3xl font-extrabold text-slate-950 mt-10 mb-4 pb-2 border-b border-slate-200">' . $formatInline($m[1]) . '</h2>';
+            continue;
+        }
+        // Heading 1 (#)
+        if (preg_match('~^#\s+(.*)$~', $trimmed, $m)) {
+            if ($inList) { $html .= '</ul>'; $inList = false; }
+            if ($inQuote) { $flushQuote(); $inQuote = false; }
+            $flushPara();
+            $html .= '<h2 class="font-serif text-2xl sm:text-3xl font-black text-slate-950 mt-10 mb-4 pb-2 border-b border-slate-200">' . $formatInline($m[1]) . '</h2>';
+            continue;
+        }
+
+        // Quote
+        if (strpos($trimmed, '>') === 0) {
+            if ($inList) { $html .= '</ul>'; $inList = false; }
+            $flushPara();
+            $inQuote = true;
+            $quoteBuffer[] = trim(substr($trimmed, 1));
+            continue;
+        } elseif ($inQuote) {
+            $flushQuote();
+            $inQuote = false;
+        }
+
+        // Bullet List
+        if (preg_match('~^[-*•]\s+(.*)$~', $trimmed, $m)) {
+            if ($inQuote) { $flushQuote(); $inQuote = false; }
+            $flushPara();
+            if (!$inList) {
+                $html .= '<ul class="space-y-2.5 my-5 pl-2">';
+                $inList = true;
+            }
+            $html .= '<li class="flex items-start gap-3 text-slate-800 text-base sm:text-lg"><span class="text-red-600 font-black leading-none mt-1.5 text-base">•</span><span class="flex-1">' . $formatInline($m[1]) . '</span></li>';
+            continue;
+        } elseif ($inList) {
+            $html .= '</ul>';
+            $inList = false;
+        }
+
+        $paraBuffer[] = $trimmed;
+    }
+
+    if ($inList) { $html .= '</ul>'; }
+    if ($inQuote) { $flushQuote(); }
+    $flushPara();
+
+    return $html;
+}
+
+$canonicalUrl = 'https://njaccessportal.com/blog/' . rawurlencode($slug ?: ($post['id'] ?? ''));
+$fullCoverUrl = (strpos($coverImage, 'http') === 0) ? $coverImage : 'https://njaccessportal.com/' . ltrim($coverImage, '/');
+$seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료접근센터(NJ Healthcare Access Center) 건강 의료 전문 리포트');
+?>
+<!DOCTYPE html>
+<html lang="ko" class="h-full antialiased">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title><?= $title ?> | 뉴저지 의료접근센터 · NJ Healthcare Access Center</title>
+  <meta name="description" content="<?= $seoDescription ?>" />
+  <meta name="keywords" content="<?= $title ?>, <?= $category ?>, nj healthcare access portal, nj healthcare access center, healthcare access center, 뉴저지 의료접근센터, 의료접근, 의료접근센터, 뉴저지 한인 의료, 의학 리포트, 건강 정보" />
+  <link rel="canonical" href="https://njaccessportal.com/blog/<?= htmlspecialchars($slug ?: $id) ?>" />
+" />
+" />
+" />
+
+  <!-- OpenGraph / Facebook / KakaoTalk -->
+  <meta property="og:site_name" content="NJ Access Portal · 뉴저지 한인 의료접근포털" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="<?= $canonicalUrl ?>" />
+  <meta property="og:title" content="<?= $title ?> | 뉴저지 의료접근센터 (NJ Healthcare Access Center)" />
+  <meta property="og:description" content="<?= $seoDescription ?>" />
+  <meta property="og:image" content="<?= $fullCoverUrl ?>" />
+  <meta property="article:published_time" content="<?= date('c', strtotime($post['date'] ?? 'now')) ?>" />
+  <meta property="article:section" content="<?= $category ?>" />
+  <meta property="article:author" content="<?= $author ?>" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="<?= $title ?> | 뉴저지 의료접근센터" />
+  <meta name="twitter:description" content="<?= $seoDescription ?>" />
+  <meta name="twitter:image" content="<?= $fullCoverUrl ?>" />
+
+  <!-- Schema.org JSON-LD Structured Data for Google Search & AI Search -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": <?= json_encode($canonicalUrl, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>
+    },
+    "headline": <?= json_encode($post['title'] ?? '', JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>,
+    "description": <?= json_encode($seoDescription, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>,
+    "image": [<?= json_encode($fullCoverUrl, JSON_UNESCAPED_SLASHES) ?>],
+    "datePublished": "<?= date('c', strtotime($post['date'] ?? 'now')) ?>",
+    "dateModified": "<?= date('c', strtotime($post['updatedAt'] ?? ($post['date'] ?? ($post['createdAt'] ?? 'now')))) ?>",
+    "author": {
+      "@type": "Person",
+      "name": <?= json_encode($author, JSON_UNESCAPED_UNICODE) ?>
+    },
+    "publisher": {
+      "@type": "MedicalOrganization",
+      "name": "뉴저지 의료접근센터 (NJ Healthcare Access Center)",
+      "alternateName": ["NJ Access Portal", "Healthcare Access Center", "뉴저지 의료접근센터", "의료접근센터", "의료접근"],
+      "url": "https://njaccessportal.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://njaccessportal.com/logo-icon.svg"
+      }
+    },
+    "articleSection": <?= json_encode($category, JSON_UNESCAPED_UNICODE) ?>,
+    "keywords": <?= json_encode($category . ', nj healthcare access portal, nj healthcare access center, healthcare access center, 뉴저지 의료접근센터, 의료접근, 의료접근센터, 뉴저지 한인 건강, 의학 뉴스', JSON_UNESCAPED_UNICODE) ?>
+  }
+  </script>
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/_next/static/chunks/1fosv8xgmgdeu.css" />
+
+  <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
+  <link rel="icon" href="/favicon.ico?v=2" sizes="16x16 32x32 48x48" type="image/x-icon" />
+  <link rel="icon" href="/favicon-192.png?v=2" sizes="192x192" type="image/png" />
+  <link rel="icon" href="/favicon-512.png?v=2" sizes="512x512" type="image/png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2" />
+
+  <style>
+    :root, html, body {
+      font-family: "Pretendard Variable", Pretendard, "Noto Sans KR", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif !important;
+    }
+    .bg-brand-gradient {
+      background: linear-gradient(135deg, #0f3a9e 0%, #5e0f73 100%) !important;
+    }
+  </style>
+
+  <!-- Logo Animation Styles -->
+  <style id="njap-logo-anim-styles">
+    .njap-brand-link {
+      display: inline-flex !important;
+      align-items: center !important;
+      flex-shrink: 0 !important;
+    }
+    .njap-brand-link img,
+    .njap-brand-link svg {
+      height: 52px !important;
+      max-height: 54px !important;
+      width: auto !important;
+      object-fit: contain !important;
+    }
+    @media (max-width: 640px) {
+      .njap-brand-link img,
+      .njap-brand-link svg {
+        height: 40px !important;
+        max-height: 42px !important;
+        width: auto !important;
+      }
+    }
+    @media (max-width: 375px) {
+      .njap-brand-link img,
+      .njap-brand-link svg {
+        height: 34px !important;
+        max-height: 36px !important;
+      }
+    }
+
+    @keyframes njapNavKeySlide {
+      0% {
+        opacity: 0;
+        transform: translate(670px, 0);
+      }
+      15% {
+        opacity: 1;
+      }
+      75% {
+        transform: translate(0, 0);
+      }
+      86% {
+        transform: translate(-3.5px, 0);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+    }
+
+    @keyframes njapNavKeyholePulse {
+      0%, 70% {
+        stroke: #DC2626;
+        filter: drop-shadow(0 0 0 transparent);
+      }
+      82% {
+        stroke: #EF4444;
+        filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.85));
+      }
+      100% {
+        stroke: #DC2626;
+        filter: drop-shadow(0 0 0 transparent);
+      }
+    }
+
+    @keyframes njapNavDoorAppear {
+      0% {
+        opacity: 0;
+        transform: scale(0.96);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes njapNavTextMain {
+      0% {
+        opacity: 0;
+        transform: translate(45px, 0);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+    }
+
+    @keyframes njapNavTextSub {
+      0% {
+        opacity: 0;
+        transform: translate(35px, 0);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+    }
+
+    .njap-nav-door {
+      transform-origin: 40px 45px;
+      animation: njapNavDoorAppear 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .njap-nav-key {
+      animation: njapNavKeySlide 2.18s cubic-bezier(0.22, 1, 0.36, 1) 0.22s both;
+    }
+
+    .njap-nav-keyhole {
+      animation: njapNavKeyholePulse 2.4s ease-out 0.22s both;
+    }
+
+    .njap-nav-text-main {
+      animation: njapNavTextMain 1.0s cubic-bezier(0.16, 1, 0.3, 1) 2.18s both;
+    }
+
+    .njap-nav-text-sub {
+      animation: njapNavTextSub 1.0s cubic-bezier(0.16, 1, 0.3, 1) 2.48s both;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .njap-nav-door, .njap-nav-key, .njap-nav-keyhole, .njap-nav-text-main, .njap-nav-text-sub {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+  </style>
+
+</head>
+<body class="min-h-full flex flex-col bg-brand-light">
+
+  <!-- Header Nav -->
+  <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/90 backdrop-blur-md border-b border-brand-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a class="flex items-center cursor-pointer njap-brand-link flex-shrink-0 group" href="/" onclick="navigateToHome(event); return false;" title="NJ Access Portal · 뉴저지 한인 의료접근포털">
+          <svg class="h-8 sm:h-10 md:h-11 w-auto object-contain transition-transform group-hover:scale-102" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NJ Access Portal · 뉴저지 한인 의료접근포털" style="overflow: visible;">
+            <title>NJ Access Portal · 뉴저지 한인 의료접근포털</title>
+            <!-- Icon Mark (Door + Key + NJAP) -->
+            <g transform="translate(4, 2) scale(0.56)" stroke-linecap="round" stroke-linejoin="round">
+              <!-- Door Frame & NJAP Text -->
+              <g class="njap-nav-door" stroke="#1E3A8A">
+                <line x1="20" y1="12" x2="20" y2="88" stroke-width="3.5" />
+                <rect x="25" y="12" width="55" height="76" rx="2" stroke-width="4" fill="none" />
+                <polyline points="25,16 52,25 52,36" stroke-width="3.5" />
+                <text x="52.5" y="81" font-family="'Times New Roman', serif" font-size="13.5" font-weight="900" letter-spacing="1.5" fill="#1E3A8A" stroke="none" text-anchor="middle">NJAP</text>
+              </g>
+              
+              <!-- Keyhole -->
+              <path class="njap-nav-keyhole" d="M 43,45 A 7,7 0 1,1 53,45 L 56,64 L 40,64 Z" stroke="#DC2626" stroke-width="3.5" fill="none" />
+              
+              <!-- Key: enters from right side into the door -->
+              <g class="njap-nav-key">
+                <circle cx="74" cy="45" r="6.5" stroke="#DC2626" stroke-width="3.5" fill="none" />
+                <line x1="47" y1="45" x2="67.5" y2="45" stroke="#DC2626" stroke-width="3.5" />
+                <line x1="49" y1="45" x2="49" y2="49" stroke="#DC2626" stroke-width="3.5" />
+                <line x1="53" y1="45" x2="53" y2="48" stroke="#DC2626" stroke-width="3" />
+              </g>
+            </g>
+
+            <!-- Typography: slides in from right after key enters -->
+            <g class="njap-nav-text-main">
+              <text x="64" y="27" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="18" font-weight="900" fill="#0B192C" letter-spacing="-0.5">NJ Access Portal</text>
+            </g>
+            <g class="njap-nav-text-sub">
+              <text x="64" y="44" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="10.5" font-weight="600" fill="#64748B" letter-spacing="0.2">뉴저지 한인 의료접근포털</text>
+            </g>
+          </svg>
+        </a>
+        <div class="hidden md:flex items-center" style="display: flex; align-items: center; gap: 26px;">
+          <a class="nav-link pb-0.5 font-medium text-sm text-slate-700 hover:text-brand-blue cursor-pointer" href="/" onclick="navigateToHome(event); return false;">홈</a>
+          <a class="nav-link pb-0.5 font-medium text-sm text-brand-blue font-bold" href="/blog">뉴스</a>
+          <a class="nav-link pb-0.5 font-medium text-sm text-slate-700 hover:text-brand-blue" href="/forum">커뮤니티 포럼</a>
+          <a class="nav-link pb-0.5 font-medium text-sm text-slate-700 hover:text-brand-blue" href="/medicare">메디케어 &amp; ACA</a>
+          <a class="nav-link pb-0.5 font-medium text-sm text-slate-700 hover:text-brand-blue" href="/about">소개</a>
+          <a class="nav-link pb-0.5 font-medium text-sm text-slate-700 hover:text-brand-blue flex flex-col items-center justify-center leading-tight group" href="/engine" target="_self" title="Universal Access Engine (Marketing Client)">
+            <span class="text-[13px] font-bold text-slate-800 group-hover:text-brand-blue tracking-tight">Engine</span>
+            <span class="text-[9px] font-semibold text-slate-400 group-hover:text-brand-blue tracking-tighter -mt-0.5">Marketing Client</span>
+          </a>
+        </div>
+        <div class="flex items-center gap-3">
+          <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity cursor-pointer" title="카카오톡 1:1 상담 바로가기"><img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" /><span class="text-xs sm:text-sm font-bold text-slate-800 hover:text-brand-blue tracking-tight whitespace-nowrap">1:1 상담</span></a>
+          <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors" aria-label="Menu">
+            <div class="w-5 h-4 flex flex-col justify-between">
+              <span class="block h-0.5 bg-brand-dark rounded-full"></span>
+              <span class="block h-0.5 bg-brand-dark rounded-full"></span>
+              <span class="block h-0.5 bg-brand-dark rounded-full"></span>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+                        <div id="mobile-menu-dropdown" class="md:hidden overflow-hidden transition-all duration-300 max-h-0 opacity-0 bg-white/98 backdrop-blur-md border-t border-brand-border px-4 py-3 flex flex-col gap-1" style="-webkit-overflow-scrolling: touch;">
+      <!-- 1. 홈 -->
+      <a href="/" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          <span class="text-[15px]">홈</span>
+        </div>
+        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+
+      <!-- 2. 뉴스 -->
+      <a href="/blog" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-bold text-brand-blue bg-blue-50/70">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-brand-blue shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+          <span class="text-[15px]">뉴스</span>
+        </div>
+        <svg class="w-4 h-4 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+
+      <!-- 2.5. 커뮤니티 포럼 -->
+      <a href="/forum" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>
+          <span class="text-[15px]">커뮤니티 포럼</span>
+        </div>
+        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+
+      <!-- 4. 메디케어 & ACA -->
+      <a href="/medicare" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          <span class="text-[15px]">메디케어 &amp; ACA</span>
+        </div>
+        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+
+      <!-- 6. 소개 -->
+      <a href="/about" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <span class="text-[15px]">소개</span>
+        </div>
+        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+
+      <!-- 7. Engine (Marketing Client) -->
+      <a href="/engine" target="_self" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          <div class="flex flex-col text-left">
+            <span class="text-[15px] font-bold text-slate-800">Engine</span>
+            <span class="text-[10px] font-semibold text-slate-400 leading-none">Marketing Client</span>
+          </div>
+        </div>
+        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+
+      <!-- 카카오톡 1:1 상담 바로가기 -->
+      <div class="pt-2 pb-1">
+        <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3.5 bg-[#FEE500] hover:bg-[#FDD835] active:bg-[#FBC02D] text-[#191919] rounded-xl font-bold text-sm shadow-xs transition-all cursor-pointer">
+          <div class="flex items-center gap-2.5">
+            <img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" />
+            <div class="flex flex-col text-left">
+              <span class="text-sm font-bold leading-tight">카카오톡 1:1 상담 바로가기</span>
+              <span class="text-[11px] font-medium text-black/70">의료 복지 및 건강 상담 실시간 문의</span>
+            </div>
+          </div>
+          <svg class="w-4 h-4 text-black/60 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="h-[109px]"></div>
+
+  <!-- Main Article Content -->
+  <main class="flex-1">
+    <article>
+      <!-- Hero Banner -->
+      <div class="bg-brand-darker text-white">
+        <div class="relative w-full h-72 sm:h-96 overflow-hidden bg-slate-950">
+          <img src="<?= $coverImage ?>" alt="<?= $title ?>" class="object-cover w-full h-full opacity-40">
+          <div class="absolute inset-0 bg-gradient-to-t from-brand-darker via-brand-darker/60 to-transparent"></div>
+        </div>
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 -mt-20 relative z-10">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="tag-pill bg-brand-blue text-white font-bold text-xs px-3.5 py-1 rounded-full shadow"><?= $category ?></span>
+          </div>
+          <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl leading-tight mb-6 text-white font-extrabold tracking-tight">
+            <?= $title ?>
+          </h1>
+          <div class="flex items-center gap-4 text-sm font-sans text-white/70">
+            <div class="flex items-center gap-2">
+              <span class="w-8 h-8 rounded-full bg-brand-gradient flex items-center justify-center text-xs font-bold text-white shadow">편</span>
+              <span><?= $author ?></span>
+            </div>
+            <span>·</span>
+            <span><?= $date ?></span>
+            <span>·</span>
+            <span>⏱ <?= $readTime ?> 읽기</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Audio Reader (Equipped on every post) -->
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-10 mb-2">
+        <div id="njap-audio-player" class="flex items-center gap-3 bg-white/95 backdrop-blur-md border border-slate-200/80 rounded-2xl shadow-lg px-4 py-3">
+          <!-- Play/Pause -->
+          <button id="njap-play-btn" onclick="njapTogglePlay()" title="듣기 / 일시정지"
+            class="flex-shrink-0 w-10 h-10 rounded-full bg-brand-blue hover:bg-brand-dark text-white flex items-center justify-center shadow-md transition-all active:scale-95">
+            <svg id="njap-icon-play" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 ml-0.5"><path d="M8 5.14v14l11-7-11-7z"/></svg>
+            <svg id="njap-icon-pause" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 hidden"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          </button>
+          <!-- Label + Seek -->
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-xs font-bold text-brand-blue tracking-wide flex items-center gap-1">
+                <span>🔊</span> 뉴스 읽어주기
+              </span>
+              <span id="njap-time-display" class="text-[11px] font-mono text-slate-400">0:00 / 0:00</span>
+            </div>
+            <input id="njap-seek" type="range" min="0" max="100" value="0" oninput="njapSeek(this.value)"
+              class="w-full h-1.5 rounded-full accent-brand-blue cursor-pointer" />
+          </div>
+          <!-- Download / Badge -->
+          <?php if (!empty($audioUrl)): ?>
+          <a id="njap-dl-btn" href="<?= htmlspecialchars($audioUrl) ?>" download title="MP3 다운로드"
+            class="flex-shrink-0 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-brand-blue flex items-center justify-center transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
+          </a>
+          <audio id="njap-audio" src="<?= htmlspecialchars($audioUrl) ?>" preload="metadata"></audio>
+          <?php else: ?>
+          <span title="AI 음성 리더" class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 text-brand-blue flex items-center justify-center text-xs">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+          </span>
+          <?php endif; ?>
+        </div>
+      </div>
+      <script>
+        (function() {
+          var audio = document.getElementById('njap-audio');
+          var seekBar = document.getElementById('njap-seek');
+          var timeDisp = document.getElementById('njap-time-display');
+          var iconPlay = document.getElementById('njap-icon-play');
+          var iconPause = document.getElementById('njap-icon-pause');
+          var isPlaying = false;
+          var useSpeech = !audio;
+
+          function fmt(s) {
+            s = Math.floor(s || 0);
+            return Math.floor(s/60) + ':' + ('0' + (s%60)).slice(-2);
+          }
+
+          if (audio) {
+            audio.addEventListener('timeupdate', function() {
+              var pct = audio.duration ? (audio.currentTime / audio.duration * 100) : 0;
+              seekBar.value = pct;
+              timeDisp.textContent = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
+            });
+            audio.addEventListener('ended', function() {
+              iconPlay.classList.remove('hidden');
+              iconPause.classList.add('hidden');
+              isPlaying = false;
+            });
+            audio.addEventListener('error', function() {
+              useSpeech = true;
+            });
+          }
+
+          // Standard audio reading rule: Start strictly from main body, skip title & excerpt
+          var postRawText = <?= json_encode(strip_tags($post['content'] ?? '')) ?>;
+          var speechSentences = [];
+          var speechIndex = 0;
+          var speechTimer = null;
+          var speechElapsed = 0;
+          var estimatedDuration = Math.max(30, Math.round((postRawText || '').length / 7));
+
+          if (useSpeech || !audio) {
+            fetch('/api/audio_generator.php?slug=<?= rawurlencode($audioSlug) ?>').catch(function(){});
+            timeDisp.textContent = '0:00 / ' + fmt(estimatedDuration);
+          }
+
+          function prepareSentences() {
+            var raw = (postRawText || '');
+            // Strip photos, figures, markdown boxes, links, URLs
+            raw = raw.replace(/\[(?:사진|PHOTO)[^\]]*\]/gi, '');
+            raw = raw.replace(/!\[.*?\]\(.*?\)/gs, '');
+            raw = raw.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+            raw = raw.replace(/:::box\s*([\s\S]*?)\s*:::/g, '$1');
+            raw = raw.replace(/https?:\/\/\S+/gi, '');
+            // Skip words inside parentheses without breaking trailing Korean particles
+            var particles = '(?:은|는|이|가|을|를|의|에|에서|에서는|에도|에만|에의|에게|으로|로|으로는|로는|으로도|로도|와|과|도|만|뿐|부터|까지|이나|나|이며|며|이란|란|이라|라|라서|이라서|처럼|같이|마저|조차)';
+            raw = raw.replace(new RegExp('\\s*\\([^)]*\\)(?=' + particles + ')', 'gu'), '');
+            raw = raw.replace(new RegExp('\\s*（[^）]*）(?=' + particles + ')', 'gu'), '');
+            raw = raw.replace(/\s*\([^)]*\)/gu, ' ');
+            raw = raw.replace(/\s*（[^）]*）/gu, ' ');
+            raw = raw.replace(/\s+/g, ' ').trim();
+            var matches = raw.match(/[^.!?\n]+[.!?\n]+/g);
+            speechSentences = matches ? matches.map(function(s){ return s.trim(); }).filter(Boolean) : (raw ? [raw] : []);
+          }
+
+          function speakNextSentence() {
+            if (!isPlaying || speechIndex >= speechSentences.length) {
+              stopSpeech();
+              return;
+            }
+            if (!('speechSynthesis' in window)) return;
+
+            var u = new SpeechSynthesisUtterance(speechSentences[speechIndex]);
+            u.lang = 'ko-KR';
+            u.rate = 1.08; // Normal natural news reader speed
+            var voices = window.speechSynthesis.getVoices();
+            // Strictly prioritize Korean female model voices
+            var koVoice = voices.find(function(v) { 
+              return v.lang && v.lang.startsWith('ko') && /female|여성|yuna|sunhi|heami|soora|jiwon/i.test(v.name); 
+            }) || voices.find(function(v) { 
+              return v.lang && v.lang.startsWith('ko') && !/male|남성|minho|daeho/i.test(v.name); 
+            }) || voices.find(function(v) { 
+              return v.lang && v.lang.startsWith('ko'); 
+            });
+            if (koVoice) u.voice = koVoice;
+
+            u.onend = function() {
+              speechIndex++;
+              if (speechIndex < speechSentences.length && isPlaying) {
+                speakNextSentence();
+              } else {
+                stopSpeech();
+              }
+            };
+            u.onerror = function() {
+              speechIndex++;
+              if (speechIndex < speechSentences.length && isPlaying) {
+                speakNextSentence();
+              } else {
+                stopSpeech();
+              }
+            };
+
+            window.speechSynthesis.speak(u);
+          }
+
+          function startSpeech() {
+            if (!speechSentences.length) prepareSentences();
+            if (speechIndex >= speechSentences.length) speechIndex = 0;
+            isPlaying = true;
+            iconPlay.classList.add('hidden');
+            iconPause.classList.remove('hidden');
+            speakNextSentence();
+
+            if (speechTimer) clearInterval(speechTimer);
+            speechTimer = setInterval(function() {
+              if (isPlaying) {
+                speechElapsed++;
+                var pct = Math.min(100, (speechElapsed / estimatedDuration) * 100);
+                seekBar.value = pct;
+                timeDisp.textContent = fmt(speechElapsed) + ' / ' + fmt(estimatedDuration);
+              }
+            }, 1000);
+          }
+
+          function pauseSpeech() {
+            isPlaying = false;
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+            if (speechTimer) clearInterval(speechTimer);
+            iconPlay.classList.remove('hidden');
+            iconPause.classList.add('hidden');
+          }
+
+          function stopSpeech() {
+            pauseSpeech();
+            speechIndex = 0;
+            speechElapsed = 0;
+            seekBar.value = 0;
+            timeDisp.textContent = '0:00 / ' + fmt(estimatedDuration);
+          }
+
+          window.njapTogglePlay = function() {
+            if (!useSpeech && audio) {
+              if (audio.paused) {
+                audio.play().then(function() {
+                  isPlaying = true;
+                  iconPlay.classList.add('hidden');
+                  iconPause.classList.remove('hidden');
+                }).catch(function() {
+                  useSpeech = true;
+                  startSpeech();
+                });
+              } else {
+                audio.pause();
+                isPlaying = false;
+                iconPlay.classList.remove('hidden');
+                iconPause.classList.add('hidden');
+              }
+            } else {
+              if (!isPlaying) {
+                startSpeech();
+              } else {
+                pauseSpeech();
+              }
+            }
+          };
+
+          window.njapSeek = function(v) {
+            if (!useSpeech && audio && audio.duration) {
+              audio.currentTime = audio.duration * v / 100;
+            } else if (useSpeech) {
+              if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+              speechElapsed = Math.round(estimatedDuration * v / 100);
+              speechIndex = Math.min(speechSentences.length - 1, Math.floor(speechSentences.length * v / 100));
+              timeDisp.textContent = fmt(speechElapsed) + ' / ' + fmt(estimatedDuration);
+              if (isPlaying) {
+                speakNextSentence();
+              }
+            }
+          };
+        })();
+      </script>
+
+      <!-- Body Content -->
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+        
+        <!-- Top Medical Disclaimer Notice -->
+        <div class="mb-8 p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 text-amber-950 text-xs sm:text-[13px] flex items-start gap-3 shadow-2xs">
+          <i class="fa-solid fa-triangle-exclamation text-amber-600 text-sm mt-0.5 shrink-0"></i>
+          <div class="space-y-1">
+            <p class="font-bold text-amber-900">
+              의료 면책 공지 (Medical Disclaimer)
+            </p>
+            <p class="text-amber-800 leading-relaxed font-medium">
+              The material is for informational purposes and does not constitute formal professional or medical advice.
+            </p>
+            <p class="text-amber-700/80 text-[11px] leading-relaxed">
+              본 콘텐츠의 모든 내용은 일반 건강 정보 제공 목적이며 공식적인 전문 진료, 의학적 진단 또는 처방을 대신하지 않습니다.
+            </p>
+          </div>
+        </div>
+
+        <?php if (!empty($excerpt)): ?>
+        <div class="mb-10 p-5 rounded-xl bg-blue-50 border-l-4 border-brand-blue shadow-xs">
+          <p class="font-sans text-brand-dark font-medium leading-relaxed text-base"><?= $excerpt ?></p>
+        </div>
+        <?php endif; ?>
+
+        <?php if (!empty($summaryPoints)): ?>
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 mb-10">
+          <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">핵심 포인트 &amp; 주요 요약</p>
+          <ul class="space-y-2 text-sm text-slate-800 font-medium">
+            <?php foreach ($summaryPoints as $pt): ?>
+              <?php if (trim($pt)): ?>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-red-600 font-bold">•</span>
+                  <span><?= htmlspecialchars($pt) ?></span>
+                </li>
+              <?php endif; ?>
+            <?php endforeach; ?>
+          </ul>
+        </div>
+        <?php endif; ?>
+
+        <?php if (!empty($videoUrl)): ?>
+        <div class="mb-10 rounded-2xl overflow-hidden shadow-lg bg-black aspect-video">
+          <?php if (strpos($videoUrl, '.mp4') !== false): ?>
+            <video src="<?= htmlspecialchars($videoUrl) ?>" controls class="w-full h-full"></video>
+          <?php elseif (preg_match('~(?:youtu\.be/|youtube\.com/(?:embed/|v/|watch\?v=))([\w-]{11})~', $videoUrl, $m)): ?>
+            <iframe src="https://www.youtube.com/embed/<?= $m[1] ?>" class="w-full h-full border-0" allowfullscreen></iframe>
+          <?php endif; ?>
+        </div>
+        <?php endif; ?>
+
+        <?php
+          $usedImages = [];
+          $renderedContentHtml = render_article_content($content, $images, $usedImages);
+          $remainingGalleryImages = array_values(array_filter($articleImages, function($img) use ($usedImages) {
+              return !in_array($img, $usedImages);
+          }));
+        ?>
+        <div class="prose prose-lg max-w-none font-sans text-slate-800 leading-relaxed space-y-5 text-base sm:text-lg">
+          <?= $renderedContentHtml ?>
+        </div>
+
+        <!-- In-Article Photos Gallery (Displays remaining photos not embedded in text) -->
+        <?php if (!empty($remainingGalleryImages)): ?>
+        <div class="my-12 pt-8 border-t border-slate-200/80 space-y-6">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
+            <h3 class="text-sm font-extrabold uppercase tracking-wider text-slate-700">
+              관련 보도 사진 &amp; 의학 인포그래픽 자료 (<?= count($remainingGalleryImages) ?>장)
+            </h3>
+          </div>
+
+          <?php if (count($remainingGalleryImages) === 1): ?>
+            <figure class="rounded-3xl overflow-hidden shadow-lg border border-slate-200/80 bg-slate-50">
+              <img src="<?= htmlspecialchars($remainingGalleryImages[0]) ?>" alt="<?= $title ?> 상세 이미지" class="w-full h-auto object-cover max-h-[520px]">
+            </figure>
+          <?php else: ?>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <?php foreach ($remainingGalleryImages as $idx => $imgUrl): ?>
+                <figure class="group rounded-2xl overflow-hidden shadow-sm hover:shadow-xl border border-slate-200 bg-slate-50 transition-all duration-300">
+                  <div class="relative aspect-4/3 sm:aspect-16/10 overflow-hidden bg-slate-100">
+                    <img src="<?= htmlspecialchars($imgUrl) ?>" alt="<?= $title ?> 관련 사진 <?= $idx + 1 ?>" class="w-full h-full object-cover group-hover:scale-104 transition-transform duration-500">
+                    <div class="absolute bottom-2 right-2 bg-black/60 backdrop-blur-xs text-white text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md">
+                      사진 #<?= $idx + 2 ?>
+                    </div>
+                  </div>
+                </figure>
+              <?php endforeach; ?>
+            </div>
+          <?php endif; ?>
+        </div>
+        <?php endif; ?>
+
+        <!-- Bottom Medical Disclaimer Notice -->
+        <div class="my-10 p-4 rounded-2xl bg-slate-50 border border-slate-200 text-slate-700 text-xs sm:text-[13px] flex items-start gap-3 shadow-2xs">
+          <i class="fa-solid fa-circle-info text-blue-600 text-sm mt-0.5 shrink-0"></i>
+          <div class="space-y-1">
+            <p class="font-bold text-slate-900">
+              의료 면책 안내 (Medical Disclaimer)
+            </p>
+            <p class="text-slate-800 leading-relaxed font-medium">
+              The material is for informational purposes and does not constitute formal professional or medical advice.
+            </p>
+            <p class="text-slate-500 text-[11px] leading-relaxed">
+              본 웹사이트에 게재된 건강 및 의학 정보는 일반 참고용이며, 개인의 구체적인 질환이나 의학적 문제는 반드시 면허를 갖춘 전문 의료진과 직접 상담하시기 바랍니다.
+            </p>
+          </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- COMMENT SECTION (댓글 섹션)                                        -->
+        <!-- ================================================================= -->
+        <section id="comments-section" class="mt-16 pt-10 border-t-2 border-brand-dark font-sans text-brand-dark" data-post-slug="<?= $postSlug ?>">
+          
+          <!-- Header Bar: Title + Count Badge + Sort Buttons -->
+          <div class="flex items-center justify-between mb-6 pb-3 border-b border-brand-border">
+            <div class="flex items-center gap-2">
+              <h2 class="font-serif font-bold text-2xl text-brand-dark">댓글</h2>
+              <span id="comment-total-badge" class="text-sm font-bold text-brand-blue bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-100">0</span>
+            </div>
+            <div class="flex items-center gap-3 text-xs font-medium text-brand-muted">
+              <button id="sort-likes" onclick="setCommentSort('likes')" class="transition-colors text-brand-blue font-bold underline cursor-pointer">순공감순</button>
+              <span>·</span>
+              <button id="sort-newest" onclick="setCommentSort('newest')" class="transition-colors hover:text-brand-dark cursor-pointer text-slate-500">최신순</button>
+              <span>·</span>
+              <button id="sort-oldest" onclick="setCommentSort('oldest')" class="transition-colors hover:text-brand-dark cursor-pointer text-slate-500">과거순</button>
+            </div>
+          </div>
+
+          <!-- Information Notice -->
+          <div class="mb-6 p-3.5 rounded-lg bg-gray-50 border border-gray-200 text-xs text-brand-muted flex items-center gap-2.5">
+            <span class="text-brand-blue text-sm font-bold">ⓘ</span>
+            <span class="leading-relaxed">로그인 없이 닉네임만으로 자유롭게 의견을 남기실 수 있습니다. 타인을 배려하는 따뜻한 댓글을 부탁드립니다.</span>
+          </div>
+
+          <!-- Main Comment Input Form Box -->
+          <form id="main-comment-form" onsubmit="handleMainCommentSubmit(event)" class="mb-10 p-5 rounded-2xl border border-brand-border bg-white shadow-sm">
+            <div class="flex flex-col sm:flex-row gap-3 mb-3">
+              <input type="text" id="comment-nickname" required maxlength="12" placeholder="닉네임 (예: 포트리한인)" class="text-xs p-2.5 rounded-lg border border-brand-border bg-brand-light outline-none focus:border-brand-blue w-full sm:w-48">
+              <input type="password" id="comment-password" maxlength="4" placeholder="비밀번호 4자리 (선택: 삭제용)" class="text-xs p-2.5 rounded-lg border border-brand-border bg-brand-light outline-none focus:border-brand-blue w-full sm:w-52">
+            </div>
+            <div class="relative mb-3">
+              <textarea id="comment-content" required rows="3" maxlength="500" placeholder="따뜻한 댓글을 남겨주세요. (최대 500자)" oninput="updateCommentCharCount(this)" class="w-full text-sm p-3.5 rounded-xl border border-brand-border outline-none focus:border-brand-blue resize-none leading-relaxed"></textarea>
+              <span id="comment-char-count" class="absolute right-3 bottom-3 text-xs text-brand-muted">0 / 500자</span>
+            </div>
+            <div class="flex justify-end">
+              <button type="submit" class="text-xs font-semibold px-6 py-2.5 rounded-full bg-brand-gradient text-white hover:opacity-90 transition-opacity shadow-sm cursor-pointer">댓글 등록</button>
+            </div>
+          </form>
+
+          <!-- Comment List Container -->
+          <div id="comments-list-container" class="space-y-6">
+            <!-- Dynamic comments rendered here via JS -->
+          </div>
+
+        </section>
+
+        <!-- Prev / Next Navigation -->
+        <div class="mt-16 pt-8 border-t border-brand-border grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <?php if ($prevPost): ?>
+          <a class="group flex flex-col gap-1 p-5 rounded-xl bg-brand-light border border-brand-border hover:border-brand-blue hover:bg-white transition-all" href="/blog/<?= htmlspecialchars($prevPost['slug'] ?? $prevPost['id']) ?>">
+            <span class="text-xs font-sans text-brand-muted">← 이전 글</span>
+            <span class="font-serif text-base text-brand-dark line-clamp-2 group-hover:text-brand-blue transition-colors"><?= htmlspecialchars($prevPost['title']) ?></span>
+          </a>
+          <?php endif; ?>
+          <?php if ($nextPost): ?>
+          <a class="group flex flex-col gap-1 p-5 rounded-xl bg-brand-light border border-brand-border hover:border-brand-blue hover:bg-white transition-all text-right sm:col-start-2" href="/blog/<?= htmlspecialchars($nextPost['slug'] ?? $nextPost['id']) ?>">
+            <span class="text-xs font-sans text-brand-muted">다음 글 →</span>
+            <span class="font-serif text-base text-brand-dark line-clamp-2 group-hover:text-brand-blue transition-colors"><?= htmlspecialchars($nextPost['title']) ?></span>
+          </a>
+          <?php endif; ?>
+        </div>
+
+        <!-- Related Articles (관련 기사) -->
+        <?php if (!empty($relatedPosts)): ?>
+        <div class="mt-12">
+          <h2 class="font-serif text-2xl text-brand-dark mb-6 font-bold">관련 기사</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <?php foreach ($relatedPosts as $rp): ?>
+              <?php 
+                $rpCover = !empty($rp['coverImage']) ? $rp['coverImage'] : (!empty($rp['images'][0]) ? $rp['images'][0] : 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&q=80&auto=format');
+                $rpDate = htmlspecialchars($rp['date'] ?? date('Y-m-d'));
+                $rpTitle = htmlspecialchars($rp['title'] ?? '');
+                $rpSlug = htmlspecialchars($rp['slug'] ?? ($rp['id'] ?? ''));
+              ?>
+              <a class="group card-hover block" href="/blog/<?= $rpSlug ?>">
+                <div class="bg-white border border-brand-border rounded-xl overflow-hidden flex gap-4 p-4 hover:shadow-md transition-shadow">
+                  <div class="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-slate-100">
+                    <img src="<?= htmlspecialchars($rpCover) ?>" alt="<?= $rpTitle ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                  </div>
+                  <div class="min-w-0 flex flex-col justify-center">
+                    <p class="text-xs font-sans text-brand-muted mb-1"><?= $rpDate ?></p>
+                    <h3 class="font-serif text-sm text-brand-dark line-clamp-2 group-hover:text-brand-blue transition-colors font-semibold leading-snug"><?= $rpTitle ?></h3>
+                  </div>
+                </div>
+              </a>
+            <?php endforeach; ?>
+          </div>
+        </div>
+        <?php endif; ?>
+
+        <div class="mt-12 text-center">
+          <a href="/blog" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 transition-colors shadow">
+            <span>← 모든 건강 뉴스 목록으로</span>
+          </a>
+        </div>
+
+      </div>
+    </article>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-brand-darker text-white mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-10">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+        <div class="lg:col-span-2">
+          <a class="inline-flex items-center mb-4 group cursor-pointer njap-brand-link" href="/" onclick="navigateToHome(event); return false;" title="NJ Access Portal · 뉴저지 한인 의료접근포털">
+            <img src="/logo-white.png" alt="NJ Access Portal · 뉴저지 한인 의료접근포털" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
+          </a>
+          <p class="text-sm text-white/60 font-sans leading-relaxed max-w-xs mb-6">뉴저지 한인 커뮤니티를 위한 의료 접근 및 건강 정보 포털. 메디케어, ACA, 의료 상담을 한국어로 제공합니다.</p>
+        </div>
+        <div>
+          <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">정보</p>
+          <ul class="space-y-2.5">
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200 cursor-pointer" href="/" onclick="navigateToHome(event); return false;">홈</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/about">소개</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/blog">건강 뉴스</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/forum">커뮤니티 포럼</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">의료 가이드</p>
+          <ul class="space-y-2.5">
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/medicare">메디케어 안내</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/medicare#aca">ACA 보험</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/medicare#faq">자주 묻는 질문</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">스마트 의료 도구</p>
+          <ul class="space-y-2.5">
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/matcher">보험 자격 진단</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/calculator">보조금 계산기</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/dictionary">의학 용어 사전</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div class="text-xs font-sans text-white/30 max-w-2xl leading-relaxed">
+          <span class="font-semibold text-white/40">⚠ 의료 면책 조항:</span> 이 웹사이트의 정보는 교육 목적으로만 제공됩니다. 의료 결정은 반드시 자격을 갖춘 의료 전문가와 상담하십시오.
+        </div>
+        <p class="text-xs font-sans text-white/30 whitespace-nowrap">© 2026 NJ Access Portal · 뉴저지 한인 의료접근센터</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/cms-client.js?v=<?= time() ?>"></script>
+
+  <!-- Interactive Comments Script -->
+  <script>
+    (function () {
+      'use strict';
+
+      const postSlug = '<?= $postSlug ?>';
+      const storageKey = 'njaccess_comments_' + postSlug;
+      let currentSort = 'likes';
+      let activeReplyId = null;
+
+      let commentsData = [];
+
+      // Known fake/seed nicknames to always strip
+      const FAKE_NICKS = new Set([
+        '포트리한인***', '뉴욕주민***', '맨해튼맘***', '뉴저지한인***',
+        '한인이웃***', 'NJ센터***', 'NJ센터답변***'
+      ]);
+
+      function isFakeComment(c) {
+        return String(c.id).startsWith('seed-') || FAKE_NICKS.has(c.nickname);
+      }
+
+      function isFakeReply(r) {
+        return String(r.id).startsWith('seed-') || FAKE_NICKS.has(r.nickname);
+      }
+
+      function stripFakes(list) {
+        return list
+          .filter(c => !isFakeComment(c))
+          .map(c => {
+            if (Array.isArray(c.replies)) {
+              c.replies = c.replies.filter(r => !isFakeReply(r));
+            }
+            return c;
+          });
+      }
+
+      // Initial load: always fetch from API; localStorage is only a fallback
+      function loadComments() {
+        // Purge any stale/fake data from localStorage right away
+        try {
+          const cached = localStorage.getItem(storageKey);
+          if (cached) {
+            const parsed = JSON.parse(cached);
+            if (Array.isArray(parsed)) {
+              const cleaned = stripFakes(parsed);
+              if (cleaned.length !== parsed.length) {
+                localStorage.setItem(storageKey, JSON.stringify(cleaned));
+              }
+            }
+          }
+        } catch (e) {}
+
+        // Don't pre-render from localStorage; wait for API to avoid flashing stale seeds
+        // Fetch real comments from API
+        fetch('/api/comments.php?slug=' + encodeURIComponent(postSlug))
+          .then(res => res.json())
+          .then(res => {
+            if (res.success && Array.isArray(res.comments)) {
+              commentsData = stripFakes(res.comments);
+              saveCommentsLocal(commentsData);
+              renderComments();
+            } else {
+              // Fallback: use cleaned localStorage
+              try {
+                const cached = localStorage.getItem(storageKey);
+                if (cached) {
+                  const parsed = JSON.parse(cached);
+                  if (Array.isArray(parsed)) commentsData = stripFakes(parsed);
+                }
+              } catch (e) {}
+              renderComments();
+            }
+          })
+          .catch(() => {
+            // Offline fallback: use cleaned localStorage
+            try {
+              const cached = localStorage.getItem(storageKey);
+              if (cached) {
+                const parsed = JSON.parse(cached);
+                if (Array.isArray(parsed)) commentsData = stripFakes(parsed);
+              }
+            } catch (e) {}
+            renderComments();
+          });
+      }
+
+      function saveCommentsLocal(data) {
+        try {
+          localStorage.setItem(storageKey, JSON.stringify(data));
+        } catch (e) {}
+      }
+
+      window.updateCommentCharCount = function(textarea) {
+        const counter = document.getElementById('comment-char-count');
+        if (counter) {
+          counter.textContent = textarea.value.length + ' / 500자';
+        }
+      };
+
+      window.setCommentSort = function(sortType) {
+        currentSort = sortType;
+        ['likes', 'newest', 'oldest'].forEach(st => {
+          const btn = document.getElementById('sort-' + st);
+          if (btn) {
+            if (st === sortType) {
+              btn.className = 'transition-colors text-brand-blue font-bold underline cursor-pointer';
+            } else {
+              btn.className = 'transition-colors hover:text-brand-dark cursor-pointer text-slate-500';
+            }
+          }
+        });
+        renderComments();
+      };
+
+      window.handleMainCommentSubmit = function(e) {
+        e.preventDefault();
+        const nickInput = document.getElementById('comment-nickname');
+        const passInput = document.getElementById('comment-password');
+        const contentInput = document.getElementById('comment-content');
+
+        const nickname = nickInput.value.trim();
+        const password = passInput.value.trim();
+        const content = contentInput.value.trim();
+
+        if (!nickname || !content) return;
+
+        const maskedNick = nickname.length > 2 ? (nickname.substring(0, 3) + '***') : (nickname + '***');
+        const now = new Date();
+        const dateStr = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0') + ' ' + String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+
+        const newComment = {
+          id: 'c_' + Date.now(),
+          nickname: maskedNick,
+          password: password,
+          content: content,
+          createdAt: dateStr,
+          likes: 0,
+          dislikes: 0,
+          replies: []
+        };
+
+        commentsData.unshift(newComment);
+        saveCommentsLocal(commentsData);
+        renderComments();
+
+        // Reset form
+        nickInput.value = '';
+        passInput.value = '';
+        contentInput.value = '';
+        updateCommentCharCount(contentInput);
+
+        // Sync to API
+        fetch('/api/comments.php?action=add&slug=' + encodeURIComponent(postSlug), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nickname, password, content })
+        }).catch(() => {});
+      };
+
+      window.toggleReplyBox = function(commentId) {
+        activeReplyId = (activeReplyId === commentId) ? null : commentId;
+        renderComments();
+      };
+
+      window.handleReplySubmit = function(e, parentId) {
+        e.preventDefault();
+        const nickInput = document.getElementById('reply-nick-' + parentId);
+        const passInput = document.getElementById('reply-pass-' + parentId);
+        const contentInput = document.getElementById('reply-content-' + parentId);
+
+        const nickname = nickInput.value.trim();
+        const password = passInput ? passInput.value.trim() : '';
+        const content = contentInput.value.trim();
+
+        if (!nickname || !content) return;
+
+        const maskedNick = nickname.length > 2 ? (nickname.substring(0, 3) + '***') : (nickname + '***');
+        const now = new Date();
+        const dateStr = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0') + ' ' + String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+
+        const newReply = {
+          id: 'r_' + Date.now(),
+          nickname: maskedNick,
+          password: password,
+          content: content,
+          createdAt: dateStr,
+          likes: 0,
+          dislikes: 0
+        };
+
+        commentsData.forEach(c => {
+          if (c.id === parentId) {
+            if (!c.replies) c.replies = [];
+            c.replies.push(newReply);
+          }
+        });
+
+        activeReplyId = null;
+        saveCommentsLocal(commentsData);
+        renderComments();
+
+        // Sync to API
+        fetch('/api/comments.php?action=add&slug=' + encodeURIComponent(postSlug), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ parentId, nickname, password, content })
+        }).catch(() => {});
+      };
+
+      window.toggleLikeComment = function(commentId, isReply, parentId) {
+        commentsData.forEach(c => {
+          if (isReply && c.id === parentId && c.replies) {
+            c.replies.forEach(r => {
+              if (r.id === commentId) {
+                const userLiked = !r.userLiked;
+                r.likes = Math.max(0, (r.likes || 0) + (userLiked ? 1 : -1));
+                r.userLiked = userLiked;
+              }
+            });
+          } else if (!isReply && c.id === commentId) {
+            const userLiked = !c.userLiked;
+            c.likes = Math.max(0, (c.likes || 0) + (userLiked ? 1 : -1));
+            c.userLiked = userLiked;
+          }
+        });
+        saveCommentsLocal(commentsData);
+        renderComments();
+
+        fetch('/api/comments.php?action=like&slug=' + encodeURIComponent(postSlug), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ commentId, isReply, parentId })
+        }).catch(() => {});
+      };
+
+      window.toggleDislikeComment = function(commentId) {
+        commentsData.forEach(c => {
+          if (c.id === commentId) {
+            const userDisliked = !c.userDisliked;
+            c.dislikes = Math.max(0, (c.dislikes || 0) + (userDisliked ? 1 : -1));
+            c.userDisliked = userDisliked;
+          }
+        });
+        saveCommentsLocal(commentsData);
+        renderComments();
+
+        fetch('/api/comments.php?action=dislike&slug=' + encodeURIComponent(postSlug), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ commentId })
+        }).catch(() => {});
+      };
+
+      window.deleteCommentPrompt = function(commentId) {
+        const pass = prompt('댓글 삭제를 위해 작성 시 입력한 4자리 비밀번호를 입력해주세요:');
+        if (!pass) return;
+
+        let target = null;
+        commentsData.forEach(c => {
+          if (c.id === commentId) target = c;
+          if (c.replies) {
+            c.replies.forEach(r => {
+              if (r.id === commentId) target = r;
+            });
+          }
+        });
+
+        if (target && target.password && target.password !== pass.trim()) {
+          alert('비밀번호가 일치하지 않습니다.');
+          return;
+        }
+
+        // Delete from local
+        commentsData = commentsData.filter(c => c.id !== commentId);
+        commentsData.forEach(c => {
+          if (c.replies) {
+            c.replies = c.replies.filter(r => r.id !== commentId);
+          }
+        });
+
+        saveCommentsLocal(commentsData);
+        renderComments();
+        alert('댓글이 삭제되었습니다.');
+
+        fetch('/api/comments.php?action=delete&slug=' + encodeURIComponent(postSlug), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ commentId, password: pass.trim() })
+        }).catch(() => {});
+      };
+
+      function renderComments() {
+        const container = document.getElementById('comments-list-container');
+        const badge = document.getElementById('comment-total-badge');
+        if (!container) return;
+
+        // Calculate total count including replies
+        let totalCount = 0;
+        commentsData.forEach(c => {
+          totalCount += 1 + (c.replies ? c.replies.length : 0);
+        });
+        if (badge) badge.textContent = totalCount;
+
+        if (commentsData.length === 0) {
+          container.innerHTML = '<p class="text-center py-10 text-xs text-brand-muted">첫 번째 댓글을 작성해 보세요!</p>';
+          return;
+        }
+
+        // Sort comments
+        let sorted = [...commentsData];
+        if (currentSort === 'likes') {
+          sorted.sort((a, b) => (b.likes || 0) - (a.likes || 0));
+        } else if (currentSort === 'newest') {
+          sorted.sort((a, b) => (b.id || '').localeCompare(a.id || ''));
+        } else {
+          sorted.sort((a, b) => (a.id || '').localeCompare(b.id || ''));
+        }
+
+        let html = '';
+        sorted.forEach(c => {
+          const initial = (c.nickname || '한').charAt(0);
+          const hasReplies = c.replies && c.replies.length > 0;
+          const repliesCountText = hasReplies ? `(${c.replies.length})` : '';
+
+          html += `
+            <div class="pb-6 border-b border-brand-border/60 last:border-b-0">
+              <!-- Comment Header -->
+              <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="w-6 h-6 rounded-full bg-blue-100 text-brand-blue text-[11px] font-bold flex items-center justify-center">${escapeHtml(initial)}</span>
+                  <span class="font-bold text-xs text-brand-dark">${escapeHtml(c.nickname)}</span>
+                  <span class="text-[11px] text-brand-muted">${escapeHtml(c.createdAt || '')}</span>
+                </div>
+                ${c.password ? `<button onclick="deleteCommentPrompt('${c.id}')" class="text-[11px] text-brand-muted hover:text-red-500 transition-colors cursor-pointer">삭제</button>` : ''}
+              </div>
+
+              <!-- Comment Body -->
+              <p class="text-sm text-brand-dark leading-relaxed mb-3 pl-8">${escapeHtml(c.content)}</p>
+
+              <!-- Comment Actions -->
+              <div class="flex items-center justify-between pl-8 text-xs font-medium text-brand-muted">
+                <button onclick="toggleReplyBox('${c.id}')" class="hover:text-brand-blue transition-colors flex items-center gap-1 cursor-pointer">
+                  💬 답글 ${repliesCountText}
+                </button>
+                <div class="flex items-center gap-3">
+                  <button onclick="toggleLikeComment('${c.id}', false)" class="flex items-center gap-1 px-2.5 py-1 rounded-full border transition-all cursor-pointer ${c.userLiked ? 'bg-blue-50 border-brand-blue text-brand-blue font-bold' : 'border-brand-border hover:border-brand-blue hover:text-brand-blue'}">
+                    👍 공감 ${c.likes || 0}
+                  </button>
+                  <button onclick="toggleDislikeComment('${c.id}')" class="flex items-center gap-1 px-2.5 py-1 rounded-full border transition-all cursor-pointer ${c.userDisliked ? 'bg-gray-100 border-gray-400 text-gray-700 font-bold' : 'border-brand-border hover:border-gray-400'}">
+                    👎 비공감 ${c.dislikes || 0}
+                  </button>
+                </div>
+              </div>
+
+              <!-- Reply Input Box (When clicked) -->
+              ${activeReplyId === c.id ? `
+                <div class="mt-4 ml-8 p-4 rounded-xl bg-gray-50 border border-brand-border">
+                  <p class="text-xs font-bold text-brand-muted mb-2">답글 작성하기</p>
+                  <form onsubmit="handleReplySubmit(event, '${c.id}')">
+                    <div class="flex gap-2 mb-2">
+                      <input type="text" id="reply-nick-${c.id}" required placeholder="닉네임" class="text-xs p-2 rounded-lg border border-brand-border bg-white w-44 block outline-none focus:border-brand-blue">
+                      <input type="password" id="reply-pass-${c.id}" maxlength="4" placeholder="비밀번호 4자리 (선택)" class="text-xs p-2 rounded-lg border border-brand-border bg-white w-44 block outline-none focus:border-brand-blue">
+                    </div>
+                    <textarea id="reply-content-${c.id}" required rows="2" maxlength="300" placeholder="답글 내용을 입력하세요." class="w-full text-xs p-2.5 rounded-lg border border-brand-border bg-white outline-none focus:border-brand-blue mb-2 resize-none"></textarea>
+                    <div class="flex gap-2 justify-end">
+                      <button type="button" onclick="toggleReplyBox('${c.id}')" class="text-xs px-3 py-1.5 rounded-full border border-brand-border hover:bg-gray-200 cursor-pointer">취소</button>
+                      <button type="submit" class="text-xs font-semibold px-4 py-1.5 rounded-full bg-brand-blue text-white hover:bg-blue-700 cursor-pointer">답글 등록</button>
+                    </div>
+                  </form>
+                </div>
+              ` : ''}
+
+              <!-- Replies List -->
+              ${hasReplies ? `
+                <div class="mt-4 ml-8 space-y-3 pl-4 border-l-2 border-brand-blue/30">
+                  ${c.replies.map(r => `
+                    <div class="pt-2">
+                      <div class="flex items-center justify-between mb-1">
+                        <div class="flex items-center gap-2">
+                          <span class="font-bold text-xs text-brand-dark">${escapeHtml(r.nickname)}</span>
+                          <span class="text-[10px] text-brand-muted">${escapeHtml(r.createdAt || '')}</span>
+                        </div>
+                        ${r.password ? `<button onclick="deleteCommentPrompt('${r.id}')" class="text-[10px] text-brand-muted hover:text-red-500 transition-colors cursor-pointer">삭제</button>` : ''}
+                      </div>
+                      <p class="text-xs text-brand-dark leading-relaxed mb-2">${escapeHtml(r.content)}</p>
+                      <div class="flex items-center justify-end gap-2 text-[11px] text-brand-muted">
+                        <button onclick="toggleLikeComment('${r.id}', true, '${c.id}')" class="flex items-center gap-1 px-2 py-0.5 rounded-full border text-[10px] cursor-pointer ${r.userLiked ? 'bg-blue-50 border-brand-blue text-brand-blue font-bold' : 'border-brand-border hover:border-brand-blue hover:text-brand-blue'}">
+                          👍 ${r.likes || 0}
+                        </button>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              ` : ''}
+            </div>
+          `;
+        });
+
+        container.innerHTML = html;
+      }
+
+      function escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
+
+      // Initialize on load
+      document.addEventListener('DOMContentLoaded', loadComments);
+    })();
+  </script>
+  <script src="/js/cms-client.js?v=<?= time() ?>"></script>
+  <script src="/js/fixes.js?v=<?= time() ?>"></script>
+<script src="/js/njap-notifications.js?v=1.0.0"></script>
+</body>
+</html>

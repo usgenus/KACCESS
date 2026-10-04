@@ -26,7 +26,7 @@ const targetFiles = [
   '_not-found.html'
 ];
 
-const newNavBrandLink = `<a class="flex items-center cursor-pointer njap-brand-link flex-shrink-0 group" href="/" onclick="navigateToHome(event); return false;" title="Healthcare Access Portal">
+const newNavBrandLink = `<a class="flex items-center cursor-pointer njap-brand-link flex-shrink-0 group" href="/" onclick="navigateToHome(event); return false;" title="NJ Access Portal · 뉴저지 한인 의료접근포털">
           <img src="/logo.png" alt="Healthcare Access Portal · 뉴저지 한인 의료 정보 포털 · NJAP" class="h-8 sm:h-10 md:h-11 w-auto object-contain transition-transform group-hover:scale-102" />
         </a>`;
 
@@ -74,8 +74,8 @@ for (const relPath of targetFiles) {
   // </a>
   const footerBrandRegex = /<a class="[^"]*mb-4 group cursor-pointer njap-brand-link"[^>]*>[\s\S]*?<\/a>/;
   if (footerBrandRegex.test(content)) {
-    const footerReplacement = `<a class="inline-flex items-center mb-4 group cursor-pointer njap-brand-link" href="/" onclick="navigateToHome(event); return false;" title="Healthcare Access Portal">
-            <img src="/logo-white.png" alt="Healthcare Access Portal · 뉴저지 한인 의료 정보 포털" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
+    const footerReplacement = `<a class="inline-flex items-center mb-4 group cursor-pointer njap-brand-link" href="/" onclick="navigateToHome(event); return false;" title="NJ Access Portal · 뉴저지 한인 의료접근포털">
+            <img src="/logo-white.png" alt="NJ Access Portal · 뉴저지 한인 의료접근포털" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
           </a>`;
     content = content.replace(footerBrandRegex, footerReplacement);
     changed = true;

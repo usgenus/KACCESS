@@ -14,6 +14,8 @@ const filesToUpload = [
   'js/fixes.js',
   'ko/js/fixes.js',
   'blog.html',
+  'blog.php',
+  'blog-post.php',
   'calculator.html',
   'dictionary.html',
   'matcher.html',
@@ -23,7 +25,10 @@ const filesToUpload = [
   'index.php',
   'medicare.html',
   'medicare/index.html',
-  'resource-center.html'
+  'resource-center.html',
+  'forum/components.php',
+  'ko/forum/components.php',
+  'senior-care.php'
 ];
 
 async function uploadFile(relPath) {

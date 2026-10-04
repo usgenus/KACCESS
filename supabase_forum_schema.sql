@@ -1,5 +1,5 @@
 -- =========================================================
--- Healthcare Access Portal (NJAP) - Medical Forum Schema
+-- NJ Access Portal - Medical Forum Schema
 -- =========================================================
 
 -- 1. Medical Specialties Table (15 Core Disciplines)

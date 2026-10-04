@@ -1,0 +1,3548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Services &amp; Disciplines // Interactive Index | Access Engine</title>
+  <meta name="description" content="A sleek, minimalist digital portfolio interface and interactive index. Explore commercial, editorial, moving image, physician spotlights, and strategic healthcare navigation.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Syne:wght@600;700;800&family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=20260925_white_mobile_menu_v2">
+  <style>
+    /* ==========================================================================
+       MINIMALIST DIGITAL PORTFOLIO & PARALLAX STACKING INDEX
+       ========================================================================== */
+    :root {
+      --bg-pitch: #091024;
+      --bg-surface: #142247;
+      --border-subtle: rgba(212, 175, 55, 0.2);
+      --border-focus: #D4AF37;
+      --text-white: #FAF7F2;
+      --text-dim: #CBD5E1;
+      --text-soft: #94A3B8;
+      --cyan-highlight: #E5C158;
+      --font-mono: 'Plus Jakarta Sans', sans-serif;
+      --font-heading: 'Syne', sans-serif;
+      --font-grotesk: 'Plus Jakarta Sans', sans-serif;
+      --font-designer: 'Syne', sans-serif;
+      --header-height: 76px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: var(--bg-pitch);
+      color: var(--text-white);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow-x: clip;
+      min-height: 100vh;
+      background: var(--bg-pitch);
+    }
+
+    /* Standard Clean Cursor */
+    a, button, .filter-pill, .index-item, .meta-btn-primary, .meta-btn-secondary,
+    .viewport-expand-btn, .lightbox-close-btn, .modal-close-x, .tier-box a {
+      cursor: pointer;
+    }
+
+    /* Cinematic Full-Screen Background Stage */
+    .cinema-bg-stage {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+      background-color: var(--bg-pitch);
+    }
+
+    .cinema-bg-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center center;
+      opacity: 0;
+      transform: scale(1.03);
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+      filter: contrast(1.1) brightness(1.0);
+      will-change: opacity, transform;
+    }
+
+    .cinema-bg-layer.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .cinema-bg-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      filter: contrast(1.1) brightness(1.0);
+      will-change: opacity;
+    }
+
+    .cinema-bg-video.active {
+      opacity: 1;
+    }
+
+    /* Atmospheric Gradients & Scrim for Legibility */
+    .cinema-scrim {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        rgba(226, 232, 240, 0.48) 0%,
+        rgba(226, 232, 240, 0.30) 35%,
+        rgba(226, 232, 240, 0.10) 65%,
+        rgba(226, 232, 240, 0.25) 100%
+      );
+      z-index: 1;
+    }
+
+    .cinema-vignette {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(
+        circle at 68% 50%,
+        rgba(226, 232, 240, 0.05) 0%,
+        rgba(226, 232, 240, 0.18) 70%,
+        rgba(226, 232, 240, 0.35) 100%
+      );
+      z-index: 2;
+    }
+
+    .film-grain {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+      opacity: 0.18;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    /* Royal Gold Header */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000 !important;
+      background: rgba(10, 18, 40, 0.96) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.3) !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45) !important;
+    }
+
+    .brand-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: #FAF7F2 !important;
+    }
+
+    .brand-logo-svg {
+      height: 42px;
+      width: auto;
+      flex-shrink: 0;
+    }
+
+    .brand-text {
+      font-family: 'Barlow Condensed', -apple-system, BlinkMacSystemFont, sans-serif !important;
+      font-size: 1.42rem !important;
+      font-weight: 400 !important;
+      letter-spacing: 0.08em !important;
+      color: #FAF7F2 !important;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .njap-char {
+      color: #FAF7F2 !important;
+      font-weight: 400 !important;
+      display: inline-block;
+      opacity: 0;
+      transform: translate(22px, 0);
+      animation: njapCharSlide 0.4s cubic-bezier(0.16, 1, 0.3, 1) calc(2.10s + var(--i) * 0.045s) both !important;
+    }
+
+    .brand-engine,
+    .brand-text .brand-engine,
+    .njap-char.brand-engine {
+      font-weight: 800 !important;
+      color: #E5C158 !important;
+    }
+
+    .footer-brand-logo .njap-char {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+      color: #FAF7F2 !important;
+    }
+
+    .nav-container {
+      max-width: 1720px;
+      margin: 0 auto;
+      padding: 1.1rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .live-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      color: #00e5ff;
+      background: rgba(0, 229, 255, 0.1);
+      border: 1px solid rgba(0, 229, 255, 0.25);
+      padding: 0.25rem 0.65rem;
+      border-radius: 20px;
+    }
+
+    .status-pulse-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #00e5ff;
+      box-shadow: 0 0 8px #00e5ff;
+      animation: pulseGlow 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.4; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    /* Royal Gold Nav Links */
+    .nav-link {
+      color: #FAF7F2 !important;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-decoration: none;
+      padding: 0.4rem 0;
+      white-space: nowrap;
+    }
+    .nav-link:hover,
+    .nav-link.active {
+      color: #E5C158 !important;
+    }
+    .nav-cta {
+      background: linear-gradient(135deg, #D4AF37 0%, #AA820A 100%) !important;
+      color: #0A1128 !important;
+      border: 1px solid #D4AF37 !important;
+      font-weight: 700 !important;
+      padding: 0.55rem 1.25rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .nav-cta:hover {
+      background: linear-gradient(135deg, #E5C158 0%, #C5A049 100%) !important;
+      color: #0A1128 !important;
+    }
+
+    .btn-pricing-toggle {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #e5e5e5;
+      padding: 0.55rem 1.15rem;
+      border-radius: 2px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-pricing-toggle:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: #ffffff;
+      color: #ffffff;
+    }
+
+    /* Main Container: Split-Screen Layout */
+    .services-index-stage {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      padding-top: calc(var(--header-height) + 1.2rem);
+      padding-bottom: 6rem;
+      max-width: 1720px;
+      margin: 0 auto;
+      padding-left: 2.5rem;
+      padding-right: 2.5rem;
+    }
+
+    .split-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      width: 100%;
+      gap: 3.5rem;
+      align-items: stretch;
+    }
+
+    /* ==========================================================================
+       LEFT SIDE: CURATED EDITORIAL INDEX LIST (COMMERCIAL, EDITORIAL, ETC.)
+       ========================================================================== */
+    .index-left-column {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding-top: 0.5rem;
+      padding-bottom: 4rem;
+      width: 100%;
+    }
+
+    .index-header-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .index-heading {
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .index-heading span.active-count {
+      color: var(--cyan-highlight);
+      font-weight: 700;
+    }
+
+    .index-instruction {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      color: rgba(255, 255, 255, 0.4);
+      text-transform: uppercase;
+    }
+
+    /* Clean Category Filter Navigation Bar */
+    .index-filters {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.55rem;
+      margin-top: 0.2rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .filter-pill {
+      background: #142247;
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      color: #CBD5E1;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      padding: 0.42rem 0.95rem;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
+      white-space: nowrap;
+      outline: none;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .filter-pill:hover,
+    .filter-pill.active {
+      background: linear-gradient(135deg, #D4AF37 0%, #AA820A 100%) !important;
+      border-color: #D4AF37 !important;
+      color: #0A1128 !important;
+      box-shadow: 0 4px 14px rgba(212, 175, 55, 0.35) !important;
+      transform: translateY(-1px);
+    }
+
+    /* Clean Vertical Editorial Index List (Original Clean Way) */
+    .project-index-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      position: relative;
+      width: 100%;
+    }
+
+    .index-item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.95rem 1.4rem;
+      border-radius: 8px;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      text-decoration: none;
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      background: #0E1834;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      user-select: none;
+      cursor: pointer;
+      margin-bottom: 0.45rem;
+    }
+
+    /* Non-hovered items subtle dimming for focused contrast */
+    .project-index-list:hover .index-item:not(:hover) {
+      opacity: 0.45;
+      filter: blur(0.3px);
+    }
+
+    .index-item:hover,
+    .index-item.active {
+      opacity: 1 !important;
+      filter: none !important;
+      border-color: #D4AF37 !important;
+      background: #142247 !important;
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.18) !important;
+      transform: translateX(8px);
+    }
+
+    .item-left-wrap {
+      display: flex;
+      align-items: center;
+      gap: 1.4rem;
+    }
+
+    .item-number {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #E5C158;
+      letter-spacing: 0.04em;
+      min-width: 2rem;
+    }
+
+    .index-item:hover .item-number,
+    .index-item.active .item-number {
+      color: var(--cyan-highlight);
+    }
+
+    .item-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.62rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      text-transform: uppercase;
+      color: #FAF7F2;
+      line-height: 1.15;
+      transition: color 0.2s ease;
+      text-shadow: none;
+    }
+
+    .index-item:hover .item-title,
+    .index-item.active .item-title {
+      color: #E5C158;
+      text-shadow: none;
+    }
+
+    .item-right-wrap {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .item-tag {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      transition: color 0.2s ease;
+    }
+
+    .index-item:hover .item-tag,
+    .index-item.active .item-tag {
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .item-arrow {
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      color: transparent;
+      transform: translateX(-6px);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .index-item:hover .item-arrow,
+    .index-item.active .item-arrow {
+      color: var(--cyan-highlight);
+      transform: translateX(0);
+    }
+
+    .item-hover-glow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 229, 255, 0.12) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-radius: 4px;
+    }
+
+    .index-item:hover .item-hover-glow {
+      opacity: 1;
+    }
+
+    /* ==========================================================================
+       RIGHT SIDE: ALWAYS STATIC IMAGE & DISPLAY AREA (LOCKED IN VIEWPORT)
+       ========================================================================== */
+    .index-right-column {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      align-self: stretch;
+    }
+
+    /* Sticky wrapper pins the entire right section permanently inside the visible window */
+    .right-sticky-wrapper {
+      position: sticky;
+      top: calc(var(--header-height) + 1rem);
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      width: 100%;
+      z-index: 50;
+      max-height: calc(100vh - var(--header-height) - 1.8rem);
+      overflow: hidden;
+      overscroll-behavior: contain;
+    }
+
+    /* Framed Preview Viewport: Adapts dynamically to original screen ratio */
+    .display-viewport-frame {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      background: #0E1834;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      transition: aspect-ratio 0.4s cubic-bezier(0.16, 1, 0.3, 1), max-height 0.4s ease, width 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Horizontal Dimension (Landscape Cinema & Widescreen) */
+    .display-viewport-frame.is-horizontal {
+      width: 100%;
+      max-height: 38vh;
+      min-height: 180px;
+      align-self: stretch;
+    }
+
+    /* Vertical Dimension (Portrait & Editorial Stills in Original Vertical Proportion) */
+    .display-viewport-frame.is-vertical {
+      width: auto;
+      height: 42vh;
+      max-height: 42vh;
+      min-height: 240px;
+      max-width: 100%;
+      align-self: flex-start;
+    }
+
+    .display-viewport-frame:hover {
+      border-color: rgba(0, 229, 255, 0.5);
+      transform: translateY(-4px);
+    }
+
+    .display-media-view {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+      filter: contrast(1.1) brightness(0.95);
+      display: block;
+    }
+
+    .display-viewport-frame:hover .display-media-view {
+      transform: scale(1.02);
+    }
+
+    .viewport-top-badge {
+      position: absolute;
+      top: 0.8rem;
+      left: 0.8rem;
+      right: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .spec-pill {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      background: rgba(3, 3, 3, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      padding: 0.22rem 0.5rem;
+      border-radius: 2px;
+    }
+
+    .spec-pill.accent {
+      border-color: rgba(0, 229, 255, 0.4);
+      color: #00e5ff;
+    }
+
+    .viewport-expand-btn {
+      position: absolute;
+      bottom: 0.8rem;
+      right: 0.8rem;
+      background: rgba(3, 3, 3, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      padding: 0.35rem 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+      z-index: 5;
+    }
+
+    .viewport-expand-btn:hover {
+      background: #ffffff;
+      color: #000000;
+      border-color: #ffffff;
+    }
+
+    /* Metadata Panel below framed visual */
+    .display-metadata-card {
+      background: #0E1834;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 8px;
+      padding: 1.3rem 1.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      flex-shrink: 0;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .meta-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 0.4rem;
+    }
+
+    .meta-discipline-category {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cyan-highlight);
+    }
+
+    .meta-project-index {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-dim);
+    }
+
+    .meta-display-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.15rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      color: #FAF7F2;
+      line-height: 1.1;
+    }
+
+    .meta-display-desc {
+      font-family: var(--font-grotesk);
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: #CBD5E1;
+    }
+
+    .meta-spec-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      padding: 0.75rem 0;
+      border-top: 1px solid rgba(212, 175, 55, 0.2);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    }
+
+    .spec-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .spec-label {
+      font-family: var(--font-grotesk);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #94A3B8;
+      font-weight: 700;
+    }
+
+    .spec-val {
+      font-family: var(--font-grotesk);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #FAF7F2;
+    }
+
+    .meta-action-bar {
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+      margin-top: 0.5rem;
+    }
+
+    .meta-btn-primary {
+      flex: 1;
+      padding: 0.82rem 1.4rem;
+      background: linear-gradient(135deg, #D4AF37 0%, #AA820A 100%) !important;
+      color: #0A1128 !important;
+      font-family: var(--font-grotesk);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid #D4AF37 !important;
+      border-radius: 6px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 14px rgba(212, 175, 55, 0.35);
+    }
+
+    .meta-btn-primary:hover {
+      background: linear-gradient(135deg, #E5C158 0%, #C5A049 100%) !important;
+      border-color: #E5C158 !important;
+      color: #0A1128 !important;
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.45);
+    }
+
+    .meta-btn-secondary {
+      padding: 0.82rem 1.4rem;
+      background: #142247;
+      color: #FAF7F2;
+      font-family: var(--font-grotesk);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 6px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .meta-btn-secondary:hover {
+      border-color: #D4AF37;
+      background: #192b5a;
+      color: #E5C158;
+    }
+
+    /* Multi-Media Cinema Stage & Filmstrip */
+    .lightbox-stage-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000000;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .lightbox-nav-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(4, 4, 6, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 20;
+      transition: all 0.2s ease;
+      backdrop-filter: blur(8px);
+    }
+    .lightbox-nav-arrow:hover {
+      background: #ffffff;
+      color: #000000;
+      border-color: #ffffff;
+      transform: translateY(-50%) scale(1.08);
+    }
+    .lightbox-nav-arrow.prev { left: 1rem; }
+    .lightbox-nav-arrow.next { right: 1rem; }
+
+    .lightbox-media-badge-bar {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      z-index: 20;
+      pointer-events: none;
+    }
+    .lightbox-counter-pill, .lightbox-type-pill {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      border-radius: 2px;
+      background: rgba(0, 0, 0, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      backdrop-filter: blur(8px);
+    }
+    .lightbox-type-pill {
+      color: var(--cyan-highlight);
+      border-color: rgba(0, 229, 255, 0.35);
+    }
+
+    /* Lightbox Modal: Continuous Scroll Media Feed + Static Description */
+    .cinema-lightbox-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(9, 16, 36, 0.96);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      z-index: 99990;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      overflow: hidden;
+    }
+
+    .cinema-lightbox-modal.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .lightbox-nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 2.8rem;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+      flex-shrink: 0;
+      background: rgba(14, 24, 52, 0.98);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .lightbox-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .lightbox-close-btn {
+      background: #142247;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      color: #FAF7F2;
+      padding: 0.55rem 1.25rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      cursor: pointer;
+      text-transform: uppercase;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .lightbox-close-btn:hover {
+      background: #D4AF37;
+      color: #0A1128;
+      border-color: #D4AF37;
+    }
+
+    /* Modal Grid: Left scrollable media feed, Right sticky description */
+    .lightbox-body {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1.45fr 1fr;
+      padding: 2.2rem 3rem 3rem 3rem;
+      gap: 3.5rem;
+      overflow: hidden;
+      align-items: start;
+      max-width: 1720px;
+      margin: 0 auto;
+      width: 100%;
+      height: calc(100vh - 75px);
+      box-sizing: border-box;
+    }
+
+    /* LEFT SIDE: SCROLL DOWNABLE IMAGES AND VIDEOS */
+    .lightbox-media-feed {
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+      padding-right: 1.5rem;
+      scrollbar-width: thin;
+      scrollbar-color: #D4AF37 #0E1834;
+    }
+
+    .lightbox-media-feed::-webkit-scrollbar {
+      width: 6px;
+    }
+    .lightbox-media-feed::-webkit-scrollbar-track {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    .lightbox-media-feed::-webkit-scrollbar-thumb {
+      background: #D4AF37;
+      border-radius: 3px;
+    }
+    .lightbox-media-feed::-webkit-scrollbar-thumb:hover {
+      background: #E5C158;
+    }
+
+    .lightbox-feed-item {
+      width: 100%;
+      flex-shrink: 0;
+      background: #0E1834;
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .lightbox-feed-media-wrap {
+      width: 100%;
+      background: #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox-feed-media-wrap img {
+      width: 100%;
+      height: auto;
+      max-height: 85vh;
+      object-fit: contain;
+      display: block;
+    }
+
+    .lightbox-feed-media-wrap video {
+      width: 100%;
+      height: auto;
+      max-height: 85vh;
+      object-fit: contain;
+      display: block;
+      background: #f1f5f9;
+    }
+
+    .lightbox-feed-meta {
+      padding: 0.85rem 1.25rem;
+      background: #142247;
+      border-top: 1px solid rgba(212, 175, 55, 0.2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .lightbox-feed-caption {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: #CBD5E1;
+      letter-spacing: 0.04em;
+    }
+
+    .lightbox-feed-pill {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #E5C158;
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      padding: 0.2rem 0.6rem;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    /* RIGHT SIDE: DESCRIPTION STAYS STATIC NOT SCROLLING */
+    .lightbox-details-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 1.6rem;
+      position: sticky;
+      top: 0;
+      align-self: start;
+      max-height: 100%;
+      overflow-y: auto;
+      padding: 2.2rem;
+      background: #0E1834;
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 8px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    @media (max-width: 992px) {
+      .live-status-pill {
+        display: none !important;
+      }
+      .nav-container {
+        padding: 0.75rem 1rem !important;
+      }
+      .nav-actions {
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
+        flex-shrink: 0 !important;
+      }
+      .nav-cta,
+      #nav-cta-btn {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0.35rem 0.65rem !important;
+        font-size: 0.68rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.04em !important;
+        line-height: 1.15 !important;
+        border-radius: 4px !important;
+        white-space: nowrap !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+        flex-shrink: 0 !important;
+      }
+      .hamburger-btn,
+      #hamburger-btn {
+        display: flex !important;
+        cursor: pointer;
+        pointer-events: auto !important;
+        position: relative;
+        z-index: 1010;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        min-height: 38px !important;
+        border: 1px solid rgba(212, 175, 55, 0.45) !important;
+        background: rgba(14, 24, 52, 0.85) !important;
+        border-radius: 6px !important;
+        flex-shrink: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 5px !important;
+      }
+      .hamburger-btn span {
+        width: 18px !important;
+        height: 2px !important;
+        background: #FFFFFF !important;
+        border-radius: 1px !important;
+        display: block !important;
+      }
+      .mobile-menu {
+        z-index: 2500 !important;
+        background: #091024 !important;
+        border-left: 1px solid rgba(212, 175, 55, 0.3) !important;
+        color: #FFFFFF !important;
+      }
+      .mobile-menu.open,
+      .mobile-menu.active {
+        right: 0 !important;
+      }
+      .mobile-menu .brand-text,
+      .mobile-menu .brand-text .njap-char,
+      .mobile-menu .njap-char,
+      .mobile-menu .close-menu-btn {
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+      }
+      .mobile-menu .brand-engine,
+      .mobile-menu .njap-char.brand-engine {
+        color: #E5C158 !important;
+        -webkit-text-fill-color: #E5C158 !important;
+      }
+      .mobile-menu .close-menu-btn:hover {
+        color: #E5C158 !important;
+        -webkit-text-fill-color: #E5C158 !important;
+      }
+      .mobile-menu .mobile-link,
+      .mobile-menu a.mobile-link,
+      .mobile-menu .mobile-links a {
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+        font-size: 1.25rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.08em !important;
+        text-decoration: none !important;
+        transition: all 0.2s ease !important;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+      }
+      .mobile-menu .mobile-link:visited,
+      .mobile-menu a.mobile-link:visited,
+      .mobile-menu .mobile-links a:visited {
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+      }
+      .mobile-menu .mobile-link:hover,
+      .mobile-menu .mobile-link:focus,
+      .mobile-menu a.mobile-link:hover,
+      .mobile-menu a.mobile-link:focus {
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+        text-shadow: 0 0 12px rgba(255, 255, 255, 0.8) !important;
+      }
+      .mobile-menu .mobile-link.active,
+      .mobile-menu a.mobile-link.active,
+      .mobile-menu .mobile-links a.active {
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+        font-weight: 800 !important;
+      }
+      .mobile-menu .mobile-link.active::before,
+      .mobile-menu a.mobile-link.active::before,
+      .mobile-menu .mobile-links a.active::before {
+        content: '▸ ' !important;
+        color: #E5C158 !important;
+        -webkit-text-fill-color: #E5C158 !important;
+        font-size: 1.1em !important;
+        font-weight: 900 !important;
+        margin-right: 0.35rem !important;
+      }
+      .mobile-menu .mobile-link.cta-mobile,
+      .mobile-menu a.mobile-link.cta-mobile {
+        color: #0A1128 !important;
+        -webkit-text-fill-color: #0A1128 !important;
+        background: linear-gradient(135deg, #D4AF37 0%, #E5C158 100%) !important;
+        padding: 0.85rem 1.4rem !important;
+        border-radius: 6px !important;
+        text-align: center !important;
+        font-weight: 800 !important;
+      }
+      .mobile-menu .mobile-link.cta-mobile::before,
+      .mobile-menu a.mobile-link.cta-mobile::before {
+        display: none !important;
+      }
+      .mobile-menu .telemetry-tag,
+      .mobile-menu .direct-contact {
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+      }
+      .cinema-lightbox-modal {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 100vw !important;
+        width: 100% !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+        background: rgba(9, 16, 36, 0.98) !important;
+        backdrop-filter: blur(24px) !important;
+        -webkit-backdrop-filter: blur(24px) !important;
+        z-index: 99990 !important;
+        display: block !important;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        overflow-y: scroll !important;
+        overflow-x: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        touch-action: pan-y !important;
+        overscroll-behavior-y: contain;
+      }
+      .cinema-lightbox-modal.is-open {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+      }
+      .lightbox-nav-bar {
+        position: sticky !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        z-index: 200 !important;
+        padding: 0.85rem 1.2rem !important;
+        background: rgba(14, 24, 52, 0.98) !important;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.25) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        box-sizing: border-box !important;
+      }
+      .lightbox-title-wrap {
+        gap: 0.6rem;
+        flex-wrap: wrap;
+        max-width: calc(100% - 85px);
+      }
+      #modal-project-title {
+        font-size: 1.25rem !important;
+        line-height: 1.2;
+      }
+      .lightbox-close-btn {
+        padding: 0.45rem 0.85rem;
+        font-size: 0.7rem;
+        white-space: nowrap;
+      }
+      .lightbox-body {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: min-content !important;
+        overflow: visible !important;
+        padding: 1.2rem 1.2rem 5rem 1.2rem !important;
+        gap: 2rem !important;
+        box-sizing: border-box !important;
+        touch-action: pan-y !important;
+      }
+      .lightbox-media-feed {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1.8rem !important;
+        height: auto !important;
+        overflow: visible !important;
+        padding-right: 0 !important;
+        width: 100% !important;
+        touch-action: pan-y !important;
+      }
+      .lightbox-feed-item {
+        touch-action: pan-y !important;
+        cursor: grab;
+      }
+      .lightbox-feed-media-wrap {
+        touch-action: pan-y !important;
+        user-select: none !important;
+        -webkit-user-select: none !important;
+        cursor: grab;
+      }
+      .lightbox-feed-media-wrap img {
+        max-height: 60vh !important;
+        touch-action: pan-y !important;
+        pointer-events: none !important;
+        -webkit-user-drag: none !important;
+        user-drag: none !important;
+        user-select: none !important;
+        -webkit-user-select: none !important;
+        -webkit-touch-callout: none !important;
+      }
+      .lightbox-details-wrap {
+        display: flex !important;
+        flex-direction: column !important;
+        position: static !important;
+        width: 100% !important;
+        max-height: none !important;
+        overflow: visible !important;
+        padding: 1.5rem !important;
+        background: #0E1834 !important;
+        border: 1px solid rgba(212, 175, 55, 0.25) !important;
+        border-radius: 8px !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+        box-sizing: border-box !important;
+      }
+    }
+
+    /* Pricing Modal */
+    .pricing-modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(9, 16, 36, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 99980;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+      padding: 2rem;
+    }
+
+    .pricing-modal-backdrop.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .pricing-modal-container {
+      background: #0E1834;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 12px;
+      max-width: 1240px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 3rem;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+      position: relative;
+      color: #FAF7F2;
+    }
+
+    .modal-close-x {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: #142247;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      color: #FAF7F2;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .modal-close-x:hover {
+      background: #D4AF37;
+      color: #0A1128;
+      border-color: #D4AF37;
+    }
+
+    .tiers-modal-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.8rem;
+      margin-top: 2.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .tier-box {
+      background: #142247;
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 8px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .tier-box.highlight {
+      background: #16244A;
+      border: 2px solid #D4AF37;
+      box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
+    }
+
+    .tier-box-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #D4AF37;
+      color: #0A1128;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      padding: 0.2rem 0.75rem;
+      border-radius: 20px;
+      text-transform: uppercase;
+    }
+
+    .tier-box-title {
+      font-family: var(--font-heading);
+      font-size: 1.6rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #FAF7F2;
+      margin-bottom: 0.5rem;
+    }
+
+    .tier-box-price {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: #E5C158;
+      margin: 1rem 0;
+    }
+
+    .tier-box-price span {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: #64748b;
+      font-weight: 400;
+    }
+
+    .tier-box-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+      flex-grow: 1;
+    }
+
+    .tier-box-features li {
+      font-size: 0.86rem;
+      color: #CBD5E1;
+      padding-left: 1.2rem;
+      position: relative;
+      line-height: 1.4;
+    }
+
+    .tier-box-features li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: #D4AF37;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 1200px) {
+      .split-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+      .index-right-column {
+        position: static;
+      }
+      .right-sticky-wrapper {
+        position: static;
+        max-height: none;
+      }
+      .item-title {
+        font-size: 1.55rem;
+      }
+      .tiers-modal-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .services-index-stage {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-top: calc(var(--header-height) + 0.8rem);
+        padding-bottom: 3rem;
+      }
+      .split-grid {
+        gap: 1.5rem;
+      }
+      .index-left-column {
+        padding-top: 0;
+        padding-bottom: 1.2rem;
+      }
+      .project-index-list {
+        gap: 0.28rem;
+      }
+      .project-index-list:hover .index-item:not(:hover) {
+        opacity: 1 !important;
+        filter: none !important;
+      }
+      .index-item {
+        padding: 0.6rem 0.85rem !important;
+        margin-bottom: 0.25rem !important;
+        border-radius: 9px !important;
+        border: 1px solid rgba(212, 175, 55, 0.2) !important;
+        background: #0E1834 !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+        transform: none !important;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+      .index-item:hover,
+      .index-item.active {
+        transform: none !important;
+        border-color: #D4AF37 !important;
+        background: #142247 !important;
+        box-shadow: 0 4px 14px rgba(212, 175, 55, 0.25) !important;
+      }
+      .item-left-wrap {
+        gap: 0.65rem !important;
+        flex: 1;
+        min-width: 0;
+      }
+      .item-number {
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
+        font-size: 0.7rem !important;
+        font-weight: 700 !important;
+        color: #E5C158 !important;
+        background: rgba(212, 175, 55, 0.15) !important;
+        border: 1px solid rgba(212, 175, 55, 0.35) !important;
+        padding: 0.2rem 0.45rem !important;
+        border-radius: 6px !important;
+        min-width: 1.8rem !important;
+        text-align: center !important;
+        letter-spacing: 0.02em !important;
+        line-height: 1 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-shrink: 0 !important;
+        transition: all 0.2s ease !important;
+      }
+      .index-item:hover .item-number,
+      .index-item.active .item-number {
+        background: #D4AF37 !important;
+        color: #0A1128 !important;
+        border-color: #D4AF37 !important;
+      }
+      .item-title {
+        font-size: 0.92rem !important;
+        font-weight: 700 !important;
+        letter-spacing: -0.01em !important;
+        line-height: 1.26 !important;
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.35rem;
+      }
+      .index-item:hover .item-title,
+      .index-item.active .item-title {
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+      }
+      .item-video-badge {
+        font-size: 0.56rem !important;
+        padding: 1px 5px !important;
+        margin-left: 2px !important;
+        border-radius: 3px !important;
+        letter-spacing: 0.03em !important;
+      }
+      .item-tag {
+        display: none !important;
+      }
+      .item-right-wrap {
+        gap: 0.35rem !important;
+        flex-shrink: 0 !important;
+        margin-left: 0.4rem !important;
+      }
+      .item-arrow {
+        font-size: 0.88rem !important;
+        color: #FFFFFF !important;
+        transform: none !important;
+        transition: all 0.2s ease !important;
+      }
+      .index-item:hover .item-arrow,
+      .index-item.active .item-arrow {
+        color: #E5C158 !important;
+        transform: translateX(2px) !important;
+      }
+      .item-hover-glow {
+        display: none !important;
+      }
+      .nav-container {
+        padding: 0.75rem 1rem !important;
+      }
+      .nav-actions {
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
+        flex-shrink: 0 !important;
+      }
+      .nav-cta,
+      #nav-cta-btn {
+        padding: 0.35rem 0.65rem !important;
+        font-size: 0.68rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.04em !important;
+        line-height: 1.15 !important;
+        border-radius: 4px !important;
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+      }
+      .hamburger-btn,
+      #hamburger-btn {
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        min-height: 38px !important;
+        flex-shrink: 0 !important;
+      }
+      .pricing-modal-container {
+        padding: 1.5rem;
+      }
+      .lightbox-nav-bar {
+        padding: 0.75rem 1rem;
+        gap: 0.5rem;
+      }
+      .lightbox-title-wrap {
+        gap: 0.4rem;
+        max-width: calc(100% - 75px);
+      }
+      #modal-tag-pill {
+        display: none;
+      }
+      #modal-project-title {
+        font-size: 1.1rem !important;
+      }
+      .lightbox-close-btn {
+        padding: 0.4rem 0.7rem;
+        font-size: 0.68rem;
+      }
+      .lightbox-body {
+        padding: 1rem 1rem 3.5rem 1rem !important;
+        gap: 1.6rem !important;
+      }
+      .lightbox-details-wrap {
+        padding: 1.25rem !important;
+      }
+      #modal-detail-title {
+        font-size: 1.25rem !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .services-index-stage {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+      }
+      .index-item {
+        padding: 0.52rem 0.72rem !important;
+        margin-bottom: 0.22rem !important;
+        border-radius: 8px !important;
+      }
+      .item-left-wrap {
+        gap: 0.5rem !important;
+      }
+      .item-number {
+        font-size: 0.66rem !important;
+        min-width: 1.65rem !important;
+        padding: 0.18rem 0.38rem !important;
+        border-radius: 5px !important;
+      }
+      .item-title {
+        font-size: 0.86rem !important;
+        line-height: 1.22 !important;
+      }
+      .item-arrow {
+        font-size: 0.82rem !important;
+      }
+      .nav-container {
+        padding: 0.65rem 0.65rem !important;
+      }
+      .brand-text {
+        font-size: 1.05rem !important;
+        letter-spacing: 0.04em !important;
+      }
+      .brand-logo-svg {
+        width: 24px !important;
+        height: 24px !important;
+      }
+      .nav-actions {
+        gap: 0.35rem !important;
+      }
+      .nav-cta,
+      #nav-cta-btn {
+        padding: 0.3rem 0.48rem !important;
+        font-size: 0.62rem !important;
+        letter-spacing: 0.02em !important;
+      }
+      .hamburger-btn,
+      #hamburger-btn {
+        width: 35px !important;
+        height: 35px !important;
+        min-width: 35px !important;
+        min-height: 35px !important;
+      }
+    }
+  </style>
+
+  <!-- Client Password Gate Overlay Styles -->
+  <style id="engine-client-gate-styles">
+    html.engine-locked, html.engine-locked body {
+      overflow: hidden !important;
+      height: 100vh !important;
+    }
+    #engine-client-gate {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 99999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 50% 38%, rgba(16, 28, 62, 0.97), rgba(6, 11, 24, 0.99));
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      padding: 20px;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    .gate-card {
+      background: rgba(13, 22, 48, 0.9);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      border-radius: 24px;
+      box-shadow: 0 30px 70px -15px rgba(0, 0, 0, 0.85), 0 0 45px rgba(212, 175, 55, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      width: 100%;
+      max-width: 410px;
+      padding: 38px 32px 34px;
+      text-align: center;
+      color: #FAF7F2;
+      animation: gateModalPop 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      transform-origin: center;
+      box-sizing: border-box;
+    }
+    @keyframes gateModalPop {
+      0% { opacity: 0; transform: scale(0.92) translateY(14px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .gate-shake {
+      animation: gateShake 0.45s ease !important;
+    }
+    @keyframes gateShake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-8px); }
+      40%, 80% { transform: translateX(8px); }
+    }
+    .gate-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: #D4AF37;
+      text-transform: uppercase;
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+    }
+    .gate-icon-wrap {
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.22), rgba(56, 189, 248, 0.12));
+      border: 1.5px solid rgba(212, 175, 55, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px;
+      color: #D4AF37;
+      box-shadow: 0 0 24px rgba(212, 175, 55, 0.28);
+    }
+    .gate-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: #FAF7F2;
+      margin: 0 0 8px 0;
+      letter-spacing: -0.02em;
+    }
+    .gate-desc {
+      font-size: 13.5px;
+      color: #94A3B8;
+      margin: 0 0 24px 0;
+      line-height: 1.5;
+    }
+    .gate-input-wrap {
+      position: relative;
+      margin-bottom: 12px;
+    }
+    #gate-pass-input {
+      width: 100%;
+      box-sizing: border-box;
+      background: rgba(7, 12, 26, 0.92);
+      border: 1.5px solid rgba(212, 175, 55, 0.3);
+      border-radius: 14px;
+      padding: 14px 18px;
+      font-size: 22px;
+      color: #FAF7F2;
+      text-align: center;
+      letter-spacing: 0.22em;
+      outline: none;
+      transition: all 0.2s ease;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    #gate-pass-input:focus {
+      border-color: #D4AF37;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 0 3px rgba(212, 175, 55, 0.25);
+    }
+    .gate-error {
+      color: #f87171;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .gate-btn {
+      width: 100%;
+      box-sizing: border-box;
+      background: linear-gradient(135deg, #D4AF37 0%, #E5C158 50%, #B89628 100%);
+      color: #070C1A;
+      font-size: 15px;
+      font-weight: 700;
+      border: none;
+      border-radius: 13px;
+      padding: 14px 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+      box-shadow: 0 8px 22px -4px rgba(212, 175, 55, 0.45);
+    }
+    .gate-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 28px -4px rgba(212, 175, 55, 0.6);
+      filter: brightness(1.05);
+    }
+    .gate-btn:active {
+      transform: translateY(0);
+    }
+  </style>
+
+  <!-- Pre-check Script: Synchronously hides gate if already unlocked -->
+  <script>
+    (function() {
+      try {
+        if (sessionStorage.getItem('njap_engine_client_pw') === '7777') {
+          document.write('<style>#engine-client-gate{display:none!important;}</style>');
+        } else {
+          document.documentElement.classList.add('engine-locked');
+        }
+      } catch (e) {
+        document.documentElement.classList.add('engine-locked');
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Client Password Gate Modal -->
+  <div id="engine-client-gate">
+    <div id="engine-gate-card" class="gate-card">
+      <div class="gate-badge">SECURE CLIENT PORTAL</div>
+      <div class="gate-icon-wrap">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+      </div>
+      <h2 class="gate-title">Client Password</h2>
+      <p class="gate-desc">Enter the client password to open the website.</p>
+      
+      <form id="engine-gate-form" autocomplete="off" onsubmit="return false;">
+        <div class="gate-input-wrap">
+          <input type="password" id="gate-pass-input" placeholder="••••" maxlength="16" autofocus inputmode="numeric" autocomplete="current-password" aria-label="Client Password" />
+        </div>
+        <div id="gate-error-msg" class="gate-error" style="display: none;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          Incorrect password. Please try again.
+        </div>
+        <button type="submit" id="gate-submit-btn" class="gate-btn">
+          <span>Enter Website</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Full-Screen Atmospheric Background Reveal Stage -->
+  <div class="cinema-bg-stage" id="cinema-bg-stage">
+    <div class="cinema-bg-layer" id="bg-layer-a"></div>
+    <div class="cinema-bg-layer" id="bg-layer-b"></div>
+    <video class="cinema-bg-video" id="bg-video-layer" autoplay muted loop playsinline></video>
+    <div class="cinema-scrim"></div>
+    <div class="cinema-vignette"></div>
+    <div class="film-grain"></div>
+  </div>
+
+  <!-- Clean Minimalist Header -->
+  <header id="site-header" class="site-header">
+    <div class="nav-container">
+      <div class="brand-meta">
+        <a href="index.html" class="brand-logo" id="brand-logo-link" aria-label="Access Engine Homepage">
+          <svg class="brand-logo-svg" viewBox="0 0 95 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Access Engine Logo">
+            <g stroke-linecap="round" stroke-linejoin="round">
+              <g class="njap-nav-door">
+                <line x1="20" y1="12" x2="20" y2="88" stroke="#1E3A8A" stroke-width="3.5" />
+                <rect x="25" y="12" width="55" height="76" rx="2" stroke="#1E3A8A" stroke-width="4" fill="#FFFFFF" />
+                <polyline points="25,16 52,25 52,36" stroke="#1E3A8A" stroke-width="3.5" fill="none" />
+                <text x="52.5" y="81" font-family="'Times New Roman', serif" font-size="13.5" font-weight="400" letter-spacing="1.5" fill="#1E3A8A" stroke="none" text-anchor="middle">NJAP</text>
+              </g>
+              <path class="njap-nav-keyhole" d="M 43,45 A 7,7 0 1,1 53,45 L 56,64 L 40,64 Z" stroke="#DC2626" stroke-width="3.5" fill="#FFFFFF" />
+              <g class="njap-nav-key">
+                <circle cx="74" cy="45" r="6.5" stroke="#DC2626" stroke-width="3.5" fill="#FFFFFF" />
+                <line x1="47" y1="45" x2="67.5" y2="45" stroke="#DC2626" stroke-width="3.5" />
+                <line x1="49" y1="45" x2="49" y2="49" stroke="#DC2626" stroke-width="3.5" />
+                <line x1="53" y1="45" x2="53" y2="48" stroke="#DC2626" stroke-width="3" />
+              </g>
+            </g>
+          </svg>
+          <span class="brand-text">
+            <span class="njap-char" style="--i:0">A</span><span class="njap-char" style="--i:1">C</span><span class="njap-char" style="--i:2">C</span><span class="njap-char" style="--i:3">E</span><span class="njap-char" style="--i:4">S</span><span class="njap-char" style="--i:5">S</span><span class="njap-char-space">&nbsp;</span><span class="njap-char brand-engine" style="--i:6">E</span><span class="njap-char brand-engine" style="--i:7">N</span><span class="njap-char brand-engine" style="--i:8">G</span><span class="njap-char brand-engine" style="--i:9">I</span><span class="njap-char brand-engine" style="--i:10">N</span><span class="njap-char brand-engine" style="--i:11">E</span>
+          </span>
+        </a>
+        <div class="live-status-pill">
+          <span class="status-pulse-dot"></span>
+          <span>INDEX ACTIVE // 2026</span>
+        </div>
+      </div>
+
+      <nav class="desktop-nav" id="desktop-nav" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link">HOME</a>
+        <a href="index.html#about-team" class="nav-link">ABOUT US</a>
+        <a href="services.html" class="nav-link active">SERVICES</a>
+        <a href="portfolio.html" class="nav-link">PORTFOLIO</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="index.html#lead-intake" class="btn btn-primary nav-cta" id="nav-cta-btn">ENGAGE CONSULTANCY</a>
+        <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle Navigation Menu">
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Fullscreen Mobile Drawer -->
+  <div id="mobile-menu" class="mobile-menu">
+    <div class="mobile-menu-inner">
+      <div class="mobile-menu-header">
+        <div class="mobile-brand">
+          <svg class="brand-logo-svg" viewBox="0 0 95 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Access Engine Logo">
+            <g stroke-linecap="round" stroke-linejoin="round">
+              <g class="njap-nav-door">
+                <line x1="20" y1="12" x2="20" y2="88" stroke="#1E3A8A" stroke-width="3.5" />
+                <rect x="25" y="12" width="55" height="76" rx="2" stroke="#1E3A8A" stroke-width="4" fill="#FFFFFF" />
+                <polyline points="25,16 52,25 52,36" stroke="#1E3A8A" stroke-width="3.5" fill="none" />
+                <text x="52.5" y="81" font-family="'Times New Roman', serif" font-size="13.5" font-weight="400" letter-spacing="1.5" fill="#1E3A8A" stroke="none" text-anchor="middle">NJAP</text>
+              </g>
+              <path class="njap-nav-keyhole" d="M 43,45 A 7,7 0 1,1 53,45 L 56,64 L 40,64 Z" stroke="#DC2626" stroke-width="3.5" fill="#FFFFFF" />
+              <g class="njap-nav-key">
+                <circle cx="74" cy="45" r="6.5" stroke="#DC2626" stroke-width="3.5" fill="#FFFFFF" />
+                <line x1="47" y1="45" x2="67.5" y2="45" stroke="#DC2626" stroke-width="3.5" />
+                <line x1="49" y1="45" x2="49" y2="49" stroke="#DC2626" stroke-width="3.5" />
+                <line x1="53" y1="45" x2="53" y2="48" stroke="#DC2626" stroke-width="3" />
+              </g>
+            </g>
+          </svg>
+          <span class="brand-text">
+            <span class="njap-char" style="--i:0">A</span><span class="njap-char" style="--i:1">C</span><span class="njap-char" style="--i:2">C</span><span class="njap-char" style="--i:3">E</span><span class="njap-char" style="--i:4">S</span><span class="njap-char" style="--i:5">S</span><span class="njap-char-space">&nbsp;</span><span class="njap-char brand-engine" style="--i:6">E</span><span class="njap-char brand-engine" style="--i:7">N</span><span class="njap-char brand-engine" style="--i:8">G</span><span class="njap-char brand-engine" style="--i:9">I</span><span class="njap-char brand-engine" style="--i:10">N</span><span class="njap-char brand-engine" style="--i:11">E</span>
+          </span>
+        </div>
+        <button id="close-menu-btn" class="close-menu-btn" aria-label="Close Menu">✕</button>
+      </div>
+      <div class="mobile-links">
+        <a href="index.html" class="mobile-link">HOME</a>
+        <a href="index.html#about-team" class="mobile-link">ABOUT US</a>
+        <a href="services.html" class="mobile-link active">SERVICES</a>
+        <a href="portfolio.html" class="mobile-link">PORTFOLIO</a>
+        <a href="index.html#lead-intake" class="mobile-link cta-mobile">ENGAGE CONSULTANCY</a>
+      </div>
+      <div class="mobile-menu-footer">
+        <p class="telemetry-tag">STATUS: ACTIVE // 50,000+ NAVIGATIONS</p>
+        <p class="direct-contact">njaccessportal.com | njaccessportal@gmail.com</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTERACTIVE SPLIT-SCREEN PORTFOLIO INDEX -->
+  <main class="services-index-stage" id="services-index-stage">
+    <div class="split-grid">
+
+      <!-- LEFT SIDE: CURATED VERTICAL LIST OF PROJECT TITLES (STACKS ON SCROLL) -->
+      <section class="index-left-column" aria-label="Curated Project Index">
+        <ul class="project-index-list" id="project-index-list">
+          <!-- Populated by JavaScript with Stacking Offsets -->
+        </ul>
+      </section>
+
+      <!-- RIGHT SIDE: ALWAYS STATIC IMAGE & VIDEO VIEWPORT (MOVES WITH SCROLL) -->
+      <aside class="index-right-column" id="index-right-column" aria-label="Dynamic Display Area">
+        <div class="right-sticky-wrapper" id="right-sticky-wrapper">
+          
+          <!-- Large Framed Display Viewport -->
+          <div class="display-viewport-frame" id="display-viewport-frame">
+            <img src="assets/service_media_photo.jpg" alt="MEDIA PRODUCTION 1 - [PHOTO SHOOT // HERO SHOTS & EVENTS]" class="display-media-view" id="display-main-image" />
+            <video class="display-media-view" id="display-main-video" autoplay muted loop playsinline style="display: none;"></video>
+            <iframe class="display-media-view" id="display-main-youtube" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="display: none; width: 100%; height: 100%; border: none; background: #000;"></iframe>
+            
+            <div class="viewport-top-badge">
+              <span class="spec-pill accent" id="display-badge-category">MEDIA PRODUCTION 1</span>
+              <span class="spec-pill" id="display-badge-resolution">3:2 DCI // 35MM</span>
+            </div>
+
+            <button class="viewport-expand-btn" id="open-lightbox-btn" aria-label="Open Fullscreen View">
+              <span>EXPAND VIEW</span>
+              <span>↗</span>
+            </button>
+          </div>
+
+          <!-- Dynamic Project Metadata Card -->
+          <div class="display-metadata-card" id="display-metadata-card">
+            <div class="meta-card-header">
+              <span class="meta-discipline-category" id="meta-category-text">DISCIPLINE // 01</span>
+              <span class="meta-project-index" id="meta-index-text">INDEX ITEM 01 OF 09</span>
+            </div>
+
+            <h2 class="meta-display-title" id="meta-title-text">MEDIA PRODUCTION 1</h2>
+            
+            <p class="meta-display-desc" id="meta-desc-text">
+              Professional on-location still photography engineered for healthcare engagement. Encompassing high-contrast physician and specialist hero shots, executive medical portraits, and comprehensive photo coverage of health seminars, community screenings, and special outreach events.
+            </p>
+
+            <!-- Telemetry Spec Grid -->
+            <div class="meta-spec-grid">
+              <div class="spec-item">
+                <span class="spec-label" id="meta-client-label">CLIENT / ENGAGEMENT</span>
+                <span class="spec-val" id="meta-client-val">Hospitals, Specialty Clinics &amp; Community Centers</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label" id="meta-director-label">PRODUCER / LEAD</span>
+                <span class="spec-val" id="meta-director-val">Media Production Lead &amp; Photography Team</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label" id="meta-optics-label">EQUIPMENT &amp; FORMAT</span>
+                <span class="spec-val" id="meta-optics-val">High-Resolution Full-Frame // Studio Strobe Rig</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label" id="meta-tier-label">SERVICE MODEL</span>
+                <span class="spec-val" id="meta-tier-val">Retainer &amp; Event Package</span>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="meta-action-bar">
+              <button class="meta-btn-primary" id="meta-inspect-btn">
+                <span id="meta-inspect-btn-text">Details</span>
+                <span>→</span>
+              </button>
+              <a href="index.html#lead-intake" class="meta-btn-secondary" id="meta-secondary-btn">
+                <span id="meta-secondary-btn-text">INQUIRE SERVICE</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- EXPANDED LIGHTBOX / CASE STUDY MODAL -->
+  <div class="cinema-lightbox-modal" id="cinema-lightbox-modal" role="dialog" aria-modal="true">
+    <div class="lightbox-nav-bar">
+      <div class="lightbox-title-wrap">
+        <span class="spec-pill accent" id="modal-tag-pill">EDITORIAL</span>
+        <h3 id="modal-project-title" style="font-family: var(--font-heading); font-size: 1.75rem; text-transform: uppercase; color: #0f172a;">EDITORIAL // ARCHIVAL STILL</h3>
+      </div>
+      <button class="lightbox-close-btn" id="close-lightbox-btn">CLOSE [ESC]</button>
+    </div>
+
+    <div class="lightbox-body">
+      <!-- LEFT: SCROLLABLE FEED OF ALL IMAGES AND VIDEOS -->
+      <div class="lightbox-media-feed" id="lightbox-media-feed">
+        <!-- Populated dynamically with continuous scrollable images and videos -->
+      </div>
+      
+      <div class="lightbox-details-wrap">
+        <div>
+          <span class="spec-label" id="modal-overview-label">CASE OVERVIEW</span>
+          <h4 id="modal-detail-title" style="font-size: 1.5rem; margin: 0.5rem 0 1rem 0; font-family: var(--font-grotesk); color: #0f172a;">Cinematic Narrative &amp; Production Still</h4>
+          <p id="modal-detail-description" style="color: #475569; line-height: 1.6;">
+            A complete synthesis of lighting, spatial geometry, and authentic clinical engagement. Created to establish emotional resonance while retaining absolute fidelity.
+          </p>
+        </div>
+
+        <div style="border-top: 1px solid #e2e8f0; padding-top: 1.2rem;">
+          <span class="spec-label" id="modal-deliverables-label">DELIVERABLES &amp; LICENSING</span>
+          <p style="color: #0f172a; font-size: 0.9rem; margin-top: 0.4rem;" id="modal-deliverables">
+            Full 4K Raw Master, Color Graded Stills, Multilingual Broadcast Cutdowns, Billboard Rights.
+          </p>
+        </div>
+
+        <div style="margin-top: 1.5rem;">
+          <a href="index.html#lead-intake" class="btn btn-primary full-width" style="padding: 1rem 2rem;">
+            COMMISSION SIMILAR PROJECT // ENGAGE
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRICING & TIERS MODAL -->
+  <div class="pricing-modal-backdrop" id="pricing-modal-backdrop" role="dialog" aria-modal="true">
+    <div class="pricing-modal-container">
+      <button class="modal-close-x" id="close-pricing-modal-btn">&times;</button>
+      
+      <div style="text-align: center; max-width: 680px; margin: 0 auto;">
+        <span class="spec-pill accent">ENTERPRISE PARTNERSHIP TIERS</span>
+        <h2 style="font-family: var(--font-heading); font-size: 3rem; text-transform: uppercase; margin-top: 0.5rem; letter-spacing: 0.02em; color: #0f172a;">
+          Service Rates &amp; Models
+        </h2>
+        <p style="color: #475569; font-size: 0.95rem; margin-top: 0.5rem;">
+          Transparent enterprise navigation, 4K production retainers, and hospital clinical linkage programs.
+        </p>
+      </div>
+
+      <!-- 3 Tier Cards Grid -->
+      <div class="tiers-modal-grid">
+        <!-- Tier 1 -->
+        <div class="tier-box">
+          <span class="spec-label">TIER 01 // ADVISORY</span>
+          <h3 class="tier-box-title">Strategy &amp; Consulting</h3>
+          <div class="tier-box-price">$9,500 <span>/ month</span></div>
+          <ul class="tier-box-features">
+            <li>1 Dedicated On-Site Bilingual Navigator</li>
+            <li>Hyper-localized ZIP code outreach campaigns</li>
+            <li>1 Studio-grade Physician Spotlight Video</li>
+            <li>Direct hospital clinic scheduling &amp; warm handoff</li>
+            <li>Bi-weekly navigation progress reporting</li>
+          </ul>
+          <a href="index.html#lead-intake" class="meta-btn-secondary" style="margin-top: auto;">SELECT STRATEGY</a>
+        </div>
+
+        <!-- Tier 2 (Popular) -->
+        <div class="tier-box highlight">
+          <div class="tier-box-badge">MOST POPULAR PARTNERSHIP</div>
+          <span class="spec-label">TIER 02 // ENTERPRISE REGIONAL</span>
+          <h3 class="tier-box-title">Regional Access Engine</h3>
+          <div class="tier-box-price">$16,500 <span>/ month</span></div>
+          <ul class="tier-box-features">
+            <li>Full Field Navigation Team (KO, ES, ZH, EN)</li>
+            <li>4-Channel Access Hotline (In-person, Phone, SMS)</li>
+            <li>Monthly Studio 4K Broadcast Doctor Spotlight</li>
+            <li>Community Health Fair Sponsorship &amp; Screenings</li>
+            <li>Hospital EHR &amp; CRM Integration Linkage</li>
+            <li>CHNA / IRS 990 Demographic Reporting</li>
+          </ul>
+          <a href="index.html#lead-intake" class="meta-btn-primary" style="margin-top: auto;">DEPLOY REGIONAL ENGINE</a>
+        </div>
+
+        <!-- Tier 3 -->
+        <div class="tier-box">
+          <span class="spec-label">TIER 03 // SCALED NETWORK</span>
+          <h3 class="tier-box-title">Enterprise Network</h3>
+          <div class="tier-box-price">Custom <span>/ scope</span></div>
+          <ul class="tier-box-features">
+            <li>Dedicated Regional Healthcare Navigation Center</li>
+            <li>Custom Multilingual Media Vault &amp; Broadcast Library</li>
+            <li>Cross-Service Line Routing (Cardiology, Oncology)</li>
+            <li>Executive Strategic Briefings &amp; Custom SLAs</li>
+            <li>Real-time Referral &amp; Preventative Utilization API</li>
+          </ul>
+          <a href="index.html#lead-intake" class="meta-btn-secondary" style="margin-top: auto;">REQUEST PROPOSAL</a>
+        </div>
+      </div>
+
+      <!-- A La Carte Solutions -->
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 2rem; border-radius: 4px;">
+        <h4 style="font-family: var(--font-heading); font-size: 1.5rem; text-transform: uppercase; margin-bottom: 1.2rem;">
+          A La Carte Production &amp; Clinical Activations
+        </h4>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem;">
+          <div style="padding: 1rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 4px;">
+            <strong style="color: #ffffff; display: block; font-size: 0.95rem;">Physician Spotlight 4K Video+Photo</strong>
+            <span style="color: var(--cyan-highlight); font-weight: 700; font-family: var(--font-mono); font-size: 1.1rem;">$4,500</span>
+            <p style="color: #888; font-size: 0.8rem; margin-top: 0.3rem;">Studio shoot, medical script consulting, bilingual subtitles.</p>
+          </div>
+          <div style="padding: 1rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 4px;">
+            <strong style="color: #ffffff; display: block; font-size: 0.95rem;">Medical Seminar / Healthfair</strong>
+            <span style="color: var(--cyan-highlight); font-weight: 700; font-family: var(--font-mono); font-size: 1.1rem;">$7,500</span>
+            <p style="color: #888; font-size: 0.8rem; margin-top: 0.3rem;">Civic event hosting, patient intake, clinic linkage.</p>
+          </div>
+          <div style="padding: 1rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 4px;">
+            <strong style="color: #ffffff; display: block; font-size: 0.95rem;">CHNA Needs Assessment</strong>
+            <span style="color: var(--cyan-highlight); font-weight: 700; font-family: var(--font-mono); font-size: 1.1rem;">$8,000</span>
+            <p style="color: #888; font-size: 0.8rem; margin-top: 0.3rem;">Multilingual demographic surveys and data synthesis.</p>
+          </div>
+          <div style="padding: 1rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 4px;">
+            <strong style="color: #ffffff; display: block; font-size: 0.95rem;">Targeted Multilingual Campaign</strong>
+            <span style="color: var(--cyan-highlight); font-weight: 700; font-family: var(--font-mono); font-size: 1.1rem;">$3,500/mo</span>
+            <p style="color: #888; font-size: 0.8rem; margin-top: 0.3rem;">ZIP code targeting across digital channels with lead capture.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CLEAN MINIMAL FOOTER -->
+  <footer class="spacex-footer" style="background: #000000; border-top: 1px solid var(--border-subtle); position: relative; z-index: 10;">
+    <div class="footer-container">
+      <div class="footer-left">
+        <a href="index.html" class="brand-logo footer-brand-logo">
+          <svg class="brand-logo-svg" viewBox="0 0 95 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Access Engine Logo">
+            <g stroke-linecap="round" stroke-linejoin="round">
+              <g class="njap-nav-door">
+                <line x1="20" y1="12" x2="20" y2="88" stroke="#1E3A8A" stroke-width="3.5" />
+                <rect x="25" y="12" width="55" height="76" rx="2" stroke="#1E3A8A" stroke-width="4" fill="#FFFFFF" />
+                <polyline points="25,16 52,25 52,36" stroke="#1E3A8A" stroke-width="3.5" fill="none" />
+                <text x="52.5" y="81" font-family="'Times New Roman', serif" font-size="13.5" font-weight="400" letter-spacing="1.5" fill="#1E3A8A" stroke="none" text-anchor="middle">NJAP</text>
+              </g>
+              <path class="njap-nav-keyhole" d="M 43,45 A 7,7 0 1,1 53,45 L 56,64 L 40,64 Z" stroke="#DC2626" stroke-width="3.5" fill="#FFFFFF" />
+              <g class="njap-nav-key">
+                <circle cx="74" cy="45" r="6.5" stroke="#DC2626" stroke-width="3.5" fill="#FFFFFF" />
+                <line x1="47" y1="45" x2="67.5" y2="45" stroke="#DC2626" stroke-width="3.5" />
+                <line x1="49" y1="45" x2="49" y2="49" stroke="#DC2626" stroke-width="3.5" />
+                <line x1="53" y1="45" x2="53" y2="48" stroke="#DC2626" stroke-width="3" />
+              </g>
+            </g>
+          </svg>
+          <span class="brand-text">
+            <span class="njap-char" style="--i:0">A</span><span class="njap-char" style="--i:1">C</span><span class="njap-char" style="--i:2">C</span><span class="njap-char" style="--i:3">E</span><span class="njap-char" style="--i:4">S</span><span class="njap-char" style="--i:5">S</span><span class="njap-char-space">&nbsp;</span><span class="njap-char brand-engine" style="--i:6">E</span><span class="njap-char brand-engine" style="--i:7">N</span><span class="njap-char brand-engine" style="--i:8">G</span><span class="njap-char brand-engine" style="--i:9">I</span><span class="njap-char brand-engine" style="--i:10">N</span><span class="njap-char brand-engine" style="--i:11">E</span>
+          </span>
+        </a>
+        <span class="footer-copy">&copy; 2026 Universal Healthcare Access Engine // All Rights Reserved.</span>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">HOME</a>
+        <a href="services.html">SERVICES &amp; INDEX</a>
+        <a href="portfolio.html">PORTFOLIO</a>
+        <a href="index.html#lead-intake">ENGAGE CONSULTANCY</a>
+        <a href="mailto:njaccessportal@gmail.com">DIRECT CONTACT</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       CORE SCRIPT: PARALLAX STACKING, STATIC RIGHT MEDIA, & FAIRY CURSOR
+       ========================================================================== */ -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      /* --------------------------------------------------------------------------
+         PROJECT DATA: PRESERVES EXACT FIRST DESIGN DATA
+         -------------------------------------------------------------------------- */
+      const PROJECTS = [
+      {
+            "id": "media-production-1",
+            "indexNum": "01",
+            "title": "MEDIA PRODUCTION 1",
+            "category": "media-production",
+            "categoryLabel": "MEDIA PRODUCTION",
+            "tag": "[PHOTO SHOOT // HERO SHOTS & EVENTS]",
+            "image": "assets/service_media_photo.jpg",
+            "video": null,
+            "width": 1920,
+            "height": 1080,
+            "description": "Professional on-location still photography engineered for healthcare engagement. Encompassing high-contrast physician and specialist hero shots, executive medical portraits, and comprehensive photo coverage of health seminars, community screenings, and special outreach events.",
+            "client": "Hospitals, Specialty Clinics & Community Centers",
+            "director": "Media Production Lead & Photography Team",
+            "optics": "High-Resolution Full-Frame // Studio Strobe Rig",
+            "tier": "Retainer & Event Package",
+            "primaryBtnText": "Details",
+            "primaryBtnLink": "#lightbox",
+            "secondaryBtnText": "INQUIRE SERVICE",
+            "secondaryBtnLink": "index.html#lead-intake",
+            "deliverables": "Physician hero portraits, executive headshots, medical seminar photo series, community event documentation, high-resolution digital & print licensing.",
+            "thumbnailType": "image",
+            "spec1Label": "CLIENT / ENGAGEMENT",
+            "spec1Val": "Hospitals, Specialty Clinics & Community Centers",
+            "spec2Label": "PRODUCER / LEAD",
+            "spec2Val": "Media Production Lead & Photography Team",
+            "spec3Label": "EQUIPMENT & FORMAT",
+            "spec3Val": "High-Resolution Full-Frame // Studio Strobe Rig",
+            "spec4Label": "SERVICE MODEL",
+            "spec4Val": "Retainer & Event Package",
+            "deliverablesLabel": "DELIVERABLES & SCOPE",
+            "telemetryHeading": "04 // TELEMETRY SPECIFICATIONS",
+            "buttonsHeading": "05 // ACTION BUTTONS & LINKS",
+            "deliverablesHeading": "06 // CASE STUDY LIGHTBOX & DELIVERABLES",
+            "gallery": [
+                  {
+                        "type": "image",
+                        "url": "assets/service_media_photo.jpg",
+                        "title": "MEDIA PRODUCTION 1 // Clinical Hero Still",
+                        "caption": "Specialized on-location photography capturing clinical excellence and authentic patient-provider engagement.",
+                        "width": 1920,
+                        "height": 1080
+                  }
+            ]
+      },
+      {
+            "id": "media-production-2",
+            "indexNum": "02",
+            "title": "MEDIA PRODUCTION 2",
+            "category": "media-production",
+            "categoryLabel": "MEDIA PRODUCTION",
+            "tag": "[DIGITAL VIDEO // YOUTUBE & DR. INTERVIEW]",
+            "image": "assets/service_media_video.jpg",
+            "video": null,
+            "width": 1920,
+            "height": 1080,
+            "description": "End-to-end cinematic video production crafted for modern digital healthcare marketing. Encompassing high-impact digital banner videos, YouTube channel content, engaging patient educational videos, and in-depth broadcast-grade Doctor Interview series.",
+            "client": "Regional Health Systems & Clinical Department Chairs",
+            "director": "Cinematography & Broadcast Unit",
+            "optics": "4K Cinema Sensor // Broadcast Audio // Studio Lighting",
+            "tier": "Monthly Video Retainer / Per Episode",
+            "primaryBtnText": "Details",
+            "primaryBtnLink": "#lightbox",
+            "secondaryBtnText": "INQUIRE SERVICE",
+            "secondaryBtnLink": "index.html#lead-intake",
+            "deliverables": "Digital banner video motion graphics, YouTube formatted video, patient educational video modules, 4K Doctor Interview series, multilingual captions.",
+            "thumbnailType": "image",
+            "spec1Label": "CLIENT / ENGAGEMENT",
+            "spec1Val": "Regional Health Systems & Clinical Department Chairs",
+            "spec2Label": "PRODUCER / LEAD",
+            "spec2Val": "Cinematography & Broadcast Unit",
+            "spec3Label": "EQUIPMENT & FORMAT",
+            "spec3Val": "4K Cinema Sensor // Broadcast Audio // Studio Lighting",
+            "spec4Label": "SERVICE MODEL",
+            "spec4Val": "Monthly Video Retainer / Per Episode",
+            "deliverablesLabel": "DELIVERABLES & SCOPE",
+            "telemetryHeading": "04 // TELEMETRY SPECIFICATIONS",
+            "buttonsHeading": "05 // ACTION BUTTONS & LINKS",
+            "deliverablesHeading": "06 // CASE STUDY LIGHTBOX & DELIVERABLES",
+            "gallery": [
+                  {
+                        "type": "image",
+                        "url": "assets/service_media_video.jpg",
+                        "title": "MEDIA PRODUCTION 2 // Broadcast Doctor Interview",
+                        "caption": "In-depth physician spotlight interviews, digital banners, and clinical education videos.",
+                        "width": 1920,
+                        "height": 1080
+                  }
+            ]
+      },
+      {
+            "id": "sns-management",
+            "indexNum": "03",
+            "title": "SNS MANAGEMENT",
+            "category": "sns-management",
+            "categoryLabel": "SNS MANAGEMENT",
+            "tag": "[NEWS, EVENTS & PATIENT INQUIRIES]",
+            "image": "assets/service_sns_management.jpg",
+            "video": null,
+            "width": 1920,
+            "height": 1080,
+            "description": "Active multi-platform social media and messaging operations. Publishing real-time community health news, seminar and special event announcements, and providing responsive patient inquiry handling with warm patient navigation routing.",
+            "client": "Community Outreach Departments & Hospital Networks",
+            "director": "Digital Outreach & Social Media Director",
+            "optics": "KakaoTalk 24/7 // Meta // YouTube // Constant Contact",
+            "tier": "Monthly Managed Retainer",
+            "primaryBtnText": "Details",
+            "primaryBtnLink": "#lightbox",
+            "secondaryBtnText": "INQUIRE SERVICE",
+            "secondaryBtnLink": "index.html#lead-intake",
+            "deliverables": "Bi-weekly content calendars, community event campaigns, health advisories, 24/7 patient inquiry triage, engagement reporting.",
+            "thumbnailType": "image",
+            "spec1Label": "CLIENT / ENGAGEMENT",
+            "spec1Val": "Community Outreach Departments & Hospital Networks",
+            "spec2Label": "PRODUCER / LEAD",
+            "spec2Val": "Digital Outreach & Social Media Director",
+            "spec3Label": "CHANNELS MANAGED",
+            "spec3Val": "KakaoTalk 24/7 // Meta // YouTube // Constant Contact",
+            "spec4Label": "SERVICE MODEL",
+            "spec4Val": "Monthly Managed Retainer",
+            "deliverablesLabel": "DELIVERABLES & SCOPE",
+            "telemetryHeading": "04 // TELEMETRY SPECIFICATIONS",
+            "buttonsHeading": "05 // ACTION BUTTONS & LINKS",
+            "deliverablesHeading": "06 // CASE STUDY LIGHTBOX & DELIVERABLES",
+            "gallery": [
+                  {
+                        "type": "image",
+                        "url": "assets/service_sns_management.jpg",
+                        "title": "SNS MANAGEMENT // Digital Outreach Operations",
+                        "caption": "Real-time patient communications, community news broadcasting, and social channel management.",
+                        "width": 1920,
+                        "height": 1080
+                  }
+            ]
+      },
+      {
+            "id": "community-hub-management",
+            "indexNum": "04",
+            "title": "COMMUNITY HUB MANAGEMENT",
+            "category": "community-hub",
+            "categoryLabel": "COMMUNITY HUB",
+            "tag": "[WORK ENGINE & HOSPITAL-COMMUNITY BRIDGE]",
+            "image": "assets/service_community_hub.jpg",
+            "video": null,
+            "width": 1920,
+            "height": 1080,
+            "description": "Operational work engine establishing a robust, bidirectional bridge between local community centers and regional hospitals. Managing on-site outreach desks, coordinating with community leadership, and converting casual event visitors into long-term clinical care relationships.",
+            "client": "Hospitals, Community Centers & Senior Hubs",
+            "director": "Community Relations & Operations Lead",
+            "optics": "On-Site Hub Desk // Bilingual Liaison Protocols",
+            "tier": "Integrated Facility Retainer",
+            "primaryBtnText": "Details",
+            "primaryBtnLink": "#lightbox",
+            "secondaryBtnText": "INQUIRE SERVICE",
+            "secondaryBtnLink": "index.html#lead-intake",
+            "deliverables": "On-site community hub operations, hospital liaison and intake routing, community health partner integration, recurring outreach status syncs.",
+            "thumbnailType": "image",
+            "spec1Label": "CLIENT / ENGAGEMENT",
+            "spec1Val": "Hospitals, Community Centers & Senior Hubs",
+            "spec2Label": "PRODUCER / LEAD",
+            "spec2Val": "Community Relations & Operations Lead",
+            "spec3Label": "CORE INFRASTRUCTURE",
+            "spec3Val": "On-Site Hub Desk // Bilingual Liaison Protocols",
+            "spec4Label": "SERVICE MODEL",
+            "spec4Val": "Integrated Facility Retainer",
+            "deliverablesLabel": "DELIVERABLES & SCOPE",
+            "telemetryHeading": "04 // TELEMETRY SPECIFICATIONS",
+            "buttonsHeading": "05 // ACTION BUTTONS & LINKS",
+            "deliverablesHeading": "06 // CASE STUDY LIGHTBOX & DELIVERABLES",
+            "gallery": [
+                  {
+                        "type": "image",
+                        "url": "assets/service_community_hub.jpg",
+                        "title": "COMMUNITY HUB // Grassroots Hospital Bridge",
+                        "caption": "On-site community desk bridging ethnic community centers with top regional hospital systems.",
+                        "width": 1920,
+                        "height": 1080
+                  }
+            ]
+      },
+      {
+            "id": "patient-navigation",
+            "indexNum": "05",
+            "title": "PATIENT NAVIGATION",
+            "category": "patient-navigation",
+            "categoryLabel": "PATIENT NAVIGATION",
+            "tag": "[INSURANCE TRIAGE & APPOINTMENT COORDINATION]",
+            "image": "assets/service_patient_navigation.jpg",
+            "video": null,
+            "width": 1920,
+            "height": 1080,
+            "description": "Dedicated culturally and linguistically congruent patient navigation services. Expert triage for insurance eligibility, primary and specialty doctor appointment scheduling, follow-up appointment tracking, and resolving complex hospital billing inquiries.",
+            "client": "Health Systems, ACOs & Grassroots Patients",
+            "director": "Lead Patient Navigator & Bilingual Clinical Coordinator",
+            "optics": "Multilingual Intake Desk // Insurance Triage Hotline",
+            "tier": "Core Patient Access Service",
+            "primaryBtnText": "Details",
+            "primaryBtnLink": "#lightbox",
+            "secondaryBtnText": "INQUIRE SERVICE",
+            "secondaryBtnLink": "index.html#lead-intake",
+            "deliverables": "Insurance eligibility triage, appointment scheduling, warm clinic handoffs, follow-up appointment tracking, hospital billing inquiry resolution & advocacy.",
+            "thumbnailType": "image",
+            "spec1Label": "CLIENT / ENGAGEMENT",
+            "spec1Val": "Health Systems, ACOs & Grassroots Patients",
+            "spec2Label": "PRODUCER / LEAD",
+            "spec2Val": "Lead Patient Navigator & Bilingual Clinical Coordinator",
+            "spec3Label": "CORE FOCUS",
+            "spec3Val": "Insurance Triage // Appointments // Billing Inquiries",
+            "spec4Label": "SERVICE MODEL",
+            "spec4Val": "Core Patient Access Service",
+            "deliverablesLabel": "DELIVERABLES & SCOPE",
+            "telemetryHeading": "04 // TELEMETRY SPECIFICATIONS",
+            "buttonsHeading": "05 // ACTION BUTTONS & LINKS",
+            "deliverablesHeading": "06 // CASE STUDY LIGHTBOX & DELIVERABLES",
+            "gallery": [
+                  {
+                        "type": "image",
+                        "url": "assets/service_patient_navigation.jpg",
+                        "title": "PATIENT NAVIGATION // Empathic Clinical Coordination",
+                        "caption": "Personalized patient navigation resolving insurance hurdles, billing questions, and scheduling.",
+                        "width": 1920,
+                        "height": 1080
+                  }
+            ]
+      },
+      {
+            "id": "special-events",
+            "indexNum": "06",
+            "title": "SPECIAL EVENTS",
+            "category": "special-events",
+            "categoryLabel": "SPECIAL EVENTS",
+            "tag": "[MEDICAL SEMINARS & HEALTH EDUCATION]",
+            "image": "assets/service_special_events.jpg",
+            "video": null,
+            "width": 1920,
+            "height": 1080,
+            "description": "Full-lifecycle organization of high-impact medical events and educational initiatives: large-scale medical seminars, small-scale medical seminars, interactive online medical webinars, and specialized health education covering chronic disease and diabetic management and more.",
+            "client": "Hospital Specialty Departments & Senior Organizations",
+            "director": "Event Operations & Medical Education Coordinator",
+            "optics": "Hybrid Live Streaming // Lecture Audio Rig // Seminar Production",
+            "tier": "Event Package & Series Retainer",
+            "primaryBtnText": "Details",
+            "primaryBtnLink": "#lightbox",
+            "secondaryBtnText": "INQUIRE SERVICE",
+            "secondaryBtnLink": "index.html#lead-intake",
+            "deliverables": "Large & small-scale seminar management, online webinar hosting, physician speaker coordination, chronic disease & diabetes educational materials, attendee registration & care navigation follow-up.",
+            "thumbnailType": "image",
+            "spec1Label": "CLIENT / ENGAGEMENT",
+            "spec1Val": "Hospital Specialty Departments & Senior Organizations",
+            "spec2Label": "PRODUCER / LEAD",
+            "spec2Val": "Event Operations & Medical Education Coordinator",
+            "spec3Label": "FORMAT & SCOPE",
+            "spec3Val": "Large Scale // Small Scale // Online Seminars // Chronic Care",
+            "spec4Label": "SERVICE MODEL",
+            "spec4Val": "Event Package & Series Retainer",
+            "deliverablesLabel": "DELIVERABLES & SCOPE",
+            "telemetryHeading": "04 // TELEMETRY SPECIFICATIONS",
+            "buttonsHeading": "05 // ACTION BUTTONS & LINKS",
+            "deliverablesHeading": "06 // CASE STUDY LIGHTBOX & DELIVERABLES",
+            "gallery": [
+                  {
+                        "type": "image",
+                        "url": "assets/service_special_events.jpg",
+                        "title": "SPECIAL EVENTS // Medical Seminars & Education",
+                        "caption": "Large-scale and small-scale medical seminars, webinars, and chronic disease/diabetic management education.",
+                        "width": 1920,
+                        "height": 1080
+                  }
+            ]
+      },
+      {
+            "id": "websites-digital-platform",
+            "indexNum": "07",
+            "title": "WEBSITES & DIGITAL PLATFORM",
+            "category": "digital-platform",
+            "categoryLabel": "DIGITAL PLATFORM",
+            "tag": "[WEB ENGINEERING // AI TOOLS & SOCIAL INTEGRATION]",
+            "image": "assets/service_digital_platform.jpg",
+            "video": null,
+            "width": 1920,
+            "height": 1080,
+            "description": "Custom professional website design and digital health platform architecture. Engineered with specialized clinical workflow tools, AI programming, responsive multi-device layouts, social network channels, and YouTube video library integrations to strategize and elevate institutional digital presence.",
+            "client": "Hospital Networks, Medical Centers & Specialty Clinics",
+            "director": "Digital Platform Architect & Engineering Lead",
+            "optics": "Full-Stack Web // AI Programming // Social & YouTube API",
+            "tier": "Platform Retainer & Custom Build",
+            "primaryBtnText": "Details",
+            "primaryBtnLink": "#lightbox",
+            "secondaryBtnText": "INQUIRE SERVICE",
+            "secondaryBtnLink": "index.html#lead-intake",
+            "deliverables": "Custom responsive medical website, specialized clinical tools, AI programming integration, YouTube video hub & social media embedding, SEO & platform strategy roadmap.",
+            "thumbnailType": "image",
+            "spec1Label": "CLIENT / ENGAGEMENT",
+            "spec1Val": "Hospital Networks, Medical Centers & Specialty Clinics",
+            "spec2Label": "PRODUCER / LEAD",
+            "spec2Val": "Digital Platform Architect & Engineering Lead",
+            "spec3Label": "TECH STACK & TOOLS",
+            "spec3Val": "AI Programming // YouTube API // Social Integrations",
+            "spec4Label": "SERVICE MODEL",
+            "spec4Val": "Platform Retainer & Custom Build",
+            "deliverablesLabel": "DELIVERABLES & SCOPE",
+            "telemetryHeading": "04 // TELEMETRY SPECIFICATIONS",
+            "buttonsHeading": "05 // ACTION BUTTONS & LINKS",
+            "deliverablesHeading": "06 // CASE STUDY LIGHTBOX & DELIVERABLES",
+            "gallery": [
+                  {
+                        "type": "image",
+                        "url": "assets/service_digital_platform.jpg",
+                        "title": "WEBSITES & DIGITAL PLATFORM // Engineering Architecture",
+                        "caption": "Professional healthcare web architecture integrating AI programming, YouTube channels, and social connectivity.",
+                        "width": 1920,
+                        "height": 1080
+                  }
+            ]
+      },
+      {
+            "id": "healthcare-access-portal",
+            "indexNum": "08",
+            "title": "HEALTHCARE ACCESS PORTAL SERVICES",
+            "category": "access-portal",
+            "categoryLabel": "ACCESS PORTAL",
+            "tag": "[ALL-IN-ONE PLUG-AND-PLAY ECOSYSTEM]",
+            "image": "assets/service_access_portal.jpg",
+            "video": null,
+            "width": 1920,
+            "height": 1080,
+            "description": "The flagship all-in-one healthcare access ecosystem combining Services 1 through 7 into a turnkey, plug-and-play solution. Ready for immediate deployment for Korean community center services for patients, with a pre-architected framework for future expansion into Chinese and Latino community centers.",
+            "client": "Enterprise Health Networks, Municipalities & Community Alliances",
+            "director": "Executive Platform Director & Healthcare Architect",
+            "optics": "Plug-and-Play Ecosystem // Multi-Channel Access Architecture",
+            "tier": "Enterprise All-Inclusive Master Service",
+            "primaryBtnText": "Details",
+            "primaryBtnLink": "#lightbox",
+            "secondaryBtnText": "INQUIRE SERVICE",
+            "secondaryBtnLink": "index.html#lead-intake",
+            "deliverables": "Turnkey deployment of Services 1 through 7, immediate Korean center operational launch, scalable framework for Chinese and Latino community center rollout, centralized intake and analytics dashboard.",
+            "thumbnailType": "image",
+            "spec1Label": "CLIENT / ENGAGEMENT",
+            "spec1Val": "Enterprise Health Networks, Municipalities & Community Alliances",
+            "spec2Label": "PRODUCER / LEAD",
+            "spec2Val": "Executive Platform Director & Healthcare Architect",
+            "spec3Label": "ECOSYSTEM INTEGRATION",
+            "spec3Val": "Services 1-7 Combined // Korean, Chinese & Latino Expansion",
+            "spec4Label": "SERVICE MODEL",
+            "spec4Val": "Enterprise All-Inclusive Master Service",
+            "deliverablesLabel": "DELIVERABLES & SCOPE",
+            "telemetryHeading": "04 // TELEMETRY SPECIFICATIONS",
+            "buttonsHeading": "05 // ACTION BUTTONS & LINKS",
+            "deliverablesHeading": "06 // CASE STUDY LIGHTBOX & DELIVERABLES",
+            "gallery": [
+                  {
+                        "type": "image",
+                        "url": "assets/service_access_portal.jpg",
+                        "title": "HEALTHCARE ACCESS PORTAL // Plug-and-Play Platform",
+                        "caption": "Turnkey access portal uniting media production, SNS, community hub, patient navigation, and special events.",
+                        "width": 1920,
+                        "height": 1080
+                  }
+            ]
+      },
+      {
+            "id": "global-healthcare-network",
+            "indexNum": "09",
+            "title": "GLOBAL HEALTHCARE NETWORK",
+            "category": "global-network",
+            "categoryLabel": "GLOBAL NETWORK",
+            "tag": "[INTERNATIONAL PATIENT ACCESS & MOU HOSPITAL PARTNERSHIPS]",
+            "image": "assets/service_access_portal.jpg",
+            "video": null,
+            "width": 1920,
+            "height": 1080,
+            "description": "Strategic international healthcare partnership network bridging overseas hospitals and U.S. medical centers. Encompasses formal MOU establishment with partner hospitals abroad, VIP international patient coordination for inbound medical travel to top U.S. hospitals, and bilateral referral management — connecting global patients with premier American clinical expertise.",
+            "client": "U.S. Hospital Systems & Overseas MOU Partner Hospitals",
+            "director": "International Relations & Global Patient Access Director",
+            "optics": "MOU Partnership Framework // VIP Patient Concierge // Bilateral Referral",
+            "tier": "International Partnership Retainer",
+            "primaryBtnText": "Details",
+            "primaryBtnLink": "#lightbox",
+            "secondaryBtnText": "INQUIRE SERVICE",
+            "secondaryBtnLink": "index.html#lead-intake",
+            "deliverables": "MOU hospital partnership agreements, VIP international patient intake & concierge coordination, inbound patient routing to U.S. specialty hospitals, bilateral overseas-to-USA referral protocols, multilingual medical travel support.",
+            "thumbnailType": "image",
+            "spec1Label": "CLIENT / ENGAGEMENT",
+            "spec1Val": "U.S. Hospital Systems & Overseas MOU Partner Hospitals",
+            "spec2Label": "DIRECTOR / LEAD",
+            "spec2Val": "International Relations & Global Patient Access Director",
+            "spec3Label": "PARTNERSHIP FRAMEWORK",
+            "spec3Val": "MOU Agreements // VIP Patient Concierge // Bilateral Referral",
+            "spec4Label": "SERVICE MODEL",
+            "spec4Val": "International Partnership Retainer",
+            "deliverablesLabel": "DELIVERABLES & SCOPE",
+            "telemetryHeading": "04 // TELEMETRY SPECIFICATIONS",
+            "buttonsHeading": "05 // ACTION BUTTONS & LINKS",
+            "deliverablesHeading": "06 // CASE STUDY LIGHTBOX & DELIVERABLES",
+            "gallery": [
+                  {
+                        "type": "image",
+                        "url": "assets/service_access_portal.jpg",
+                        "title": "GLOBAL HEALTHCARE NETWORK // International Patient Access",
+                        "caption": "MOU hospital partnerships abroad routing VIP international patients to premier U.S. medical centers.",
+                        "width": 1920,
+                        "height": 1080
+                  }
+            ]
+      }
+];
+
+      /* --------------------------------------------------------------------------
+         DOM ELEMENTS & STATE
+         -------------------------------------------------------------------------- */
+      const listEl = document.getElementById('project-index-list');
+      const bgLayerA = document.getElementById('bg-layer-a');
+      const bgLayerB = document.getElementById('bg-layer-b');
+      const bgVideoLayer = document.getElementById('bg-video-layer');
+      let currentActiveLayer = 'A';
+
+      // Right display area elements (ALWAYS static in window)
+      const displayMainImg = document.getElementById('display-main-image');
+      const displayMainVideo = document.getElementById('display-main-video');
+      const displayBadgeCat = document.getElementById('display-badge-category');
+      const displayBadgeRes = document.getElementById('display-badge-resolution');
+      const metaCategoryText = document.getElementById('meta-category-text');
+      const metaIndexText = document.getElementById('meta-index-text');
+      const metaTitleText = document.getElementById('meta-title-text');
+      const metaDescText = document.getElementById('meta-desc-text');
+      const metaClientVal = document.getElementById('meta-client-val');
+      const metaDirectorVal = document.getElementById('meta-director-val');
+      const metaOpticsVal = document.getElementById('meta-optics-val');
+      const metaTierVal = document.getElementById('meta-tier-val');
+      const activeCategoryIndicator = document.getElementById('active-category-indicator');
+      const displayViewportFrame = document.getElementById('display-viewport-frame');
+
+      // Lightbox modal elements
+      const lightboxModal = document.getElementById('cinema-lightbox-modal');
+      const modalHeroImage = document.getElementById('modal-hero-image');
+      const modalHeroVideo = document.getElementById('modal-hero-video');
+      const modalProjectTitle = document.getElementById('modal-project-title');
+      const modalDetailTitle = document.getElementById('modal-detail-title');
+      const modalDetailDesc = document.getElementById('modal-detail-description');
+      const modalDeliverables = document.getElementById('modal-deliverables');
+      const modalTagPill = document.getElementById('modal-tag-pill');
+      const closeLightboxBtn = document.getElementById('close-lightbox-btn');
+      const openLightboxBtn = document.getElementById('open-lightbox-btn');
+      const metaInspectBtn = document.getElementById('meta-inspect-btn');
+
+      // Pricing modal elements
+      const pricingModal = document.getElementById('pricing-modal-backdrop');
+      const openPricingBtn = document.getElementById('open-pricing-modal-btn');
+      const closePricingBtn = document.getElementById('close-pricing-modal-btn');
+      const mobilePricingLink = document.getElementById('mobile-pricing-link');
+
+      let currentActiveProject = PROJECTS[0]; // MEDIA PRODUCTION 1 is default active item
+
+      /* --------------------------------------------------------------------------
+         RENDER STACKING PROJECT INDEX LIST (PARALLAX STACKING LIKE MAIN PAGE)
+         -------------------------------------------------------------------------- */
+      function renderList(items) {
+        listEl.innerHTML = '';
+        items.forEach((proj, idx) => {
+          const li = document.createElement('li');
+          const isCurrent = proj.id === currentActiveProject.id;
+          
+          li.className = `index-item ${isCurrent ? 'active' : ''}`;
+          li.setAttribute('data-id', proj.id);
+          li.setAttribute('data-category', proj.category);
+
+          const hasYt = extractYouTubeId(proj.video) || extractYouTubeId(proj.image) || (proj.gallery && proj.gallery.some(g => extractYouTubeId(g.url) || g.isYouTube));
+          const hasDirectVid = proj.video && !extractYouTubeId(proj.video);
+          const videoBadgeHtml = hasYt 
+            ? `<span class="item-video-badge" style="display:inline-flex; align-items:center; gap:4px; font-size:0.62rem; font-weight:700; color:#ff3b30; background:rgba(255,59,48,0.14); border:1px solid rgba(255,59,48,0.38); padding:1px 6px; border-radius:3px; margin-left:8px; vertical-align:middle;"><svg width="9" height="9" viewBox="0 0 24 24" fill="#ff3b30"><polygon points="8,5 19,12 8,19"></polygon></svg> YOUTUBE</span>`
+            : (hasDirectVid ? `<span class="item-video-badge" style="display:inline-flex; align-items:center; gap:4px; font-size:0.62rem; font-weight:700; color:var(--accent-blue); background:rgba(0,229,255,0.14); border:1px solid rgba(0,229,255,0.38); padding:1px 6px; border-radius:3px; margin-left:8px; vertical-align:middle;">▶ VIDEO</span>` : '');
+
+          li.innerHTML = `
+            <div class="item-left-wrap">
+              <span class="item-number">${proj.indexNum}</span>
+              <span class="item-title">${proj.title}${videoBadgeHtml}</span>
+            </div>
+            <div class="item-right-wrap">
+              <span class="item-tag">${proj.tag}</span>
+              <span class="item-arrow">→</span>
+            </div>
+            <div class="item-hover-glow"></div>
+          `;
+
+          // Hover triggers full-screen background reveal & updates right viewport
+          li.addEventListener('mouseenter', () => {
+            activateProject(proj, li);
+          });
+
+          li.addEventListener('mouseleave', () => {
+          });
+
+          // Magnetic mouse position inside the item
+          li.addEventListener('mousemove', (e) => {
+            const rect = li.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            li.style.setProperty('--mouse-x', `${x}px`);
+            li.style.setProperty('--mouse-y', `${y}px`);
+          });
+
+          li.addEventListener('click', (e) => {
+            e.preventDefault();
+            activateProject(proj, li);
+            openLightbox(proj);
+          });
+
+          listEl.appendChild(li);
+        });
+      }
+
+      // ── YouTube Utilities for Services Display ───────────────────────────
+      function extractYouTubeId(url) {
+        if (!url || typeof url !== "string") return null;
+        const clean = url.trim();
+        const patterns = [
+          /(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|v\/|shorts\/|live\/)|youtu\.be\/)([\w-]{11})/i,
+          /[?&]v=([\w-]{11})/i
+        ];
+        for (const p of patterns) {
+          const m = clean.match(p);
+          if (m && m[1]) return m[1];
+        }
+        return null;
+      }
+
+      function ytThumbUrl(videoId, quality) {
+        return `https://img.youtube.com/vi/${videoId}/${quality || 'hqdefault'}.jpg`;
+      }
+
+      /* --------------------------------------------------------------------------
+         ACTIVATE PROJECT (SYNC FULL-SCREEN BACKGROUND & STATIC RIGHT VIEWPORT)
+         -------------------------------------------------------------------------- */
+      function activateProject(project, activeElement) {
+        if (!project) return;
+        currentActiveProject = project;
+
+        // Update active class on list items
+        document.querySelectorAll(".index-item").forEach(item => {
+          if (item.getAttribute("data-id") === project.id) {
+            item.classList.add("active");
+          } else {
+            item.classList.remove("active");
+          }
+        });
+
+        let ytId = extractYouTubeId(project.video) || extractYouTubeId(project.image);
+        if (!ytId && project.gallery && project.gallery.length > 0) {
+          const gYt = project.gallery.find(x => x.isYouTube || extractYouTubeId(x.url) || x.youtubeId);
+          if (gYt) ytId = extractYouTubeId(gYt.url) || gYt.youtubeId;
+        }
+
+        // Check if project specifically selected image thumbnail or has a custom uploaded image
+        const isVideoThumbnail = (project.thumbnailType === "video" && Boolean(ytId || project.video));
+        const isImageThumbnail = !isVideoThumbnail;
+
+        let thumbUrl = "";
+        if (isVideoThumbnail && ytId) {
+          thumbUrl = ytThumbUrl(ytId, "maxresdefault");
+        } else {
+          thumbUrl = project.customImage || project.image || "assets/service_media_photo.jpg";
+        }
+
+        const isDirectVideo = (Boolean(project.video) && !ytId && isVideoThumbnail);
+
+        // 1. Trigger Full-Screen Background Cross-Dissolve (Photo, Direct Video, or YouTube Thumbnail)
+        if (isDirectVideo) {
+          bgVideoLayer.src = project.video;
+          bgVideoLayer.classList.add("active");
+          bgLayerA.classList.remove("active");
+          bgLayerB.classList.remove("active");
+        } else {
+          bgVideoLayer.classList.remove("active");
+          bgVideoLayer.pause();
+
+          const bgImgUrl = thumbUrl;
+          if (currentActiveLayer === "A") {
+            bgLayerB.style.backgroundImage = `url("${bgImgUrl}")`;
+            bgLayerB.classList.add("active");
+            bgLayerA.classList.remove("active");
+            currentActiveLayer = "B";
+          } else {
+            bgLayerA.style.backgroundImage = `url("${bgImgUrl}")`;
+            bgLayerA.classList.add("active");
+            bgLayerB.classList.remove("active");
+            currentActiveLayer = "A";
+          }
+        }
+
+        // 2. Update Right Column Dynamic Display Viewport & Metadata (Static in Window)
+        function applyMediaRatio(w, h, isVideo) {
+          const ratio = w / h;
+          const isVertical = ratio < 0.98;
+
+          displayViewportFrame.style.aspectRatio = `${w} / ${h}`;
+          if (isVertical) {
+            displayViewportFrame.classList.add("is-vertical");
+            displayViewportFrame.classList.remove("is-horizontal");
+            displayBadgeRes.textContent = (w === 2200 && h === 3300) ? "2:3 PORTRAIT // 35MM" : "VERTICAL // HIGH-RES";
+          } else {
+            displayViewportFrame.classList.add("is-horizontal");
+            displayViewportFrame.classList.remove("is-vertical");
+            displayBadgeRes.textContent = isVideo ? (ytId ? "4K YOUTUBE // CINEMA" : "4K CINEMA // 16:9") : "3:2 DCI // 35MM";
+          }
+        }
+
+        // Apply immediately from pre-configured project dimensions
+        if (project.width && project.height) {
+          applyMediaRatio(project.width, project.height, Boolean(project.video));
+        }
+
+        // Manage YouTube Play Overlay Button and Inline Iframe Player on Viewport Frame
+        const displayMainYoutube = document.getElementById("display-main-youtube");
+        let ytOverlay = document.getElementById("yt-viewport-play-overlay");
+
+        if (!isImageThumbnail && ytId) {
+          displayMainVideo.style.display = "none";
+          displayMainVideo.pause();
+          if (displayMainYoutube) {
+            displayMainYoutube.style.display = "none";
+            displayMainYoutube.src = "";
+          }
+          displayMainImg.style.display = "block";
+          displayMainImg.src = thumbUrl;
+          displayMainImg.alt = `${project.title} - ${project.tag}`;
+          displayMainImg.onerror = () => {
+            displayMainImg.src = ytThumbUrl(ytId, "hqdefault");
+          };
+          applyMediaRatio(1920, 1080, true);
+
+          if (!ytOverlay) {
+            ytOverlay = document.createElement("div");
+            ytOverlay.id = "yt-viewport-play-overlay";
+            ytOverlay.style.cssText = "position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.28); cursor:pointer; z-index:3; transition:background 0.2s;";
+            ytOverlay.innerHTML = `
+              <div style="width:72px; height:50px; background:rgba(255,0,0,0.92); border-radius:12px; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 28px rgba(255,0,0,0.55); transition:transform 0.2s ease;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#ffffff"><polygon points="8,5 19,12 8,19"></polygon></svg>
+              </div>
+            `;
+            displayViewportFrame.appendChild(ytOverlay);
+          }
+          ytOverlay.style.display = "flex";
+          ytOverlay.onclick = (e) => {
+            e.stopPropagation();
+            if (displayMainYoutube) {
+              displayMainYoutube.src = `https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1`;
+              displayMainYoutube.style.display = "block";
+              displayMainImg.style.display = "none";
+              ytOverlay.style.display = "none";
+            } else {
+              openLightbox(currentActiveProject);
+            }
+          };
+        } else if (isDirectVideo && !isImageThumbnail) {
+          if (displayMainYoutube) {
+            displayMainYoutube.style.display = "none";
+            displayMainYoutube.src = "";
+          }
+          if (ytOverlay) ytOverlay.style.display = "none";
+          displayMainImg.style.display = "none";
+          displayMainVideo.style.display = "block";
+          displayMainVideo.src = project.video;
+          displayMainVideo.play().catch(() => {});
+
+          if (displayMainVideo.videoWidth) {
+            applyMediaRatio(displayMainVideo.videoWidth, displayMainVideo.videoHeight, true);
+          } else {
+            displayMainVideo.onloadedmetadata = () => {
+              applyMediaRatio(displayMainVideo.videoWidth, displayMainVideo.videoHeight, true);
+            };
+          }
+        } else {
+          // Custom Image mode
+          if (displayMainYoutube) {
+            displayMainYoutube.style.display = "none";
+            displayMainYoutube.src = "";
+          }
+          if (ytOverlay) ytOverlay.style.display = "none";
+          displayMainVideo.style.display = "none";
+          displayMainVideo.pause();
+          displayMainImg.style.display = "block";
+          displayMainImg.src = thumbUrl;
+          displayMainImg.alt = `${project.title} - ${project.tag}`;
+
+          if (displayMainImg.complete && displayMainImg.naturalWidth > 0) {
+            applyMediaRatio(displayMainImg.naturalWidth, displayMainImg.naturalHeight, false);
+          } else {
+            displayMainImg.onload = () => {
+              applyMediaRatio(displayMainImg.naturalWidth, displayMainImg.naturalHeight, false);
+            };
+          }
+        }
+
+        displayBadgeCat.textContent = project.tag || project.title;
+        metaCategoryText.textContent = `DISCIPLINE // ${project.indexNum}`;
+        metaIndexText.textContent = `INDEX ITEM ${project.indexNum} OF ${PROJECTS.length < 10 ? '0' + PROJECTS.length : PROJECTS.length}`;
+        metaTitleText.textContent = project.title;
+        metaDescText.textContent = project.description;
+
+        // Custom Blue Labels & Values from CMS!
+        const metaClientLbl = document.getElementById("meta-client-label");
+        if (metaClientLbl) metaClientLbl.textContent = project.spec1Label || "CLIENT / ENGAGEMENT";
+        metaClientVal.textContent = project.spec1Val || project.client || "";
+
+        const metaDirectorLbl = document.getElementById("meta-director-label");
+        if (metaDirectorLbl) metaDirectorLbl.textContent = project.spec2Label || "DIRECTOR / PHOTOGRAPHER";
+        metaDirectorVal.textContent = project.spec2Val || project.director || "";
+
+        const metaOpticsLbl = document.getElementById("meta-optics-label");
+        if (metaOpticsLbl) metaOpticsLbl.textContent = project.spec3Label || "OPTICS & SENSOR";
+        metaOpticsVal.textContent = project.spec3Val || project.optics || "";
+
+        const metaTierLbl = document.getElementById("meta-tier-label");
+        if (metaTierLbl) metaTierLbl.textContent = project.spec4Label || "SERVICE TIER LEVEL";
+        metaTierVal.textContent = project.spec4Val || project.tier || "";
+
+        // Dynamic Action Buttons from CMS
+        const inspectBtnText = document.getElementById("meta-inspect-btn-text");
+        if (inspectBtnText) {
+          inspectBtnText.textContent = project.primaryBtnText || "Details";
+        }
+        const secBtn = document.getElementById("meta-secondary-btn");
+        const secBtnText = document.getElementById("meta-secondary-btn-text");
+        if (secBtnText) {
+          secBtnText.textContent = project.secondaryBtnText || "INQUIRE SERVICE";
+        }
+        if (secBtn && project.secondaryBtnLink) {
+          secBtn.href = project.secondaryBtnLink;
+        }
+      }
+
+      /* --------------------------------------------------------------------------
+         SCROLL-TRIGGERED SYNCHRONIZATION WHILE SCROLLING
+         -------------------------------------------------------------------------- */
+      let isScrolling = false;
+      window.addEventListener("scroll", () => {
+        if (!isScrolling) {
+          window.requestAnimationFrame(() => {
+            const scrollThreshold = window.scrollY + window.innerHeight * 0.35;
+            const items = document.querySelectorAll(".index-item");
+
+            for (let i = items.length - 1; i >= 0; i--) {
+              const item = items[i];
+              if (item.offsetTop <= scrollThreshold) {
+                const id = item.getAttribute("data-id");
+                const target = PROJECTS.find(p => p.id === id);
+                if (target && target.id !== currentActiveProject.id) {
+                  activateProject(target, item);
+                }
+                break;
+              }
+            }
+            isScrolling = false;
+          });
+          isScrolling = true;
+        }
+      }, { passive: true });
+
+      /* --------------------------------------------------------------------------
+         MULTI-MEDIA LIGHTBOX MODAL (MULTIPLE PHOTOS & VIDEOS + FILMSTRIP)
+         -------------------------------------------------------------------------- */
+      /* --------------------------------------------------------------------------
+         CONTINUOUS SCROLLABLE MEDIA FEED LIGHTBOX (STATIC RIGHT DESCRIPTION)
+         -------------------------------------------------------------------------- */
+      let currentProjectGallery = [];
+
+      function openLightbox(proj) {
+        currentActiveProject = proj;
+
+        const mainYt = extractYouTubeId(proj.video) || extractYouTubeId(proj.image);
+        let items = [];
+
+        if (proj.gallery && Array.isArray(proj.gallery) && proj.gallery.length > 0) {
+          items = [...proj.gallery];
+
+          // If project thumbnail mode is VIDEO and has a main video, ensure it is included
+          if (proj.thumbnailType === "video" && proj.video) {
+            const hasYtInGallery = items.some(x => (mainYt && (extractYouTubeId(x.url) === mainYt || x.youtubeId === mainYt)));
+            const hasDirectInGallery = items.some(x => x.url === proj.video);
+            if (!hasYtInGallery && !hasDirectInGallery) {
+              items.unshift({
+                type: "video",
+                url: proj.video,
+                isYouTube: Boolean(mainYt),
+                youtubeId: mainYt || null,
+                thumbnail: mainYt ? ytThumbUrl(mainYt, "maxresdefault") : undefined,
+                title: proj.title + " // Official Broadcast Video",
+                caption: proj.description || "Official video broadcast"
+              });
+            }
+          }
+        } else {
+          // If gallery is empty, fall back to main visual or video
+          items = [
+            {
+              type: (proj.video || mainYt) ? "video" : "image",
+              url: (proj.thumbnailType === "video" && proj.video) ? proj.video : (proj.customImage || proj.image || proj.video),
+              isYouTube: Boolean(mainYt),
+              youtubeId: mainYt || null,
+              thumbnail: mainYt ? ytThumbUrl(mainYt, "maxresdefault") : (proj.customImage || proj.image || undefined),
+              title: proj.title + ((proj.video || mainYt) ? " // Official Broadcast Video" : " // Primary Master Visual"),
+              caption: proj.description
+            }
+          ];
+        }
+
+        currentProjectGallery = items;
+
+        modalProjectTitle.textContent = `${proj.title} // ${proj.indexNum}`;
+        modalDetailTitle.textContent = `${proj.title} — ${proj.tag}`;
+        modalDetailDesc.textContent = proj.description;
+
+        const modalDeliverablesLabel = document.getElementById("modal-deliverables-label");
+        if (modalDeliverablesLabel) {
+          modalDeliverablesLabel.textContent = proj.deliverablesLabel || "DELIVERABLES & LICENSING";
+        }
+        modalDeliverables.textContent = proj.deliverables || "";
+        modalTagPill.textContent = proj.tag || "CASE STUDY";
+
+        renderScrollableMediaFeed();
+        lightboxModal.classList.add("is-open");
+        const lightboxBody = document.querySelector(".lightbox-body");
+        if (lightboxBody) lightboxBody.scrollTop = 0;
+        lightboxModal.scrollTop = 0;
+        document.body.style.overflow = "hidden";
+      }
+
+      function renderScrollableMediaFeed() {
+        const feedContainer = document.getElementById("lightbox-media-feed");
+        if (!feedContainer) return;
+        feedContainer.innerHTML = "";
+
+        currentProjectGallery.forEach((item, idx) => {
+          const ytId = extractYouTubeId(item.url) || item.youtubeId;
+          const isDirectVid = (item.type === "video" && !ytId) || (item.url && item.url.match(/\.(mp4|webm|mov|m4v)(\?.*)?$/i));
+          const numStr = String(idx + 1).padStart(2, "0");
+          const totalStr = String(currentProjectGallery.length).padStart(2, "0");
+
+          let typeLabel = "PHOTOGRAPHY";
+          if (ytId) typeLabel = "YOUTUBE BROADCAST";
+          else if (isDirectVid) typeLabel = "MOTION REEL";
+
+          const captionText = item.title || item.caption || `${ytId ? 'YouTube Broadcast Video' : (isDirectVid ? 'Production Motion Reel' : 'Cinematography Still')} ${numStr}`;
+
+          const feedItem = document.createElement("div");
+          feedItem.className = "lightbox-feed-item";
+
+          let mediaHtml = "";
+          if (ytId) {
+            mediaHtml = `
+              <div class="lightbox-feed-media-wrap is-youtube" style="position: relative; width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 4px; overflow: hidden; min-height: 320px;">
+                <iframe 
+                  class="lightbox-feed-yt"
+                  src="https://www.youtube-nocookie.com/embed/${ytId}?autoplay=${idx === 0 ? '1' : '0'}&rel=0&modestbranding=1&enablejsapi=1" 
+                  title="${captionText}" 
+                  frameborder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                  allowfullscreen 
+                  style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;">
+                </iframe>
+              </div>
+            `;
+          } else if (isDirectVid) {
+            mediaHtml = `
+              <div class="lightbox-feed-media-wrap">
+                <video class="lightbox-feed-video" src="${item.url}" controls ${idx === 0 ? 'autoplay' : ''} playsinline style="width:100%; max-height:85vh;"></video>
+              </div>
+            `;
+          } else {
+            mediaHtml = `
+              <div class="lightbox-feed-media-wrap">
+                <img src="${item.url}" alt="${captionText}" draggable="false" loading="${idx === 0 ? 'eager' : 'lazy'}" />
+              </div>
+            `;
+          }
+
+          feedItem.innerHTML = `
+            ${mediaHtml}
+            <div class="lightbox-feed-meta">
+              <span class="lightbox-feed-caption">${captionText}</span>
+              <span class="lightbox-feed-pill">${numStr} / ${totalStr} [${typeLabel}]</span>
+            </div>
+          `;
+          feedContainer.appendChild(feedItem);
+        });
+
+        // Audio configuration: UNMUTED with 40% default volume
+        const feedVideos = feedContainer.querySelectorAll("video");
+        feedVideos.forEach((vid, vIdx) => {
+          vid.muted = false;
+          vid.volume = 0.4;
+          if (vIdx === 0) {
+            const playPromise = vid.play();
+            if (playPromise !== undefined) {
+              playPromise.catch(() => {
+                vid.muted = true;
+                vid.play().then(() => {
+                  vid.muted = false;
+                  vid.volume = 0.4;
+                }).catch(() => {});
+              });
+            }
+          }
+        });
+
+        const feedIframes = feedContainer.querySelectorAll("iframe");
+        feedIframes.forEach((iframe) => {
+          const setYtAudio = () => {
+            try {
+              iframe.contentWindow.postMessage(JSON.stringify({
+                event: "command",
+                func: "unMute"
+              }), "*");
+              iframe.contentWindow.postMessage(JSON.stringify({
+                event: "command",
+                func: "setVolume",
+                args: [40]
+              }), "*");
+            } catch(e) {}
+          };
+          iframe.addEventListener("load", () => {
+            setTimeout(setYtAudio, 300);
+            setTimeout(setYtAudio, 1000);
+          });
+          setTimeout(setYtAudio, 500);
+          setTimeout(setYtAudio, 1200);
+        });
+
+        // Reset scroll position to top
+        feedContainer.scrollTop = 0;
+      }
+
+      function closeLightbox() {
+        lightboxModal.classList.remove("is-open");
+        const lightboxBody = document.querySelector(".lightbox-body");
+        if (lightboxBody) lightboxBody.scrollTop = 0;
+        lightboxModal.scrollTop = 0;
+        const feedVideos = document.querySelectorAll("#lightbox-media-feed video");
+        feedVideos.forEach(v => {
+          v.pause();
+          v.currentTime = 0;
+        });
+        const feedIframes = document.querySelectorAll("#lightbox-media-feed iframe");
+        feedIframes.forEach(f => {
+          f.src = "";
+        });
+        document.body.style.overflow = "";
+      }
+
+      if (openLightboxBtn) {
+        openLightboxBtn.addEventListener("click", () => openLightbox(currentActiveProject));
+      }
+      if (metaInspectBtn) {
+        metaInspectBtn.addEventListener("click", () => openLightbox(currentActiveProject));
+      }
+      if (closeLightboxBtn) {
+        closeLightboxBtn.addEventListener("click", closeLightbox);
+      }
+      if (lightboxModal) {
+        lightboxModal.addEventListener("click", (e) => {
+          if (e.target === lightboxModal) closeLightbox();
+        });
+      }
+
+      /* --------------------------------------------------------------------------
+         ACTIVE GRAB & SLIDE SCROLL ENGINE (TOUCH, TRACKPAD & MOUSE DRAG)
+         -------------------------------------------------------------------------- */
+      (function setupModalGrabAndSlide() {
+        const modal = document.getElementById("cinema-lightbox-modal");
+        const feed = document.getElementById("lightbox-media-feed");
+        if (!modal) return;
+
+        let isDragging = false;
+        let startY = 0;
+        let startScrollTop = 0;
+        let activeScroller = modal;
+        let lastY = 0;
+        let lastTime = 0;
+        let velocityY = 0;
+        let animId = null;
+        let movedDistance = 0;
+
+        function getScroller() {
+          return window.innerWidth <= 992 ? modal : (feed || modal);
+        }
+
+        modal.addEventListener("pointerdown", (e) => {
+          // Allow interactive controls to work naturally
+          if (e.target.closest("button, a, iframe, video, input, select, textarea")) return;
+          if (e.pointerType === "mouse" && e.button !== 0) return;
+
+          cancelAnimationFrame(animId);
+          activeScroller = getScroller();
+          isDragging = true;
+          movedDistance = 0;
+          startY = e.clientY;
+          lastY = e.clientY;
+          lastTime = performance.now();
+          startScrollTop = activeScroller.scrollTop;
+          velocityY = 0;
+          modal.style.cursor = "grabbing";
+        });
+
+        window.addEventListener("pointermove", (e) => {
+          if (!isDragging) return;
+          const currentY = e.clientY;
+          const deltaY = currentY - startY;
+          movedDistance += Math.abs(currentY - lastY);
+          activeScroller.scrollTop = startScrollTop - deltaY;
+
+          const now = performance.now();
+          const dt = now - lastTime;
+          if (dt > 10) {
+            velocityY = (currentY - lastY) / dt;
+            lastY = currentY;
+            lastTime = now;
+          }
+        });
+
+        function endDrag(e) {
+          if (!isDragging) return;
+          isDragging = false;
+          modal.style.cursor = "";
+
+          // If dragged significantly, prevent default click behavior
+          if (movedDistance > 5 && e && e.cancelable) {
+            e.preventDefault();
+          }
+
+          // Inertial gliding momentum when released with velocity
+          if (Math.abs(velocityY) > 0.12) {
+            let currentVelocity = velocityY * 16;
+            function momentumStep() {
+              if (Math.abs(currentVelocity) < 0.4) return;
+              activeScroller.scrollTop -= currentVelocity;
+              currentVelocity *= 0.92;
+              animId = requestAnimationFrame(momentumStep);
+            }
+            animId = requestAnimationFrame(momentumStep);
+          }
+        }
+
+        window.addEventListener("pointerup", endDrag);
+        window.addEventListener("pointercancel", endDrag);
+      })();
+
+      /* --------------------------------------------------------------------------
+         PRICING & TIERS MODAL HANDLING
+         -------------------------------------------------------------------------- */
+      function openPricingModal() {
+        pricingModal.classList.add("is-open");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closePricingModal() {
+        pricingModal.classList.remove("is-open");
+        document.body.style.overflow = "";
+      }
+
+      if (openPricingBtn) openPricingBtn.addEventListener("click", openPricingModal);
+      if (closePricingBtn) closePricingBtn.addEventListener("click", closePricingModal);
+      if (mobilePricingLink) {
+        mobilePricingLink.addEventListener("click", (e) => {
+          e.preventDefault();
+          const mobileMenu = document.getElementById("mobile-menu");
+          if (mobileMenu) mobileMenu.classList.remove("active");
+          openPricingModal();
+        });
+      }
+      if (pricingModal) {
+        pricingModal.addEventListener("click", (e) => {
+          if (e.target === pricingModal) closePricingModal();
+        });
+      }
+
+      window.addEventListener("keydown", (e) => {
+        if (lightboxModal && lightboxModal.classList.contains("is-open")) {
+          if (e.key === "Escape") closeLightbox();
+        } else if (e.key === "Escape") {
+          closePricingModal();
+        }
+      });
+
+      /* --------------------------------------------------------------------------
+         CATEGORY FILTERING LOGIC
+         -------------------------------------------------------------------------- */
+      let currentFilter = 'all';
+      const filterPills = document.querySelectorAll('.filter-pill');
+
+      function applyCategoryFilter(filter) {
+        currentFilter = filter;
+
+        filterPills.forEach(btn => {
+          const btnFilter = btn.getAttribute('data-filter');
+          if (btnFilter === filter) {
+            btn.classList.add('active');
+            btn.setAttribute('aria-selected', 'true');
+          } else {
+            btn.classList.remove('active');
+            btn.setAttribute('aria-selected', 'false');
+          }
+        });
+
+        const activeBtn = document.querySelector(`.filter-pill[data-filter="${filter}"]`);
+        const label = activeBtn ? activeBtn.textContent.trim() : 'ALL';
+
+        let filteredItems = [];
+        if (filter === 'all') {
+          filteredItems = [...PROJECTS];
+          if (activeCategoryIndicator) {
+            activeCategoryIndicator.textContent = `ALL DISCIPLINES [${filteredItems.length}]`;
+          }
+        } else {
+          filteredItems = PROJECTS.filter(p => p.category === filter);
+          if (activeCategoryIndicator) {
+            activeCategoryIndicator.textContent = `${label} [${filteredItems.length}]`;
+          }
+        }
+
+        renderList(filteredItems);
+
+        if (filteredItems.length > 0) {
+          const isCurrentInList = currentActiveProject && filteredItems.find(p => p.id === currentActiveProject.id);
+          if (isCurrentInList) {
+            activateProject(isCurrentInList);
+          } else {
+            activateProject(filteredItems[0]);
+          }
+        }
+      }
+
+      filterPills.forEach(pill => {
+        pill.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetFilter = pill.getAttribute('data-filter');
+          applyCategoryFilter(targetFilter);
+        });
+      });
+
+      /* --------------------------------------------------------------------------
+         INITIALIZATION: FETCH FROM CMS DATA STORE & RENDER LIST
+         -------------------------------------------------------------------------- */
+      async function initServices() {
+        try {
+          const res = await fetch('data/services_data.json?t=' + Date.now());
+          if (res.ok) {
+            const data = await res.json();
+            if (data && data.projects && data.projects.length > 0) {
+              PROJECTS.length = 0;
+              PROJECTS.push(...data.projects);
+            }
+          }
+        } catch (e) {
+          console.log('Using embedded default services data');
+        }
+
+        const allPill = document.querySelector('.filter-pill[data-filter="all"]');
+        if (allPill) {
+          allPill.textContent = 'ALL [' + (PROJECTS.length < 10 ? '0' + PROJECTS.length : PROJECTS.length) + ']';
+        }
+
+        applyCategoryFilter(currentFilter);
+      }
+
+      initServices();
+
+      // Mobile Menu
+      const hamburgerBtn = document.getElementById('hamburger-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const closeMenuBtn = document.getElementById('close-menu-btn');
+
+      function openMobileMenu() {
+        if (!mobileMenu) return;
+        mobileMenu.classList.add('open');
+        mobileMenu.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeMobileMenu() {
+        if (!mobileMenu) return;
+        mobileMenu.classList.remove('open');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      if (hamburgerBtn) {
+        hamburgerBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          openMobileMenu();
+        });
+      }
+      if (closeMenuBtn) {
+        closeMenuBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          closeMobileMenu();
+        });
+      }
+
+      // Close drawer when any mobile navigation link is clicked
+      const mobileNavLinks = document.querySelectorAll('.mobile-link');
+      mobileNavLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          closeMobileMenu();
+        });
+      });
+
+      // Close when clicking outside drawer content
+      document.addEventListener('click', (e) => {
+        if (mobileMenu && (mobileMenu.classList.contains('open') || mobileMenu.classList.contains('active'))) {
+          if (!mobileMenu.contains(e.target) && hamburgerBtn && !hamburgerBtn.contains(e.target)) {
+            closeMobileMenu();
+          }
+        }
+      });
+
+      // Open modal automatically if requested via URL param or hash
+      if (window.location.search.includes('modal=1') || window.location.hash === '#modal') {
+        setTimeout(() => {
+          openLightbox(PROJECTS[0]);
+        }, 100);
+      }
+
+    });
+  </script>
+  <script src="js/client-auth.js?v=20261004_v1"></script>
+</body>
+</html>

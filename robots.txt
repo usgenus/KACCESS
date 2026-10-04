@@ -1,20 +1,27 @@
 User-agent: *
 Allow: /
-Allow: /ko/forum
-Allow: /ko/forum/
-Allow: /ko/forum/topic/
-Allow: /ko/blog
-Allow: /ko/blog/
-Allow: /ko/senior-care
-Allow: /ko/medicare
+Allow: /forum
+Allow: /forum/
+Allow: /forum/topic/
+Allow: /blog
+Allow: /blog/
+Allow: /medicare
+Allow: /about
+Allow: /calculator
+Allow: /dictionary
+Allow: /matcher
+Allow: /engine/
+Allow: /ko/
 
 # Explicit Directives for Googlebot
 User-agent: Googlebot
 Allow: /
+Allow: /ko/
 Allow: /ko/forum
 Allow: /ko/forum/
 Allow: /ko/forum/topic/
 Allow: /ko/blog
+Allow: /engine/
 
 # AI & Search Retrieval Crawlers
 User-agent: Google-Extended
@@ -63,3 +70,4 @@ Disallow: /ko/data/
 # XML Sitemaps
 Sitemap: https://njaccessportal.com/sitemap.xml
 Sitemap: https://njaccessportal.com/ko/sitemap.xml
+Sitemap: https://njaccessportal.com/engine/sitemap.xml

@@ -29,8 +29,8 @@ $isQuestionClinician = !empty($question['authorBadge']) && str_contains($questio
 $cleanBodyText = preg_replace('/\s+/', ' ', trim(strip_tags($question['body'])));
 $cleanTitleText = trim(strip_tags($question['title']));
 $seoDesc = mb_substr($cleanBodyText, 0, 155, 'UTF-8') . (mb_strlen($cleanBodyText, 'UTF-8') > 155 ? '...' : '');
-$topicUrl = 'https://njaccessportal.com/ko/forum/topic/' . urlencode($question['id']);
-$coverImage = !empty($question['images'][0]) ? (str_starts_with($question['images'][0], 'http') ? $question['images'][0] : 'https://njaccessportal.com/ko/' . ltrim($question['images'][0], '/')) : 'https://njaccessportal.com/ko/logo-icon.svg';
+$topicUrl = 'https://njaccessportal.com/forum/topic/' . urlencode($question['id']);
+$coverImage = !empty($question['images'][0]) ? (str_starts_with($question['images'][0], 'http') ? $question['images'][0] : 'https://njaccessportal.com/' . ltrim($question['images'][0], '/')) : 'https://njaccessportal.com/logo-icon.svg';
 $pubDate = date('c', strtotime($question['createdAt'] ?? 'now'));
 $modDate = date('c', strtotime($question['updatedAt'] ?? ($question['createdAt'] ?? 'now')));
 
@@ -91,13 +91,13 @@ $breadcrumbList = [
             '@type' => 'ListItem',
             'position' => 1,
             'name' => '홈',
-            'item' => 'https://njaccessportal.com/ko/'
+            'item' => 'https://njaccessportal.com/'
         ],
         [
             '@type' => 'ListItem',
             'position' => 2,
             'name' => '커뮤니티 포럼',
-            'item' => 'https://njaccessportal.com/ko/forum'
+            'item' => 'https://njaccessportal.com/forum'
         ]
     ]
 ];
@@ -107,7 +107,7 @@ if ($category) {
         '@type' => 'ListItem',
         'position' => $bPos++,
         'name' => $category['name_ko'],
-        'item' => 'https://njaccessportal.com/ko/forum?specialty=' . urlencode($category['id'])
+        'item' => 'https://njaccessportal.com/forum?specialty=' . urlencode($category['id'])
     ];
 }
 if ($subSpecialty) {
@@ -115,7 +115,7 @@ if ($subSpecialty) {
         '@type' => 'ListItem',
         'position' => $bPos++,
         'name' => $subSpecialty['name_ko'],
-        'item' => 'https://njaccessportal.com/ko/forum?specialty=medical_health&sub=' . urlencode($subSpecialty['id'])
+        'item' => 'https://njaccessportal.com/forum?specialty=medical_health&sub=' . urlencode($subSpecialty['id'])
     ];
 }
 $breadcrumbList['itemListElement'][] = [
@@ -164,7 +164,10 @@ $forumPostingSchema = [
   <!-- Directives for Googlebot & Web Crawlers -->
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-  <link rel="canonical" href="<?= htmlspecialchars($topicUrl) ?>" />
+  <link rel="canonical" href="https://njaccessportal.com/forum/topic/<?= htmlspecialchars($id) ?>" />
+" />
+" />
+" />
 
   <!-- OpenGraph / Social Media -->
   <meta property="og:site_name" content="NJAP 헬스케어 포럼 · 뉴저지 의료접근센터" />
@@ -206,7 +209,7 @@ $forumPostingSchema = [
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/ko/_next/static/chunks/1fosv8xgmgdeu.css" />
+  <link rel="stylesheet" href="/_next/static/chunks/1fosv8xgmgdeu.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Identity Services (GIS) -->
@@ -306,15 +309,15 @@ $forumPostingSchema = [
       <!-- Top Breadcrumbs & Back Bar -->
       <div class="flex items-center justify-between gap-4 mb-4 text-xs sm:text-sm font-bold text-slate-500 flex-wrap">
         <div class="flex items-center gap-2 flex-wrap">
-          <a href="/ko/forum" class="hover:text-blue-600 transition-colors">포럼 홈</a>
+          <a href="/forum" class="hover:text-blue-600 transition-colors">포럼 홈</a>
           <span class="text-slate-300">/</span>
-          <a href="/ko/forum?specialty=<?= urlencode($category['id'] ?? '') ?>&view=topics" 
+          <a href="/forum?specialty=<?= urlencode($category['id'] ?? '') ?>&view=topics" 
              class="hover:text-blue-600 transition-colors">
             <?= htmlspecialchars($category['name_ko'] ?? '게시판') ?>
           </a>
           <?php if (!empty($subSpecialty)): ?>
             <span class="text-slate-300">/</span>
-            <a href="/ko/forum?specialty=medical_health&sub=<?= urlencode($subSpecialty['id']) ?>&view=topics"
+            <a href="/forum?specialty=medical_health&sub=<?= urlencode($subSpecialty['id']) ?>&view=topics"
                class="text-blue-600 hover:text-blue-800 transition-colors">
               <?= htmlspecialchars($subSpecialty['name_ko']) ?>
             </a>
@@ -329,14 +332,14 @@ $forumPostingSchema = [
       <div class="mb-6">
         <div class="flex items-center gap-2 mb-2.5 flex-wrap">
           <?php if ($category): ?>
-            <a href="/ko/forum?specialty=<?= urlencode($category['id']) ?>&view=topics" 
+            <a href="/forum?specialty=<?= urlencode($category['id']) ?>&view=topics" 
                class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-xl border bg-white text-slate-800 shadow-2xs hover:border-blue-400 transition-colors">
               <span><?= htmlspecialchars($category['name_ko']) ?></span>
             </a>
           <?php endif; ?>
 
           <?php if (!empty($subSpecialty)): ?>
-            <a href="/ko/forum?specialty=medical_health&sub=<?= urlencode($subSpecialty['id']) ?>&view=topics"
+            <a href="/forum?specialty=medical_health&sub=<?= urlencode($subSpecialty['id']) ?>&view=topics"
                class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-xl border border-blue-200 bg-blue-50 text-blue-800 shadow-2xs hover:bg-blue-100 transition-colors">
               <span><?= htmlspecialchars($subSpecialty['name_ko']) ?></span>
             </a>
@@ -344,7 +347,7 @@ $forumPostingSchema = [
 
           <?php if (!empty($question['tags'])): ?>
             <?php foreach ($question['tags'] as $tag): ?>
-              <a href="/ko/forum?specialty=<?= urlencode($category['id'] ?? '') ?>&q=<?= urlencode($tag) ?>&view=topics" 
+              <a href="/forum?specialty=<?= urlencode($category['id'] ?? '') ?>&q=<?= urlencode($tag) ?>&view=topics" 
                  class="text-xs bg-slate-100 hover:bg-blue-50 hover:text-blue-700 text-slate-600 px-2.5 py-1 rounded-lg border border-slate-200/80 transition-colors font-medium">
                 #<?= htmlspecialchars($tag) ?>
               </a>
@@ -637,7 +640,7 @@ $forumPostingSchema = [
               </h4>
               <div class="space-y-3">
                 <?php foreach ($relatedQuestions as $rq): ?>
-                  <a href="/ko/forum/topic/<?= htmlspecialchars($rq['id']) ?>" 
+                  <a href="/forum/topic/<?= htmlspecialchars($rq['id']) ?>" 
                      class="block group text-xs text-slate-700 hover:text-blue-600 font-medium leading-snug">
                     <span class="group-hover:underline line-clamp-2"><?= htmlspecialchars($rq['title']) ?></span>
                     <span class="block text-[10px] text-slate-400 mt-0.5">답변 <?= (int)$rq['replyCount'] ?>개</span>
@@ -718,7 +721,7 @@ $forumPostingSchema = [
         formData.append('image', file);
 
         try {
-          const res = await fetch('/ko/api/forum.php?action=upload_image', {
+          const res = await fetch('/api/forum.php?action=upload_image', {
             method: 'POST',
             body: formData
           });
@@ -774,7 +777,7 @@ $forumPostingSchema = [
       btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 등록 중...';
 
       try {
-        const res = await fetch('/ko/api/forum.php?action=reply', {
+        const res = await fetch('/api/forum.php?action=reply', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -806,7 +809,7 @@ $forumPostingSchema = [
       }
 
       try {
-        const res = await fetch('/ko/api/forum.php?action=upvote', {
+        const res = await fetch('/api/forum.php?action=upvote', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ answer_id: answerId })

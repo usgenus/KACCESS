@@ -1,12 +1,13 @@
 <?php
 /**
  * Dynamic XML Sitemap Generator
- * NJ Healthcare Access Center (Healthcare Access Portal)
- * Generates valid sitemap XML including all core pages, published news posts, and all active forum topics & discussions.
+ * NJ Healthcare Access Center (NJ Access Portal)
+ * Covers all core pages, all published articles, and all active forum topics.
  */
 header('Content-Type: application/xml; charset=utf-8');
 
-$baseUrl = 'https://njaccessportal.com/ko';
+$baseUrl = 'https://njaccessportal.com';
+
 require_once __DIR__ . '/api/db.php';
 require_once __DIR__ . '/api/forum_db.php';
 
@@ -22,142 +23,138 @@ $publishedPosts = array_values(array_filter($posts, function($p) {
 $forumQuestions = forum_get_questions('', 'latest', '', 'active');
 $forumCategories = forum_get_categories();
 $forumSubSpecialties = forum_get_sub_specialties();
-$forumSpecialties = $forumCategories;
 
-// Core portal pages
-$corePages = [
+// Core portal routes
+$coreRoutes = [
     [
-        'loc' => $baseUrl . '/',
+        'path' => '/',
         'priority' => '1.0',
         'changefreq' => 'daily',
         'lastmod' => date('Y-m-d')
     ],
     [
-        'loc' => $baseUrl . '/forum',
+        'path' => '/forum',
         'priority' => '0.9',
         'changefreq' => 'hourly',
         'lastmod' => date('Y-m-d')
     ],
     [
-        'loc' => $baseUrl . '/forum?view=categories',
+        'path' => '/forum?view=categories',
         'priority' => '0.8',
         'changefreq' => 'daily',
         'lastmod' => date('Y-m-d')
     ],
     [
-        'loc' => $baseUrl . '/blog',
+        'path' => '/blog',
         'priority' => '0.9',
         'changefreq' => 'daily',
         'lastmod' => date('Y-m-d')
     ],
     [
-        'loc' => $baseUrl . '/senior-care',
-        'priority' => '0.9',
-        'changefreq' => 'weekly',
-        'lastmod' => date('Y-m-d')
-    ],
-    [
-        'loc' => $baseUrl . '/medicare',
+        'path' => '/medicare',
         'priority' => '0.8',
         'changefreq' => 'weekly',
         'lastmod' => date('Y-m-d')
     ],
     [
-        'loc' => $baseUrl . '/tool',
+        'path' => '/about',
         'priority' => '0.8',
         'changefreq' => 'monthly',
         'lastmod' => date('Y-m-d')
     ],
     [
-        'loc' => $baseUrl . '/matcher',
+        'path' => '/matcher',
         'priority' => '0.7',
         'changefreq' => 'monthly',
         'lastmod' => date('Y-m-d')
     ],
     [
-        'loc' => $baseUrl . '/calculator',
+        'path' => '/calculator',
         'priority' => '0.7',
         'changefreq' => 'monthly',
         'lastmod' => date('Y-m-d')
     ],
     [
-        'loc' => $baseUrl . '/dictionary',
+        'path' => '/dictionary',
         'priority' => '0.7',
-        'changefreq' => 'monthly',
-        'lastmod' => date('Y-m-d')
-    ],
-    [
-        'loc' => $baseUrl . '/about',
-        'priority' => '0.8',
         'changefreq' => 'monthly',
         'lastmod' => date('Y-m-d')
     ]
 ];
 
+// Helper to render sitemap URL nodes
+function render_url($url, $priority, $changefreq, $lastmod, $images = []) {
+    echo "  <url>\n";
+    echo "    <loc>" . htmlspecialchars($url) . "</loc>\n";
+    echo "    <lastmod>" . htmlspecialchars($lastmod) . "</lastmod>\n";
+    echo "    <changefreq>" . htmlspecialchars($changefreq) . "</changefreq>\n";
+    echo "    <priority>" . htmlspecialchars($priority) . "</priority>\n";
+    if (!empty($images)) {
+        foreach ($images as $img) {
+            if (!empty($img['loc'])) {
+                echo "    <image:image>\n";
+                echo "      <image:loc>" . htmlspecialchars($img['loc']) . "</image:loc>\n";
+                if (!empty($img['title'])) {
+                    echo "      <image:title>" . htmlspecialchars($img['title']) . "</image:title>\n";
+                }
+                echo "    </image:image>\n";
+            }
+        }
+    }
+    echo "  </url>\n";
+}
+
 echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
 ?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-<?php foreach ($corePages as $page): ?>
-  <url>
-    <loc><?= htmlspecialchars($page['loc']) ?></loc>
-    <lastmod><?= htmlspecialchars($page['lastmod']) ?></lastmod>
-    <changefreq><?= htmlspecialchars($page['changefreq']) ?></changefreq>
-    <priority><?= htmlspecialchars($page['priority']) ?></priority>
-  </url>
-<?php endforeach; ?>
 
-<?php /* 1. 5 Core Forum Category Pages */ ?>
-<?php foreach ($forumCategories as $cat): ?>
-  <url>
-    <loc><?= htmlspecialchars($baseUrl . '/forum?specialty=' . urlencode($cat['id'])) ?></loc>
-    <lastmod><?= date('Y-m-d') ?></lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
-  </url>
-<?php endforeach; ?>
+<?php /* 1. Core Portal Pages */ ?>
+<?php foreach ($coreRoutes as $r): 
+    $url = $baseUrl . ($r['path'] === '/' ? '/' : $r['path']);
+    render_url($url, $r['priority'], $r['changefreq'], $r['lastmod']);
+endforeach; ?>
 
-<?php /* 1.1. 의학포럼 19대 세부 전문 진료과목 Pages */ ?>
-<?php foreach ($forumSubSpecialties as $sub): ?>
-  <url>
-    <loc><?= htmlspecialchars($baseUrl . '/forum?specialty=medical_health&sub=' . urlencode($sub['id'])) ?></loc>
-    <lastmod><?= date('Y-m-d') ?></lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-<?php endforeach; ?>
+<?php /* 2. Core Forum Category Pages */ ?>
+<?php foreach ($forumCategories as $cat): 
+    $catQuery = '?specialty=' . urlencode($cat['id']);
+    $url = $baseUrl . '/forum' . $catQuery;
+    render_url($url, '0.85', 'daily', date('Y-m-d'));
+endforeach; ?>
 
-<?php /* 2. All Active Forum Topics & Discussions */ ?>
+<?php /* 3. Medical Forum Sub-specialties */ ?>
+<?php foreach ($forumSubSpecialties as $sub): 
+    $subQuery = '?specialty=medical_health&sub=' . urlencode($sub['id']);
+    $url = $baseUrl . '/forum' . $subQuery;
+    render_url($url, '0.8', 'daily', date('Y-m-d'));
+endforeach; ?>
+
+<?php /* 4. All Active Forum Topics & Discussions */ ?>
 <?php foreach ($forumQuestions as $q): 
-    $topicUrl = $baseUrl . '/forum/topic/' . urlencode($q['id']);
+    $topicPath = '/forum/topic/' . urlencode($q['id']);
+    $url = $baseUrl . $topicPath;
+
     $qDate = $q['updatedAt'] ?? ($q['createdAt'] ?? 'now');
     $lastmod = date('Y-m-d', strtotime($qDate));
+    
     $firstImg = !empty($q['images'][0]) ? $q['images'][0] : '';
     if ($firstImg && strpos($firstImg, 'http') !== 0) {
         $firstImg = $baseUrl . '/' . ltrim($firstImg, '/');
     }
-?>
-  <url>
-    <loc><?= htmlspecialchars($topicUrl) ?></loc>
-    <lastmod><?= htmlspecialchars($lastmod) ?></lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-<?php if (!empty($firstImg)): ?>
-    <image:image>
-      <image:loc><?= htmlspecialchars($firstImg) ?></image:loc>
-      <image:title><?= htmlspecialchars($q['title']) ?></image:title>
-    </image:image>
-<?php endif; ?>
-  </url>
-<?php endforeach; ?>
+    $images = [];
+    if (!empty($firstImg)) {
+        $images[] = ['loc' => $firstImg, 'title' => $q['title'] ?? ''];
+    }
+    render_url($url, '0.8', 'daily', $lastmod, $images);
+endforeach; ?>
 
-<?php /* 3. Published Blog & Health News Posts */ ?>
+<?php /* 5. Published Blog & Health News Posts */ ?>
 <?php foreach ($publishedPosts as $post): 
     $slug = $post['slug'] ?? ($post['id'] ?? '');
     if (!$slug) continue;
-    $postUrl = $baseUrl . '/blog/' . rawurlencode($slug);
+    $postPath = '/blog/' . rawurlencode($slug);
+    $url = $baseUrl . $postPath;
     
-    // Parse lastmod date
     $rawDate = $post['updatedAt'] ?? ($post['date'] ?? ($post['createdAt'] ?? ''));
     $lastmod = !empty($rawDate) ? date('Y-m-d', strtotime($rawDate)) : date('Y-m-d');
     
@@ -169,18 +166,30 @@ echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
     if ($coverImage && strpos($coverImage, 'http') !== 0) {
         $coverImage = $baseUrl . '/' . ltrim($coverImage, '/');
     }
-?>
+    $images = [];
+    if (!empty($coverImage)) {
+        $images[] = ['loc' => $coverImage, 'title' => $postTitle];
+    }
+    render_url($url, '0.8', 'weekly', $lastmod, $images);
+endforeach; ?>
+
+<?php /* 6. Healthcare Access Engine (English Services Portal) */ ?>
   <url>
-    <loc><?= htmlspecialchars($postUrl) ?></loc>
-    <lastmod><?= htmlspecialchars($lastmod) ?></lastmod>
+    <loc>https://njaccessportal.com/engine/</loc>
+    <lastmod><?= date('Y-m-d') ?></lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://njaccessportal.com/engine/services</loc>
+    <lastmod><?= date('Y-m-d') ?></lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-<?php if (!empty($coverImage)): ?>
-    <image:image>
-      <image:loc><?= htmlspecialchars($coverImage) ?></image:loc>
-      <image:title><?= htmlspecialchars($postTitle) ?></image:title>
-    </image:image>
-<?php endif; ?>
   </url>
-<?php endforeach; ?>
+  <url>
+    <loc>https://njaccessportal.com/engine/portfolio</loc>
+    <lastmod><?= date('Y-m-d') ?></lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

@@ -914,13 +914,14 @@
         }
       }
 
-      // Active styling
+      // Active styling & text
       var isAbout = curPath === '/about';
       var isRc = curPath === '/resource-center' || curPath === '/medicare';
       var aAbout = desktopDiv.querySelector('a[href*="/about"]');
       var aRc = desktopDiv.querySelector('a[href*="/resource-center"]');
 
       if (aAbout) {
+        aAbout.textContent = '의료 접근센터';
         if (isAbout) {
           aAbout.className = 'nav-link pb-0.5 font-bold text-brand-blue';
         } else {
@@ -955,6 +956,17 @@
         spans.forEach(function(sp) {
           if (sp.textContent.indexOf('메디케어') !== -1) {
             sp.textContent = '의료정보센터';
+          }
+        });
+      });
+
+      // Update About link in mobile dropdown to 의료 접근센터
+      var mAbout = mobileDropdown.querySelectorAll('a[href*="/about"]');
+      mAbout.forEach(function(a) {
+        var spans = a.querySelectorAll('span');
+        spans.forEach(function(sp) {
+          if (sp.textContent.trim() === '소개') {
+            sp.textContent = '의료 접근센터';
           }
         });
       });

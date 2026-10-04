@@ -8,7 +8,7 @@ function getHeader(title) {
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 <meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="stylesheet" href="/_next/static/chunks/1fosv8xgmgdeu.css" />
-<title>${title} | Healthcare Access Portal</title>
+<title>${title} | NJ Access Portal · 뉴저지 한인 의료접근포털</title>
 <meta name="description" content="뉴저지 한인 커뮤니티를 위한 의료 접근 및 건강 정보 포털. 메디케어, ACA, 의료 상담을 한국어로 제공합니다."/>
 <link rel="icon" href="/favicon.ico" sizes="256x256" type="image/x-icon"/>
 <style>
@@ -23,7 +23,7 @@ function getHeader(title) {
 <body class="min-h-full flex flex-col bg-slate-50">
 <div class="fixed top-0 left-0 right-0 z-50 h-[45px] overflow-hidden flex items-center" style="background:#000000">
   <div class="marquee-track whitespace-nowrap">
-    <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12">✦ 의료접근포탈: &quot;비영리 기관들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료 전문가들이 제공하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot; ✦</span>
+    <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12">✦ 의료접근포탈: &quot;비영리기관(한인 커뮤니티센터)들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료시스템 전문가들이 제공하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot; ✦</span>
   </div>
 </div>
 <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/90 backdrop-blur-sm border-b border-slate-200" style="top:45px">
@@ -166,7 +166,7 @@ function getFooter() {
 <footer class="bg-brand-darker text-white mt-auto">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8">
     <div class="border-t border-white/10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/50">
-      <div>© 2026 Healthcare Access Portal. 뉴저지 한인 커뮤니티를 위한 무료 의료 정보 서비스입니다.</div>
+      <div>© 2026 NJ Access Portal · 뉴저지 한인 의료접근센터. 뉴저지 한인 커뮤니티를 위한 무료 의료 정보 서비스입니다.</div>
       <div class="flex gap-4">
         <a href="/medicare" class="hover:text-white">메디케어 안내</a>
         <a href="/calculator" class="hover:text-white">보조금 계산기</a>

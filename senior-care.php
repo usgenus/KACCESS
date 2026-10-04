@@ -1,10 +1,7 @@
 <?php
-/**
- * Healthcare Access Portal - Senior Care (시니어 케어 & 전문 재활 시설)
- * Long-Term Care & Post-Acute Rehabilitation Facility Information & Mockup
- * Sourced from Excelcare at Wayne (https://excelcarewayne.com)
- */
-?>
+header("Location: /", true, 301);
+exit;
+
 <!DOCTYPE html>
 <html lang="ko" class="h-full antialiased">
 <head>
@@ -14,7 +11,7 @@
   <meta name="description" content="뉴저지 최고 수준의 장기요양(Long-Term Care) 및 아급성 집중 전문 재활(Post-Acute Rehab) 시설 안내. 주 7일 물리·작업·언어치료, 24시간 전문 간호, CMS 5성 최고등급 인증 케어. 뉴저지 의료접근센터(NJ Healthcare Access Center) 시니어 케어 가이드." />
   <meta name="keywords" content="시니어 케어, 뉴저지 재활병원, 뉴저지 장기요양원, senior care NJ, skilled nursing facility, rehab center, nj healthcare access portal, nj healthcare access center, healthcare access center, 뉴저지 의료접근센터, 의료접근, 의료접근센터, post-acute rehab" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-  <link rel="canonical" href="https://njaccessportal.com/ko/senior-care" />
+  <link rel="canonical" href="https://njaccessportal.com/senior-care" />
     <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
 <link rel="icon" href="/favicon.ico?v=2" sizes="256x256" type="image/x-icon" />
   <script>
@@ -24,19 +21,19 @@
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://njaccessportal.com/ko/senior-care" />
+  <meta property="og:url" content="https://njaccessportal.com/senior-care" />
   <meta property="og:title" content="시니어 케어 &amp; 전문 재활 치료 · Senior Care &amp; Rehab | 뉴저지 의료접근센터 (NJ Healthcare Access Center)" />
   <meta property="og:description" content="뉴저지 최고 수준의 장기요양 및 집중 재활 시설 안내. 주 7일 물리·작업·언어치료, 24시간 전문 간호, CMS 5성 인증 케어." />
-  <meta property="og:image" content="https://njaccessportal.com/ko/images/senior-hero.png" />
-  <meta property="og:site_name" content="뉴저지 의료접근센터 · NJ Healthcare Access Center" />
+  <meta property="og:image" content="https://njaccessportal.com/images/senior-hero.png" />
+  <meta property="og:site_name" content="NJ Access Portal · 뉴저지 한인 의료접근포털" />
   <meta property="og:locale" content="ko_KR" />
   <meta property="og:locale:alternate" content="en_US" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="시니어 케어 &amp; 전문 재활 치료 | 뉴저지 의료접근센터" />
-  <meta name="twitter:description" content="뉴저지 최고 수준의 장기요양 및 전문 재활 치료 시설 안내. NJ Healthcare Access Portal." />
-  <meta name="twitter:image" content="https://njaccessportal.com/ko/images/senior-hero.png" />
+  <meta name="twitter:description" content="뉴저지 최고 수준의 장기요양 및 전문 재활 치료 시설 안내. NJ Access Portal." />
+  <meta name="twitter:image" content="https://njaccessportal.com/images/senior-hero.png" />
 
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
@@ -45,13 +42,13 @@
     "@type": ["MedicalWebPage", "NursingHome"],
     "name": "뉴저지 의료접근센터 시니어 케어 & 전문 재활 치료 (Senior Care & Post-Acute Rehab)",
     "description": "뉴저지 최고 수준의 장기요양(Long-Term Care) 및 아급성 집중 전문 재활(Post-Acute Rehab) 시설 안내 및 1:1 입소 상담.",
-    "url": "https://njaccessportal.com/ko/senior-care",
+    "url": "https://njaccessportal.com/senior-care",
     "inLanguage": ["ko", "en"],
     "provider": {
       "@type": "MedicalOrganization",
       "name": "뉴저지 의료접근센터 (NJ Healthcare Access Center)",
-      "alternateName": ["Healthcare Access Center", "뉴저지 의료접근", "의료접근센터", "NJ Healthcare Access Portal"],
-      "url": "https://njaccessportal.com/ko"
+      "alternateName": ["Healthcare Access Center", "뉴저지 의료접근", "의료접근센터", "NJ Access Portal"],
+      "url": "https://njaccessportal.com"
     },
     "medicalSpecialty": [
       "https://schema.org/Geriatric",
@@ -77,7 +74,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/ko/_next/static/chunks/1fosv8xgmgdeu.css" />
+  <link rel="stylesheet" href="/_next/static/chunks/1fosv8xgmgdeu.css" />
 
   <style>
     :root, html, body {
@@ -681,6 +678,7 @@
       line-height: 1.4 !important;
       display: -webkit-box !important;
       -webkit-line-clamp: 2 !important;
+      line-clamp: 2 !important;
       -webkit-box-orient: vertical !important;
       overflow: hidden !important;
       margin-bottom: 6px !important;
@@ -695,26 +693,6 @@
       font-weight: 600 !important;
       margin-top: 4px !important;
     }
-  </style>
-  <script>
-    (function() {
-      try {
-        var userChosen = sessionStorage.getItem('njap_senior_user_chosen') || localStorage.getItem('njap_senior_user_chosen');
-        var s = 0;
-        if (userChosen === '1') {
-          var val = sessionStorage.getItem('njap_senior_mode') || localStorage.getItem('njap_senior_mode');
-          s = parseInt(val, 10);
-        }
-        if (s === 1) document.documentElement.classList.add('senior-mode-1');
-        else if (s === 2) document.documentElement.classList.add('senior-mode-2');
-      } catch(e) {}
-    })();
-  </script>
-  <style id="njap-senior-mode-base-css">
-    html.senior-mode-1 { font-size: 118% !important; }
-    html.senior-mode-2 { font-size: 135% !important; }
-    html.senior-mode-1 .header-spacer, html.senior-mode-1 .h-\[109px\], html.senior-mode-1 #header-spacer { height: 120px !important; min-height: 120px !important; }
-    html.senior-mode-2 .header-spacer, html.senior-mode-2 .h-\[109px\], html.senior-mode-2 #header-spacer { height: 132px !important; min-height: 132px !important; }
   </style>
 
   <!-- Logo Animation Styles -->
@@ -853,7 +831,7 @@
     <div class="marquee-track whitespace-nowrap">
       <?php for ($i = 0; $i < 6; $i++): ?>
         <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12">
-          <span class="opacity-60 mr-3">✦</span>의료접근포탈: &quot;비영리 기관들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot;<span class="opacity-60 ml-3">✦</span>
+          <span class="opacity-60 mr-3">✦</span>의료접근포탈: &quot;비영리기관(한인 커뮤니티센터)들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료시스템 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot;<span class="opacity-60 ml-3">✦</span>
         </span>
       <?php endfor; ?>
     </div>
@@ -863,9 +841,9 @@
   <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/90 backdrop-blur-md border-b border-slate-200" style="top:45px">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
-        <a class="flex items-center cursor-pointer njap-brand-link flex-shrink-0 group" href="/ko/" onclick="navigateToHome(event); return false;" title="Healthcare Access Portal">
-          <svg class="h-8 sm:h-10 md:h-11 w-auto object-contain transition-transform group-hover:scale-102" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Healthcare Access Portal · 뉴저지 한인 의료 정보 포털 · NJAP" style="overflow: visible;">
-            <title>Healthcare Access Portal · 뉴저지 한인 의료 정보 포털 · NJAP</title>
+        <a class="flex items-center cursor-pointer njap-brand-link flex-shrink-0 group" href="/" onclick="navigateToHome(event); return false;" title="NJ Access Portal · 뉴저지 한인 의료접근포털">
+          <svg class="h-8 sm:h-10 md:h-11 w-auto object-contain transition-transform group-hover:scale-102" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NJ Access Portal · 뉴저지 한인 의료접근포털" style="overflow: visible;">
+            <title>NJ Access Portal · 뉴저지 한인 의료접근포털</title>
             <!-- Icon Mark (Door + Key + NJAP) -->
             <g transform="translate(4, 2) scale(0.56)" stroke-linecap="round" stroke-linejoin="round">
               <!-- Door Frame & NJAP Text -->
@@ -890,33 +868,34 @@
 
             <!-- Typography: slides in from right after key enters -->
             <g class="njap-nav-text-main">
-              <text x="64" y="27" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="18" font-weight="900" fill="#0B192C" letter-spacing="-0.5">Healthcare Access Portal</text>
+              <text x="64" y="27" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="18" font-weight="900" fill="#0B192C" letter-spacing="-0.5">NJ Access Portal</text>
             </g>
             <g class="njap-nav-text-sub">
-              <text x="64" y="44" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="10.5" font-weight="600" fill="#64748B" letter-spacing="0.2">뉴저지 한인 의료 정보 포털 · NJAP</text>
+              <text x="64" y="44" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="10.5" font-weight="600" fill="#64748B" letter-spacing="0.2">뉴저지 한인 의료접근포털</text>
             </g>
           </svg>
         </a>
 
         <!-- Desktop Menu: "커뮤니티 포럼" is right after "뉴스" -->
         <div class="hidden md:flex items-center desktop-nav-links" style="display: flex; align-items: center; gap: 26px;">
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/">홈</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/blog">뉴스</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/forum">커뮤니티 포럼</a>
-          <a class="nav-link pb-0.5 font-bold text-[#f05a4f] border-b-2 border-[#f05a4f]" href="/ko/senior-care">시니어 케어</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/medicare">메디케어 &amp; ACA</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/tool">환자도우미</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/ko/about">소개</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/">홈</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/blog">뉴스</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/forum">커뮤니티 포럼</a>
+          <a class="nav-link pb-0.5 font-bold text-[#f05a4f] border-b-2 border-[#f05a4f]" href="/senior-care">시니어 케어</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/medicare">메디케어 &amp; ACA</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/about">의료 접근센터</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue flex flex-col items-center justify-center leading-tight group" href="/engine" target="_self" title="Universal Access Engine (Marketing Client)">
+            <span class="text-[13.5px] font-bold text-slate-800 group-hover:text-brand-blue tracking-tight">Engine</span>
+            <span class="text-[9px] font-semibold text-slate-400 group-hover:text-brand-blue tracking-tighter -mt-0.5">Marketing Client</span>
+          </a>
         </div>
 
         <div class="flex items-center gap-3">
           <!-- KakaoTalk 1:1 Chat Button -->
           <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity cursor-pointer" title="카카오톡 1:1 상담 바로가기">
-            <img src="/ko/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" />
+            <img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" />
             <span class="text-xs sm:text-sm font-bold text-slate-800 hover:text-brand-blue tracking-tight whitespace-nowrap">1:1 상담</span>
           </a>
-          <button id="senior-mode-btn" class="senior-mode-btn notranslate" translate="no" type="button" onclick="window.cycleSeniorMode && window.cycleSeniorMode()" title="시니어모드+ (글자 크기 3단계 조절)" aria-label="시니어모드 글자 크기 조절"><span class="senior-btn-label">시니어모드+</span><span class="senior-step-badge" style="display:none;"></span></button>
-          <button id="en-translate-btn" class="notranslate" translate="no" onclick="window.toggleTranslation && window.toggleTranslation()" title="Switch Language (EN / KR)" aria-label="Language Toggle" style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;border:1.5px solid #cbd5e1;font-size:11px;font-weight:700;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s ease;background:transparent;color:#475569;white-space:nowrap;flex-shrink:0;line-height:1.4;"><span class="notranslate" translate="no">🌐</span> <span class="notranslate en-btn-label" translate="no">EN</span></button>
           <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors" aria-label="Menu">
             <div class="w-5 h-4 flex flex-col justify-between">
               <span class="block h-0.5 bg-brand-dark rounded-full"></span>
@@ -931,7 +910,7 @@
     <!-- Mobile Menu -->
                 <div id="mobile-menu-dropdown" class="md:hidden overflow-hidden transition-all duration-300 max-h-0 opacity-0 bg-white/98 backdrop-blur-md border-t border-brand-border px-4 py-3 flex flex-col gap-1" style="-webkit-overflow-scrolling: touch;">
       <!-- 1. 홈 -->
-      <a href="/ko/" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
           <span class="text-[15px]">홈</span>
@@ -940,7 +919,7 @@
       </a>
 
       <!-- 2. 뉴스 -->
-      <a href="/ko/blog" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/blog" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
           <span class="text-[15px]">뉴스</span>
@@ -949,7 +928,7 @@
       </a>
 
       <!-- 2.5. 커뮤니티 포럼 -->
-      <a href="/ko/forum" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/forum" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>
           <span class="text-[15px]">커뮤니티 포럼</span>
@@ -958,7 +937,7 @@
       </a>
 
       <!-- 3. 시니어 케어 -->
-      <a href="/ko/senior-care" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-bold text-[#f05a4f] bg-[#fef2f1]">
+      <a href="/senior-care" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-bold text-[#f05a4f] bg-[#fef2f1]">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-[#f05a4f] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
           <span class="text-[15px]">시니어 케어</span>
@@ -967,7 +946,7 @@
       </a>
 
       <!-- 4. 메디케어 & ACA -->
-      <a href="/ko/medicare" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/medicare" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
           <span class="text-[15px]">메디케어 &amp; ACA</span>
@@ -975,20 +954,23 @@
         <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
 
-      <!-- 5. 환자도우미 -->
-      <a href="/ko/tool" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <!-- 6. 의료 접근센터 -->
+      <a href="/about" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
-          <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-          <span class="text-[15px]">환자도우미</span>
+          <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <span class="text-[15px]">의료 접근센터</span>
         </div>
         <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
 
-      <!-- 6. 소개 -->
-      <a href="/ko/about" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <!-- 7. Engine (Marketing Client) -->
+      <a href="/engine" target="_self" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
-          <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          <span class="text-[15px]">소개</span>
+          <svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          <div class="flex flex-col text-left">
+            <span class="text-[15px] font-bold text-slate-800">Engine</span>
+            <span class="text-[10px] font-semibold text-slate-400 leading-none">Marketing Client</span>
+          </div>
         </div>
         <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
@@ -997,7 +979,7 @@
       <div class="pt-2 pb-1">
         <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3.5 bg-[#FEE500] hover:bg-[#FDD835] active:bg-[#FBC02D] text-[#191919] rounded-xl font-bold text-sm shadow-xs transition-all cursor-pointer">
           <div class="flex items-center gap-2.5">
-            <img src="/ko/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" />
+            <img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" />
             <div class="flex flex-col text-left">
               <span class="text-sm font-bold leading-tight">카카오톡 1:1 상담 바로가기</span>
               <span class="text-[11px] font-medium text-black/70">의료 복지 및 시니어 케어 실시간 문의</span>
@@ -1032,7 +1014,7 @@
           class="w-full h-full object-cover object-center opacity-55 scale-105 transition-opacity duration-700"
           style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"
         >
-          <source src="/ko/uploads/videos/excelcare_billboard_bg.mp4" type="video/mp4">
+          <source src="/uploads/videos/excelcare_billboard_bg.mp4" type="video/mp4">
         </video>
         <!-- Gradients for pristine text contrast -->
         <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/30 pointer-events-none"></div>
@@ -1515,7 +1497,7 @@
           <div>
             <div class="relative rounded-2xl overflow-hidden shadow-xl border border-slate-200 group">
               <img 
-                src="/ko/uploads/images/excelcare/excelcare-norwood-4.jpg" 
+                src="/uploads/images/excelcare/excelcare-norwood-4.jpg" 
                 alt="Excelcare at Norwood 최고급 프라이빗 스위트룸" 
                 class="w-full h-[420px] object-cover group-hover:scale-102 transition-transform duration-700"
               />
@@ -1556,7 +1538,7 @@
           <!-- Item 1: Private Suite -->
           <div class="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl hover:border-[#f05a4f]/40 transition-all duration-300">
             <div class="relative aspect-4/3 overflow-hidden bg-slate-100">
-              <img src="/ko/uploads/images/excelcare/excelcare-norwood-4.jpg" alt="Excelcare 프라이빗 입원실" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <img src="/uploads/images/excelcare/excelcare-norwood-4.jpg" alt="Excelcare 프라이빗 입원실" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               <div class="absolute top-3 left-3 bg-slate-900/85 backdrop-blur-xs text-white text-[11px] font-bold px-2.5 py-1 rounded-md">
                 프라이빗 스위트룸
               </div>
@@ -1570,7 +1552,7 @@
           <!-- Item 2: Rehab Gym -->
           <div class="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl hover:border-[#f05a4f]/40 transition-all duration-300">
             <div class="relative aspect-4/3 overflow-hidden bg-slate-100">
-              <img src="/ko/uploads/images/excelcare/image-3.png" alt="Excelcare 전문 재활 치료실" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <img src="/uploads/images/excelcare/image-3.png" alt="Excelcare 전문 재활 치료실" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               <div class="absolute top-3 left-3 bg-[#f05a4f]/90 backdrop-blur-xs text-white text-[11px] font-bold px-2.5 py-1 rounded-md">
                 전문 재활 짐 (Gym)
               </div>
@@ -1584,7 +1566,7 @@
           <!-- Item 3: Lounge & Activity -->
           <div class="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl hover:border-[#f05a4f]/40 transition-all duration-300">
             <div class="relative aspect-4/3 overflow-hidden bg-slate-100">
-              <img src="/ko/uploads/images/excelcare/norwood-2-1.png" alt="Excelcare 커뮤니티 라운지" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <img src="/uploads/images/excelcare/norwood-2-1.png" alt="Excelcare 커뮤니티 라운지" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               <div class="absolute top-3 left-3 bg-slate-900/85 backdrop-blur-xs text-white text-[11px] font-bold px-2.5 py-1 rounded-md">
                 커뮤니티 라운지
               </div>
@@ -1598,7 +1580,7 @@
           <!-- Item 4: Dining & Korean Meal -->
           <div class="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl hover:border-[#f05a4f]/40 transition-all duration-300">
             <div class="relative aspect-4/3 overflow-hidden bg-slate-100">
-              <img src="/ko/uploads/images/excelcare/image-4.png" alt="Excelcare 다이닝 & 식단" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <img src="/uploads/images/excelcare/image-4.png" alt="Excelcare 다이닝 & 식단" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               <div class="absolute top-3 left-3 bg-[#f05a4f]/90 backdrop-blur-xs text-white text-[11px] font-bold px-2.5 py-1 rounded-md">
                 영양 식단 &amp; 다이닝
               </div>
@@ -1776,7 +1758,7 @@
               <span>입원 직통 전화: (973) 790-5800</span>
             </a>
             <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-sm border border-white/20 backdrop-blur-sm transition-all">
-              <img src="/ko/kakaotalk-icon.png" alt="Kakao" class="w-5 h-5 rounded" />
+              <img src="/kakaotalk-icon.png" alt="Kakao" class="w-5 h-5 rounded" />
               <span>카카오톡 1:1 실시간 문의</span>
             </a>
           </div>
@@ -1828,7 +1810,7 @@
 
               <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center shrink-0 border border-amber-200/60">
-                  <img src="/ko/kakaotalk-icon.png" alt="Kakao" class="w-5 h-5 rounded" />
+                  <img src="/kakaotalk-icon.png" alt="Kakao" class="w-5 h-5 rounded" />
                 </div>
                 <div>
                   <span class="text-xs text-slate-400 block font-medium">카카오톡 공식 채널</span>
@@ -1899,35 +1881,35 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-10">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
         <div class="lg:col-span-2">
-          <a class="inline-flex items-center mb-4 group cursor-pointer njap-brand-link" href="/ko/" onclick="navigateToHome(event); return false;" title="Healthcare Access Portal">
-            <img src="/ko/logo-white.png" alt="Healthcare Access Portal · 뉴저지 한인 의료 정보 포털" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
+          <a class="inline-flex items-center mb-4 group cursor-pointer njap-brand-link" href="/" onclick="navigateToHome(event); return false;" title="NJ Access Portal · 뉴저지 한인 의료접근포털">
+            <img src="/logo-white.png" alt="NJ Access Portal · 뉴저지 한인 의료접근포털" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
           </a>
           <p class="text-sm text-white/60 font-sans leading-relaxed max-w-xs mb-6">뉴저지 한인 커뮤니티를 위한 의료 접근 및 건강 정보 포털. 시니어 케어, 재활, 메디케어, 의료 상담을 한국어로 제공합니다.</p>
         </div>
         <div>
           <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">정보</p>
           <ul class="space-y-2.5">
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200 cursor-pointer" href="/ko/">홈</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/about">소개</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/blog">건강 뉴스</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/forum">커뮤니티 포럼</a></li>
-            <li><a class="text-sm font-sans text-white/90 font-semibold hover:text-white transition-colors duration-200" href="/ko/senior-care">시니어 케어 (장기요양·재활)</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200 cursor-pointer" href="/">홈</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/about">의료 접근센터</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/blog">건강 뉴스</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/forum">커뮤니티 포럼</a></li>
+            <li><a class="text-sm font-sans text-white/90 font-semibold hover:text-white transition-colors duration-200" href="/senior-care">시니어 케어 (장기요양·재활)</a></li>
           </ul>
         </div>
         <div>
           <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">의료 가이드</p>
           <ul class="space-y-2.5">
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/medicare">메디케어 안내</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/medicare#aca">ACA 보험</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/medicare#faq">자주 묻는 질문</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/medicare">메디케어 안내</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/medicare#aca">ACA 보험</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/medicare#faq">자주 묻는 질문</a></li>
           </ul>
         </div>
         <div>
-          <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">환자도우미</p>
+          <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">스마트 의료 도구</p>
           <ul class="space-y-2.5">
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/matcher">보험 자격 진단</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/calculator">보조금 계산기</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/dictionary">의학 용어 사전</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/matcher">보험 자격 진단</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/calculator">보조금 계산기</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/dictionary">의학 용어 사전</a></li>
           </ul>
         </div>
       </div>
@@ -1935,7 +1917,7 @@
         <div class="text-xs font-sans text-white/30 max-w-2xl leading-relaxed">
           <span class="font-semibold text-white/40">⚠ 의료 면책 조항:</span> 이 웹사이트의 정보는 교육 목적으로만 제공됩니다. 의료 결정은 반드시 자격을 갖춘 의료 전문가와 상담하십시오.
         </div>
-        <p class="text-xs font-sans text-white/30 whitespace-nowrap">© 2026 Healthcare Access Portal</p>
+        <p class="text-xs font-sans text-white/30 whitespace-nowrap">© 2026 NJ Access Portal · 뉴저지 한인 의료접근센터</p>
       </div>
     </div>
   </footer>
@@ -2159,7 +2141,6 @@
     }
   </script>
 
-  <script src="/ko/js/fixes.js?v=8.0.0"></script>
-<script src="/ko/js/njap-translate.js?v=3.1.0"></script>
+  <script src="/js/fixes.js?v=20261004_v10"></script>
 </body>
 </html>

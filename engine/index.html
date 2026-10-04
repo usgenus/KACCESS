@@ -1,0 +1,2465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hybrid Healthcare Access & Navigation | Universal Access Engine</title>
+  <meta name="description" content="Enabling organizations to deliver end-to-end consumer health navigation—bridging the coverage-to-care gap through digital platforms, localized outreach, and health literacy. Engineered for health systems, ACA users, and diverse communities.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Barlow+Condensed:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=20260925_white_mobile_menu_v2">
+
+  <!-- Adam Jakubowski Sticky Accordion Stack Styles -->
+  <style>
+    :root {
+      --header-height: 70px;
+      --aj-bar-height: 46px;
+    }
+    @media (max-width: 768px) {
+      :root {
+        --header-height: 60px;
+        --aj-bar-height: 38px;
+      }
+    }
+
+    /* Fixed Top Site Header: Royal Gold Sovereign Navy Layer */
+    .site-header {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: var(--header-height, 70px) !important;
+      z-index: 1000 !important;
+      background: rgba(10, 18, 40, 0.96) !important;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.3) !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      transform: translateZ(0) !important;
+      -webkit-transform: translateZ(0) !important;
+      backface-visibility: hidden !important;
+      -webkit-backface-visibility: hidden !important;
+      contain: layout style paint !important;
+      transition: none !important;
+    }
+    .site-header.scrolled {
+      background: rgba(9, 16, 36, 0.98) !important;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5) !important;
+      transition: none !important;
+    }
+    .site-header .brand-text,
+    .brand-text,
+    .brand-logo .brand-text,
+    .brand-text .njap-char,
+    .site-header .njap-char,
+    .footer-brand-logo .brand-text,
+    .footer-brand-logo .njap-char {
+      font-weight: 400 !important;
+      color: #FAF7F2 !important;
+    }
+    .brand-engine,
+    .brand-text .brand-engine,
+    .njap-char.brand-engine {
+      font-weight: 800 !important;
+      color: #E5C158 !important;
+    }
+
+    /* Mobile Drawer Menu Pure White Text Guarantee */
+    .mobile-menu {
+      z-index: 2500 !important;
+      background: #091024 !important;
+      border-left: 1px solid rgba(212, 175, 55, 0.3) !important;
+      color: #FFFFFF !important;
+    }
+    .mobile-menu.open,
+    .mobile-menu.active {
+      right: 0 !important;
+    }
+    .mobile-menu .brand-text,
+    .mobile-menu .brand-text .njap-char,
+    .mobile-menu .njap-char,
+    .mobile-menu .close-menu-btn {
+      color: #FFFFFF !important;
+      -webkit-text-fill-color: #FFFFFF !important;
+    }
+    .mobile-menu .brand-engine,
+    .mobile-menu .njap-char.brand-engine {
+      color: #E5C158 !important;
+      -webkit-text-fill-color: #E5C158 !important;
+    }
+    .mobile-menu .close-menu-btn:hover {
+      color: #E5C158 !important;
+      -webkit-text-fill-color: #E5C158 !important;
+    }
+    .mobile-menu .mobile-link,
+    .mobile-menu a.mobile-link,
+    .mobile-menu .mobile-links a {
+      color: #FFFFFF !important;
+      -webkit-text-fill-color: #FFFFFF !important;
+      font-size: 1.25rem !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.08em !important;
+      text-decoration: none !important;
+      transition: all 0.2s ease !important;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+    }
+    .mobile-menu .mobile-link:visited,
+    .mobile-menu a.mobile-link:visited,
+    .mobile-menu .mobile-links a:visited {
+      color: #FFFFFF !important;
+      -webkit-text-fill-color: #FFFFFF !important;
+    }
+    .mobile-menu .mobile-link:hover,
+    .mobile-menu .mobile-link:focus,
+    .mobile-menu a.mobile-link:hover,
+    .mobile-menu a.mobile-link:focus {
+      color: #FFFFFF !important;
+      -webkit-text-fill-color: #FFFFFF !important;
+      text-shadow: 0 0 12px rgba(255, 255, 255, 0.8) !important;
+    }
+    .mobile-menu .mobile-link.active,
+    .mobile-menu a.mobile-link.active,
+    .mobile-menu .mobile-links a.active {
+      color: #FFFFFF !important;
+      -webkit-text-fill-color: #FFFFFF !important;
+      font-weight: 800 !important;
+    }
+    .mobile-menu .mobile-link.active::before,
+    .mobile-menu a.mobile-link.active::before,
+    .mobile-menu .mobile-links a.active::before {
+      content: '▸ ' !important;
+      color: #E5C158 !important;
+      -webkit-text-fill-color: #E5C158 !important;
+      font-size: 1.1em !important;
+      font-weight: 900 !important;
+      margin-right: 0.35rem !important;
+    }
+    .mobile-menu .mobile-link.cta-mobile,
+    .mobile-menu a.mobile-link.cta-mobile {
+      color: #0A1128 !important;
+      -webkit-text-fill-color: #0A1128 !important;
+      background: linear-gradient(135deg, #D4AF37 0%, #E5C158 100%) !important;
+      padding: 0.85rem 1.4rem !important;
+      border-radius: 6px !important;
+      text-align: center !important;
+      font-weight: 800 !important;
+    }
+    .mobile-menu .mobile-link.cta-mobile::before,
+    .mobile-menu a.mobile-link.cta-mobile::before {
+      display: none !important;
+    }
+    .mobile-menu .telemetry-tag,
+    .mobile-menu .direct-contact {
+      color: #FFFFFF !important;
+      -webkit-text-fill-color: #FFFFFF !important;
+    }
+
+    @media (max-width: 992px) {
+      .header-inner {
+        padding: 0 1rem !important;
+      }
+      .nav-actions {
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
+      }
+      .nav-cta,
+      #nav-cta-btn {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0.35rem 0.65rem !important;
+        font-size: 0.68rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.04em !important;
+        line-height: 1.15 !important;
+        border-radius: 4px !important;
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+      }
+      .hamburger-btn,
+      #hamburger-btn {
+        display: flex !important;
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        min-height: 38px !important;
+        flex-shrink: 0 !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-inner {
+        padding: 0 0.55rem !important;
+      }
+      .brand-text {
+        font-size: 1.05rem !important;
+      }
+      .brand-logo-svg {
+        width: 24px !important;
+        height: 24px !important;
+      }
+      .nav-actions {
+        gap: 0.35rem !important;
+      }
+      .nav-cta,
+      #nav-cta-btn {
+        padding: 0.3rem 0.48rem !important;
+        font-size: 0.62rem !important;
+      }
+      .hamburger-btn,
+      #hamburger-btn {
+        width: 35px !important;
+        height: 35px !important;
+        min-width: 35px !important;
+        min-height: 35px !important;
+      }
+    }
+
+    .aj-accordion-stack {
+      position: relative;
+      width: 100%;
+      overflow: visible;
+    }
+
+    .aj-stack-header {
+      position: sticky !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      height: var(--aj-bar-height, 46px) !important;
+      padding: 0 3rem !important;
+      cursor: pointer !important;
+      user-select: none !important;
+      box-sizing: border-box !important;
+      will-change: transform;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      transform: translate3d(0, 0, 0);
+      -webkit-transform: translate3d(0, 0, 0);
+      transition: background-color 0.2s ease, box-shadow 0.2s ease !important;
+    }
+
+    /* Royal Gold Sovereign Navy Accordion Bars */
+    .aj-bar-white,
+    .aj-bar-black {
+      background: #111D3B !important;
+      color: #FAF7F2 !important;
+      border-top: 1px solid rgba(212, 175, 55, 0.25) !important;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.25) !important;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+    }
+    .aj-bar-white .aj-label-num,
+    .aj-bar-black .aj-label-num { color: #E5C158 !important; }
+    .aj-bar-white .aj-label-text,
+    .aj-bar-black .aj-label-text { color: #FAF7F2 !important; font-weight: 700 !important; }
+    .aj-bar-white .aj-toggle-btn,
+    .aj-bar-black .aj-toggle-btn {
+      border: 1px solid rgba(212, 175, 55, 0.4) !important;
+      color: #E5C158 !important;
+    }
+    .aj-bar-white:hover,
+    .aj-bar-black:hover { background: #16244A !important; }
+    .aj-bar-white .aj-toggle-btn:hover,
+    .aj-bar-black .aj-toggle-btn:hover {
+      background: #D4AF37 !important;
+      color: #0A1128 !important;
+    }
+
+    /* Hero Metrics & Submetrics - Royal Gold Contrast Guarantee (Desktop & Mobile) */
+    #hero .metric-hud-box,
+    #hero .submetric-box,
+    .metric-hud-box,
+    .submetric-box {
+      background: rgba(18, 30, 61, 0.95) !important;
+      border: 1px solid rgba(212, 175, 55, 0.35) !important;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5) !important;
+    }
+    #hero .metric-value,
+    #hero .submetric-box .metric-value,
+    .metric-value,
+    .submetric-box .metric-value,
+    .counter {
+      color: #FAF7F2 !important;
+    }
+    #hero .metric-value .plus,
+    #hero .submetric-box .metric-value .plus,
+    .metric-value .plus,
+    .submetric-box .metric-value .plus {
+      color: #E5C158 !important;
+    }
+    #hero .metric-title,
+    #hero .submetric-box .metric-title,
+    .metric-title,
+    .submetric-box .metric-title {
+      color: #FAF7F2 !important;
+    }
+    #hero .metric-caption,
+    #hero .submetric-box .metric-caption,
+    .metric-caption,
+    .submetric-box .metric-caption {
+      color: #CBD5E1 !important;
+    }
+
+    .aj-header-left {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .aj-label-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      min-width: 2rem;
+    }
+    .aj-label-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .aj-toggle-btn {
+      background: transparent;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.15rem;
+      line-height: 1;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+      padding: 0;
+    }
+    .aj-toggle-btn.collapsed { opacity: 0.6; }
+
+    /* Stacking Top Offsets & Z-Indexes - Maximum 4 slots */
+    .aj-stack-header {
+      will-change: transform;
+    }
+    .aj-stack-header[data-index="0"] { top: calc(var(--header-height, 70px) + 0 * var(--aj-bar-height, 46px)) !important; z-index: 101 !important; }
+    .aj-stack-header[data-index="1"] { top: calc(var(--header-height, 70px) + 1 * var(--aj-bar-height, 46px)) !important; z-index: 102 !important; }
+    .aj-stack-header[data-index="2"] { top: calc(var(--header-height, 70px) + 2 * var(--aj-bar-height, 46px)) !important; z-index: 103 !important; }
+    .aj-stack-header[data-index="3"] { top: calc(var(--header-height, 70px) + 3 * var(--aj-bar-height, 46px)) !important; z-index: 104 !important; }
+    .aj-stack-header[data-index="4"] { top: calc(var(--header-height, 70px) + 3 * var(--aj-bar-height, 46px)) !important; z-index: 105 !important; }
+    .aj-stack-header[data-index="5"] { top: calc(var(--header-height, 70px) + 3 * var(--aj-bar-height, 46px)) !important; z-index: 106 !important; }
+    .aj-stack-header[data-index="6"] { top: calc(var(--header-height, 70px) + 3 * var(--aj-bar-height, 46px)) !important; z-index: 107 !important; }
+    .aj-stack-header[data-index="7"] { top: calc(var(--header-height, 70px) + 3 * var(--aj-bar-height, 46px)) !important; z-index: 108 !important; }
+    .aj-stack-header[data-index="8"] { top: calc(var(--header-height, 70px) + 3 * var(--aj-bar-height, 46px)) !important; z-index: 109 !important; }
+    .aj-stack-header[data-index="9"] { top: calc(var(--header-height, 70px) + 3 * var(--aj-bar-height, 46px)) !important; z-index: 110 !important; }
+
+    /* Section Body */
+    .aj-stack-body {
+      transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 0.35s ease,
+                  padding 0.35s ease;
+      max-height: 8000px;
+      opacity: 1;
+      overflow: visible;
+      position: relative;
+      padding-top: 4rem !important;
+      padding-bottom: 5rem !important;
+    }
+    .aj-stack-body.collapsed {
+      max-height: 0 !important;
+      opacity: 0 !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+      overflow: hidden !important;
+      border: none !important;
+      margin: 0 !important;
+    }
+
+    @media (max-width: 768px) {
+      .aj-stack-header { padding: 0 1.25rem !important; }
+      .aj-label-text { font-size: 0.72rem; }
+      .aj-stack-body {
+        padding-top: 2.5rem !important;
+        padding-bottom: 3.5rem !important;
+      }
+    /* ── Two-Color Accordion Bars: History (White Bar) vs Awards (Black Bar) ── */
+    .aj-ha-accordion-wrap {
+      margin-top: 2.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .aj-ha-accordion-wrap .aj-block {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .aj-ha-accordion-wrap .aj-block:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    /* ── 01 HISTORY: White Bar & White Body ── */
+    .aj-ha-accordion-wrap .aj-block-white {
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      background: #ffffff;
+      color: #111111;
+    }
+
+    .aj-ha-accordion-wrap #aj-label-history {
+      background: #ffffff;
+      color: #111111;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .aj-ha-accordion-wrap #aj-label-history .aj-label-num {
+      color: #0284c7;
+      background: rgba(2, 132, 199, 0.1);
+      border: 1px solid rgba(2, 132, 199, 0.25);
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+    }
+
+    .aj-ha-accordion-wrap #aj-label-history .aj-label-text {
+      color: #111111;
+      font-weight: 700;
+    }
+
+    .aj-ha-accordion-wrap #aj-label-history .aj-toggle-btn {
+      background: #f1f5f9;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      color: #0f172a;
+    }
+
+    .aj-ha-accordion-wrap #aj-label-history .aj-toggle-btn:hover {
+      background: #0284c7;
+      border-color: #0284c7;
+      color: #ffffff;
+    }
+
+    .aj-ha-accordion-wrap #aj-content-history {
+      background: #ffffff;
+      color: #111111;
+    }
+
+    .aj-ha-accordion-wrap #aj-content-history .aj-entry {
+      border-right: 1px solid rgba(0, 0, 0, 0.08);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .aj-ha-accordion-wrap #aj-content-history .aj-entry:hover {
+      background: rgba(0, 0, 0, 0.02);
+    }
+
+    .aj-ha-accordion-wrap #aj-content-history .aj-year {
+      color: #0284c7;
+    }
+
+    .aj-ha-accordion-wrap #aj-content-history .aj-title {
+      color: #111111;
+    }
+
+    .aj-ha-accordion-wrap #aj-content-history .aj-title em {
+      background: rgba(2, 132, 199, 0.12);
+      color: #0284c7;
+    }
+
+    .aj-ha-accordion-wrap #aj-content-history .aj-place {
+      color: #0369a1;
+    }
+
+    .aj-ha-accordion-wrap #aj-content-history .aj-desc {
+      color: #555555;
+    }
+
+    /* ── 02 AWARDS: Black Bar & Black Body ── */
+    .aj-ha-accordion-wrap .aj-block-black {
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: #0a0a0a;
+      color: #f0f0f0;
+    }
+
+    .aj-ha-accordion-wrap #aj-label-awards {
+      background: #111111;
+      color: #ffffff;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .aj-ha-accordion-wrap #aj-label-awards .aj-label-num {
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+    }
+
+    .aj-ha-accordion-wrap #aj-label-awards .aj-label-text {
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .aj-ha-accordion-wrap #aj-label-awards .aj-toggle-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+    }
+
+    .aj-ha-accordion-wrap #aj-label-awards .aj-toggle-btn:hover {
+      background: #0284c7;
+      border-color: #38bdf8;
+      color: #ffffff;
+    }
+
+    .aj-ha-accordion-wrap #aj-content-awards {
+      background: #0a0a0a;
+      color: #f0f0f0;
+    }
+
+    .aj-ha-accordion-wrap #aj-content-awards .aj-entry {
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .aj-ha-accordion-wrap #aj-content-awards .aj-entry:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .aj-ha-accordion-wrap #aj-content-awards .aj-year {
+      color: #38bdf8;
+    }
+
+    .aj-ha-accordion-wrap #aj-content-awards .aj-title {
+      color: #f0f0f0;
+    }
+
+    .aj-ha-accordion-wrap #aj-content-awards .aj-title em {
+      background: rgba(2, 132, 199, 0.25);
+      color: #38bdf8;
+    }
+
+    .aj-ha-accordion-wrap #aj-content-awards .aj-place {
+      color: #38bdf8;
+    }
+
+    .aj-ha-accordion-wrap #aj-content-awards .aj-desc {
+      color: #94a3b8;
+    }
+
+    /* Shared bar layout */
+    .aj-ha-accordion-wrap .aj-block-label {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 1.15rem 2rem;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.2s ease;
+    }
+
+    .aj-ha-accordion-wrap .aj-label-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      min-width: 2.2rem;
+      text-align: center;
+      line-height: 1;
+    }
+
+    .aj-ha-accordion-wrap .aj-label-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      flex: 1;
+    }
+
+    .aj-ha-accordion-wrap .aj-toggle-btn {
+      padding: 0.48rem 1.15rem;
+      border-radius: 9999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      cursor: pointer;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      line-height: 1;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .aj-ha-accordion-wrap .aj-toggle-icon {
+      font-size: 1rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .aj-ha-accordion-wrap .aj-toggle-text {
+      font-size: 0.74rem;
+      line-height: 1;
+    }
+
+    /* Drawer content */
+    .aj-ha-accordion-wrap .aj-block-content {
+      overflow: hidden;
+      transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 0.35s ease,
+                  padding 0.3s ease;
+      max-height: 2500px;
+      opacity: 1;
+    }
+
+    .aj-ha-accordion-wrap .aj-block-content.collapsed {
+      max-height: 0;
+      opacity: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    /* 3-column entry grid inside accordion */
+    .aj-ha-accordion-wrap .aj-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      padding: 2rem 2.5rem 2.5rem;
+    }
+
+    @media (max-width: 960px) {
+      .aj-ha-accordion-wrap .aj-grid {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 1.75rem 1.75rem 2rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .aj-ha-accordion-wrap .aj-grid {
+        grid-template-columns: 1fr;
+        padding: 1.25rem 1.25rem 1.5rem;
+      }
+      .aj-ha-accordion-wrap .aj-block-label {
+        padding: 1rem 1.25rem;
+        gap: 0.85rem;
+      }
+      .aj-ha-accordion-wrap .aj-toggle-btn {
+        padding: 0.38rem 0.85rem;
+        font-size: 0.68rem;
+      }
+    }
+
+    .aj-ha-accordion-wrap .aj-entry {
+      padding: 1.75rem 2rem 1.75rem 1.5rem;
+      transition: background 0.2s;
+    }
+
+    .aj-ha-accordion-wrap .aj-entry:nth-child(3n) {
+      border-right: none;
+    }
+
+    .aj-ha-accordion-wrap .aj-year {
+      display: inline-block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      margin-bottom: 0.55rem;
+    }
+
+    .aj-ha-accordion-wrap .aj-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.02rem;
+      font-weight: 700;
+      margin: 0 0 0.35rem 0;
+      line-height: 1.35;
+    }
+
+    .aj-ha-accordion-wrap .aj-title em {
+      font-style: normal;
+      font-size: 0.72rem;
+      font-weight: 600;
+      border-radius: 4px;
+      padding: 0.1rem 0.45rem;
+      margin-left: 0.45rem;
+      vertical-align: middle;
+    }
+
+    .aj-ha-accordion-wrap .aj-place {
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin: 0 0 0.45rem 0;
+      line-height: 1.4;
+    }
+
+    .aj-ha-accordion-wrap .aj-desc {
+      font-size: 0.82rem;
+      line-height: 1.6;
+      margin: 0;
+    }
+  </style>
+
+  <!-- Client Password Gate Overlay Styles -->
+  <style id="engine-client-gate-styles">
+    html.engine-locked, html.engine-locked body {
+      overflow: hidden !important;
+      height: 100vh !important;
+    }
+    #engine-client-gate {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 99999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 50% 38%, rgba(16, 28, 62, 0.97), rgba(6, 11, 24, 0.99));
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      padding: 20px;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    .gate-card {
+      background: rgba(13, 22, 48, 0.9);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      border-radius: 24px;
+      box-shadow: 0 30px 70px -15px rgba(0, 0, 0, 0.85), 0 0 45px rgba(212, 175, 55, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      width: 100%;
+      max-width: 410px;
+      padding: 38px 32px 34px;
+      text-align: center;
+      color: #FAF7F2;
+      animation: gateModalPop 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      transform-origin: center;
+      box-sizing: border-box;
+    }
+    @keyframes gateModalPop {
+      0% { opacity: 0; transform: scale(0.92) translateY(14px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .gate-shake {
+      animation: gateShake 0.45s ease !important;
+    }
+    @keyframes gateShake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-8px); }
+      40%, 80% { transform: translateX(8px); }
+    }
+    .gate-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: #D4AF37;
+      text-transform: uppercase;
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+    }
+    .gate-icon-wrap {
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.22), rgba(56, 189, 248, 0.12));
+      border: 1.5px solid rgba(212, 175, 55, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px;
+      color: #D4AF37;
+      box-shadow: 0 0 24px rgba(212, 175, 55, 0.28);
+    }
+    .gate-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: #FAF7F2;
+      margin: 0 0 8px 0;
+      letter-spacing: -0.02em;
+    }
+    .gate-desc {
+      font-size: 13.5px;
+      color: #94A3B8;
+      margin: 0 0 24px 0;
+      line-height: 1.5;
+    }
+    .gate-input-wrap {
+      position: relative;
+      margin-bottom: 12px;
+    }
+    #gate-pass-input {
+      width: 100%;
+      box-sizing: border-box;
+      background: rgba(7, 12, 26, 0.92);
+      border: 1.5px solid rgba(212, 175, 55, 0.3);
+      border-radius: 14px;
+      padding: 14px 18px;
+      font-size: 22px;
+      color: #FAF7F2;
+      text-align: center;
+      letter-spacing: 0.22em;
+      outline: none;
+      transition: all 0.2s ease;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    #gate-pass-input:focus {
+      border-color: #D4AF37;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 0 3px rgba(212, 175, 55, 0.25);
+    }
+    .gate-error {
+      color: #f87171;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .gate-btn {
+      width: 100%;
+      box-sizing: border-box;
+      background: linear-gradient(135deg, #D4AF37 0%, #E5C158 50%, #B89628 100%);
+      color: #070C1A;
+      font-size: 15px;
+      font-weight: 700;
+      border: none;
+      border-radius: 13px;
+      padding: 14px 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+      box-shadow: 0 8px 22px -4px rgba(212, 175, 55, 0.45);
+    }
+    .gate-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 28px -4px rgba(212, 175, 55, 0.6);
+      filter: brightness(1.05);
+    }
+    .gate-btn:active {
+      transform: translateY(0);
+    }
+  </style>
+
+  <!-- Pre-check Script: Synchronously hides gate if already unlocked -->
+  <script>
+    (function() {
+      try {
+        if (sessionStorage.getItem('njap_engine_client_pw') === '7777') {
+          document.write('<style>#engine-client-gate{display:none!important;}</style>');
+        } else {
+          document.documentElement.classList.add('engine-locked');
+        }
+      } catch (e) {
+        document.documentElement.classList.add('engine-locked');
+      }
+    })();
+  </script>
+</head>
+<body class="spacex-theme">
+
+  <!-- Client Password Gate Modal -->
+  <div id="engine-client-gate">
+    <div id="engine-gate-card" class="gate-card">
+      <div class="gate-badge">SECURE CLIENT PORTAL</div>
+      <div class="gate-icon-wrap">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+      </div>
+      <h2 class="gate-title">Client Password</h2>
+      <p class="gate-desc">Enter the client password to open the website.</p>
+      
+      <form id="engine-gate-form" autocomplete="off" onsubmit="return false;">
+        <div class="gate-input-wrap">
+          <input type="password" id="gate-pass-input" placeholder="••••" maxlength="16" autofocus inputmode="numeric" autocomplete="current-password" aria-label="Client Password" />
+        </div>
+        <div id="gate-error-msg" class="gate-error" style="display: none;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          Incorrect password. Please try again.
+        </div>
+        <button type="submit" id="gate-submit-btn" class="gate-btn">
+          <span>Enter Website</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Subtle Ambient Canvas -->
+  <canvas id="bg-canvas" class="bg-canvas"></canvas>
+
+  <!-- Clean Frosted Header -->
+  <header id="site-header" class="site-header">
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo" id="brand-logo-link" aria-label="Access Engine Homepage">
+        <svg class="brand-logo-svg" viewBox="0 0 95 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Access Engine Logo">
+          <g stroke-linecap="round" stroke-linejoin="round">
+            <g class="njap-nav-door">
+              <line x1="20" y1="12" x2="20" y2="88" stroke="#1E3A8A" stroke-width="3.5" />
+              <rect x="25" y="12" width="55" height="76" rx="2" stroke="#1E3A8A" stroke-width="4" fill="#FFFFFF" />
+              <polyline points="25,16 52,25 52,36" stroke="#1E3A8A" stroke-width="3.5" fill="none" />
+              <text x="52.5" y="81" font-family="'Times New Roman', serif" font-size="13.5" font-weight="400" letter-spacing="1.5" fill="#1E3A8A" stroke="none" text-anchor="middle">NJAP</text>
+            </g>
+            <path class="njap-nav-keyhole" d="M 43,45 A 7,7 0 1,1 53,45 L 56,64 L 40,64 Z" stroke="#DC2626" stroke-width="3.5" fill="#FFFFFF" />
+            <g class="njap-nav-key">
+              <circle cx="74" cy="45" r="6.5" stroke="#DC2626" stroke-width="3.5" fill="#FFFFFF" />
+              <line x1="47" y1="45" x2="67.5" y2="45" stroke="#DC2626" stroke-width="3.5" />
+              <line x1="49" y1="45" x2="49" y2="49" stroke="#DC2626" stroke-width="3.5" />
+              <line x1="53" y1="45" x2="53" y2="48" stroke="#DC2626" stroke-width="3" />
+            </g>
+          </g>
+        </svg>
+        <span class="brand-text">
+          <span class="njap-char" style="--i:0">A</span><span class="njap-char" style="--i:1">C</span><span class="njap-char" style="--i:2">C</span><span class="njap-char" style="--i:3">E</span><span class="njap-char" style="--i:4">S</span><span class="njap-char" style="--i:5">S</span><span class="njap-char-space">&nbsp;</span><span class="njap-char brand-engine" style="--i:6">E</span><span class="njap-char brand-engine" style="--i:7">N</span><span class="njap-char brand-engine" style="--i:8">G</span><span class="njap-char brand-engine" style="--i:9">I</span><span class="njap-char brand-engine" style="--i:10">N</span><span class="njap-char brand-engine" style="--i:11">E</span>
+        </span>
+      </a>
+
+      <nav class="desktop-nav" id="desktop-nav" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link active">HOME</a>
+        <a href="#about-team" class="nav-link" id="nav-about-link">ABOUT US</a>
+        <a href="services.html" class="nav-link">SERVICES</a>
+        <a href="portfolio.html" class="nav-link">PORTFOLIO</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#lead-intake" class="btn btn-primary nav-cta" id="nav-cta-btn">ENGAGE CONSULTANCY</a>
+        <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle Navigation Menu">
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Fullscreen Mobile Drawer -->
+  <div id="mobile-menu" class="mobile-menu">
+    <div class="mobile-menu-inner">
+      <div class="mobile-menu-header">
+        <div class="mobile-brand">
+          <svg class="brand-logo-svg" viewBox="0 0 95 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Access Engine Logo">
+            <g stroke-linecap="round" stroke-linejoin="round">
+              <g class="njap-nav-door">
+                <line x1="20" y1="12" x2="20" y2="88" stroke="#1E3A8A" stroke-width="3.5" />
+                <rect x="25" y="12" width="55" height="76" rx="2" stroke="#1E3A8A" stroke-width="4" fill="#FFFFFF" />
+                <polyline points="25,16 52,25 52,36" stroke="#1E3A8A" stroke-width="3.5" fill="none" />
+                <text x="52.5" y="81" font-family="'Times New Roman', serif" font-size="13.5" font-weight="400" letter-spacing="1.5" fill="#1E3A8A" stroke="none" text-anchor="middle">NJAP</text>
+              </g>
+              <path class="njap-nav-keyhole" d="M 43,45 A 7,7 0 1,1 53,45 L 56,64 L 40,64 Z" stroke="#DC2626" stroke-width="3.5" fill="#FFFFFF" />
+              <g class="njap-nav-key">
+                <circle cx="74" cy="45" r="6.5" stroke="#DC2626" stroke-width="3.5" fill="#FFFFFF" />
+                <line x1="47" y1="45" x2="67.5" y2="45" stroke="#DC2626" stroke-width="3.5" />
+                <line x1="49" y1="45" x2="49" y2="49" stroke="#DC2626" stroke-width="3.5" />
+                <line x1="53" y1="45" x2="53" y2="48" stroke="#DC2626" stroke-width="3" />
+              </g>
+            </g>
+          </svg>
+          <span class="brand-text">
+            <span class="njap-char" style="--i:0">A</span><span class="njap-char" style="--i:1">C</span><span class="njap-char" style="--i:2">C</span><span class="njap-char" style="--i:3">E</span><span class="njap-char" style="--i:4">S</span><span class="njap-char" style="--i:5">S</span><span class="njap-char-space">&nbsp;</span><span class="njap-char brand-engine" style="--i:6">E</span><span class="njap-char brand-engine" style="--i:7">N</span><span class="njap-char brand-engine" style="--i:8">G</span><span class="njap-char brand-engine" style="--i:9">I</span><span class="njap-char brand-engine" style="--i:10">N</span><span class="njap-char brand-engine" style="--i:11">E</span>
+          </span>
+        </div>
+        <button id="close-menu-btn" class="close-menu-btn" aria-label="Close Menu">✕</button>
+      </div>
+      <div class="mobile-links">
+        <a href="index.html" class="mobile-link active">HOME</a>
+        <a href="#about-team" class="mobile-link" id="mobile-about-link">ABOUT US</a>
+        <a href="services.html" class="mobile-link">SERVICES</a>
+        <a href="portfolio.html" class="mobile-link">PORTFOLIO</a>
+        <a href="#lead-intake" class="mobile-link cta-mobile">ENGAGE CONSULTANCY</a>
+      </div>
+      <div class="mobile-menu-footer">
+        <p class="telemetry-tag">STATUS: ACTIVE // 50,000+ NAVIGATIONS</p>
+        <p class="direct-contact">njaccessportal.com | njaccessportal@gmail.com</p>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <!-- SECTION 1: HERO (Slide 1) -->
+    <section id="hero" class="spacex-section hero-section">
+      <div class="hero-bg-media">
+        <video class="hero-bg-video" autoplay loop muted playsinline webkit-playsinline preload="auto" poster="assets/hero_bg.jpg?v=20260919_user_video" src="assets/hero_bg.mp4?v=20260919_user_video">
+          <source src="assets/hero_bg.mp4?v=20260919_user_video" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+      </div>
+      
+      <div class="section-container hero-content">
+
+        <h1 class="hero-headline">
+          Hybrid Healthcare <br class="desk-break">Access & Navigation
+        </h1>
+
+        <p class="hero-subheadline hero-quote-slide">
+          Your health, Simplified
+        </p>
+
+        <!-- Metric Telemetry Cards (Slide 1 Badges) -->
+        <div class="hero-metrics-grid">
+          <div class="metric-hud-box">
+            <div class="metric-value"><span class="counter" data-target="50000">0</span><span class="plus">+</span></div>
+            <div class="metric-title"><span class="metric-prefix">50,000+ </span>Navigations</div>
+            <div class="metric-caption">Proven patient onboarding & warm care handoffs</div>
+          </div>
+          <div class="metric-hud-box">
+            <div class="metric-value"><span class="counter" data-target="20">0</span><span class="plus">+ YRS</span></div>
+            <div class="metric-title"><span class="metric-prefix">20+ Yrs </span>Media Excellence</div>
+            <div class="metric-caption">Studio-grade physician spotlights & broadcast</div>
+          </div>
+          <div class="metric-hud-box">
+            <div class="metric-value"><span class="counter" data-target="12">0</span><span class="plus">+ YRS</span></div>
+            <div class="metric-title">Universal Access Engine</div>
+            <div class="metric-caption">12+ yrs clinical linkage & community trust</div>
+          </div>
+        </div>
+
+        <!-- Additional Operational Metrics (4 Numbered Counters) -->
+        <div class="hero-submetrics-grid">
+          <div class="metric-hud-box submetric-box">
+            <div class="metric-value"><span class="counter" data-target="100">0</span><span class="plus">+</span></div>
+            <div class="metric-title">100+ Major Hospital Seminars</div>
+            <div class="metric-caption">100+ major hospital seminars and events</div>
+          </div>
+          <div class="metric-hud-box submetric-box">
+            <div class="metric-value"><span class="counter" data-target="50">0</span><span class="plus">+</span></div>
+            <div class="metric-title">Under 50 <span class="metric-prefix">People </span>Seminars</div>
+            <div class="metric-caption">50+ target group focused health and wellness programs</div>
+          </div>
+          <div class="metric-hud-box submetric-box">
+            <div class="metric-value"><span class="counter" data-target="20">0</span><span class="plus">+</span></div>
+            <div class="metric-title">Special Education</div>
+            <div class="metric-caption">Special education, chronic disease management, diabetic &amp; prediabetic education, behavioral health</div>
+          </div>
+          <div class="metric-hud-box submetric-box">
+            <div class="metric-value"><span class="counter" data-target="500">0</span><span class="plus">+</span></div>
+            <div class="metric-title"><span class="metric-prefix">Healthcare </span>Media Shoots</div>
+            <div class="metric-caption">500+ physician spotlights & broadcast productions</div>
+          </div>
+        </div>
+
+        <div class="hero-cta-group">
+          <a href="services.html" class="btn btn-primary" id="hero-services-btn">EXPLORE SERVICES & PRICING</a>
+          <a href="portfolio.html" class="btn btn-outline" id="hero-portfolio-btn">VIEW PORTFOLIO</a>
+        </div>
+      </div>
+
+      <div class="scroll-indicator">
+        <span class="scroll-text">SCROLL TO DISCOVER</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: THE CORE ACCESS PARADIGM (Slide 2) -->
+    <div class="aj-accordion-stack" id="aj-accordion-stack">
+
+    <!-- ACCORDION STACK HEADER 01: The Core Access Paradigm -->
+    <div class="aj-stack-header aj-bar-white" id="aj-hdr-paradigm" data-index="0" onclick="ajToggleSection('paradigm', event)">
+      <div class="aj-header-left">
+        <span class="aj-label-num">01</span>
+        <span class="aj-label-text">The Core Access Paradigm</span>
+      </div>
+      <button class="aj-toggle-btn" id="aj-btn-paradigm" onclick="ajToggleSection('paradigm', event)" aria-expanded="true" aria-label="Toggle The Core Access Paradigm">
+        <span class="aj-toggle-icon">−</span>
+      </button>
+    </div>
+    <section id="paradigm" class="spacex-section paradigm-section aj-stack-body">
+      <div class="section-container">
+        <div class="split-layout">
+          <div class="split-text-side">
+            <div class="section-header-minimal">
+              <span class="section-tag">01 // CORE ARCHITECTURE</span>
+              <div class="cyan-accent-line"></div>
+              <h2 class="section-title">The Core Access Paradigm</h2>
+            </div>
+
+            <div class="paradigm-quote-box">
+              <p class="paradigm-quote">
+                “Connecting patients of all backgrounds, income brackets, and insurance types with hospital care, preventive screenings, and treatment without technology or fear barriers.”
+              </p>
+            </div>
+
+            <div class="paradigm-specs-vertical">
+              <div class="spec-node-item">
+                <div class="spec-label">TECH BARRIER</div>
+                <div class="spec-val zero-barrier">ZERO BARRIER</div>
+                <div class="spec-desc">In-person, KakaoTalk, Phone & Email pathways eliminate digital intimidation for tech-averse seniors and working parents.</div>
+              </div>
+              <div class="spec-node-item">
+                <div class="spec-label">FEAR BARRIER</div>
+                <div class="spec-val zero-barrier">ELIMINATED</div>
+                <div class="spec-desc">Upfront insurance literacy and copay transparency eradicate the dread of surprise hospital bills.</div>
+              </div>
+              <div class="spec-node-item">
+                <div class="spec-label">HOSPITAL LINKAGE</div>
+                <div class="spec-val direct-link">DIRECT ACCESS</div>
+                <div class="spec-desc">Seamless appointment booking, specialist consultation, and essential treatment routing.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="split-media-side">
+            <div class="media-frame">
+              <img src="assets/paradigm_bg.jpg?v=20260919_hybrid" alt="Compassionate Asian healthcare care coordinator assisting patient family in clinic" class="media-image" loading="lazy">
+              <div class="media-hud-overlay">
+                <div class="hud-corner top-left"></div>
+                <div class="hud-corner top-right"></div>
+                <div class="hud-corner bottom-left"></div>
+                <div class="hud-corner bottom-right"></div>
+                <div class="hud-badge">CARE COORDINATION // WARM COMMUNITY GUIDANCE</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: UNIVERSAL TARGET AUDIENCE & MISSION (Slide 3) -->
+    
+    <!-- ACCORDION STACK HEADER 02: Universal Target Audience & Mission -->
+    <div class="aj-stack-header aj-bar-black" id="aj-hdr-audience" data-index="1" onclick="ajToggleSection('audience', event)">
+      <div class="aj-header-left">
+        <span class="aj-label-num">02</span>
+        <span class="aj-label-text">Universal Target Audience & Mission</span>
+      </div>
+      <button class="aj-toggle-btn" id="aj-btn-audience" onclick="ajToggleSection('audience', event)" aria-expanded="true" aria-label="Toggle Universal Target Audience & Mission">
+        <span class="aj-toggle-icon">−</span>
+      </button>
+    </div>
+    <section id="audience" class="spacex-section audience-section aj-stack-body">
+      <div class="section-container">
+        <div class="split-layout">
+          <div class="split-text-side">
+            <div class="section-header-minimal">
+              <span class="section-tag">02 // MISSION PROFILE</span>
+              <h2 class="section-title">Universal Target Audience & Mission</h2>
+              <h3 class="section-subtitle-spacex">Reaching Every American in Need</h3>
+            </div>
+
+            <div class="audience-list">
+              <div class="audience-item">
+                <div class="item-icon-box">01</div>
+                <div class="item-content">
+                  <h4 class="item-title">Universal Demographic Reach</h4>
+                  <p class="item-desc">Assisting individuals regardless of age, sex, or financial status who need help accessing healthcare.</p>
+                </div>
+              </div>
+
+              <div class="audience-item">
+                <div class="item-icon-box">02</div>
+                <div class="item-content">
+                  <h4 class="item-title">Underserved Middle Class & ACA Users</h4>
+                  <p class="item-desc">Dedicated support for working families with ACA/Obamacare who hesitate to use care due to hidden cost fears or complexity.</p>
+                </div>
+              </div>
+
+              <div class="audience-item">
+                <div class="item-icon-box">03</div>
+                <div class="item-content">
+                  <h4 class="item-title">Insurance Literacy & Activation</h4>
+                  <p class="item-desc">Demystifying plan terms, copays, and preventive benefits so patients transition smoothly from coverage to care.</p>
+                </div>
+              </div>
+
+              <div class="audience-item">
+                <div class="item-icon-box">04</div>
+                <div class="item-content">
+                  <h4 class="item-title">Hospital Linkage</h4>
+                  <p class="item-desc">Facilitating direct appointments for preventative care, specialist consultation, and essential medical treatments.</p>
+                </div>
+              </div>
+
+              <div class="audience-item">
+                <div class="item-icon-box">05</div>
+                <div class="item-content">
+                  <h4 class="item-title">Reduce Emergency Visits &amp; Routing Patients to Urgent Care</h4>
+                  <p class="item-desc">Preventing avoidable emergency room visits and surprise hospital bills by triaging and routing non-emergent patients to local urgent care centers and primary clinics.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="split-media-side">
+            <div class="media-frame">
+              <img src="assets/consultation.jpg?v=20260919_hybrid" alt="Asian physician consulting with patient in American clinical examination room" class="media-image" loading="lazy">
+              <div class="media-hud-overlay">
+                <div class="hud-corner top-left"></div>
+                <div class="hud-corner top-right"></div>
+                <div class="hud-corner bottom-left"></div>
+                <div class="hud-corner bottom-right"></div>
+                <div class="hud-badge">ENGAGEMENT VECTOR // 100% INCLUSIVE</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: UNIVERSAL MULTI-CHANNEL ACCESS ENGINE (Slide 4) -->
+    
+    <!-- ACCORDION STACK HEADER 03: 4-Layer Universal Access Engine -->
+    <div class="aj-stack-header aj-bar-white" id="aj-hdr-access-engine" data-index="2" onclick="ajToggleSection('access-engine', event)">
+      <div class="aj-header-left">
+        <span class="aj-label-num">03</span>
+        <span class="aj-label-text">4-Layer Universal Access Engine</span>
+      </div>
+      <button class="aj-toggle-btn" id="aj-btn-access-engine" onclick="ajToggleSection('access-engine', event)" aria-expanded="true" aria-label="Toggle 4-Layer Universal Access Engine">
+        <span class="aj-toggle-icon">−</span>
+      </button>
+    </div>
+    <section id="access-engine" class="spacex-section engine-section aj-stack-body">
+      <div class="section-container">
+        <div class="section-header-minimal text-center">
+          <span class="section-tag">03 // MULTI-CHANNEL INFRASTRUCTURE</span>
+          <h2 class="section-title">Universal Multi-Channel Access Engine</h2>
+          <p class="section-desc-center">Engineered to meet patients across their preferred modality without friction.</p>
+        </div>
+
+        <div class="engine-cards-grid">
+          <!-- Card 1: In-Person Community Outreach -->
+          <div class="engine-card">
+            <div class="card-status-bar">
+              <span class="channel-code">CH-01 // FIELD OUTREACH</span>
+              <span class="channel-dot active"></span>
+            </div>
+            <div class="channel-symbol">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.75">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+            <h3 class="channel-title">In-Person Community Outreach</h3>
+            <p class="channel-desc">Committed in-person outreach including healthcare medical seminars, patient education special events, and local Community Healthcare Access Center hubs for direct, trusted handoffs.</p>
+            <div class="channel-footer">
+              <span class="tag-pill">Medical Seminars</span>
+              <span class="tag-pill">Special Events</span>
+              <span class="tag-pill">Access Center Hubs</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Telephone Support -->
+          <div class="engine-card">
+            <div class="card-status-bar">
+              <span class="channel-code">CH-02 // VOICE</span>
+              <span class="channel-dot active"></span>
+            </div>
+            <div class="channel-symbol">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.75">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+            </div>
+            <h3 class="channel-title">Telephone Support</h3>
+            <p class="channel-desc">Direct phone hotline providing live guidance, appointment booking, and insurance navigation for complex medical queries.</p>
+            <div class="channel-footer">
+              <span class="tag-pill">Live Hotline</span>
+              <span class="tag-pill">Care Triage</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Korean KakaoTalk Messenger -->
+          <div class="engine-card">
+            <div class="card-status-bar">
+              <span class="channel-code">CH-03 // KAKAOTALK</span>
+              <span class="channel-dot active"></span>
+            </div>
+            <div class="channel-symbol">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.75">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </div>
+            <h3 class="channel-title">Korean KakaoTalk Messenger</h3>
+            <p class="channel-desc">Direct communication with patients via Korean KakaoTalk Messenger, receiving inquiries and messages 24 hours a day for immediate care coordination.</p>
+            <div class="channel-footer">
+              <span class="tag-pill">24-Hour Messaging</span>
+              <span class="tag-pill">KakaoTalk Channel</span>
+              <span class="tag-pill">Direct Patient Chat</span>
+            </div>
+          </div>
+
+          <!-- Card 4: Email & Constant Contact -->
+          <div class="engine-card">
+            <div class="card-status-bar">
+              <span class="channel-code">CH-04 // EMAIL &amp; CRM</span>
+              <span class="channel-dot active"></span>
+            </div>
+            <div class="channel-symbol">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.75">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+            </div>
+            <h3 class="channel-title">Email &amp; Constant Contact</h3>
+            <p class="channel-desc">Structured email contact via Constant Contact, utilizing our verified subscriber database gathered through the Healthcare Access Portal for intake, bulletins, and referrals.</p>
+            <div class="channel-footer">
+              <span class="tag-pill">Constant Contact</span>
+              <span class="tag-pill">Portal Subscriber DB</span>
+              <span class="tag-pill">Doc Intake</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: HYBRID LOCALIZED EXECUTION (Slide 5) -->
+    
+    <!-- ACCORDION STACK HEADER 04: Hybrid Localized Execution Model -->
+    <div class="aj-stack-header aj-bar-black" id="aj-hdr-hybrid-execution" data-index="3" onclick="ajToggleSection('hybrid-execution', event)">
+      <div class="aj-header-left">
+        <span class="aj-label-num">04</span>
+        <span class="aj-label-text">Hybrid Localized Execution Model</span>
+      </div>
+      <button class="aj-toggle-btn" id="aj-btn-hybrid-execution" onclick="ajToggleSection('hybrid-execution', event)" aria-expanded="true" aria-label="Toggle Hybrid Localized Execution Model">
+        <span class="aj-toggle-icon">−</span>
+      </button>
+    </div>
+    <section id="hybrid-execution" class="spacex-section hybrid-section aj-stack-body">
+      <div class="section-container">
+        <div class="section-header-minimal">
+          <span class="section-tag">04 // INTEGRATED STRATEGY</span>
+          <h2 class="section-title">Hybrid Localized Execution</h2>
+          <p class="section-desc">Connecting broadcast-grade digital media with boots-on-the-ground care navigation.</p>
+        </div>
+
+        <div class="hybrid-dual-grid">
+          <!-- Column 1: Targeted Digital Outreach -->
+          <div class="hybrid-card digital-col">
+            <div class="hybrid-card-body">
+              <span class="vector-badge">VECTOR A // DIGITAL & BROADCAST</span>
+              <h3 class="hybrid-col-title">Targeted Digital Outreach</h3>
+              <p class="hybrid-text">
+                Geotargeted YouTube campaigns, social media broadcasts, and studio-grade physician spotlights designed to engage diverse neighborhoods.
+              </p>
+              <div class="language-support-box">
+                <span class="lang-tag">Korean</span>
+                <span class="lang-tag">Spanish</span>
+                <span class="lang-tag">Chinese</span>
+                <span class="lang-tag">English</span>
+              </div>
+              <ul class="spec-bullets">
+                <li>Studio-grade doctor spotlight production</li>
+                <li>Hyper-localized ZIP code targeting</li>
+                <li>Multilingual healthcare literacy videos</li>
+              </ul>
+            </div>
+            <div class="card-side-visual">
+              <img src="assets/broadcast_studio.jpg?v=20260919_hybrid" alt="Asian American physician recorded in bright broadcast studio for community health literacy" class="side-img" loading="lazy">
+              <div class="visual-tag">STUDIO HEALTH BROADCAST</div>
+            </div>
+          </div>
+
+          <!-- Column 2: Boots-on-the-Ground Navigation -->
+          <div class="hybrid-card physical-col">
+            <div class="hybrid-card-body">
+              <span class="vector-badge">VECTOR B // HUMAN NAVIGATION</span>
+              <h3 class="hybrid-col-title">Boots-on-the-Ground Navigation</h3>
+              <p class="hybrid-text">
+                Direct human support that picks up where digital ads leave off. In-person care coordinators guide patients through hospital scheduling, billing questions, and Obamacare benefit activation.
+              </p>
+              <ul class="spec-bullets">
+                <li>In-person hospital appointment scheduling</li>
+                <li>Comprehensive medical billing navigation</li>
+                <li>Obamacare (ACA) preventative benefit activation</li>
+                <li>Warm community-to-clinic handoffs</li>
+              </ul>
+            </div>
+            <div class="card-side-visual">
+              <img src="assets/navigator.jpg?v=20260919_hybrid" alt="Asian healthcare navigator guiding patient through healthcare registration and benefits" class="side-img" loading="lazy">
+              <div class="visual-tag">IN-PERSON CARE COORDINATOR</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: COVERAGE-TO-CARE BRIDGE (Slide 6) -->
+    
+    <!-- ACCORDION STACK HEADER 05: The Coverage-to-Care Bridge -->
+    <div class="aj-stack-header aj-bar-white" id="aj-hdr-coverage-bridge" data-index="4" onclick="ajToggleSection('coverage-bridge', event)">
+      <div class="aj-header-left">
+        <span class="aj-label-num">05</span>
+        <span class="aj-label-text">The Coverage-to-Care Bridge</span>
+      </div>
+      <button class="aj-toggle-btn" id="aj-btn-coverage-bridge" onclick="ajToggleSection('coverage-bridge', event)" aria-expanded="true" aria-label="Toggle The Coverage-to-Care Bridge">
+        <span class="aj-toggle-icon">−</span>
+      </button>
+    </div>
+    <section id="coverage-bridge" class="spacex-section bridge-section aj-stack-body">
+      <div class="section-container">
+        <div class="split-layout reverse-on-mobile">
+          <div class="split-media-side">
+            <div class="media-frame">
+              <img src="assets/care_bridge.jpg?v=20260919_hybrid" alt="Asian healthcare navigator explaining insurance coverage and benefits to senior patient" class="media-image" loading="lazy">
+              <div class="media-hud-overlay">
+                <div class="hud-corner top-left"></div>
+                <div class="hud-corner top-right"></div>
+                <div class="hud-corner bottom-left"></div>
+                <div class="hud-corner bottom-right"></div>
+                <div class="hud-badge">TRUST BRIDGE // 100% COVERED CARE</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="split-text-side">
+            <div class="section-header-minimal">
+              <span class="section-tag">05 // CARE ACTIVATION</span>
+              <h2 class="section-title">Coverage-to-Care Bridge</h2>
+              <h3 class="section-subtitle-spacex highlight-blue">Eliminating Fear & Fostering Trust</h3>
+            </div>
+
+            <div class="bridge-narrative">
+              <div class="callout-block">
+                <p class="lead-quote">
+                  Having an insurance card does not equal knowing how to access care. Many middle-class and ACA plan holders avoid preventative care due to fear of unexpected bills.
+                </p>
+              </div>
+
+              <div class="solution-block">
+                <p class="body-text">
+                  Our navigation model eliminates this anxiety by reviewing benefits upfront, clarifying 100% covered preventative care, and connecting patients directly with hospital service lines.
+                </p>
+              </div>
+
+              <div class="bridge-metrics-row">
+                <div class="bridge-metric">
+                  <div class="b-val">100%</div>
+                  <div class="b-lbl">Covered Preventative Clarification</div>
+                </div>
+                <div class="bridge-metric">
+                  <div class="b-val">0 $</div>
+                  <div class="b-lbl">Unexpected Cost Anxiety</div>
+                </div>
+                <div class="bridge-metric">
+                  <div class="b-val">DIRECT</div>
+                  <div class="b-lbl">Hospital Service Line Booking</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: COMPETITIVE STRATEGIC MATRICES (Slide 7) -->
+    
+    <!-- ACCORDION STACK HEADER 06: Strategic Operational Matrix & Pricing -->
+    <div class="aj-stack-header aj-bar-black" id="aj-hdr-matrix" data-index="5" onclick="ajToggleSection('matrix', event)">
+      <div class="aj-header-left">
+        <span class="aj-label-num">06</span>
+        <span class="aj-label-text">Strategic Operational Matrix & Pricing</span>
+      </div>
+      <button class="aj-toggle-btn" id="aj-btn-matrix" onclick="ajToggleSection('matrix', event)" aria-expanded="true" aria-label="Toggle Strategic Operational Matrix & Pricing">
+        <span class="aj-toggle-icon">−</span>
+      </button>
+    </div>
+    <section id="matrix" class="spacex-section matrix-section aj-stack-body">
+      <div class="section-container">
+        <!-- Main Section Header -->
+        <div class="section-header-minimal text-center matrix-header-wrapper">
+          <div class="matrix-badge-pill">
+            <span class="pulse-indicator"></span>
+            <span class="matrix-badge-text">EXECUTIVE BENCHMARKS // STRATEGIC MATRICES</span>
+          </div>
+          <h2 class="section-title matrix-main-title">Competitive Strategic Matrices</h2>
+          <p class="section-desc-center matrix-subtitle">
+            Direct comparison: Why leading healthcare networks &amp; hospital systems replace fragmented ad agencies and standard non-profits with the <strong>Strategic Access Engine</strong>.
+          </p>
+        </div>
+
+        <!-- SUBSECTION 1: MEDIA & MARKETING -->
+        <div class="matrix-subsection-header text-center">
+          <div class="matrix-pill-tag tag-blue">
+            <span class="matrix-pill-bullet"></span> PILLAR 01 // MEDIA &amp; MARKETING
+          </div>
+          <h3 class="matrix-subheading">Media &amp; Marketing Execution Matrix</h3>
+          <p class="matrix-subdesc">
+            Geotargeted broadcast media, trusted physician branding, and multi-channel community outreach vs. conventional ad agencies and fragmented flyers.
+          </p>
+        </div>
+
+        <div class="matrix-hero-card" id="media-marketing-card">
+          <div class="table-responsive-wrapper matrix-table-container">
+            <table class="spacex-matrix-table featured-matrix-table" id="strategic-matrix-table">
+              <thead>
+                <tr>
+                  <th scope="col" class="th-metric">
+                    <span class="th-title-text">Core Capability / Metric</span>
+                  </th>
+                  <th scope="col" class="th-agency">
+                    <div class="th-competitor-header">
+                      <span class="th-comp-name">Typical Ad Agencies</span>
+                      <span class="th-comp-tag comp-weak">Digital Only</span>
+                    </div>
+                  </th>
+                  <th scope="col" class="th-nonprofit">
+                    <div class="th-competitor-header">
+                      <span class="th-comp-name">Standard Non-Profits</span>
+                      <span class="th-comp-tag comp-weak">Limited Reach</span>
+                    </div>
+                  </th>
+                  <th scope="col" class="th-engine th-engine-hero">
+                    <div class="th-engine-badge-wrap">
+                      <span class="crown-badge">INDUSTRY-LEADING MODEL</span>
+                      <span class="th-engine-title">OUR STRATEGIC ACCESS ENGINE</span>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="matrix-row">
+                  <td class="td-metric">
+                    <span class="metric-name">Outreach Approach</span>
+                  </td>
+                  <td class="td-agency">
+                    <span class="comp-text">Detached digital ads &amp; impressions</span>
+                  </td>
+                  <td class="td-nonprofit">
+                    <span class="comp-text">Passive flyers &amp; one-off sign-ups</span>
+                  </td>
+                  <td class="td-engine highlight-cell">
+                    <span class="engine-highlight-text"><strong>Hybrid:</strong> Geotargeted broadcast media + active on-the-ground field teams</span>
+                  </td>
+                </tr>
+
+                <tr class="matrix-row">
+                  <td class="td-metric">
+                    <span class="metric-name">Support Channels</span>
+                  </td>
+                  <td class="td-agency">
+                    <span class="comp-text">Web forms &amp; automated chatbots only</span>
+                  </td>
+                  <td class="td-nonprofit">
+                    <span class="comp-text">Limited walk-in hours &amp; voicemail delays</span>
+                  </td>
+                  <td class="td-engine highlight-cell">
+                    <span class="engine-highlight-text"><strong>Multi-Channel 360°:</strong> Bilingual In-Person Outreach, Direct Hotline, 24/7 KakaoTalk &amp; Constant Contact Email</span>
+                  </td>
+                </tr>
+
+                <tr class="matrix-row">
+                  <td class="td-metric">
+                    <span class="metric-name">Tech &amp; Fear Barrier</span>
+                  </td>
+                  <td class="td-agency">
+                    <span class="comp-text">High barrier (Excludes seniors &amp; ESL patients)</span>
+                  </td>
+                  <td class="td-nonprofit">
+                    <span class="comp-text">Moderate barrier (Language &amp; process gaps)</span>
+                  </td>
+                  <td class="td-engine highlight-cell">
+                    <span class="engine-highlight-text"><strong>Zero Barrier:</strong> Turnkey navigation engineered for all patients, Medicaid &amp; ACA</span>
+                  </td>
+                </tr>
+
+                <tr class="matrix-row">
+                  <td class="td-metric">
+                    <span class="metric-name">Media Production</span>
+                  </td>
+                  <td class="td-agency">
+                    <span class="comp-text">Generic stock photography &amp; templates</span>
+                  </td>
+                  <td class="td-nonprofit">
+                    <span class="comp-text">Amateur photography and videography</span>
+                  </td>
+                  <td class="td-engine highlight-cell">
+                    <span class="engine-highlight-text"><strong>20+ Years:</strong> Broadcast TV studios, medical seminars &amp; trusted doctor branding</span>
+                  </td>
+                </tr>
+
+                <tr class="matrix-row">
+                  <td class="td-metric">
+                    <span class="metric-name">Verified Track Record</span>
+                  </td>
+                  <td class="td-agency">
+                    <span class="comp-text">Vanity ad clicks &amp; vague impression counts</span>
+                  </td>
+                  <td class="td-nonprofit">
+                    <span class="comp-text">Small localized episodic counts</span>
+                  </td>
+                  <td class="td-engine highlight-cell">
+                    <span class="engine-highlight-text"><strong>12+ Years Healthcare:</strong> Over 50,000+ documented patient navigations</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Bottom Strategic Summary Callout for Media & Marketing -->
+          <div class="matrix-bottom-bar">
+            <div class="matrix-bottom-stats">
+              <div class="matrix-stat-item">
+                <span class="m-stat-val">50,000+</span>
+                <span class="m-stat-lbl">Patients Navigated</span>
+              </div>
+              <div class="matrix-stat-divider"></div>
+              <div class="matrix-stat-item">
+                <span class="m-stat-val">20+ Yrs</span>
+                <span class="m-stat-lbl">Broadcast &amp; Medical Production</span>
+              </div>
+              <div class="matrix-stat-divider"></div>
+              <div class="matrix-stat-item">
+                <span class="m-stat-val">100%</span>
+                <span class="m-stat-lbl">Bilingual Hybrid Execution</span>
+              </div>
+            </div>
+            <div class="matrix-bottom-action">
+              <a href="#lead-intake" class="btn btn-primary matrix-cta-btn">ENGAGE MEDIA CONSULTANCY</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBSECTION 2: HEALTHCARE NAVIGATION -->
+        <div class="matrix-subsection-header text-center matrix-second-subsection">
+          <div class="matrix-pill-tag tag-cyan">
+            <span class="matrix-pill-bullet"></span> PILLAR 02 // HEALTHCARE NAVIGATION
+          </div>
+          <h3 class="matrix-subheading">Why Non-Profit Navigators Frequently Fail</h3>
+        </div>
+
+        <div class="matrix-hero-card" id="healthcare-navigation-card">
+          <div class="table-responsive-wrapper matrix-table-container">
+            <table class="spacex-matrix-table featured-matrix-table" id="healthcare-navigation-table">
+              <thead>
+                <tr>
+                  <th scope="col" class="th-metric" style="width: 32%;">
+                    <span class="th-title-text">Core Limitation</span>
+                  </th>
+                  <th scope="col" class="th-nonprofit" style="width: 68%; border-right: none;">
+                    <div class="th-competitor-header">
+                      <span class="th-comp-name">Why Non-Profit Navigators Frequently Fail</span>
+                      <span class="th-comp-tag comp-danger">Operational Breakdown</span>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="matrix-row">
+                  <td class="td-metric">
+                    <span class="metric-name">Superficial Insurance Knowledge</span>
+                  </td>
+                  <td class="td-nonprofit" style="border-right: none;">
+                    <span class="comp-text">Navigators often understand basic enrollment forms (e.g., submitting a Medicaid or ACA application) but fail to grasp operational mechanics—such as the difference between Original Medicare and Medicare Advantage HMO prior-authorization rules, out-of-network balance billing, or dual-eligible (D-SNP) coordination.</span>
+                  </td>
+                </tr>
+
+                <tr class="matrix-row">
+                  <td class="td-metric">
+                    <span class="metric-name">&ldquo;Blind&rdquo; Referrals</span>
+                  </td>
+                  <td class="td-nonprofit" style="border-right: none;">
+                    <span class="comp-text">Because they lack real-time clinical directory tools, navigators frequently route patients to doctors based solely on Korean surname or neighborhood word-of-mouth, without verifying whether the provider is currently accepting that specific plan's network or new patients.</span>
+                  </td>
+                </tr>
+
+                <tr class="matrix-row">
+                  <td class="td-metric">
+                    <span class="metric-name">High Turnover, Minimal Standardized Training</span>
+                  </td>
+                  <td class="td-nonprofit" style="border-right: none;">
+                    <span class="comp-text">Grant-funded navigator roles typically offer low pay and minimal continuing education. By the time an individual navigator begins to understand the nuances of local health systems, billing codes, and hospital financial assistance programs, they leave the organization.</span>
+                  </td>
+                </tr>
+
+                <tr class="matrix-row">
+                  <td class="td-metric">
+                    <span class="metric-name">No Digital Workflow</span>
+                  </td>
+                  <td class="td-nonprofit" style="border-right: none;">
+                    <span class="comp-text">Most cases are managed via paper files, phone tags, or manual spreadsheets. A patient might wait two weeks just to find out a referral went nowhere.</span>
+                  </td>
+                </tr>
+
+                <tr class="matrix-row">
+                  <td class="td-metric">
+                    <span class="metric-name">Reliance on Free Health Fairs &amp; Education</span>
+                  </td>
+                  <td class="td-nonprofit" style="border-right: none;">
+                    <span class="comp-text">Rely on free healthfair events and health education, which are no follow ups, fragmented educations and services (screenings).</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: COMPLETE B2B ARCHITECTURE (Slide 9) -->
+    
+    <!-- ACCORDION STACK HEADER 07: Technical & Operational Architecture -->
+    <div class="aj-stack-header aj-bar-white" id="aj-hdr-architecture" data-index="6" onclick="ajToggleSection('architecture', event)">
+      <div class="aj-header-left">
+        <span class="aj-label-num">07</span>
+        <span class="aj-label-text">Technical & Operational Architecture</span>
+      </div>
+      <button class="aj-toggle-btn" id="aj-btn-architecture" onclick="ajToggleSection('architecture', event)" aria-expanded="true" aria-label="Toggle Technical & Operational Architecture">
+        <span class="aj-toggle-icon">−</span>
+      </button>
+    </div>
+    <section id="architecture" class="spacex-section arch-section aj-stack-body">
+      <div class="section-container">
+        <div class="section-header-minimal text-center">
+          <span class="section-tag">07 // ENTERPRISE FRAMEWORK</span>
+          <h2 class="section-title">Complete B2B Architecture</h2>
+          <p class="section-desc-center">Four synergistic enterprise modules connecting hospital leadership with communities.</p>
+        </div>
+
+        <div class="arch-showcase-layout">
+          <div class="arch-cards-grid">
+            <!-- Card 1: Home Portal -->
+            <div class="arch-card">
+              <div class="arch-header">
+                <span class="module-num">MOD // 01</span>
+                <div class="module-icon">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                  </svg>
+                </div>
+              </div>
+              <h3 class="arch-title">Home Portal</h3>
+              <p class="arch-desc">Universal Access Engine, Hybrid Execution credentials, and 20yr media / 12yr healthcare track experience.</p>
+              <div class="arch-tag-list">
+                <span class="tag-pill">20yr Media</span>
+                <span class="tag-pill">12yr Healthcare</span>
+                <span class="tag-pill">Credentials</span>
+              </div>
+            </div>
+
+            <!-- Card 2: Strategic Capabilities -->
+            <div class="arch-card">
+              <div class="arch-header">
+                <span class="module-num">MOD // 02</span>
+                <div class="module-icon">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75">
+                    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                    <polyline points="2 17 12 22 22 17"></polyline>
+                    <polyline points="2 12 12 17 22 12"></polyline>
+                  </svg>
+                </div>
+              </div>
+              <h3 class="arch-title">Strategic Capabilities</h3>
+              <p class="arch-desc">Multi-community literacy, 50,000+ navigation workflows, and physician branding.</p>
+              <div class="arch-tag-list">
+                <span class="tag-pill">50k+ Workflows</span>
+                <span class="tag-pill">Community Literacy</span>
+                <span class="tag-pill">Physician Branding</span>
+              </div>
+            </div>
+
+            <!-- Card 3: Portfolio & Impact -->
+            <div class="arch-card">
+              <div class="arch-header">
+                <span class="module-num">MOD // 03</span>
+                <div class="module-icon">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75">
+                    <line x1="18" y1="20" x2="18" y2="10"></line>
+                    <line x1="12" y1="20" x2="12" y2="4"></line>
+                    <line x1="6" y1="20" x2="6" y2="14"></line>
+                  </svg>
+                </div>
+              </div>
+              <h3 class="arch-title">Portfolio & Impact</h3>
+              <p class="arch-desc">Seminars, health fair showcases, media vault, and facility spotlights.</p>
+              <div class="arch-tag-list">
+                <span class="tag-pill">Health Fairs</span>
+                <span class="tag-pill">Media Vault</span>
+                <span class="tag-pill">Facility Spotlights</span>
+              </div>
+            </div>
+
+            <!-- Card 4: Consultancy Intake -->
+            <div class="arch-card">
+              <div class="arch-header">
+                <span class="module-num">MOD // 04</span>
+                <div class="module-icon">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="8.5" cy="7" r="4"></circle>
+                    <polyline points="17 11 19 13 23 9"></polyline>
+                  </svg>
+                </div>
+              </div>
+              <h3 class="arch-title">Consultancy Intake</h3>
+              <p class="arch-desc">Executive B2B consultation funnel for hospital VPs, CMOs, and payor provider-relations leads.</p>
+              <div class="arch-tag-list">
+                <span class="tag-pill">Hospital VPs</span>
+                <span class="tag-pill">CMOs</span>
+                <span class="tag-pill">Payor Relations</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Side Add-on Visual for B2B Architecture -->
+          <div class="b2b-executive-visual-banner">
+            <div class="media-frame">
+              <img src="assets/executive_dashboard.jpg?v=20260919_hybrid" alt="Asian healthcare executives and hospital leadership collaborating on community health outreach strategy" class="media-image" loading="lazy">
+              <div class="media-hud-overlay">
+                <div class="hud-corner top-left"></div>
+                <div class="hud-corner top-right"></div>
+                <div class="hud-corner bottom-left"></div>
+                <div class="hud-corner bottom-right"></div>
+                <div class="hud-badge">EXECUTIVE STRATEGY // HEALTH SYSTEM COLLABORATION</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: ABOUT OUR TEAM & STRATEGIC MISSION -->
+    
+    <!-- ACCORDION STACK HEADER 08: About Our Team & Proven Track Record -->
+    <div class="aj-stack-header aj-bar-black" id="aj-hdr-about-team" data-index="7" onclick="ajToggleSection('about-team', event)">
+      <div class="aj-header-left">
+        <span class="aj-label-num">08</span>
+        <span class="aj-label-text">About Our Team &amp; Proven Track Record</span>
+      </div>
+      <button class="aj-toggle-btn" id="aj-btn-about-team" onclick="ajToggleSection('about-team', event)" aria-expanded="true" aria-label="Toggle About Our Team">
+        <span class="aj-toggle-icon">−</span>
+      </button>
+    </div>
+    <section id="about-team" class="spacex-section about-team-section aj-stack-body">
+      <div class="section-container">
+        <div class="section-header-minimal text-center">
+          <span class="section-tag">08 // ABOUT OUR TEAM</span>
+          <h2 class="section-title">About Our Team</h2>
+        </div>
+
+        <div class="about-team-content-card">
+          <p>Many hospital and community center outreach programs fall short of their preventative health goals. While health fairs successfully draw crowds with free screenings, they rarely result in meaningful long-term care. Preventative symptoms go unmonitored, community centers lack clinical expertise, and hospitals struggle to maintain a dedicated bridge into the community.</p>
+
+          <p>Furthermore, traditional hospital marketing directed at specific demographics—such as the Korean community—frequently misses the mark. Community centers often lack professional design and marketing resources, while hospital campaigns fail due to a lack of deep cultural, linguistic, and community-specific understanding.</p>
+
+          <p>Effective outreach cannot rely on isolated efforts; it requires a synchronized, multi-channel approach. True community engagement demands a cohesive strategy spanning physical flyers, local newspapers, major media outlets, social media, YouTube, dedicated websites, and most importantly, dedicated patient navigators. When these elements are orchestrated together, retention rates rise, underserved patients receive continuous care, and the hospital builds a lasting, loyal patient base.</p>
+
+          <p>Building this infrastructure from scratch is notoriously difficult, typically requiring complex coordination across multiple hospital departments with no guarantee of success.</p>
+
+          <p>However, our team brings over a decade of proven consulting and strategic marketing experience. By leveraging our already implemented community center healthcare access hubs and our central Healthcare Access Portal as the navigation engine, the hospital can bypass a decade of trial and error.</p>
+
+          <p>Our solution is entirely plug-and-play and handled completely in-house. By partnering with us, you can immediately activate a culturally tailored, highly effective localized marketing and outreach strategy from day one.</p>
+
+          <p>We welcome the opportunity to discuss how we can seamlessly integrate this proven ecosystem into your upcoming initiatives.</p>
+
+          <!-- ACCORDION: HISTORY (WHITE BAR) & AWARDS (BLACK BAR) -->
+          <div class="aj-ha-accordion-wrap">
+
+            <!-- HISTORY block (White Bar) -->
+            <div class="aj-block aj-block-white" id="aj-block-history">
+              <div class="aj-block-label" id="aj-label-history" onclick="toggleHAAccordion('history')">
+                <span class="aj-label-num">01</span>
+                <span class="aj-label-text">history</span>
+                <button class="aj-toggle-btn collapsed" onclick="event.stopPropagation(); toggleHAAccordion('history')" aria-expanded="false" id="aj-btn-history">
+                  <span class="aj-toggle-icon">+</span>
+                  <span class="aj-toggle-text">Click to expand</span>
+                </button>
+              </div>
+              <div class="aj-block-content collapsed" id="aj-content-history">
+                <div class="aj-grid">
+                  <div class="aj-entry">
+                    <span class="aj-year">July 2026</span>
+                    <h3 class="aj-title">Founder / Healthcare Access Center</h3>
+                    <p class="aj-place">AWCA (Asian Women's Christian Association) · Teaneck, NJ</p>
+                    <p class="aj-desc">Expanded regional clinical navigation hub offering integrated hospital care linkages and chronic disease support.</p>
+                  </div>
+                  <div class="aj-entry">
+                    <span class="aj-year">Mar 2026</span>
+                    <h3 class="aj-title">Founder / Healthcare Access Center</h3>
+                    <p class="aj-place">Family Touch · Little Ferry, NJ</p>
+                    <p class="aj-desc">Established dedicated access hub for family wellness, care coordination, and community preventive education.</p>
+                  </div>
+                  <div class="aj-entry">
+                    <span class="aj-year">2023 – 2025</span>
+                    <h3 class="aj-title">Founder / Healthcare Resource Center <em>Pilot</em></h3>
+                    <p class="aj-place">KASCANJ — Korean American Senior Citizen's Association of NJ</p>
+                    <p class="aj-desc">Pioneered the multilingual care access pilot with comprehensive patient onboarding and community health literacy.</p>
+                  </div>
+                  <div class="aj-entry">
+                    <span class="aj-year">2015 – 2025</span>
+                    <h3 class="aj-title">Managed Korean Center Team as Consultant <em>10 Years</em></h3>
+                    <p class="aj-place">Englewood Health</p>
+                    <p class="aj-desc">10 years of hospital center operations, outpatient navigation, large-scale screenings, and bilingual physician coordination.</p>
+                  </div>
+                  <div class="aj-entry">
+                    <span class="aj-year">2020</span>
+                    <h3 class="aj-title">Consultant for Asian Health Initiatives</h3>
+                    <p class="aj-place">Holy Name Medical Center</p>
+                    <p class="aj-desc">Specialized consultant advising on Asian community health, clinical outreach, and patient access strategies.</p>
+                  </div>
+                  <div class="aj-entry">
+                    <span class="aj-year">2020</span>
+                    <h3 class="aj-title">Media Director</h3>
+                    <p class="aj-place">AWCA (Asian Women's Christian Association)</p>
+                    <p class="aj-desc">Directed multimedia broadcasting, healthcare educational media productions, and digital community outreach.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- AWARDS block (Black Bar) -->
+            <div class="aj-block aj-block-black" id="aj-block-awards">
+              <div class="aj-block-label" id="aj-label-awards" onclick="toggleHAAccordion('awards')">
+                <span class="aj-label-num">02</span>
+                <span class="aj-label-text">awards &amp; recognitions</span>
+                <button class="aj-toggle-btn collapsed" onclick="event.stopPropagation(); toggleHAAccordion('awards')" aria-expanded="false" id="aj-btn-awards">
+                  <span class="aj-toggle-icon">+</span>
+                  <span class="aj-toggle-text">Click to expand</span>
+                </button>
+              </div>
+              <div class="aj-block-content collapsed" id="aj-content-awards">
+                <div class="aj-grid">
+                  <div class="aj-entry">
+                    <span class="aj-year">2024</span>
+                    <h3 class="aj-title">Foster G. McGaw Prize</h3>
+                    <p class="aj-place">American Hospital Association · Semi-Finalist</p>
+                    <p class="aj-desc">Recognized nationally for exceptional community service, cross-sector healthcare integration, and patient navigation excellence.</p>
+                  </div>
+                  <div class="aj-entry">
+                    <span class="aj-year">2022</span>
+                    <h3 class="aj-title">Percy Award — Winner</h3>
+                    <p class="aj-place">Healthcare Planning &amp; Marketing Society of NJ · Best Digital Campaign</p>
+                    <p class="aj-desc">Honored for breakthrough digital outreach, health literacy media campaigns, and clinical accessibility engagement.</p>
+                  </div>
+                  <div class="aj-entry">
+                    <span class="aj-year">2018 – 2019</span>
+                    <h3 class="aj-title">National Academic Conferences</h3>
+                    <p class="aj-place">Association of Korean Medicine USA Branch</p>
+                    <p class="aj-desc">Held 2nd &amp; 3rd National Academic Conferences, convening integrative health physicians and clinical researchers nationwide.</p>
+                  </div>
+                  <div class="aj-entry">
+                    <span class="aj-year">Community</span>
+                    <h3 class="aj-title">Community Service Awards</h3>
+                    <p class="aj-place">AWCA (2024) · KASCANJ (2020) · Esther Ha Foundation (2017)</p>
+                    <p class="aj-desc">Recognized by leading NJ community organizations for sustained healthcare leadership and public health contribution.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 10: EXECUTIVE B2B LEAD INTAKE SYSTEM (Slide 10) -->
+    
+    <!-- ACCORDION STACK HEADER 09: Engage Healthcare Access Engine -->
+    <div class="aj-stack-header aj-bar-white" id="aj-hdr-lead-intake" data-index="8" onclick="ajToggleSection('lead-intake', event)">
+      <div class="aj-header-left">
+        <span class="aj-label-num">09</span>
+        <span class="aj-label-text">Engage Healthcare Access Engine</span>
+      </div>
+      <button class="aj-toggle-btn" id="aj-btn-lead-intake" onclick="ajToggleSection('lead-intake', event)" aria-expanded="true" aria-label="Toggle Engage Healthcare Access Engine">
+        <span class="aj-toggle-icon">−</span>
+      </button>
+    </div>
+    <section id="lead-intake" class="spacex-section intake-section aj-stack-body">
+      <div class="section-container">
+        <div class="split-layout">
+          <div class="split-text-side">
+            <div class="section-header-minimal">
+              <span class="section-tag">09 // QUALIFICATION PROTOCOL</span>
+              <h2 class="section-title">Executive B2B Lead Intake System</h2>
+              <h3 class="section-subtitle-spacex">Actionable Intake Funnel</h3>
+            </div>
+
+            <div class="intake-points">
+              <div class="intake-point-card">
+                <div class="point-header">
+                  <span class="p-num">01</span>
+                  <h4>Primary Healthcare Goal</h4>
+                </div>
+                <p>Tailored for Core Services (01–08), Senior Outreach, Multi-Cultural Growth, or ACA Activation.</p>
+              </div>
+
+              <div class="intake-point-card">
+                <div class="point-header">
+                  <span class="p-num">02</span>
+                  <h4>Target Patient Demographics</h4>
+                </div>
+                <p>Korean, Spanish, Chinese, Senior, or Middle-Class Underinsured populations.</p>
+              </div>
+
+              <div class="intake-point-card">
+                <div class="point-header">
+                  <span class="p-num">03</span>
+                  <h4>Current Infrastructure Evaluation</h4>
+                </div>
+                <p>Assessing existing digital vs. in-house navigation capabilities.</p>
+              </div>
+
+              <div class="intake-point-card">
+                <div class="point-header">
+                  <span class="p-num">04</span>
+                  <h4>Partnership Scope</h4>
+                </div>
+                <p>Strategy planning and consulting or multi-year regional health system strategy.</p>
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="split-media-side">
+            <!-- Interactive Intake Funnel Application Form -->
+            <div class="intake-interactive-app">
+              <div class="app-header-bar">
+                <span class="app-title">EXECUTIVE CONSULTATION PROTOCOL</span>
+                <span class="app-status">SYSTEM READY</span>
+              </div>
+              <form id="executive-lead-form" class="intake-form">
+                <div class="form-group">
+                  <label for="lead-name">EXECUTIVE NAME & TITLE</label>
+                  <input type="text" id="lead-name" name="executive_name" class="spacex-input" placeholder="e.g. Dr. Sarah Jenkins, VP Strategy" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="lead-org">HEALTH SYSTEM / ORGANIZATION</label>
+                  <input type="text" id="lead-org" name="organization" class="spacex-input" placeholder="e.g. Metro Health Network" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="lead-goal">PRIMARY HEALTHCARE GOAL</label>
+                  <select id="lead-goal" name="healthcare_goal" class="spacex-input" required>
+                    <optgroup label="CORE SERVICES (01 — 08)">
+                      <option value="01 Media Production 1">01 Media Production 1 (Photo Shoot, Hero Shots &amp; Seminars)</option>
+                      <option value="02 Media Production 2">02 Media Production 2 (Digital Banner, YouTube &amp; Dr. Interview)</option>
+                      <option value="03 SNS Management">03 SNS Management (News, Events &amp; Patient Inquiries)</option>
+                      <option value="04 Community Hub Management">04 Community Hub Management (Hospital-Community Bridge)</option>
+                      <option value="05 Patient Navigation">05 Patient Navigation (Insurance Triage, Appointments &amp; Billing)</option>
+                      <option value="06 Special Events">06 Special Events (Medical Seminars &amp; Chronic Disease Education)</option>
+                      <option value="07 Websites &amp; Digital Platform">07 Websites &amp; Digital Platform (AI Tools, YouTube &amp; Social Integration)</option>
+                      <option value="08 Healthcare Access Portal Services">08 Healthcare Access Portal Services (All-in-One Turnkey Ecosystem)</option>
+                    </optgroup>
+                    <optgroup label="STRATEGIC HEALTHCARE INITIATIVES">
+                      <option value="Senior Outreach">Senior Outreach &amp; Preventative Care</option>
+                      <option value="Multi-Cultural Growth">Multi-Cultural Growth (Korean, Spanish, Chinese)</option>
+                      <option value="ACA Activation">ACA / Obamacare Activation &amp; Literacy</option>
+                      <option value="Global Healthcare Network">09 Global Healthcare Network &amp; International Patient Access</option>
+                    </optgroup>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="lead-demo">TARGET PATIENT DEMOGRAPHICS</label>
+                  <select id="lead-demo" name="target_demographics" class="spacex-input" required>
+                    <option value="Korean Community">Korean Immigrant & Senior Population</option>
+                    <option value="Spanish Community">Spanish-Speaking Working Families</option>
+                    <option value="Chinese Community">Chinese Community & Seniors</option>
+                    <option value="Middle-Class Underinsured">Middle-Class Underinsured & High Deductible</option>
+                    <option value="Broad Regional Mix">Broad Multi-Cultural Regional Mix</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="lead-scope">PARTNERSHIP SCOPE</label>
+                  <select id="lead-scope" name="partnership_scope" class="spacex-input" required>
+                    <option value="Strategy Planning and Consulting">Strategy Planning and Consulting</option>
+                    <option value="Annual Regional Strategy">1-Year Regional Health System Deployment</option>
+                    <option value="Multi-Year Enterprise">Multi-Year Enterprise Network Integration</option>
+                    <option value="Global Healthcare Network">Global Healthcare Network &amp; International Patient Access</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="lead-email">DIRECT EXECUTIVE EMAIL</label>
+                  <input type="email" id="lead-email" name="executive_email" class="spacex-input" placeholder="direct@healthsystem.org" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary full-width" id="submit-intake-btn">TRANSMIT EXECUTIVE BRIEFING REQUEST</button>
+                <div id="intake-confirmation" class="confirmation-msg">
+                  ✓ REQUEST TRANSMITTED // An executive healthcare strategist will initiate review within 4 hours.
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- SECTION 11: ENGAGE OUR CONSULTANCY (Slide 12) -->
+    
+    <!-- ACCORDION STACK HEADER 10: Executive Advisory & Directorship -->
+    <div class="aj-stack-header aj-bar-black" id="aj-hdr-consultancy" data-index="9" onclick="ajToggleSection('consultancy', event)">
+      <div class="aj-header-left">
+        <span class="aj-label-num">10</span>
+        <span class="aj-label-text">Executive Advisory & Directorship</span>
+      </div>
+      <button class="aj-toggle-btn" id="aj-btn-consultancy" onclick="ajToggleSection('consultancy', event)" aria-expanded="true" aria-label="Toggle Executive Advisory & Directorship">
+        <span class="aj-toggle-icon">−</span>
+      </button>
+    </div>
+    <section id="consultancy" class="spacex-section consultancy-section aj-stack-body">
+      <div class="section-container text-center">
+        <div class="section-header-minimal text-center">
+          <span class="section-tag">10 // STRATEGIC PARTNERSHIP</span>
+          <h2 class="hero-headline consult-headline">Engage Our Consultancy</h2>
+          <p class="consult-subheadline">
+            Schedule a Hybrid Outreach & Health Equity Consultation Today
+          </p>
+        </div>
+
+        <div class="consultancy-box">
+          <div class="partner-meta">
+            <div class="meta-label">ENTERPRISE SYSTEM ARCHITECTURE</div>
+            <div class="meta-system-name">Universal Healthcare Access Engine & B2B Partner Portal</div>
+          </div>
+
+          <div class="channel-contact-grid">
+            <a href="https://njaccessportal.com" target="_blank" rel="noopener" class="contact-channel-card">
+              <div class="cc-icon">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.75">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+              </div>
+              <div class="cc-title">PARTNER PORTAL</div>
+              <div class="cc-value">njaccessportal.com</div>
+              <div class="cc-action">LAUNCH ACCESS &rarr;</div>
+            </a>
+
+            <a href="mailto:njaccessportal@gmail.com" class="contact-channel-card">
+              <div class="cc-icon">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.75">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+              </div>
+              <div class="cc-title">EXECUTIVE DIRECT EMAIL</div>
+              <div class="cc-value">njaccessportal@gmail.com</div>
+              <div class="cc-action">TRANSMIT INQUIRY &rarr;</div>
+            </a>
+          </div>
+
+          <div class="consultancy-action-row">
+            <button id="open-consult-modal-btn" class="btn btn-primary">OPEN CONSULTATION SCHEDULER</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div> <!-- end .aj-accordion-stack -->
+
+  </main>
+
+  <!-- CLEAN BRIGHT FOOTER -->
+  <footer class="spacex-footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <a href="index.html" class="brand-logo footer-brand-logo">
+          <svg class="brand-logo-svg" viewBox="0 0 95 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Access Engine Logo">
+            <g stroke-linecap="round" stroke-linejoin="round">
+              <g class="njap-nav-door">
+                <line x1="20" y1="12" x2="20" y2="88" stroke="#1E3A8A" stroke-width="3.5" />
+                <rect x="25" y="12" width="55" height="76" rx="2" stroke="#1E3A8A" stroke-width="4" fill="#FFFFFF" />
+                <polyline points="25,16 52,25 52,36" stroke="#1E3A8A" stroke-width="3.5" fill="none" />
+                <text x="52.5" y="81" font-family="'Times New Roman', serif" font-size="13.5" font-weight="400" letter-spacing="1.5" fill="#1E3A8A" stroke="none" text-anchor="middle">NJAP</text>
+              </g>
+              <path class="njap-nav-keyhole" d="M 43,45 A 7,7 0 1,1 53,45 L 56,64 L 40,64 Z" stroke="#DC2626" stroke-width="3.5" fill="#FFFFFF" />
+              <g class="njap-nav-key">
+                <circle cx="74" cy="45" r="6.5" stroke="#DC2626" stroke-width="3.5" fill="#FFFFFF" />
+                <line x1="47" y1="45" x2="67.5" y2="45" stroke="#DC2626" stroke-width="3.5" />
+                <line x1="49" y1="45" x2="49" y2="49" stroke="#DC2626" stroke-width="3.5" />
+                <line x1="53" y1="45" x2="53" y2="48" stroke="#DC2626" stroke-width="3" />
+              </g>
+            </g>
+          </svg>
+          <span class="brand-text">
+            <span class="njap-char" style="--i:0">A</span><span class="njap-char" style="--i:1">C</span><span class="njap-char" style="--i:2">C</span><span class="njap-char" style="--i:3">E</span><span class="njap-char" style="--i:4">S</span><span class="njap-char" style="--i:5">S</span><span class="njap-char-space">&nbsp;</span><span class="njap-char brand-engine" style="--i:6">E</span><span class="njap-char brand-engine" style="--i:7">N</span><span class="njap-char brand-engine" style="--i:8">G</span><span class="njap-char brand-engine" style="--i:9">I</span><span class="njap-char brand-engine" style="--i:10">N</span><span class="njap-char brand-engine" style="--i:11">E</span>
+          </span>
+        </a>
+        <span class="footer-copy">&copy; 2026 Universal Healthcare Access Engine. All rights reserved.</span>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">HOME</a>
+        <a href="services.html">SERVICES</a>
+        <a href="portfolio.html">PORTFOLIO</a>
+        <a href="#lead-intake">ENGAGE CONSULTANCY</a>
+        <a href="mailto:njaccessportal@gmail.com">DIRECT CONTACT</a>
+        <a href="javascript:void(0)" onclick="window.lockEnginePortal && window.lockEnginePortal()" style="opacity: 0.45; font-size: 0.85em;" title="Lock Portal">🔒 LOCK PORTAL</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Interactive Modal for Scheduling Consultation -->
+  <div id="consultation-modal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-window">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-tag">SCHEDULE CONSULTATION</span>
+          <h3 class="modal-title">Executive Briefing & Strategic Audit</h3>
+        </div>
+        <button id="close-modal-btn" class="close-modal-btn" aria-label="Close Modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="modal-scheduler-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="m-name">FULL NAME</label>
+              <input type="text" id="m-name" name="full_name" class="spacex-input" placeholder="Executive Name" required>
+            </div>
+            <div class="form-group">
+              <label for="m-title">TITLE / ROLE</label>
+              <input type="text" id="m-title" name="title" class="spacex-input" placeholder="VP, Chief Medical Officer, etc." required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="m-email">EXECUTIVE EMAIL</label>
+              <input type="email" id="m-email" name="executive_email" class="spacex-input" placeholder="direct@organization.org" required>
+            </div>
+            <div class="form-group">
+              <label for="m-org">ORGANIZATION / SYSTEM</label>
+              <input type="text" id="m-org" name="organization" class="spacex-input" placeholder="Hospital / Organization Name" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="m-timeframe">PREFERRED BRIEFING TIMEFRAME</label>
+            <select id="m-timeframe" name="preferred_timeframe" class="spacex-input">
+              <option value="Immediate (This Week)">Immediate (This Week)</option>
+              <option value="Next Week">Next Week</option>
+              <option value="Within 30 Days">Within 30 Days</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="m-notes">INITIAL FOCUS OR QUESTIONS</label>
+            <textarea id="m-notes" name="focus_notes" class="spacex-input" rows="3" placeholder="Specify clinical service lines, demographic priorities, or regional health systems..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary full-width" id="confirm-scheduler-btn">CONFIRM CONSULTATION RESERVATION</button>
+          <div id="modal-confirmation" class="confirmation-msg">
+            ✓ CONFIRMED // Your consultation request has been queued. Direct briefing confirmation will be sent to your email.
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/client-auth.js?v=20261004_v1"></script>
+  <script src="js/app.js?v=20260921_smooth_counters"></script>
+
+  <!-- Adam Jakubowski Style Stacking Accordion Interaction (Max 4 Stacked Bars with FIFO Push) -->
+  <script>
+    const ajSectionIds = [
+      'paradigm',
+      'audience',
+      'access-engine',
+      'hybrid-execution',
+      'coverage-bridge',
+      'matrix',
+      'architecture',
+      'about-team',
+      'lead-intake',
+      'consultancy'
+    ];
+
+    function ajToggleSection(sectionId, event) {
+      if (event) {
+        event.stopPropagation();
+      }
+      const body = document.getElementById(sectionId);
+      const btn = document.getElementById('aj-btn-' + sectionId);
+      const hdr = document.getElementById('aj-hdr-' + sectionId);
+      if (!body) return;
+
+      const isCollapsed = body.classList.contains('collapsed');
+      if (isCollapsed) {
+        body.classList.remove('collapsed');
+        if (btn) {
+          btn.classList.remove('collapsed');
+          const icon = btn.querySelector('.aj-toggle-icon');
+          if (icon) icon.textContent = '−';
+          btn.setAttribute('aria-expanded', 'true');
+        }
+        if (hdr) {
+          const topOffset = hdr.getBoundingClientRect().top + window.pageYOffset - parseInt(getComputedStyle(hdr).top);
+          window.scrollTo({ top: topOffset, behavior: 'smooth' });
+        }
+      } else {
+        body.classList.add('collapsed');
+        if (btn) {
+          btn.classList.add('collapsed');
+          const icon = btn.querySelector('.aj-toggle-icon');
+          if (icon) icon.textContent = '+';
+          btn.setAttribute('aria-expanded', 'false');
+        }
+      }
+
+      if (window.ajUpdateStackPush) {
+        window.ajUpdateStackPush();
+        setTimeout(window.ajUpdateStackPush, 100);
+        setTimeout(window.ajUpdateStackPush, 250);
+        setTimeout(window.ajUpdateStackPush, 460);
+      }
+    }
+
+    // 4-Bar Accordion Stack Controller: Pushes top bars up when more than 4 bars stack
+    (function init4BarRollingStack() {
+      let ticking = false;
+
+      function updateStackPush() {
+        ticking = false;
+        const isMobile = window.innerWidth <= 768;
+        const navH = isMobile ? 64 : 70;
+        const barH = isMobile ? 42 : 46;
+        const maxStack = 4;
+        const bottomSlot = navH + (maxStack - 1) * barH;
+        const targetArrival = bottomSlot + barH;
+
+        const headerEls = ajSectionIds.map(id => document.getElementById('aj-hdr-' + id));
+        const sectionEls = ajSectionIds.map(id => document.getElementById(id));
+
+        const pj = new Float32Array(ajSectionIds.length);
+        for (let j = 4; j < ajSectionIds.length; j++) {
+          const sec = sectionEls[j];
+          if (!sec) continue;
+          const rect = sec.getBoundingClientRect();
+          if (sec.classList.contains('collapsed')) {
+            const hdr = headerEls[j];
+            const hdrRect = hdr ? hdr.getBoundingClientRect() : null;
+            if (hdrRect && hdrRect.top <= bottomSlot) {
+              pj[j] = barH;
+            } else {
+              pj[j] = 0;
+            }
+          } else {
+            pj[j] = Math.max(0, Math.min(barH, targetArrival - rect.top));
+          }
+        }
+
+        for (let i = 0; i < ajSectionIds.length; i++) {
+          const hdr = headerEls[i];
+          if (!hdr) continue;
+
+          let pushI = 0;
+          const startJ = Math.max(i + 1, 4);
+          for (let j = startJ; j < ajSectionIds.length; j++) {
+            pushI += pj[j];
+          }
+
+          if (pushI > 0) {
+            hdr.style.transform = `translate3d(0, -${pushI}px, 0)`;
+          } else {
+            hdr.style.transform = '';
+          }
+
+          const baseSlot = navH + Math.min(i, maxStack - 1) * barH;
+          const visualTop = baseSlot - pushI;
+
+          // Header is completely covered once its bottom edge slides under navH
+          if (visualTop <= navH - barH) {
+            hdr.style.visibility = 'hidden';
+            hdr.style.pointerEvents = 'none';
+          } else {
+            hdr.style.visibility = 'visible';
+            hdr.style.pointerEvents = 'auto';
+          }
+        }
+      }
+
+      function onScrollOrResize() {
+        if (!ticking) {
+          requestAnimationFrame(updateStackPush);
+          ticking = true;
+        }
+      }
+
+      window.addEventListener('scroll', onScrollOrResize, { passive: true });
+      window.addEventListener('resize', onScrollOrResize, { passive: true });
+      window.ajUpdateStackPush = updateStackPush;
+    })();
+
+    // History (White Bar) & Awards (Black Bar) Accordion Toggle
+    function toggleHAAccordion(id, event) {
+      if (event) event.stopPropagation();
+      const content = document.getElementById('aj-content-' + id);
+      const btn = document.getElementById('aj-btn-' + id);
+      const bar = document.getElementById('aj-label-' + id);
+      if (!content) return;
+      const isCollapsed = content.classList.toggle('collapsed');
+      if (btn) {
+        btn.classList.toggle('collapsed', isCollapsed);
+        btn.setAttribute('aria-expanded', String(!isCollapsed));
+        const icon = btn.querySelector('.aj-toggle-icon');
+        const text = btn.querySelector('.aj-toggle-text');
+        if (icon) icon.textContent = isCollapsed ? '+' : '−';
+        if (text) text.textContent = isCollapsed ? 'Click to expand' : 'Click to collapse';
+      }
+      if (bar) {
+        bar.setAttribute('aria-expanded', String(!isCollapsed));
+      }
+      if (window.ajUpdateStackPush) {
+        setTimeout(window.ajUpdateStackPush, 350);
+      }
+    }
+
+    // Smooth scroll for anchor links including #about-team
+    function scrollToSection(targetId, e) {
+      if (e) e.preventDefault();
+      const target = document.getElementById(targetId);
+      if (!target) return;
+      if (target.classList.contains('collapsed')) {
+        ajToggleSection(targetId);
+      }
+      const hdr = document.getElementById('aj-hdr-' + targetId);
+      const destEl = hdr || target;
+      const isMobile = window.innerWidth <= 768;
+      const navH = isMobile ? 64 : 70;
+      const topOffset = destEl.getBoundingClientRect().top + window.pageYOffset - (navH + 8);
+      window.scrollTo({ top: Math.max(0, topOffset), behavior: 'smooth' });
+      if (history.pushState) {
+        history.pushState(null, null, '#' + targetId);
+      }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href && href.length > 1) {
+          const targetId = href.replace('#', '');
+          const targetEl = document.getElementById(targetId);
+          if (targetEl) {
+            scrollToSection(targetId, e);
+          }
+        }
+      });
+    });
+
+    // Auto-expand and scroll if URL has hash anchor
+    window.addEventListener('hashchange', () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash) {
+        const target = document.getElementById(hash);
+        if (target && target.classList.contains('collapsed')) {
+          ajToggleSection(hash);
+        }
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash) {
+        const target = document.getElementById(hash);
+        if (target && target.classList.contains('collapsed')) {
+          ajToggleSection(hash);
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>

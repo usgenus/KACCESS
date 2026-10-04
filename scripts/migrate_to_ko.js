@@ -61,10 +61,10 @@ filesToReplaceDomain.forEach(rel => {
 console.log('\n--- Step 2: Update splash.html button links to /ko/ ---');
 updateFile('splash.html', (content) => {
   return content
-    .replace(/href="https:\/\/njaccessportal\.com\/ko\/"/g, 'href="/ko/"')
-    .replace(/href="https:\/\/njaccessportal\.com\/ko\/medicare"/g, 'href="/ko/medicare"')
-    .replace(/href="https:\/\/njaccessportal\.com\/ko\/forum"/g, 'href="/ko/forum"')
-    .replace(/href="https:\/\/njaccessportal\.com\/ko\/tool"/g, 'href="/ko/tool"');
+    .replace(/href="https:\/\/njaccessportal\.com\/ko\/"/g, 'href="/"')
+    .replace(/href="https:\/\/njaccessportal\.com\/ko\/medicare"/g, 'href="/medicare"')
+    .replace(/href="https:\/\/njaccessportal\.com\/ko\/forum"/g, 'href="/forum"')
+    .replace(/href="https:\/\/njaccessportal\.com\/ko\/tool"/g, 'href="/tool"');
 });
 
 console.log('\n--- Step 3: Update .htaccess for /ko/ subfolder ---');
@@ -142,9 +142,9 @@ portalFiles.forEach(rel => {
   updateFile(rel, (content) => {
     let res = content;
 
-    // 1. Root link href="/" -> href="/ko/"
-    res = res.replace(/href="\/"/g, 'href="/ko/"');
-    res = res.replace(/href='\/'/g, "href='/ko/'");
+    // 1. Root link href="/" -> href="/"
+    res = res.replace(/href="\/"/g, 'href="/"');
+    res = res.replace(/href='\/'/g, "href='/'");
 
     // 2. Specific routes: href="/route" or href="/route/..." or href="/route?..."
     routes.forEach(route => {
@@ -181,7 +181,7 @@ portalFiles.forEach(rel => {
     });
 
     // Asset paths like /logo, /kakao, /access.jpg
-    res = res.replace(/src="\/logo/g, 'src="/ko/logo');
+    res = res.replace(/src="\/logo/g, 'src="/logo');
     res = res.replace(/src="\/kakao/g, 'src="/ko/kakao');
     res = res.replace(/src="\/access\.jpg"/g, 'src="/ko/access.jpg"');
     res = res.replace(/src="\/forum_community_banner\.jpg"/g, 'src="/ko/forum_community_banner.jpg"');

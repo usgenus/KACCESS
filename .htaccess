@@ -1,8 +1,14 @@
-DirectoryIndex index.html index.php
+DirectoryIndex index.php index.html
 
 <IfModule mod_headers.c>
   Header set Cache-Control "no-cache, must-revalidate, max-age=0"
   Header set Pragma "no-cache"
+
+  # Allow Service Worker across origin
+  <Files "sw.js">
+    Header set Service-Worker-Allowed "/"
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+  </Files>
 
   # Media files byte-range caching
   <FilesMatch "\.(mp4|webm|ogv|mov|m4v|mp3|ogg|wav)$">
@@ -12,8 +18,15 @@ DirectoryIndex index.html index.php
     Header unset Expires
   </FilesMatch>
 
-  # Static assets
-  <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|ico|woff|woff2|ttf|eot|css|js)$">
+  # JavaScript and CSS: immediate revalidation so mobile browsers never get stuck on stale scripts
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "no-cache, must-revalidate, max-age=0"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+  </FilesMatch>
+
+  # Images and static media: long cache
+  <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|ico|woff|woff2|ttf|eot)$">
     Header set Cache-Control "public, max-age=604800"
     Header unset Pragma
     Header unset Expires
@@ -24,41 +37,63 @@ DirectoryIndex index.html index.php
 RewriteEngine On
 RewriteBase /
 
-# 0. Sitemaps and robots.txt routing
-RewriteRule ^sitemap\.xml$ /ko/sitemap.php [L]
-RewriteRule ^robots\.txt$ /ko/robots.txt [L]
+# 0. Leave /engine completely untouched
+RewriteCond %{REQUEST_URI} ^/engine(/.*)?$ [NC]
+RewriteRule ^ - [L]
 
-# 1. Forward direct request for root index.php to /ko/
-RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s/+index\.php[\s?] [NC]
-RewriteRule ^index\.php$ /ko/ [R=301,L]
+# 0.2 Service Worker routing
+RewriteRule ^sw\.js$ sw.js [L]
+RewriteRule ^ko/sw\.js$ sw.js [L]
 
-# 2. Forward non-prefixed portal pages to /ko/
-RewriteRule ^(medicare|blog|forum|senior-care|tool|about|matcher|calculator|dictionary|admin|admin2)(/.*)?$ /ko/$1$2 [R=301,L]
+# 0.3 Sitemaps and robots.txt routing
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+RewriteRule ^robots\.txt$ robots.txt [L]
 
-# 3. Forward legacy root asset/API fallbacks to /ko/ if not found at root
+# 0.4 Canonical redirect explicit index.html / index.php to root
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s/+index\.(html|php) [NC]
+RewriteRule ^index\.(html|php)$ / [R=301,L]
+
+# 1. 301 Permanent Redirect all legacy /en/ and /ko/ paths to root domain hub
+RewriteRule ^en/?$ / [R=301,L]
+RewriteRule ^en/(.*)$ /$1 [R=301,L]
+RewriteRule ^ko/?$ / [R=301,L]
+RewriteRule ^ko/(.*)$ /$1 [R=301,L]
+
+# 2. Clean routes for portal pages
+RewriteRule ^admin/?$ admin/index.php [L]
+RewriteRule ^admin2/?$ admin2/index.php [L]
+
+RewriteRule ^forum/?$ forum/index.php [L]
+RewriteRule ^forum/ask/?$ forum/ask.php [L]
+RewriteRule ^forum/category/([^/]+)/?$ forum/index.php?specialty=$1 [L]
+RewriteRule ^forum/topic/([^/]+)/?$ forum/topic.php?id=$1 [L]
+
+RewriteRule ^blog/?$ blog.php [L]
+RewriteRule ^blog/([^/]+)/?$ blog-post.php?slug=$1 [L]
+
+RewriteRule ^resource-center/?$ resource-center.html [L]
+RewriteRule ^resources/?$ resource-center.html [L]
+RewriteRule ^medicare/?$ resource-center.html [L]
+RewriteRule ^resources/medicare/?$ resource-center.html [L]
+RewriteRule ^navigation/?$ / [R=301,L]
+RewriteRule ^news/?$ blog.php [L]
+RewriteRule ^senior-care/?$ / [R=301,L]
+RewriteRule ^tool/?$ / [R=301,L]
+RewriteRule ^matcher/?$ matcher.html [L]
+RewriteRule ^calculator/?$ calculator.html [L]
+RewriteRule ^dictionary/?$ dictionary.html [L]
+RewriteRule ^about/?$ about.html [L]
+RewriteRule ^404/?$ 404.html [L]
+
+# 3. Fallbacks for uploads if missing in root but present in /ko/uploads
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^js/(.*)$ /ko/js/$1 [L]
+RewriteCond %{DOCUMENT_ROOT}/ko/uploads/$1 -f
+RewriteRule ^uploads/(.*)$ /ko/uploads/$1 [L]
 
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^api/(.*)$ /ko/api/$1 [L,QSA]
-
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^uploads/(images|videos|audio)/(.+)$ /ko/uploads/$1/$2 [L]
-
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^_next/(.*)$ /ko/_next/$1 [L]
-
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(favicon\.(ico|svg|png)|favicon-.*\.png|apple-touch-icon\.png|logo.*|kakao.*)$ /ko/$1 [L]
-
+# 4. If requested file or directory exists, serve it directly
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 </IfModule>
 
-ErrorDocument 404 /ko/404.html
+ErrorDocument 404 /404.html

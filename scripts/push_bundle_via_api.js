@@ -68,10 +68,10 @@ function request(method, path, body) {
 
 async function run() {
   console.log('Uploading deploy_bundle.tar.gz...');
-  await uploadFile('/tmp/deploy_bundle.tar.gz', 'deploy_bundle.tar.gz', 'Update deploy_bundle.tar.gz for mobile accordion menu');
+  await uploadFile('/tmp/deploy_bundle.tar.gz', 'deploy_bundle.tar.gz', 'Update deploy_bundle.tar.gz to restore full Korean forum topics and feed');
   
   console.log('Uploading deploy_sync.php...');
-  await uploadFile('deploy_sync.php', 'deploy_sync.php', 'Update deploy_sync.php for mobile accordion menu');
+  await uploadFile('deploy_sync.php', 'deploy_sync.php', 'Update deploy_sync.php to sync Korean forum data and persistent storage');
   
   console.log('All files pushed to GitHub successfully!');
 }

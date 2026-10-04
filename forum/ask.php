@@ -33,14 +33,14 @@ if (!empty($rawCategory)) {
   <title>새 글 및 질문 작성하기 | NJAP 헬스케어 포럼</title>
   <meta name="robots" content="noindex, follow" />
   <meta name="googlebot" content="noindex, follow" />
-  <link rel="canonical" href="https://njaccessportal.com/ko/forum/ask" />
+  <link rel="canonical" href="https://njaccessportal.com/forum/ask" />
   <link rel="icon" href="/favicon.ico">
   
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/ko/_next/static/chunks/1fosv8xgmgdeu.css" />
+  <link rel="stylesheet" href="/_next/static/chunks/1fosv8xgmgdeu.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Identity Services (GIS) -->
@@ -139,7 +139,7 @@ if (!empty($rawCategory)) {
 
       <!-- Breadcrumbs -->
       <div class="flex items-center gap-2 mb-4 text-xs sm:text-sm font-bold text-slate-500">
-        <a href="/ko/forum" class="hover:text-blue-600 transition-colors">포럼 홈</a>
+        <a href="/forum" class="hover:text-blue-600 transition-colors">포럼 홈</a>
         <span class="text-slate-300">›</span>
         <span class="text-slate-800">새 질문 / 정보 작성하기 (Create a Topic)</span>
       </div>
@@ -156,7 +156,7 @@ if (!empty($rawCategory)) {
               뉴저지 한인 동포 및 한인 의료진들과 안심하고 경험과 정보를 나누실 수 있습니다.
             </p>
           </div>
-          <a href="/ko/forum" class="text-slate-400 hover:text-slate-600 p-2 touch-target flex items-center justify-center font-bold text-lg">
+          <a href="/forum" class="text-slate-400 hover:text-slate-600 p-2 touch-target flex items-center justify-center font-bold text-lg">
             ✕
           </a>
         </div>
@@ -307,7 +307,7 @@ if (!empty($rawCategory)) {
             </div>
 
             <div class="flex items-center justify-end gap-3 flex-wrap">
-              <a href="/ko/forum" class="px-5 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-xs sm:text-sm font-bold text-slate-700 transition-colors touch-target flex items-center justify-center">
+              <a href="/forum" class="px-5 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-xs sm:text-sm font-bold text-slate-700 transition-colors touch-target flex items-center justify-center">
                 취소
               </a>
               <button type="submit" id="btn-submit-ask" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-sm sm:text-base px-8 py-3.5 rounded-2xl transition-all shadow-md flex items-center cursor-pointer touch-target">
@@ -377,7 +377,7 @@ if (!empty($rawCategory)) {
         formData.append('image', file);
 
         try {
-          const res = await fetch('/ko/api/forum.php?action=upload_image', {
+          const res = await fetch('/api/forum.php?action=upload_image', {
             method: 'POST',
             body: formData
           });
@@ -473,7 +473,7 @@ if (!empty($rawCategory)) {
       btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 등록 중...';
 
       try {
-        const res = await fetch('/ko/api/forum.php?action=ask', {
+        const res = await fetch('/api/forum.php?action=ask', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -490,7 +490,7 @@ if (!empty($rawCategory)) {
         const data = await res.json();
         const createdId = data.data?.id || data.question?.id;
         if (data.success && createdId) {
-          window.location.href = '/ko/forum/topic/' + encodeURIComponent(createdId);
+          window.location.href = '/forum/topic/' + encodeURIComponent(createdId);
         } else {
           alert(data.error || '질문 등록에 실패했습니다.');
           btn.disabled = false;

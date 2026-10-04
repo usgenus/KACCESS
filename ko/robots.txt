@@ -1,0 +1,84 @@
+User-agent: *
+Allow: /
+Allow: /forum
+Allow: /forum/
+Allow: /forum/topic/
+Allow: /blog
+Allow: /blog/
+Allow: /medicare
+Allow: /about
+Allow: /calculator
+Allow: /dictionary
+Allow: /matcher
+Allow: /en/
+Allow: /engine/
+Allow: /ko/
+
+# Explicit Directives for Googlebot
+User-agent: Googlebot
+Allow: /
+Allow: /ko/
+Allow: /ko/forum
+Allow: /ko/forum/
+Allow: /ko/forum/topic/
+Allow: /ko/blog
+Allow: /en/
+Allow: /en/forum
+Allow: /en/forum/
+Allow: /en/forum/topic/
+Allow: /en/blog
+Allow: /engine/
+
+# AI & Search Retrieval Crawlers
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+# Admin & Private System Protection
+Disallow: /admin/
+Disallow: /admin2/
+Disallow: /ko/admin/
+Disallow: /ko/admin2/
+Disallow: /en/admin/
+Disallow: /en/admin2/
+Disallow: /api/
+Disallow: /ko/api/
+Disallow: /en/api/
+Disallow: /data/
+Disallow: /ko/data/
+Disallow: /en/data/
+
+# XML Sitemaps
+Sitemap: https://njaccessportal.com/sitemap.xml
+Sitemap: https://njaccessportal.com/ko/sitemap.xml
+Sitemap: https://njaccessportal.com/en/sitemap.xml
+Sitemap: https://njaccessportal.com/engine/sitemap.xml

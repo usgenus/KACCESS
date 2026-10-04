@@ -1,5 +1,5 @@
 -- =========================================================
--- Healthcare Access Portal (NJAP) - Supabase Database Schema
+-- NJ Access Portal - Supabase Database Schema
 -- Run this in your Supabase SQL Editor to create tables
 -- =========================================================
 

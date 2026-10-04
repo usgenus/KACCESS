@@ -19,13 +19,30 @@ $subDir = in_array($ext, ['mp4', 'webm', 'ogg', 'mov', 'm4v']) ? 'videos' : 'ima
 
 $localFilePath = ($subDir === 'videos' ? LOCAL_VIDEOS_DIR : LOCAL_IMAGES_DIR) . '/' . $filename;
 $persistentFilePath = ($subDir === 'videos' ? PERSISTENT_VIDEOS_DIR : PERSISTENT_IMAGES_DIR) . '/' . $filename;
+$koFilePath = ($subDir === 'videos' ? (defined('KO_VIDEOS_DIR') ? KO_VIDEOS_DIR : (dirname(LOCAL_VIDEOS_DIR) . '/uploads/videos')) : (defined('KO_IMAGES_DIR') ? KO_IMAGES_DIR : (dirname(LOCAL_IMAGES_DIR) . '/uploads/images'))) . '/' . $filename;
 
-// 1. If physical file exists in Persistent Storage but not in local mirror, restore local mirror
-if (!file_exists($localFilePath) && file_exists($persistentFilePath)) {
-    $dir = dirname($localFilePath);
-    if (!is_dir($dir)) { @mkdir($dir, 0777, true); @chmod($dir, 0777); }
-    @copy($persistentFilePath, $localFilePath);
-    @chmod($localFilePath, 0666);
+// 1. If physical file exists in any of the 3 locations, sync to the missing ones
+$existingSrc = file_exists($localFilePath) ? $localFilePath : (file_exists($persistentFilePath) ? $persistentFilePath : (file_exists($koFilePath) ? $koFilePath : null));
+
+if ($existingSrc) {
+    if (!file_exists($localFilePath)) {
+        $dir = dirname($localFilePath);
+        if (!is_dir($dir)) { @mkdir($dir, 0777, true); @chmod($dir, 0777); }
+        @copy($existingSrc, $localFilePath);
+        @chmod($localFilePath, 0666);
+    }
+    if (!file_exists($persistentFilePath)) {
+        $pDir = dirname($persistentFilePath);
+        if (!is_dir($pDir)) { @mkdir($pDir, 0777, true); @chmod($pDir, 0777); }
+        @copy($existingSrc, $persistentFilePath);
+        @chmod($persistentFilePath, 0666);
+    }
+    if (!file_exists($koFilePath)) {
+        $kDir = dirname($koFilePath);
+        if (!is_dir($kDir)) { @mkdir($kDir, 0777, true); @chmod($kDir, 0777); }
+        @copy($existingSrc, $koFilePath);
+        @chmod($koFilePath, 0666);
+    }
 }
 
 // 2. If physical file does not exist anywhere, try recovering from Persistent Media Store or Local Store
@@ -63,7 +80,7 @@ if (!file_exists($localFilePath) && !file_exists($persistentFilePath)) {
 }
 
 // 3. Determine the best source file to stream
-$streamPath = file_exists($localFilePath) ? $localFilePath : (file_exists($persistentFilePath) ? $persistentFilePath : null);
+$streamPath = file_exists($localFilePath) ? $localFilePath : (file_exists($persistentFilePath) ? $persistentFilePath : (file_exists($koFilePath) ? $koFilePath : null));
 
 if ($streamPath && file_exists($streamPath)) {
     $mime = mime_content_type($streamPath);
@@ -136,9 +153,13 @@ if ($streamPath && file_exists($streamPath)) {
     exit;
 }
 
-// 4. Graceful Fallback for missing images
+// 4. Fallback for genuinely missing media (Never redirect to external Unsplash image with 302!)
 if ($subDir === 'images') {
-    header('Location: https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&q=80&auto=format', true, 302);
+    header('Cache-Control: no-cache, no-store, must-revalidate');
+    header('Pragma: no-cache');
+    header('Expires: 0');
+    header('Content-Type: image/svg+xml');
+    echo '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450"><rect width="800" height="450" fill="#f8fafc"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="16" fill="#94a3b8">NJAP Healthcare Portal</text></svg>';
     exit;
 }
 

@@ -87,13 +87,15 @@ $audioCandidates = [
     dirname(__DIR__, 2) . '/uploads/audio/' . $audioSlug . '.mp3'
 ];
 $audioFound = false;
+$audioMtime = 0;
 foreach ($audioCandidates as $ac) {
-    if (!empty($ac) && file_exists($ac)) {
+    if (!empty($ac) && file_exists($ac) && filesize($ac) > 500) {
         $audioFound = true;
+        $audioMtime = filemtime($ac);
         break;
     }
 }
-$audioUrl = $audioFound ? '/ko/uploads/audio/' . rawurlencode($audioSlug) . '.mp3' : '';
+$audioUrl = $audioFound ? ('/uploads/audio/' . rawurlencode($audioSlug) . '.mp3?v=' . ($audioMtime ?: time())) : '';
 
 function render_article_content($content, $allImages = [], &$usedImages = []) {
     if (empty($content)) return '';
@@ -294,8 +296,8 @@ function render_article_content($content, $allImages = [], &$usedImages = []) {
     return $html;
 }
 
-$canonicalUrl = 'https://njaccessportal.com/ko/blog/' . rawurlencode($slug ?: ($post['id'] ?? ''));
-$fullCoverUrl = (strpos($coverImage, 'http') === 0) ? $coverImage : 'https://njaccessportal.com/ko/' . ltrim($coverImage, '/');
+$canonicalUrl = 'https://njaccessportal.com/blog/' . rawurlencode($slug ?: ($post['id'] ?? ''));
+$fullCoverUrl = (strpos($coverImage, 'http') === 0) ? $coverImage : 'https://njaccessportal.com/' . ltrim($coverImage, '/');
 $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료접근센터(NJ Healthcare Access Center) 건강 의료 전문 리포트');
 ?>
 <!DOCTYPE html>
@@ -306,10 +308,13 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
   <title><?= $title ?> | 뉴저지 의료접근센터 · NJ Healthcare Access Center</title>
   <meta name="description" content="<?= $seoDescription ?>" />
   <meta name="keywords" content="<?= $title ?>, <?= $category ?>, nj healthcare access portal, nj healthcare access center, healthcare access center, 뉴저지 의료접근센터, 의료접근, 의료접근센터, 뉴저지 한인 의료, 의학 리포트, 건강 정보" />
-  <link rel="canonical" href="<?= $canonicalUrl ?>" />
+  <link rel="canonical" href="https://njaccessportal.com/blog/<?= htmlspecialchars($slug ?: $id) ?>" />
+" />
+" />
+" />
 
   <!-- OpenGraph / Facebook / KakaoTalk -->
-  <meta property="og:site_name" content="뉴저지 의료접근센터 · NJ Healthcare Access Center" />
+  <meta property="og:site_name" content="NJ Access Portal · 뉴저지 한인 의료접근포털" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="<?= $canonicalUrl ?>" />
   <meta property="og:title" content="<?= $title ?> | 뉴저지 의료접근센터 (NJ Healthcare Access Center)" />
@@ -346,11 +351,11 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
     "publisher": {
       "@type": "MedicalOrganization",
       "name": "뉴저지 의료접근센터 (NJ Healthcare Access Center)",
-      "alternateName": ["NJ Healthcare Access Portal", "Healthcare Access Center", "뉴저지 의료접근센터", "의료접근센터", "의료접근"],
-      "url": "https://njaccessportal.com/ko",
+      "alternateName": ["NJ Access Portal", "Healthcare Access Center", "뉴저지 의료접근센터", "의료접근센터", "의료접근"],
+      "url": "https://njaccessportal.com",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://njaccessportal.com/ko/logo-icon.svg"
+        "url": "https://njaccessportal.com/logo-icon.svg"
       }
     },
     "articleSection": <?= json_encode($category, JSON_UNESCAPED_UNICODE) ?>,
@@ -362,7 +367,7 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/ko/_next/static/chunks/1fosv8xgmgdeu.css" />
+  <link rel="stylesheet" href="/_next/static/chunks/1fosv8xgmgdeu.css" />
 
   <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
   <link rel="icon" href="/favicon.ico?v=2" sizes="16x16 32x32 48x48" type="image/x-icon" />
@@ -377,26 +382,6 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
     .bg-brand-gradient {
       background: linear-gradient(135deg, #0f3a9e 0%, #5e0f73 100%) !important;
     }
-  </style>
-  <script>
-    (function() {
-      try {
-        var userChosen = sessionStorage.getItem('njap_senior_user_chosen') || localStorage.getItem('njap_senior_user_chosen');
-        var s = 0;
-        if (userChosen === '1') {
-          var val = sessionStorage.getItem('njap_senior_mode') || localStorage.getItem('njap_senior_mode');
-          s = parseInt(val, 10);
-        }
-        if (s === 1) document.documentElement.classList.add('senior-mode-1');
-        else if (s === 2) document.documentElement.classList.add('senior-mode-2');
-      } catch(e) {}
-    })();
-  </script>
-  <style id="njap-senior-mode-base-css">
-    html.senior-mode-1 { font-size: 118% !important; }
-    html.senior-mode-2 { font-size: 135% !important; }
-    html.senior-mode-1 .header-spacer, html.senior-mode-1 .h-\[109px\], html.senior-mode-1 #header-spacer { height: 120px !important; min-height: 120px !important; }
-    html.senior-mode-2 .header-spacer, html.senior-mode-2 .h-\[109px\], html.senior-mode-2 #header-spacer { height: 132px !important; min-height: 132px !important; }
   </style>
 
   <!-- Logo Animation Styles -->
@@ -534,9 +519,9 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
   <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/90 backdrop-blur-md border-b border-brand-border">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
-        <a class="flex items-center cursor-pointer njap-brand-link flex-shrink-0 group" href="/ko/" onclick="navigateToHome(event); return false;" title="Healthcare Access Portal">
-          <svg class="h-8 sm:h-10 md:h-11 w-auto object-contain transition-transform group-hover:scale-102" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Healthcare Access Portal · 뉴저지 한인 의료 정보 포털 · NJAP" style="overflow: visible;">
-            <title>Healthcare Access Portal · 뉴저지 한인 의료 정보 포털 · NJAP</title>
+        <a class="flex items-center cursor-pointer njap-brand-link flex-shrink-0 group" href="/" onclick="navigateToHome(event); return false;" title="NJ Access Portal · 뉴저지 한인 의료접근포털">
+          <svg class="h-8 sm:h-10 md:h-11 w-auto object-contain transition-transform group-hover:scale-102" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NJ Access Portal · 뉴저지 한인 의료접근포털" style="overflow: visible;">
+            <title>NJ Access Portal · 뉴저지 한인 의료접근포털</title>
             <!-- Icon Mark (Door + Key + NJAP) -->
             <g transform="translate(4, 2) scale(0.56)" stroke-linecap="round" stroke-linejoin="round">
               <!-- Door Frame & NJAP Text -->
@@ -561,26 +546,26 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
 
             <!-- Typography: slides in from right after key enters -->
             <g class="njap-nav-text-main">
-              <text x="64" y="27" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="18" font-weight="900" fill="#0B192C" letter-spacing="-0.5">Healthcare Access Portal</text>
+              <text x="64" y="27" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="18" font-weight="900" fill="#0B192C" letter-spacing="-0.5">NJ Access Portal</text>
             </g>
             <g class="njap-nav-text-sub">
-              <text x="64" y="44" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="10.5" font-weight="600" fill="#64748B" letter-spacing="0.2">뉴저지 한인 의료 정보 포털 · NJAP</text>
+              <text x="64" y="44" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="10.5" font-weight="600" fill="#64748B" letter-spacing="0.2">뉴저지 한인 의료접근포털</text>
             </g>
           </svg>
         </a>
         <div class="hidden md:flex items-center" style="display: flex; align-items: center; gap: 26px;">
-          <a class="nav-link pb-0.5 font-medium text-sm text-slate-700 hover:text-brand-blue cursor-pointer" href="/ko/" onclick="navigateToHome(event); return false;">홈</a>
-          <a class="nav-link pb-0.5 font-medium text-sm text-brand-blue font-bold" href="/ko/blog">뉴스</a>
-          <a class="nav-link pb-0.5 font-medium text-sm text-slate-700 hover:text-brand-blue" href="/ko/forum">커뮤니티 포럼</a>
-          <a class="nav-link pb-0.5 font-medium text-sm text-slate-700 hover:text-brand-blue" href="/ko/senior-care">시니어 케어</a>
-          <a class="nav-link pb-0.5 font-medium text-sm text-slate-700 hover:text-brand-blue" href="/ko/medicare">메디케어 &amp; ACA</a>
-          <a class="nav-link pb-0.5 font-medium text-sm text-slate-700 hover:text-brand-blue" href="/ko/tool">환자도우미</a>
-          <a class="nav-link pb-0.5 font-medium text-sm text-slate-700 hover:text-brand-blue" href="/ko/about">소개</a>
+          <a class="nav-link pb-0.5 font-medium text-sm text-slate-700 hover:text-brand-blue cursor-pointer" href="/" onclick="navigateToHome(event); return false;">홈</a>
+          <a class="nav-link pb-0.5 font-medium text-sm text-brand-blue font-bold" href="/blog">뉴스</a>
+          <a class="nav-link pb-0.5 font-medium text-sm text-slate-700 hover:text-brand-blue" href="/forum">커뮤니티 포럼</a>
+          <a class="nav-link pb-0.5 font-medium text-sm text-slate-700 hover:text-brand-blue" href="/medicare">메디케어 &amp; ACA</a>
+          <a class="nav-link pb-0.5 font-medium text-sm text-slate-700 hover:text-brand-blue" href="/about">의료 접근센터</a>
+          <a class="nav-link pb-0.5 font-medium text-sm text-slate-700 hover:text-brand-blue flex flex-col items-center justify-center leading-tight group" href="/engine" target="_self" title="Universal Access Engine (Marketing Client)">
+            <span class="text-[13px] font-bold text-slate-800 group-hover:text-brand-blue tracking-tight">Engine</span>
+            <span class="text-[9px] font-semibold text-slate-400 group-hover:text-brand-blue tracking-tighter -mt-0.5">Marketing Client</span>
+          </a>
         </div>
         <div class="flex items-center gap-3">
-          <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity cursor-pointer" title="카카오톡 1:1 상담 바로가기"><img src="/ko/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" /><span class="text-xs sm:text-sm font-bold text-slate-800 hover:text-brand-blue tracking-tight whitespace-nowrap">1:1 상담</span></a>
-          <button id="senior-mode-btn" class="senior-mode-btn notranslate" translate="no" type="button" onclick="window.cycleSeniorMode && window.cycleSeniorMode()" title="시니어모드+ (글자 크기 3단계 조절)" aria-label="시니어모드 글자 크기 조절"><span class="senior-btn-label">시니어모드+</span><span class="senior-step-badge" style="display:none;"></span></button>
-          <button id="en-translate-btn" class="notranslate" translate="no" onclick="window.toggleTranslation && window.toggleTranslation()" title="Switch Language (EN / KR)" aria-label="Language Toggle" style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;border:1.5px solid #cbd5e1;font-size:11px;font-weight:700;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s ease;background:transparent;color:#475569;white-space:nowrap;flex-shrink:0;line-height:1.4;"><span class="notranslate" translate="no">🌐</span> <span class="notranslate en-btn-label" translate="no">EN</span></button>
+          <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity cursor-pointer" title="카카오톡 1:1 상담 바로가기"><img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" /><span class="text-xs sm:text-sm font-bold text-slate-800 hover:text-brand-blue tracking-tight whitespace-nowrap">1:1 상담</span></a>
           <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors" aria-label="Menu">
             <div class="w-5 h-4 flex flex-col justify-between">
               <span class="block h-0.5 bg-brand-dark rounded-full"></span>
@@ -591,9 +576,9 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
         </div>
       </div>
     </div>
-        <div id="mobile-menu-dropdown" class="md:hidden overflow-hidden transition-all duration-300 max-h-0 opacity-0 bg-white/98 backdrop-blur-md border-t border-brand-border px-4 py-3 flex flex-col gap-1" style="-webkit-overflow-scrolling: touch;">
+                        <div id="mobile-menu-dropdown" class="md:hidden overflow-hidden transition-all duration-300 max-h-0 opacity-0 bg-white/98 backdrop-blur-md border-t border-brand-border px-4 py-3 flex flex-col gap-1" style="-webkit-overflow-scrolling: touch;">
       <!-- 1. 홈 -->
-      <a href="/ko/" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
           <span class="text-[15px]">홈</span>
@@ -602,7 +587,7 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
       </a>
 
       <!-- 2. 뉴스 -->
-      <a href="/ko/blog" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-bold text-brand-blue bg-blue-50/70">
+      <a href="/blog" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-bold text-brand-blue bg-blue-50/70">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-brand-blue shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
           <span class="text-[15px]">뉴스</span>
@@ -611,7 +596,7 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
       </a>
 
       <!-- 2.5. 커뮤니티 포럼 -->
-      <a href="/ko/forum" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/forum" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>
           <span class="text-[15px]">커뮤니티 포럼</span>
@@ -619,17 +604,8 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
         <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
 
-      <!-- 3. 시니어 케어 -->
-      <a href="/ko/senior-care" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
-        <div class="flex items-center gap-3">
-          <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
-          <span class="text-[15px]">시니어 케어</span>
-        </div>
-        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-      </a>
-
       <!-- 4. 메디케어 & ACA -->
-      <a href="/ko/medicare" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/medicare" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
           <span class="text-[15px]">메디케어 &amp; ACA</span>
@@ -637,20 +613,23 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
         <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
 
-      <!-- 5. 환자도우미 -->
-      <a href="/ko/tool" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <!-- 6. 의료 접근센터 -->
+      <a href="/about" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
-          <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-          <span class="text-[15px]">환자도우미</span>
+          <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <span class="text-[15px]">의료 접근센터</span>
         </div>
         <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
 
-      <!-- 6. 소개 -->
-      <a href="/ko/about" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <!-- 7. Engine (Marketing Client) -->
+      <a href="/engine" target="_self" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
-          <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          <span class="text-[15px]">소개</span>
+          <svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          <div class="flex flex-col text-left">
+            <span class="text-[15px] font-bold text-slate-800">Engine</span>
+            <span class="text-[10px] font-semibold text-slate-400 leading-none">Marketing Client</span>
+          </div>
         </div>
         <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
@@ -659,10 +638,10 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
       <div class="pt-2 pb-1">
         <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3.5 bg-[#FEE500] hover:bg-[#FDD835] active:bg-[#FBC02D] text-[#191919] rounded-xl font-bold text-sm shadow-xs transition-all cursor-pointer">
           <div class="flex items-center gap-2.5">
-            <img src="/ko/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" />
+            <img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-6 h-6 rounded-md shrink-0 object-contain shadow-xs" />
             <div class="flex flex-col text-left">
               <span class="text-sm font-bold leading-tight">카카오톡 1:1 상담 바로가기</span>
-              <span class="text-[11px] font-medium text-black/70">의료 복지 및 시니어 케어 실시간 문의</span>
+              <span class="text-[11px] font-medium text-black/70">의료 복지 및 건강 상담 실시간 문의</span>
             </div>
           </div>
           <svg class="w-4 h-4 text-black/60 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
@@ -702,8 +681,7 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
         </div>
       </div>
 
-      <?php if (!empty($audioUrl)): ?>
-      <!-- Audio Reader -->
+      <!-- Audio Reader (Equipped on every post) -->
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-10 mb-2">
         <div id="njap-audio-player" class="flex items-center gap-3 bg-white/95 backdrop-blur-md border border-slate-200/80 rounded-2xl shadow-lg px-4 py-3">
           <!-- Play/Pause -->
@@ -715,19 +693,27 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
           <!-- Label + Seek -->
           <div class="flex-1 min-w-0">
             <div class="flex items-center justify-between mb-1">
-              <span class="text-xs font-bold text-brand-blue tracking-wide flex items-center gap-1"><span>🔊</span> 뉴스 읽어주기</span>
+              <span class="text-xs font-bold text-brand-blue tracking-wide flex items-center gap-1">
+                <span>🔊</span> 뉴스 읽어주기
+              </span>
               <span id="njap-time-display" class="text-[11px] font-mono text-slate-400">0:00 / 0:00</span>
             </div>
             <input id="njap-seek" type="range" min="0" max="100" value="0" oninput="njapSeek(this.value)"
               class="w-full h-1.5 rounded-full accent-brand-blue cursor-pointer" />
           </div>
-          <!-- Download -->
-          <a href="<?= htmlspecialchars($audioUrl) ?>" download title="MP3 다운로드"
+          <!-- Download / Badge -->
+          <?php if (!empty($audioUrl)): ?>
+          <a id="njap-dl-btn" href="<?= htmlspecialchars($audioUrl) ?>" download title="MP3 다운로드"
             class="flex-shrink-0 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-brand-blue flex items-center justify-center transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
           </a>
+          <audio id="njap-audio" src="<?= htmlspecialchars($audioUrl) ?>" preload="metadata"></audio>
+          <?php else: ?>
+          <span title="AI 음성 리더" class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 text-brand-blue flex items-center justify-center text-xs">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+          </span>
+          <?php endif; ?>
         </div>
-        <audio id="njap-audio" src="<?= htmlspecialchars($audioUrl) ?>" preload="metadata"></audio>
       </div>
       <script>
         (function() {
@@ -736,36 +722,179 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
           var timeDisp = document.getElementById('njap-time-display');
           var iconPlay = document.getElementById('njap-icon-play');
           var iconPause = document.getElementById('njap-icon-pause');
+          var isPlaying = false;
+          var useSpeech = !audio;
+
           function fmt(s) {
             s = Math.floor(s || 0);
             return Math.floor(s/60) + ':' + ('0' + (s%60)).slice(-2);
           }
-          audio.addEventListener('timeupdate', function() {
-            var pct = audio.duration ? (audio.currentTime / audio.duration * 100) : 0;
-            seekBar.value = pct;
-            timeDisp.textContent = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
-          });
-          audio.addEventListener('ended', function() {
-            iconPlay.classList.remove('hidden');
-            iconPause.classList.add('hidden');
-          });
-          window.njapTogglePlay = function() {
-            if (audio.paused) {
-              audio.play();
-              iconPlay.classList.add('hidden');
-              iconPause.classList.remove('hidden');
-            } else {
-              audio.pause();
+
+          if (audio) {
+            audio.addEventListener('timeupdate', function() {
+              var pct = audio.duration ? (audio.currentTime / audio.duration * 100) : 0;
+              seekBar.value = pct;
+              timeDisp.textContent = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
+            });
+            audio.addEventListener('ended', function() {
               iconPlay.classList.remove('hidden');
               iconPause.classList.add('hidden');
+              isPlaying = false;
+            });
+            audio.addEventListener('error', function() {
+              useSpeech = true;
+            });
+          }
+
+          // Standard audio reading rule: Start strictly from main body, skip title & excerpt
+          var postRawText = <?= json_encode(strip_tags($post['content'] ?? '')) ?>;
+          var speechSentences = [];
+          var speechIndex = 0;
+          var speechTimer = null;
+          var speechElapsed = 0;
+          var estimatedDuration = Math.max(30, Math.round((postRawText || '').length / 7));
+
+          if (useSpeech || !audio) {
+            fetch('/api/audio_generator.php?slug=<?= rawurlencode($audioSlug) ?>').catch(function(){});
+            timeDisp.textContent = '0:00 / ' + fmt(estimatedDuration);
+          }
+
+          function prepareSentences() {
+            var raw = (postRawText || '');
+            // Strip photos, figures, markdown boxes, links, URLs
+            raw = raw.replace(/\[(?:사진|PHOTO)[^\]]*\]/gi, '');
+            raw = raw.replace(/!\[.*?\]\(.*?\)/gs, '');
+            raw = raw.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+            raw = raw.replace(/:::box\s*([\s\S]*?)\s*:::/g, '$1');
+            raw = raw.replace(/https?:\/\/\S+/gi, '');
+            // Skip words inside parentheses without breaking trailing Korean particles
+            var particles = '(?:은|는|이|가|을|를|의|에|에서|에서는|에도|에만|에의|에게|으로|로|으로는|로는|으로도|로도|와|과|도|만|뿐|부터|까지|이나|나|이며|며|이란|란|이라|라|라서|이라서|처럼|같이|마저|조차)';
+            raw = raw.replace(new RegExp('\\s*\\([^)]*\\)(?=' + particles + ')', 'gu'), '');
+            raw = raw.replace(new RegExp('\\s*（[^）]*）(?=' + particles + ')', 'gu'), '');
+            raw = raw.replace(/\s*\([^)]*\)/gu, ' ');
+            raw = raw.replace(/\s*（[^）]*）/gu, ' ');
+            raw = raw.replace(/\s+/g, ' ').trim();
+            var matches = raw.match(/[^.!?\n]+[.!?\n]+/g);
+            speechSentences = matches ? matches.map(function(s){ return s.trim(); }).filter(Boolean) : (raw ? [raw] : []);
+          }
+
+          function speakNextSentence() {
+            if (!isPlaying || speechIndex >= speechSentences.length) {
+              stopSpeech();
+              return;
+            }
+            if (!('speechSynthesis' in window)) return;
+
+            var u = new SpeechSynthesisUtterance(speechSentences[speechIndex]);
+            u.lang = 'ko-KR';
+            u.rate = 1.08; // Normal natural news reader speed
+            var voices = window.speechSynthesis.getVoices();
+            // Strictly prioritize Korean female model voices
+            var koVoice = voices.find(function(v) { 
+              return v.lang && v.lang.startsWith('ko') && /female|여성|yuna|sunhi|heami|soora|jiwon/i.test(v.name); 
+            }) || voices.find(function(v) { 
+              return v.lang && v.lang.startsWith('ko') && !/male|남성|minho|daeho/i.test(v.name); 
+            }) || voices.find(function(v) { 
+              return v.lang && v.lang.startsWith('ko'); 
+            });
+            if (koVoice) u.voice = koVoice;
+
+            u.onend = function() {
+              speechIndex++;
+              if (speechIndex < speechSentences.length && isPlaying) {
+                speakNextSentence();
+              } else {
+                stopSpeech();
+              }
+            };
+            u.onerror = function() {
+              speechIndex++;
+              if (speechIndex < speechSentences.length && isPlaying) {
+                speakNextSentence();
+              } else {
+                stopSpeech();
+              }
+            };
+
+            window.speechSynthesis.speak(u);
+          }
+
+          function startSpeech() {
+            if (!speechSentences.length) prepareSentences();
+            if (speechIndex >= speechSentences.length) speechIndex = 0;
+            isPlaying = true;
+            iconPlay.classList.add('hidden');
+            iconPause.classList.remove('hidden');
+            speakNextSentence();
+
+            if (speechTimer) clearInterval(speechTimer);
+            speechTimer = setInterval(function() {
+              if (isPlaying) {
+                speechElapsed++;
+                var pct = Math.min(100, (speechElapsed / estimatedDuration) * 100);
+                seekBar.value = pct;
+                timeDisp.textContent = fmt(speechElapsed) + ' / ' + fmt(estimatedDuration);
+              }
+            }, 1000);
+          }
+
+          function pauseSpeech() {
+            isPlaying = false;
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+            if (speechTimer) clearInterval(speechTimer);
+            iconPlay.classList.remove('hidden');
+            iconPause.classList.add('hidden');
+          }
+
+          function stopSpeech() {
+            pauseSpeech();
+            speechIndex = 0;
+            speechElapsed = 0;
+            seekBar.value = 0;
+            timeDisp.textContent = '0:00 / ' + fmt(estimatedDuration);
+          }
+
+          window.njapTogglePlay = function() {
+            if (!useSpeech && audio) {
+              if (audio.paused) {
+                audio.play().then(function() {
+                  isPlaying = true;
+                  iconPlay.classList.add('hidden');
+                  iconPause.classList.remove('hidden');
+                }).catch(function() {
+                  useSpeech = true;
+                  startSpeech();
+                });
+              } else {
+                audio.pause();
+                isPlaying = false;
+                iconPlay.classList.remove('hidden');
+                iconPause.classList.add('hidden');
+              }
+            } else {
+              if (!isPlaying) {
+                startSpeech();
+              } else {
+                pauseSpeech();
+              }
             }
           };
+
           window.njapSeek = function(v) {
-            if (audio.duration) audio.currentTime = audio.duration * v / 100;
+            if (!useSpeech && audio && audio.duration) {
+              audio.currentTime = audio.duration * v / 100;
+            } else if (useSpeech) {
+              if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+              speechElapsed = Math.round(estimatedDuration * v / 100);
+              speechIndex = Math.min(speechSentences.length - 1, Math.floor(speechSentences.length * v / 100));
+              timeDisp.textContent = fmt(speechElapsed) + ' / ' + fmt(estimatedDuration);
+              if (isPlaying) {
+                speakNextSentence();
+              }
+            }
           };
         })();
       </script>
-      <?php endif; ?>
 
       <!-- Body Content -->
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
@@ -927,13 +1056,13 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
         <!-- Prev / Next Navigation -->
         <div class="mt-16 pt-8 border-t border-brand-border grid grid-cols-1 sm:grid-cols-2 gap-4">
           <?php if ($prevPost): ?>
-          <a class="group flex flex-col gap-1 p-5 rounded-xl bg-brand-light border border-brand-border hover:border-brand-blue hover:bg-white transition-all" href="/ko/blog/<?= htmlspecialchars($prevPost['slug'] ?? $prevPost['id']) ?>">
+          <a class="group flex flex-col gap-1 p-5 rounded-xl bg-brand-light border border-brand-border hover:border-brand-blue hover:bg-white transition-all" href="/blog/<?= htmlspecialchars($prevPost['slug'] ?? $prevPost['id']) ?>">
             <span class="text-xs font-sans text-brand-muted">← 이전 글</span>
             <span class="font-serif text-base text-brand-dark line-clamp-2 group-hover:text-brand-blue transition-colors"><?= htmlspecialchars($prevPost['title']) ?></span>
           </a>
           <?php endif; ?>
           <?php if ($nextPost): ?>
-          <a class="group flex flex-col gap-1 p-5 rounded-xl bg-brand-light border border-brand-border hover:border-brand-blue hover:bg-white transition-all text-right sm:col-start-2" href="/ko/blog/<?= htmlspecialchars($nextPost['slug'] ?? $nextPost['id']) ?>">
+          <a class="group flex flex-col gap-1 p-5 rounded-xl bg-brand-light border border-brand-border hover:border-brand-blue hover:bg-white transition-all text-right sm:col-start-2" href="/blog/<?= htmlspecialchars($nextPost['slug'] ?? $nextPost['id']) ?>">
             <span class="text-xs font-sans text-brand-muted">다음 글 →</span>
             <span class="font-serif text-base text-brand-dark line-clamp-2 group-hover:text-brand-blue transition-colors"><?= htmlspecialchars($nextPost['title']) ?></span>
           </a>
@@ -952,7 +1081,7 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
                 $rpTitle = htmlspecialchars($rp['title'] ?? '');
                 $rpSlug = htmlspecialchars($rp['slug'] ?? ($rp['id'] ?? ''));
               ?>
-              <a class="group card-hover block" href="/ko/blog/<?= $rpSlug ?>">
+              <a class="group card-hover block" href="/blog/<?= $rpSlug ?>">
                 <div class="bg-white border border-brand-border rounded-xl overflow-hidden flex gap-4 p-4 hover:shadow-md transition-shadow">
                   <div class="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-slate-100">
                     <img src="<?= htmlspecialchars($rpCover) ?>" alt="<?= $rpTitle ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
@@ -969,7 +1098,7 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
         <?php endif; ?>
 
         <div class="mt-12 text-center">
-          <a href="/ko/blog" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 transition-colors shadow">
+          <a href="/blog" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 transition-colors shadow">
             <span>← 모든 건강 뉴스 목록으로</span>
           </a>
         </div>
@@ -983,35 +1112,34 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-10">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
         <div class="lg:col-span-2">
-          <a class="inline-flex items-center mb-4 group cursor-pointer njap-brand-link" href="/ko/" onclick="navigateToHome(event); return false;" title="Healthcare Access Portal">
-            <img src="/ko/logo-white.png" alt="Healthcare Access Portal · 뉴저지 한인 의료 정보 포털" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
+          <a class="inline-flex items-center mb-4 group cursor-pointer njap-brand-link" href="/" onclick="navigateToHome(event); return false;" title="NJ Access Portal · 뉴저지 한인 의료접근포털">
+            <img src="/logo-white.png" alt="NJ Access Portal · 뉴저지 한인 의료접근포털" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
           </a>
           <p class="text-sm text-white/60 font-sans leading-relaxed max-w-xs mb-6">뉴저지 한인 커뮤니티를 위한 의료 접근 및 건강 정보 포털. 메디케어, ACA, 의료 상담을 한국어로 제공합니다.</p>
         </div>
         <div>
           <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">정보</p>
           <ul class="space-y-2.5">
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200 cursor-pointer" href="/ko/" onclick="navigateToHome(event); return false;">홈</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/about">소개</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/blog">건강 뉴스</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/forum">커뮤니티 포럼</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/senior-care">시니어 케어</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200 cursor-pointer" href="/" onclick="navigateToHome(event); return false;">홈</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/about">의료 접근센터</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/blog">건강 뉴스</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/forum">커뮤니티 포럼</a></li>
           </ul>
         </div>
         <div>
           <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">의료 가이드</p>
           <ul class="space-y-2.5">
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/medicare">메디케어 안내</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/medicare#aca">ACA 보험</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/medicare#faq">자주 묻는 질문</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/medicare">메디케어 안내</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/medicare#aca">ACA 보험</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/medicare#faq">자주 묻는 질문</a></li>
           </ul>
         </div>
         <div>
-          <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">환자도우미</p>
+          <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">스마트 의료 도구</p>
           <ul class="space-y-2.5">
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/tool">보험 자격 진단</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/tool">보조금 계산기</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/ko/tool">의학 용어 사전</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/matcher">보험 자격 진단</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/calculator">보조금 계산기</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/dictionary">의학 용어 사전</a></li>
           </ul>
         </div>
       </div>
@@ -1019,12 +1147,12 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
         <div class="text-xs font-sans text-white/30 max-w-2xl leading-relaxed">
           <span class="font-semibold text-white/40">⚠ 의료 면책 조항:</span> 이 웹사이트의 정보는 교육 목적으로만 제공됩니다. 의료 결정은 반드시 자격을 갖춘 의료 전문가와 상담하십시오.
         </div>
-        <p class="text-xs font-sans text-white/30 whitespace-nowrap">© 2026 Healthcare Access Portal</p>
+        <p class="text-xs font-sans text-white/30 whitespace-nowrap">© 2026 NJ Access Portal · 뉴저지 한인 의료접근센터</p>
       </div>
     </div>
   </footer>
 
-  <script src="/ko/js/cms-client.js?v=3.5.0"></script>
+  <script src="/js/cms-client.js?v=20261004_v9"></script>
 
   <!-- Interactive Comments Script -->
   <script>
@@ -1081,7 +1209,7 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
 
         // Don't pre-render from localStorage; wait for API to avoid flashing stale seeds
         // Fetch real comments from API
-        fetch('/ko/api/comments.php?slug=' + encodeURIComponent(postSlug))
+        fetch('/api/comments.php?slug=' + encodeURIComponent(postSlug))
           .then(res => res.json())
           .then(res => {
             if (res.success && Array.isArray(res.comments)) {
@@ -1179,7 +1307,7 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
         updateCommentCharCount(contentInput);
 
         // Sync to API
-        fetch('/ko/api/comments.php?action=add&slug=' + encodeURIComponent(postSlug), {
+        fetch('/api/comments.php?action=add&slug=' + encodeURIComponent(postSlug), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ nickname, password, content })
@@ -1229,7 +1357,7 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
         renderComments();
 
         // Sync to API
-        fetch('/ko/api/comments.php?action=add&slug=' + encodeURIComponent(postSlug), {
+        fetch('/api/comments.php?action=add&slug=' + encodeURIComponent(postSlug), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ parentId, nickname, password, content })
@@ -1255,7 +1383,7 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
         saveCommentsLocal(commentsData);
         renderComments();
 
-        fetch('/ko/api/comments.php?action=like&slug=' + encodeURIComponent(postSlug), {
+        fetch('/api/comments.php?action=like&slug=' + encodeURIComponent(postSlug), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ commentId, isReply, parentId })
@@ -1273,7 +1401,7 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
         saveCommentsLocal(commentsData);
         renderComments();
 
-        fetch('/ko/api/comments.php?action=dislike&slug=' + encodeURIComponent(postSlug), {
+        fetch('/api/comments.php?action=dislike&slug=' + encodeURIComponent(postSlug), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ commentId })
@@ -1311,7 +1439,7 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
         renderComments();
         alert('댓글이 삭제되었습니다.');
 
-        fetch('/ko/api/comments.php?action=delete&slug=' + encodeURIComponent(postSlug), {
+        fetch('/api/comments.php?action=delete&slug=' + encodeURIComponent(postSlug), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ commentId, password: pass.trim() })
@@ -1442,8 +1570,8 @@ $seoDescription = !empty($excerpt) ? $excerpt : ($title . ' - 뉴저지 의료�
       document.addEventListener('DOMContentLoaded', loadComments);
     })();
   </script>
-  <script src="/ko/js/cms-client.js?v=3.5.0"></script>
-  <script src="/ko/js/fixes.js?v=8.0.0"></script>
-<script src="/ko/js/njap-translate.js?v=3.1.0"></script>
+  <script src="/js/cms-client.js?v=20261004_v9"></script>
+  <script src="/js/fixes.js?v=20261004_v10"></script>
+<script src="/js/njap-notifications.js?v=1.0.0"></script>
 </body>
 </html>
