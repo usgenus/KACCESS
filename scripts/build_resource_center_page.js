@@ -1037,6 +1037,196 @@ const html = `<!DOCTYPE html>
       font-weight: 600;
       text-decoration: underline;
     }
+
+    /* Portal Mockup Screenshot Card */
+    .rc-portal-mockup-card {
+      margin: 18px 0 22px 0;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.08);
+    }
+    .rc-portal-mockup-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 8px 14px;
+      background: #0f172a;
+      border-bottom: 1px solid #1e293b;
+    }
+    .rc-portal-mockup-dots {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .rc-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 9999px;
+      display: inline-block;
+    }
+    .rc-dot-red { background: #ef4444; }
+    .rc-dot-yellow { background: #f59e0b; }
+    .rc-dot-green { background: #10b981; }
+    .rc-portal-mockup-url {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.12);
+      padding: 3px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      color: #cbd5e1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 480px;
+      font-family: monospace;
+    }
+    .rc-portal-mockup-url svg {
+      width: 14px !important;
+      height: 14px !important;
+      min-width: 14px !important;
+      max-width: 14px !important;
+      margin-right: 6px !important;
+      display: inline-block !important;
+      vertical-align: middle !important;
+      flex-shrink: 0 !important;
+      color: #10b981 !important;
+    }
+    .rc-portal-mockup-btn {
+      background: #2563eb;
+      color: #ffffff !important;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      text-decoration: none !important;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .rc-portal-mockup-btn:hover {
+      background: #1d4ed8;
+    }
+    .rc-portal-mockup-img-wrap {
+      max-height: 400px;
+      overflow-y: auto;
+      background: #f8fafc;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .rc-portal-mockup-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+    .rc-portal-mockup-caption {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 9px 14px;
+      background: #f8fafc;
+    }
+    .rc-portal-badge-verified {
+      background: #dcfce7;
+      color: #15803d;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      border: 1px solid #bbf7d0;
+    }
+
+    /* Redesigned Data Chart Card */
+    .rc-redesigned-chart-card {
+      margin: 22px 0;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+    }
+    .rc-chart-card-header {
+      background: linear-gradient(135deg, #071322 0%, #0F2342 60%, #1B2A4A 100%);
+      padding: 12px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+    .rc-chart-card-title {
+      color: #ffffff;
+      font-size: 14.5px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+    .rc-chart-card-badge {
+      background: rgba(127, 200, 192, 0.2);
+      color: #7fc8c0;
+      border: 1px solid rgba(127, 200, 192, 0.4);
+      padding: 3px 10px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .rc-chart-table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .rc-chart-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+    }
+    .rc-chart-table th {
+      background: #f1f5f9;
+      color: #0f172a;
+      font-weight: 700;
+      padding: 11px 14px;
+      border-bottom: 2px solid #cbd5e1;
+      white-space: nowrap;
+    }
+    .rc-chart-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #1e293b;
+      line-height: 1.55;
+    }
+    .rc-chart-table tr:nth-child(even) {
+      background: #f8fafc;
+    }
+    .rc-chart-table tr:hover {
+      background: #f0fdf4;
+    }
+    .rc-chart-footnote {
+      padding: 10px 16px;
+      background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+      font-size: 12px;
+      color: #64748b;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .rc-chart-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 6px;
+    }
+    .rc-chart-badge-green { background: #dcfce7; color: #15803d; }
+    .rc-chart-badge-blue { background: #dbeafe; color: #1e40af; }
+    .rc-chart-badge-amber { background: #fef3c7; color: #b45309; }
+    .rc-chart-cell-highlight { font-weight: 800; color: #0284c7; }
     .rc-notice-box {
       margin-top: 30px;
       padding: 18px 20px;

@@ -28,6 +28,18 @@ const filesToUpload = [
   '.htaccess'
 ];
 
+// Add all resource screenshots
+const resourceImagesDir = path.join(BASE_DIR, 'uploads/images/resources');
+if (fs.existsSync(resourceImagesDir)) {
+  const imgFiles = fs.readdirSync(resourceImagesDir);
+  for (const img of imgFiles) {
+    if (img.endsWith('.jpg') || img.endsWith('.png')) {
+      filesToUpload.push(`uploads/images/resources/${img}`);
+    }
+  }
+}
+
+
 async function uploadFile(relPath) {
   const localPath = path.join(BASE_DIR, relPath);
   if (!fs.existsSync(localPath)) {
