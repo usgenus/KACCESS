@@ -52,9 +52,10 @@
     handleHashRouting();
   });
 
-  window.addEventListener('hashchange', handleHashRouting);
+  let isSwitchingTab = false;
 
   function handleHashRouting() {
+    if (isSwitchingTab) return;
     let hash = window.location.hash.replace('#', '') || 'calculator';
     // Backwards compatibility aliases
     if (hash === 'directory' || hash === 'housing') hash = 'resources';
@@ -132,29 +133,29 @@
     if (n > TOTAL_SLIDES) n = TOTAL_SLIDES;
     currentBillboardSlide = n;
 
-    // Update slides visibility with smooth transition
+    // Update slides visibility without any delayed timeouts or layout push
     for (let i = 1; i <= TOTAL_SLIDES; i++) {
       const slide = document.getElementById('rc-hero-slide-' + i);
       const img = document.getElementById('rc-hero-visual-' + i);
       const tab = document.getElementById('rc-billboard-tab-' + i);
+      const isActive = (i === n);
 
       if (slide) {
-        if (i === n) {
+        if (isActive) {
           slide.classList.remove('hidden');
           void slide.offsetWidth;
+          slide.style.opacity = '1';
+          slide.style.transform = 'translateY(0)';
           slide.classList.remove('opacity-0', 'translate-y-3');
         } else {
-          slide.classList.add('opacity-0', 'translate-y-3');
-          setTimeout(() => {
-            if (currentBillboardSlide !== i) {
-              slide.classList.add('hidden');
-            }
-          }, 350);
+          slide.style.opacity = '0';
+          slide.style.transform = 'translateY(8px)';
+          slide.classList.add('hidden', 'opacity-0', 'translate-y-3');
         }
       }
 
       if (img) {
-        if (i === n) {
+        if (isActive) {
           img.style.opacity = '1';
           img.style.transform = 'scale(1.0)';
           img.style.zIndex = '10';
@@ -166,7 +167,6 @@
       }
 
       if (tab) {
-        const isActive = (i === n);
         tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
         tab.setAttribute('tabindex', isActive ? '0' : '-1');
         tab.classList.toggle('active', isActive);
@@ -180,15 +180,15 @@
 
     if (syncTab) {
       const tabId = SLIDE_TO_TAB[n];
-      if (tabId) {
+      if (tabId && tabId !== activeTab) {
         switchTab(tabId, false);
       }
     }
   }
 
   window.rcHeroGoto = function (n, shouldScroll = false) {
-    setBillboardSlide(n, true);
     resetBillboardTimer();
+    setBillboardSlide(n, true);
     if (shouldScroll) {
       scrollToContent();
     }
@@ -196,8 +196,14 @@
 
   window.rcHeroTabClick = function (tabId, shouldScroll = false) {
     const slideIdx = TAB_TO_SLIDE[tabId] || 1;
-    window.location.hash = tabId;
-    window.rcHeroGoto(slideIdx, shouldScroll);
+    if (window.location.hash !== '#' + tabId) {
+      isSwitchingTab = true;
+      window.location.hash = tabId;
+      setTimeout(() => { isSwitchingTab = false; }, 80);
+    }
+    resetBillboardTimer();
+    setBillboardSlide(slideIdx, false);
+    switchTab(tabId, shouldScroll);
   };
 
   window.rcHeroJumpHousing = function () {
@@ -221,7 +227,7 @@
     }
   }
 
-  // 1. Tab Navigation (Only 3 Buttons)
+  // 1. Tab Navigation
   function initTabNavigation() {
     const tabs = document.querySelectorAll('.rc-nav-tab');
     tabs.forEach(tab => {
@@ -235,19 +241,28 @@
   }
 
   function switchTab(tabId, shouldScroll = false) {
+    const isAlreadyActive = activeTab === tabId &&
+      document.getElementById(`tab-view-${tabId}`) &&
+      !document.getElementById(`tab-view-${tabId}`).classList.contains('hidden');
+
     activeTab = tabId;
     const slideIdx = TAB_TO_SLIDE[tabId] || 1;
-    setBillboardSlide(slideIdx, false);
 
-    document.querySelectorAll('.rc-nav-tab').forEach(t => {
-      const isActive = t.dataset.tab === tabId;
-      t.classList.toggle('active', isActive);
-      t.setAttribute('aria-selected', isActive ? 'true' : 'false');
-    });
+    if (currentBillboardSlide !== slideIdx) {
+      setBillboardSlide(slideIdx, false);
+    }
 
-    document.querySelectorAll('.rc-tab-view').forEach(view => {
-      view.classList.toggle('hidden', view.id !== `tab-view-${tabId}`);
-    });
+    if (!isAlreadyActive) {
+      document.querySelectorAll('.rc-nav-tab').forEach(t => {
+        const isActive = t.dataset.tab === tabId;
+        t.classList.toggle('active', isActive);
+        t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+
+      document.querySelectorAll('.rc-tab-view').forEach(view => {
+        view.classList.toggle('hidden', view.id !== `tab-view-${tabId}`);
+      });
+    }
 
     if (shouldScroll) {
       scrollToContent();

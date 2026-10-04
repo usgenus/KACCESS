@@ -268,7 +268,7 @@ const html = `<!DOCTYPE html>
       font-weight: 600;
     }
     .hero-slide {
-      transition: opacity 350ms cubic-bezier(0.16, 1, 0.3, 1), transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
+      transition: opacity 250ms cubic-bezier(0.16, 1, 0.3, 1), transform 250ms cubic-bezier(0.16, 1, 0.3, 1);
     }
     .rc-hero-tabs-grid {
       display: grid;
@@ -2067,7 +2067,7 @@ const html = `<!DOCTYPE html>
   <!-- Scripts -->
   <script src="/data/resource_center_data.js"></script>
   <script src="/js/resource_calculator.js"></script>
-  <script src="/js/resource_center.js?v=20261004_senior_v1"></script>
+  <script src="/js/resource_center.js?v=20261004_senior_v2"></script>
   <script src="/js/fixes.js?v=8.1.0"></script>
 </body>
 </html>
