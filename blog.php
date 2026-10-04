@@ -156,6 +156,14 @@ unset($pRef);
       }
     }
 
+    /* ============================================================
+       NAVBAR BRAND LOGO INLINE ANIMATION
+       - Door: visible & stable with subtle gentle entry
+       - Key: moves smoothly from right side into the door keyhole
+       - Keyhole: subtle light glow reaction when key enters
+       - Texts: sequentially slide in from the right after key enters
+       - Stays as is permanently
+       ============================================================ */
     @keyframes njapNavKeySlide {
       0% {
         opacity: 0;

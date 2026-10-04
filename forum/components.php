@@ -34,6 +34,14 @@ function render_forum_header(string $searchQuery = '', ?array $currentSpecialty 
       }
     }
 
+    /* ============================================================
+       NAVBAR BRAND LOGO INLINE ANIMATION
+       - Door: visible & stable with subtle gentle entry
+       - Key: moves smoothly from right side into the door keyhole
+       - Keyhole: subtle light glow reaction when key enters
+       - Texts: sequentially slide in from the right after key enters
+       - Stays as is permanently
+       ============================================================ */
     @keyframes njapNavKeySlide {
       0% {
         opacity: 0;
@@ -155,8 +163,8 @@ function render_forum_header(string $searchQuery = '', ?array $currentSpecialty 
             <i class="fa-solid fa-bars text-sm"></i>
           </button>
 
-          <a class="flex items-center cursor-pointer njap-brand-link flex-shrink min-w-0 group" href="/" onclick="navigateToHome(event); return false;" title="NJ Access Portal · 뉴저지 한인 의료접근포털">
-          <svg class="h-7 sm:h-9 md:h-11 w-auto max-w-[135px] xs:max-w-[165px] sm:max-w-none object-contain transition-transform group-hover:scale-102" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NJ Access Portal · 뉴저지 한인 의료접근포털" style="overflow: visible;">
+          <a class="flex items-center cursor-pointer njap-brand-link flex-shrink-0 group" href="/" onclick="navigateToHome(event); return false;" title="NJ Access Portal · 뉴저지 한인 의료접근포털">
+          <svg class="h-8 sm:h-10 md:h-11 w-auto object-contain transition-transform group-hover:scale-102" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NJ Access Portal · 뉴저지 한인 의료접근포털" style="overflow: visible;">
             <title>NJ Access Portal · 뉴저지 한인 의료접근포털</title>
             <!-- Icon Mark (Door + Key + NJAP) -->
             <g transform="translate(4, 2) scale(0.56)" stroke-linecap="round" stroke-linejoin="round">

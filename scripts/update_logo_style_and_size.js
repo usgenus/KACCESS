@@ -5,14 +5,18 @@ const ROOT = path.resolve(__dirname, '..');
 
 const targetFiles = [
   'index.php',
+  'index.html',
+  'ko/index.html',
+  'resource-center.html',
+  'medicare.html',
+  'medicare/index.html',
   'blog.php',
   'blog.html',
   'blog-post.php',
+  'ko/blog-post.php',
   'senior-care.php',
   'senior-care.html',
   'senior-care/index.html',
-  'medicare.html',
-  'medicare/index.html',
   'tool.html',
   'tool/index.html',
   'about.html',
@@ -21,8 +25,10 @@ const targetFiles = [
   'dictionary.html',
   'matcher.html',
   'the-health-bridge.html',
+  'the-health-bridge.php',
   'the-health-bridge/index.html',
   'forum/components.php',
+  'ko/forum/components.php',
   '404.html',
   '_not-found.html'
 ];
@@ -56,6 +62,14 @@ const unifiedStyle = `  <style id="njap-logo-anim-styles">
       }
     }
 
+    /* ============================================================
+       NAVBAR BRAND LOGO INLINE ANIMATION
+       - Door: visible & stable with subtle gentle entry
+       - Key: moves smoothly from right side into the door keyhole
+       - Keyhole: subtle light glow reaction when key enters
+       - Texts: sequentially slide in from the right after key enters
+       - Stays as is permanently
+       ============================================================ */
     @keyframes njapNavKeySlide {
       0% {
         opacity: 0;
@@ -154,6 +168,39 @@ const unifiedStyle = `  <style id="njap-logo-anim-styles">
     }
   </style>`;
 
+const animatedSvg = `<svg class="h-8 sm:h-10 md:h-11 w-auto object-contain transition-transform group-hover:scale-102" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NJ Access Portal · 뉴저지 한인 의료접근포털" style="overflow: visible;">
+            <title>NJ Access Portal · 뉴저지 한인 의료접근포털</title>
+            <!-- Icon Mark (Door + Key + NJAP) -->
+            <g transform="translate(4, 2) scale(0.56)" stroke-linecap="round" stroke-linejoin="round">
+              <!-- Door Frame & NJAP Text -->
+              <g class="njap-nav-door" stroke="#1E3A8A">
+                <line x1="20" y1="12" x2="20" y2="88" stroke-width="3.5" />
+                <rect x="25" y="12" width="55" height="76" rx="2" stroke-width="4" fill="none" />
+                <polyline points="25,16 52,25 52,36" stroke-width="3.5" />
+                <text x="52.5" y="81" font-family="'Times New Roman', serif" font-size="13.5" font-weight="900" letter-spacing="1.5" fill="#1E3A8A" stroke="none" text-anchor="middle">NJAP</text>
+              </g>
+              
+              <!-- Keyhole -->
+              <path class="njap-nav-keyhole" d="M 43,45 A 7,7 0 1,1 53,45 L 56,64 L 40,64 Z" stroke="#DC2626" stroke-width="3.5" fill="none" />
+              
+              <!-- Key: enters from right side into the door -->
+              <g class="njap-nav-key">
+                <circle cx="74" cy="45" r="6.5" stroke="#DC2626" stroke-width="3.5" fill="none" />
+                <line x1="47" y1="45" x2="67.5" y2="45" stroke="#DC2626" stroke-width="3.5" />
+                <line x1="49" y1="45" x2="49" y2="49" stroke="#DC2626" stroke-width="3.5" />
+                <line x1="53" y1="45" x2="53" y2="48" stroke="#DC2626" stroke-width="3" />
+              </g>
+            </g>
+
+            <!-- Typography: slides in from right after key enters -->
+            <g class="njap-nav-text-main">
+              <text x="64" y="27" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="18" font-weight="900" fill="#0B192C" letter-spacing="-0.5">NJ Access Portal</text>
+            </g>
+            <g class="njap-nav-text-sub">
+              <text x="64" y="44" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="10.5" font-weight="600" fill="#64748B" letter-spacing="0.2">뉴저지 한인 의료접근포털</text>
+            </g>
+          </svg>`;
+
 let updated = 0;
 
 for (const relPath of targetFiles) {
@@ -163,26 +210,45 @@ for (const relPath of targetFiles) {
   let content = fs.readFileSync(fullPath, 'utf8');
   let replaced = false;
 
+  // 1. Update or inject style block
   if (content.includes('<style id="njap-logo-anim-styles">')) {
-    // Replace the existing block
     content = content.replace(
       /<style id="njap-logo-anim-styles">[\s\S]*?<\/style>/,
       unifiedStyle.trim()
     );
     replaced = true;
-  } else if (relPath === 'forum/components.php') {
-    // Insert into forum/components.php at the start of render_forum_header
+  } else if (relPath.includes('forum/components.php')) {
     content = content.replace(
       /function render_forum_header\(string \$searchQuery = '', \?array \$currentSpecialty = null\) \{\s*\?>/,
       `function render_forum_header(string $searchQuery = '', ?array $currentSpecialty = null) {\n?>\n${unifiedStyle}`
     );
     replaced = true;
+  } else if (content.includes('</head>')) {
+    content = content.replace('</head>', `${unifiedStyle}\n</head>`);
+    replaced = true;
   }
 
-  // Ensure any lingering 480px is 335px
-  if (content.includes('480px')) {
-    content = content.replace(/translate\(480px,\s*0\)/g, 'translate(335px, 0)');
+  // 2. Ensure translate(670px, 0) is used everywhere
+  if (content.includes('translate(480px, 0)')) {
+    content = content.replace(/translate\(480px,\s*0\)/g, 'translate(670px, 0)');
     replaced = true;
+  }
+  if (content.includes('translate(335px, 0)')) {
+    content = content.replace(/translate\(335px,\s*0\)/g, 'translate(670px, 0)');
+    replaced = true;
+  }
+
+  // 3. For any navbar brand link that has old static SVG, upgrade to animated SVG
+  if (content.includes('njap-brand-link')) {
+    // If brand link contains SVG without njap-nav-door
+    const brandRegex = /(<a\s+class="[^"]*njap-brand-link[^"]*"[^>]*>)(\s*<svg[\s\S]*?<\/svg>)/g;
+    content = content.replace(brandRegex, (match, openA, svgContent) => {
+      if (!svgContent.includes('njap-nav-door') || !svgContent.includes('njap-nav-key')) {
+        replaced = true;
+        return `${openA}\n          ${animatedSvg.trim()}`;
+      }
+      return match;
+    });
   }
 
   if (replaced) {
@@ -190,7 +256,7 @@ for (const relPath of targetFiles) {
     console.log('[UPDATED]', relPath);
     updated++;
   } else {
-    console.log('[SKIPPED]', relPath);
+    console.log('[OK]', relPath);
   }
 }
 

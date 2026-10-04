@@ -208,9 +208,9 @@
       '  #mobile-menu-btn { flex-shrink: 0 !important; display: inline-flex !important; }',
       '}',
       '.njap-brand-link { display: inline-flex !important; align-items: center !important; flex-shrink: 0 !important; }',
-      '.njap-brand-link img { height: 52px !important; max-height: 54px !important; width: auto !important; object-fit: contain !important; }',
-      '@media (max-width: 640px) { .njap-brand-link img { height: 40px !important; max-height: 42px !important; width: auto !important; } }',
-      '@media (max-width: 375px) { .njap-brand-link img { height: 34px !important; max-height: 36px !important; } }',
+      '.njap-brand-link img, .njap-brand-link svg { height: 52px !important; max-height: 54px !important; width: auto !important; object-fit: contain !important; }',
+      '@media (max-width: 640px) { .njap-brand-link img, .njap-brand-link svg { height: 40px !important; max-height: 42px !important; width: auto !important; } }',
+      '@media (max-width: 375px) { .njap-brand-link img, .njap-brand-link svg { height: 34px !important; max-height: 36px !important; } }',
 
       /* KakaoTalk large CTA button (about page) */
       '.kakao-cta-btn {',
@@ -257,8 +257,7 @@
       '  #sidebar-toggle-btn { display: inline-flex !important; align-items: center !important; justify-content: center !important; flex-shrink: 0 !important; width: 32px !important; height: 32px !important; }',
       '  #mobile-menu-btn, button[aria-label="Menu"] { display: inline-flex !important; align-items: center !important; justify-content: center !important; flex-shrink: 0 !important; }',
       '  nav a.forum-kakao-btn, body.forum-page nav a[href*="pf.kakao.com"], #forum-sidebar ~ * nav a[href*="pf.kakao.com"] { display: none !important; }',
-      '  body.forum-page nav .njap-brand-link, #forum-sidebar ~ * nav .njap-brand-link { max-width: calc(100vw - 195px) !important; flex-shrink: 1 !important; min-width: 0 !important; }',
-      '  body.forum-page nav .njap-brand-link svg, #forum-sidebar ~ * nav .njap-brand-link svg { max-width: 100% !important; height: 26px !important; }',
+      '  body.forum-page nav .njap-brand-link, #forum-sidebar ~ * nav .njap-brand-link { flex-shrink: 0 !important; }',
       '  body.forum-page nav #auth-box button span, #forum-sidebar ~ * nav #auth-box button span { display: none !important; }',
       '}',
     ].join('\n');
@@ -1032,8 +1031,59 @@
   window.applySeniorMode = function() {};
   window.getSeniorModeStep = function() { return 0; };
 
+  var UNIFIED_LOGO_SVG = '<svg class="h-8 sm:h-10 md:h-11 w-auto object-contain transition-transform group-hover:scale-102" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NJ Access Portal · 뉴저지 한인 의료접근포털" style="overflow: visible;">' +
+    '<title>NJ Access Portal · 뉴저지 한인 의료접근포털</title>' +
+    '<g transform="translate(4, 2) scale(0.56)" stroke-linecap="round" stroke-linejoin="round">' +
+      '<g class="njap-nav-door" stroke="#1E3A8A">' +
+        '<line x1="20" y1="12" x2="20" y2="88" stroke-width="3.5" />' +
+        '<rect x="25" y="12" width="55" height="76" rx="2" stroke-width="4" fill="none" />' +
+        '<polyline points="25,16 52,25 52,36" stroke-width="3.5" />' +
+        '<text x="52.5" y="81" font-family="\'Times New Roman\', serif" font-size="13.5" font-weight="900" letter-spacing="1.5" fill="#1E3A8A" stroke="none" text-anchor="middle">NJAP</text>' +
+      '</g>' +
+      '<path class="njap-nav-keyhole" d="M 43,45 A 7,7 0 1,1 53,45 L 56,64 L 40,64 Z" stroke="#DC2626" stroke-width="3.5" fill="none" />' +
+      '<g class="njap-nav-key">' +
+        '<circle cx="74" cy="45" r="6.5" stroke="#DC2626" stroke-width="3.5" fill="none" />' +
+        '<line x1="47" y1="45" x2="67.5" y2="45" stroke="#DC2626" stroke-width="3.5" />' +
+        '<line x1="49" y1="45" x2="49" y2="49" stroke="#DC2626" stroke-width="3.5" />' +
+        '<line x1="53" y1="45" x2="53" y2="48" stroke="#DC2626" stroke-width="3" />' +
+      '</g>' +
+    '</g>' +
+    '<g class="njap-nav-text-main">' +
+      '<text x="64" y="27" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="18" font-weight="900" fill="#0B192C" letter-spacing="-0.5">NJ Access Portal</text>' +
+    '</g>' +
+    '<g class="njap-nav-text-sub">' +
+      '<text x="64" y="44" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="10.5" font-weight="600" fill="#64748B" letter-spacing="0.2">뉴저지 한인 의료접근포털</text>' +
+    '</g>' +
+  '</svg>';
+
+  var UNIFIED_LOGO_CSS = [
+    '.njap-brand-link { display: inline-flex !important; align-items: center !important; flex-shrink: 0 !important; }',
+    '.njap-brand-link img, .njap-brand-link svg { height: 52px !important; max-height: 54px !important; width: auto !important; object-fit: contain !important; }',
+    '@media (max-width: 640px) { .njap-brand-link img, .njap-brand-link svg { height: 40px !important; max-height: 42px !important; width: auto !important; } }',
+    '@media (max-width: 375px) { .njap-brand-link img, .njap-brand-link svg { height: 34px !important; max-height: 36px !important; } }',
+    '@keyframes njapNavKeySlide { 0% { opacity: 0; transform: translate(670px, 0); } 15% { opacity: 1; } 75% { transform: translate(0, 0); } 86% { transform: translate(-3.5px, 0); } 100% { opacity: 1; transform: translate(0, 0); } }',
+    '@keyframes njapNavKeyholePulse { 0%, 70% { stroke: #DC2626; filter: drop-shadow(0 0 0 transparent); } 82% { stroke: #EF4444; filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.85)); } 100% { stroke: #DC2626; filter: drop-shadow(0 0 0 transparent); } }',
+    '@keyframes njapNavDoorAppear { 0% { opacity: 0; transform: scale(0.96); } 100% { opacity: 1; transform: scale(1); } }',
+    '@keyframes njapNavTextMain { 0% { opacity: 0; transform: translate(45px, 0); } 100% { opacity: 1; transform: translate(0, 0); } }',
+    '@keyframes njapNavTextSub { 0% { opacity: 0; transform: translate(35px, 0); } 100% { opacity: 1; transform: translate(0, 0); } }',
+    '.njap-nav-door { transform-origin: 40px 45px; animation: njapNavDoorAppear 0.75s cubic-bezier(0.16, 1, 0.3, 1) both; }',
+    '.njap-nav-key { animation: njapNavKeySlide 2.18s cubic-bezier(0.22, 1, 0.36, 1) 0.22s both; }',
+    '.njap-nav-keyhole { animation: njapNavKeyholePulse 2.4s ease-out 0.22s both; }',
+    '.njap-nav-text-main { animation: njapNavTextMain 1.0s cubic-bezier(0.16, 1, 0.3, 1) 2.18s both; }',
+    '.njap-nav-text-sub { animation: njapNavTextSub 1.0s cubic-bezier(0.16, 1, 0.3, 1) 2.48s both; }',
+    '@media (prefers-reduced-motion: reduce) { .njap-nav-door, .njap-nav-key, .njap-nav-keyhole, .njap-nav-text-main, .njap-nav-text-sub { animation: none !important; opacity: 1 !important; transform: none !important; } }'
+  ].join('\n');
+
   function ensureUnifiedLogo() {
     try {
+      // 0. Ensure animation styles exist in <head>
+      if (!document.getElementById('njap-logo-anim-styles')) {
+        var styleEl = document.createElement('style');
+        styleEl.id = 'njap-logo-anim-styles';
+        styleEl.textContent = UNIFIED_LOGO_CSS;
+        document.head.appendChild(styleEl);
+      }
+
       // 1. Navigation logo
       var nav = document.querySelector('nav');
       if (nav) {
@@ -1042,8 +1092,13 @@
           var link = brandLinks[i];
           var text = (link.textContent || '').trim();
           if (text === '홈' || link.classList.contains('nav-link')) continue;
-          // If already contains animated SVG, keep it
-          if (link.querySelector('svg.njap-nav-door, svg g.njap-nav-door')) continue;
+          if (!link.classList.contains('njap-brand-link')) link.classList.add('njap-brand-link');
+          link.classList.add('flex-shrink-0');
+          // If already contains animated SVG with key and door, verify it has correct classes
+          var key = link.querySelector('.njap-nav-key');
+          var door = link.querySelector('.njap-nav-door');
+          if (key && door) continue;
+          link.innerHTML = UNIFIED_LOGO_SVG;
         }
       }
 
