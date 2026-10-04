@@ -1,4 +1,33 @@
-<!DOCTYPE html>
+const fs = require('fs');
+const path = require('path');
+
+const BASE_DIR = '/Users/ejyoon/Desktop/KACCESS';
+const medicareHtmlPath = path.join(BASE_DIR, 'medicare.html');
+const destHtmlPath = path.join(BASE_DIR, 'resource-center.html');
+
+// Read existing medicare page to extract its rich sections (AEP, CMS numbers, Parts, IRA, Comparison, etc.)
+let medicareHtml = '';
+try {
+  medicareHtml = fs.readFileSync(medicareHtmlPath, 'utf8');
+} catch (e) {
+  console.warn('Could not read medicare.html directly, using empty fallback');
+}
+
+// Extract the body content of medicare sections
+let medicareSectionsHtml = '';
+const aepMatch = medicareHtml.match(/<!-- ========================================================\s*FEATURE 1: 2026 AEP OPEN ENROLLMENT[\s\S]*?<!-- ========================================================\s*FEATURE 4: 2026 IRA DEEP DIVE[\s\S]*?<\/div>\s*<\/div>\s*<\/div>/);
+if (aepMatch) {
+  medicareSectionsHtml = aepMatch[0];
+} else {
+  const startIdx = medicareHtml.indexOf('<div id="section-open-enrollment"');
+  const endIdx = medicareHtml.indexOf('</main>');
+  if (startIdx !== -1 && endIdx !== -1) {
+    medicareSectionsHtml = medicareHtml.slice(startIdx, endIdx);
+  }
+}
+
+// Generate the complete resource-center.html
+const html = `<!DOCTYPE html>
 <html lang="ko" class="h-full antialiased">
 <head>
   <meta charset="utf-8" />
@@ -1400,410 +1429,7 @@
 
         <!-- Merged Content from medicare.html -->
         <div class="medicare-embedded-wrap">
-          <!-- ========================================================
-               FEATURE 1: 2026 AEP OPEN ENROLLMENT & 4-STEP CHECKLIST
-               ======================================================== -->
-          <div id="section-open-enrollment" class="mb-14 p-6 sm:p-9 rounded-2xl bg-gradient-to-br from-[#0B192C] via-[#10233d] to-[#0B192C] text-white shadow-xl border border-blue-900/60 relative overflow-hidden">
-            <!-- Decorative Glow -->
-            <div style="position:absolute;top:-80px;right:-80px;width:300px;height:300px;background:radial-gradient(circle,rgba(59,130,246,0.18) 0%,transparent 70%);border-radius:50%;pointer-events:none;"></div>
-            
-            <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
-              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-red-600 text-white shadow-xs">
-                <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
-                2026 연간 가입 기간 (AEP)
-              </span>
-              <span class="text-xs sm:text-sm font-semibold text-blue-200 bg-white/10 px-3 py-1 rounded-full border border-white/15">
-                가입 기간: <strong>2026년 10월 15일 ~ 12월 7일</strong> (적용 개시: 2027년 1월 1일)
-              </span>
-            </div>
-
-            <h3 class="text-2xl sm:text-3xl font-serif font-bold text-white mb-3">
-              메디케어 오픈 인롤먼트 2026: 10월 15일~12월 7일 4단계 체크리스트
-            </h3>
-            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-3xl mb-6">
-              매년 가을, 메디케어는 1년에 단 한 번 보장 내용을 재검토하고 최적의 플랜으로 변경할 수 있는 기회를 제공합니다. 2027년도 보장을 위한 연간 가입 기간은 <strong>2026년 10월 15일부터 12월 7일까지</strong>이며, 변경된 사항은 <strong>2027년 1월 1일부터 적용</strong>됩니다.
-            </p>
-
-            <!-- What you can do during AEP -->
-            <div class="bg-white/8 backdrop-blur-md rounded-xl p-4 sm:p-5 mb-7 border border-white/15">
-              <h4 class="text-sm font-bold text-blue-300 mb-2.5 flex items-center gap-2">
-                <svg class="w-4 h-4 text-blue-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                이 기간에 할 수 있는 일 (연례 변경 권한):
-              </h4>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm text-slate-200">
-                <div class="flex items-center gap-2">• 오리지널 메디케어 ↔ 메디케어 어드밴티지 간 상호 전환</div>
-                <div class="flex items-center gap-2">• 기존 메디케어 어드밴티지 플랜을 다른 회사 플랜으로 변경</div>
-                <div class="flex items-center gap-2">• 파트 D 처방약 플랜 신규 가입·변경·해지</div>
-                <div class="flex items-center gap-2">• 약 보장이 없으셨던 분들의 신규 처방약 플랜 가입</div>
-              </div>
-            </div>
-
-            <!-- 4-Step Checklist Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-7">
-              <!-- Step 1 -->
-              <div class="bg-white/5 rounded-xl p-4 border border-white/10 flex flex-col justify-between hover:bg-white/8 transition-colors">
-                <div>
-                  <div class="flex items-center justify-between mb-2">
-                    <span class="text-[11px] font-extrabold uppercase px-2.5 py-0.5 rounded bg-blue-500/30 text-blue-200 border border-blue-400/30">STEP 1</span>
-                    <span class="text-xs text-amber-300 font-semibold">9월 말 ~ 10월 초 우편 수령</span>
-                  </div>
-                  <h5 class="text-base font-bold text-white mb-2">1. Annual Notice of Change(ANOC, 연간 변경 안내문)를 여세요</h5>
-                  <p class="text-xs text-slate-300 leading-relaxed">
-                    현재 플랜이 9월 말~10월 초에 우편으로 발송합니다. 내년도 월 보험료, 코페이, 약 목록(포뮬러리), 병원 및 의사 네트워크 변경 사항이 적혀 있습니다. <strong>다른 무엇보다 먼저 읽으세요.</strong>
-                  </p>
-                </div>
-              </div>
-
-              <!-- Step 2 -->
-              <div class="bg-white/5 rounded-xl p-4 border border-white/10 flex flex-col justify-between hover:bg-white/8 transition-colors">
-                <div>
-                  <div class="flex items-center justify-between mb-2">
-                    <span class="text-[11px] font-extrabold uppercase px-2.5 py-0.5 rounded bg-blue-500/30 text-blue-200 border border-blue-400/30">STEP 2</span>
-                    <span class="text-xs text-emerald-300 font-semibold">의사·병원·약국 대조</span>
-                  </div>
-                  <h5 class="text-base font-bold text-white mb-2">2. 담당 의사와 처방약을 정리하세요</h5>
-                  <p class="text-xs text-slate-300 leading-relaxed">
-                    다니는 의사·병원·약국, 복용 중인 모든 약(용량 포함)을 적으세요. 플랜마다 네트워크와 약 목록(포뮬러리)이 매년 바뀌므로 2027년에도 포함되는지 대조가 필수입니다.
-                  </p>
-                </div>
-              </div>
-
-              <!-- Step 3 -->
-              <div class="bg-white/5 rounded-xl p-4 border border-white/10 flex flex-col justify-between hover:bg-white/8 transition-colors">
-                <div>
-                  <div class="flex items-center justify-between mb-2">
-                    <span class="text-[11px] font-extrabold uppercase px-2.5 py-0.5 rounded bg-blue-500/30 text-blue-200 border border-blue-400/30">STEP 3</span>
-                    <span class="text-xs text-purple-300 font-semibold">연간 총비용 계산</span>
-                  </div>
-                  <h5 class="text-base font-bold text-white mb-2">3. 보험료가 아닌 총비용을 비교하세요</h5>
-                  <p class="text-xs text-slate-300 leading-relaxed">
-                    <strong>월 보험료 + 파트 B 보험료(2026년 월 $202.90) + 디덕터블 + 약·진료 코페이</strong>를 합산하세요. 월 보험료 $0 플랜이 총비용은 더 비쌀 수 있습니다.
-                  </p>
-                </div>
-              </div>
-
-              <!-- Step 4 -->
-              <div class="bg-white/5 rounded-xl p-4 border border-white/10 flex flex-col justify-between hover:bg-white/8 transition-colors">
-                <div>
-                  <div class="flex items-center justify-between mb-2">
-                    <span class="text-[11px] font-extrabold uppercase px-2.5 py-0.5 rounded bg-blue-500/30 text-blue-200 border border-blue-400/30">STEP 4</span>
-                    <span class="text-xs text-sky-300 font-semibold">medicare.gov 1~5점</span>
-                  </div>
-                  <h5 class="text-base font-bold text-white mb-2">4. 플랜 별점과 추가 혜택을 확인하세요</h5>
-                  <p class="text-xs text-slate-300 leading-relaxed">
-                    메디케어는 매년 10월 medicare.gov에 1~5점 별점을 게시합니다. 치과·안과·운동 혜택이 중요하다면 세부 조건을 꼭 확인하세요. 플랜과 카운티마다 조건이 다릅니다.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Free Assistance Banner -->
-            <div class="p-4 sm:p-5 rounded-xl bg-gradient-to-r from-blue-600/30 to-indigo-600/30 border border-blue-400/40 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div class="flex items-center gap-3.5">
-                <div class="w-10 h-10 rounded-full bg-blue-500/30 flex items-center justify-center shrink-0 text-xl">💡</div>
-                <div>
-                  <h5 class="text-sm font-bold text-white">지금 할 일: ANOC, 약 목록, 의사 명단을 준비하세요</h5>
-                  <p class="text-xs text-slate-300">저희 NJAP 내비게이션 팀이 한국어 또는 영어로 플랜 비교를 도와드립니다. <strong>상담은 100% 무료입니다.</strong></p>
-                </div>
-              </div>
-              <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="shrink-0 px-4 py-2.5 rounded-xl bg-[#FEE500] hover:bg-[#FDD835] text-[#191919] font-bold text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer">
-                <img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-4 h-4 object-contain" />
-                <span>카카오톡 1:1 무료 상담</span>
-              </a>
-            </div>
-          </div>
-
-          <!-- ========================================================
-               FEATURE 2: 2026 CMS BENCHMARK NUMBERS (DASHBOARD)
-               ======================================================== -->
-          <div id="section-cms-numbers" class="mb-14">
-            <h3 class="font-serif text-xl sm:text-2xl text-brand-dark font-bold mb-2 flex items-center gap-2">
-              <span style="width:10px;height:22px;background:#1a5cf6;border-radius:99px;display:inline-block;"></span>
-              (1) 올해 알아둘 2026년 메디케어 공식 기본 수치 (CMS 확정치)
-            </h3>
-            <p class="text-xs sm:text-sm text-slate-600 mb-6">
-              2026년 10월 기준 연방 메디케어·메디케이드 서비스 센터(CMS) 공식 발표 수치로 완벽 검증된 핵심 재정 지표입니다.
-            </p>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <!-- Metric 1: Part B Premium -->
-              <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between hover:border-blue-400 transition-colors">
-                <div>
-                  <div class="flex items-center justify-between mb-2">
-                    <span class="text-[11px] font-bold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-200">Part B 외래 보험</span>
-                    <span class="text-[11px] font-semibold text-red-600 bg-red-50 px-2 py-0.5 rounded-full border border-red-200">작년 $185 대비 인상</span>
-                  </div>
-                  <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-1">$202.90 <span class="text-xs font-medium text-slate-500">/월</span></div>
-                  <p class="text-xs text-slate-600 leading-relaxed mb-3">2026년 파트 B 표준 월 보험료. 파트 B 디덕터블은 <strong>$283</strong>입니다.</p>
-                </div>
-                <div class="pt-3 border-t border-slate-100 text-xs font-semibold text-slate-700 flex justify-between">
-                  <span>연간 디덕터블</span>
-                  <span class="text-blue-700 font-bold">$283</span>
-                </div>
-              </div>
-
-              <!-- Metric 2: Part D $2,100 Cap -->
-              <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between hover:border-emerald-400 transition-colors">
-                <div>
-                  <div class="flex items-center justify-between mb-2">
-                    <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">Part D 처방약 상한</span>
-                    <span class="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">도넛홀 전격 폐지</span>
-                  </div>
-                  <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-1">$2,100 <span class="text-xs font-medium text-slate-500">/연간</span></div>
-                  <p class="text-xs text-slate-600 leading-relaxed mb-3">본인부담 상한제 도입 2년 만의 첫 인상($2,000→$2,100). 도달 시 잔여 기간 <strong>$0 코페이</strong>.</p>
-                </div>
-                <div class="pt-3 border-t border-slate-100 text-xs font-semibold text-slate-700 flex justify-between">
-                  <span>파트 D 디덕터블 상한</span>
-                  <span class="text-emerald-700 font-bold">최대 $615</span>
-                </div>
-              </div>
-
-              <!-- Metric 3: Part A Hospital Deductible -->
-              <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between hover:border-purple-400 transition-colors">
-                <div>
-                  <div class="flex items-center justify-between mb-2">
-                    <span class="text-[11px] font-bold text-purple-700 bg-purple-50 px-2.5 py-0.5 rounded-full border border-purple-200">Part A 병원 입원</span>
-                    <span class="text-[11px] font-semibold text-purple-700 bg-purple-50 px-2 py-0.5 rounded-full border border-purple-200">40크레딧 $0 무료</span>
-                  </div>
-                  <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-1">$1,736 <span class="text-xs font-medium text-slate-500">/Benefit Period당</span></div>
-                  <p class="text-xs text-slate-600 leading-relaxed mb-3">병원 입원 공제액(디덕터블). 1~60일까지 추가 일일 코페이 없이 전액 보장.</p>
-                </div>
-                <div class="pt-3 border-t border-slate-100 text-xs font-semibold text-slate-700 flex justify-between">
-                  <span>10년(40크레딧) 근로자</span>
-                  <span class="text-purple-700 font-bold">월 $0 (전액 무료)</span>
-                </div>
-              </div>
-
-              <!-- Metric 4: Standalone PDP Reduction -->
-              <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between hover:border-amber-400 transition-colors">
-                <div>
-                  <div class="flex items-center justify-between mb-2">
-                    <span class="text-[11px] font-bold text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">단독 약 플랜 축소</span>
-                    <span class="text-[11px] font-semibold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">꼼꼼한 비교 필수</span>
-                  </div>
-                  <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-1">약 360개 <span class="text-xs font-medium text-slate-500">전국 플랜</span></div>
-                  <p class="text-xs text-slate-600 leading-relaxed mb-3">단독 약 플랜이 전국 464개에서 약 360개로 감소. 단독 평균 약 $34, 어드밴티지 내장 플랜 약 $11.</p>
-                </div>
-                <div class="pt-3 border-t border-slate-100 text-xs font-semibold text-slate-700 flex justify-between">
-                  <span>정부 협상 10대 약품</span>
-                  <span class="text-amber-800 font-bold">인하가 적용 시작</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- ========================================================
-               FEATURE 3: 4 MEDICARE PARTS (UP-TO-DATE VALUES)
-               ======================================================== -->
-          <div id="section-medicare-parts" class="mb-14">
-            <h3 class="font-serif text-xl sm:text-2xl text-brand-dark font-bold mb-6 flex items-center gap-2">
-              <span style="width:10px;height:22px;background:#1a5cf6;border-radius:99px;display:inline-block;"></span>
-              (2) 메디케어 파트별 기본 구조
-            </h3>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              <!-- Part A -->
-              <div class="editorial-card flex flex-col justify-between">
-                <div>
-                  <div class="flex items-center justify-between mb-3">
-                    <span class="text-xs font-bold px-2.5 py-1 rounded-full text-white bg-blue-600">Part A</span>
-                    <span class="text-xs font-medium text-slate-500">병원 입원</span>
-                  </div>
-                  <h4 class="font-serif text-xl text-brand-dark font-bold mb-1.5">병원 입원 보험</h4>
-                  <p class="text-xs text-slate-600 leading-relaxed mb-4">병원 입원 진료, 전문 간호 시설(SNF), 호스피스 간호를 보장합니다. Benefit Period당 디덕터블은 <strong>$1,736</strong>입니다.</p>
-                </div>
-                <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs text-slate-800">
-                  • 10년(40크레딧) 납부자: <strong>월 $0 (무료)</strong>
-                </div>
-              </div>
-
-              <!-- Part B -->
-              <div class="editorial-card flex flex-col justify-between">
-                <div>
-                  <div class="flex items-center justify-between mb-3">
-                    <span class="text-xs font-bold px-2.5 py-1 rounded-full text-white bg-purple-600">Part B</span>
-                    <span class="text-xs font-medium text-slate-500">외래 진료</span>
-                  </div>
-                  <h4 class="font-serif text-xl text-brand-dark font-bold mb-1.5">외래 의료 보험</h4>
-                  <p class="text-xs text-slate-600 leading-relaxed mb-4">의사 진료, 정기 검진, 외래 검사/수술, 의료 장비를 보장합니다. 디덕터블은 <strong>$283</strong>입니다.</p>
-                </div>
-                <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs text-slate-800">
-                  • 2026 CMS 표준 보험료: <strong>월 $202.90</strong>
-                </div>
-              </div>
-
-              <!-- Part C -->
-              <div class="editorial-card flex flex-col justify-between">
-                <div>
-                  <div class="flex items-center justify-between mb-3">
-                    <span class="text-xs font-bold px-2.5 py-1 rounded-full text-white bg-indigo-600">Part C</span>
-                    <span class="text-xs font-medium text-slate-500">우대 종합</span>
-                  </div>
-                  <h4 class="font-serif text-xl text-brand-dark font-bold mb-1.5">어드밴티지</h4>
-                  <p class="text-xs text-slate-600 leading-relaxed mb-4">민간 보험사를 통한 종합 패키지 플랜(A+B+대개 D 통합 및 치과·안과·보청기 등 부가 혜택)입니다.</p>
-                </div>
-                <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs text-slate-800">
-                  • 추가 월 보험료: <strong>월 $0 플랜 다수</strong>
-                </div>
-              </div>
-
-              <!-- Part D -->
-              <div class="editorial-card flex flex-col justify-between">
-                <div>
-                  <div class="flex items-center justify-between mb-3">
-                    <span class="text-xs font-bold px-2.5 py-1 rounded-full text-white bg-teal-600">Part D</span>
-                    <span class="text-xs font-medium text-slate-500">처방 의약품</span>
-                  </div>
-                  <h4 class="font-serif text-xl text-brand-dark font-bold mb-1.5">처방약 보험</h4>
-                  <p class="text-xs text-slate-600 leading-relaxed mb-4">약국 조제 처방약을 보장합니다. 디덕터블 상한은 최대 $615이며, 본인부담금 상한제가 적용됩니다.</p>
-                </div>
-                <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs text-slate-800">
-                  • 2026 연간 상한제: <strong>최대 $2,100 한도</strong>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- ========================================================
-               FEATURE 4: 2026 IRA DEEP DIVE ($2,100 CAP & CHANGES)
-               ======================================================== -->
-          <div id="section-ira" class="ira-container">
-            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-              <span class="ira-header-tag">2026 Inflation Reduction Act (IRA) · 처방약 구조 전면 개편</span>
-              <span class="text-xs text-blue-200 bg-blue-500/20 px-2.5 py-0.5 rounded border border-blue-400/30">CMS 2026년 10월 수치 검증</span>
-            </div>
-            <h3 class="ira-main-title">(3) 2026년 메디케어 파트 D: $2,100 약값 상한제와 처방약 핵심 변경점</h3>
-            <p class="ira-main-desc">
-              처방약을 복용하신다면, 2026년은 메디케어 약 보장에 큰 변화가 생긴 해입니다. 디덕터블·코페이·코인슈어런스 합계가 2026년에 <strong>$2,100에 도달하면, 그 해 나머지 기간 동안 보장 약값 본인부담은 $0</strong>입니다. (단, 월 보험료는 상한에 포함되지 않습니다.)
-            </p>
-
-            <div class="ira-grid mb-6">
-              <div class="ira-card">
-                <div class="ira-card-title">1. 처방약 연간 본인부담 상한: $2,000 → $2,100</div>
-                <p class="ira-card-desc">
-                  기존의 복잡했던 <strong>도넛홀(Coverage Gap) 구간이 전격 폐지</strong>되었습니다. 상한제 도입 2년 만의 첫 인상으로 $2,100에 도달하는 즉시 이후의 처방약값은 100% 보험사가 부담($0 코페이)합니다.
-                </p>
-              </div>
-
-              <div class="ira-card">
-                <div class="ira-card-title">2. 처방약 무이자 분할 납부 프로그램 (M3P)</div>
-                <p class="ira-card-desc">
-                  <strong>Medicare Prescription Payment Plan (M3P)</strong>을 통해 연초에 일시적으로 발생하는 고액 약값을 약국에서 한 번에 내는 대신 1년(12개월) 동안 무이자 균등 분할 납부할 수 있습니다. 가입 플랜에 신청 방법을 문의하세요.
-                </p>
-              </div>
-
-              <div class="ira-card">
-                <div class="ira-card-title">3. 메디케어 약값 협상 첫 10개 약품 인하 가격 적용 시작</div>
-                <p class="ira-card-desc">
-                  연방 정부가 직접 협상한 10대 다빈도 의약품(Eliquis, Xarelto, Jardiance, Januvia, Entresto 등)의 인하된 가격이 2026년부터 본격 적용되어 본인부담금이 크게 낮아집니다.
-                </p>
-              </div>
-
-              <div class="ira-card">
-                <div class="ira-card-title">4. 인슐린 월 $35 상한 &amp; 권장 성인 백신 $0 무료</div>
-                <p class="ira-card-desc">
-                  인슐린은 30일분 공급당 최대 $35로 제한되며, 대상포진(Shingrix), 독감, 폐렴구균, 코로나19, RSV 등 CDC 권장 백신은 코페이 없이 전액 무료로 접종받으실 수 있습니다.
-                </p>
-              </div>
-            </div>
-
-            <!-- Standalone PDP caution box -->
-            <div class="p-4 rounded-xl bg-white/10 border border-white/20 text-xs sm:text-sm text-slate-200 leading-relaxed">
-              <div class="font-bold text-amber-300 mb-1 flex items-center gap-2">
-                <span>⚠️</span>
-                <span>단독 파트 D 플랜 선택지 축소 주의: 전국 464개 → 약 360개로 감소</span>
-              </div>
-              <p class="text-xs text-slate-300 mb-2">
-                올해 단독 파트 D 플랜 수가 전국적으로 크게 줄어들었습니다. 단독 파트 D 평균 보험료는 월 약 $34(작년 약 $38에서 인하)이며, 어드밴티지 내장 플랜은 약 $11입니다.
-              </p>
-              <p class="text-xs text-slate-200">
-                <strong>지금 할 일:</strong> 본인의 약이 내년 플랜의 <strong>포뮬러리(약 목록)</strong>에 있는지, <strong>몇 등급(tier)</strong>인지, <strong>사전 승인(prior authorization)</strong>이 필요한지 반드시 확인하세요. 코페이를 결정하는 것은 바로 이것입니다.
-              </p>
-            </div>
-          </div>
-
-          <!-- ========================================================
-               FEATURE 5: ORIGINAL VS ADVANTAGE (4 CRITERIA & OEP)
-               ======================================================== -->
-          <div id="section-compare" class="mb-14">
-            <h3 class="font-serif text-xl sm:text-2xl text-brand-dark font-bold mb-2 flex items-center gap-2">
-              <span style="width:10px;height:22px;background:#1a5cf6;border-radius:99px;display:inline-block;"></span>
-              (4) 오리지널 메디케어 vs 메디케어 어드밴티지: 2026 제대로 비교하는 법
-            </h3>
-            <p class="text-xs sm:text-sm text-slate-600 mb-5">
-              가입 기간(2026년 10월 15일~12월 7일)에 가장 큰 결정 중 하나는 오리지널 메디케어를 유지할지, 메디케어 어드밴티지로 바꿀지, 또는 어드밴티지 플랜을 갈아탈지입니다.
-            </p>
-
-            <!-- Comparison Table -->
-            <div class="overflow-x-auto bg-white rounded-2xl border border-slate-200 shadow-xs mb-8">
-              <table class="w-full text-left font-sans text-xs sm:text-sm border-collapse medicare-table">
-                <thead>
-                  <tr>
-                    <th class="w-1/5">구분</th>
-                    <th class="w-2/5" style="background:#1e293b !important;">경로 1: 오리지널 + 서플리먼트(Medigap)</th>
-                    <th class="w-2/5" style="background:#312e81 !important;">경로 2: 메디케어 어드밴티지 (Part C)</th>
-                  </tr>
-                </thead>
-                <tbody class="text-slate-800">
-                  <tr class="hover:bg-slate-50">
-                    <td class="font-bold bg-slate-50">기본 구성</td>
-                    <td class="border-l border-slate-200">파트 A(입원) + 파트 B(외래) + 서플리먼트(Plan G 등) + 파트 D(처방약)</td>
-                    <td class="border-l border-slate-200">병원·의료·대개 약 보장을 하나로 묶은 민간 일체형 플랜 (HMO / PPO)</td>
-                  </tr>
-                  <tr class="hover:bg-slate-50">
-                    <td class="font-bold bg-slate-50">의사/병원 네트워크</td>
-                    <td class="border-l border-slate-200 font-semibold text-emerald-800">미국 전역 메디케어 수용 의료진 100% 이용 (사전승인/네트워크 제한 없음)</td>
-                    <td class="border-l border-slate-200">보험사 지정 네트워크 내 이용 원칙, 전문의 진료 시 사전 승인 필요 가능</td>
-                  </tr>
-                  <tr class="hover:bg-slate-50">
-                    <td class="font-bold bg-slate-50">추가 부가 혜택</td>
-                    <td class="border-l border-slate-200 text-slate-500">기본 치과, 안과, 보청기, 운동 혜택 미포함</td>
-                    <td class="border-l border-slate-200 font-semibold text-indigo-800">치과, 안과, 보청기, 한방/침술, OTC 카드, 피트니스 등 풍부</td>
-                  </tr>
-                  <tr class="hover:bg-slate-50">
-                    <td class="font-bold bg-slate-50">월 비용 구조</td>
-                    <td class="border-l border-slate-200">고정비 높음 (Part B $202.90 + 서플리먼트 + Part D), <strong>진료 시 본인부담금 거의 없음</strong></td>
-                    <td class="border-l border-slate-200">고정비 매우 저렴 (<strong>Part C $0 플랜 다수</strong>), <strong>진료·처방 시마다 코페이 발생</strong></td>
-                  </tr>
-                  <tr style="background:#eff6ff !important;">
-                    <td class="font-bold bg-slate-50">추천 대상</td>
-                    <td class="border-l border-slate-200 font-bold text-blue-700">만성질환이 있거나 대형병원/전문의 진료가 잦으신 분, 전국 여행이 잦은 분</td>
-                    <td class="border-l border-slate-200 font-bold text-indigo-800">평소 건강하며 월 고정 지출을 아끼고 다양한 생활 부가 혜택을 원하는 분</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <!-- 4 Criteria Editorial Grid -->
-            <div class="mb-7">
-              <h4 class="text-base font-bold text-brand-dark mb-3">전문 용어 없이 비교하는 4가지 실전 기준:</h4>
-              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-2xs">
-                  <div class="text-xs font-bold text-brand-blue mb-1">기준 1. 담당 의사와 병원</div>
-                  <p class="text-xs text-slate-600 leading-relaxed">
-                    어드밴티지는 2027년 네트워크에 각 의사·병원이 포함되는지 확인하세요. 네트워크는 매년 바뀝니다. 오리지널은 거의 모든 의료기관에서 받습니다.
-                  </p>
-                </div>
-                <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-2xs">
-                  <div class="text-xs font-bold text-brand-blue mb-1">기준 2. 처방약 (포뮬러리)</div>
-                  <p class="text-xs text-slate-600 leading-relaxed">
-                    모든 처방약을 플랜 포뮬러리와 대조하고, 등급과 사전 승인(prior authorization) 필요 여부를 확인하세요. 2026년 파트 D 상한 $2,100을 기억하세요.
-                  </p>
-                </div>
-                <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-2xs">
-                  <div class="text-xs font-bold text-brand-blue mb-1">기준 3. 연간 총비용</div>
-                  <p class="text-xs text-slate-600 leading-relaxed">
-                    월 보험료(플랜 보험료 + 파트 B $202.90) + 디덕터블 + 예상 진료·약 코페이를 합산하세요. 보험료만 보고 판단하지 마세요.
-                  </p>
-                </div>
-                <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-2xs">
-                  <div class="text-xs font-bold text-brand-blue mb-1">기준 4. 별점과 추가 혜택</div>
-                  <p class="text-xs text-slate-600 leading-relaxed">
-                    메디케어는 매년 10월 medicare.gov에 1~5점 별점을 게시합니다. 추가 혜택은 결정적 기준이 아니라 보조 기준으로 보시고 세부 조건을 확인하세요.
-                  </p>
-                </div>
-              </div>
-            </div>
+          ${medicareSectionsHtml}
         </div>
       </section>
 
@@ -1868,3 +1494,7 @@
   <script src="/js/fixes.js?v=8.1.0"></script>
 </body>
 </html>
+`;
+
+fs.writeFileSync(destHtmlPath, html, 'utf8');
+console.log(`[SUCCESS] Rebuilt ${destHtmlPath} (${Buffer.byteLength(html, 'utf8')} bytes).`);
