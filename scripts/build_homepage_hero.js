@@ -424,10 +424,10 @@ JSON
         <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(circle at 75% 35%, rgba(31, 111, 168, 0.28) 0%, rgba(15, 35, 66, 0) 70%); z-index: 1;"></div>
         <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(circle at 20% 80%, rgba(127, 200, 192, 0.1) 0%, transparent 50%); z-index: 1;"></div>
 
-        <!-- PHASE 1: Clean Cinematic Video Intro Layer (No Buttons, No Box) -->
-        <div id="hero-video-phase" class="absolute inset-0 w-full h-full z-30 transition-opacity duration-500 overflow-hidden bg-slate-950 flex items-center justify-center">
+        <!-- PHASE 1: Clean Cinematic Video Intro Layer (Click anywhere or scroll to shrink to billboard) -->
+        <div id="hero-video-phase" class="absolute inset-0 w-full h-full z-30 transition-opacity duration-500 overflow-hidden bg-slate-950 flex items-center justify-center cursor-pointer" onclick="if(window.njapHeroTransition)window.njapHeroTransition()" title="화면을 클릭하거나 스크롤하면 서비스 슬라이드로 이동합니다">
           <video id="hero-intro-video" 
-                 class="w-full h-full object-cover" 
+                 class="w-full h-full object-cover cursor-pointer" 
                  autoplay 
                  muted 
                  playsinline 
@@ -439,10 +439,10 @@ JSON
           </video>
           <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-slate-950/30 pointer-events-none"></div>
 
-          <!-- Subtle Scroll Down Indicator -->
-          <div class="absolute bottom-5 right-6 text-white/50 text-xs font-medium flex items-center gap-1.5 pointer-events-none hidden sm:flex">
-            <svg class="w-3.5 h-3.5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
-            <span>스크롤하여 서비스 바로보기</span>
+          <!-- Subtle Scroll / Click Indicator -->
+          <div class="absolute bottom-5 right-6 text-white/70 text-xs font-medium flex items-center gap-1.5 pointer-events-none hidden sm:flex bg-slate-950/40 backdrop-blur-sm px-3.5 py-1.5 rounded-full border border-white/15 shadow-lg">
+            <svg class="w-3.5 h-3.5 animate-bounce text-[#7FC8C0]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+            <span>클릭 또는 스크롤하여 바로보기</span>
           </div>
         </div>
 
@@ -668,6 +668,19 @@ JSON
                 transitionToBillboard();
               }
             }, { passive: true });
+
+            // Click anywhere on video phase to shrink to billboard immediately
+            if (videoPhase) {
+              videoPhase.addEventListener('click', function() {
+                if (!isTransitioned) transitionToBillboard();
+              });
+            }
+            if (video) {
+              video.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (!isTransitioned) transitionToBillboard();
+              });
+            }
 
             // Slide navigation (1 to 6)
             function goToSlide(n) {
@@ -985,10 +998,10 @@ function updateStaticIndexHTML() {
         <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(circle at 75% 35%, rgba(31, 111, 168, 0.28) 0%, rgba(15, 35, 66, 0) 70%); z-index: 1;"></div>
         <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(circle at 20% 80%, rgba(127, 200, 192, 0.1) 0%, transparent 50%); z-index: 1;"></div>
 
-        <!-- PHASE 1: Clean Cinematic Video Intro Layer (No Buttons, No Box) -->
-        <div id="hero-video-phase" class="absolute inset-0 w-full h-full z-30 transition-opacity duration-500 overflow-hidden bg-slate-950 flex items-center justify-center">
+        <!-- PHASE 1: Clean Cinematic Video Intro Layer (Click anywhere or scroll to shrink to billboard) -->
+        <div id="hero-video-phase" class="absolute inset-0 w-full h-full z-30 transition-opacity duration-500 overflow-hidden bg-slate-950 flex items-center justify-center cursor-pointer" onclick="if(window.njapHeroTransition)window.njapHeroTransition()" title="화면을 클릭하거나 스크롤하면 서비스 슬라이드로 이동합니다">
           <video id="hero-intro-video" 
-                 class="w-full h-full object-cover" 
+                 class="w-full h-full object-cover cursor-pointer" 
                  autoplay 
                  muted 
                  playsinline 
@@ -1000,10 +1013,10 @@ function updateStaticIndexHTML() {
           </video>
           <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-slate-950/30 pointer-events-none"></div>
 
-          <!-- Subtle Scroll Down Indicator -->
-          <div class="absolute bottom-5 right-6 text-white/50 text-xs font-medium flex items-center gap-1.5 pointer-events-none hidden sm:flex">
-            <svg class="w-3.5 h-3.5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
-            <span>스크롤하여 서비스 바로보기</span>
+          <!-- Subtle Scroll / Click Indicator -->
+          <div class="absolute bottom-5 right-6 text-white/70 text-xs font-medium flex items-center gap-1.5 pointer-events-none hidden sm:flex bg-slate-950/40 backdrop-blur-sm px-3.5 py-1.5 rounded-full border border-white/15 shadow-lg">
+            <svg class="w-3.5 h-3.5 animate-bounce text-[#7FC8C0]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+            <span>클릭 또는 스크롤하여 바로보기</span>
           </div>
         </div>
 
@@ -1118,6 +1131,18 @@ function updateStaticIndexHTML() {
             window.addEventListener('scroll', function() {
               if (!isTransitioned && window.scrollY > 20) transitionToBillboard();
             }, { passive: true });
+
+            if (videoPhase) {
+              videoPhase.addEventListener('click', function() {
+                if (!isTransitioned) transitionToBillboard();
+              });
+            }
+            if (video) {
+              video.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (!isTransitioned) transitionToBillboard();
+              });
+            }
 
             function goToSlide(n) {
               if (n < 1) n = totalSlides;
