@@ -342,7 +342,6 @@ def render_article_html(cat_title, title, portal_key, exec_summary, chart_info, 
     <h4 class="rc-guide-h4">공식 문의처 및 접수 안내</h4>
     <ul class="rc-guide-list">
       {contact_li}
-      <li><strong>뉴저지 한인 의료접근포털 (NJAP):</strong> 201-336-7400 / support@njaccessportal.com (한국어 무료 상담 및 대행 지원)</li>
     </ul>
   </div>
 

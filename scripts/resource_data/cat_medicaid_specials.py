@@ -270,7 +270,7 @@ def get_medicaid_specials_articles():
             ],
             contacts=[
                 {"name": "NJ SHIP (주정부 건강보험 무료 상담)", "val": "1-800-792-8820"},
-                {"name": "NJAP 듀얼 플랜 전문 안내", "val": "201-336-7400"}
+                {"name": "NJAP 듀얼 플랜 전문 안내", "val": "njaccessportal@gmail.com"}
             ]
         )
     })
@@ -323,7 +323,7 @@ def get_medicaid_specials_articles():
             ],
             contacts=[
                 {"name": "버겐카운티 복지국 응급의료과", "val": "201-368-4200"},
-                {"name": "NJAP 응급 의료비 긴급 지원", "val": "201-336-7400"}
+                {"name": "NJAP 응급 의료비 긴급 지원", "val": "njaccessportal@gmail.com"}
             ]
         )
     })
@@ -484,7 +484,7 @@ def get_medicaid_specials_articles():
             ],
             contacts=[
                 {"name": "NJ Estate Recovery 전담 부서", "val": "609-588-2993"},
-                {"name": "NJAP 유산보호 전문 법률 연계", "val": "201-336-7400"}
+                {"name": "NJAP 유산보호 전문 법률 연계", "val": "njaccessportal@gmail.com"}
             ]
         )
     })

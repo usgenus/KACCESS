@@ -57,7 +57,7 @@ def get_long_term_care_articles():
             ],
             contacts=[
                 {"name": "버겐카운티 ADRC 데이케어 상담", "val": "201-336-7400"},
-                {"name": "NJAP 어덜트 데이케어 무료 연계", "val": "201-336-7400"}
+                {"name": "NJAP 어덜트 데이케어 무료 연계", "val": "njaccessportal@gmail.com"}
             ]
         )
     })

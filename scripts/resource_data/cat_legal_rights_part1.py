@@ -217,7 +217,7 @@ def get_legal_rights_part1_articles():
             ],
             contacts=[
                 {"name": "New Jersey State Bar Association", "val": "732-249-5000"},
-                {"name": "NJAP 은퇴 법률 전문가 연계", "val": "201-336-7400"}
+                {"name": "NJAP 은퇴 법률 전문가 연계", "val": "njaccessportal@gmail.com"}
             ]
         )
     })
@@ -380,7 +380,7 @@ def get_legal_rights_part1_articles():
             ],
             contacts=[
                 {"name": "American College of Trust and Estate Counsel", "val": "actec.org"},
-                {"name": "NJAP 신탁 전문 연계", "val": "201-336-7400"}
+                {"name": "NJAP 신탁 전문 연계", "val": "njaccessportal@gmail.com"}
             ]
         )
     })

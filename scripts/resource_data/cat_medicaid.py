@@ -110,7 +110,7 @@ def get_medicaid_articles():
             ],
             contacts=[
                 {"name": "버겐카운티 복지국 ABD 팀", "val": "201-368-4200"},
-                {"name": "NJAP 메디케이드 자산 전문 상담", "val": "201-336-7400"}
+                {"name": "NJAP 메디케이드 자산 전문 상담", "val": "njaccessportal@gmail.com"}
             ]
         )
     })
