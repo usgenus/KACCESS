@@ -78,12 +78,21 @@ function get_db_data($forceCloud = false): array {
         }
     }
 
-    // Auto-seed persistent storage from local mirror if persistent file does not exist yet
-    if (!file_exists(PERSISTENT_DATA_FILE) && file_exists(DATA_FILE)) {
-        $pDir = dirname(PERSISTENT_DATA_FILE);
-        if (!is_dir($pDir)) { @mkdir($pDir, 0777, true); @chmod($pDir, 0777); }
-        @copy(DATA_FILE, PERSISTENT_DATA_FILE);
-        @chmod(PERSISTENT_DATA_FILE, 0666);
+    // Auto-seed or update persistent storage from local mirror if DATA_FILE is newer
+    if (file_exists(DATA_FILE)) {
+        if (!file_exists(PERSISTENT_DATA_FILE)) {
+            $pDir = dirname(PERSISTENT_DATA_FILE);
+            if (!is_dir($pDir)) { @mkdir($pDir, 0777, true); @chmod($pDir, 0777); }
+            @copy(DATA_FILE, PERSISTENT_DATA_FILE);
+            @chmod(PERSISTENT_DATA_FILE, 0666);
+        } else {
+            clearstatcache(true, DATA_FILE);
+            clearstatcache(true, PERSISTENT_DATA_FILE);
+            if (filemtime(DATA_FILE) > filemtime(PERSISTENT_DATA_FILE)) {
+                @copy(DATA_FILE, PERSISTENT_DATA_FILE);
+                @chmod(PERSISTENT_DATA_FILE, 0666);
+            }
+        }
     }
     if (!file_exists(PERSISTENT_MEDIA_STORE) && file_exists(LOCAL_MEDIA_STORE)) {
         @copy(LOCAL_MEDIA_STORE, PERSISTENT_MEDIA_STORE);

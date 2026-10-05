@@ -287,15 +287,15 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
         <div>
           <div class="flex items-center gap-2">
             <span class="p-2 bg-blue-500/10 text-blue-400 rounded-xl text-lg"><i class="fa-solid fa-panorama"></i></span>
-            <h1 class="text-xl sm:text-2xl font-extrabold text-white">홈페이지 히어로 빌보드 & 비디오 관리 (Hero Billboard)</h1>
+            <h1 class="text-xl sm:text-2xl font-extrabold text-white">히어로 6대 서비스 빌보드 &amp; 대화면 비디오 관리 (Hero Billboard)</h1>
           </div>
-          <p class="text-xs sm:text-sm text-slate-400 mt-1">
-            홈페이지 <strong>최상단 투-페이즈 빌보드</strong>를 관리합니다. 등록된 비디오는 첫 화면에서 풀사이즈로 순서대로 재생된 후, 자동으로 정보 슬라이드 빌보드로 축소 전환됩니다. 각 슬라이드의 제목, 설명 메시지, 이동 링크를 설정하세요.
+          <p class="text-xs sm:text-sm text-slate-400 mt-1 leading-relaxed">
+            홈페이지 <strong>최상단 대화면 비디오 &amp; 6대 서비스 빌보드</strong>를 관리합니다. <strong>슬라이드 1의 영상은 첫 화면의 대화면 메인 비디오로 자동 연동</strong>되며, 첫 화면 재생 후 6개 정보 슬라이드 빌보드로 축소 전환됩니다. 6개 슬라이드 전체의 제목, 설명 문구, 미디어, 버튼 링크를 편집할 수 있습니다.
           </p>
         </div>
         <button onclick="openBillboardModal()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-3 rounded-2xl transition-all flex items-center gap-2 text-xs shadow-lg shadow-blue-600/30 whitespace-nowrap self-start sm:self-auto">
           <i class="fa-solid fa-plus"></i>
-          <span>새 빌보드 1 추가</span>
+          <span>새 슬라이드 추가</span>
         </button>
       </div>
 
@@ -549,21 +549,45 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
             placeholder="슬라이드 본문에 노출될 핵심 설명 문구(메시지)를 입력하세요."></textarea>
         </div>
 
+        <!-- Main Big Screen Video Option (Linked to Slide 1) -->
+        <div id="billboard-mainvideo-wrap" class="p-3.5 bg-blue-950/60 border border-blue-500/40 rounded-2xl space-y-1.5 transition-all">
+          <div class="flex items-center gap-2">
+            <input type="checkbox" id="billboard-ismainvideo-input" name="isMainVideo" class="w-4 h-4 rounded text-blue-600 bg-slate-800 border-slate-700">
+            <label for="billboard-ismainvideo-input" class="font-bold text-white text-xs cursor-pointer flex items-center gap-1.5">
+              <i class="fa-solid fa-star text-amber-400"></i>
+              <span>홈페이지 대화면 메인 비디오로 사용 (Slide 1과 상시 연동)</span>
+            </label>
+          </div>
+          <p class="text-[11px] text-blue-200/80 leading-relaxed pl-6">
+            체크 시 홈페이지 첫 화면에 풀스크린으로 재생되는 메인 비디오로 설정되며, 재생 완료 시 슬라이드 1로 자동 축소 연동됩니다.
+          </p>
+        </div>
+
         <!-- Media Upload / URL -->
         <div class="bg-slate-950/60 p-4 rounded-2xl border border-slate-800 space-y-3">
           <div class="flex items-center justify-between">
             <label class="block font-bold text-slate-200">배경 미디어 (비디오 또는 이미지) *</label>
             <span class="text-[11px] text-blue-400 font-semibold flex items-center gap-1">
-              <i class="fa-solid fa-circle-info"></i> MP4 비디오 권장
+              <i class="fa-solid fa-photo-film"></i> 비디오(.mp4) 또는 이미지(.jpg, .png)
             </span>
           </div>
-          <div class="p-2.5 bg-blue-950/40 border border-blue-800/40 rounded-xl text-[11px] text-blue-200 leading-relaxed">
-            💡 <strong>인트로 풀영상 재생 안내:</strong> 비디오(.mp4, .webm)를 등록하시면 첫 방문 시 풀사이즈 영상으로 순서대로 재생된 후, 자동으로 정보 슬라이드 빌보드로 축소 전환됩니다. 여러 개의 영상을 올리면 1번, 2번... 순서대로 연속 재생됩니다.
+
+          <!-- Quick Selector for Available Server Videos -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-2.5 bg-slate-900/80 border border-slate-800 rounded-xl text-[11px]">
+            <span class="text-slate-400 font-medium">서버 영상 목록에서 선택:</span>
+            <select id="billboard-video-picker" onchange="pickBillboardVideo(this.value)" class="bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1 text-slate-200 text-xs focus:outline-none focus:border-blue-500">
+              <option value="">-- 비디오 직접 선택 --</option>
+              <option value="/uploads/videos/videos_20260922_014616_9f2834.mp4">의료포털 소개 영상 (20260922)</option>
+              <option value="/uploads/videos/splash-video.mp4">스플래시 영상 (splash-video)</option>
+              <option value="/uploads/videos/excelcare_billboard_bg.mp4">엑셀케어 비디오 배경</option>
+              <option value="/uploads/videos/videos_20260917_141902_77985c.mp4">의료진 진료 안내 영상 (20260917)</option>
+            </select>
           </div>
+
           <div class="flex gap-2">
             <input type="text" id="billboard-media-input" name="mediaUrl" required
               class="flex-1 bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-blue-500"
-              placeholder="미디어 URL (예: /uploads/videos/... 또는 https://...)">
+              placeholder="미디어 URL (예: /uploads/videos/... 또는 /uploads/images/...)">
             <label class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-2 rounded-xl cursor-pointer transition-all flex items-center gap-1.5 whitespace-nowrap">
               <i class="fa-solid fa-arrow-up-from-bracket"></i>
               <span>파일 업로드</span>

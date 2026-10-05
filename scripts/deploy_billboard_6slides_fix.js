@@ -13,6 +13,7 @@ const filesToUpload = [
   'admin/index.php',
   'admin/admin.js',
   'api/billboards.php',
+  'api/db.php',
   'data/content.json'
 ];
 

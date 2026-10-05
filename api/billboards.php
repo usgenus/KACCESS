@@ -74,6 +74,7 @@ if ($method === 'POST') {
         'secondaryLinkUrl' => trim($input['secondaryLinkUrl'] ?? ''),
         'secondaryLinkText' => trim($input['secondaryLinkText'] ?? ''),
         'order' => (int)($input['order'] ?? $order),
+        'isMainVideo' => isset($input['isMainVideo']) ? (bool)$input['isMainVideo'] : ((int)($input['order'] ?? $order) === 1),
         'active' => isset($input['active']) ? (bool)$input['active'] : true,
         'createdAt' => date('Y-m-d H:i:s')
     ];
@@ -116,10 +117,19 @@ if ($method === 'PUT') {
             if (isset($input['secondaryLinkUrl'])) $item['secondaryLinkUrl'] = trim($input['secondaryLinkUrl']);
             if (isset($input['secondaryLinkText'])) $item['secondaryLinkText'] = trim($input['secondaryLinkText']);
             if (isset($input['order'])) $item['order'] = (int)$input['order'];
+            if (isset($input['isMainVideo'])) $item['isMainVideo'] = (bool)$input['isMainVideo'];
             if (isset($input['active'])) $item['active'] = (bool)$input['active'];
             $item['updatedAt'] = date('Y-m-d H:i:s');
             $found = true;
             break;
+        }
+    }
+
+    if ($found && !empty($input['isMainVideo'])) {
+        foreach ($billboards as &$other) {
+            if ($other['id'] !== $id) {
+                $other['isMainVideo'] = false;
+            }
         }
     }
 

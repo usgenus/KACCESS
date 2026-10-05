@@ -219,15 +219,23 @@ function renderBillboards() {
 
   container.innerHTML = state.billboards.map(b => {
     const isVid = b.mediaType === 'video' || (b.mediaUrl && (/\.(mp4|webm|mov|ogg|m4v)($|\?)/i.test(b.mediaUrl) || b.mediaUrl.startsWith('data:video') || b.mediaUrl.includes('/uploads/videos/')));
+    const isMainVid = Boolean(b.isMainVideo || b.order === 1);
     return `
-    <div class="bg-slate-800/90 border border-slate-700/90 rounded-3xl overflow-hidden shadow-lg flex flex-col justify-between group">
+    <div class="bg-slate-800/90 border ${isMainVid ? 'border-amber-500/60 shadow-amber-500/10' : 'border-slate-700/90'} rounded-3xl overflow-hidden shadow-lg flex flex-col justify-between group">
       <div>
         <div class="relative h-48 bg-slate-900 overflow-hidden">
           ${isVid ? `
             <video src="${b.mediaUrl}" class="w-full h-full object-cover" muted autoplay loop playsinline></video>
-            <span class="absolute top-3 right-3 bg-red-600/90 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow">
-              <i class="fa-solid fa-play"></i> 풀영상 인트로 #${b.order || 1}
-            </span>
+            <div class="absolute top-3 right-3 flex items-center gap-1.5 flex-wrap justify-end">
+              ${isMainVid ? `
+                <span class="bg-gradient-to-r from-amber-500 to-amber-600 text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow">
+                  <i class="fa-solid fa-star"></i> 대화면 메인 비디오
+                </span>
+              ` : ''}
+              <span class="bg-red-600/90 text-white text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shadow">
+                <i class="fa-solid fa-play"></i> 비디오
+              </span>
+            </div>
           ` : `
             <img src="${b.mediaUrl || 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&q=80'}" alt="${b.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
             <span class="absolute top-3 right-3 bg-blue-600/90 text-white text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shadow">
@@ -241,7 +249,10 @@ function renderBillboards() {
             </span>
           </div>
           <div class="absolute bottom-3 left-3 right-3">
-            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-0.5">순서 #${b.order || 1}</span>
+            <div class="flex items-center gap-2 mb-0.5">
+              <span class="text-[11px] font-extrabold text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-md">슬라이드 #${b.order || 1}</span>
+              ${isMainVid ? '<span class="text-[10px] text-amber-300 font-semibold">(첫 화면 풀영상 연동)</span>' : ''}
+            </div>
             <h3 class="text-base font-extrabold text-white leading-snug line-clamp-1">${b.title}</h3>
           </div>
         </div>
@@ -254,21 +265,21 @@ function renderBillboards() {
           <div class="text-[11px] text-slate-300 space-y-1">
             <div class="flex items-center gap-1.5 truncate">
               <i class="fa-solid fa-link text-blue-400 shrink-0"></i>
-              <span class="font-bold text-slate-400 shrink-0">링크:</span>
+              <span class="font-bold text-slate-400 shrink-0">기본 버튼:</span>
               <span class="text-blue-300 truncate">${b.linkUrl || '#'}</span>
               <span class="text-slate-400 text-[10px] shrink-0 font-medium">(${b.linkText || '자세히 보기 →'})</span>
             </div>
             ${b.secondaryLinkUrl ? `
               <div class="flex items-center gap-1.5 truncate">
                 <i class="fa-solid fa-arrow-up-right-from-square text-slate-400 shrink-0"></i>
-                <span class="font-bold text-slate-400 shrink-0">보조:</span>
+                <span class="font-bold text-slate-400 shrink-0">보조 버튼:</span>
                 <span class="text-slate-300 truncate">${b.secondaryLinkUrl}</span>
                 <span class="text-slate-400 text-[10px] shrink-0 font-medium">(${b.secondaryLinkText || '더 알아보기'})</span>
               </div>
             ` : ''}
           </div>
           <div class="flex items-center justify-between text-xs text-slate-400 pt-2 border-t border-slate-700/60">
-            <span class="text-[11px] text-slate-400">노출 순서: <strong class="text-white">#${b.order || 1}</strong></span>
+            <span class="text-[11px] text-slate-400">슬라이드 순서: <strong class="text-white">#${b.order || 1}</strong></span>
             <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${b.active ? 'bg-emerald-500/20 text-emerald-300' : 'bg-slate-700 text-slate-400'}">
               ${b.active ? '● 노출 중' : '비활성'}
             </span>
@@ -290,14 +301,29 @@ function renderBillboards() {
   `}).join('');
 }
 
+window.pickBillboardVideo = function(val) {
+  if (!val) return;
+  const mediaInput = document.getElementById('billboard-media-input');
+  if (mediaInput) mediaInput.value = val;
+  const preview = document.getElementById('billboard-media-preview');
+  if (preview) {
+    preview.innerHTML = `<video src="${val}" class="w-full h-full object-cover" controls playsinline autoplay muted></video>`;
+    preview.classList.remove('hidden');
+  }
+};
+
 function openBillboardModal() {
   document.getElementById('form-billboard').reset();
   document.getElementById('billboard-id').value = '';
-  document.getElementById('modal-billboard-title').innerHTML = '<i class="fa-solid fa-panorama text-blue-400"></i> <span>새 히어로 빌보드 & 비디오 등록</span>';
+  document.getElementById('modal-billboard-title').innerHTML = '<i class="fa-solid fa-panorama text-blue-400"></i> <span>새 히어로 슬라이드 등록</span>';
   document.getElementById('billboard-order-input').value = (state.billboards && state.billboards.length) ? (state.billboards.length + 1) : 1;
   document.getElementById('billboard-linktext-input').value = '자세히 보기 →';
   document.getElementById('billboard-linkurl-input').value = '/about#contact';
   document.getElementById('billboard-active-input').checked = true;
+  const mainVidCheck = document.getElementById('billboard-ismainvideo-input');
+  if (mainVidCheck) mainVidCheck.checked = false;
+  const vidPicker = document.getElementById('billboard-video-picker');
+  if (vidPicker) vidPicker.value = '';
   document.getElementById('billboard-media-preview').classList.add('hidden');
   document.getElementById('modal-billboard').classList.remove('hidden');
 }
@@ -321,6 +347,11 @@ function editBillboard(id) {
   const secTextInput = document.getElementById('billboard-secondary-linktext-input');
   if (secTextInput) secTextInput.value = b.secondaryLinkText || '';
 
+  const mainVidCheck = document.getElementById('billboard-ismainvideo-input');
+  if (mainVidCheck) mainVidCheck.checked = Boolean(b.isMainVideo || b.order === 1);
+  const vidPicker = document.getElementById('billboard-video-picker');
+  if (vidPicker) vidPicker.value = b.mediaUrl || '';
+
   document.getElementById('billboard-active-input').checked = b.active !== false;
 
   const preview = document.getElementById('billboard-media-preview');
@@ -336,7 +367,7 @@ function editBillboard(id) {
     preview.classList.add('hidden');
   }
 
-  document.getElementById('modal-billboard-title').innerHTML = '<i class="fa-solid fa-pen-to-square text-blue-400"></i> <span>히어로 빌보드 & 비디오 수정</span>';
+  document.getElementById('modal-billboard-title').innerHTML = '<i class="fa-solid fa-pen-to-square text-blue-400"></i> <span>슬라이드 #' + (b.order || 1) + ' 수정</span>';
   document.getElementById('modal-billboard').classList.remove('hidden');
 }
 
@@ -349,15 +380,18 @@ async function handleSaveBillboard(e) {
   const secTextInput = document.getElementById('billboard-secondary-linktext-input');
   const mediaUrl = document.getElementById('billboard-media-input').value.trim();
   const isVid = /\.(mp4|webm|mov|ogg|m4v)($|\?)/i.test(mediaUrl) || mediaUrl.startsWith('data:video') || mediaUrl.includes('/uploads/videos/');
+  const mainVidCheck = document.getElementById('billboard-ismainvideo-input');
+  const orderVal = parseInt(document.getElementById('billboard-order-input').value) || 1;
 
   const payload = {
     id: id,
     title: document.getElementById('billboard-title-input').value.trim(),
     category: (catInput ? catInput.value.trim() : '') || '',
-    order: parseInt(document.getElementById('billboard-order-input').value) || 1,
+    order: orderVal,
     subtitle: document.getElementById('billboard-subtitle-input').value.trim(),
     mediaUrl: mediaUrl,
     mediaType: isVid ? 'video' : 'image',
+    isMainVideo: mainVidCheck ? mainVidCheck.checked : (orderVal === 1),
     linkUrl: document.getElementById('billboard-linkurl-input').value.trim(),
     linkText: document.getElementById('billboard-linktext-input').value.trim(),
     secondaryLinkUrl: (secUrlInput ? secUrlInput.value.trim() : '') || '',
