@@ -158,12 +158,23 @@ function send_new_post_notification($postItem) {
     $cover = trim($postItem['coverImage'] ?? '/favicon-192.png');
     $postId = $postItem['id'] ?? ('p_' . time());
 
+    $cleanTitle = preg_replace('/[\x{1F300}-\x{1F9FF}\x{2600}-\x{26FF}\x{2700}-\x{27BF}]/u', '', $title);
+    $cleanTitle = preg_replace('/^\s*(\[속보\]|\[긴급\]|\[안내\]|\[Notice\]|\[Breaking\])\s*/iu', '', $cleanTitle);
+    $cleanTitle = trim($cleanTitle);
+
+    $siteOrigin = 'https://njaccessportal.com';
+    $coverUrl = $cover;
+    if ($coverUrl && strpos($coverUrl, 'http') !== 0) {
+        $coverUrl = $siteOrigin . '/' . ltrim($coverUrl, '/');
+    }
+    $badgeUrl = $siteOrigin . '/favicon-192.png';
+
     $broadcastPayload = [
         'id' => $postId,
-        'title' => '🔔 [속보] ' . $title,
+        'title' => '[NJ 한인의료포털] ' . $cleanTitle,
         'body' => $excerpt,
-        'icon' => $cover ?: '/favicon-192.png',
-        'badge' => '/favicon-192.png',
+        'icon' => $coverUrl ?: $badgeUrl,
+        'badge' => $badgeUrl,
         'url' => '/ko/blog/' . $slug,
         'tag' => 'post-' . $postId,
         'timestamp' => time() * 1000

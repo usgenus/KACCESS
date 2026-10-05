@@ -104,13 +104,13 @@
 
     // Send instant welcome notification
     try {
-      reg.showNotification('🔔 [NJAP] 알림 구독이 완료되었습니다!', {
-        body: '새로운 건강 뉴스 및 긴급 리콜 소식이 등록되면 실시간으로 알려드립니다.',
-        icon: '/favicon-192.png',
-        badge: '/favicon-192.png',
-        data: { url: '/blog' },
+      reg.showNotification('[NJ 한인의료포털] 알림 구독이 완료되었습니다', {
+        body: '새로운 한인 건강 뉴스 및 복지 안내가 등록되면 신속하게 알려드립니다.',
+        icon: 'https://njaccessportal.com/favicon-192.png',
+        badge: 'https://njaccessportal.com/favicon-192.png',
+        data: { url: '/news' },
         tag: 'njap-welcome',
-        vibrate: [200, 100, 200]
+        vibrate: [100, 50, 100]
       });
     } catch (e) {
       // Ignore if background notification fails

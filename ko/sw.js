@@ -3,7 +3,7 @@
  * Handles real-time Web Push notifications for news, medical columns & emergency recalls.
  */
 
-const SW_VERSION = 'njap-sw-v1.1.0';
+const SW_VERSION = 'njap-sw-v1.1.1';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
@@ -30,22 +30,36 @@ self.addEventListener('push', (event) => {
 });
 
 function showNotificationFromData(data) {
-  const title = data.title || '🔔 [속보] 새로운 건강·의료 소식';
+  let title = (data.title || '[NJ 한인의료포털] 건강·의료 소식')
+    .replace(/[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '')
+    .replace(/^\s*(\[속보\]|\[긴급\]|\[안내\])\s*/gi, '')
+    .trim();
+  
+  if (!title.startsWith('[NJ')) {
+    title = '[NJ 한인의료포털] ' + title;
+  }
+
+  const defaultIcon = 'https://njaccessportal.com/favicon-192.png';
+  let iconUrl = data.icon || defaultIcon;
+  if (iconUrl && !iconUrl.startsWith('http')) {
+    iconUrl = 'https://njaccessportal.com/' + iconUrl.replace(/^\/+/, '');
+  }
+
   const options = {
-    body: data.body || '뉴저지 한인 의료접근센터의 새로운 건강 정보 및 긴급 리콜을 확인하세요.',
-    icon: data.icon || '/favicon-192.png',
-    badge: data.badge || '/favicon-192.png',
-    image: data.image || undefined,
+    body: (data.body || '뉴저지 한인 의료접근센터의 새로운 건강 정보 및 기사를 확인하세요.').trim(),
+    icon: iconUrl,
+    badge: defaultIcon,
+    image: data.image && data.image.startsWith('http') ? data.image : undefined,
     data: {
-      url: data.url || '/blog',
+      url: data.url || '/ko/blog',
       timestamp: data.timestamp || Date.now()
     },
-    tag: data.tag || 'njap-news-alert',
-    renotify: true,
-    vibrate: [250, 100, 250, 100, 250],
+    tag: data.tag || 'njap-news',
+    renotify: false,
+    vibrate: [100, 50, 100],
     actions: [
-      { action: 'read', title: '기사 읽기 📖' },
-      { action: 'close', title: '닫기 ✕' }
+      { action: 'read', title: '기사 읽기' },
+      { action: 'close', title: '닫기' }
     ]
   };
   return self.registration.showNotification(title, options);
@@ -53,7 +67,7 @@ function showNotificationFromData(data) {
 
 async function fetchLatestAndShowNotification() {
   try {
-    const res = await fetch('/api/latest_broadcast.json?_t=' + Date.now(), { cache: 'no-store' });
+    const res = await fetch('/data/latest_broadcast.json?_t=' + Date.now(), { cache: 'no-store' });
     if (res.ok) {
       const data = await res.json();
       if (data && data.title) {
@@ -65,23 +79,23 @@ async function fetchLatestAndShowNotification() {
   }
 
   try {
-    const res2 = await fetch('/api/posts.php?status=published&_t=' + Date.now(), { cache: 'no-store' });
+    const res2 = await fetch('/ko/api/posts.php?status=published&_t=' + Date.now(), { cache: 'no-store' });
     const json2 = await res2.json();
     const latest = (json2.data && json2.data[0]) ? json2.data[0] : null;
     if (latest) {
       return showNotificationFromData({
-        title: `🔔 [새 뉴스] ${latest.title}`,
+        title: latest.title,
         body: latest.excerpt || '새로운 의료 칼럼 및 정책 뉴스가 등록되었습니다.',
-        icon: latest.coverImage || '/favicon-192.png',
-        url: `/blog/${latest.slug}`
+        icon: latest.coverImage || 'https://njaccessportal.com/favicon-192.png',
+        url: `/ko/blog/${latest.slug}`
       });
     }
   } catch (e) {
     // Minimal fallback
     return showNotificationFromData({
-      title: '🔔 뉴저지 한인 의료접근센터',
-      body: '새로운 건강 소식 및 리콜 정보가 등록되었습니다.',
-      url: '/blog'
+      title: '[NJ 한인의료포털] 뉴저지 한인 의료접근센터',
+      body: '새로운 건강 소식 및 복지 정보가 등록되었습니다.',
+      url: '/ko/blog'
     });
   }
 }
