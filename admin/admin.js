@@ -225,16 +225,19 @@ function renderBillboards() {
         <div class="relative h-48 bg-slate-900 overflow-hidden">
           ${isVid ? `
             <video src="${b.mediaUrl}" class="w-full h-full object-cover" muted autoplay loop playsinline></video>
-            <span class="absolute top-3 right-3 bg-red-600/90 text-white text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
-              <i class="fa-solid fa-video"></i> VIDEO
+            <span class="absolute top-3 right-3 bg-red-600/90 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow">
+              <i class="fa-solid fa-play"></i> 풀영상 인트로 #${b.order || 1}
             </span>
           ` : `
             <img src="${b.mediaUrl || 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&q=80'}" alt="${b.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <span class="absolute top-3 right-3 bg-blue-600/90 text-white text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shadow">
+              <i class="fa-solid fa-image"></i> 이미지
+            </span>
           `}
           <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
           <div class="absolute top-3 left-3">
             <span class="bg-blue-600 text-white text-[11px] font-extrabold px-3 py-1 rounded-full shadow-md">
-              ${b.subtitle || b.category || 'SPECIAL CAMPAIGN'}
+              ${b.category || 'HIGHLIGHT'}
             </span>
           </div>
           <div class="absolute bottom-3 left-3 right-3">
@@ -244,12 +247,28 @@ function renderBillboards() {
         </div>
 
         <div class="p-5 space-y-3">
-          <p class="text-xs text-slate-300 leading-relaxed line-clamp-2">${b.subtitle || ''}</p>
+          <div class="text-xs text-slate-300 leading-relaxed bg-slate-900/60 p-3 rounded-xl border border-slate-700/50">
+            <span class="text-[11px] font-bold text-slate-400 block mb-1">설명 문구 / 메시지:</span>
+            <p class="text-slate-200 line-clamp-3">${b.subtitle || '<span class="text-slate-500 italic">설명 문구 없음</span>'}</p>
+          </div>
+          <div class="text-[11px] text-slate-300 space-y-1">
+            <div class="flex items-center gap-1.5 truncate">
+              <i class="fa-solid fa-link text-blue-400 shrink-0"></i>
+              <span class="font-bold text-slate-400 shrink-0">링크:</span>
+              <span class="text-blue-300 truncate">${b.linkUrl || '#'}</span>
+              <span class="text-slate-400 text-[10px] shrink-0 font-medium">(${b.linkText || '자세히 보기 →'})</span>
+            </div>
+            ${b.secondaryLinkUrl ? `
+              <div class="flex items-center gap-1.5 truncate">
+                <i class="fa-solid fa-arrow-up-right-from-square text-slate-400 shrink-0"></i>
+                <span class="font-bold text-slate-400 shrink-0">보조:</span>
+                <span class="text-slate-300 truncate">${b.secondaryLinkUrl}</span>
+                <span class="text-slate-400 text-[10px] shrink-0 font-medium">(${b.secondaryLinkText || '더 알아보기'})</span>
+              </div>
+            ` : ''}
+          </div>
           <div class="flex items-center justify-between text-xs text-slate-400 pt-2 border-t border-slate-700/60">
-            <span class="flex items-center gap-1.5">
-              <i class="fa-solid fa-link text-blue-400"></i>
-              <span class="truncate max-w-[160px]">${b.linkUrl || '#'}</span>
-            </span>
+            <span class="text-[11px] text-slate-400">노출 순서: <strong class="text-white">#${b.order || 1}</strong></span>
             <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${b.active ? 'bg-emerald-500/20 text-emerald-300' : 'bg-slate-700 text-slate-400'}">
               ${b.active ? '● 노출 중' : '비활성'}
             </span>
@@ -274,7 +293,11 @@ function renderBillboards() {
 function openBillboardModal() {
   document.getElementById('form-billboard').reset();
   document.getElementById('billboard-id').value = '';
-  document.getElementById('modal-billboard-title').innerHTML = '<i class="fa-solid fa-panorama text-blue-400"></i> <span>새 갤러리 빌보드 등록</span>';
+  document.getElementById('modal-billboard-title').innerHTML = '<i class="fa-solid fa-panorama text-blue-400"></i> <span>새 히어로 빌보드 & 비디오 등록</span>';
+  document.getElementById('billboard-order-input').value = (state.billboards && state.billboards.length) ? (state.billboards.length + 1) : 1;
+  document.getElementById('billboard-linktext-input').value = '자세히 보기 →';
+  document.getElementById('billboard-linkurl-input').value = '/about#contact';
+  document.getElementById('billboard-active-input').checked = true;
   document.getElementById('billboard-media-preview').classList.add('hidden');
   document.getElementById('modal-billboard').classList.remove('hidden');
 }
@@ -284,6 +307,7 @@ function editBillboard(id) {
   if (!b) return;
 
   document.getElementById('billboard-id').value = b.id;
+  document.getElementById('billboard-title-input').value = b.title || '';
   const catInput = document.getElementById('billboard-category-input');
   if (catInput) catInput.value = b.category || '';
   document.getElementById('billboard-order-input').value = b.order || 1;
@@ -291,6 +315,12 @@ function editBillboard(id) {
   document.getElementById('billboard-media-input').value = b.mediaUrl || '';
   document.getElementById('billboard-linkurl-input').value = b.linkUrl || '/about#contact';
   document.getElementById('billboard-linktext-input').value = b.linkText || '자세히 보기 →';
+  
+  const secUrlInput = document.getElementById('billboard-secondary-linkurl-input');
+  if (secUrlInput) secUrlInput.value = b.secondaryLinkUrl || '';
+  const secTextInput = document.getElementById('billboard-secondary-linktext-input');
+  if (secTextInput) secTextInput.value = b.secondaryLinkText || '';
+
   document.getElementById('billboard-active-input').checked = b.active !== false;
 
   const preview = document.getElementById('billboard-media-preview');
@@ -306,7 +336,7 @@ function editBillboard(id) {
     preview.classList.add('hidden');
   }
 
-  document.getElementById('modal-billboard-title').innerHTML = '<i class="fa-solid fa-pen-to-square text-blue-400"></i> <span>갤러리 빌보드 수정</span>';
+  document.getElementById('modal-billboard-title').innerHTML = '<i class="fa-solid fa-pen-to-square text-blue-400"></i> <span>히어로 빌보드 & 비디오 수정</span>';
   document.getElementById('modal-billboard').classList.remove('hidden');
 }
 
@@ -315,19 +345,23 @@ async function handleSaveBillboard(e) {
   const id = document.getElementById('billboard-id').value;
   const isEdit = Boolean(id);
   const catInput = document.getElementById('billboard-category-input');
+  const secUrlInput = document.getElementById('billboard-secondary-linkurl-input');
+  const secTextInput = document.getElementById('billboard-secondary-linktext-input');
   const mediaUrl = document.getElementById('billboard-media-input').value.trim();
   const isVid = /\.(mp4|webm|mov|ogg|m4v)($|\?)/i.test(mediaUrl) || mediaUrl.startsWith('data:video') || mediaUrl.includes('/uploads/videos/');
 
   const payload = {
     id: id,
-    title: document.getElementById('billboard-title-input').value,
+    title: document.getElementById('billboard-title-input').value.trim(),
     category: (catInput ? catInput.value.trim() : '') || '',
     order: parseInt(document.getElementById('billboard-order-input').value) || 1,
-    subtitle: document.getElementById('billboard-subtitle-input').value,
+    subtitle: document.getElementById('billboard-subtitle-input').value.trim(),
     mediaUrl: mediaUrl,
     mediaType: isVid ? 'video' : 'image',
-    linkUrl: document.getElementById('billboard-linkurl-input').value,
-    linkText: document.getElementById('billboard-linktext-input').value,
+    linkUrl: document.getElementById('billboard-linkurl-input').value.trim(),
+    linkText: document.getElementById('billboard-linktext-input').value.trim(),
+    secondaryLinkUrl: (secUrlInput ? secUrlInput.value.trim() : '') || '',
+    secondaryLinkText: (secTextInput ? secTextInput.value.trim() : '') || '',
     active: document.getElementById('billboard-active-input').checked
   };
 

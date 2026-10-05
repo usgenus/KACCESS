@@ -287,10 +287,10 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
         <div>
           <div class="flex items-center gap-2">
             <span class="p-2 bg-blue-500/10 text-blue-400 rounded-xl text-lg"><i class="fa-solid fa-panorama"></i></span>
-            <h1 class="text-xl sm:text-2xl font-extrabold text-white">갤러리 빌보드 1 관리 (Billboard 1)</h1>
+            <h1 class="text-xl sm:text-2xl font-extrabold text-white">홈페이지 히어로 빌보드 & 비디오 관리 (Hero Billboard)</h1>
           </div>
           <p class="text-xs sm:text-sm text-slate-400 mt-1">
-            홈페이지 <strong>상단 전면</strong>에 노출되는 대형 하이라이트 빌보드 배너를 관리합니다. (비디오 완독 재생, 이미지 5초 전환)
+            홈페이지 <strong>최상단 투-페이즈 빌보드</strong>를 관리합니다. 등록된 비디오는 첫 화면에서 풀사이즈로 순서대로 재생된 후, 자동으로 정보 슬라이드 빌보드로 축소 전환됩니다. 각 슬라이드의 제목, 설명 메시지, 이동 링크를 설정하세요.
           </p>
         </div>
         <button onclick="openBillboardModal()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-3 rounded-2xl transition-all flex items-center gap-2 text-xs shadow-lg shadow-blue-600/30 whitespace-nowrap self-start sm:self-auto">
@@ -512,7 +512,7 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
       <div class="flex items-center justify-between border-b border-slate-800 pb-4">
         <h3 id="modal-billboard-title" class="text-lg font-bold text-white flex items-center gap-2">
           <i class="fa-solid fa-panorama text-blue-400"></i>
-          <span>갤러리 빌보드 등록</span>
+          <span>히어로 빌보드 & 비디오 등록</span>
         </h3>
         <button onclick="closeModal('modal-billboard')" class="text-slate-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
       </div>
@@ -521,43 +521,53 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
         <input type="hidden" id="billboard-id" name="id">
 
         <div>
-          <label class="block font-bold text-slate-300 mb-1.5">빌보드 제목 (Headline) *</label>
+          <label class="block font-bold text-slate-300 mb-1.5">빌보드 제목 (Headline / Title) *</label>
           <input type="text" id="billboard-title-input" name="title" required
             class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500"
-            placeholder="예: 2026년 뉴저지 한인 맞춤형 종합 건강검진 특별 지원">
+            placeholder="예: NJ ACCESS PORTAL 또는 메디케어 오픈 인롤먼트">
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
+            <label class="block font-bold text-slate-300 mb-1.5">상단 강조 배지 (Badge / Category)</label>
+            <input type="text" id="billboard-category-input" name="category"
+              class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500"
+              placeholder="예: 2026 메디케어 중점 가이드, 의료정보센터 등 (선택)">
+          </div>
+          <div>
             <label class="block font-bold text-slate-300 mb-1.5">노출 순서 (Display Order)</label>
             <input type="number" id="billboard-order-input" name="order" value="1" min="1" max="100"
               class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
-          </div>
-          <div>
-            <label class="block font-bold text-slate-300 mb-1.5">버튼 표시 문구 (Button Text)</label>
-            <input type="text" id="billboard-linktext-input" name="linkText" value="자세히 보기 →"
-              class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500">
+            <span class="text-[10px] text-slate-400 mt-0.5 block">비디오 재생 및 정보 슬라이드 노출 순서 (1, 2, 3...)</span>
           </div>
         </div>
 
         <div>
-          <label class="block font-bold text-slate-300 mb-1.5">메인 설명 문구 (Main Text / Subtitle) *</label>
+          <label class="block font-bold text-slate-300 mb-1.5">설명 문구 / 메시지 (Message / Subtitle) *</label>
           <textarea id="billboard-subtitle-input" name="subtitle" rows="3" required
             class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-blue-500 leading-relaxed"
-            placeholder="배너 하단에 들어갈 상세 설명 문구를 입력하세요."></textarea>
+            placeholder="슬라이드 본문에 노출될 핵심 설명 문구(메시지)를 입력하세요."></textarea>
         </div>
 
         <!-- Media Upload / URL -->
         <div class="bg-slate-950/60 p-4 rounded-2xl border border-slate-800 space-y-3">
-          <label class="block font-bold text-slate-200">배경 이미지 또는 비디오 업로드 (Image / Video)</label>
+          <div class="flex items-center justify-between">
+            <label class="block font-bold text-slate-200">배경 미디어 (비디오 또는 이미지) *</label>
+            <span class="text-[11px] text-blue-400 font-semibold flex items-center gap-1">
+              <i class="fa-solid fa-circle-info"></i> MP4 비디오 권장
+            </span>
+          </div>
+          <div class="p-2.5 bg-blue-950/40 border border-blue-800/40 rounded-xl text-[11px] text-blue-200 leading-relaxed">
+            💡 <strong>인트로 풀영상 재생 안내:</strong> 비디오(.mp4, .webm)를 등록하시면 첫 방문 시 풀사이즈 영상으로 순서대로 재생된 후, 자동으로 정보 슬라이드 빌보드로 축소 전환됩니다. 여러 개의 영상을 올리면 1번, 2번... 순서대로 연속 재생됩니다.
+          </div>
           <div class="flex gap-2">
             <input type="text" id="billboard-media-input" name="mediaUrl" required
               class="flex-1 bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-blue-500"
-              placeholder="이미지 또는 비디오 URL (https://... 또는 /uploads/...)">
+              placeholder="미디어 URL (예: /uploads/videos/... 또는 https://...)">
             <label class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-2 rounded-xl cursor-pointer transition-all flex items-center gap-1.5 whitespace-nowrap">
               <i class="fa-solid fa-arrow-up-from-bracket"></i>
               <span>파일 업로드</span>
-              <input type="file" class="hidden" accept="image/*,video/*" onchange="uploadFieldFile(this, 'billboard-media-input', 'billboard-media-preview')">
+              <input type="file" class="hidden" accept="video/*,image/*" onchange="uploadFieldFile(this, 'billboard-media-input', 'billboard-media-preview')">
             </label>
           </div>
           <!-- Preview container -->
@@ -566,17 +576,35 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
           </div>
         </div>
 
-        <!-- CTA Link & Text -->
+        <!-- Primary CTA Link & Text -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label class="block font-bold text-slate-300 mb-1.5">버튼 클릭 이동 링크 (Link URL)</label>
-            <input type="text" id="billboard-linkurl-input" name="linkUrl" value="/about#contact"
-              class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500">
+            <label class="block font-bold text-slate-300 mb-1.5">버튼 클릭 이동 링크 (Link URL) *</label>
+            <input type="text" id="billboard-linkurl-input" name="linkUrl" value="/about#contact" required
+              class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500"
+              placeholder="예: /about, /about#contact, /resources/medicare">
           </div>
           <div>
             <label class="block font-bold text-slate-300 mb-1.5">버튼 표시 문구 (Button Text)</label>
             <input type="text" id="billboard-linktext-input" name="linkText" value="자세히 보기 →"
-              class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500">
+              class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500"
+              placeholder="예: 자세히 보기 →, 신청 안내 보기">
+          </div>
+        </div>
+
+        <!-- Optional Secondary Button -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+          <div>
+            <label class="block font-bold text-slate-300 mb-1.5">보조 버튼 링크 (선택사항)</label>
+            <input type="text" id="billboard-secondary-linkurl-input" name="secondaryLinkUrl"
+              class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500"
+              placeholder="예: http://pf.kakao.com/_hdxmxaX/chat 또는 /calculator">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-300 mb-1.5">보조 버튼 문구 (선택사항)</label>
+            <input type="text" id="billboard-secondary-linktext-input" name="secondaryLinkText"
+              class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500"
+              placeholder="예: 카카오톡 상담, 자격 확인">
           </div>
         </div>
 

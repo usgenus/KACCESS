@@ -1436,7 +1436,52 @@ html, body {
   <main class="flex-1">
     <div class="flex flex-col bg-[#F3F3F5] min-h-screen text-[#111111] font-sans">
       
-                                                      <!-- 1. Two-Phase Homepage Hero: Video Intro -> 5-Service Rotating Billboard (Shrinks Vertically by 35% on Transition) -->
+                                                                        <!-- 1. Two-Phase Homepage Hero: Multi-Video Intro -> 6-Service Rotating Billboard (Shrinks Vertically by 35% on Transition) -->
+      <?php
+        // Prepare CMS Billboard Data for Server Pre-rendering
+        $firstB = !empty($activeBillboards) ? $activeBillboards[0] : null;
+        $slide1Title = !empty($firstB['title']) ? $firstB['title'] : 'NJ ACCESS PORTAL';
+        $slide1Subtitle = !empty($firstB['subtitle']) ? $firstB['subtitle'] : '뉴저지 한인 동포를 위한 맞춤형 의료 복지 정보와 병원 예약 안내를 제공합니다.';
+        $slide1Category = !empty($firstB['category']) ? $firstB['category'] : '뉴저지 의료접근 포털';
+        $slide1MediaUrl = !empty($firstB['mediaUrl']) ? $firstB['mediaUrl'] : '/uploads/videos/videos_20260922_014616_9f2834.mp4';
+        $slide1LinkUrl = !empty($firstB['linkUrl']) ? $firstB['linkUrl'] : '/about#contact';
+        $slide1LinkText = !empty($firstB['linkText']) ? $firstB['linkText'] : '자세히 보기 →';
+        $slide1SecUrl = !empty($firstB['secondaryLinkUrl']) ? $firstB['secondaryLinkUrl'] : '';
+        $slide1SecText = !empty($firstB['secondaryLinkText']) ? $firstB['secondaryLinkText'] : '';
+
+        // Collect all active video billboards into sequential playlist
+        $videoPlaylist = [];
+        foreach ($activeBillboards as $b) {
+            $mUrl = $b['mediaUrl'] ?? '';
+            $isVid = ($b['mediaType'] ?? '') === 'video' || preg_match('/\.(mp4|webm|mov|ogg|m4v)($|\?)/i', $mUrl) || strpos($mUrl, '/uploads/videos/') !== false;
+            if ($isVid && !empty($mUrl)) {
+                $videoPlaylist[] = [
+                    'url' => $mUrl,
+                    'title' => $b['title'] ?? 'NJ ACCESS PORTAL',
+                    'subtitle' => $b['subtitle'] ?? '',
+                    'category' => !empty($b['category']) ? $b['category'] : '뉴저지 의료접근 포털',
+                    'linkUrl' => $b['linkUrl'] ?? '/about#contact',
+                    'linkText' => $b['linkText'] ?? '자세히 보기 →',
+                    'secondaryLinkUrl' => $b['secondaryLinkUrl'] ?? '',
+                    'secondaryLinkText' => $b['secondaryLinkText'] ?? ''
+                ];
+            }
+        }
+        if (empty($videoPlaylist)) {
+            $videoPlaylist[] = [
+                'url' => $slide1MediaUrl,
+                'title' => $slide1Title,
+                'subtitle' => $slide1Subtitle,
+                'category' => $slide1Category,
+                'linkUrl' => $slide1LinkUrl,
+                'linkText' => $slide1LinkText,
+                'secondaryLinkUrl' => $slide1SecUrl,
+                'secondaryLinkText' => $slide1SecText
+            ];
+        }
+        $firstVideo = $videoPlaylist[0];
+        $isSlide1Vid = ($firstB['mediaType'] ?? '') === 'video' || preg_match('/\.(mp4|webm|mov|ogg|m4v)($|\?)/i', $slide1MediaUrl) || strpos($slide1MediaUrl, '/uploads/videos/') !== false;
+      ?>
       <section id="homepage-hero-billboard-section" class="w-full mb-8 overflow-hidden select-none hero-phase-video" style="width:100vw; max-width:100vw; position:relative; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw; background: linear-gradient(135deg, #071322 0%, #0F2342 55%, #1B2A4A 100%); font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;" aria-label="NJ Access Portal 주요 서비스 하이라이트">
         <style>
           #homepage-hero-billboard-section {
@@ -1494,7 +1539,7 @@ html, body {
           }
           .hero-main-desc {
             font-size: 14.5px;
-            color: rgba(255, 255, 255, 0.85);
+            color: rgba(255, 255, 255, 0.88);
             line-height: 1.55;
             max-width: 520px;
             margin: 0 0 20px 0;
@@ -1670,23 +1715,28 @@ html, body {
             font-weight: 600;
             letter-spacing: -0.01em;
             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-right: 12px;
           }
           .hero-card-caption-num {
             color: rgba(255, 255, 255, 0.7);
             font-size: 11px;
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
             font-weight: 600;
+            white-space: nowrap;
           }
           .hero-slide {
             transition: opacity 350ms cubic-bezier(0.16, 1, 0.3, 1), transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
           }
           .hero-tabs-grid {
             display: grid;
-            grid-template-columns: repeat(5, minmax(0, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 8px;
             width: 100%;
           }
-          @media (max-width: 639px) {
+          @media (max-width: 960px) {
             .hero-tabs-grid {
               display: flex;
               overflow-x: auto;
@@ -1700,7 +1750,7 @@ html, body {
               -webkit-overflow-scrolling: touch;
             }
             .hero-tab-item {
-              flex: 0 0 140px;
+              flex: 0 0 135px;
             }
           }
           .hero-tab-item {
@@ -1769,41 +1819,97 @@ html, body {
                  playsinline 
                  webkit-playsinline 
                  preload="auto" 
+                 src="<?= htmlspecialchars($firstVideo['url']) ?>"
                  poster="/uploads/images/billboard_video_poster.jpg"
                  style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
-            <source src="/uploads/videos/videos_20260922_014616_9f2834.mp4" type="video/mp4">
           </video>
-          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-slate-950/30 pointer-events-none"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-slate-950/45 pointer-events-none"></div>
 
-          <!-- Small Skip Button -->
-          <button id="hero-video-skip-btn" type="button" class="absolute top-4 right-4 sm:top-6 sm:right-8 z-40 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-black/65 hover:bg-black/90 backdrop-blur-md border border-white/25 text-white text-xs sm:text-sm font-semibold flex items-center gap-1.5 shadow-xl transition-all active:scale-95 cursor-pointer" aria-label="비디오 건너뛰기">
-            <span>건너뛰기 Skip</span>
-            <svg class="w-3.5 h-3.5 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 5l7 7-7 7M5 5l7 7-7 7"/></svg>
-          </button>
+          <!-- Clean Text & Link Overlay from CMS (at bottom-left of full video) -->
+          <div id="hero-video-text-overlay" class="absolute bottom-8 left-6 sm:bottom-12 sm:left-12 max-w-xl z-40 transition-all duration-300 pointer-events-auto">
+            <div class="p-6 sm:p-8 rounded-2xl bg-slate-950/70 backdrop-blur-xl border border-white/20 shadow-2xl">
+              <div id="hero-video-badge-wrap">
+                <span id="hero-video-badge" class="hero-pill-badge mb-3.5">
+                  <span class="w-2 h-2 rounded-full bg-[#7FC8C0] animate-pulse"></span>
+                  <span id="hero-video-badge-text"><?= htmlspecialchars($firstVideo['category']) ?></span>
+                </span>
+              </div>
+              <div id="hero-video-title" class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight mb-2.5 drop-shadow-md leading-tight">
+                <?= htmlspecialchars($firstVideo['title']) ?>
+              </div>
+              <p id="hero-video-desc" class="text-base sm:text-lg text-slate-100 font-medium leading-relaxed mb-5 max-w-lg drop-shadow">
+                <?= nl2br(htmlspecialchars($firstVideo['subtitle'])) ?>
+              </p>
+              <div id="hero-video-btn-row" class="hero-btn-row">
+                <a id="hero-video-link-primary" href="<?= htmlspecialchars($firstVideo['linkUrl']) ?>" class="hero-btn-primary">
+                  <span id="hero-video-link-text"><?= htmlspecialchars($firstVideo['linkText']) ?></span>
+                  <svg class="hero-btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                </a>
+                <?php if (!empty($firstVideo['secondaryLinkUrl'])): ?>
+                <a id="hero-video-link-secondary" href="<?= htmlspecialchars($firstVideo['secondaryLinkUrl']) ?>" class="hero-btn-white">
+                  <span id="hero-video-sec-text"><?= htmlspecialchars($firstVideo['secondaryLinkText'] ?: '더 알아보기') ?></span>
+                </a>
+                <?php endif; ?>
+              </div>
+            </div>
+          </div>
+
+          <!-- Subtle Scroll Hint (No Buttons) -->
+          <div class="absolute bottom-4 right-6 text-white/50 text-xs font-medium flex items-center gap-1.5 pointer-events-none hidden sm:flex">
+            <svg class="w-3.5 h-3.5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+            <span>스크롤하여 건너뛰기</span>
+          </div>
         </div>
 
-        <!-- PHASE 2: Rotating Service Billboard Layer (Shrunk Vertically by 35%) -->
+        <!-- PHASE 2: Rotating Service Billboard Layer (Shrunk Vertically by 35% -> Exactly 6 Slides) -->
         <div id="hero-billboard-phase" class="relative w-full h-full z-10 opacity-0 pointer-events-none transition-opacity duration-500 flex flex-col justify-between py-5 sm:py-7 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" style="min-height: clamp(365px, 34vw, 455px);">
           
           <!-- Top Row: Left Content Column & Right Visual Card Column -->
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center flex-1 my-auto">
             
-            <!-- Left Column: Content Panels (Pre-rendered in DOM, only active slide visible) -->
+            <!-- Left Column: Content Panels (Only active slide visible) -->
             <div class="order-1 lg:order-1 lg:col-span-7 flex flex-col justify-center relative min-h-[240px] sm:min-h-[260px]">
               
-              <!-- SLIDE 01: 메디케어 & ACA 가이드 -->
+              <!-- SLIDE 01: CMS Hero Slide (The Big Screen Video Item) -->
               <div id="hero-slide-1" class="hero-slide" data-slide="1">
+                <div>
+                  <span class="hero-pill-badge">
+                    <span class="w-2 h-2 rounded-full bg-[#7FC8C0] animate-pulse"></span>
+                    <span id="hero-slide1-badge-text"><?= htmlspecialchars($slide1Category) ?></span>
+                  </span>
+                </div>
+                <!-- Authoritative Page single <h1> for SEO -->
+                <h1 id="hero-single-h1" class="hero-main-title">
+                  <?= htmlspecialchars($slide1Title) ?>
+                </h1>
+                <p id="hero-slide1-desc" class="hero-main-desc">
+                  <?= nl2br(htmlspecialchars($slide1Subtitle)) ?>
+                </p>
+                <div id="hero-slide1-btn-row" class="hero-btn-row">
+                  <a id="hero-slide1-link" href="<?= htmlspecialchars($slide1LinkUrl) ?>" class="hero-btn-primary">
+                    <span id="hero-slide1-link-text"><?= htmlspecialchars($slide1LinkText) ?></span>
+                    <svg class="hero-btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                  </a>
+                  <?php if (!empty($slide1SecUrl)): ?>
+                  <a id="hero-slide1-sec-link" href="<?= htmlspecialchars($slide1SecUrl) ?>" class="hero-btn-white">
+                    <span><?= htmlspecialchars($slide1SecText ?: '더 알아보기') ?></span>
+                  </a>
+                  <?php endif; ?>
+                </div>
+              </div>
+
+              <!-- SLIDE 02: 메디케어 & ACA 가이드 -->
+              <div id="hero-slide-2" class="hero-slide hidden opacity-0 translate-y-3" data-slide="2">
                 <div>
                   <span class="hero-pill-badge">
                     <span class="w-2 h-2 rounded-full bg-[#7FC8C0] animate-pulse"></span>
                     2026 메디케어 중점 가이드
                   </span>
                 </div>
-                <!-- Authoritative Page single <h1> for SEO -->
-                <h1 id="hero-single-h1" class="hero-main-title">
+                <div class="hero-main-title">
                   메디케어 오픈 인롤먼트<br>
                   <span class="hero-gradient-accent">10월 15일 – 12월 7일 완벽 가이드</span>
-                </h1>
+                </div>
                 <p class="hero-main-desc">
                   파트 D $2,100 약값 상한제, 파트 B $202.90 — 2026년 변경 사항과 플랜 비교 체크리스트를 확인하세요.
                 </p>
@@ -1818,8 +1924,8 @@ html, body {
                 </div>
               </div>
 
-              <!-- SLIDE 02: 환자 내비게이션 서비스 -->
-              <div id="hero-slide-2" class="hero-slide hidden opacity-0 translate-y-3" data-slide="2">
+              <!-- SLIDE 03: 환자 내비게이션 서비스 -->
+              <div id="hero-slide-3" class="hero-slide hidden opacity-0 translate-y-3" data-slide="3">
                 <div>
                   <span class="hero-pill-badge">
                     <span class="w-2 h-2 rounded-full bg-[#4FA3D1] animate-pulse"></span>
@@ -1845,8 +1951,8 @@ html, body {
                 </div>
               </div>
 
-              <!-- SLIDE 03: 커뮤니티 포럼 -->
-              <div id="hero-slide-3" class="hero-slide hidden opacity-0 translate-y-3" data-slide="3">
+              <!-- SLIDE 04: 커뮤니티 포럼 -->
+              <div id="hero-slide-4" class="hero-slide hidden opacity-0 translate-y-3" data-slide="4">
                 <div>
                   <span class="hero-pill-badge">
                     <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
@@ -1871,8 +1977,8 @@ html, body {
                 </div>
               </div>
 
-              <!-- SLIDE 04: 건강 뉴스 -->
-              <div id="hero-slide-4" class="hero-slide hidden opacity-0 translate-y-3" data-slide="4">
+              <!-- SLIDE 05: 건강 뉴스 -->
+              <div id="hero-slide-5" class="hero-slide hidden opacity-0 translate-y-3" data-slide="5">
                 <div>
                   <span class="hero-pill-badge">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -1897,8 +2003,8 @@ html, body {
                 </div>
               </div>
 
-              <!-- SLIDE 05: 실시간 자격 확인 -->
-              <div id="hero-slide-5" class="hero-slide hidden opacity-0 translate-y-3" data-slide="5">
+              <!-- SLIDE 06: 실시간 자격 확인 -->
+              <div id="hero-slide-6" class="hero-slide hidden opacity-0 translate-y-3" data-slide="6">
                 <div>
                   <span class="hero-pill-badge">
                     <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
@@ -1925,20 +2031,27 @@ html, body {
             <!-- Right Column: Visual Card with Caption -->
             <div class="order-2 lg:order-2 lg:col-span-5 flex justify-center w-full">
               <div class="hero-card-container">
-                <!-- Images (All 5 pre-rendered) -->
-                <img id="hero-visual-1" src="/uploads/images/hero_slide_1.jpg" alt="2026 메디케어 변경 사항 한눈에" class="hero-visual-img" style="opacity: 1; transform: scale(1.0); z-index: 10;" />
-                <img id="hero-visual-2" src="/uploads/images/hero_slide_2.jpg" alt="찾아가는 맞춤 내비게이션" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
-                <img id="hero-visual-3" src="/uploads/images/hero_slide_forum.jpg?v=1" alt="5개 게시판 · 실시간 소통" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
-                <img id="hero-visual-4" src="/uploads/images/hero_slide_recall.jpg?v=<?= time() ?>" alt="긴급 식품·의약품 리콜 속보" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
-                <img id="hero-visual-5" src="/uploads/images/hero_slide_5.jpg" alt="2026 복지 혜택 자격 계산기" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
+                <!-- Visual 1: Video or Image from CMS -->
+                <?php if ($isSlide1Vid): ?>
+                <video id="hero-visual-1" src="<?= htmlspecialchars($slide1MediaUrl) ?>" autoplay muted loop playsinline webkit-playsinline class="hero-visual-img" style="opacity: 1; transform: scale(1.0); z-index: 10; object-fit: cover;"></video>
+                <?php else: ?>
+                <img id="hero-visual-1" src="<?= htmlspecialchars($slide1MediaUrl) ?>" alt="<?= htmlspecialchars($slide1Title) ?>" class="hero-visual-img" style="opacity: 1; transform: scale(1.0); z-index: 10;" />
+                <?php endif; ?>
+
+                <!-- Visuals 2 to 6 -->
+                <img id="hero-visual-2" src="/uploads/images/hero_slide_1.jpg" alt="2026 메디케어 변경 사항 한눈에" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
+                <img id="hero-visual-3" src="/uploads/images/hero_slide_2.jpg" alt="찾아가는 맞춤 내비게이션" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
+                <img id="hero-visual-4" src="/uploads/images/hero_slide_forum.jpg?v=1" alt="5개 게시판 · 실시간 소통" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
+                <img id="hero-visual-5" src="/uploads/images/hero_slide_recall.jpg" alt="긴급 식품·의약품 리콜 속보" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
+                <img id="hero-visual-6" src="/uploads/images/hero_slide_5.jpg" alt="2026 복지 혜택 자격 계산기" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
                 
                 <!-- Bottom Caption Bar -->
                 <div class="hero-card-caption-bar">
                   <span id="hero-visual-caption" class="hero-card-caption-text">
-                    2026 메디케어 변경 사항 한눈에
+                    <?= htmlspecialchars($slide1Title) ?>
                   </span>
                   <span class="hero-card-caption-num">
-                    <span id="hero-visual-num">01</span> / 05
+                    <span id="hero-visual-num">01</span> / 06
                   </span>
                 </div>
               </div>
@@ -1946,41 +2059,48 @@ html, body {
 
           </div>
 
-          <!-- Bottom: Highlight Tab Bar (role="tablist", aria-selected, arrow-key navigation) -->
+          <!-- Bottom: Highlight Tab Bar (6 tabs) -->
           <div class="mt-6 pt-3 border-t border-white/10 w-full">
             <div role="tablist" aria-label="NJ Access Portal 서비스 하이라이트" class="hero-tabs-grid">
               
               <!-- Tab 1 -->
               <button role="tab" id="hero-tab-1" aria-controls="hero-slide-1" aria-selected="true" tabindex="0" onclick="window.njapHeroGoto(1)" class="hero-tab-item active">
                 <span class="hero-tab-sub">하이라이트 01</span>
-                <span class="hero-tab-title">메디케어 & ACA</span>
+                <span id="hero-tab1-title" class="hero-tab-title"><?= htmlspecialchars($slide1Category) ?></span>
                 <div class="hero-tab-bar"></div>
               </button>
 
               <!-- Tab 2 -->
               <button role="tab" id="hero-tab-2" aria-controls="hero-slide-2" aria-selected="false" tabindex="-1" onclick="window.njapHeroGoto(2)" class="hero-tab-item">
                 <span class="hero-tab-sub">하이라이트 02</span>
-                <span class="hero-tab-title">환자 내비게이션</span>
+                <span class="hero-tab-title">메디케어 &amp; ACA</span>
                 <div class="hero-tab-bar"></div>
               </button>
 
               <!-- Tab 3 -->
               <button role="tab" id="hero-tab-3" aria-controls="hero-slide-3" aria-selected="false" tabindex="-1" onclick="window.njapHeroGoto(3)" class="hero-tab-item">
                 <span class="hero-tab-sub">하이라이트 03</span>
-                <span class="hero-tab-title">커뮤니티 포럼</span>
+                <span class="hero-tab-title">환자 내비게이션</span>
                 <div class="hero-tab-bar"></div>
               </button>
 
               <!-- Tab 4 -->
               <button role="tab" id="hero-tab-4" aria-controls="hero-slide-4" aria-selected="false" tabindex="-1" onclick="window.njapHeroGoto(4)" class="hero-tab-item">
                 <span class="hero-tab-sub">하이라이트 04</span>
-                <span class="hero-tab-title">건강 뉴스</span>
+                <span class="hero-tab-title">커뮤니티 포럼</span>
                 <div class="hero-tab-bar"></div>
               </button>
 
               <!-- Tab 5 -->
               <button role="tab" id="hero-tab-5" aria-controls="hero-slide-5" aria-selected="false" tabindex="-1" onclick="window.njapHeroGoto(5)" class="hero-tab-item">
                 <span class="hero-tab-sub">하이라이트 05</span>
+                <span class="hero-tab-title">건강 뉴스</span>
+                <div class="hero-tab-bar"></div>
+              </button>
+
+              <!-- Tab 6 -->
+              <button role="tab" id="hero-tab-6" aria-controls="hero-slide-6" aria-selected="false" tabindex="-1" onclick="window.njapHeroGoto(6)" class="hero-tab-item">
+                <span class="hero-tab-sub">하이라이트 06</span>
                 <span class="hero-tab-title">실시간 자격 확인</span>
                 <div class="hero-tab-bar"></div>
               </button>
@@ -1998,19 +2118,43 @@ html, body {
             var videoPhase = document.getElementById('hero-video-phase');
             var billboardPhase = document.getElementById('hero-billboard-phase');
             var video = document.getElementById('hero-intro-video');
-            var skipBtn = document.getElementById('hero-video-skip-btn');
             var visualCaption = document.getElementById('hero-visual-caption');
             var visualNum = document.getElementById('hero-visual-num');
             var singleH1 = document.getElementById('hero-single-h1');
             
+            // Phase 1 Overlay Elements
+            var overlayBadge = document.getElementById('hero-video-badge-text');
+            var overlayTitle = document.getElementById('hero-video-title');
+            var overlayDesc = document.getElementById('hero-video-desc');
+            var overlayLink = document.getElementById('hero-video-link-primary');
+            var overlayLinkText = document.getElementById('hero-video-link-text');
+            var overlaySecLink = document.getElementById('hero-video-link-secondary');
+            var overlaySecText = document.getElementById('hero-video-sec-text');
+
+            // Video playlist from server
+            var videoPlaylist = <?= json_encode($videoPlaylist, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
+            if (!Array.isArray(videoPlaylist) || videoPlaylist.length === 0) {
+              videoPlaylist = [{
+                url: '/uploads/videos/videos_20260922_014616_9f2834.mp4',
+                title: 'NJ ACCESS PORTAL',
+                subtitle: '뉴저지 한인 동포를 위한 맞춤형 의료 복지 정보와 병원 예약 안내를 제공합니다.',
+                category: '뉴저지 의료접근 포털',
+                linkUrl: '/about#contact',
+                linkText: '자세히 보기 →'
+              }];
+            }
+
+            var currentVideoIdx = 0;
+            var totalVideos = videoPlaylist.length;
             var currentSlide = 1;
-            var totalSlides = 5;
+            var totalSlides = 6;
             var rotateTimer = null;
             var isTransitioned = false;
             var isPaused = false;
             var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
             var captions = [
+              videoPlaylist[0].title || 'NJ ACCESS PORTAL',
               '2026 메디케어 변경 사항 한눈에',
               '찾아가는 맞춤 내비게이션',
               '5개 게시판 · 실시간 소통',
@@ -2019,6 +2163,7 @@ html, body {
             ];
 
             var slideHeadlines = [
+              videoPlaylist[0].title || 'NJ ACCESS PORTAL',
               '메디케어 오픈 인롤먼트<br><span class="hero-gradient-accent">10월 15일 – 12월 7일 완벽 가이드</span>',
               '병원 찾기가 막막하다면<br><span class="hero-gradient-accent">전문 내비게이터와 함께</span>',
               '궁금한 건강 정보를<br><span class="hero-gradient-accent">커뮤니티에 물어보세요</span>',
@@ -2026,9 +2171,60 @@ html, body {
               '나에게 맞는 혜택을<br><span class="hero-gradient-accent">실시간 맞춤 계산기로 확인</span>'
             ];
 
+            function updateVideoOverlay(idx) {
+              var v = videoPlaylist[idx];
+              if (!v) return;
+              if (overlayBadge) overlayBadge.textContent = v.category || '뉴저지 의료접근 포털';
+              if (overlayTitle) overlayTitle.textContent = v.title || 'NJ ACCESS PORTAL';
+              if (overlayDesc) overlayDesc.innerHTML = (v.subtitle || '').replace(/\n/g, '<br>');
+              if (overlayLink) {
+                overlayLink.href = v.linkUrl || '/about#contact';
+                if (overlayLinkText) overlayLinkText.textContent = v.linkText || '자세히 보기 →';
+              }
+              if (overlaySecLink) {
+                if (v.secondaryLinkUrl) {
+                  overlaySecLink.href = v.secondaryLinkUrl;
+                  if (overlaySecText) overlaySecText.textContent = v.secondaryLinkText || '더 알아보기';
+                  overlaySecLink.classList.remove('hidden');
+                } else {
+                  overlaySecLink.classList.add('hidden');
+                }
+              }
+            }
+
+            function playVideoAtIndex(idx) {
+              if (idx >= totalVideos) {
+                transitionToBillboard();
+                return;
+              }
+              currentVideoIdx = idx;
+              updateVideoOverlay(idx);
+
+              if (video) {
+                var nextSrc = videoPlaylist[currentVideoIdx].url;
+                try { video.pause(); } catch(e) {}
+                video.src = nextSrc;
+                video.load();
+                var p = video.play();
+                if (p && p.catch) {
+                  p.catch(function(err) {
+                    // If video play failed, try next or transition
+                    if (currentVideoIdx + 1 < totalVideos) {
+                      playVideoAtIndex(currentVideoIdx + 1);
+                    } else {
+                      transitionToBillboard();
+                    }
+                  });
+                }
+              }
+            }
+
             function transitionToBillboard() {
               if (isTransitioned) return;
               isTransitioned = true;
+
+              // Detach scroll/wheel listeners
+              removeScrollSkipListeners();
 
               if (video) {
                 try { video.pause(); } catch(e) {}
@@ -2053,12 +2249,67 @@ html, body {
                 billboardPhase.style.pointerEvents = 'auto';
               }
 
+              // Also ensure active visual video in right card starts playing
+              var activeVis = document.getElementById('hero-visual-1');
+              if (activeVis && activeVis.tagName === 'VIDEO') {
+                try { activeVis.play(); } catch(e) {}
+              }
+
               if (!prefersReducedMotion) {
                 startRotation();
               }
             }
 
-            // Phase 1 triggers
+            // Automatic skip on scroll down
+            function onScrollDownSkip() {
+              if (!isTransitioned) {
+                transitionToBillboard();
+              }
+            }
+
+            function handleWheel(e) {
+              if (e.deltaY > 12) {
+                onScrollDownSkip();
+              }
+            }
+
+            var touchStartY = 0;
+            function handleTouchStart(e) {
+              if (e.touches && e.touches[0]) {
+                touchStartY = e.touches[0].clientY;
+              }
+            }
+
+            function handleTouchMove(e) {
+              if (e.touches && e.touches[0]) {
+                var delta = touchStartY - e.touches[0].clientY;
+                if (delta > 20) { // Swiping up = scrolling down
+                  onScrollDownSkip();
+                }
+              }
+            }
+
+            function handleWindowScroll() {
+              if (window.scrollY > 25) {
+                onScrollDownSkip();
+              }
+            }
+
+            function attachScrollSkipListeners() {
+              window.addEventListener('wheel', handleWheel, { passive: true });
+              window.addEventListener('touchstart', handleTouchStart, { passive: true });
+              window.addEventListener('touchmove', handleTouchMove, { passive: true });
+              window.addEventListener('scroll', handleWindowScroll, { passive: true });
+            }
+
+            function removeScrollSkipListeners() {
+              window.removeEventListener('wheel', handleWheel);
+              window.removeEventListener('touchstart', handleTouchStart);
+              window.removeEventListener('touchmove', handleTouchMove);
+              window.removeEventListener('scroll', handleWindowScroll);
+            }
+
+            // Phase 1 Setup & Sequential Video Playback
             if (prefersReducedMotion) {
               transitionToBillboard();
             } else if (video) {
@@ -2067,11 +2318,18 @@ html, body {
               video.volume = 0;
               video.playsInline = true;
 
+              attachScrollSkipListeners();
+              updateVideoOverlay(0);
+
               var triggerPlay = function() {
                 var p = video.play();
                 if (p && p.catch) {
                   p.catch(function() {
-                    transitionToBillboard();
+                    if (totalVideos > 1) {
+                      playVideoAtIndex(1);
+                    } else {
+                      transitionToBillboard();
+                    }
                   });
                 }
               };
@@ -2083,26 +2341,34 @@ html, body {
                 video.addEventListener('loadeddata', triggerPlay, { once: true });
               }
 
-              video.addEventListener('ended', transitionToBillboard);
-              video.addEventListener('error', transitionToBillboard);
+              // Advance to next video or transition when ended
+              video.addEventListener('ended', function() {
+                if (currentVideoIdx + 1 < totalVideos) {
+                  playVideoAtIndex(currentVideoIdx + 1);
+                } else {
+                  transitionToBillboard();
+                }
+              });
 
-              // Safety timeout: transition after 12 seconds max
+              video.addEventListener('error', function() {
+                if (currentVideoIdx + 1 < totalVideos) {
+                  playVideoAtIndex(currentVideoIdx + 1);
+                } else {
+                  transitionToBillboard();
+                }
+              });
+
+              // Watchdog safety timeout per video (60s max)
               setTimeout(function() {
-                if (!isTransitioned) transitionToBillboard();
-              }, 12000);
+                if (!isTransitioned && currentVideoIdx === 0 && totalVideos <= 1) {
+                  transitionToBillboard();
+                }
+              }, 45000);
             } else {
               transitionToBillboard();
             }
 
-            if (skipBtn) {
-              skipBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                transitionToBillboard();
-              });
-            }
-
-            // Slide navigation
+            // Slide navigation (1 to 6)
             function goToSlide(n) {
               if (n < 1) n = totalSlides;
               if (n > totalSlides) n = 1;
@@ -2116,7 +2382,7 @@ html, body {
               // Update slides
               for (var i = 1; i <= totalSlides; i++) {
                 var slide = document.getElementById('hero-slide-' + i);
-                var img = document.getElementById('hero-visual-' + i);
+                var visual = document.getElementById('hero-visual-' + i);
                 var tab = document.getElementById('hero-tab-' + i);
 
                 if (slide) {
@@ -2132,15 +2398,21 @@ html, body {
                   }
                 }
 
-                if (img) {
+                if (visual) {
                   if (i === currentSlide) {
-                    img.style.opacity = '1';
-                    img.style.transform = 'scale(1.0)';
-                    img.style.zIndex = '10';
+                    visual.style.opacity = '1';
+                    visual.style.transform = 'scale(1.0)';
+                    visual.style.zIndex = '10';
+                    if (visual.tagName === 'VIDEO') {
+                      try { visual.currentTime = 0; visual.play(); } catch(e) {}
+                    }
                   } else {
-                    img.style.opacity = '0';
-                    img.style.transform = 'scale(1.02)';
-                    img.style.zIndex = '1';
+                    visual.style.opacity = '0';
+                    visual.style.transform = 'scale(1.02)';
+                    visual.style.zIndex = '1';
+                    if (visual.tagName === 'VIDEO') {
+                      try { visual.pause(); } catch(e) {}
+                    }
                   }
                 }
 
@@ -2157,7 +2429,7 @@ html, body {
                 }
               }
 
-              if (visualCaption) {
+              if (visualCaption && captions[currentSlide - 1]) {
                 visualCaption.textContent = captions[currentSlide - 1];
               }
               if (visualNum) {
@@ -2177,7 +2449,7 @@ html, body {
                 if (!isPaused) {
                   goToSlide(currentSlide + 1);
                 }
-              }, 4000);
+              }, 5000);
             }
 
             function stopRotation() {
@@ -2227,6 +2499,98 @@ html, body {
                 }
               });
             }
+
+            // Live CMS Update Hook (Updates Slide 1 and Video Playlist dynamically)
+            window.njapUpdateHeroFromCMS = function(cmsList) {
+              if (!Array.isArray(cmsList) || cmsList.length === 0) return;
+
+              // Filter video items
+              var newVideos = [];
+              cmsList.forEach(function(s) {
+                var url = s.mediaUrl || '';
+                var isV = s.mediaType === 'video' || /\.(mp4|webm|mov|ogg|m4v)($|\?)/i.test(url) || url.indexOf('/uploads/videos/') !== -1;
+                if (isV && url) {
+                  newVideos.push({
+                    url: url,
+                    title: s.title || 'NJ ACCESS PORTAL',
+                    subtitle: s.subtitle || '',
+                    category: s.category || '뉴저지 의료접근 포털',
+                    linkUrl: s.linkUrl || '/about#contact',
+                    linkText: s.linkText || '자세히 보기 →',
+                    secondaryLinkUrl: s.secondaryLinkUrl || '',
+                    secondaryLinkText: s.secondaryLinkText || ''
+                  });
+                }
+              });
+
+              if (newVideos.length > 0) {
+                videoPlaylist = newVideos;
+                totalVideos = videoPlaylist.length;
+              }
+
+              // Update Slide 1 Content
+              var first = cmsList[0];
+              var bText = first.category || '뉴저지 의료접근 포털';
+              var title = first.title || 'NJ ACCESS PORTAL';
+              var desc = first.subtitle || '';
+              var lUrl = first.linkUrl || '/about#contact';
+              var lText = first.linkText || '자세히 보기 →';
+              var sUrl = first.secondaryLinkUrl || '';
+              var sText = first.secondaryLinkText || '';
+
+              var s1Badge = document.getElementById('hero-slide1-badge-text');
+              if (s1Badge) s1Badge.textContent = bText;
+
+              var s1H1 = document.getElementById('hero-single-h1');
+              if (s1H1 && currentSlide === 1) s1H1.textContent = title;
+              slideHeadlines[0] = title;
+              captions[0] = title;
+
+              var s1Desc = document.getElementById('hero-slide1-desc');
+              if (s1Desc) s1Desc.innerHTML = desc.replace(/\n/g, '<br>');
+
+              var s1Link = document.getElementById('hero-slide1-link');
+              var s1LinkText = document.getElementById('hero-slide1-link-text');
+              if (s1Link) {
+                s1Link.href = lUrl;
+                if (s1LinkText) s1LinkText.textContent = lText;
+              }
+
+              var s1SecLink = document.getElementById('hero-slide1-sec-link');
+              if (s1SecLink) {
+                if (sUrl) {
+                  s1SecLink.href = sUrl;
+                  s1SecLink.querySelector('span').textContent = sText || '더 알아보기';
+                  s1SecLink.classList.remove('hidden');
+                } else {
+                  s1SecLink.classList.add('hidden');
+                }
+              }
+
+              // Update Tab 1 Title
+              var tab1Title = document.getElementById('hero-tab1-title');
+              if (tab1Title) tab1Title.textContent = bText;
+
+              // Update Visual 1 if media changed
+              var vis1 = document.getElementById('hero-visual-1');
+              var isV = first.mediaType === 'video' || /\.(mp4|webm|mov|ogg|m4v)($|\?)/i.test(first.mediaUrl || '') || (first.mediaUrl || '').indexOf('/uploads/videos/') !== -1;
+              if (vis1) {
+                if (isV && vis1.tagName === 'VIDEO') {
+                  if (vis1.src !== first.mediaUrl) {
+                    vis1.src = first.mediaUrl;
+                    vis1.load();
+                    if (currentSlide === 1) try { vis1.play(); } catch(e) {}
+                  }
+                } else if (!isV && vis1.tagName === 'IMG') {
+                  vis1.src = first.mediaUrl;
+                  vis1.alt = title;
+                }
+              }
+
+              if (currentSlide === 1) {
+                goToSlide(1);
+              }
+            };
           })();
         </script>
       </section>

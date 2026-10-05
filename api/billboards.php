@@ -71,6 +71,8 @@ if ($method === 'POST') {
         'videoUrl' => trim($input['videoUrl'] ?? ''),
         'linkUrl' => trim($input['linkUrl'] ?? '/about#contact'),
         'linkText' => trim($input['linkText'] ?? '자세히 보기 →'),
+        'secondaryLinkUrl' => trim($input['secondaryLinkUrl'] ?? ''),
+        'secondaryLinkText' => trim($input['secondaryLinkText'] ?? ''),
         'order' => (int)($input['order'] ?? $order),
         'active' => isset($input['active']) ? (bool)$input['active'] : true,
         'createdAt' => date('Y-m-d H:i:s')
@@ -111,6 +113,8 @@ if ($method === 'PUT') {
             if (isset($input['videoUrl'])) $item['videoUrl'] = trim($input['videoUrl']);
             if (isset($input['linkUrl'])) $item['linkUrl'] = trim($input['linkUrl']);
             if (isset($input['linkText'])) $item['linkText'] = trim($input['linkText']);
+            if (isset($input['secondaryLinkUrl'])) $item['secondaryLinkUrl'] = trim($input['secondaryLinkUrl']);
+            if (isset($input['secondaryLinkText'])) $item['secondaryLinkText'] = trim($input['secondaryLinkText']);
             if (isset($input['order'])) $item['order'] = (int)$input['order'];
             if (isset($input['active'])) $item['active'] = (bool)$input['active'];
             $item['updatedAt'] = date('Y-m-d H:i:s');
