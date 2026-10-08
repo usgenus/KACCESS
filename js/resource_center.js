@@ -726,7 +726,8 @@
 
     const manifest = window.RESOURCE_AUDIO_MANIFEST;
     const item = manifest ? manifest[artId] : null;
-    const audioUrl = item ? item.audio_url : `/uploads/audio/guides/guide_${artId.replace(/-/g, '_')}.mp3`;
+    const baseAudioUrl = item ? item.audio_url : `/uploads/audio/guides/guide_${artId.replace(/-/g, '_')}.mp3`;
+    const audioUrl = baseAudioUrl + '?v=20261008b';
 
     currentPlayingArtId = artId;
     resourceAudioEl.src = audioUrl;
