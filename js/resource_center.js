@@ -16,24 +16,27 @@
   let activeHousingTown = 'all';
 
   // Billboard Controller Constants & State (Mirrored from first page billboard style)
-  const TOTAL_SLIDES = 4;
+  const TOTAL_SLIDES = 5;
   const CAPTIONS = [
     '2026 연방 빈곤선(FPL) 기준 실시간 자동 판정',
     '엄선된 8대 카테고리 80편 연구 안내서 & 타운별 주택 포털',
     '2026 메디케어 AEP 인롤먼트 & 파트 D 약값 상한제',
-    '뉴저지 65세+ 시니어 맞춤 주거·처방약·재택돌봄·세금동결'
+    '뉴저지 65세+ 시니어 맞춤 주거·처방약·재택돌봄·세금동결',
+    '처방약 할인부터 병원비 협상까지 바로 쓰는 실전 팁'
   ];
   const TAB_TO_SLIDE = {
     'calculator': 1,
     'resources': 2,
     'medicare': 3,
-    'senior': 4
+    'senior': 4,
+    'tips': 5
   };
   const SLIDE_TO_TAB = {
     1: 'calculator',
     2: 'resources',
     3: 'medicare',
-    4: 'senior'
+    4: 'senior',
+    5: 'tips'
   };
 
   let currentBillboardSlide = 1;
@@ -61,7 +64,7 @@
     // Backwards compatibility aliases
     if (hash === 'directory' || hash === 'housing') hash = 'resources';
 
-    if (['calculator', 'resources', 'medicare', 'senior'].includes(hash)) {
+    if (['calculator', 'resources', 'medicare', 'senior', 'tips'].includes(hash)) {
       switchTab(hash, false);
     } else if (hash.startsWith('senior-guide-') || hash.startsWith('senior-art-')) {
       const slugOrId = hash.replace('senior-guide-', '').replace('senior-art-', '');
@@ -262,6 +265,9 @@
   function switchTab(tabId, shouldScroll = false) {
     if (tabId !== 'resources' && window.stopResourceAudio) {
       window.stopResourceAudio();
+    }
+    if (tabId !== 'tips' && window.stopTipAudio) {
+      window.stopTipAudio();
     }
     const isAlreadyActive = activeTab === tabId &&
       document.getElementById(`tab-view-${tabId}`) &&
@@ -727,15 +733,15 @@
     const manifest = window.RESOURCE_AUDIO_MANIFEST;
     const item = manifest ? manifest[artId] : null;
     const baseAudioUrl = item ? item.audio_url : `/uploads/audio/guides/guide_${artId.replace(/-/g, '_')}.mp3`;
-    const audioUrl = baseAudioUrl + '?v=20261008b';
+    const audioUrl = baseAudioUrl + '?v=20261008_hyunsu';
 
     currentPlayingArtId = artId;
     resourceAudioEl.src = audioUrl;
     resourceAudioEl.currentTime = 0;
-    resourceAudioEl.playbackRate = 1.05; // 1.05x speed per user requirement!
+    resourceAudioEl.playbackRate = 1.0;
 
     resourceAudioEl.play().then(() => {
-      resourceAudioEl.playbackRate = 1.05;
+      resourceAudioEl.playbackRate = 1.0;
       updateActiveAudioUI();
     }).catch(err => {
       console.warn('Audio play request interrupted or failed:', err);
@@ -1306,6 +1312,104 @@
     `).join('');
   }
 
+  window.toggleTipCard = function (el) {
+    const card = (el && el.classList.contains('rc-tip-card')) ? el : (el ? el.closest('.rc-tip-card') : null);
+    if (!card) return;
+    const isExpanded = card.classList.contains('is-expanded');
+
+    // Close any other open card so only one window is open at a time
+    document.querySelectorAll('.rc-tip-card.is-expanded').forEach(otherCard => {
+      if (otherCard !== card) {
+        otherCard.classList.remove('is-expanded');
+        const otherText = otherCard.querySelector('.rc-tip-toggle-text');
+        if (otherText) otherText.textContent = '상세보기';
+      }
+    });
+
+    card.classList.toggle('is-expanded', !isExpanded);
+    const toggleText = card.querySelector('.rc-tip-toggle-text');
+    if (toggleText) {
+      toggleText.textContent = !isExpanded ? '접기' : '상세보기';
+    }
+  };
+
+  // --- HEALTHCARE TIPS AUDIO GUIDE SYSTEM ---
+  let tipAudioEl = null;
+  let currentPlayingTipId = null;
+
+  function initTipAudioSystem() {
+    if (!tipAudioEl) {
+      tipAudioEl = new Audio();
+      tipAudioEl.preload = 'none';
+      tipAudioEl.addEventListener('ended', () => {
+        window.stopTipAudio();
+      });
+      tipAudioEl.addEventListener('error', (e) => {
+        console.warn('Tip audio playback error:', e);
+        window.stopTipAudio();
+      });
+    }
+  }
+
+  window.toggleTipAudio = function (tipId, btnEl) {
+    initTipAudioSystem();
+
+    if (window.stopResourceAudio) {
+      window.stopResourceAudio();
+    }
+
+    if (currentPlayingTipId === tipId && !tipAudioEl.paused) {
+      window.stopTipAudio();
+      return;
+    }
+
+    window.stopTipAudio();
+
+    currentPlayingTipId = tipId;
+    tipAudioEl.src = `/uploads/audio/guides/guide_${tipId.replace(/-/g, '_')}.mp3?v=20261008_hyunsu`;
+    tipAudioEl.currentTime = 0;
+    tipAudioEl.playbackRate = 1.0;
+
+    tipAudioEl.play().then(() => {
+      updateTipAudioUI();
+    }).catch(err => {
+      console.warn('Tip audio play error:', err);
+      updateTipAudioUI();
+    });
+
+    updateTipAudioUI();
+  };
+
+  window.stopTipAudio = function () {
+    if (tipAudioEl) {
+      tipAudioEl.pause();
+      tipAudioEl.currentTime = 0;
+    }
+    currentPlayingTipId = null;
+    updateTipAudioUI();
+  };
+
+  function updateTipAudioUI() {
+    document.querySelectorAll('.rc-tip-audio-btn').forEach(btn => {
+      const tipId = btn.dataset.tipId;
+      const isPlaying = (tipId === currentPlayingTipId && tipAudioEl && !tipAudioEl.paused);
+      const textEl = btn.querySelector('.rc-tip-audio-text');
+      const playIcon = btn.querySelector('.rc-tip-icon-play');
+      const stopIcon = btn.querySelector('.rc-tip-icon-stop');
+
+      btn.classList.toggle('is-playing', isPlaying);
+      if (isPlaying) {
+        if (textEl) textEl.textContent = '오디오 멈추기';
+        if (playIcon) playIcon.classList.add('hidden');
+        if (stopIcon) stopIcon.classList.remove('hidden');
+      } else {
+        if (textEl) textEl.textContent = '오디오 가이드';
+        if (playIcon) playIcon.classList.remove('hidden');
+        if (stopIcon) stopIcon.classList.add('hidden');
+      }
+    });
+  }
+
   window.selectSearchResult = function (articleId) {
     closeSearchModal();
     if (activeTab === 'senior' && ALL_SENIOR_ARTICLE_IDS.has(articleId)) {
@@ -1317,3 +1421,4 @@
   };
 
 })();
+

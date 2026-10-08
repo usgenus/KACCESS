@@ -51,7 +51,7 @@ function clean_text_for_audio_tts($text) {
     return trim($text);
 }
 
-function synthesize_edge_tts_audio($cleanText, $voice = 'ko-KR-SunHiNeural') {
+function synthesize_edge_tts_audio($cleanText, $voice = 'ko-KR-HyunsuMultilingualNeural') {
     if (empty($cleanText)) return false;
 
     $trustedClientToken = "6A5AA1D4EAFF4E9FB37E23D68491D6F4";
@@ -120,7 +120,7 @@ function synthesize_edge_tts_audio($cleanText, $voice = 'ko-KR-SunHiNeural') {
     $reqId = bin2hex(random_bytes(16));
     $escaped = htmlspecialchars($cleanText, ENT_XML1, 'UTF-8');
     $langLocale = strpos($voice, 'en-') === 0 ? 'en-US' : 'ko-KR';
-    $ssml = "<speak version=\"1.0\" xmlns=\"http://www.w3.org/2001/10/synthesis\" xmlns:mstts=\"https://www.w3.org/2001/mstts\" xml:lang=\"{$langLocale}\"><voice name=\"{$voice}\"><prosody pitch=\"+0Hz\" rate=\"+0%\" volume=\"+0%\">{$escaped}</prosody></voice></speak>";
+    $ssml = "<speak version=\"1.0\" xmlns=\"http://www.w3.org/2001/10/synthesis\" xmlns:mstts=\"https://www.w3.org/2001/mstts\" xml:lang=\"{$langLocale}\"><voice name=\"{$voice}\"><prosody pitch=\"+0Hz\" rate=\"-2%\" volume=\"+0%\">{$escaped}</prosody></voice></speak>";
     $msg = "X-RequestId:{$reqId}\r\nContent-Type:application/ssml+xml\r\nPath:ssml\r\n\r\n" . $ssml;
     $sendFrame($sp, $msg);
 
@@ -204,8 +204,8 @@ function generate_post_audio_file($slug, $title, $excerpt = '', $content = '', $
     $cleanText = clean_text_for_audio_tts($readingBody);
     if (empty($cleanText)) return false;
 
-    // Female anchor voice: SunHi for Korean, Aria for English
-    $voice = ($lang === 'en') ? 'en-US-AriaNeural' : 'ko-KR-SunHiNeural';
+    // Male anchor voice: Hyunsu for Korean, Aria for English
+    $voice = ($lang === 'en') ? 'en-US-AriaNeural' : 'ko-KR-HyunsuMultilingualNeural';
 
     // If text is extremely long (>2500 chars), chunk by sentences to keep socket fast
     $totalLen = mb_strlen($cleanText, 'UTF-8');

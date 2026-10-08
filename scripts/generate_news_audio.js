@@ -45,11 +45,11 @@ async function generateAudioForText(text, outputPath, retries = 3) {
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
       const tts = new MsEdgeTTS();
-      await tts.setMetadata('ko-KR-SunHiNeural', OUTPUT_FORMAT.AUDIO_24KHZ_48KBITRATE_MONO_MP3);
+      await tts.setMetadata('ko-KR-HyunsuMultilingualNeural', OUTPUT_FORMAT.AUDIO_24KHZ_48KBITRATE_MONO_MP3);
       
       const bytes = await new Promise((resolve, reject) => {
         try {
-          const { audioStream } = tts.toStream(text);
+          const { audioStream } = tts.toStream(text, { rate: '-2%' });
           const chunks = [];
           audioStream.on('data', c => chunks.push(c));
           audioStream.on('end', () => {
