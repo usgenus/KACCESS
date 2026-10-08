@@ -79,6 +79,7 @@ const html = `<!DOCTYPE html>
     }
     .hero-gradient-accent {
       background: linear-gradient(90deg, #7FC8C0 0%, #4FA3D1 100%);
+      background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       display: inline-block;
@@ -185,7 +186,7 @@ const html = `<!DOCTYPE html>
       background: #FADA0A;
       transform: translateY(-1px);
     }
-    .hero-btn-icon {
+.hero-btn-icon {
       width: 14px;
       height: 14px;
       flex-shrink: 0;
@@ -1582,7 +1583,7 @@ const html = `<!DOCTYPE html>
         <div class="hidden md:flex items-center" style="display: flex; align-items: center; gap: 24px;">
           <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/">홈</a>
           <a class="nav-link pb-0.5 text-slate-700 hover:text-brand-blue" href="/blog">뉴스</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/forum">커뮤니티 포럼</a>
+          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/forum">뉴저지 한인 광장</a>
           <a class="nav-link pb-0.5 font-bold text-brand-blue flex flex-col items-center justify-center leading-tight text-center" href="/resource-center">
             <span class="text-[12px] leading-tight font-semibold">의료&amp;커뮤니티</span>
             <span class="text-[14px] leading-tight font-bold">정보센터</span>
@@ -1627,11 +1628,11 @@ const html = `<!DOCTYPE html>
         <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
 
-      <!-- 2.5. 커뮤니티 포럼 -->
+      <!-- 2.5. 뉴저지 한인 광장 -->
       <a href="/forum" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>
-          <span class="text-[15px]">커뮤니티 포럼</span>
+          <span class="text-[15px]">뉴저지 한인 광장</span>
         </div>
         <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
@@ -1683,16 +1684,29 @@ const html = `<!DOCTYPE html>
 
       <div class="relative w-full z-10 flex flex-col justify-between py-6 sm:py-9 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         
-        <!-- Header row inside billboard (Badge & Global Search) -->
-        <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
-          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-blue-500/20 text-blue-300 border border-blue-400/30 backdrop-blur-md">
-            <span class="w-2 h-2 rounded-full bg-[#7FC8C0] animate-pulse"></span>
-            2026/2027 New Jersey Official Knowledge Hub
-          </span>
-          <button type="button" onclick="openSearchModal()" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white/10 hover:bg-white/15 text-slate-200 border border-white/20 transition-all cursor-pointer backdrop-blur-md">
-            <span>전체 가이드 실시간 검색</span>
-            <span class="px-1.5 py-0.5 rounded bg-white/20 text-[10px] font-mono">⌘K</span>
-          </button>
+                <!-- Header row inside billboard (Badge & Centered Global Search) -->
+        <div class="relative w-full flex flex-col sm:flex-row items-center justify-between gap-4 mb-7">
+          <div class="shrink-0">
+            <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-blue-500/25 text-blue-200 border border-blue-400/40 backdrop-blur-md shadow-xs">
+              <span class="w-2 h-2 rounded-full bg-[#7FC8C0] animate-pulse"></span>
+              2026/2027 New Jersey Official Knowledge Hub
+            </span>
+          </div>
+
+          <!-- Centered, Prominent Global Search Button in the Top Area of the Hero Section -->
+          <div class="sm:absolute sm:left-1/2 sm:-translate-x-1/2 z-20 flex justify-center w-full sm:w-auto">
+            <button type="button" onclick="openSearchModal()" 
+                    class="inline-flex items-center justify-center gap-2.5 px-5 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-slate-900 border border-sky-400 shadow-[0_4px_16px_rgba(0,0,0,0.25)] hover:bg-slate-50 hover:border-sky-400 hover:shadow-[0_6px_22px_rgba(56,189,248,0.4)] hover:scale-[1.02] transition-all cursor-pointer select-none backdrop-blur-md"
+                    style="background: #ffffff !important; color: #0f172a !important; border: 1.5px solid #38bdf8 !important; box-shadow: 0 4px 18px rgba(0,0,0,0.25) !important;"
+                    aria-label="전체검색 열기">
+              <i class="fa-solid fa-magnifying-glass text-[#1B6FA8] text-xs sm:text-sm"></i>
+              <span style="color: #0f172a !important; font-weight: 800 !important; letter-spacing: -0.01em !important;">전체검색</span>
+              <span class="px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 text-[10px] sm:text-xs font-mono font-bold border border-slate-200">⌘K</span>
+            </button>
+          </div>
+
+          <!-- Right placeholder spacer on desktop for balance -->
+          <div class="hidden sm:block shrink-0 w-[240px]"></div>
         </div>
 
         <!-- Middle Row: Left Content Slide Panels & Right Visual Card -->
@@ -1717,10 +1731,10 @@ const html = `<!DOCTYPE html>
                 NJ FamilyCare(메디케이드), 시니어 동결세(Senior Freeze), PAAD 의약품 지원, SNAP 푸드스탬프 자격을 가구원 수와 월 소득에 맞춰 즉시 자동 산출합니다.
               </p>
               <div class="hero-btn-row">
-                <button type="button" onclick="window.rcHeroTabClick('calculator', true)" class="hero-btn-primary">
+                <button type="button" onclick="window.rcHeroTabClick('calculator', false)" class="hero-btn-primary">
                   <span>계산기 시작하기</span>
                 </button>
-                <button type="button" onclick="window.rcHeroTabClick('calculator', true)" class="hero-btn-white">
+                <button type="button" onclick="window.rcHeroTabClick('calculator', false)" class="hero-btn-white">
                   <span>수혜 기준표 보기</span>
                 </button>
               </div>
@@ -1742,7 +1756,7 @@ const html = `<!DOCTYPE html>
                 포트리·팰팍 타운별 시니어 아파트 신청 링크, 공과금 감면(LIHEAP/USF), 푸드뱅크, 성인 주간보호 등 뉴저지 한인을 위해 완벽히 재작성된 80편의 연구 가이드를 제공합니다.
               </p>
               <div class="hero-btn-row">
-                <button type="button" onclick="window.rcHeroTabClick('resources', true)" class="hero-btn-primary">
+                <button type="button" onclick="window.rcHeroTabClick('resources', false)" class="hero-btn-primary">
                   <span>커뮤니티 리소스 둘러보기</span>
                 </button>
                 <button type="button" onclick="window.rcHeroJumpHousing()" class="hero-btn-white">
@@ -1767,7 +1781,7 @@ const html = `<!DOCTYPE html>
                 인플레이션 감축법(IRA) 파트 D 약값 상한제 $2,100, 파트 B 표준 보험료 $202.90, 오리지널 vs 어드밴티지 맞춤 선택 전략과 저소득층 보조(Extra Help)를 확인하세요.
               </p>
               <div class="hero-btn-row">
-                <button type="button" onclick="window.rcHeroTabClick('medicare', true)" class="hero-btn-primary">
+                <button type="button" onclick="window.rcHeroTabClick('medicare', false)" class="hero-btn-primary">
                   <span>메디케어 가이드 읽기</span>
                 </button>
                 <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="hero-btn-kakao">
@@ -1792,10 +1806,10 @@ const html = `<!DOCTYPE html>
                 HUD 202 독립 시니어 아파트, PAAD $5 약값 상한제, PPP 가족 간병인 유급 지원, 65세 이상 재산세 동결(Senior Freeze) 및 성인 데이케어까지 한눈에 확인하세요.
               </p>
               <div class="hero-btn-row">
-                <button type="button" onclick="window.rcHeroTabClick('senior', true)" class="hero-btn-primary">
+                <button type="button" onclick="window.rcHeroTabClick('senior', false)" class="hero-btn-primary">
                   <span>시니어 리소스 둘러보기</span>
                 </button>
-                <button type="button" onclick="window.rcHeroTabClick('senior', true)" class="hero-btn-white">
+                <button type="button" onclick="window.rcHeroTabClick('senior', false)" class="hero-btn-white">
                   <span>시니어 6대 분야별 보기</span>
                 </button>
               </div>
@@ -1831,29 +1845,29 @@ const html = `<!DOCTYPE html>
           <div role="tablist" aria-label="의료정보센터 주요 서비스 하이라이트" class="rc-hero-tabs-grid">
             
             <!-- Button 1: 자격확인 계산기 -->
-            <button role="tab" id="rc-billboard-tab-1" aria-controls="rc-hero-slide-1" aria-selected="true" tabindex="0" onclick="window.rcHeroTabClick('calculator', true)" class="hero-tab-item rc-hero-tab active" data-slide="1" data-tab="calculator">
-              <span class="hero-tab-sub">하이라이트 01</span>
+            <button role="tab" id="rc-billboard-tab-1" aria-controls="rc-hero-slide-1" aria-selected="true" tabindex="0" onclick="window.rcHeroTabClick('calculator', false)" class="hero-tab-item rc-hero-tab active" data-slide="1" data-tab="calculator">
+              <span class="hero-tab-sub">01</span>
               <span class="hero-tab-title">자격확인 계산기</span>
               <div class="hero-tab-bar"></div>
             </button>
 
             <!-- Button 2: 커뮤니티 리소스 -->
-            <button role="tab" id="rc-billboard-tab-2" aria-controls="rc-hero-slide-2" aria-selected="false" tabindex="-1" onclick="window.rcHeroTabClick('resources', true)" class="hero-tab-item rc-hero-tab" data-slide="2" data-tab="resources">
-              <span class="hero-tab-sub">하이라이트 02</span>
+            <button role="tab" id="rc-billboard-tab-2" aria-controls="rc-hero-slide-2" aria-selected="false" tabindex="-1" onclick="window.rcHeroTabClick('resources', false)" class="hero-tab-item rc-hero-tab" data-slide="2" data-tab="resources">
+              <span class="hero-tab-sub">02</span>
               <span class="hero-tab-title">커뮤니티 리소스</span>
               <div class="hero-tab-bar"></div>
             </button>
 
             <!-- Button 3: 메디케어 & ACA -->
-            <button role="tab" id="rc-billboard-tab-3" aria-controls="rc-hero-slide-3" aria-selected="false" tabindex="-1" onclick="window.rcHeroTabClick('medicare', true)" class="hero-tab-item rc-hero-tab" data-slide="3" data-tab="medicare">
-              <span class="hero-tab-sub">하이라이트 03</span>
+            <button role="tab" id="rc-billboard-tab-3" aria-controls="rc-hero-slide-3" aria-selected="false" tabindex="-1" onclick="window.rcHeroTabClick('medicare', false)" class="hero-tab-item rc-hero-tab" data-slide="3" data-tab="medicare">
+              <span class="hero-tab-sub">03</span>
               <span class="hero-tab-title">메디케어 &amp; ACA</span>
               <div class="hero-tab-bar"></div>
             </button>
 
             <!-- Button 4: 시니어 -->
-            <button role="tab" id="rc-billboard-tab-4" aria-controls="rc-hero-slide-4" aria-selected="false" tabindex="-1" onclick="window.rcHeroTabClick('senior', true)" class="hero-tab-item rc-hero-tab" data-slide="4" data-tab="senior">
-              <span class="hero-tab-sub">하이라이트 04</span>
+            <button role="tab" id="rc-billboard-tab-4" aria-controls="rc-hero-slide-4" aria-selected="false" tabindex="-1" onclick="window.rcHeroTabClick('senior', false)" class="hero-tab-item rc-hero-tab" data-slide="4" data-tab="senior">
+              <span class="hero-tab-sub">04</span>
               <span class="hero-tab-title">시니어</span>
               <div class="hero-tab-bar"></div>
             </button>
@@ -2031,8 +2045,6 @@ const html = `<!DOCTYPE html>
           <div class="flex items-center justify-between pb-4 mb-6 border-b border-slate-100">
             <div class="flex items-center gap-2">
               <span id="inlineReaderCatBadge" class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800">카테고리</span>
-              <span class="text-xs text-slate-400">|</span>
-              <span class="text-xs font-medium text-slate-500">뉴저지 공식 리서치 브리핑</span>
             </div>
             <div class="flex items-center gap-2">
               <button type="button" onclick="window.print()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 flex items-center justify-center cursor-pointer">
@@ -2408,8 +2420,6 @@ const html = `<!DOCTYPE html>
           <div class="flex items-center justify-between pb-4 mb-6 border-b border-slate-100">
             <div class="flex items-center gap-2">
               <span id="inlineSeniorReaderCatBadge" class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800">시니어 카테고리</span>
-              <span class="text-xs text-slate-400">|</span>
-              <span class="text-xs font-medium text-slate-500">뉴저지 시니어 공식 리서치 브리핑</span>
             </div>
             <div class="flex items-center gap-2">
               <button type="button" onclick="window.print()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 flex items-center justify-center cursor-pointer">
@@ -2491,16 +2501,30 @@ const html = `<!DOCTYPE html>
     </div>
   </main>
 
-  <!-- =======================================================
-       Quick Search Modal (Cmd+K)
+    <!-- =======================================================
+       Quick Search Window (Cmd+K) - Compact & Centered in Top Hero Area
        ======================================================= -->
-  <div id="rcSearchModal" class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-xs flex items-start justify-center p-4 pt-20 hidden">
-    <div class="bg-white rounded-2xl max-w-2xl w-full shadow-2xl border border-slate-200 overflow-hidden">
-      <div class="p-4 border-b border-slate-100 flex items-center gap-3">
-        <input type="text" id="rcSearchModalInput" placeholder="가이드, 시니어 주택, 계산기 항목 실시간 검색..." class="w-full text-base font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none" />
-        <button type="button" onclick="closeSearchModal()" class="text-xs font-semibold px-2 py-1 rounded bg-slate-100 text-slate-500 hover:bg-slate-200">ESC</button>
+  <div id="rcSearchModal" 
+       onclick="if(event.target === this) closeSearchModal();" 
+       class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/60 backdrop-blur-xs flex items-start justify-center p-4 pt-24 sm:pt-28" 
+       style="display: none !important;">
+    <div class="bg-white rounded-2xl shadow-2xl border border-slate-200/90 overflow-hidden" 
+         onclick="event.stopPropagation();" 
+         style="width: 92vw !important; max-width: 320px !important; box-shadow: 0 12px 36px rgba(15, 23, 42, 0.28) !important;">
+      <div class="p-3 border-b border-slate-100 flex items-center gap-2 bg-white">
+        <i class="fa-solid fa-magnifying-glass text-[#1B6FA8] text-xs sm:text-sm shrink-0 ml-1"></i>
+        <input type="text" 
+               id="rcSearchModalInput" 
+               onkeydown="if(event.key === 'Escape' || event.key === 'Esc' || event.keyCode === 27) { event.preventDefault(); closeSearchModal(); }" 
+               placeholder="전체검색..." 
+               class="w-full text-xs sm:text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none bg-transparent" />
+        <button type="button" 
+                onclick="closeSearchModal()" 
+                class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors cursor-pointer shrink-0">
+          ESC
+        </button>
       </div>
-      <ul id="rcSearchResultsList" class="p-3 max-h-96 overflow-y-auto divide-y divide-slate-100">
+      <ul id="rcSearchResultsList" class="p-2 max-h-80 overflow-y-auto divide-y divide-slate-100 text-left">
         <!-- Results injected dynamically -->
       </ul>
     </div>
@@ -2523,7 +2547,7 @@ const html = `<!DOCTYPE html>
             <li><a href="/resource-center#resources" class="hover:text-white" style="color: #94a3b8 !important;">커뮤니티 리소스 &amp; 시니어 주택</a></li>
             <li><a href="/resource-center#medicare" class="hover:text-white" style="color: #94a3b8 !important;">2026 메디케어 &amp; ACA 완전 가이드</a></li>
             <li><a href="/resource-center#senior" class="hover:text-white" style="color: #94a3b8 !important;">뉴저지 시니어 복지 가이드</a></li>
-            <li><a href="/forum" class="hover:text-white" style="color: #94a3b8 !important;">커뮤니티 포럼 Q&amp;A</a></li>
+            <li><a href="/forum" class="hover:text-white" style="color: #94a3b8 !important;">뉴저지 한인 광장 Q&amp;A</a></li>
           </ul>
         </div>
         <div>
