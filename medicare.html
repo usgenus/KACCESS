@@ -68,6 +68,7 @@
     }
     .hero-gradient-accent {
       background: linear-gradient(90deg, #7FC8C0 0%, #4FA3D1 100%);
+      background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       display: inline-block;
@@ -174,7 +175,7 @@
       background: #FADA0A;
       transform: translateY(-1px);
     }
-    .hero-btn-icon {
+.hero-btn-icon {
       width: 14px;
       height: 14px;
       flex-shrink: 0;
@@ -920,6 +921,216 @@
       color: #64748b;
       margin-bottom: 0;
     }
+    /* ==========================================================================
+       Premium Sleek Audio Guide Bar (Apple Podcasts / NYTimes Style)
+       ========================================================================== */
+    .rc-audio-guide-wrapper {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 12px 4px 5px;
+      border-radius: 9999px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+      margin: 4px 0 6px 0;
+      vertical-align: middle;
+      transition: all 0.2s ease;
+      max-width: 100%;
+    }
+    .rc-audio-guide-wrapper:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+    }
+    .rc-audio-play-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 3px 10px 3px 3px;
+      border-radius: 9999px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      color: #0f172a;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .rc-audio-play-btn:hover {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+      color: #1d4ed8;
+    }
+    .rc-play-icon-box {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #2563eb;
+      color: #ffffff !important;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      transition: transform 0.15s ease, background 0.15s ease;
+      flex-shrink: 0;
+    }
+    .rc-play-icon-box i.fa-play {
+      padding-left: 1.5px;
+    }
+    .rc-play-icon-box i {
+      color: #ffffff !important;
+    }
+    .rc-audio-play-btn:hover .rc-play-icon-box {
+      transform: scale(1.08);
+      background: #1d4ed8;
+    }
+    .rc-audio-play-btn.is-playing {
+      background: #fff1f2 !important;
+      border-color: #fecdd3 !important;
+      color: #e11d48 !important;
+    }
+    .rc-audio-play-btn.is-playing .rc-play-icon-box {
+      background: #e11d48 !important;
+    }
+    /* Animated mini sound wave equalizer bars */
+    .rc-wave-bars {
+      display: none;
+      align-items: flex-end;
+      gap: 2px;
+      height: 12px;
+      margin-left: -2px;
+    }
+    .rc-audio-play-btn.is-playing .rc-wave-bars {
+      display: inline-flex;
+    }
+    .rc-wave-bars span {
+      width: 2px;
+      background: #e11d48;
+      border-radius: 1px;
+      animation: rcWave 0.9s ease-in-out infinite alternate;
+    }
+    .rc-wave-bars span:nth-child(1) { height: 5px; animation-delay: 0.1s; }
+    .rc-wave-bars span:nth-child(2) { height: 11px; animation-delay: 0.25s; }
+    .rc-wave-bars span:nth-child(3) { height: 7px; animation-delay: 0.4s; }
+    @keyframes rcWave {
+      0% { height: 3px; }
+      100% { height: 11px; }
+    }
+    .rc-audio-divider {
+      width: 1px;
+      height: 18px;
+      background: #e2e8f0;
+    }
+    .rc-audio-timeline-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    /* Custom Scrubber Track & Thumb */
+    .rc-timeline-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100px;
+      height: 4px;
+      border-radius: 9999px;
+      background: #e2e8f0;
+      outline: none;
+      cursor: pointer;
+      transition: background 0.15s ease;
+      vertical-align: middle;
+    }
+    .rc-timeline-slider:hover {
+      background: #cbd5e1;
+    }
+    .rc-timeline-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #2563eb;
+      border: 2px solid #ffffff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+      cursor: grab;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+    .rc-timeline-slider::-webkit-slider-thumb:hover,
+    .rc-timeline-slider:active::-webkit-slider-thumb {
+      transform: scale(1.3);
+      background: #1d4ed8;
+      cursor: grabbing;
+    }
+    .rc-timeline-slider::-moz-range-thumb {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #2563eb;
+      border: 2px solid #ffffff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+      cursor: grab;
+    }
+    .rc-timeline-slider::-moz-range-track {
+      height: 4px;
+      border-radius: 9999px;
+      background: #e2e8f0;
+    }
+    .rc-time-display {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-variant-numeric: tabular-nums;
+      font-size: 11px;
+      font-weight: 600;
+      color: #64748b;
+      min-width: 76px;
+      letter-spacing: -0.2px;
+    }
+    .rc-speed-badge {
+      font-size: 10px;
+      font-weight: 700;
+      color: #475569;
+      background: #f1f5f9;
+      padding: 1.5px 5.5px;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+      line-height: 1.2;
+    }
+    @media (max-width: 640px) {
+      .rc-audio-guide-wrapper {
+        padding: 3px 8px 3px 4px;
+        gap: 6px;
+      }
+      .rc-timeline-slider {
+        width: 70px;
+      }
+      .rc-time-display {
+        font-size: 10px;
+        min-width: 68px;
+      }
+    }
+    /* Card Audio Button in Resources Grid */
+    .rc-card-audio-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 8px;
+      border-radius: 9999px;
+      background: #f8fafc;
+      color: #2563eb;
+      font-size: 11px;
+      font-weight: 700;
+      border: 1px solid #e2e8f0;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .rc-card-audio-btn:hover {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+      color: #1d4ed8;
+    }
+    .rc-card-audio-btn.is-playing {
+      background: #fff1f2 !important;
+      color: #e11d48 !important;
+      border-color: #fecdd3 !important;
+    }
     .rc-callout-box {
       background: #f8fafc;
       border-left: 4px solid #2563eb;
@@ -1334,25 +1545,25 @@
       background: linear-gradient(135deg, #081a33 0%, #0e2b54 60%, #163d74 100%) !important;
       color: #ffffff !important;
     }
-    .medicare-guide-container .bg-white/10 {
+    .medicare-guide-container .bg-white\/10 {
       background-color: rgba(255, 255, 255, 0.1) !important;
     }
-    .medicare-guide-container .bg-white/8 {
+    .medicare-guide-container .bg-white\/8 {
       background-color: rgba(255, 255, 255, 0.08) !important;
     }
-    .medicare-guide-container .bg-white/5 {
+    .medicare-guide-container .bg-white\/5 {
       background-color: rgba(255, 255, 255, 0.05) !important;
     }
-    .medicare-guide-container .bg-white/12:hover {
+    .medicare-guide-container .bg-white\/12:hover {
       background-color: rgba(255, 255, 255, 0.12) !important;
     }
-    .medicare-guide-container .border-white/10 {
+    .medicare-guide-container .border-white\/10 {
       border-color: rgba(255, 255, 255, 0.1) !important;
     }
-    .medicare-guide-container .border-white/15 {
+    .medicare-guide-container .border-white\/15 {
       border-color: rgba(255, 255, 255, 0.15) !important;
     }
-    .medicare-guide-container .border-white/20 {
+    .medicare-guide-container .border-white\/20 {
       border-color: rgba(255, 255, 255, 0.2) !important;
     }
     .medicare-guide-container .text-slate-300 {
@@ -1373,19 +1584,19 @@
     .medicare-guide-container .text-emerald-300 {
       color: #6ee7b7 !important;
     }
-    .medicare-guide-container .bg-emerald-950/40 {
+    .medicare-guide-container .bg-emerald-950\/40 {
       background-color: rgba(2, 44, 34, 0.5) !important;
     }
-    .medicare-guide-container .bg-blue-950/40 {
+    .medicare-guide-container .bg-blue-950\/40 {
       background-color: rgba(23, 37, 84, 0.5) !important;
     }
-    .medicare-guide-container .bg-emerald-500/30 {
+    .medicare-guide-container .bg-emerald-500\/30 {
       background-color: rgba(16, 185, 129, 0.3) !important;
     }
-    .medicare-guide-container .bg-red-900/40 {
+    .medicare-guide-container .bg-red-900\/40 {
       background-color: rgba(127, 29, 29, 0.4) !important;
     }
-    .medicare-guide-container .bg-red-500/20 {
+    .medicare-guide-container .bg-red-500\/20 {
       background-color: rgba(239, 68, 68, 0.2) !important;
     }
   </style>
@@ -1534,9 +1745,9 @@
   <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/90 backdrop-blur-sm border-b border-brand-border nav-top-offset">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
-        <a class="flex items-center cursor-pointer njap-brand-link flex-shrink-0 group" href="/" onclick="navigateToHome(event); return false;" title="NJ Access Portal · 뉴저지 한인 의료접근포털">
-          <svg class="h-8 sm:h-10 md:h-11 w-auto object-contain transition-transform group-hover:scale-102" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NJ Access Portal · 뉴저지 한인 의료접근포털" style="overflow: visible;">
-            <title>NJ Access Portal · 뉴저지 한인 의료접근포털</title>
+        <a class="flex items-center cursor-pointer njap-brand-link flex-shrink-0 group" href="/" onclick="navigateToHome(event); return false;" title="NJ Access Portal · 뉴저지 한인 포털">
+          <svg class="h-8 sm:h-10 md:h-11 w-auto object-contain transition-transform group-hover:scale-102" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NJ Access Portal · 뉴저지 한인 포털" style="overflow: visible;">
+            <title>NJ Access Portal · 뉴저지 한인 포털</title>
             <!-- Icon Mark (Door + Key + NJAP) -->
             <g transform="translate(4, 2) scale(0.56)" stroke-linecap="round" stroke-linejoin="round">
               <!-- Door Frame & NJAP Text -->
@@ -1564,22 +1775,31 @@
               <text x="64" y="27" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="18" font-weight="900" fill="#0B192C" letter-spacing="-0.5">NJ Access Portal</text>
             </g>
             <g class="njap-nav-text-sub">
-              <text x="64" y="44" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="10.5" font-weight="600" fill="#64748B" letter-spacing="0.2">뉴저지 한인 의료접근포털</text>
+              <text x="64" y="44" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="10.5" font-weight="600" fill="#64748B" letter-spacing="0.2">뉴저지 한인 포털</text>
             </g>
           </svg>
         </a>
-        <div class="hidden md:flex items-center" style="display: flex; align-items: center; gap: 24px;">
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/">홈</a>
-          <a class="nav-link pb-0.5 text-slate-700 hover:text-brand-blue" href="/blog">뉴스</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/forum">커뮤니티 포럼</a>
-          <a class="nav-link pb-0.5 font-bold text-brand-blue flex flex-col items-center justify-center leading-tight text-center" href="/resource-center">
-            <span class="text-[12px] leading-tight font-semibold">의료&amp;커뮤니티</span>
-            <span class="text-[14px] leading-tight font-bold">정보센터</span>
+        <div class="hidden md:flex items-center" style="display: flex; align-items: center; gap: 40px;">
+          <a class="nav-link pb-0.5 flex flex-col items-center justify-center leading-tight text-center cursor-pointer group" href="/">
+            <span class="text-[14px] leading-tight font-semibold text-slate-800 group-hover:text-brand-blue transition-colors">홈</span>
+            <span class="text-[10px] leading-tight font-medium text-slate-400 group-hover:text-brand-blue/80 transition-colors">Home</span>
           </a>
-          <a class="nav-link pb-0.5 text-slate-700 hover:text-brand-blue" href="/about">의료 접근센터</a>
-          <a class="nav-link pb-0.5 text-slate-700 hover:text-brand-blue flex flex-col items-center justify-center leading-tight" href="/engine">
-            <span class="text-[13.5px] font-bold text-slate-800">Engine</span>
-            <span class="text-[9px] font-semibold text-slate-400">Marketing Client</span>
+          <a class="nav-link pb-0.5 flex flex-col items-center justify-center leading-tight text-center cursor-pointer group" href="/blog">
+            <span class="text-[14px] leading-tight font-semibold text-slate-800 group-hover:text-brand-blue transition-colors">뉴스</span>
+            <span class="text-[10px] leading-tight font-medium text-slate-400 group-hover:text-brand-blue/80 transition-colors">News</span>
+          </a>
+          <a class="nav-link pb-0.5 flex flex-col items-center justify-center leading-tight text-center cursor-pointer group" href="/forum">
+            <span class="text-[14px] leading-tight font-semibold text-slate-800 group-hover:text-brand-blue transition-colors">뉴저지 한인광장</span>
+            <span class="text-[10px] leading-tight font-medium text-slate-400 group-hover:text-brand-blue/80 transition-colors">Market place</span>
+          </a>
+          <a class="nav-link pb-0.5 flex flex-col items-center justify-center leading-tight text-center cursor-pointer group" href="/resource-center">
+            <span class="text-[12px] leading-tight font-bold text-black group-hover:text-brand-blue transition-colors">의료 &amp; 커뮤니티</span>
+            <span class="text-[13px] leading-tight font-bold text-slate-700 group-hover:text-brand-blue transition-colors">정보센터</span>
+            <span class="text-[10px] leading-tight font-medium text-brand-blue/80 transition-colors">Resource Center</span>
+          </a>
+          <a class="nav-link pb-0.5 flex flex-col items-center justify-center leading-tight text-center cursor-pointer group" href="/about">
+            <span class="text-[14px] leading-tight font-semibold text-slate-800 group-hover:text-brand-blue transition-colors">의료접근센터</span>
+            <span class="text-[10px] leading-tight font-medium text-slate-400 group-hover:text-brand-blue/80 transition-colors">Healthcare Access Center</span>
           </a>
         </div>
         <div class="flex items-center gap-3">
@@ -1599,60 +1819,61 @@
     </div>
     <div id="mobile-menu-dropdown" class="md:hidden overflow-hidden transition-all duration-300 max-h-0 opacity-0 bg-white/98 backdrop-blur-md border-t border-brand-border px-4 py-3 flex flex-col gap-1" style="-webkit-overflow-scrolling: touch;">
       <!-- 1. 홈 -->
-      <a href="/" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/" class="flex items-center justify-between py-2.5 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-          <span class="text-[15px]">홈</span>
+          <div class="flex flex-col text-left leading-tight">
+            <span class="text-[15px] font-bold text-slate-800">홈</span>
+            <span class="text-[10.5px] font-medium text-slate-400">Home</span>
+          </div>
         </div>
         <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
 
       <!-- 2. 뉴스 -->
-      <a href="/blog" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/blog" class="flex items-center justify-between py-2.5 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
-          <span class="text-[15px]">뉴스</span>
+          <div class="flex flex-col text-left leading-tight">
+            <span class="text-[15px] font-bold text-slate-800">뉴스</span>
+            <span class="text-[10.5px] font-medium text-slate-400">News</span>
+          </div>
         </div>
         <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
 
-      <!-- 2.5. 커뮤니티 포럼 -->
-      <a href="/forum" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <!-- 2.5. 뉴저지 한인 광장 -->
+      <a href="/forum" class="flex items-center justify-between py-2.5 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>
-          <span class="text-[15px]">커뮤니티 포럼</span>
+          <div class="flex flex-col text-left leading-tight">
+            <span class="text-[15px] font-bold text-slate-800">뉴저지 한인광장</span>
+            <span class="text-[10.5px] font-medium text-slate-400">Market place</span>
+          </div>
         </div>
         <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
 
       <!-- 4. 의료&커뮤니티 정보센터 -->
-      <a href="/resource-center" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-bold text-brand-blue bg-blue-50/70">
+      <a href="/resource-center" class="flex items-center justify-between py-2.5 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-bold text-brand-blue bg-blue-50/70">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-brand-blue shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
           <div class="flex flex-col text-left leading-tight">
-            <span class="text-[12px] text-blue-600 font-medium">의료&amp;커뮤니티</span>
-            <span class="text-[15px] font-bold text-brand-blue">정보센터</span>
+            <span class="text-[13px] font-bold text-black">의료 &amp; 커뮤니티</span>
+            <span class="text-[13px] font-semibold text-[#475569]">정보센터</span>
+            <span class="text-[10.5px] font-medium text-brand-blue/80">Resource Center</span>
           </div>
         </div>
         <svg class="w-4 h-4 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
 
       <!-- 6. 의료 접근센터 -->
-      <a href="/about" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/about" class="flex items-center justify-between py-2.5 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          <span class="text-[15px]">의료 접근센터</span>
-        </div>
-        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-      </a>
-
-      <!-- 7. Engine (Marketing Client) -->
-      <a href="/engine" target="_self" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
-        <div class="flex items-center gap-3">
-          <svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-          <div class="flex flex-col text-left">
-            <span class="text-[15px] font-bold text-slate-800">Engine</span>
-            <span class="text-[10px] font-semibold text-slate-400 leading-none">Marketing Client</span>
+          <div class="flex flex-col text-left leading-tight">
+            <span class="text-[15px] font-bold text-slate-800">의료접근센터</span>
+            <span class="text-[10.5px] font-medium text-slate-400">Healthcare Access Center</span>
           </div>
         </div>
         <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
@@ -1672,16 +1893,29 @@
 
       <div class="relative w-full z-10 flex flex-col justify-between py-6 sm:py-9 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         
-        <!-- Header row inside billboard (Badge & Global Search) -->
-        <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
-          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-blue-500/20 text-blue-300 border border-blue-400/30 backdrop-blur-md">
-            <span class="w-2 h-2 rounded-full bg-[#7FC8C0] animate-pulse"></span>
-            2026/2027 New Jersey Official Knowledge Hub
-          </span>
-          <button type="button" onclick="openSearchModal()" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white/10 hover:bg-white/15 text-slate-200 border border-white/20 transition-all cursor-pointer backdrop-blur-md">
-            <span>전체 가이드 실시간 검색</span>
-            <span class="px-1.5 py-0.5 rounded bg-white/20 text-[10px] font-mono">⌘K</span>
-          </button>
+                <!-- Header row inside billboard (Badge & Centered Global Search) -->
+        <div class="relative w-full flex flex-col sm:flex-row items-center justify-between gap-4 mb-7">
+          <div class="shrink-0">
+            <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-blue-500/25 text-blue-200 border border-blue-400/40 backdrop-blur-md shadow-xs">
+              <span class="w-2 h-2 rounded-full bg-[#7FC8C0] animate-pulse"></span>
+              2026/2027 New Jersey Official Knowledge Hub
+            </span>
+          </div>
+
+          <!-- Centered, Prominent Global Search Button in the Top Area of the Hero Section -->
+          <div class="sm:absolute sm:left-1/2 sm:-translate-x-1/2 z-20 flex justify-center w-full sm:w-auto">
+            <button type="button" onclick="openSearchModal()" 
+                    class="inline-flex items-center justify-center gap-2.5 px-5 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-slate-900 border border-sky-400 shadow-[0_4px_16px_rgba(0,0,0,0.25)] hover:bg-slate-50 hover:border-sky-400 hover:shadow-[0_6px_22px_rgba(56,189,248,0.4)] hover:scale-[1.02] transition-all cursor-pointer select-none backdrop-blur-md"
+                    style="background: #ffffff !important; color: #0f172a !important; border: 1.5px solid #38bdf8 !important; box-shadow: 0 4px 18px rgba(0,0,0,0.25) !important;"
+                    aria-label="전체검색 열기">
+              <i class="fa-solid fa-magnifying-glass text-[#1B6FA8] text-xs sm:text-sm"></i>
+              <span style="color: #0f172a !important; font-weight: 800 !important; letter-spacing: -0.01em !important;">전체검색</span>
+              <span class="px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 text-[10px] sm:text-xs font-mono font-bold border border-slate-200">⌘K</span>
+            </button>
+          </div>
+
+          <!-- Right placeholder spacer on desktop for balance -->
+          <div class="hidden sm:block shrink-0 w-[240px]"></div>
         </div>
 
         <!-- Middle Row: Left Content Slide Panels & Right Visual Card -->
@@ -1706,10 +1940,10 @@
                 NJ FamilyCare(메디케이드), 시니어 동결세(Senior Freeze), PAAD 의약품 지원, SNAP 푸드스탬프 자격을 가구원 수와 월 소득에 맞춰 즉시 자동 산출합니다.
               </p>
               <div class="hero-btn-row">
-                <button type="button" onclick="window.rcHeroTabClick('calculator', true)" class="hero-btn-primary">
+                <button type="button" onclick="window.rcHeroTabClick('calculator', false)" class="hero-btn-primary">
                   <span>계산기 시작하기</span>
                 </button>
-                <button type="button" onclick="window.rcHeroTabClick('calculator', true)" class="hero-btn-white">
+                <button type="button" onclick="window.rcHeroTabClick('calculator', false)" class="hero-btn-white">
                   <span>수혜 기준표 보기</span>
                 </button>
               </div>
@@ -1731,7 +1965,7 @@
                 포트리·팰팍 타운별 시니어 아파트 신청 링크, 공과금 감면(LIHEAP/USF), 푸드뱅크, 성인 주간보호 등 뉴저지 한인을 위해 완벽히 재작성된 80편의 연구 가이드를 제공합니다.
               </p>
               <div class="hero-btn-row">
-                <button type="button" onclick="window.rcHeroTabClick('resources', true)" class="hero-btn-primary">
+                <button type="button" onclick="window.rcHeroTabClick('resources', false)" class="hero-btn-primary">
                   <span>커뮤니티 리소스 둘러보기</span>
                 </button>
                 <button type="button" onclick="window.rcHeroJumpHousing()" class="hero-btn-white">
@@ -1756,7 +1990,7 @@
                 인플레이션 감축법(IRA) 파트 D 약값 상한제 $2,100, 파트 B 표준 보험료 $202.90, 오리지널 vs 어드밴티지 맞춤 선택 전략과 저소득층 보조(Extra Help)를 확인하세요.
               </p>
               <div class="hero-btn-row">
-                <button type="button" onclick="window.rcHeroTabClick('medicare', true)" class="hero-btn-primary">
+                <button type="button" onclick="window.rcHeroTabClick('medicare', false)" class="hero-btn-primary">
                   <span>메디케어 가이드 읽기</span>
                 </button>
                 <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="hero-btn-kakao">
@@ -1781,10 +2015,10 @@
                 HUD 202 독립 시니어 아파트, PAAD $5 약값 상한제, PPP 가족 간병인 유급 지원, 65세 이상 재산세 동결(Senior Freeze) 및 성인 데이케어까지 한눈에 확인하세요.
               </p>
               <div class="hero-btn-row">
-                <button type="button" onclick="window.rcHeroTabClick('senior', true)" class="hero-btn-primary">
+                <button type="button" onclick="window.rcHeroTabClick('senior', false)" class="hero-btn-primary">
                   <span>시니어 리소스 둘러보기</span>
                 </button>
-                <button type="button" onclick="window.rcHeroTabClick('senior', true)" class="hero-btn-white">
+                <button type="button" onclick="window.rcHeroTabClick('senior', false)" class="hero-btn-white">
                   <span>시니어 6대 분야별 보기</span>
                 </button>
               </div>
@@ -1820,29 +2054,29 @@
           <div role="tablist" aria-label="의료정보센터 주요 서비스 하이라이트" class="rc-hero-tabs-grid">
             
             <!-- Button 1: 자격확인 계산기 -->
-            <button role="tab" id="rc-billboard-tab-1" aria-controls="rc-hero-slide-1" aria-selected="true" tabindex="0" onclick="window.rcHeroTabClick('calculator', true)" class="hero-tab-item rc-hero-tab active" data-slide="1" data-tab="calculator">
-              <span class="hero-tab-sub">하이라이트 01</span>
+            <button role="tab" id="rc-billboard-tab-1" aria-controls="rc-hero-slide-1" aria-selected="true" tabindex="0" onclick="window.rcHeroTabClick('calculator', false)" class="hero-tab-item rc-hero-tab active" data-slide="1" data-tab="calculator">
+              <span class="hero-tab-sub">01</span>
               <span class="hero-tab-title">자격확인 계산기</span>
               <div class="hero-tab-bar"></div>
             </button>
 
             <!-- Button 2: 커뮤니티 리소스 -->
-            <button role="tab" id="rc-billboard-tab-2" aria-controls="rc-hero-slide-2" aria-selected="false" tabindex="-1" onclick="window.rcHeroTabClick('resources', true)" class="hero-tab-item rc-hero-tab" data-slide="2" data-tab="resources">
-              <span class="hero-tab-sub">하이라이트 02</span>
+            <button role="tab" id="rc-billboard-tab-2" aria-controls="rc-hero-slide-2" aria-selected="false" tabindex="-1" onclick="window.rcHeroTabClick('resources', false)" class="hero-tab-item rc-hero-tab" data-slide="2" data-tab="resources">
+              <span class="hero-tab-sub">02</span>
               <span class="hero-tab-title">커뮤니티 리소스</span>
               <div class="hero-tab-bar"></div>
             </button>
 
             <!-- Button 3: 메디케어 & ACA -->
-            <button role="tab" id="rc-billboard-tab-3" aria-controls="rc-hero-slide-3" aria-selected="false" tabindex="-1" onclick="window.rcHeroTabClick('medicare', true)" class="hero-tab-item rc-hero-tab" data-slide="3" data-tab="medicare">
-              <span class="hero-tab-sub">하이라이트 03</span>
+            <button role="tab" id="rc-billboard-tab-3" aria-controls="rc-hero-slide-3" aria-selected="false" tabindex="-1" onclick="window.rcHeroTabClick('medicare', false)" class="hero-tab-item rc-hero-tab" data-slide="3" data-tab="medicare">
+              <span class="hero-tab-sub">03</span>
               <span class="hero-tab-title">메디케어 &amp; ACA</span>
               <div class="hero-tab-bar"></div>
             </button>
 
             <!-- Button 4: 시니어 -->
-            <button role="tab" id="rc-billboard-tab-4" aria-controls="rc-hero-slide-4" aria-selected="false" tabindex="-1" onclick="window.rcHeroTabClick('senior', true)" class="hero-tab-item rc-hero-tab" data-slide="4" data-tab="senior">
-              <span class="hero-tab-sub">하이라이트 04</span>
+            <button role="tab" id="rc-billboard-tab-4" aria-controls="rc-hero-slide-4" aria-selected="false" tabindex="-1" onclick="window.rcHeroTabClick('senior', false)" class="hero-tab-item rc-hero-tab" data-slide="4" data-tab="senior">
+              <span class="hero-tab-sub">04</span>
               <span class="hero-tab-title">시니어</span>
               <div class="hero-tab-bar"></div>
             </button>
@@ -3429,16 +3663,30 @@
     </div>
   </main>
 
-  <!-- =======================================================
-       Quick Search Modal (Cmd+K)
+    <!-- =======================================================
+       Quick Search Window (Cmd+K) - Compact & Centered in Top Hero Area
        ======================================================= -->
-  <div id="rcSearchModal" class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-xs flex items-start justify-center p-4 pt-20 hidden">
-    <div class="bg-white rounded-2xl max-w-2xl w-full shadow-2xl border border-slate-200 overflow-hidden">
-      <div class="p-4 border-b border-slate-100 flex items-center gap-3">
-        <input type="text" id="rcSearchModalInput" placeholder="가이드, 시니어 주택, 계산기 항목 실시간 검색..." class="w-full text-base font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none" />
-        <button type="button" onclick="closeSearchModal()" class="text-xs font-semibold px-2 py-1 rounded bg-slate-100 text-slate-500 hover:bg-slate-200">ESC</button>
+  <div id="rcSearchModal" 
+       onclick="if(event.target === this) closeSearchModal();" 
+       class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/60 backdrop-blur-xs flex items-start justify-center p-4 pt-24 sm:pt-28" 
+       style="display: none !important;">
+    <div class="bg-white rounded-2xl shadow-2xl border border-slate-200/90 overflow-hidden" 
+         onclick="event.stopPropagation();" 
+         style="width: 92vw !important; max-width: 320px !important; box-shadow: 0 12px 36px rgba(15, 23, 42, 0.28) !important;">
+      <div class="p-3 border-b border-slate-100 flex items-center gap-2 bg-white">
+        <i class="fa-solid fa-magnifying-glass text-[#1B6FA8] text-xs sm:text-sm shrink-0 ml-1"></i>
+        <input type="text" 
+               id="rcSearchModalInput" 
+               onkeydown="if(event.key === 'Escape' || event.key === 'Esc' || event.keyCode === 27) { event.preventDefault(); closeSearchModal(); }" 
+               placeholder="전체검색..." 
+               class="w-full text-xs sm:text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none bg-transparent" />
+        <button type="button" 
+                onclick="closeSearchModal()" 
+                class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors cursor-pointer shrink-0">
+          ESC
+        </button>
       </div>
-      <ul id="rcSearchResultsList" class="p-3 max-h-96 overflow-y-auto divide-y divide-slate-100">
+      <ul id="rcSearchResultsList" class="p-2 max-h-80 overflow-y-auto divide-y divide-slate-100 text-left">
         <!-- Results injected dynamically -->
       </ul>
     </div>
@@ -3449,7 +3697,24 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
         <div>
-          <div class="font-bold text-lg mb-2 text-white" style="color: #ffffff !important;">NJ Access Portal 의료정보센터</div>
+          <div class="engine-logo-row flex items-center gap-3.5 sm:gap-4 mb-4 flex-wrap">
+            <a class="inline-flex items-center group cursor-pointer njap-brand-link" href="/" title="NJ Access Portal · 뉴저지 한인 포털">
+              <svg class="h-9 sm:h-10 w-auto object-contain transition-transform group-hover:scale-105" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NJ Access Portal · 뉴저지 한인 포털"><title>NJ Access Portal · 뉴저지 한인 포털</title><g transform="translate(4, 2) scale(0.56)" stroke-linecap="round" stroke-linejoin="round"><g stroke="#FFFFFF"><line x1="20" y1="12" x2="20" y2="88" stroke-width="3.5" /><rect x="25" y="12" width="55" height="76" rx="2" stroke-width="4" fill="none" /><polyline points="25,16 52,25 52,36" stroke-width="3.5" /><text x="52.5" y="81" font-family="'Times New Roman', serif" font-size="13.5" font-weight="900" letter-spacing="1.5" fill="#FFFFFF" stroke="none" text-anchor="middle">NJAP</text></g><path d="M 43,45 A 7,7 0 1,1 53,45 L 56,64 L 40,64 Z" stroke="#EF4444" stroke-width="3.5" fill="none" /><circle cx="74" cy="45" r="6.5" stroke="#EF4444" stroke-width="3.5" fill="none" /><line x1="47" y1="45" x2="67.5" y2="45" stroke="#EF4444" stroke-width="3.5" /><line x1="49" y1="45" x2="49" y2="49" stroke="#EF4444" stroke-width="3.5" /><line x1="53" y1="45" x2="53" y2="48" stroke="#EF4444" stroke-width="3" /></g><text x="64" y="27" font-family="Pretendard, system-ui, -apple-system, sans-serif" font-size="18" font-weight="900" fill="#FFFFFF" letter-spacing="-0.5">NJ Access Portal</text><text x="64" y="44" font-family="Pretendard, system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="600" fill="#94A3B8" letter-spacing="0.2">뉴저지 한인 포털</text></svg>
+            </a>
+            <!-- Highly Visible Engine Button Next to Logo -->
+            <a href="/engine" target="_self" class="engine-footer-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl text-white font-extrabold text-sm tracking-wide shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer" style="background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 50%, #0284C7 100%) !important; color: #ffffff !important; border: 1.5px solid #38BDF8 !important; box-shadow: 0 4px 18px rgba(56, 189, 248, 0.35) !important; text-decoration: none !important;" title="Universal Access Engine 포트폴리오 바로가기">
+              <svg class="w-4 h-4 text-cyan-200" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/></svg>
+              <span style="color: #ffffff !important; font-weight: 800; letter-spacing: 0.02em;">Engine</span>
+              <svg class="w-3.5 h-3.5 text-cyan-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+
+          <!-- Engine B2B Callout Box -->
+          <div class="engine-footer-card mb-5 p-3.5 sm:p-4 rounded-xl border border-sky-500/30 text-xs leading-relaxed max-w-sm shadow-md" style="background: rgba(15, 23, 42, 0.75) !important;">
+            <div class="font-bold flex items-start gap-1.5 mb-1.5" style="color: #ffffff !important;"><span class="engine-footer-badge font-extrabold" style="color: #38BDF8 !important;">Engine:</span><span style="color: #F1F5F9 !important;">For Hospitals, Physician group and Insurance Company.</span></div>
+            <div class="engine-footer-text" style="color: #94A3B8 !important; font-size: 12px;">Contact us at <a href="mailto:NJACCESSPORTAL@GMAIL.COM" class="engine-footer-mail underline font-bold transition-colors" style="color: #38BDF8 !important;">NJACCESSPORTAL@GMAIL.COM</a> to access our portfolio.</div>
+          </div>
+
           <p class="text-xs text-slate-400 leading-relaxed" style="color: #94a3b8 !important;">
             뉴저지 한인 동포의 의료 접근성과 권익 신장을 위해 최신 연방 및 주정부 의료·복지 가이드라인과 타운별 주거 정보를 정확하고 투명하게 제공합니다.
           </p>
@@ -3461,7 +3726,7 @@
             <li><a href="/resource-center#resources" class="hover:text-white" style="color: #94a3b8 !important;">커뮤니티 리소스 &amp; 시니어 주택</a></li>
             <li><a href="/resource-center#medicare" class="hover:text-white" style="color: #94a3b8 !important;">2026 메디케어 &amp; ACA 완전 가이드</a></li>
             <li><a href="/resource-center#senior" class="hover:text-white" style="color: #94a3b8 !important;">뉴저지 시니어 복지 가이드</a></li>
-            <li><a href="/forum" class="hover:text-white" style="color: #94a3b8 !important;">커뮤니티 포럼 Q&amp;A</a></li>
+            <li><a href="/forum" class="hover:text-white" style="color: #94a3b8 !important;">뉴저지 한인 광장 Q&amp;A</a></li>
           </ul>
         </div>
         <div>
@@ -3475,15 +3740,16 @@
         </div>
       </div>
       <div class="pt-6 border-t border-slate-800 text-center text-xs text-slate-500" style="color: #64748b !important; border-top: 1px solid rgba(255,255,255,0.1) !important;">
-        &copy; 2026 NJ Access Portal (뉴저지 한인 의료접근포털). All rights reserved. 본 정보는 공공 복지 정보 안내용이며 최종 자격 심사는 관할 주정부 및 주택청의 규정에 따릅니다.
+        &copy; 2026 NJ Access Portal (뉴저지 한인 포털). All rights reserved. 본 정보는 공공 복지 정보 안내용이며 최종 자격 심사는 관할 주정부 및 주택청의 규정에 따릅니다.
       </div>
     </div>
   </footer>
 
   <!-- Scripts -->
   <script src="/data/resource_center_data.js?v=20261004_clean_contact_v2"></script>
+  <script src="/data/resource_audio_manifest.js?v=20261008_v1"></script>
   <script src="/js/resource_calculator.js?v=20261004_medicare_aca_v1"></script>
-  <script src="/js/resource_center.js?v=20261004_medicare_aca_v1"></script>
+  <script src="/js/resource_center.js?v=20261008_audio_guide_v1"></script>
   <script src="/js/fixes.js?v=8.1.0"></script>
 </body>
 </html>

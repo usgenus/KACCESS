@@ -93,12 +93,12 @@
           e.preventDefault();
           const next = currentBillboardSlide === TOTAL_SLIDES ? 1 : currentBillboardSlide + 1;
           window.rcHeroGoto(next, false);
-          document.getElementById('rc-billboard-tab-' + next)?.focus();
+          document.getElementById('rc-billboard-tab-' + next)?.focus({ preventScroll: true });
         } else if (e.key === 'ArrowLeft') {
           e.preventDefault();
           const prev = currentBillboardSlide === 1 ? TOTAL_SLIDES : currentBillboardSlide - 1;
           window.rcHeroGoto(prev, false);
-          document.getElementById('rc-billboard-tab-' + prev)?.focus();
+          document.getElementById('rc-billboard-tab-' + prev)?.focus({ preventScroll: true });
         }
       });
     }
@@ -199,12 +199,16 @@
     const slideIdx = TAB_TO_SLIDE[tabId] || 1;
     if (window.location.hash !== '#' + tabId) {
       isSwitchingTab = true;
-      window.location.hash = tabId;
+      if (window.history && window.history.replaceState) {
+        window.history.replaceState(null, '', '#' + tabId);
+      } else {
+        window.location.hash = tabId;
+      }
       setTimeout(() => { isSwitchingTab = false; }, 80);
     }
     resetBillboardTimer();
     setBillboardSlide(slideIdx, false);
-    switchTab(tabId, shouldScroll);
+    switchTab(tabId, false);
   };
 
   window.rcHeroJumpHousing = function () {
@@ -234,8 +238,11 @@
     tabs.forEach(tab => {
       tab.addEventListener('click', (e) => {
         e.preventDefault();
-        const target = tab.dataset.tab;
-        window.location.hash = target;
+        if (window.history && window.history.replaceState) {
+          window.history.replaceState(null, '', '#' + target);
+        } else {
+          window.location.hash = target;
+        }
         switchTab(target, false);
       });
     });
@@ -253,6 +260,9 @@
   }
 
   function switchTab(tabId, shouldScroll = false) {
+    if (tabId !== 'resources' && window.stopResourceAudio) {
+      window.stopResourceAudio();
+    }
     const isAlreadyActive = activeTab === tabId &&
       document.getElementById(`tab-view-${tabId}`) &&
       !document.getElementById(`tab-view-${tabId}`).classList.contains('hidden');
@@ -547,6 +557,9 @@
   }
 
   window.filterByCategory = function (catId) {
+    if (window.stopResourceAudio) {
+      window.stopResourceAudio();
+    }
     currentCategory = catId;
 
     // Update active class on cards
@@ -623,9 +636,15 @@
             </span>
             <span class="text-[11px] font-bold text-slate-400">2026 규정</span>
           </div>
-          <h4 class="text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors line-clamp-2 mb-2 leading-snug">
-            ${art.title}
-          </h4>
+          <div class="flex items-start justify-between gap-2 mb-2">
+            <h4 class="text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors line-clamp-2 leading-snug">
+              ${art.title}
+            </h4>
+            <button type="button" data-art-id="${art.id}" onclick="event.stopPropagation(); window.openAndPlayArticle('${art.id}');" class="rc-card-audio-btn flex-shrink-0 text-xs px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold border border-blue-200 inline-flex items-center gap-1 shadow-2xs transition-colors cursor-pointer" title="오디오 가이드 듣기">
+              <i class="fa-solid fa-headphones text-[10px]"></i>
+              <span>오디오 가이드(설명)</span>
+            </button>
+          </div>
           <p class="text-xs text-slate-600 line-clamp-3 leading-relaxed mb-3">
             ${art.excerpt}
           </p>
@@ -640,13 +659,284 @@
     `).join('');
   }
 
+  // --- AUDIO GUIDE SYSTEM FOR ALL 80 RESOURCES ---
+  let resourceAudioEl = null;
+  let currentPlayingArtId = null;
+  let isUserSeeking = false;
+  window.isUserSeeking = false;
+
+  window._setSeeking = function (seeking) {
+    isUserSeeking = seeking;
+    window.isUserSeeking = seeking;
+  };
+
+  function formatTime(seconds) {
+    if (isNaN(seconds) || !isFinite(seconds) || seconds < 0) return '00:00';
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60);
+    return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  }
+
+  function initResourceAudioSystem() {
+    if (!resourceAudioEl) {
+      resourceAudioEl = new Audio();
+      resourceAudioEl.preload = 'none';
+      window._rcAudioEl = resourceAudioEl;
+
+      resourceAudioEl.addEventListener('timeupdate', () => {
+        if (!isUserSeeking && !window.isUserSeeking) {
+          updateActiveAudioUI();
+        }
+      });
+
+      resourceAudioEl.addEventListener('loadedmetadata', () => {
+        updateActiveAudioUI();
+      });
+
+      resourceAudioEl.addEventListener('ended', () => {
+        window.stopResourceAudio();
+      });
+
+      resourceAudioEl.addEventListener('error', (e) => {
+        console.warn('Audio guide playback error:', e);
+        window.stopResourceAudio();
+      });
+
+      resourceAudioEl.addEventListener('seeked', () => {
+        isUserSeeking = false;
+        window.isUserSeeking = false;
+        updateActiveAudioUI();
+      });
+    }
+  }
+
+  window.toggleResourceAudio = function (artId) {
+    initResourceAudioSystem();
+
+    // If already playing this article, stop it
+    if (currentPlayingArtId === artId && !resourceAudioEl.paused) {
+      window.stopResourceAudio();
+      return;
+    }
+
+    // Stop any other article currently playing
+    if (currentPlayingArtId && currentPlayingArtId !== artId) {
+      window.stopResourceAudio();
+    }
+
+    const manifest = window.RESOURCE_AUDIO_MANIFEST;
+    const item = manifest ? manifest[artId] : null;
+    const audioUrl = item ? item.audio_url : `/uploads/audio/guides/guide_${artId.replace(/-/g, '_')}.mp3`;
+
+    currentPlayingArtId = artId;
+    resourceAudioEl.src = audioUrl;
+    resourceAudioEl.currentTime = 0;
+    resourceAudioEl.playbackRate = 1.05; // 1.05x speed per user requirement!
+
+    resourceAudioEl.play().then(() => {
+      resourceAudioEl.playbackRate = 1.05;
+      updateActiveAudioUI();
+    }).catch(err => {
+      console.warn('Audio play request interrupted or failed:', err);
+      updateActiveAudioUI();
+    });
+
+    updateActiveAudioUI();
+  };
+
+  window.stopResourceAudio = function () {
+    if (resourceAudioEl) {
+      resourceAudioEl.pause();
+      resourceAudioEl.currentTime = 0;
+    }
+    currentPlayingArtId = null;
+    isUserSeeking = false;
+    window.isUserSeeking = false;
+    updateActiveAudioUI();
+  };
+
+  window.seekResourceAudio = function (percentVal, isFinal = false) {
+    if (!resourceAudioEl) return;
+    const pct = Math.max(0, Math.min(100, parseFloat(percentVal)));
+    if (isNaN(pct)) return;
+
+    isUserSeeking = true;
+    window.isUserSeeking = true;
+
+    if (resourceAudioEl.duration && isFinite(resourceAudioEl.duration)) {
+      const targetTime = (pct / 100) * resourceAudioEl.duration;
+
+      // Update time label and active track gradient in real time as user drags
+      const wrappers = document.querySelectorAll('.rc-audio-guide-wrapper');
+      wrappers.forEach(wrap => {
+        const timeDisplay = wrap.querySelector('.rc-time-display');
+        if (timeDisplay) {
+          timeDisplay.textContent = `${formatTime(targetTime)} / ${formatTime(resourceAudioEl.duration)}`;
+        }
+        const slider = wrap.querySelector('.rc-timeline-slider');
+        if (slider) {
+          slider.value = pct;
+          slider.style.background = `linear-gradient(to right, #2563eb 0%, #2563eb ${pct}%, #e2e8f0 ${pct}%, #e2e8f0 100%)`;
+        }
+      });
+
+      if (isFinal) {
+        resourceAudioEl.currentTime = targetTime;
+        const finishSeek = () => {
+          isUserSeeking = false;
+          window.isUserSeeking = false;
+          updateActiveAudioUI();
+          resourceAudioEl.removeEventListener('seeked', finishSeek);
+        };
+        resourceAudioEl.addEventListener('seeked', finishSeek, { once: true });
+        setTimeout(finishSeek, 200);
+      }
+    }
+  };
+
+  window.openAndPlayArticle = function (artId) {
+    // Stop any active audio before opening and playing new one
+    window.stopResourceAudio();
+    window.openArticleInline(artId, true);
+  };
+
+  function updateActiveAudioUI() {
+    const wrappers = document.querySelectorAll('.rc-audio-guide-wrapper');
+    wrappers.forEach(wrap => {
+      const artId = wrap.dataset.artId;
+      const btn = wrap.querySelector('.rc-audio-play-btn');
+      const icon = wrap.querySelector('.rc-audio-icon');
+      const text = wrap.querySelector('.rc-audio-btn-text');
+      const slider = wrap.querySelector('.rc-timeline-slider');
+      const timeDisplay = wrap.querySelector('.rc-time-display');
+
+      const isThisPlaying = (currentPlayingArtId === artId && resourceAudioEl && !resourceAudioEl.paused);
+
+      if (isThisPlaying) {
+        if (btn) btn.classList.add('is-playing');
+        const iconBox = wrap.querySelector('.rc-play-icon-box');
+        if (iconBox) {
+          iconBox.innerHTML = '<svg class="rc-audio-svg-icon" viewBox="0 0 24 24" width="9" height="9" fill="#ffffff"><rect x="6" y="6" width="12" height="12" rx="1.5"/></svg>';
+        }
+        if (text) text.textContent = '정지';
+
+        const cur = resourceAudioEl.currentTime || 0;
+        const dur = (resourceAudioEl.duration && isFinite(resourceAudioEl.duration)) ? resourceAudioEl.duration : 0;
+        const pct = dur > 0 ? (cur / dur) * 100 : 0;
+
+        if (slider && !isUserSeeking && !window.isUserSeeking) {
+          slider.value = pct;
+          slider.style.background = `linear-gradient(to right, #2563eb 0%, #2563eb ${pct}%, #e2e8f0 ${pct}%, #e2e8f0 100%)`;
+        }
+        if (timeDisplay && !isUserSeeking && !window.isUserSeeking) {
+          timeDisplay.textContent = `${formatTime(cur)} / ${dur > 0 ? formatTime(dur) : '--:--'}`;
+        }
+      } else {
+        if (btn) btn.classList.remove('is-playing');
+        const iconBox = wrap.querySelector('.rc-play-icon-box');
+        if (iconBox) {
+          iconBox.innerHTML = '<svg class="rc-audio-svg-icon" viewBox="0 0 24 24" width="10" height="10" fill="#ffffff" style="margin-left: 1.5px;"><path d="M8 5v14l11-7z"/></svg>';
+        }
+        if (text) text.textContent = '오디오 가이드(설명)';
+
+        if (slider && currentPlayingArtId !== artId) {
+          slider.value = 0;
+          slider.style.background = '#e2e8f0';
+        }
+        if (timeDisplay && currentPlayingArtId !== artId) {
+          timeDisplay.textContent = '00:00 / --:--';
+        }
+      }
+    });
+
+    const cardBtns = document.querySelectorAll('.rc-card-audio-btn');
+    cardBtns.forEach(btn => {
+      const cardArtId = btn.dataset.artId;
+      const isPlaying = (currentPlayingArtId === cardArtId && resourceAudioEl && !resourceAudioEl.paused);
+      if (isPlaying) {
+        btn.classList.add('is-playing');
+        btn.innerHTML = '<svg viewBox="0 0 24 24" width="9" height="9" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="1.5"/></svg> <span>정지</span>';
+      } else {
+        btn.classList.remove('is-playing');
+        btn.innerHTML = '<svg viewBox="0 0 24 24" width="9" height="9" fill="currentColor" style="margin-left: 1px;"><path d="M8 5v14l11-7z"/></svg> <span>오디오 가이드(설명)</span>';
+      }
+    });
+  }
+
+  function attachAudioGuideToResourcePage(contentEl, art) {
+    const titleEl = contentEl.querySelector('.rc-briefing-title');
+    if (!titleEl) return;
+
+    if (contentEl.querySelector('.rc-audio-guide-wrapper')) return;
+
+    const playerWrap = document.createElement('div');
+    playerWrap.className = 'rc-audio-guide-wrapper';
+    playerWrap.id = `audioGuide_${art.id}`;
+    playerWrap.dataset.artId = art.id;
+
+    playerWrap.innerHTML = `
+      <button type="button" class="rc-audio-play-btn" onclick="window.toggleResourceAudio('${art.id}')" title="오디오 가이드 듣기 / 정지">
+        <span class="rc-play-icon-box">
+          <svg class="rc-audio-svg-icon" viewBox="0 0 24 24" width="10" height="10" fill="#ffffff" style="margin-left: 1.5px;"><path d="M8 5v14l11-7z"/></svg>
+        </span>
+        <span class="rc-audio-btn-text">오디오 가이드(설명)</span>
+        <div class="rc-wave-bars">
+          <span></span><span></span><span></span>
+        </div>
+      </button>
+      <div class="rc-audio-divider"></div>
+      <div class="rc-audio-timeline-wrap">
+        <input type="range" class="rc-timeline-slider" min="0" max="100" step="0.1" value="0"
+          onpointerdown="window._setSeeking(true);"
+          onmousedown="window._setSeeking(true);"
+          ontouchstart="window._setSeeking(true);"
+          oninput="window.seekResourceAudio(this.value, false);"
+          onchange="window.seekResourceAudio(this.value, true);"
+          onpointerup="window.seekResourceAudio(this.value, true);"
+          onmouseup="window.seekResourceAudio(this.value, true);"
+          ontouchend="window.seekResourceAudio(this.value, true);"
+          title="타임라인 앞으로 / 뒤로 이동">
+        <span class="rc-time-display">00:00 / --:--</span>
+        <span class="rc-speed-badge">1.05x</span>
+      </div>
+    `;
+
+    // Position directly next to the title on each resource page
+    if (titleEl.parentNode) {
+      const titleRow = document.createElement('div');
+      titleRow.className = 'rc-briefing-title-row flex flex-wrap items-center gap-3 mb-3';
+      titleEl.parentNode.insertBefore(titleRow, titleEl);
+      titleRow.appendChild(titleEl);
+      titleRow.appendChild(playerWrap);
+      titleEl.style.marginBottom = '0';
+    }
+
+    updateActiveAudioUI();
+  }
+
   // 4. Inline Guide Reader (NO POP UPS!)
-  window.openArticleInline = function (articleIdOrSlug) {
+  window.openArticleInline = function (articleIdOrSlug, autoPlayAudio = false) {
     const data = window.COMMUNITY_RESOURCES_DATA;
     if (!data) return;
 
     const art = data.articles.find(a => a.id === articleIdOrSlug || a.slug === articleIdOrSlug);
     if (!art) return;
+
+    // Stop any previous audio when switching to a different article
+    if (window.stopResourceAudio && (currentPlayingArtId || (resourceAudioEl && !resourceAudioEl.paused))) {
+      if (currentPlayingArtId !== art.id) {
+        window.stopResourceAudio();
+      }
+    }
+
+    // Ensure resources tab view is active so inline reader is visible
+    if (typeof switchTab === 'function') {
+      switchTab('resources', false);
+    } else {
+      document.querySelectorAll('.rc-tab-view').forEach(view => {
+        view.classList.toggle('hidden', view.id !== 'tab-view-resources');
+      });
+    }
 
     const readerEl = document.getElementById('inlineResourceReader');
     const badgeEl = document.getElementById('inlineReaderCatBadge');
@@ -657,13 +947,29 @@
     if (badgeEl) badgeEl.textContent = art.category_name;
     contentEl.innerHTML = art.content_html;
 
+    // Attach Audio Guide button right next to title on each resource page
+    attachAudioGuideToResourcePage(contentEl, art);
+
     readerEl.classList.remove('hidden');
 
-    // Smooth scroll into inline reader
-    readerEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Smooth scroll into inline reader with offset so header isn't obscured by fixed navbar
+    const headerOffset = 110;
+    const elementPosition = readerEl.getBoundingClientRect().top + window.pageYOffset;
+    const offsetPosition = elementPosition - headerOffset;
+    window.scrollTo({
+      top: Math.max(0, offsetPosition),
+      behavior: 'smooth'
+    });
+
+    if (autoPlayAudio) {
+      setTimeout(() => {
+        window.toggleResourceAudio(art.id);
+      }, 150);
+    }
   };
 
   window.closeInlineReader = function () {
+    window.stopResourceAudio();
     const readerEl = document.getElementById('inlineResourceReader');
     if (readerEl) {
       readerEl.classList.add('hidden');
@@ -913,18 +1219,33 @@
 
   // 7. Search Modal (Cmd+K)
   function initSearchModal() {
-    window.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
         openSearchModal();
       }
-      if (e.key === 'Escape') {
+      if (e.key === 'Escape' || e.key === 'Esc' || e.keyCode === 27) {
         closeSearchModal();
       }
     });
 
+    const modal = document.getElementById('rcSearchModal');
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          closeSearchModal();
+        }
+      });
+    }
+
     const input = document.getElementById('rcSearchModalInput');
     if (input) {
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' || e.key === 'Esc' || e.keyCode === 27) {
+          e.preventDefault();
+          closeSearchModal();
+        }
+      });
       input.addEventListener('input', (e) => {
         const q = e.target.value.toLowerCase().trim();
         renderModalSearchResults(q);
@@ -935,11 +1256,12 @@
   window.openSearchModal = function () {
     const modal = document.getElementById('rcSearchModal');
     if (modal) {
+      modal.style.setProperty('display', 'flex', 'important');
       modal.classList.remove('hidden');
       const input = document.getElementById('rcSearchModalInput');
       if (input) {
         input.value = '';
-        input.focus();
+        setTimeout(() => input.focus(), 60);
         renderModalSearchResults('');
       }
     }
@@ -947,7 +1269,12 @@
 
   window.closeSearchModal = function () {
     const modal = document.getElementById('rcSearchModal');
-    if (modal) modal.classList.add('hidden');
+    if (modal) {
+      modal.style.setProperty('display', 'none', 'important');
+      modal.classList.add('hidden');
+      const input = document.getElementById('rcSearchModalInput');
+      if (input) input.blur();
+    }
   };
 
   function renderModalSearchResults(q) {
@@ -963,17 +1290,17 @@
     }).slice(0, 10);
 
     if (results.length === 0) {
-      list.innerHTML = `<li class="p-4 text-center text-sm text-slate-500">일치하는 결과가 없습니다.</li>`;
+      list.innerHTML = `<li class="p-3 text-center text-xs sm:text-sm text-slate-500">일치하는 결과가 없습니다.</li>`;
       return;
     }
 
     list.innerHTML = results.map(a => `
-      <li class="p-3.5 hover:bg-slate-50 rounded-xl cursor-pointer flex items-center justify-between" onclick="selectSearchResult('${a.id}')">
-        <div>
-          <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-700">${a.category_name}</span>
-          <div class="text-sm font-bold text-slate-900 mt-0.5">${a.title}</div>
+      <li class="p-2.5 hover:bg-slate-50 rounded-xl cursor-pointer flex items-center justify-between gap-2" onclick="selectSearchResult('${a.id}')">
+        <div class="min-w-0 flex-1">
+          <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-50 text-blue-700">${a.category_name}</span>
+          <div class="text-xs sm:text-sm font-bold text-slate-900 mt-0.5 line-clamp-2 leading-snug">${a.title}</div>
         </div>
-        <span class="text-xs text-blue-600 font-semibold">&rarr;</span>
+        <span class="text-xs text-blue-600 font-semibold shrink-0 ml-1">&rarr;</span>
       </li>
     `).join('');
   }

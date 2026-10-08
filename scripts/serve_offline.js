@@ -102,8 +102,76 @@ const server = http.createServer((req, res) => {
     }
   }
 
+  // 4.5 Settings API Simulation
+  if (urlPath.includes('/api/settings.php')) {
+    const contentFile = path.join(ROOT, 'data', 'content.json');
+    let d = {};
+    if (fs.existsSync(contentFile)) {
+      try { d = JSON.parse(fs.readFileSync(contentFile, 'utf8') || '{}'); } catch(e) {}
+    }
+    if (req.method === 'POST') {
+      let body = '';
+      req.on('data', chunk => body += chunk);
+      req.on('end', () => {
+        try {
+          const parsed = JSON.parse(body || '{}');
+          if (!d.settings) d.settings = {};
+          if (parsed.scrollingBanner !== undefined) {
+            d.settings.scrollingBanner = parsed.scrollingBanner;
+          }
+          fs.writeFileSync(contentFile, JSON.stringify(d, null, 2), 'utf8');
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ success: true, message: 'Saved in local test server', data: d.settings }));
+        } catch (e) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ success: false, error: e.message }));
+        }
+      });
+      return;
+    } else {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({
+        success: true,
+        data: d.settings || {
+          scrollingBanner: '의료접근포탈: "비영리기관(한인 커뮤니티센터)들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료시스템 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스"'
+        }
+      }));
+      return;
+    }
+  }
+
+  // 4.6 Cron Push API Simulation
+  if (urlPath.includes('/api/cron_push.php')) {
+    const stateFile = path.join(ROOT, 'data', 'push_state.json');
+    let st = {};
+    if (fs.existsSync(stateFile)) {
+      try { st = JSON.parse(fs.readFileSync(stateFile, 'utf8') || '{}'); } catch(e) {}
+    }
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({
+      success: true,
+      currentTime: new Date().toISOString(),
+      scheduleRule: 'Monday 10:00 AM & Thursday 10:00 AM (America/New_York)',
+      pendingPostsCount: 0,
+      totalSubscribers: 3,
+      lastSentAt: st.last_sent_at || null,
+      lastSlot: st.last_slot || null
+    }));
+    return;
+  }
+
   // 5. Clean URLs & Portal Pages at Root
   let filePath = '';
+  if (urlPath === '/admin' || urlPath === '/admin/' || urlPath === '/admin/index.php') {
+    const adminFile = path.join(ROOT, 'admin', 'index.php');
+    if (fs.existsSync(adminFile)) {
+      let html = fs.readFileSync(adminFile, 'utf8');
+      html = html.replace(/<\?php[\s\S]*?\?>/g, '');
+      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+      res.end(html);
+      return;
+    }
+  }
   if (urlPath === '/' || urlPath === '/index.html' || urlPath === '/index.php') {
     filePath = path.join(ROOT, 'ko', 'index.html');
   } else if (urlPath === '/blog' || urlPath === '/blog/') {
@@ -156,10 +224,34 @@ const server = http.createServer((req, res) => {
 
   const ext = path.extname(filePath).toLowerCase();
   const contentType = MIME_TYPES[ext] || 'application/octet-stream';
+  const stat = fs.statSync(filePath);
+  const totalSize = stat.size;
 
-  const content = fs.readFileSync(filePath);
-  res.writeHead(200, { 'Content-Type': contentType });
-  res.end(content);
+  // Support Byte-Range Requests for Audio / Video Seeking
+  const range = req.headers.range;
+  if (range && (ext === '.mp3' || ext === '.mp4')) {
+    const parts = range.replace(/bytes=/, '').split('-');
+    const start = parseInt(parts[0], 10);
+    const end = parts[1] ? parseInt(parts[1], 10) : totalSize - 1;
+    const chunkSize = (end - start) + 1;
+    const fileStream = fs.createReadStream(filePath, { start, end });
+
+    res.writeHead(206, {
+      'Content-Range': `bytes ${start}-${end}/${totalSize}`,
+      'Accept-Ranges': 'bytes',
+      'Content-Length': chunkSize,
+      'Content-Type': contentType
+    });
+    fileStream.pipe(res);
+    return;
+  }
+
+  res.writeHead(200, {
+    'Content-Type': contentType,
+    'Content-Length': totalSize,
+    'Accept-Ranges': 'bytes'
+  });
+  fs.createReadStream(filePath).pipe(res);
 });
 
 server.listen(PORT, () => {
