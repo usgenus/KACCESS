@@ -222,32 +222,14 @@ $initialCount = count($partners);
     
     <!-- Title & Statement Row -->
     <section class="relative pt-2 pb-4">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
-        <!-- Left: Big Bold Title -->
-        <div class="lg:col-span-7">
-          <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black text-black tracking-tight leading-[1.08] mb-4">
-            뉴저지<br>파트너즈
-          </h1>
-          <p class="text-base sm:text-lg text-slate-600 font-medium tracking-tight">
-            뉴저지 한인 커뮤니티가 신뢰하는 병원·의원·약국·비즈니스
-          </p>
-        </div>
-
-        <!-- Right: Decorative Curved Arc & Strategy Statement -->
-        <div class="lg:col-span-5 relative pl-0 lg:pl-6">
-          <!-- Subtle curved circular backdrop -->
-          <div class="absolute -right-6 -top-14 w-64 h-64 bg-emerald-100/40 rounded-full blur-2xl pointer-events-none -z-10"></div>
-          
-          <div class="border-t border-slate-300 pt-4 relative">
-            <h2 class="text-sm sm:text-base font-bold text-slate-900 tracking-tight mb-1.5 flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full bg-brand-forest"></span>
-              광고가 아니라, 하나의 브랜드 페이지로.
-            </h2>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed font-normal">
-              파트너의 서비스·전문가 칼럼·영상·관련 뉴스를 한 화면에 연결하는 통합 프로필을 제안합니다.
-            </p>
-          </div>
-        </div>
+      <div class="max-w-3xl">
+        <!-- Big Bold Title -->
+        <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black text-black tracking-tight leading-[1.08] mb-4">
+          뉴저지<br>파트너즈
+        </h1>
+        <p class="text-base sm:text-lg text-slate-600 font-medium tracking-tight">
+          뉴저지 한인 커뮤니티가 신뢰하는 병원·의원·약국·비즈니스
+        </p>
       </div>
     </section>
 
