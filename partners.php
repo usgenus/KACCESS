@@ -393,53 +393,53 @@ $initialCount = count($partners);
           </div>
         </div>
 
-        <!-- Partner Cards Grid -->
-        <div id="partner-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Partner Cards Grid (5 in a row on desktop, half the size) -->
+        <div id="partner-grid" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4">
           <?php foreach ($partners as $p): ?>
-            <article class="partner-card bg-white rounded-2xl border border-slate-200 hover:border-slate-300 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden group" data-category="<?= htmlspecialchars($p['category']) ?>" data-town="<?= htmlspecialchars($p['town']) ?>" data-name="<?= htmlspecialchars($p['name']) ?>" data-intro="<?= htmlspecialchars($p['intro']) ?>" data-id="<?= htmlspecialchars($p['id']) ?>">
+            <article class="partner-card bg-white rounded-xl border border-slate-200 hover:border-slate-300 shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col overflow-hidden group" data-category="<?= htmlspecialchars($p['category']) ?>" data-town="<?= htmlspecialchars($p['town']) ?>" data-name="<?= htmlspecialchars($p['name']) ?>" data-intro="<?= htmlspecialchars($p['intro']) ?>" data-id="<?= htmlspecialchars($p['id']) ?>">
               
-              <!-- Image Area (Direct Full Page Click) -->
-              <div class="relative w-full h-48 sm:h-52 bg-slate-100 overflow-hidden cursor-pointer" onclick="handleCardClick('<?= htmlspecialchars($p['id']) ?>', '<?= htmlspecialchars($p['minisiteUrl']) ?>')">
+              <!-- Image Area (Direct Full Page Click - Half Size Height) -->
+              <div class="relative w-full h-28 sm:h-32 bg-slate-100 overflow-hidden cursor-pointer" onclick="handleCardClick('<?= htmlspecialchars($p['id']) ?>', '<?= htmlspecialchars($p['minisiteUrl']) ?>')">
                 <img src="<?= htmlspecialchars($p['imageUrl']) ?>" alt="<?= htmlspecialchars($p['name']) ?>" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                 
                 <!-- Top-Left Category Badge -->
-                <div class="absolute top-3 left-3">
-                  <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-[#E6F4EA] text-brand-forest shadow-xs">
+                <div class="absolute top-2 left-2">
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-[#E6F4EA] text-brand-forest shadow-xs">
                     <?= htmlspecialchars($p['category']) ?>
                   </span>
                 </div>
 
                 <!-- Bottom-Right Sample Badge -->
-                <div class="absolute bottom-3 right-3">
-                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-black/60 text-white backdrop-blur-xs">
+                <div class="absolute bottom-2 right-2">
+                  <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[9.5px] font-medium bg-black/60 text-white backdrop-blur-xs">
                     <?= htmlspecialchars($p['isSample'] ?: '가상 상호') ?>
                   </span>
                 </div>
               </div>
 
-              <!-- Card Body -->
-              <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
-                <div class="space-y-2">
+              <!-- Card Body (Compact Half-Size Spacing) -->
+              <div class="p-3 sm:p-3.5 flex-1 flex flex-col justify-between space-y-2.5">
+                <div class="space-y-1.5">
                   <!-- Town -->
-                  <div class="text-xs font-bold text-slate-400 uppercase tracking-tight">
+                  <div class="text-[10px] font-bold text-slate-400 uppercase tracking-tight">
                     <?= htmlspecialchars($p['town']) ?>, NJ
                   </div>
 
                   <!-- Business Name (Direct Full Page Click) -->
-                  <h3 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight group-hover:text-brand-forest transition-colors cursor-pointer" onclick="handleCardClick('<?= htmlspecialchars($p['id']) ?>', '<?= htmlspecialchars($p['minisiteUrl']) ?>')">
+                  <h3 class="text-sm sm:text-base font-black text-slate-900 tracking-tight leading-snug group-hover:text-brand-forest transition-colors cursor-pointer line-clamp-1" onclick="handleCardClick('<?= htmlspecialchars($p['id']) ?>', '<?= htmlspecialchars($p['minisiteUrl']) ?>')">
                     <?= htmlspecialchars($p['name']) ?>
                   </h3>
 
                   <!-- Intro -->
-                  <p class="text-xs sm:text-sm text-slate-600 font-normal leading-relaxed line-clamp-2">
+                  <p class="text-[11px] sm:text-xs text-slate-600 font-normal leading-relaxed line-clamp-2 min-h-[32px]">
                     <?= htmlspecialchars($p['intro']) ?>
                   </p>
 
                   <!-- Tags -->
                   <?php if (!empty($p['tags'])): ?>
-                    <div class="flex flex-wrap gap-1.5 pt-1">
-                      <?php foreach ($p['tags'] as $tag): ?>
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-[11px] font-medium bg-slate-100 text-slate-600">
+                    <div class="flex flex-wrap gap-1 pt-0.5">
+                      <?php foreach (array_slice($p['tags'], 0, 2) as $tag): ?>
+                        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[9.5px] font-medium bg-slate-100 text-slate-600 truncate max-w-[100px]">
                           <?= htmlspecialchars($tag) ?>
                         </span>
                       <?php endforeach; ?>
@@ -448,25 +448,25 @@ $initialCount = count($partners);
                 </div>
 
                 <!-- Action Buttons Row -->
-                <div class="pt-2 grid grid-cols-2 gap-2 border-t border-slate-100">
+                <div class="pt-2 grid grid-cols-2 gap-1.5 border-t border-slate-100">
                   <!-- Full Webpage Direct Link Button -->
                   <a href="<?= !empty($p['minisiteUrl']) ? htmlspecialchars($p['minisiteUrl']) : 'javascript:void(0)' ?>" 
                      onclick="handleDetailClick(event, '<?= htmlspecialchars($p['name']) ?>', '<?= htmlspecialchars($p['minisiteUrl']) ?>')" 
                      <?= !empty($p['minisiteUrl']) ? 'target="_blank" rel="noopener noreferrer"' : '' ?> 
-                     class="w-full py-2.5 px-3 rounded-xl bg-brand-forest hover:bg-brand-forestDark text-white font-bold text-xs sm:text-sm tracking-tight transition-all active:scale-95 shadow-xs flex items-center justify-center gap-1 cursor-pointer">
+                     class="w-full py-1.5 px-1.5 rounded-lg bg-brand-forest hover:bg-brand-forestDark text-white font-bold text-[11px] tracking-tight transition-all active:scale-95 shadow-xs flex items-center justify-center text-center whitespace-nowrap cursor-pointer">
                     <span>자세히보기</span>
                   </a>
 
                   <!-- Contact Button (KakaoTalk OR Email) -->
                   <?php if (($p['contactMethod'] ?? 'kakao') === 'email'): ?>
-                    <a href="mailto:<?= htmlspecialchars($p['email'] ?: 'contact@njaccessportal.com') ?>?subject=<?= urlencode('[' . $p['name'] . ' 문의] NJ Access Portal 파트너즈 연결') ?>" class="w-full py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-black text-white font-bold text-xs sm:text-sm tracking-tight transition-all active:scale-95 shadow-xs flex items-center justify-center gap-1.5 cursor-pointer">
-                      <i class="fa-solid fa-envelope text-xs"></i>
-                      <span>이메일 문의</span>
+                    <a href="mailto:<?= htmlspecialchars($p['email'] ?: 'contact@njaccessportal.com') ?>?subject=<?= urlencode('[' . $p['name'] . ' 문의] NJ Access Portal 파트너즈 연결') ?>" class="w-full py-1.5 px-1.5 rounded-lg bg-slate-900 hover:bg-black text-white font-bold text-[11px] tracking-tight transition-all active:scale-95 shadow-xs flex items-center justify-center gap-1 text-center whitespace-nowrap cursor-pointer">
+                      <i class="fa-solid fa-envelope text-[10px]"></i>
+                      <span>이메일</span>
                     </a>
                   <?php else: ?>
-                    <button type="button" onclick="handleKakaoChat('<?= htmlspecialchars($p['id']) ?>', '<?= htmlspecialchars($p['kakaoChannelId']) ?>')" class="w-full py-2.5 px-3 rounded-xl bg-[#FEE500] hover:bg-[#FDD835] text-[#191919] font-bold text-xs sm:text-sm tracking-tight transition-all active:scale-95 shadow-xs flex items-center justify-center gap-1.5 cursor-pointer">
-                      <img src="/kakaotalk-icon.png" alt="Kakao" class="w-3.5 h-3.5 rounded-xs object-contain" />
-                      <span>카카오톡 상담</span>
+                    <button type="button" onclick="handleKakaoChat('<?= htmlspecialchars($p['id']) ?>', '<?= htmlspecialchars($p['kakaoChannelId']) ?>')" class="w-full py-1.5 px-1.5 rounded-lg bg-[#FEE500] hover:bg-[#FDD835] text-[#191919] font-bold text-[11px] tracking-tight transition-all active:scale-95 shadow-xs flex items-center justify-center gap-1 text-center whitespace-nowrap cursor-pointer">
+                      <img src="/kakaotalk-icon.png" alt="Kakao" class="w-3 h-3 rounded-xs object-contain" />
+                      <span>카카오톡</span>
                     </button>
                   <?php endif; ?>
                 </div>
