@@ -74,7 +74,7 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
               NJ Access Portal
               <span class="text-[10px] bg-blue-600/90 text-white font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">FORUM CMS 2.0</span>
             </div>
-            <p class="text-[11px] text-slate-400">메디컬 포럼 &amp; 전문의 Q&amp;A 통합 관제 · NJAP</p>
+            <p class="text-[11px] text-slate-400">뉴저지 한인 광장 &amp; 전문의 Q&amp;A 통합 관제 · NJAP</p>
           </div>
         </a>
       </div>
@@ -88,6 +88,11 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
         <button onclick="switchTab('questions')" id="nav-questions" class="tab-btn px-3 py-2 rounded-xl transition-all flex items-center gap-1.5">
           <i class="fa-solid fa-circle-question"></i>
           <span>의료 질문/정보 나눔</span>
+        </button>
+        <button onclick="switchTab('reported-listings')" id="nav-reported-listings" class="tab-btn px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 text-red-400 hover:text-red-300">
+          <svg class="w-3.5 h-3.5 text-red-500 fill-current shrink-0" viewBox="0 0 24 24"><path d="M4 2v20h2v-7h14l-2-6.5L20 2H4z"/></svg>
+          <span>신고된 게시글</span>
+          <span id="badge-nav-reports" class="hidden text-[10px] bg-red-600 text-white font-bold px-1.5 py-0.2 rounded-full"></span>
         </button>
         <button onclick="switchTab('answers')" id="nav-answers" class="tab-btn px-3 py-2 rounded-xl transition-all flex items-center gap-1.5">
           <i class="fa-solid fa-comments"></i>
@@ -103,11 +108,15 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
         </button>
         <button onclick="switchTab('specialties')" id="nav-specialties" class="tab-btn px-3 py-2 rounded-xl transition-all flex items-center gap-1.5">
           <i class="fa-solid fa-layer-group"></i>
-          <span>5대 카테고리·진료과</span>
+          <span>9대 카테고리 &amp; 게시판</span>
+        </button>
+        <button onclick="switchTab('featured-ads')" id="nav-featured-ads" class="tab-btn px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 text-sky-400 hover:text-sky-300">
+          <i class="fa-solid fa-rectangle-ad"></i>
+          <span>추천 서비스 &amp; 광고</span>
         </button>
         <button onclick="switchTab('settings')" id="nav-settings" class="tab-btn px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 text-blue-400 hover:text-blue-300">
           <i class="fa-solid fa-sliders"></i>
-          <span>포럼 CMS 설정</span>
+          <span>한인 광장 CMS 설정</span>
         </button>
       </nav>
 
@@ -118,7 +127,7 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
           <span class="hidden lg:inline">뉴스 CMS (/admin)</span>
         </a>
         <a href="/forum" target="_blank" class="text-xs font-semibold bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 shadow-sm">
-          <span>포럼 사이트</span>
+          <span>한인 광장 사이트</span>
           <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
         </a>
         <button onclick="handleLogout()" class="text-xs font-semibold bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 px-3 py-2 rounded-xl transition-all flex items-center gap-1.5">
@@ -132,11 +141,13 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
     <div class="md:hidden flex overflow-x-auto px-4 py-2 bg-slate-950/80 border-t border-slate-800/80 gap-2 scrollbar-none text-xs font-semibold">
       <button onclick="switchTab('dashboard')" id="nav-m-dashboard" class="mobile-tab-btn active whitespace-nowrap px-3 py-1.5 rounded-lg">대시보드</button>
       <button onclick="switchTab('questions')" id="nav-m-questions" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg">의료 질문/정보 나눔</button>
+      <button onclick="switchTab('reported-listings')" id="nav-m-reported-listings" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-red-400">신고된 게시글</button>
       <button onclick="switchTab('answers')" id="nav-m-answers" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg">답변 관리</button>
       <button onclick="switchTab('users')" id="nav-m-users" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg">전문가 &amp; 회원</button>
       <button onclick="switchTab('events')" id="nav-m-events" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-rose-400">이벤트 관리</button>
-      <button onclick="switchTab('specialties')" id="nav-m-specialties" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg">5대 카테고리·진료과</button>
-      <button onclick="switchTab('settings')" id="nav-m-settings" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-blue-400">포럼 설정</button>
+      <button onclick="switchTab('specialties')" id="nav-m-specialties" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg">9대 카테고리 &amp; 게시판</button>
+      <button onclick="switchTab('featured-ads')" id="nav-m-featured-ads" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-sky-400">추천 서비스 &amp; 광고</button>
+      <button onclick="switchTab('settings')" id="nav-m-settings" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-blue-400">한인 광장 설정</button>
     </div>
   </header>
 
@@ -150,11 +161,11 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
         <div class="relative z-10 max-w-3xl">
           <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-xs font-bold mb-3">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-            포럼 CMS 관제 시스템 정상 가동 중
+            뉴저지 한인 광장 CMS 관제 시스템 정상 가동 중
           </span>
-          <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">메디컬 포럼 CMS 관제 센터</h1>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">메디컬 &amp; 뉴저지 한인 광장 CMS 관제 센터</h1>
           <p class="text-slate-300 text-sm mt-2 leading-relaxed">
-            5대 핵심 오픈 포럼(자유게시판, 병원후기, 의료비/보험, 의학포럼 19개 진료과, 공지/강좌) 게시물과 전문의 답변을 실시간 모니터링하고 CMS 설정을 관리합니다.
+            9대 카테고리(의료관련, 자유게시판, 마켓플레이스, 서비스, 구직, 맛집, 전문가 칼럼, 이벤트, 동호회/동문회) 및 서브게시판 게시물과 전문의 답변을 실시간 모니터링하고 CMS 설정을 관리합니다.
           </p>
         </div>
       </div>
@@ -164,7 +175,7 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
         <!-- Card 1: Questions -->
         <div onclick="switchTab('questions')" class="bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 hover:border-blue-500/50 rounded-2xl p-5 shadow-sm transition-all cursor-pointer group">
           <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-bold uppercase tracking-wider text-blue-400">의료 질문/정보 나눔</span>
+            <span class="text-xs font-bold uppercase tracking-wider text-blue-400">전체 게시글/질문</span>
             <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
               <i class="fa-solid fa-circle-question"></i>
             </div>
@@ -176,7 +187,7 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
         <!-- Card 2: Answers -->
         <div onclick="switchTab('answers')" class="bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 hover:border-emerald-500/50 rounded-2xl p-5 shadow-sm transition-all cursor-pointer group">
           <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">등록된 답변</span>
+            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">등록된 댓글/답변</span>
             <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
               <i class="fa-solid fa-comments"></i>
             </div>
@@ -188,13 +199,13 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
         <!-- Card 3: Verified Clinicians -->
         <div onclick="switchTab('users')" class="bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 hover:border-amber-500/50 rounded-2xl p-5 shadow-sm transition-all cursor-pointer group">
           <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-bold uppercase tracking-wider text-amber-400">인증 의료진 수</span>
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-400">인증 의료진/전문가 수</span>
             <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
               <i class="fa-solid fa-user-doctor"></i>
             </div>
           </div>
           <div class="text-3xl font-black text-white" id="stat-verified-clinicians">-</div>
-          <p class="text-[11px] text-slate-400 mt-1">전문의 배지 부여 회원</p>
+          <p class="text-[11px] text-slate-400 mt-1">전문의/전문가 배지 보유 회원</p>
         </div>
 
         <!-- Card 4: Flagged Queue -->
@@ -210,17 +221,17 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
         </div>
       </div>
 
-      <!-- Categories & Specialties Discussion Breakdown Grid -->
+      <!-- Categories Breakdown Grid -->
       <div class="bg-slate-800/80 border border-slate-700/80 rounded-3xl p-6 sm:p-8 space-y-6">
         <div>
           <div class="flex items-center justify-between mb-4">
             <h2 class="text-lg font-bold text-white flex items-center gap-2">
               <i class="fa-solid fa-layer-group text-blue-400"></i>
-              <span>5대 핵심 오픈 포럼 카테고리 현황</span>
+              <span>9대 핵심 커뮤니티 카테고리 현황</span>
             </h2>
             <span class="text-xs text-slate-400">실시간 집계</span>
           </div>
-          <div id="categories-dashboard-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+          <div id="categories-dashboard-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             <!-- Populated by JS -->
           </div>
         </div>
@@ -245,7 +256,7 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
         <div>
           <h2 class="text-xl font-bold text-white flex items-center gap-2">
             <i class="fa-solid fa-circle-question text-blue-400"></i>
-            <span>전체 의료 질문/정보 나눔</span>
+            <span>전체 커뮤니티 게시물 &amp; 질문 나눔</span>
           </h2>
           <p class="text-xs text-slate-400 mt-1">질문 상태를 숨김/게시로 변경하거나 부적절한 게시물을 영구 삭제할 수 있습니다.</p>
         </div>
@@ -260,7 +271,7 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
         <div class="flex flex-wrap items-center gap-2 w-full md:w-auto">
           <!-- Specialty Select -->
           <select id="q-filter-specialty" onchange="loadQuestionsTable()" class="bg-slate-900 border border-slate-700 text-xs text-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-500">
-            <option value="all">전체 진료과 및 케어 분야</option>
+            <option value="all">전체 카테고리 &amp; 서브게시판</option>
             <!-- Injected by JS -->
           </select>
 
@@ -378,45 +389,59 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
       <div class="bg-gradient-to-r from-slate-800 to-slate-800/90 border border-emerald-500/30 rounded-3xl p-6 shadow-md">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5 pb-4 border-b border-slate-700/60">
           <div>
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-[11px] font-bold mb-1 border border-emerald-500/30">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-[#38BDF8] text-[11px] font-bold mb-1 border border-blue-500/30">
               <i class="fa-solid fa-user-doctor"></i>
-              <span>전문의 Gmail 배지 자동 부여 시스템</span>
+              <span>전문가 Gmail 배지 자동 부여 시스템</span>
             </div>
             <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
-              <span>전문의 Gmail 등록 관리</span>
+              <span>전문가 Gmail &amp; 배지 선택 승인 관리</span>
             </h3>
             <p class="text-xs text-slate-400 mt-0.5">
-              등록된 Gmail로 로그인하는 사용자는 메디컬 포럼에서 <strong>공인 전문의(Verified Clinician)</strong> 배지가 자동으로 활성화됩니다.
+              등록된 Gmail로 로그인하는 사용자는 포럼에서 선택하신 <strong>공인 전문가 배지(전문의, 변호사, 보험, CPA, 부동산, 약사, 한의사 등)</strong>가 자동 활성화됩니다.
             </p>
           </div>
-          <span class="text-xs text-emerald-400 font-bold bg-emerald-950/60 border border-emerald-800/60 px-3 py-1.5 rounded-xl self-start md:self-auto">
-            등록된 전문의: <span id="doc-emails-count" class="font-extrabold text-white">-</span>명
+          <span class="text-xs text-[#38BDF8] font-bold bg-blue-950/60 border border-blue-800/60 px-3 py-1.5 rounded-xl self-start md:self-auto">
+            등록된 전문가: <span id="doc-emails-count" class="font-extrabold text-white">-</span>명
           </span>
         </div>
 
-        <!-- Add Doctor Gmail Form -->
+        <!-- Add Doctor / Expert Gmail Form with Badge Choices -->
         <form id="add-doctor-email-form" onsubmit="handleAddDoctorEmail(event)" class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-end">
-          <div class="sm:col-span-5">
+          <div class="sm:col-span-4">
             <label class="block text-[11px] font-bold text-slate-300 mb-1.5">
-              전문의 구글 이메일 (Gmail) <span class="text-red-400">*</span>
+              전문가 구글 이메일 (Gmail) <span class="text-red-400">*</span>
             </label>
             <div class="relative">
-              <input type="email" id="doc-email-input" required placeholder="예: doctor.kim@gmail.com"
-                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 font-mono" />
+              <input type="email" id="doc-email-input" required placeholder="예: expert@gmail.com"
+                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#38BDF8] font-mono" />
               <i class="fa-brands fa-google absolute right-3 top-3 text-slate-500 text-xs"></i>
             </div>
           </div>
-          <div class="sm:col-span-4">
+          <div class="sm:col-span-3">
             <label class="block text-[11px] font-bold text-slate-300 mb-1.5">
-              전문의 직함 / 진료과 <span class="text-slate-400 font-normal">(선택)</span>
+              부여할 전문가 배지 종류 <span class="text-red-400">*</span>
             </label>
-            <input type="text" id="doc-title-input" placeholder="예: 순환기내과 전문의 (MD)"
-              class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500" />
+            <select id="doc-badge-type" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[#38BDF8]">
+              <option value="doctor">전문의 (Medical Doctor)</option>
+              <option value="lawyer">변호사 (Attorney)</option>
+              <option value="insurance">보험전문가 (Insurance)</option>
+              <option value="cpa">공인회계사 (CPA)</option>
+              <option value="realtor">부동산 (Realtor)</option>
+              <option value="pharmacist">약사 (Pharmacist)</option>
+              <option value="oriental_medicine">한의사 (Acupuncturist)</option>
+            </select>
           </div>
           <div class="sm:col-span-3">
-            <button type="submit" id="btn-add-doctor" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-2.5 px-4 rounded-xl transition-all shadow-sm flex items-center justify-center gap-1.5">
+            <label class="block text-[11px] font-bold text-slate-300 mb-1.5">
+              세부 직함 / 소속 <span class="text-slate-400 font-normal">(선택)</span>
+            </label>
+            <input type="text" id="doc-title-input" placeholder="예: 순환기내과 전문의 (MD)"
+              class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#38BDF8]" />
+          </div>
+          <div class="sm:col-span-2">
+            <button type="submit" id="btn-add-doctor" class="w-full bg-[#1B6FA8] hover:bg-[#155A8A] text-white font-bold text-xs py-2.5 px-3 rounded-xl transition-all shadow-sm flex items-center justify-center gap-1.5 cursor-pointer">
               <i class="fa-solid fa-plus"></i>
-              <span>전문의 Gmail 등록</span>
+              <span>배지 승인</span>
             </button>
           </div>
         </form>
@@ -464,17 +489,23 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
       </div>
     </section>
 
-    <!-- TAB 5: SPECIALTIES OVERVIEW -->
+    <!-- TAB 5: CATEGORIES TREE & BOARD SETTINGS -->
     <section id="tab-specialties" class="tab-pane hidden space-y-6">
-      <div>
-        <h2 class="text-xl font-bold text-white flex items-center gap-2">
-          <i class="fa-solid fa-stethoscope text-cyan-400"></i>
-          <span>전문 진료과 및 시니어 케어 체계</span>
-        </h2>
-        <p class="text-xs text-slate-400 mt-1">포털에 등록된 전문 진료과 및 시니어 케어 분야 목록과 게시물 통계입니다.</p>
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-layer-group text-blue-400"></i>
+            <span>게시판 및 카테고리 관리 (9대 카테고리 트리 &amp; 보드 설정)</span>
+          </h2>
+          <p class="text-xs text-slate-400 mt-1">A1 스펙에 맞춘 9대 카테고리 트리(의료관련, 자유게시판, 마켓플레이스, 서비스, 구직, 맛집, 전문가 칼럼, 이벤트, 동호회/동문회) 및 서브게시판과 각 게시판별 썸네일 노출, 정렬탭, 작성권한, 검토큐 설정을 관리합니다.</p>
+        </div>
+        <button onclick="loadSpecialtiesGrid()" class="text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-3 py-2 rounded-xl flex items-center gap-1.5 self-start sm:self-auto cursor-pointer">
+          <i class="fa-solid fa-rotate-right"></i>
+          <span>새로고침</span>
+        </button>
       </div>
 
-      <div id="specialties-full-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div id="specialties-full-grid" class="space-y-6">
         <!-- Rendered via JS -->
       </div>
     </section>
@@ -503,7 +534,7 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
       <div class="bg-slate-800/80 border border-slate-700/80 rounded-3xl p-6 sm:p-8 shadow-xl">
         <div class="mb-4 p-3.5 rounded-2xl bg-rose-950/40 border border-rose-800/40 text-xs text-rose-300 flex items-center gap-2.5">
           <i class="fa-solid fa-bullhorn text-rose-400 text-sm shrink-0"></i>
-          <span>이곳에서 등록된 이벤트는 포럼 5대 핵심 카테고리 중 <strong>[이벤트]</strong> 섹션에 공식 인증 마크와 함께 실시간 게시되며, 회원 전체에게 이메일 브로드캐스트가 전송됩니다.</span>
+          <span>이곳에서 등록된 이벤트는 포럼 9대 핵심 카테고리 중 <strong>[이벤트]</strong> 섹션에 공식 인증 마크와 함께 실시간 게시되며, 회원 전체에게 이메일 브로드캐스트가 전송됩니다.</span>
         </div>
 
         <h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2">
@@ -626,6 +657,8 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
           </table>
         </div>
       </div>
+    </section>
+
     <!-- TAB 7: SETTINGS & CLINICAL DISCLAIMER MANAGEMENT -->
     <section id="tab-settings" class="tab-pane hidden space-y-6">
       <div class="flex items-center justify-between flex-wrap gap-4">
@@ -665,6 +698,166 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
             <i class="fa-solid fa-floppy-disk"></i>
             <span>면책 조항 설정 저장</span>
           </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: FEATURED SERVICES & PARTNER ADS -->
+    <section id="tab-featured-ads" class="tab-pane hidden space-y-6">
+      <div class="flex items-center justify-between flex-wrap gap-4">
+        <div>
+          <h2 class="text-xl font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-rectangle-ad text-sky-400"></i>
+            <span>추천 서비스 &amp; 파트너 광고 관리 (Featured Services &amp; Ads)</span>
+          </h2>
+          <p class="text-xs text-slate-400 mt-1">
+            포럼 하단에 노출되는 제휴 병원, 한인 부동산, 법률 사무소, 보험사 등 추천 광고 카드를 관리합니다.
+          </p>
+        </div>
+        <button onclick="loadFeaturedAdsTable()" class="text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-3 py-2 rounded-xl flex items-center gap-1.5 cursor-pointer">
+          <i class="fa-solid fa-rotate-right"></i>
+          <span>새로고침</span>
+        </button>
+      </div>
+
+      <!-- Add New Featured Ad Form Card -->
+      <div class="bg-gradient-to-r from-slate-800 to-slate-850 border border-sky-500/30 rounded-3xl p-6 sm:p-8 shadow-xl">
+        <h3 class="text-base font-bold text-white mb-4 flex items-center gap-2">
+          <i class="fa-solid fa-plus-circle text-sky-400"></i>
+          <span>새 추천 서비스 / 파트너 등록</span>
+        </h3>
+
+        <form id="add-featured-ad-form" onsubmit="handleAddFeaturedAd(event)" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1.5">
+                배지 라벨 <span class="text-red-400">*</span>
+              </label>
+              <input type="text" id="ad-badge-input" required placeholder="예: 병원 파트너, 부동산 파트너"
+                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-sky-500" />
+            </div>
+
+            <div class="sm:col-span-2">
+              <label class="block text-xs font-bold text-slate-300 mb-1.5">
+                서비스 / 상호명 (제목) <span class="text-red-400">*</span>
+              </label>
+              <input type="text" id="ad-title-input" required placeholder="예: 홀리네임 병원 코리안 메디컬 프로그램"
+                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-sky-500" />
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1.5">
+                강조 문구 / 가격 태그
+              </label>
+              <input type="text" id="ad-price-input" placeholder="예: 한국어 전담, 무료 시세 상담"
+                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-sky-500" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1.5">
+              서비스 설명 및 소개 문구 <span class="text-red-400">*</span>
+            </label>
+            <textarea id="ad-desc-input" rows="2" required placeholder="한인 전담 의료진 상주, 한국어 원스톱 진료·검진 예약 및 입원 서비스"
+              class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-sky-500"></textarea>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1.5">지역 / 위치</label>
+              <input type="text" id="ad-location-input" placeholder="예: Fort Lee, NJ"
+                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-sky-500" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1.5">대표 전화번호</label>
+              <input type="text" id="ad-phone-input" placeholder="예: 201-555-0199"
+                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-sky-500" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1.5">연결 URL (웹사이트/링크)</label>
+              <input type="text" id="ad-url-input" placeholder="예: https://... 또는 /forum?category=..."
+                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-sky-500" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1.5">이미지 URL</label>
+              <input type="text" id="ad-image-input" placeholder="https://..."
+                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-sky-500" />
+            </div>
+          </div>
+
+          <div class="flex justify-end pt-2">
+            <button type="submit" id="btn-add-featured-ad" class="bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs py-2.5 px-5 rounded-xl transition-all shadow-sm flex items-center gap-1.5 cursor-pointer">
+              <i class="fa-solid fa-plus"></i>
+              <span>추천 서비스 카드 등록</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Existing Ads Table -->
+      <div class="bg-slate-800/80 border border-slate-700/80 rounded-3xl p-6 sm:p-8 shadow-xl space-y-4">
+        <h3 class="text-sm font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-list-check text-sky-400"></i>
+          <span>등록된 추천 서비스 &amp; 파트너 광고 목록</span>
+        </h3>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs text-slate-300">
+            <thead class="bg-slate-900/90 text-slate-400 uppercase font-bold text-[11px] border-b border-slate-700">
+              <tr>
+                <th class="py-3 px-4">이미지</th>
+                <th class="py-3 px-4">배지 / 상호명</th>
+                <th class="py-3 px-4">설명 및 태그</th>
+                <th class="py-3 px-4">연락처 / 위치</th>
+                <th class="py-3 px-4 text-center">노출 상태</th>
+                <th class="py-3 px-4 text-right">삭제</th>
+              </tr>
+            </thead>
+            <tbody id="featured-ads-tbody" class="divide-y divide-slate-700/60 font-medium">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: REPORTED LISTINGS (신고된 게시글) -->
+    <section id="tab-reported-listings" class="tab-pane hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-bold text-white flex items-center gap-2">
+            <svg class="w-5 h-5 text-red-500 fill-current" viewBox="0 0 24 24"><path d="M4 2v20h2v-7h14l-2-6.5L20 2H4z"/></svg>
+            <span>신고된 게시글 (중고거래 매물)</span>
+          </h2>
+          <p class="text-xs text-slate-400 mt-1">
+            이용자들로부터 접수된 허위 매물, 사기 의심 및 부적절한 게시글 목록입니다. 신고 건수 순으로 정렬됩니다.
+          </p>
+        </div>
+        <button onclick="loadReportedListingsTable()" class="text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-3 py-2 rounded-xl flex items-center gap-1.5 cursor-pointer">
+          <i class="fa-solid fa-rotate-right"></i>
+          <span>새로고침</span>
+        </button>
+      </div>
+
+      <!-- Reported Listings Table -->
+      <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl overflow-hidden shadow-sm">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs text-slate-300">
+            <thead class="bg-slate-900/90 text-slate-400 uppercase font-bold text-[11px] border-b border-slate-700">
+              <tr>
+                <th class="py-3 px-4 w-10 text-center">신고</th>
+                <th class="py-3 px-4">매물 제목 (링크)</th>
+                <th class="py-3 px-4 text-center">신고 건수</th>
+                <th class="py-3 px-4">최근 사유</th>
+                <th class="py-3 px-4">최근 접수 일시</th>
+                <th class="py-3 px-4 text-center">상태</th>
+                <th class="py-3 px-4 text-right">조치 작업</th>
+              </tr>
+            </thead>
+            <tbody id="reported-listings-tbody" class="divide-y divide-slate-700/60 font-medium">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
         </div>
       </div>
     </section>

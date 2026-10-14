@@ -21,66 +21,467 @@ define('FORUM_DEFAULT_DISCLAIMER', '본 포럼의 정보는 교육 및 일반 �
 function forum_get_default_categories(): array {
     return [
         [
-            'id' => 'general_community',
-            'slug' => 'general-community',
-            'name_ko' => '자유게시판',
-            'name_en' => 'General Community / Open Forum',
-            'description' => '일상적인 소통, 뉴저지 생활 정보 및 한인 커뮤니티 자유 열린 소통 공간',
-            'icon' => 'fa-comments',
-            'color' => '#3B82F6',
-            'order' => 1,
-            'isAdminOnly' => false
-        ],
-        [
-            'id' => 'hospital_reviews',
-            'slug' => 'hospital-reviews',
-            'name_ko' => '병원/의원 추천 및 이용 후기',
-            'name_en' => 'Hospital & Doctor Reviews',
-            'description' => '지역 한인 병의원, 한인 의사 추천 및 병원 진료·이용 경험 솔직 공유',
-            'icon' => 'fa-hospital-user',
-            'color' => '#059669',
-            'order' => 2,
-            'isAdminOnly' => false
-        ],
-        [
-            'id' => 'bills_insurance',
-            'slug' => 'bills-insurance',
-            'name_ko' => '의료비·보험 및 혜택 Q&A',
-            'name_en' => 'Bills, Insurance & Assistance',
-            'description' => '메디케어, 메디케이드, ACA 건강보험, 병원비 청구서(Bill) 및 재정 지원 상담',
-            'icon' => 'fa-file-invoice-dollar',
-            'color' => '#4F46E5',
-            'order' => 3,
-            'isAdminOnly' => false
-        ],
-        [
-            'id' => 'medical_health',
-            'slug' => 'medical-health',
-            'name_ko' => '의학관련 포럼',
-            'name_en' => 'Medical & Health Q&A / Information',
-            'description' => '일반적인 건강 상식, 신체 증상 문의 및 전문의 건강 정보 (의학적 면책 조항 준수 필수)',
+            'id' => 'medical',
+            'slug' => 'medical',
+            'name_ko' => '의료관련',
+            'name_en' => 'Healthcare Hub',
+            'description' => '뉴저지 병원/의원 추천, 진료 후기, 의료비·보험 Q&A, 진료과별 전문의 의학 Q&A',
             'icon' => 'fa-stethoscope',
-            'color' => '#1E3A8A',
+            'color' => '#1B6FA8',
+            'order' => 1,
+            'hasSubBoards' => true,
+            'isAdminOnly' => false
+        ],
+        [
+            'id' => 'community',
+            'slug' => 'community',
+            'name_ko' => '자유게시판',
+            'name_en' => 'Community Talk',
+            'description' => '일상 소통, 뉴저지 생활 꿀팁, 미국 이민 생활 속 따뜻한 이웃 이야기',
+            'icon' => 'fa-comments',
+            'color' => '#2563EB',
+            'order' => 2,
+            'hasSubBoards' => false,
+            'isAdminOnly' => false
+        ],
+        [
+            'id' => 'market',
+            'slug' => 'market',
+            'name_ko' => '마켓플레이스',
+            'name_en' => 'Buy & Sell',
+            'description' => '크레이그리스트형 한인 직거래 장터 — 전자제품, 가구·생활용품, 의류·패션, 자동차, 부동산(매매/렌트), 기타',
+            'icon' => 'fa-bag-shopping',
+            'color' => '#059669',
+            'order' => 3,
+            'hasSubBoards' => true,
+            'hasThumbnails' => true,
+            'hasPriceLocation' => true,
+            'isAdminOnly' => false
+        ],
+        [
+            'id' => 'wanted',
+            'slug' => 'wanted',
+            'name_ko' => '서비스',
+            'name_en' => 'Services',
+            'description' => '필요한 생활 서비스를 나누는 게시판 — 구해요, 교육, 서비스, 커뮤니티 센터',
+            'icon' => 'fa-hand-holding-heart',
+            'color' => '#0D9488',
             'order' => 4,
-            'isAdminOnly' => false,
-            'hasSubList' => true
+            'hasSubBoards' => true,
+            'hasThumbnails' => true,
+            'hasPriceLocation' => true,
+            'isAdminOnly' => false
+        ],
+        [
+            'id' => 'jobs',
+            'slug' => 'jobs',
+            'name_ko' => '구직',
+            'name_en' => 'Jobs',
+            'description' => '뉴저지/뉴욕 한인 구인·구직, 일자리 및 채용 정보',
+            'icon' => 'fa-briefcase',
+            'color' => '#7C3AED',
+            'order' => 5,
+            'hasSubBoards' => false,
+            'hasPriceLocation' => true,
+            'isAdminOnly' => false
+        ],
+        [
+            'id' => 'food',
+            'slug' => 'food',
+            'name_ko' => '맛집',
+            'name_en' => 'Restaurants & Food',
+            'description' => '포트리, 팰팍 등 뉴저지 한인 맛집 추천, 카페 투어, 숨은 식당 솔직 후기',
+            'icon' => 'fa-utensils',
+            'color' => '#D97706',
+            'order' => 6,
+            'hasSubBoards' => false,
+            'hasThumbnails' => true,
+            'isAdminOnly' => false
+        ],
+        [
+            'id' => 'columns',
+            'slug' => 'columns',
+            'name_ko' => '전문가 칼럼',
+            'name_en' => 'Expert Columns',
+            'description' => '의사, 변호사, 보험 에이전트, CPA 분야별 공인 전문가들의 실전 칼럼 (자유로운 댓글/질문 환영)',
+            'icon' => 'fa-feather-pointed',
+            'color' => '#0891B2',
+            'order' => 7,
+            'hasSubBoards' => true,
+            'expertPostingOnly' => true,
+            'isAdminOnly' => false
         ],
         [
             'id' => 'events',
             'slug' => 'events',
             'name_ko' => '이벤트',
-            'name_en' => 'Events & Health Seminars',
-            'description' => '뉴저지 한인 의료접근센터 공식 이벤트, 세미나, 건강 강좌 및 회원 공지',
+            'name_en' => 'Events & Seminars',
+            'description' => '뉴저지 한인 커뮤니티 세미나, 건강강좌, 공식 행사 및 공지',
             'icon' => 'fa-calendar-star',
             'color' => '#E11D48',
-            'order' => 5,
-            'isAdminOnly' => true
+            'order' => 8,
+            'hasSubBoards' => false,
+            'hasThumbnails' => true,
+            'isAdminOnly' => false
+        ],
+        [
+            'id' => 'clubs',
+            'slug' => 'clubs',
+            'name_ko' => '동호회/동문회',
+            'name_en' => 'Clubs & Alumni',
+            'description' => '뉴저지/뉴욕 한인 동호회, 동문회, 취미 모임, 소모임 및 친목 네트워크',
+            'icon' => 'fa-users',
+            'color' => '#8B5CF6',
+            'order' => 9,
+            'hasSubBoards' => false,
+            'hasThumbnails' => true,
+            'isAdminOnly' => false
         ]
     ];
 }
 
 /**
- * Return 19 Clinical Medical Sub-Specialties under '의학관련 포럼'
+ * Return Sub-boards for categories per Specification A1
+ */
+function forum_get_default_sub_boards(?string $categoryId = null): array {
+    $all = [
+        // 의료관련 (hub)
+        'medical' => [
+            [
+                'id' => 'medical_reviews',
+                'slug' => 'hospital-reviews',
+                'categoryId' => 'medical',
+                'name_ko' => '병원/의원 추천 및 이용 후기',
+                'name_en' => 'Hospital & Doctor Reviews',
+                'description' => '지역 한인 병의원, 한인 의사 추천 및 병원 진료·이용 경험 솔직 공유',
+                'icon' => 'fa-hospital-user',
+                'color' => '#059669',
+                'order' => 1
+            ],
+            [
+                'id' => 'medical_billing',
+                'slug' => 'bills-insurance',
+                'categoryId' => 'medical',
+                'name_ko' => '의료비·보험 Q&A',
+                'name_en' => 'Medical Bills & Insurance Q&A',
+                'description' => '메디케어, 메디케이드, ACA 건강보험, 병원비 청구서(Bill) 및 재정 지원 상담',
+                'icon' => 'fa-file-invoice-dollar',
+                'color' => '#4F46E5',
+                'order' => 2
+            ],
+            [
+                'id' => 'medical_qa',
+                'slug' => 'medical-qa',
+                'categoryId' => 'medical',
+                'name_ko' => '의학 Q&A (진료과별)',
+                'name_en' => 'Medical Q&A by Specialty',
+                'description' => '일반적인 건강 상식, 신체 증상 문의 및 전문의 건강 상담 (의학적 면책 조항 준수 필수)',
+                'icon' => 'fa-user-doctor',
+                'color' => '#1B6FA8',
+                'order' => 3,
+                'hasSpecialtyFilter' => true
+            ],
+            [
+                'id' => 'medical_care',
+                'slug' => 'senior-care',
+                'categoryId' => 'medical',
+                'name_ko' => '시니어케어·요양원·호스피스',
+                'name_en' => 'Senior Care & Hospice',
+                'description' => '너싱홈 입소 절차, 재활 간호, 완화의료 및 장기요양 돌봄 안내',
+                'icon' => 'fa-house-medical',
+                'color' => '#0D9488',
+                'order' => 4
+            ],
+            [
+                'id' => 'medical_pharmacy',
+                'slug' => 'pharmacy-herb',
+                'categoryId' => 'medical',
+                'name_ko' => '약국·한의학',
+                'name_en' => 'Pharmacy & Korean Medicine',
+                'description' => '처방약 복약 지도, 일반의약품(OTC), 한방 진료 및 한방 건강관리 안내',
+                'icon' => 'fa-pills',
+                'color' => '#B45309',
+                'order' => 5
+            ]
+        ],
+
+        // 중고거래 (Buy & Sell — Craigslist style)
+        'market' => [
+            [
+                'id' => 'market_electronics',
+                'slug' => 'electronics',
+                'categoryId' => 'market',
+                'name_ko' => '전자제품',
+                'name_en' => 'Electronics',
+                'description' => '스마트폰, 노트북, 태블릿, 모니터, 소형 가전 직거래',
+                'icon' => 'fa-laptop',
+                'color' => '#3B82F6',
+                'order' => 1,
+                'hasThumbnails' => true
+            ],
+            [
+                'id' => 'market_furniture',
+                'slug' => 'furniture',
+                'categoryId' => 'market',
+                'name_ko' => '가구·생활용품',
+                'name_en' => 'Furniture & Household',
+                'description' => '소파, 침대, 식탁, 주방용품, 이사 정리 물품 직거래',
+                'icon' => 'fa-couch',
+                'color' => '#10B981',
+                'order' => 2,
+                'hasThumbnails' => true
+            ],
+            [
+                'id' => 'market_auto',
+                'slug' => 'auto',
+                'categoryId' => 'market',
+                'name_ko' => '자동차',
+                'name_en' => 'Cars & Vehicles',
+                'description' => '중고 승용차, SUV, 밴 개인 직거래 및 리스 승계',
+                'icon' => 'fa-car',
+                'color' => '#F59E0B',
+                'order' => 3,
+                'hasThumbnails' => true
+            ],
+            [
+                'id' => 'market_realestate',
+                'slug' => 'realestate',
+                'categoryId' => 'market',
+                'name_ko' => '부동산 (매매/렌트)',
+                'name_en' => 'Real Estate (Rent & Sale)',
+                'description' => '뉴저지 아파트 렌트, 서브리스, 콘도/하우스 매매, 룸메이트',
+                'icon' => 'fa-house',
+                'color' => '#6366F1',
+                'order' => 4,
+                'hasThumbnails' => true
+            ],
+            [
+                'id' => 'market_others',
+                'slug' => 'others',
+                'categoryId' => 'market',
+                'name_ko' => '기타',
+                'name_en' => 'Others',
+                'description' => '도서, 유아용품, 스포츠/골프용품, 취미 기타 나눔 및 거래',
+                'icon' => 'fa-box-open',
+                'color' => '#64748B',
+                'order' => 5,
+                'hasThumbnails' => true
+            ]
+        ],
+
+        // 서비스 (Services: 구해요, 교육, 서비스, 커뮤니티 센터)
+        'wanted' => [
+            [
+                'id' => 'wanted_requests',
+                'slug' => 'wanted-requests',
+                'categoryId' => 'wanted',
+                'name_ko' => '구해요',
+                'name_en' => 'Wanted & Requests',
+                'description' => '아이돌봄, 가사도우미, 라이드, 통역 등 맞춤 생활 도움 및 서비스 구해요',
+                'icon' => 'fa-hand-holding-heart',
+                'color' => '#0D9488',
+                'order' => 1,
+                'hasThumbnails' => true,
+                'hasPriceLocation' => true
+            ],
+            [
+                'id' => 'wanted_education',
+                'slug' => 'education',
+                'categoryId' => 'wanted',
+                'name_ko' => '교육',
+                'name_en' => 'Education & Tutoring',
+                'description' => '학습 과외, 입시 상담, 어학/음악/미술 레슨, 방과후 교육 및 배움 정보',
+                'icon' => 'fa-graduation-cap',
+                'color' => '#4F46E5',
+                'order' => 2,
+                'hasThumbnails' => true,
+                'hasPriceLocation' => true
+            ],
+            [
+                'id' => 'wanted_services',
+                'slug' => 'services',
+                'categoryId' => 'wanted',
+                'name_ko' => '서비스',
+                'name_en' => 'Services',
+                'description' => '가정 수리, 핸디맨, 청소, 이사, 비즈니스 및 전문 생활 서비스 안내',
+                'icon' => 'fa-screwdriver-wrench',
+                'color' => '#059669',
+                'order' => 3,
+                'hasThumbnails' => true,
+                'hasPriceLocation' => true
+            ],
+            [
+                'id' => 'wanted_community_center',
+                'slug' => 'community-center',
+                'categoryId' => 'wanted',
+                'name_ko' => '커뮤니티 센터',
+                'name_en' => 'Community Center',
+                'description' => '뉴저지 한인 커뮤니티 센터, 비영리 단체 프로그램, 동포 지원 및 모임 안내',
+                'icon' => 'fa-people-roof',
+                'color' => '#D97706',
+                'order' => 4,
+                'hasThumbnails' => true,
+                'hasPriceLocation' => false
+            ]
+        ],
+
+        // 전문가 칼럼 (Expert Columns)
+        'columns' => [
+            [
+                'id' => 'column_doctor',
+                'slug' => 'doctor',
+                'categoryId' => 'columns',
+                'name_ko' => '의사',
+                'name_en' => 'Physician Column',
+                'description' => '현직 전문의가 직접 집필하는 최신 질환 예방 및 건강 관리 칼럼',
+                'icon' => 'fa-user-doctor',
+                'color' => '#1B6FA8',
+                'expertRole' => 'doctor',
+                'order' => 1
+            ],
+            [
+                'id' => 'column_lawyer',
+                'slug' => 'lawyer',
+                'categoryId' => 'columns',
+                'name_ko' => '변호사',
+                'name_en' => 'Attorney Column',
+                'description' => '이민법, 부동산법, 상법, 의료사고 등 법률 실무 가이드 칼럼',
+                'icon' => 'fa-scale-balanced',
+                'color' => '#4F46E5',
+                'expertRole' => 'lawyer',
+                'order' => 2
+            ],
+            [
+                'id' => 'column_insurance',
+                'slug' => 'insurance-agent',
+                'categoryId' => 'columns',
+                'name_ko' => '보험 에이전트',
+                'name_en' => 'Insurance Agent Column',
+                'description' => '메디케어, 오바마케어(ACA), 자동차·주택 보험 핵심 분석 칼럼',
+                'icon' => 'fa-shield-halved',
+                'color' => '#059669',
+                'expertRole' => 'insurance',
+                'order' => 3
+            ],
+            [
+                'id' => 'column_cpa',
+                'slug' => 'cpa',
+                'categoryId' => 'columns',
+                'name_ko' => 'CPA',
+                'name_en' => 'CPA & Tax Column',
+                'description' => '미국 세무, 상속·증여세, 주택 매매 절세, 사업체 회계 팁 칼럼',
+                'icon' => 'fa-calculator',
+                'color' => '#D97706',
+                'expertRole' => 'cpa',
+                'order' => 4
+            ]
+        ]
+    ];
+
+    if ($categoryId !== null && $categoryId !== '') {
+        return $all[$categoryId] ?? [];
+    }
+    return $all;
+}
+
+/**
+ * Return board settings (thumbnails, sort tabs, expert posting restrictions, moderation)
+ */
+function forum_get_board_settings(): array {
+    $defaults = [
+        'medical' => [
+            'thumbnailsEnabled' => false,
+            'priceLocationEnabled' => false,
+            'sortTabsEnabled' => true,
+            'postingRole' => 'all',
+            'moderationQueue' => true
+        ],
+        'community' => [
+            'thumbnailsEnabled' => true,
+            'priceLocationEnabled' => false,
+            'sortTabsEnabled' => true,
+            'postingRole' => 'all',
+            'moderationQueue' => true
+        ],
+        'events' => [
+            'thumbnailsEnabled' => true,
+            'priceLocationEnabled' => false,
+            'sortTabsEnabled' => true,
+            'postingRole' => 'admin_only',
+            'moderationQueue' => true
+        ],
+        'market' => [
+            'thumbnailsEnabled' => true,
+            'priceLocationEnabled' => true,
+            'sortTabsEnabled' => true,
+            'postingRole' => 'all',
+            'moderationQueue' => true
+        ],
+        'wanted' => [
+            'thumbnailsEnabled' => true,
+            'priceLocationEnabled' => true,
+            'sortTabsEnabled' => true,
+            'postingRole' => 'all',
+            'moderationQueue' => true
+        ],
+        'jobs' => [
+            'thumbnailsEnabled' => false,
+            'priceLocationEnabled' => true,
+            'sortTabsEnabled' => true,
+            'postingRole' => 'all',
+            'moderationQueue' => true
+        ],
+        'food' => [
+            'thumbnailsEnabled' => true,
+            'priceLocationEnabled' => true,
+            'sortTabsEnabled' => true,
+            'postingRole' => 'all',
+            'moderationQueue' => true
+        ],
+        'columns' => [
+            'thumbnailsEnabled' => false,
+            'priceLocationEnabled' => false,
+            'sortTabsEnabled' => true,
+            'postingRole' => 'verified_expert',
+            'moderationQueue' => true
+        ],
+        'clubs' => [
+            'thumbnailsEnabled' => true,
+            'priceLocationEnabled' => false,
+            'sortTabsEnabled' => true,
+            'postingRole' => 'all',
+            'moderationQueue' => true
+        ]
+    ];
+
+    $data = get_forum_data();
+    if (!empty($data['board_settings']) && is_array($data['board_settings'])) {
+        foreach ($data['board_settings'] as $k => $v) {
+            if (isset($defaults[$k]) && is_array($v)) {
+                $defaults[$k] = array_merge($defaults[$k], $v);
+            } elseif (is_array($v)) {
+                $defaults[$k] = $v;
+            }
+        }
+    }
+    return $defaults;
+}
+
+/**
+ * Update custom board settings for CMS2
+ */
+function forum_update_board_settings(string $boardId, array $settings): bool {
+    $data = get_forum_data();
+    if (!isset($data['board_settings']) || !is_array($data['board_settings'])) {
+        $data['board_settings'] = [];
+    }
+    $current = $data['board_settings'][$boardId] ?? [];
+    $data['board_settings'][$boardId] = array_merge($current, $settings);
+    return save_forum_data($data);
+}
+
+/**
+ * Return 19 Clinical Medical Sub-Specialties under '의학 Q&A (진료과별)'
  */
 function forum_get_default_sub_specialties(): array {
     return [
@@ -278,56 +679,248 @@ function forum_get_default_sub_specialties(): array {
 }
 
 /**
- * Return default 5 categories for backwards compatibility
+ * Return default categories (alias for backwards compatibility)
  */
 function forum_get_default_specialties(): array {
     return forum_get_default_categories();
 }
 
 /**
- * Maps any specialtyId or slug to a unified category and subSpecialty
+ * Maps any old or new specialty/category ID/slug to the unified 7-category tree
  */
-function forum_map_specialty_to_category(?string $specId): array {
+function forum_map_specialty_to_category(?string $specId, ?string $subId = null): array {
     $specId = trim($specId ?? '');
-    if (in_array($specId, ['general_community', 'general-community', 'community'])) {
-        return ['categoryId' => 'general_community', 'subSpecialtyId' => null];
-    }
-    if (in_array($specId, ['hospital_reviews', 'hospital-reviews', 'hospital_recommendation', 'hospital-recommendation'])) {
-        return ['categoryId' => 'hospital_reviews', 'subSpecialtyId' => null];
-    }
-    if (in_array($specId, ['bills_insurance', 'bills-insurance', 'medical_billing', 'medical-billing', 'health_insurance', 'health-insurance'])) {
-        return ['categoryId' => 'bills_insurance', 'subSpecialtyId' => null];
-    }
-    if (in_array($specId, ['events', 'announcements'])) {
-        return ['categoryId' => 'events', 'subSpecialtyId' => null];
-    }
-    if ($specId === 'medical_health' || $specId === 'medical-health') {
-        return ['categoryId' => 'medical_health', 'subSpecialtyId' => null];
+    $subId = trim($subId ?? '');
+
+    // 0. All / Entire Board View
+    if ($specId === 'all' || $specId === '전체') {
+        return [
+            'categoryId' => 'all',
+            'subBoardId' => null,
+            'subSpecialtyId' => null,
+            'isLegacy' => false
+        ];
     }
 
-    // Check if it's one of the 19 sub-specialties
+    // 1. Direct match with Top Categories
+    if ($specId === 'medical') {
+        return [
+            'categoryId' => 'medical',
+            'subBoardId' => (!empty($subId) && $subId !== 'all') ? $subId : null,
+            'subSpecialtyId' => null,
+            'isLegacy' => false
+        ];
+    }
+    if (in_array($specId, ['community', 'general_community', 'general-community', 'free-board'])) {
+        return [
+            'categoryId' => 'community',
+            'subBoardId' => null,
+            'subSpecialtyId' => null,
+            'isLegacy' => ($specId !== 'community')
+        ];
+    }
+    if (in_array($specId, ['events', 'announcements'])) {
+        return [
+            'categoryId' => 'events',
+            'subBoardId' => (!empty($subId) && $subId !== 'all') ? $subId : null,
+            'subSpecialtyId' => null,
+            'isLegacy' => ($specId === 'announcements')
+        ];
+    }
+    if (in_array($specId, ['market', 'buy-sell', 'buysell'])) {
+        return [
+            'categoryId' => 'market',
+            'subBoardId' => (!empty($subId) && $subId !== 'all') ? $subId : null,
+            'subSpecialtyId' => null,
+            'isLegacy' => false
+        ];
+    }
+    if (in_array($specId, ['wanted', 'services-wanted', 'requests', 'service_requests', '구해요', 'services', 'service', '서비스'])) {
+        return [
+            'categoryId' => 'wanted',
+            'subBoardId' => (!empty($subId) && $subId !== 'all') ? $subId : null,
+            'subSpecialtyId' => null,
+            'isLegacy' => false
+        ];
+    }
+    if (in_array($specId, ['jobs', 'job', 'careers'])) {
+        return [
+            'categoryId' => 'jobs',
+            'subBoardId' => null,
+            'subSpecialtyId' => null,
+            'isLegacy' => false
+        ];
+    }
+    if (in_array($specId, ['food', 'restaurants', 'restaurant'])) {
+        return [
+            'categoryId' => 'food',
+            'subBoardId' => (!empty($subId) && $subId !== 'all') ? $subId : null,
+            'subSpecialtyId' => null,
+            'isLegacy' => false
+        ];
+    }
+    if (in_array($specId, ['columns', 'expert-columns', 'column'])) {
+        return [
+            'categoryId' => 'columns',
+            'subBoardId' => (!empty($subId) && $subId !== 'all') ? $subId : null,
+            'subSpecialtyId' => null,
+            'isLegacy' => false
+        ];
+    }
+    if (in_array($specId, ['clubs', 'alumni', 'clubs-alumni', 'clubs_alumni', '동호회', '동문회', '동호회/동문회', 'club'])) {
+        return [
+            'categoryId' => 'clubs',
+            'subBoardId' => (!empty($subId) && $subId !== 'all') ? $subId : null,
+            'subSpecialtyId' => null,
+            'isLegacy' => false
+        ];
+    }
+
+    // 2. Sub-boards of Medical (Hub)
+    if (in_array($specId, ['hospital_reviews', 'hospital-reviews', 'hospital_recommendation', 'hospital-recommendation', 'medical_reviews'])) {
+        return [
+            'categoryId' => 'medical',
+            'subBoardId' => 'medical_reviews',
+            'subSpecialtyId' => null,
+            'isLegacy' => ($specId !== 'medical_reviews')
+        ];
+    }
+    if (in_array($specId, ['bills_insurance', 'bills-insurance', 'medical_billing', 'medical-billing', 'health_insurance', 'health-insurance'])) {
+        return [
+            'categoryId' => 'medical',
+            'subBoardId' => 'medical_billing',
+            'subSpecialtyId' => null,
+            'isLegacy' => true
+        ];
+    }
+    if (in_array($specId, ['medical_health', 'medical-health', 'medical_qa', 'medical-qa'])) {
+        return [
+            'categoryId' => 'medical',
+            'subBoardId' => 'medical_qa',
+            'subSpecialtyId' => $subId ?: null,
+            'isLegacy' => in_array($specId, ['medical_health', 'medical-health'])
+        ];
+    }
+    if (in_array($specId, ['senior-care', 'senior_care', 'nursing_home', 'nursing-home', 'hospice'])) {
+        return [
+            'categoryId' => 'medical',
+            'subBoardId' => 'medical_care',
+            'subSpecialtyId' => null,
+            'isLegacy' => true
+        ];
+    }
+    if (in_array($specId, ['pharmacy', 'korean_medicine', 'korean-medicine', 'pharmacy-herb'])) {
+        return [
+            'categoryId' => 'medical',
+            'subBoardId' => 'medical_pharmacy',
+            'subSpecialtyId' => null,
+            'isLegacy' => true
+        ];
+    }
+
+    // 3. Sub-boards of Market (Craigslist-style)
+    if (in_array($specId, ['market_electronics', 'electronics'])) {
+        return ['categoryId' => 'market', 'subBoardId' => 'market_electronics', 'subSpecialtyId' => null, 'isLegacy' => false];
+    }
+    if (in_array($specId, ['market_furniture', 'furniture'])) {
+        return ['categoryId' => 'market', 'subBoardId' => 'market_furniture', 'subSpecialtyId' => null, 'isLegacy' => false];
+    }
+    if (in_array($specId, ['market_auto', 'auto', 'cars', 'car'])) {
+        return ['categoryId' => 'market', 'subBoardId' => 'market_auto', 'subSpecialtyId' => null, 'isLegacy' => false];
+    }
+    if (in_array($specId, ['market_realestate', 'realestate', 'housing', 'rent'])) {
+        return ['categoryId' => 'market', 'subBoardId' => 'market_realestate', 'subSpecialtyId' => null, 'isLegacy' => false];
+    }
+    if (in_array($specId, ['market_others', 'others', 'general-market'])) {
+        return ['categoryId' => 'market', 'subBoardId' => 'market_others', 'subSpecialtyId' => null, 'isLegacy' => false];
+    }
+
+    // 3.5 Sub-boards of Services (서비스: 구해요, 교육, 서비스, 커뮤니티 센터)
+    if (in_array($specId, ['wanted_requests', 'wanted-requests', 'requests', 'wanted', '구해요', 'wanted_care', 'care-babysitter', 'childcare', 'babysitter', 'wanted_house', 'housekeeping-cleaning', 'housekeeping', 'cleaning', 'wanted_ride', 'ride-moving', 'ride', 'moving'])) {
+        return ['categoryId' => 'wanted', 'subBoardId' => 'wanted_requests', 'subSpecialtyId' => null, 'isLegacy' => false];
+    }
+    if (in_array($specId, ['wanted_education', 'education', '교육', 'wanted_lesson', 'lesson-tutoring', 'lesson', 'tutoring', 'translation'])) {
+        return ['categoryId' => 'wanted', 'subBoardId' => 'wanted_education', 'subSpecialtyId' => null, 'isLegacy' => false];
+    }
+    if (in_array($specId, ['wanted_services', 'services', 'service', '서비스', 'wanted_repair', 'repair-handyman', 'repair', 'handyman', 'wanted_others', 'other-services', 'wanted_other'])) {
+        return ['categoryId' => 'wanted', 'subBoardId' => 'wanted_services', 'subSpecialtyId' => null, 'isLegacy' => false];
+    }
+    if (in_array($specId, ['wanted_community_center', 'community-center', 'community_center', '커뮤니티 센터', '커뮤니티센터'])) {
+        return ['categoryId' => 'wanted', 'subBoardId' => 'wanted_community_center', 'subSpecialtyId' => null, 'isLegacy' => false];
+    }
+
+    // 4. Sub-boards of Columns (Expert Columns)
+    if (in_array($specId, ['column_doctor', 'doctor'])) {
+        return ['categoryId' => 'columns', 'subBoardId' => 'column_doctor', 'subSpecialtyId' => null, 'isLegacy' => false];
+    }
+    if (in_array($specId, ['column_lawyer', 'lawyer', 'attorney'])) {
+        return ['categoryId' => 'columns', 'subBoardId' => 'column_lawyer', 'subSpecialtyId' => null, 'isLegacy' => false];
+    }
+    if (in_array($specId, ['column_insurance', 'insurance-agent', 'insurance'])) {
+        return ['categoryId' => 'columns', 'subBoardId' => 'column_insurance', 'subSpecialtyId' => null, 'isLegacy' => false];
+    }
+    if (in_array($specId, ['column_cpa', 'cpa', 'tax'])) {
+        return ['categoryId' => 'columns', 'subBoardId' => 'column_cpa', 'subSpecialtyId' => null, 'isLegacy' => false];
+    }
+
+    // 5. Clinical 19 Sub-specialties -> maps under Medical Hub -> medical_qa
     $subList = forum_get_default_sub_specialties();
     foreach ($subList as $sub) {
         if ($sub['id'] === $specId || $sub['slug'] === $specId) {
-            return ['categoryId' => 'medical_health', 'subSpecialtyId' => $sub['id']];
+            return [
+                'categoryId' => 'medical',
+                'subBoardId' => 'medical_qa',
+                'subSpecialtyId' => $sub['id'],
+                'isLegacy' => true
+            ];
         }
     }
 
-    // Default to general_community if unknown
-    return ['categoryId' => 'general_community', 'subSpecialtyId' => null];
+    // Default fallback to community
+    return ['categoryId' => 'community', 'subBoardId' => null, 'subSpecialtyId' => null, 'isLegacy' => false];
 }
 
 /**
- * Get category by ID
+ * Get category by ID or slug
  */
 function forum_get_category_by_id(string $catId): ?array {
-    if ($catId === 'announcements') {
-        $catId = 'events';
+    $catId = trim($catId);
+    if ($catId === 'all' || $catId === '전체') {
+        return [
+            'id' => 'all',
+            'slug' => 'all',
+            'name_ko' => '전체 게시글',
+            'name_en' => 'All Posts',
+            'description' => '뉴저지 한인 광장 8대 게시판의 모든 최신 글과 유용한 나눔 정보',
+            'icon' => 'fa-layer-group',
+            'color' => '#1B6FA8',
+            'order' => 0,
+            'hasSubBoards' => false,
+            'isAdminOnly' => false
+        ];
     }
+
+    $mapped = forum_map_specialty_to_category($catId);
+    $realId = $mapped['categoryId'];
     $categories = forum_get_categories();
     foreach ($categories as $cat) {
-        if ($cat['id'] === $catId || $cat['slug'] === $catId) {
+        if ($cat['id'] === $realId || $cat['slug'] === $catId || $cat['id'] === $catId) {
             return $cat;
+        }
+    }
+    return null;
+}
+
+/**
+ * Get sub-board by ID or slug
+ */
+function forum_get_sub_board_by_id(string $subBoardId): ?array {
+    $allSubBoards = forum_get_default_sub_boards();
+    foreach ($allSubBoards as $catId => $subList) {
+        foreach ($subList as $sb) {
+            if ($sb['id'] === $subBoardId || $sb['slug'] === $subBoardId) {
+                return $sb;
+            }
         }
     }
     return null;
@@ -367,6 +960,79 @@ function forum_update_disclaimer(string $disclaimer): bool {
 }
 
 /**
+ * Return section-specific disclaimer based on category
+ * Strict rule: Medical disclaimer only applies to medical-related sections!
+ */
+function forum_get_section_disclaimer(?string $categoryId = null): array {
+    $cid = strtolower(trim((string)$categoryId));
+    if (in_array($cid, ['medical', 'medical_qa', 'medical_reviews', 'medical_billing', 'hospital_reviews', 'hospitals', 'doctors', 'bills_insurance', 'medical_health'])) {
+        $customMedical = forum_get_disclaimer();
+        return [
+            'type' => 'medical',
+            'tag' => '의료 면책 안내',
+            'badgeClass' => 'bg-[#1B6FA8] text-white',
+            'boxClass' => 'from-blue-50 via-sky-50/60 to-slate-50 border-blue-200/90',
+            'headline' => $customMedical ?: '본 포럼의 정보는 교육 및 일반 정보 제공 목적이며 전문 진료를 대체하지 않습니다',
+            'subtext' => '본 포럼의 모든 질문·답변, 상담 및 후기는 비대면 정보 나눔 및 교육 목적이며 개별 의학적 진단을 대신하지 않습니다. 긴급을 요하는 응급 증상은 즉시 911에 연락하십시오.'
+        ];
+    } elseif ($cid === 'market') {
+        return [
+            'type' => 'market',
+            'tag' => '중고거래 안전 안내',
+            'badgeClass' => 'bg-emerald-700 text-white',
+            'boxClass' => 'from-emerald-50/80 via-teal-50/50 to-slate-50 border-emerald-200/90',
+            'headline' => '뉴저지 한인 광장 중고거래는 회원 간 직거래를 위한 게시판입니다',
+            'subtext' => 'NJ Access Portal은 거래의 당사자가 아니며 물품 상태나 거래 안전을 보증하지 않습니다. 안전 거래 수칙을 준수하시고 하단의 이용약관 및 면책 안내를 확인하세요.'
+        ];
+    } elseif ($cid === 'wanted' || $cid === 'services' || $cid === 'service' || strpos($cid, 'wanted_') === 0) {
+        return [
+            'type' => 'wanted',
+            'tag' => '서비스 및 커뮤니티 면책 안내',
+            'badgeClass' => 'bg-teal-700 text-white',
+            'boxClass' => 'from-teal-50/90 via-cyan-50/60 to-slate-50 border-teal-200/90',
+            'headline' => '뉴저지 한인 광장 서비스는 회원 간 자율 생활 도움, 과외·교육, 심부름 및 커뮤니티 정보 나눔 공간입니다',
+            'subtext' => 'NJ Access Portal은 서비스 계약의 당사자 또는 고용주가 아니며, 업무 조건·자격·안전을 보증하지 않습니다. 당사자 간 계약 불이행, 금전 거래, 사고, 분쟁, 손해에 대해 당사는 법적 책임을 지지 않으므로, 사전에 구체적인 조건과 신원을 직접 확인하시기 바랍니다.'
+        ];
+    } elseif ($cid === 'jobs') {
+        return [
+            'type' => 'jobs',
+            'tag' => '구인·구직 안내',
+            'badgeClass' => 'bg-purple-700 text-white',
+            'boxClass' => 'from-purple-50/70 via-indigo-50/50 to-slate-50 border-purple-200/90',
+            'headline' => '구인·구직 게시글의 근로 조건, 급여 및 직무 내용에 대한 책임은 해당 작성자에게 있습니다',
+            'subtext' => 'NJ Access Portal은 고용 계약의 당사자가 아니며 채용 관련 분쟁에 대해 책임을 지지 않습니다. 계약 전 급여 지급 조건 및 신원을 직접 확인하시기 바랍니다.'
+        ];
+    } elseif (in_array($cid, ['food', 'restaurants'])) {
+        return [
+            'type' => 'food',
+            'tag' => '맛집 정보 안내',
+            'badgeClass' => 'bg-amber-700 text-white',
+            'boxClass' => 'from-amber-50/80 via-orange-50/50 to-slate-50 border-amber-200/90',
+            'headline' => '맛집 추천 및 식당 후기는 작성 회원의 개인적 경험과 주관적 평가에 기반합니다',
+            'subtext' => '식당의 영업시간, 메뉴 가격 및 서비스 정책은 사전 고지 없이 변경될 수 있으므로 방문 전 해당 매장에 직접 확인하시기 바랍니다.'
+        ];
+    } elseif ($cid === 'columns') {
+        return [
+            'type' => 'columns',
+            'tag' => '전문가 칼럼 안내',
+            'badgeClass' => 'bg-slate-700 text-white',
+            'boxClass' => 'from-slate-100/90 via-sky-50/40 to-slate-50 border-slate-300',
+            'headline' => '본 전문가 칼럼의 내용은 기고자의 전문적 소견이며 일반적 정보 제공 목적입니다',
+            'subtext' => '개별 상황에 따른 구체적 법률, 세무, 보험, 의료 상담은 관련 공인 전문가와의 정식 대면 상담을 권장합니다.'
+        ];
+    } else {
+        return [
+            'type' => 'community',
+            'tag' => '커뮤니티 이용 안내',
+            'badgeClass' => 'bg-blue-700 text-white',
+            'boxClass' => 'from-blue-50/60 via-slate-50 to-sky-50/40 border-slate-200/90',
+            'headline' => '뉴저지 한인 광장은 동포 사회의 따뜻한 정보 나눔과 열린 소통을 위한 공간입니다',
+            'subtext' => '게시글 및 댓글에 대한 책임은 작성자에게 있으며, 건전한 커뮤니티 조성을 위해 상호 존중과 배려의 에티켓을 지켜주시기 바랍니다.'
+        ];
+    }
+}
+
+/**
  * Return default starter discussions with verified clinician answers
  */
 function forum_get_default_seed_data(): array {
@@ -393,17 +1059,6 @@ function forum_get_default_seed_data(): array {
             'clinicianTitle' => '내분비내과 전문의 (Endocrinologist)',
             'isBanned' => false,
             'createdAt' => '2026-08-05T10:00:00Z',
-            'lastActiveAt' => date('c')
-        ],
-        'u_clinician_neuro' => [
-            'id' => 'u_clinician_neuro',
-            'email' => 'neuro.lee@njaccess.org',
-            'name' => '이민수 전문의 (MD, PhD)',
-            'avatar' => 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=150&q=80',
-            'isVerifiedClinician' => true,
-            'clinicianTitle' => '신경과 전문의 (Neurologist)',
-            'isBanned' => false,
-            'createdAt' => '2026-08-10T11:00:00Z',
             'lastActiveAt' => date('c')
         ],
         'u_patient_1' => [
@@ -513,11 +1168,11 @@ function forum_get_default_seed_data(): array {
         'a_neuro_1' => [
             'id' => 'a_neuro_1',
             'questionId' => 'q_neuro_1',
-            'authorId' => 'u_clinician_neuro',
-            'authorName' => '이민수 전문의 (MD, PhD)',
-            'authorAvatar' => 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=150&q=80',
+            'authorId' => 'u_clinician_cardio',
+            'authorName' => '신경과 전문의 (MD)',
+            'authorAvatar' => '/assets/avatars/avatar_02.svg',
             'authorBadge' => 'Verified Clinician',
-            'body' => "안녕하세요, 신경과 이민수 전문의입니다.\n\n단순 노화성 건망증과 경도인지장애(MCI)의 가장 큰 차이점은 '힌트를 주었을 때 회상할 수 있는가'와 '사건 자체를 잊어버리는가'입니다.\n\n- 단순 건망증: 약속 시간이나 이름을 깜빡했더라도 힌트를 주거나 시간이 지나면 스스로 기억해냅니다.\n- 경도인지장애/초기 치매: 힌트를 주어도 사건 자체를 경험한 사실 자체를 기억하지 못하는 경우가 빈번합니다.\n\n질문자님의 어머니께서는 힌트를 드리면 기억하신다니 다행이지만, MoCA(몬트리올 인지평가) 또는 MMSE 선별검사와 뇌 MRI, 비타민 B12 및 갑상선 기능 혈액검사를 받아보시는 것이 안전합니다.\n뉴저지 의료접근센터(NJAP)를 통해 한국어 의료통역 지원이 가능한 병원 신경과 진료 예약 안내를 받으실 수 있습니다.",
+            'body' => "안녕하세요, 신경과 전문의입니다.\n\n단순 노화성 건망증과 경도인지장애(MCI)의 가장 큰 차이점은 '힌트를 주었을 때 회상할 수 있는가'와 '사건 자체를 잊어버리는가'입니다.\n\n- 단순 건망증: 약속 시간이나 이름을 깜빡했더라도 힌트를 주거나 시간이 지나면 스스로 기억해냅니다.\n- 경도인지장애/초기 치매: 힌트를 주어도 사건 자체를 경험한 사실 자체를 기억하지 못하는 경우가 빈번합니다.\n\n질문자님의 어머니께서는 힌트를 드리면 기억하신다니 다행이지만, MoCA(몬트리올 인지평가) 또는 MMSE 선별검사와 뇌 MRI, 비타민 B12 및 갑상선 기능 혈액검사를 받아보시는 것이 안전합니다.\n뉴저지 의료접근센터(NJAP)를 통해 한국어 의료통역 지원이 가능한 병원 신경과 진료 예약 안내를 받으실 수 있습니다.",
             'upvotes' => 22,
             'upvotedBy' => ['u_patient_1', 'u_patient_2'],
             'status' => 'active',
@@ -536,11 +1191,6 @@ function forum_get_default_seed_data(): array {
             'email' => 'endo.kim@njaccess.org',
             'title' => '내분비내과 전문의 (MD)',
             'addedAt' => '2026-08-05T00:00:00Z'
-        ],
-        'neuro.lee@njaccess.org' => [
-            'email' => 'neuro.lee@njaccess.org',
-            'title' => '신경과 전문의 (MD, PhD)',
-            'addedAt' => '2026-08-10T00:00:00Z'
         ]
     ];
 
@@ -635,200 +1285,389 @@ function forum_get_korean_seed_translations(): array {
 }
 
 /**
- * Retrieve forum database data from persistent storage or local mirror
+ * Hostinger Managed MySQL Database Connection
+ */
+function forum_get_pdo(): ?PDO {
+    static $pdo = null;
+    static $attempted = false;
+    if ($attempted) return $pdo;
+    $attempted = true;
+
+    if (!defined('HOSTINGER_DB_HOST') || !defined('HOSTINGER_DB_NAME') || !defined('HOSTINGER_DB_USER') || !defined('HOSTINGER_DB_PASS')) {
+        return null;
+    }
+
+    try {
+        $port = defined('HOSTINGER_DB_PORT') ? HOSTINGER_DB_PORT : 3306;
+        $dsn = "mysql:host=" . HOSTINGER_DB_HOST . ";port=" . $port . ";dbname=" . HOSTINGER_DB_NAME . ";charset=utf8mb4";
+        $instance = new PDO($dsn, HOSTINGER_DB_USER, HOSTINGER_DB_PASS, [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_TIMEOUT => 3
+        ]);
+        forum_init_mysql_schema($instance);
+        $pdo = $instance;
+        return $pdo;
+    } catch (Throwable $e) {
+        error_log("Hostinger MySQL connection error: " . $e->getMessage());
+        return null;
+    }
+}
+
+function forum_init_mysql_schema(PDO $pdo): void {
+    // 1. Primary Full-State Store (ACID persistent store on Hostinger)
+    $pdo->exec("CREATE TABLE IF NOT EXISTS `forum_data_store` (
+        `store_key` VARCHAR(64) PRIMARY KEY,
+        `store_data` LONGTEXT NOT NULL,
+        `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+
+    // 2. Structured Questions Table (Permanent archival & queries)
+    $pdo->exec("CREATE TABLE IF NOT EXISTS `forum_questions` (
+        `id` VARCHAR(64) PRIMARY KEY,
+        `title` VARCHAR(500) NOT NULL,
+        `body` MEDIUMTEXT NOT NULL,
+        `category_id` VARCHAR(64) DEFAULT NULL,
+        `specialty_id` VARCHAR(64) DEFAULT NULL,
+        `sub_board_id` VARCHAR(64) DEFAULT NULL,
+        `sub_specialty_id` VARCHAR(64) DEFAULT NULL,
+        `author_id` VARCHAR(64) DEFAULT NULL,
+        `author_name` VARCHAR(128) DEFAULT NULL,
+        `author_avatar` TEXT DEFAULT NULL,
+        `author_badge` VARCHAR(64) DEFAULT NULL,
+        `location` VARCHAR(128) DEFAULT NULL,
+        `price` VARCHAR(64) DEFAULT NULL,
+        `rating` FLOAT DEFAULT NULL,
+        `item_condition` VARCHAR(128) DEFAULT NULL,
+        `video_url` TEXT DEFAULT NULL,
+        `images_json` LONGTEXT DEFAULT NULL,
+        `like_count` INT DEFAULT 0,
+        `view_count` INT DEFAULT 0,
+        `reply_count` INT DEFAULT 0,
+        `status` VARCHAR(32) DEFAULT 'active',
+        `created_at` DATETIME DEFAULT NULL,
+        `updated_at` DATETIME DEFAULT NULL,
+        INDEX (`category_id`),
+        INDEX (`status`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+
+    // 3. Structured Answers / Comments Table (Permanent comment safety)
+    $pdo->exec("CREATE TABLE IF NOT EXISTS `forum_answers` (
+        `id` VARCHAR(64) PRIMARY KEY,
+        `question_id` VARCHAR(64) NOT NULL,
+        `author_id` VARCHAR(64) DEFAULT NULL,
+        `author_name` VARCHAR(128) DEFAULT NULL,
+        `author_avatar` TEXT DEFAULT NULL,
+        `author_badge` VARCHAR(64) DEFAULT NULL,
+        `body` MEDIUMTEXT NOT NULL,
+        `images_json` LONGTEXT DEFAULT NULL,
+        `upvotes` INT DEFAULT 0,
+        `status` VARCHAR(32) DEFAULT 'active',
+        `created_at` DATETIME DEFAULT NULL,
+        `updated_at` DATETIME DEFAULT NULL,
+        INDEX (`question_id`),
+        INDEX (`status`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+}
+
+function forum_sync_data_to_mysql(PDO $pdo, string $storeKey, array $data): void {
+    $json = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+    $stmt = $pdo->prepare("INSERT INTO `forum_data_store` (`store_key`, `store_data`) VALUES (?, ?)
+                           ON DUPLICATE KEY UPDATE `store_data` = VALUES(`store_data`)");
+    $stmt->execute([$storeKey, $json]);
+
+    // Structured questions sync
+    if (!empty($data['questions']) && is_array($data['questions'])) {
+        $qStmt = $pdo->prepare("INSERT INTO `forum_questions` (
+            `id`, `title`, `body`, `category_id`, `specialty_id`, `sub_board_id`, `sub_specialty_id`,
+            `author_id`, `author_name`, `author_avatar`, `author_badge`, `location`, `price`, `rating`,
+            `item_condition`, `video_url`, `images_json`, `like_count`, `view_count`, `reply_count`,
+            `status`, `created_at`, `updated_at`
+        ) VALUES (
+            :id, :title, :body, :category_id, :specialty_id, :sub_board_id, :sub_specialty_id,
+            :author_id, :author_name, :author_avatar, :author_badge, :location, :price, :rating,
+            :item_condition, :video_url, :images_json, :like_count, :view_count, :reply_count,
+            :status, :created_at, :updated_at
+        ) ON DUPLICATE KEY UPDATE
+            `title` = VALUES(`title`),
+            `body` = VALUES(`body`),
+            `rating` = VALUES(`rating`),
+            `location` = VALUES(`location`),
+            `reply_count` = VALUES(`reply_count`),
+            `view_count` = VALUES(`view_count`),
+            `like_count` = VALUES(`like_count`),
+            `status` = VALUES(`status`),
+            `updated_at` = VALUES(`updated_at`)");
+
+        foreach ($data['questions'] as $q) {
+            $created = !empty($q['createdAt']) ? date('Y-m-d H:i:s', strtotime($q['createdAt'])) : date('Y-m-d H:i:s');
+            $updated = !empty($q['updatedAt']) ? date('Y-m-d H:i:s', strtotime($q['updatedAt'])) : $created;
+            $qStmt->execute([
+                ':id' => $q['id'],
+                ':title' => $q['title'] ?? '',
+                ':body' => $q['body'] ?? '',
+                ':category_id' => $q['categoryId'] ?? null,
+                ':specialty_id' => $q['specialtyId'] ?? null,
+                ':sub_board_id' => $q['subBoardId'] ?? null,
+                ':sub_specialty_id' => $q['subSpecialtyId'] ?? null,
+                ':author_id' => $q['authorId'] ?? null,
+                ':author_name' => $q['authorName'] ?? '익명',
+                ':author_avatar' => $q['authorAvatar'] ?? null,
+                ':author_badge' => $q['authorBadge'] ?? null,
+                ':location' => $q['location'] ?? null,
+                ':price' => $q['price'] ?? null,
+                ':rating' => isset($q['rating']) ? floatval($q['rating']) : null,
+                ':item_condition' => $q['itemCondition'] ?? null,
+                ':video_url' => $q['videoUrl'] ?? null,
+                ':images_json' => !empty($q['images']) ? json_encode($q['images'], JSON_UNESCAPED_SLASHES) : null,
+                ':like_count' => intval($q['likeCount'] ?? 0),
+                ':view_count' => intval($q['viewCount'] ?? 0),
+                ':reply_count' => intval($q['replyCount'] ?? 0),
+                ':status' => $q['status'] ?? 'active',
+                ':created_at' => $created,
+                ':updated_at' => $updated
+            ]);
+        }
+    }
+
+    // Structured answers / comments sync
+    if (!empty($data['answers']) && is_array($data['answers'])) {
+        $aStmt = $pdo->prepare("INSERT INTO `forum_answers` (
+            `id`, `question_id`, `author_id`, `author_name`, `author_avatar`, `author_badge`,
+            `body`, `images_json`, `upvotes`, `status`, `created_at`, `updated_at`
+        ) VALUES (
+            :id, :question_id, :author_id, :author_name, :author_avatar, :author_badge,
+            :body, :images_json, :upvotes, :status, :created_at, :updated_at
+        ) ON DUPLICATE KEY UPDATE
+            `body` = VALUES(`body`),
+            `upvotes` = VALUES(`upvotes`),
+            `status` = VALUES(`status`),
+            `updated_at` = VALUES(`updated_at`)");
+
+        foreach ($data['answers'] as $a) {
+            $created = !empty($a['createdAt']) ? date('Y-m-d H:i:s', strtotime($a['createdAt'])) : date('Y-m-d H:i:s');
+            $updated = !empty($a['updatedAt']) ? date('Y-m-d H:i:s', strtotime($a['updatedAt'])) : $created;
+            $aStmt->execute([
+                ':id' => $a['id'],
+                ':question_id' => $a['questionId'],
+                ':author_id' => $a['authorId'] ?? null,
+                ':author_name' => $a['authorName'] ?? '익명',
+                ':author_avatar' => $a['authorAvatar'] ?? null,
+                ':author_badge' => $a['authorBadge'] ?? null,
+                ':body' => $a['body'] ?? '',
+                ':images_json' => !empty($a['images']) ? json_encode($a['images'], JSON_UNESCAPED_SLASHES) : null,
+                ':upvotes' => intval($a['upvotes'] ?? 0),
+                ':status' => $a['status'] ?? 'active',
+                ':created_at' => $created,
+                ':updated_at' => $updated
+            ]);
+        }
+    }
+}
+
+/**
+ * Retrieve forum database data from Hostinger MySQL or persistent storage
  */
 function get_forum_data(): array {
     $siteLang = defined('SITE_LANG') ? SITE_LANG : 'ko';
-    if ($siteLang === 'en') {
-        $pEn = defined('PERSISTENT_ROOT') ? (PERSISTENT_ROOT . '/forum_en.json') : '';
-        $lEn = __DIR__ . '/../data/forum_en.json';
-        $enData = null;
+    $storeKey = ($siteLang === 'en') ? 'forum_data_en' : 'forum_data_ko';
+    $pdo = forum_get_pdo();
 
-        if ($pEn && file_exists($pEn)) {
-            $c = @file_get_contents($pEn);
-            if ($c) {
-                $enData = json_decode($c, true);
-            }
-        }
-        if ((!is_array($enData) || empty($enData['questions'])) && file_exists($lEn)) {
-            $c = @file_get_contents($lEn);
-            if ($c) {
-                $enData = json_decode($c, true);
-            }
-        }
-
-        if (is_array($enData) && !empty($enData['questions'])) {
-            // Also merge and update seed questions from local forum_en.json
-            if (file_exists($lEn)) {
-                $localEnRaw = @file_get_contents($lEn);
-                $localEnParsed = json_decode($localEnRaw, true);
-                if (!empty($localEnParsed['questions']) && is_array($localEnParsed['questions'])) {
-                    $dirtyEn = false;
-                    foreach ($localEnParsed['questions'] as $qId => $qObj) {
-                        if (!isset($enData['questions'][$qId]) || $enData['questions'][$qId]['title'] !== $qObj['title']) {
-                            $enData['questions'][$qId] = $qObj;
-                            $dirtyEn = true;
+    // 1. Priority #1: Read directly from Hostinger MySQL database
+    if ($pdo) {
+        try {
+            $stmt = $pdo->prepare("SELECT `store_data` FROM `forum_data_store` WHERE `store_key` = ? LIMIT 1");
+            $stmt->execute([$storeKey]);
+            $row = $stmt->fetch();
+            if ($row && !empty($row['store_data'])) {
+                $decoded = json_decode($row['store_data'], true);
+                if (is_array($decoded) && !empty($decoded['questions'])) {
+                    $hasWanted = false;
+                    foreach ($decoded['questions'] as $q) {
+                        if (($q['categoryId'] ?? ($q['specialtyId'] ?? '')) === 'wanted') {
+                            $hasWanted = true;
+                            break;
                         }
                     }
-                    if (!empty($localEnParsed['answers']) && is_array($localEnParsed['answers'])) {
-                        foreach ($localEnParsed['answers'] as $aId => $aObj) {
-                            if (!isset($enData['answers'][$aId]) || $enData['answers'][$aId]['body'] !== $aObj['body']) {
-                                $enData['answers'][$aId] = $aObj;
-                                $dirtyEn = true;
+                    if (!$hasWanted) {
+                        $seedFile = ($siteLang === 'en') ? (LOCAL_ROOT . '/data/forum_en.json') : forum_find_korean_seed_file();
+                        if ($seedFile && file_exists($seedFile)) {
+                            $seedContent = @file_get_contents($seedFile);
+                            if ($seedContent) {
+                                $seedData = json_decode($seedContent, true);
+                                if (!empty($seedData['questions'])) {
+                                    foreach ($seedData['questions'] as $sqId => $sq) {
+                                        if (($sq['categoryId'] ?? '') === 'wanted' && !isset($decoded['questions'][$sqId])) {
+                                            $decoded['questions'][$sqId] = $sq;
+                                        }
+                                    }
+                                    if ($pdo) {
+                                        try { forum_sync_data_to_mysql($pdo, $storeKey, $decoded); } catch (Throwable $e) {}
+                                    }
+                                }
                             }
                         }
                     }
-                    if ($dirtyEn && $pEn && is_writable(dirname($pEn))) {
-                        @file_put_contents($pEn, json_encode($enData, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT), LOCK_EX);
-                    }
+                    return $decoded;
                 }
             }
-            return $enData;
+        } catch (Throwable $e) {
+            error_log("Error reading from Hostinger MySQL: " . $e->getMessage());
         }
     }
 
-    // Korean / Default Language
-    $dirty = false;
-    $data = null;
-
-    // 1. If persistent storage file exists, read it
-    if (file_exists(PERSISTENT_FORUM_FILE)) {
-        clearstatcache(true, PERSISTENT_FORUM_FILE);
-        $content = @file_get_contents(PERSISTENT_FORUM_FILE);
+    // 2. Priority #2: Fallback to persistent storage outside public_html
+    $dataFile = ($siteLang === 'en') ? (PERSISTENT_ROOT . '/forum_en.json') : PERSISTENT_FORUM_FILE;
+    if (file_exists($dataFile)) {
+        clearstatcache(true, $dataFile);
+        $content = @file_get_contents($dataFile);
         if ($content) {
             $data = json_decode($content, true);
-        }
-    }
-
-    // 2. If persistent storage is empty, fallback to local file
-    if (!is_array($data) || empty($data['specialties'])) {
-        $seedFile = forum_find_korean_seed_file();
-        if ($seedFile && file_exists($seedFile)) {
-            clearstatcache(true, $seedFile);
-            $content = @file_get_contents($seedFile);
-            if ($content) {
-                $data = json_decode($content, true);
-                $dirty = true;
+            if (is_array($data) && !empty($data['questions'])) {
+                // Initialize MySQL with this existing data
+                if ($pdo) {
+                    try { forum_sync_data_to_mysql($pdo, $storeKey, $data); } catch (Throwable $e) {}
+                }
+                return $data;
             }
         }
     }
 
-    if (!is_array($data)) {
-        $data = forum_get_default_seed_data();
-        $dirty = true;
-    }
-
-    // Sync seed questions from local Korean forum.json
-    $seedFile = forum_find_korean_seed_file();
+    // 3. Priority #3: Fallback to local file seed
+    $seedFile = ($siteLang === 'en') ? (LOCAL_ROOT . '/data/forum_en.json') : forum_find_korean_seed_file();
     if ($seedFile && file_exists($seedFile)) {
-        $localRaw = @file_get_contents($seedFile);
-        $localParsed = json_decode($localRaw, true);
-        if (!empty($localParsed['questions']) && is_array($localParsed['questions'])) {
-            foreach ($localParsed['questions'] as $qId => $qObj) {
-                if (!isset($data['questions'][$qId]) || $data['questions'][$qId]['title'] !== $qObj['title']) {
-                    $data['questions'][$qId] = $qObj;
-                    $dirty = true;
+        clearstatcache(true, $seedFile);
+        $content = @file_get_contents($seedFile);
+        if ($content) {
+            $data = json_decode($content, true);
+            if (is_array($data) && !empty($data['questions'])) {
+                if ($pdo) {
+                    try { forum_sync_data_to_mysql($pdo, $storeKey, $data); } catch (Throwable $e) {}
                 }
-            }
-            if (!empty($localParsed['answers']) && is_array($localParsed['answers'])) {
-                foreach ($localParsed['answers'] as $aId => $aObj) {
-                    if (!isset($data['answers'][$aId]) || $data['answers'][$aId]['body'] !== $aObj['body']) {
-                        $data['answers'][$aId] = $aObj;
-                        $dirty = true;
-                    }
-                }
+                return $data;
             }
         }
     }
 
-    // Fallback: Ensure no English titles in Korean forum questions from dictionary
-    $koTranslations = forum_get_korean_seed_translations();
-    foreach ($koTranslations as $qId => $tObj) {
-        if (!isset($data['questions'][$qId]) || $data['questions'][$qId]['title'] !== $tObj['title']) {
-            if (isset($data['questions'][$qId])) {
-                $data['questions'][$qId]['title'] = $tObj['title'];
-                if (!empty($tObj['body'])) {
-                    $data['questions'][$qId]['body'] = $tObj['body'];
-                }
-            } else {
-                $data['questions'][$qId] = [
-                    'id' => $qId,
-                    'title' => $tObj['title'],
-                    'body' => $tObj['body'],
-                    'specialtyId' => 'hospital_reviews',
-                    'categoryId' => 'hospital_reviews',
-                    'status' => 'active',
-                    'authorName' => '회원',
-                    'replyCount' => 0,
-                    'createdAt' => date('c')
-                ];
-            }
-            $dirty = true;
-        }
+    $fallback = forum_get_default_seed_data();
+    if ($pdo) {
+        try { forum_sync_data_to_mysql($pdo, $storeKey, $fallback); } catch (Throwable $e) {}
     }
-
-    if (empty($data['doctor_emails'])) {
-        $data['doctor_emails'] = [
-            'cardio.doctor@njaccess.org' => ['email' => 'cardio.doctor@njaccess.org', 'title' => '순환기내과 전문의 (MD, FACC)', 'addedAt' => '2026-08-01T00:00:00Z'],
-            'endo.kim@njaccess.org' => ['email' => 'endo.kim@njaccess.org', 'title' => '내분비내과 전문의 (MD)', 'addedAt' => '2026-08-05T00:00:00Z'],
-            'neuro.lee@njaccess.org' => ['email' => 'neuro.lee@njaccess.org', 'title' => '신경과 전문의 (MD, PhD)', 'addedAt' => '2026-08-10T00:00:00Z']
-        ];
-    }
-
-    if ($dirty && defined('PERSISTENT_FORUM_FILE') && is_writable(dirname(PERSISTENT_FORUM_FILE))) {
-        @file_put_contents(PERSISTENT_FORUM_FILE, json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT), LOCK_EX);
-    }
-
-    return $data;
+    return $fallback;
 }
 
 /**
- * Save forum database data to persistent file and local mirror
+ * Save forum database data to Hostinger MySQL and persistent mirror
  */
 function save_forum_data(array $data): bool {
+    $siteLang = defined('SITE_LANG') ? SITE_LANG : 'ko';
+    $storeKey = ($siteLang === 'en') ? 'forum_data_en' : 'forum_data_ko';
     $json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
-    // 1. Persistent storage outside public_html
-    $pDir = dirname(PERSISTENT_FORUM_FILE);
+    // 1. Priority #1: Save permanently to Hostinger MySQL Database
+    $pdo = forum_get_pdo();
+    if ($pdo) {
+        try {
+            forum_sync_data_to_mysql($pdo, $storeKey, $data);
+        } catch (Throwable $e) {
+            error_log("Failed to save to Hostinger MySQL: " . $e->getMessage());
+        }
+    }
+
+    // 2. Persistent storage outside public_html (backup mirror)
+    $dataFile = ($siteLang === 'en') ? (PERSISTENT_ROOT . '/forum_en.json') : PERSISTENT_FORUM_FILE;
+    $pDir = dirname($dataFile);
     if (!is_dir($pDir)) { @mkdir($pDir, 0777, true); @chmod($pDir, 0777); }
-    @file_put_contents(PERSISTENT_FORUM_FILE, $json, LOCK_EX);
-    @chmod(PERSISTENT_FORUM_FILE, 0666);
-    clearstatcache(true, PERSISTENT_FORUM_FILE);
+    @file_put_contents($dataFile, $json, LOCK_EX);
+    @chmod($dataFile, 0666);
+    clearstatcache(true, $dataFile);
 
-    // 2. Local mirror
-    $lDir = dirname(LOCAL_FORUM_FILE);
+    // 3. Local mirror
+    $localFile = ($siteLang === 'en') ? (LOCAL_ROOT . '/data/forum_en.json') : LOCAL_FORUM_FILE;
+    $lDir = dirname($localFile);
     if (!is_dir($lDir)) { @mkdir($lDir, 0777, true); @chmod($lDir, 0777); }
-    $res = @file_put_contents(LOCAL_FORUM_FILE, $json, LOCK_EX) !== false;
-    @chmod(LOCAL_FORUM_FILE, 0666);
-    clearstatcache(true, LOCAL_FORUM_FILE);
+    $res = @file_put_contents($localFile, $json, LOCK_EX) !== false;
+    @chmod($localFile, 0666);
+    clearstatcache(true, $localFile);
 
-    return $res;
+    return true;
 }
 
 /**
- * Get all 5 core categories with aggregated question counts
+ * Get all 7 categories with aggregated question counts and sub-boards
  */
 function forum_get_categories(): array {
     $data = get_forum_data();
     $categories = forum_get_default_categories();
+    $allSubBoards = forum_get_default_sub_boards();
     $questions = $data['questions'] ?? [];
 
-    $counts = [];
+    $catCounts = [];
+    $subCounts = [];
     foreach ($questions as $q) {
         if (($q['status'] ?? 'active') === 'active') {
-            $catInfo = forum_map_specialty_to_category($q['specialtyId'] ?? '');
-            $cId = $catInfo['categoryId'];
-            $counts[$cId] = ($counts[$cId] ?? 0) + 1;
+            $catInfo = forum_map_specialty_to_category($q['specialtyId'] ?? '', $q['subBoardId'] ?? ($q['subSpecialtyId'] ?? ''));
+            $cId = $q['categoryId'] ?? $catInfo['categoryId'];
+            $sId = $q['subBoardId'] ?? $catInfo['subBoardId'];
+            $catCounts[$cId] = ($catCounts[$cId] ?? 0) + 1;
+            if ($sId) {
+                $subCounts[$sId] = ($subCounts[$sId] ?? 0) + 1;
+            }
         }
     }
 
     foreach ($categories as &$cat) {
-        $cat['questionCount'] = $counts[$cat['id']] ?? 0;
+        $cId = $cat['id'];
+        $cat['questionCount'] = $catCounts[$cId] ?? 0;
+        $subs = $allSubBoards[$cId] ?? [];
+        foreach ($subs as &$sub) {
+            $sub['questionCount'] = $subCounts[$sub['id']] ?? 0;
+        }
+        unset($sub);
+        $cat['subBoards'] = $subs;
     }
     unset($cat);
 
     usort($categories, fn($a, $b) => ($a['order'] ?? 0) <=> ($b['order'] ?? 0));
     return $categories;
+}
+
+/**
+ * Get sub-boards with live counts
+ */
+function forum_get_sub_boards(?string $categoryId = null): array {
+    $all = forum_get_default_sub_boards($categoryId);
+    $data = get_forum_data();
+    $questions = $data['questions'] ?? [];
+
+    $subCounts = [];
+    foreach ($questions as $q) {
+        if (($q['status'] ?? 'active') === 'active') {
+            $catInfo = forum_map_specialty_to_category($q['specialtyId'] ?? '', $q['subBoardId'] ?? ($q['subSpecialtyId'] ?? ''));
+            $sId = $q['subBoardId'] ?? $catInfo['subBoardId'];
+            if ($sId) {
+                $subCounts[$sId] = ($subCounts[$sId] ?? 0) + 1;
+            }
+        }
+    }
+
+    if ($categoryId !== null && $categoryId !== '') {
+        foreach ($all as &$sb) {
+            $sb['questionCount'] = $subCounts[$sb['id']] ?? 0;
+        }
+        unset($sb);
+        return $all;
+    }
+
+    foreach ($all as $cId => &$subList) {
+        foreach ($subList as &$sb) {
+            $sb['questionCount'] = $subCounts[$sb['id']] ?? 0;
+        }
+        unset($sb);
+    }
+    unset($subList);
+    return $all;
 }
 
 /**
@@ -867,9 +1706,62 @@ function forum_get_specialties(): array {
 }
 
 /**
- * Query questions with filtering by category, sub-specialty, search query, status, and sorting
+ * Return default emoticon avatar based on name and badge (exactly 20 curated icons)
  */
-function forum_get_questions($specialty = '', $sort = 'latest', $search = '', $status = 'active', $subSpecialty = ''): array {
+function forum_get_default_avatar(?string $name = null, ?string $badge = null): string {
+    $avatars = [
+        '/assets/avatars/avatar_01.svg', '/assets/avatars/avatar_02.svg',
+        '/assets/avatars/avatar_03.svg', '/assets/avatars/avatar_04.svg',
+        '/assets/avatars/avatar_05.svg', '/assets/avatars/avatar_06.svg',
+        '/assets/avatars/avatar_07.svg', '/assets/avatars/avatar_08.svg',
+        '/assets/avatars/avatar_09.svg', '/assets/avatars/avatar_10.svg',
+        '/assets/avatars/avatar_11.svg', '/assets/avatars/avatar_12.svg',
+        '/assets/avatars/avatar_13.svg', '/assets/avatars/avatar_14.svg',
+        '/assets/avatars/avatar_15.svg', '/assets/avatars/avatar_16.svg',
+        '/assets/avatars/avatar_17.svg', '/assets/avatars/avatar_18.svg',
+        '/assets/avatars/avatar_19.svg', '/assets/avatars/avatar_20.svg'
+    ];
+    if ($badge === 'Verified Clinician' || ($name && (strpos($name, '전문의') !== false || strpos($name, 'MD') !== false || strpos($name, '의사') !== false || strpos($name, '간호사') !== false))) {
+        return '/assets/avatars/avatar_02.svg'; // Stethoscope
+    }
+    if ($badge === 'Verified Expert' || ($name && (strpos($name, '변호사') !== false || strpos($name, 'CPA') !== false || strpos($name, '에이전트') !== false))) {
+        return '/assets/avatars/avatar_13.svg'; // Smart Glasses
+    }
+    if ($name && (strpos($name, '약사') !== false || strpos($name, '약국') !== false)) {
+        return '/assets/avatars/avatar_07.svg'; // Vitamin
+    }
+    if ($name && (strpos($name, '할머니') !== false || (strpos($name, '어르신') !== false && strpos($name, '할아버지') === false))) {
+        return '/assets/avatars/avatar_15.svg'; // Kind Senior Woman
+    }
+    if ($name && strpos($name, '할아버지') !== false) {
+        return '/assets/avatars/avatar_16.svg'; // Gentle Senior Man
+    }
+    if ($name && (strpos($name, '맘') !== false || strpos($name, '엄마') !== false)) {
+        return '/assets/avatars/avatar_04.svg'; // Coffee
+    }
+    if ($name && (strpos($name, '포트리') !== false || strpos($name, '팰팍') !== false || strpos($name, '뉴저지') !== false)) {
+        return '/assets/avatars/avatar_20.svg'; // NJ / Liberty
+    }
+    if (empty($name)) return $avatars[0];
+    $idx = abs(crc32($name)) % count($avatars);
+    return $avatars[$idx];
+}
+
+/**
+ * Sanitize avatar URL to ensure it is always a valid local SVG emoticon badge, never an Unsplash photo
+ */
+function forum_sanitize_avatar(?string $avatar, ?string $name = null, ?string $badge = null): string {
+    if (empty($avatar) || strpos($avatar, 'unsplash') !== false || !preg_match('#^/assets/avatars/avatar_\d{2}\.svg$#', $avatar)) {
+        return forum_get_default_avatar($name, $badge);
+    }
+    return $avatar;
+}
+
+/**
+ * Query questions with filtering by category, sub-board, search query, status, and sorting
+ * Supported sorts: 'latest', 'views' (조회순), 'likes' (공감순), 'comments' (댓글순), 'hot' (인기순), 'unanswered'
+ */
+function forum_get_questions($specialty = '', $sort = 'latest', $search = '', $status = 'active', $subBoard = '', $limit = 0): array {
     $data = get_forum_data();
     $questions = array_values($data['questions'] ?? []);
 
@@ -880,9 +1772,17 @@ function forum_get_questions($specialty = '', $sort = 'latest', $search = '', $s
     }
 
     $subMap = [];
+    foreach (forum_get_sub_boards() as $cId => $subList) {
+        foreach ($subList as $sb) {
+            $subMap[$sb['id']] = $sb;
+            $subMap[$sb['slug']] = $sb;
+        }
+    }
+
+    $clinMap = [];
     foreach (forum_get_sub_specialties() as $s) {
-        $subMap[$s['id']] = $s;
-        $subMap[$s['slug']] = $s;
+        $clinMap[$s['id']] = $s;
+        $clinMap[$s['slug']] = $s;
     }
 
     // Filter by status (unless 'all' requested by moderator)
@@ -890,36 +1790,44 @@ function forum_get_questions($specialty = '', $sort = 'latest', $search = '', $s
         $questions = array_filter($questions, fn($q) => ($q['status'] ?? 'active') === $status);
     }
 
-    // Filter by category and/or subSpecialty
+    // Filter by category and/or subBoard
     $specKey = trim($specialty ?? '');
-    $subKey = trim($subSpecialty ?? '');
+    $subKey = trim($subBoard ?? '');
 
     if (!empty($specKey) && $specKey !== 'all') {
-        $targetCatInfo = forum_map_specialty_to_category($specKey);
+        $targetCatInfo = forum_map_specialty_to_category($specKey, $subKey);
         $targetCatId = $targetCatInfo['categoryId'];
-        $directSubId = $targetCatInfo['subSpecialtyId']; // If user requested /forum?specialty=cardiology directly
+        $directSubId = $targetCatInfo['subBoardId'];
 
-        $questions = array_filter($questions, function($q) use ($targetCatId, $directSubId, $subKey) {
-            $qCatInfo = forum_map_specialty_to_category($q['specialtyId'] ?? '');
+        $questions = array_filter($questions, function($q) use ($targetCatId, $directSubId, $subKey, $specKey) {
+            $qCatInfo = forum_map_specialty_to_category($q['specialtyId'] ?? '', $q['subBoardId'] ?? ($q['subSpecialtyId'] ?? ''));
             $qCatId = $q['categoryId'] ?? $qCatInfo['categoryId'];
-            $qSubId = $q['subSpecialtyId'] ?? $qCatInfo['subSpecialtyId'];
+            $qSubId = $q['subBoardId'] ?? $qCatInfo['subBoardId'];
 
             // Must match target category
             if ($qCatId !== $targetCatId) {
                 return false;
             }
 
-            // If direct sub-specialty requested via primary filter (e.g. ?specialty=cardiology)
-            if ($directSubId !== null && $qSubId !== $directSubId) {
-                return false;
-            }
-
-            // If explicit subSpecialty passed (e.g. ?specialty=medical_health&sub=cardiology)
-            if (!empty($subKey) && $subKey !== 'all' && $qSubId !== $subKey) {
-                return false;
+            // If a specific sub-board was requested (either via subKey or direct specialty)
+            $effectiveSub = (!empty($subKey) && $subKey !== 'all') ? $subKey : $directSubId;
+            if (!empty($effectiveSub) && $effectiveSub !== 'all') {
+                $subTargetInfo = forum_map_specialty_to_category($effectiveSub);
+                $cleanSubId = $subTargetInfo['subBoardId'] ?: $effectiveSub;
+                if ($qSubId !== $cleanSubId && ($q['subSpecialtyId'] ?? '') !== $effectiveSub) {
+                    return false;
+                }
             }
 
             return true;
+        });
+    } elseif (!empty($subKey) && $subKey !== 'all') {
+        $subTargetInfo = forum_map_specialty_to_category($subKey);
+        $cleanSubId = $subTargetInfo['subBoardId'] ?: $subKey;
+        $questions = array_filter($questions, function($q) use ($cleanSubId, $subKey) {
+            $qCatInfo = forum_map_specialty_to_category($q['specialtyId'] ?? '', $q['subBoardId'] ?? ($q['subSpecialtyId'] ?? ''));
+            $qSubId = $q['subBoardId'] ?? $qCatInfo['subBoardId'];
+            return ($qSubId === $cleanSubId || ($q['subSpecialtyId'] ?? '') === $subKey);
         });
     }
 
@@ -930,21 +1838,31 @@ function forum_get_questions($specialty = '', $sort = 'latest', $search = '', $s
             $t = mb_strtolower($q['title'] ?? '');
             $b = mb_strtolower($q['body'] ?? '');
             $a = mb_strtolower($q['authorName'] ?? '');
-            return str_contains($t, $qLower) || str_contains($b, $qLower) || str_contains($a, $qLower);
+            $loc = mb_strtolower($q['location'] ?? '');
+            $price = mb_strtolower($q['price'] ?? '');
+            $tags = mb_strtolower(implode(' ', $q['tags'] ?? []));
+            return str_contains($t, $qLower) || str_contains($b, $qLower) || str_contains($a, $qLower) || str_contains($loc, $qLower) || str_contains($price, $qLower) || str_contains($tags, $qLower);
         });
     }
 
-    // Augment with category, subSpecialty, participants, and clinician answers
+    // Augment with category, subBoard, subSpecialty, participants, answers
     $answers = $data['answers'] ?? [];
     foreach ($questions as &$q) {
-        $qCatInfo = forum_map_specialty_to_category($q['specialtyId'] ?? '');
+        $qCatInfo = forum_map_specialty_to_category($q['specialtyId'] ?? '', $q['subBoardId'] ?? ($q['subSpecialtyId'] ?? ''));
         $catId = $q['categoryId'] ?? $qCatInfo['categoryId'];
-        $subId = $q['subSpecialtyId'] ?? $qCatInfo['subSpecialtyId'];
+        $subId = $q['subBoardId'] ?? $qCatInfo['subBoardId'];
+        $clinId = $q['subSpecialtyId'] ?? $qCatInfo['subSpecialtyId'];
 
         $q['category'] = $catMap[$catId] ?? null;
-        $q['subSpecialty'] = $subId ? ($subMap[$subId] ?? null) : null;
-        // For template backward compatibility: if subSpecialty exists, provide it; otherwise provide category
-        $q['specialty'] = $q['subSpecialty'] ?? $q['category'];
+        $q['subBoard'] = $subId ? ($subMap[$subId] ?? null) : null;
+        $q['subSpecialty'] = $clinId ? ($clinMap[$clinId] ?? null) : null;
+        // Template backward compatibility:
+        $q['specialty'] = $q['subBoard'] ?? ($q['subSpecialty'] ?? $q['category']);
+
+        // Default likes if not present
+        if (!isset($q['likeCount'])) {
+            $q['likeCount'] = (int)($q['upvotes'] ?? 0);
+        }
 
         // Count answers and check for clinician answer
         $qAnswers = array_values(array_filter($answers, fn($a) => ($a['questionId'] ?? '') === $q['id'] && ($a['status'] ?? 'active') === 'active'));
@@ -953,8 +1871,7 @@ function forum_get_questions($specialty = '', $sort = 'latest', $search = '', $s
         // Participants avatar list (Author first, then commenters up to 5)
         $participants = [];
         $seenAvatars = [];
-        $defaultAvatar = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&q=80';
-        $authorAv = !empty($q['authorAvatar']) ? $q['authorAvatar'] : $defaultAvatar;
+        $authorAv = !empty($q['authorAvatar']) ? $q['authorAvatar'] : forum_get_default_avatar($q['authorName'] ?? null);
         $participants[] = [
             'name' => $q['authorName'] ?? '작성자',
             'avatar' => $authorAv,
@@ -972,7 +1889,7 @@ function forum_get_questions($specialty = '', $sort = 'latest', $search = '', $s
             if (!empty($ans['createdAt']) && strcmp($ans['createdAt'], $latestTime) > 0) {
                 $latestTime = $ans['createdAt'];
             }
-            $ansAv = !empty($ans['authorAvatar']) ? $ans['authorAvatar'] : $defaultAvatar;
+            $ansAv = !empty($ans['authorAvatar']) ? $ans['authorAvatar'] : forum_get_default_avatar($ans['authorName'] ?? null);
             if (empty($seenAvatars[$ansAv]) && count($participants) < 5) {
                 $seenAvatars[$ansAv] = true;
                 $participants[] = [
@@ -985,21 +1902,41 @@ function forum_get_questions($specialty = '', $sort = 'latest', $search = '', $s
         $q['hasClinicianAnswer'] = $hasClinician;
         $q['participants'] = $participants;
         $q['latestActivityAt'] = $latestTime;
+
+        // Enforce hard privacy rules for poster contact & email
+        unset($q['authorEmail'], $q['email'], $q['userEmail']);
+        if (empty($q['phoneVisible'])) {
+            $q['contactPhone'] = null;
+        }
     }
     unset($q);
 
-    // Sorting
-    if ($sort === 'verified') {
-        $questions = array_filter($questions, fn($q) => !empty($q['hasClinicianAnswer']));
-        usort($questions, fn($a, $b) => strcmp($b['latestActivityAt'] ?? '', $a['latestActivityAt'] ?? ''));
-    } elseif ($sort === 'trending' || $sort === 'popular' || $sort === 'hot') {
-        usort($questions, fn($a, $b) => (($b['viewCount'] ?? 0) + ($b['replyCount'] ?? 0) * 8) <=> (($a['viewCount'] ?? 0) + ($a['replyCount'] ?? 0) * 8));
+    // Sorting implementation
+    if ($sort === 'views' || $sort === 'view' || $sort === '조회순') {
+        usort($questions, fn($a, $b) => ($b['viewCount'] ?? 0) <=> ($a['viewCount'] ?? 0));
+    } elseif ($sort === 'likes' || $sort === 'like' || $sort === '공감순') {
+        usort($questions, fn($a, $b) => (($b['likeCount'] ?? 0) + ($b['upvotes'] ?? 0)) <=> (($a['likeCount'] ?? 0) + ($a['upvotes'] ?? 0)));
+    } elseif ($sort === 'replies' || $sort === 'comments' || $sort === 'comment' || $sort === '댓글순') {
+        usort($questions, fn($a, $b) => ($b['replyCount'] ?? 0) <=> ($a['replyCount'] ?? 0));
+    } elseif ($sort === 'hot' || $sort === 'popular' || $sort === 'trending') {
+        usort($questions, fn($a, $b) => (($b['viewCount'] ?? 0) + ($b['replyCount'] ?? 0) * 10 + ($b['likeCount'] ?? 0) * 5) <=> (($a['viewCount'] ?? 0) + ($a['replyCount'] ?? 0) * 10 + ($a['likeCount'] ?? 0) * 5));
     } elseif ($sort === 'unanswered') {
         $questions = array_filter($questions, fn($q) => ($q['replyCount'] ?? 0) === 0);
         usort($questions, fn($a, $b) => strcmp($b['createdAt'] ?? '', $a['createdAt'] ?? ''));
     } else {
-        // latest activity
-        usort($questions, fn($a, $b) => strcmp($b['latestActivityAt'] ?? $b['createdAt'] ?? '', $a['latestActivityAt'] ?? $a['createdAt'] ?? ''));
+        // Latest (pinned notice first, then newest createdAt)
+        usort($questions, function($a, $b) {
+            $aNotice = !empty($a['isNotice']) ? 1 : 0;
+            $bNotice = !empty($b['isNotice']) ? 1 : 0;
+            if ($aNotice !== $bNotice) {
+                return $bNotice <=> $aNotice;
+            }
+            return strcmp($b['createdAt'] ?? '', $a['createdAt'] ?? '');
+        });
+    }
+
+    if ($limit > 0) {
+        $questions = array_slice($questions, 0, $limit);
     }
 
     return array_values($questions);
@@ -1039,23 +1976,58 @@ function forum_get_question(string $id, bool $incrementView = true): ?array {
     $q['answers'] = array_values($answers);
     $q['replyCount'] = count($answers);
 
+    // Enforce hard privacy rules for poster contact & email
+    unset($q['authorEmail'], $q['email'], $q['userEmail']);
+    if (empty($q['phoneVisible'])) {
+        $q['contactPhone'] = null;
+    }
+
     return $q;
 }
 
 /**
- * Add a new question (supports category & subSpecialty)
+ * Add a new thread / question (supports 7-category tree, sub-boards, price/location, photos, marketplace contact)
  */
-function forum_add_question(string $title, string $body, string $specialtyId, array $user, ?string $customAuthorName = null, array $images = [], ?string $subSpecialtyId = null, ?string $videoUrl = null, ?string $webLink = null): array {
+function forum_add_question(
+    string $title,
+    string $body,
+    string $specialtyId,
+    array $user,
+    ?string $customAuthorName = null,
+    array $images = [],
+    ?string $subSpecialtyId = null,
+    ?string $videoUrl = null,
+    ?string $webLink = null,
+    ?string $price = null,
+    ?string $location = null,
+    ?string $itemCondition = null,
+    bool $isNotice = false,
+    ?string $customAvatar = null,
+    ?float $rating = null,
+    ?array $contactMethods = null,
+    ?string $contactPhone = null,
+    int $phoneVisible = 1,
+    int $disclaimerAgreed = 0
+): array {
     $data = get_forum_data();
     $id = 'q_' . bin2hex(random_bytes(6));
     $now = date('c');
 
     $isClinician = !empty($user['isVerifiedClinician']);
-    $authorName = trim($customAuthorName ?? '') ?: ($user['name'] ?? '익명 사용자');
+    $isExpert = !empty($user['isVerifiedClinician']) || !empty($user['isVerifiedExpert']) || !empty($user['isAdmin']);
+    $authorName = trim($customAuthorName ?? '') ?: ($user['name'] ?? '익명 이웃');
 
     // If author customized their name, persist to their profile as well
     if (!empty($customAuthorName) && isset($data['users'][$user['id']])) {
         $data['users'][$user['id']]['name'] = $authorName;
+    }
+
+    $finalAvatar = forum_sanitize_avatar(!empty($customAvatar) ? $customAvatar : ($user['avatar'] ?? ''), $authorName, $isClinician ? 'Verified Clinician' : null);
+    if (!empty($finalAvatar) && isset($data['users'][$user['id']])) {
+        $data['users'][$user['id']]['avatar'] = $finalAvatar;
+        if (isset($_SESSION['forum_user'])) {
+            $_SESSION['forum_user']['avatar'] = $finalAvatar;
+        }
     }
 
     // Clean image URLs array
@@ -1066,9 +2038,17 @@ function forum_add_question(string $title, string $body, string $specialtyId, ar
         }
     }
 
-    $catInfo = forum_map_specialty_to_category($specialtyId);
+    $catInfo = forum_map_specialty_to_category($specialtyId, $subSpecialtyId);
     $finalCatId = $catInfo['categoryId'];
-    $finalSubId = $subSpecialtyId ?? $catInfo['subSpecialtyId'];
+    $finalSubBoardId = $catInfo['subBoardId'];
+    $finalSubClinId = $catInfo['subSpecialtyId'];
+
+    // Enforce expert restriction on columns
+    if ($finalCatId === 'columns' && !$isExpert) {
+        throw new Exception('전문가 칼럼 게시판은 공인된 전문의, 변호사, 보험 에이전트, CPA 인증 회원만 게시물을 등록할 수 있습니다. (댓글과 질문은 누구나 자유롭게 남기실 수 있습니다.)');
+    }
+
+    $cleanRating = ($rating !== null) ? max(0, min(10, round(floatval($rating), 1))) : null;
 
     $newQ = [
         'id' => $id,
@@ -1076,14 +2056,26 @@ function forum_add_question(string $title, string $body, string $specialtyId, ar
         'body' => trim($body),
         'specialtyId' => $specialtyId,
         'categoryId' => $finalCatId,
-        'subSpecialtyId' => $finalSubId,
+        'subBoardId' => $finalSubBoardId,
+        'subSpecialtyId' => $finalSubClinId,
         'authorId' => $user['id'],
         'authorName' => $authorName,
-        'authorAvatar' => $user['avatar'] ?? 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&q=80',
-        'authorBadge' => $isClinician ? 'Verified Clinician' : null,
+        'authorAvatar' => $finalAvatar,
+        'authorBadge' => $isClinician ? 'Verified Clinician' : ($isExpert ? 'Verified Expert' : null),
         'images' => $cleanImages,
         'videoUrl' => $videoUrl ? trim($videoUrl) : null,
         'webLink' => $webLink ? trim($webLink) : null,
+        'price' => $price ? trim($price) : null,
+        'location' => $location ? trim($location) : null,
+        'rating' => $cleanRating,
+        'itemCondition' => $itemCondition ? trim($itemCondition) : null,
+        'contactMethods' => $contactMethods ?: ['email'],
+        'contactPhone' => $contactPhone ? trim($contactPhone) : null,
+        'phoneVisible' => (int)$phoneVisible,
+        'disclaimerAgreed' => (int)$disclaimerAgreed,
+        'isNotice' => $isNotice,
+        'likeCount' => 0,
+        'likedBy' => [],
         'viewCount' => 0,
         'replyCount' => 0,
         'status' => 'active',
@@ -1098,9 +2090,40 @@ function forum_add_question(string $title, string $body, string $specialtyId, ar
 }
 
 /**
- * Add a reply/answer to a question (supports custom author name/nickname)
+ * Toggle like / 공감 on a thread
  */
-function forum_add_answer(string $questionId, string $body, array $user, ?string $customAuthorName = null, array $images = []): ?array {
+function forum_toggle_question_like(string $questionId, string $userId): array {
+    $data = get_forum_data();
+    if (empty($data['questions'][$questionId])) {
+        return ['success' => false, 'error' => '게시물을 찾을 수 없습니다.'];
+    }
+
+    $q = &$data['questions'][$questionId];
+    $likedBy = $q['likedBy'] ?? [];
+    $hasLiked = in_array($userId, $likedBy);
+
+    if ($hasLiked) {
+        $likedBy = array_values(array_filter($likedBy, fn($uid) => $uid !== $userId));
+        $q['likeCount'] = max(0, ($q['likeCount'] ?? 1) - 1);
+    } else {
+        $likedBy[] = $userId;
+        $q['likeCount'] = ($q['likeCount'] ?? 0) + 1;
+    }
+    $q['likedBy'] = $likedBy;
+    $q['upvotes'] = $q['likeCount'];
+    save_forum_data($data);
+
+    return [
+        'success' => true,
+        'hasLiked' => !$hasLiked,
+        'likeCount' => $q['likeCount']
+    ];
+}
+
+/**
+ * Add a reply/answer to a question (supports custom author name/nickname and custom avatar)
+ */
+function forum_add_answer(string $questionId, string $body, array $user, ?string $customAuthorName = null, array $images = [], ?string $customAvatar = null): ?array {
     $data = get_forum_data();
     if (empty($data['questions'][$questionId])) {
         return null;
@@ -1116,6 +2139,14 @@ function forum_add_answer(string $questionId, string $body, array $user, ?string
         $data['users'][$user['id']]['name'] = $authorName;
     }
 
+    $finalAvatar = forum_sanitize_avatar(!empty($customAvatar) ? $customAvatar : ($user['avatar'] ?? ''), $authorName, $isClinician ? 'Verified Clinician' : null);
+    if (!empty($finalAvatar) && isset($data['users'][$user['id']])) {
+        $data['users'][$user['id']]['avatar'] = $finalAvatar;
+        if (isset($_SESSION['forum_user'])) {
+            $_SESSION['forum_user']['avatar'] = $finalAvatar;
+        }
+    }
+
     // Clean image URLs array
     $cleanImages = [];
     foreach ($images as $img) {
@@ -1129,7 +2160,7 @@ function forum_add_answer(string $questionId, string $body, array $user, ?string
         'questionId' => $questionId,
         'authorId' => $user['id'],
         'authorName' => $authorName,
-        'authorAvatar' => $user['avatar'] ?? 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&q=80',
+        'authorAvatar' => $finalAvatar,
         'authorBadge' => $isClinician ? 'Verified Clinician' : null,
         'body' => trim($body),
         'images' => $cleanImages,
@@ -1201,9 +2232,67 @@ function forum_get_doctor_emails(): array {
 }
 
 /**
- * Add a doctor Gmail to grant verified doctor badge automatically
+ * Professional badge metadata by type
  */
-function forum_add_doctor_email(string $email, string $title = '전문의 (MD)'): bool {
+function forum_get_badge_info(string $badgeType): array {
+    $types = [
+        'doctor' => [
+            'type' => 'doctor',
+            'label' => '전문의',
+            'title' => '의사 / 전문의 (MD)',
+            'color' => '#1B6FA8',
+            'badgeEn' => 'Verified Doctor'
+        ],
+        'lawyer' => [
+            'type' => 'lawyer',
+            'label' => '변호사',
+            'title' => '공인 변호사 (Attorney)',
+            'color' => '#4338CA',
+            'badgeEn' => 'Verified Attorney'
+        ],
+        'insurance' => [
+            'type' => 'insurance',
+            'label' => '보험전문가',
+            'title' => '공인 보험 에이전트',
+            'color' => '#0369A1',
+            'badgeEn' => 'Verified Insurance'
+        ],
+        'cpa' => [
+            'type' => 'cpa',
+            'label' => 'CPA',
+            'title' => '공인회계사 (CPA)',
+            'color' => '#B45309',
+            'badgeEn' => 'Verified CPA'
+        ],
+        'realtor' => [
+            'type' => 'realtor',
+            'label' => '부동산',
+            'title' => '공인중개사 / 부동산 전문가',
+            'color' => '#7C3AED',
+            'badgeEn' => 'Verified Realtor'
+        ],
+        'pharmacist' => [
+            'type' => 'pharmacist',
+            'label' => '약사',
+            'title' => '공인 약사 (PharmD)',
+            'color' => '#0284C7',
+            'badgeEn' => 'Verified Pharmacist'
+        ],
+        'oriental_medicine' => [
+            'type' => 'oriental_medicine',
+            'label' => '한의사',
+            'title' => '공인 한의사 (KMD, LAc)',
+            'color' => '#92400E',
+            'badgeEn' => 'Verified Acupuncturist'
+        ]
+    ];
+    return $types[$badgeType] ?? $types['doctor'];
+}
+
+/**
+ * Add an expert Gmail to grant verified professional badge automatically
+ */
+function forum_add_doctor_email(string $email, string $title = '전문의 (MD)', string $badgeType = 'doctor'): bool {
     $data = get_forum_data();
     $email = strtolower(trim($email));
     if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) return false;
@@ -1212,10 +2301,14 @@ function forum_add_doctor_email(string $email, string $title = '전문의 (MD)')
         $data['doctor_emails'] = [];
     }
 
-    $title = trim($title) ?: '전문의 (MD)';
+    $bInfo = forum_get_badge_info($badgeType);
+    $title = trim($title) ?: $bInfo['title'];
     $data['doctor_emails'][$email] = [
         'email' => $email,
         'title' => $title,
+        'badgeType' => $bInfo['type'],
+        'badgeLabel' => $bInfo['label'],
+        'color' => $bInfo['color'],
         'addedAt' => date('c')
     ];
 
@@ -1224,21 +2317,25 @@ function forum_add_doctor_email(string $email, string $title = '전문의 (MD)')
         if (strtolower($u['email'] ?? '') === $email) {
             $data['users'][$uId]['isVerifiedClinician'] = true;
             $data['users'][$uId]['clinicianTitle'] = $title;
+            $data['users'][$uId]['badgeType'] = $bInfo['type'];
+            $data['users'][$uId]['badgeLabel'] = $bInfo['label'];
         }
     }
 
     // Propagate to their posts and answers
-    $badge = 'Verified Clinician';
+    $badge = $bInfo['label'];
     foreach ($data['questions'] as $qId => $q) {
         $author = $data['users'][$q['authorId'] ?? ''] ?? null;
         if ($author && strtolower($author['email'] ?? '') === $email) {
             $data['questions'][$qId]['authorBadge'] = $badge;
+            $data['questions'][$qId]['authorBadgeType'] = $bInfo['type'];
         }
     }
     foreach ($data['answers'] as $aId => $a) {
         $author = $data['users'][$a['authorId'] ?? ''] ?? null;
         if ($author && strtolower($author['email'] ?? '') === $email) {
             $data['answers'][$aId]['authorBadge'] = $badge;
+            $data['answers'][$aId]['authorBadgeType'] = $bInfo['type'];
         }
     }
 
@@ -1246,7 +2343,7 @@ function forum_add_doctor_email(string $email, string $title = '전문의 (MD)')
 }
 
 /**
- * Remove a doctor Gmail from verified doctor list
+ * Remove an expert Gmail from verified list
  */
 function forum_remove_doctor_email(string $email): bool {
     $data = get_forum_data();
@@ -1260,9 +2357,194 @@ function forum_remove_doctor_email(string $email): bool {
         if (strtolower($u['email'] ?? '') === $email) {
             $data['users'][$uId]['isVerifiedClinician'] = false;
             $data['users'][$uId]['clinicianTitle'] = null;
+            $data['users'][$uId]['badgeType'] = null;
+            $data['users'][$uId]['badgeLabel'] = null;
         }
     }
 
+    return save_forum_data($data);
+}
+
+/**
+ * Permanently delete a user profile and clean up associated records
+ */
+function forum_delete_user(string $userId): bool {
+    $data = get_forum_data();
+    $targetKey = null;
+    $targetEmail = '';
+
+    if (isset($data['users'][$userId])) {
+        $targetKey = $userId;
+        $targetEmail = strtolower(trim($data['users'][$userId]['email'] ?? ''));
+    } else {
+        foreach ($data['users'] as $k => $u) {
+            if (($u['id'] ?? '') === $userId) {
+                $targetKey = $k;
+                $targetEmail = strtolower(trim($u['email'] ?? ''));
+                break;
+            }
+        }
+    }
+
+    if ($targetKey !== null && isset($data['users'][$targetKey])) {
+        unset($data['users'][$targetKey]);
+    }
+
+    // Also remove from doctor_emails if email exists
+    if (!empty($targetEmail)) {
+        if (isset($data['doctor_emails'][$targetEmail])) {
+            unset($data['doctor_emails'][$targetEmail]);
+        }
+        foreach ($data['users'] as $k => $u) {
+            if (strtolower(trim($u['email'] ?? '')) === $targetEmail || ($u['id'] ?? '') === $userId) {
+                unset($data['users'][$k]);
+            }
+        }
+    }
+
+    // Clean up author info in answers or comments if matching
+    if (!empty($data['answers'])) {
+        foreach ($data['answers'] as $aId => $ans) {
+            if (($ans['authorId'] ?? '') === $userId) {
+                $data['answers'][$aId]['authorName'] = '탈퇴한 회원';
+                $data['answers'][$aId]['authorBadge'] = null;
+                $data['answers'][$aId]['authorBadgeType'] = null;
+            }
+        }
+    }
+
+    return save_forum_data($data);
+}
+
+/**
+ * Get featured services and sponsor ads
+ */
+function forum_get_featured_ads(bool $activeOnly = true): array {
+    $data = get_forum_data();
+    $ads = $data['featured_ads'] ?? [];
+    if (empty($ads)) {
+        $ads = forum_get_default_featured_ads();
+    }
+    if ($activeOnly) {
+        $ads = array_filter($ads, fn($a) => !isset($a['active']) || !empty($a['active']));
+    }
+    return array_values($ads);
+}
+
+/**
+ * Default seeded featured services & sponsor ads
+ */
+function forum_get_default_featured_ads(): array {
+    return [
+        [
+            'id' => 'ad_1',
+            'badge' => '병원 파트너',
+            'title' => '홀리네임 병원 코리안 메디컬 프로그램',
+            'desc' => '한인 전담 의료진 상주, 한국어 원스톱 진료·검진 예약 및 입원 서비스',
+            'price' => '한국어 전담',
+            'location' => 'Teaneck, NJ',
+            'phone' => '201-833-3000',
+            'image' => 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=600&q=80',
+            'url' => 'https://www.holyname.org',
+            'active' => true
+        ],
+        [
+            'id' => 'ad_2',
+            'badge' => '부동산 파트너',
+            'title' => '버겐카운티 탑 리얼티 — 포트리·팰팍 매매/렌트',
+            'desc' => '학군 및 상권 분석 전문, 한인 맞춤형 콘도·싱글홈 매매 및 상가 임대',
+            'price' => '무료 시세 상담',
+            'location' => 'Fort Lee, NJ',
+            'phone' => '201-555-0199',
+            'image' => 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80',
+            'url' => '/forum?category=market&sub=market_realestate',
+            'active' => true
+        ],
+        [
+            'id' => 'ad_3',
+            'badge' => '법률 파트너',
+            'title' => '뉴저지 종합 법률 그룹 — 이민·상법·부동산',
+            'desc' => '영주권, 시민권, 투자비자, 교통사고 및 상업용 부동산 계약 전문 변호사',
+            'price' => '1:1 비밀 상담',
+            'location' => 'Ridgefield, NJ',
+            'phone' => '201-555-0144',
+            'image' => 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&q=80',
+            'url' => '/forum?category=columns&sub=column_lawyer',
+            'active' => true
+        ],
+        [
+            'id' => 'ad_4',
+            'badge' => '보험 파트너',
+            'title' => '메디케어 & 오바마케어 종합 건강보험 센터',
+            'desc' => '2026 연례 가입 기간(AEP) 맞춤 플랜 비교, 시니어 파트 C/D 무료 분석',
+            'price' => '무료 플랜 비교',
+            'location' => 'Palisades Park, NJ',
+            'phone' => '201-555-0188',
+            'image' => 'https://images.unsplash.com/photo-1450133064473-71024230f91b?w=600&q=80',
+            'url' => '/forum?category=columns&sub=column_insurance',
+            'active' => true
+        ]
+    ];
+}
+
+/**
+ * Save / Update featured ad
+ */
+function forum_save_featured_ad(array $ad): bool {
+    $data = get_forum_data();
+    if (!isset($data['featured_ads']) || !is_array($data['featured_ads'])) {
+        $data['featured_ads'] = forum_get_default_featured_ads();
+    }
+
+    $id = trim($ad['id'] ?? '');
+    if (empty($id)) {
+        $id = 'ad_' . time() . '_' . rand(100, 999);
+        $ad['id'] = $id;
+    }
+
+    $found = false;
+    foreach ($data['featured_ads'] as $idx => $existing) {
+        if ($existing['id'] === $id) {
+            $data['featured_ads'][$idx] = array_merge($existing, $ad);
+            $found = true;
+            break;
+        }
+    }
+    if (!$found) {
+        $data['featured_ads'][] = $ad;
+    }
+
+    return save_forum_data($data);
+}
+
+/**
+ * Toggle featured ad active status
+ */
+function forum_toggle_featured_ad(string $id, bool $active): bool {
+    $data = get_forum_data();
+    if (!isset($data['featured_ads']) || !is_array($data['featured_ads'])) {
+        $data['featured_ads'] = forum_get_default_featured_ads();
+    }
+
+    foreach ($data['featured_ads'] as $idx => $existing) {
+        if ($existing['id'] === $id) {
+            $data['featured_ads'][$idx]['active'] = $active;
+            return save_forum_data($data);
+        }
+    }
+    return false;
+}
+
+/**
+ * Delete featured ad
+ */
+function forum_delete_featured_ad(string $id): bool {
+    $data = get_forum_data();
+    if (!isset($data['featured_ads']) || !is_array($data['featured_ads'])) {
+        $data['featured_ads'] = forum_get_default_featured_ads();
+    }
+
+    $data['featured_ads'] = array_values(array_filter($data['featured_ads'], fn($a) => ($a['id'] ?? '') !== $id));
     return save_forum_data($data);
 }
 
@@ -1277,6 +2559,24 @@ function forum_update_user_name(string $userId, string $newName): bool {
     if (empty($newName)) return false;
 
     $data['users'][$userId]['name'] = $newName;
+
+    return save_forum_data($data);
+}
+
+/**
+ * Update user avatar icon
+ */
+function forum_update_user_avatar(string $userId, string $newAvatar): bool {
+    $data = get_forum_data();
+    if (!isset($data['users'][$userId])) return false;
+
+    $newAvatar = trim($newAvatar);
+    if (empty($newAvatar)) return false;
+
+    $data['users'][$userId]['avatar'] = $newAvatar;
+    if (isset($_SESSION['forum_user'])) {
+        $_SESSION['forum_user']['avatar'] = $newAvatar;
+    }
 
     return save_forum_data($data);
 }
@@ -1329,7 +2629,7 @@ function forum_upsert_user(array $profile): array {
         'id' => $userId,
         'email' => $email,
         'name' => $profile['name'] ?? '회원',
-        'avatar' => $profile['avatar'] ?? 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&q=80',
+        'avatar' => $profile['avatar'] ?? forum_get_default_avatar($profile['name'] ?? null),
         'isVerifiedClinician' => $isDoctor,
         'clinicianTitle' => $docTitle,
         'isBanned' => false,
@@ -1404,29 +2704,17 @@ function forum_moderate_question(string $questionId, string $status): bool {
 }
 
 /**
- * Moderator: Update question specialty / category
+ * Moderator: Update question category / sub-board
  */
-function forum_update_question_specialty(string $questionId, string $specialtyId): bool {
+function forum_update_question_specialty(string $questionId, string $specialtyId, ?string $subBoardId = null): bool {
     $data = get_forum_data();
     if (!isset($data['questions'][$questionId])) return false;
 
-    // Validate specialty ID
-    $validSpecialties = array_column(forum_get_default_specialties(), 'id');
-    if (!in_array($specialtyId, $validSpecialties)) {
-        return false;
-    }
-
-    // Find specialty slug
-    $specialtySlug = $specialtyId;
-    foreach (forum_get_default_specialties() as $sp) {
-        if ($sp['id'] === $specialtyId) {
-            $specialtySlug = $sp['slug'] ?? $specialtyId;
-            break;
-        }
-    }
-
+    $catInfo = forum_map_specialty_to_category($specialtyId, $subBoardId);
     $data['questions'][$questionId]['specialtyId'] = $specialtyId;
-    $data['questions'][$questionId]['specialtySlug'] = $specialtySlug;
+    $data['questions'][$questionId]['categoryId'] = $catInfo['categoryId'];
+    $data['questions'][$questionId]['subBoardId'] = $catInfo['subBoardId'];
+    $data['questions'][$questionId]['subSpecialtyId'] = $catInfo['subSpecialtyId'];
     $data['questions'][$questionId]['updatedAt'] = date('c');
     return save_forum_data($data);
 }
@@ -1444,18 +2732,35 @@ function forum_moderate_answer(string $answerId, string $status): bool {
 }
 
 /**
- * Moderator: Delete question
+ * Moderator: Delete question (Admin Only)
  */
 function forum_delete_question(string $questionId): bool {
+    if (session_status() === PHP_SESSION_NONE) { session_start(); }
+    if (empty($_SESSION['cms_logged_in']) && empty($_SESSION['admin_logged_in'])) {
+        return false;
+    }
+
+    $pdo = forum_get_pdo();
+    if ($pdo) {
+        try {
+            $pdo->prepare("DELETE FROM `forum_answers` WHERE `question_id` = ?")->execute([$questionId]);
+            $pdo->prepare("DELETE FROM `forum_questions` WHERE `id` = ?")->execute([$questionId]);
+        } catch (Throwable $e) {
+            error_log("Error deleting question from MySQL: " . $e->getMessage());
+        }
+    }
+
     $data = get_forum_data();
     if (!isset($data['questions'][$questionId])) return false;
 
     unset($data['questions'][$questionId]);
 
     // Delete associated answers
-    foreach ($data['answers'] as $aId => $ans) {
-        if (($ans['questionId'] ?? '') === $questionId) {
-            unset($data['answers'][$aId]);
+    if (!empty($data['answers']) && is_array($data['answers'])) {
+        foreach ($data['answers'] as $aId => $ans) {
+            if (($ans['questionId'] ?? '') === $questionId) {
+                unset($data['answers'][$aId]);
+            }
         }
     }
 
@@ -1463,9 +2768,23 @@ function forum_delete_question(string $questionId): bool {
 }
 
 /**
- * Moderator: Delete answer
+ * Moderator: Delete answer (Admin Only)
  */
 function forum_delete_answer(string $answerId): bool {
+    if (session_status() === PHP_SESSION_NONE) { session_start(); }
+    if (empty($_SESSION['cms_logged_in']) && empty($_SESSION['admin_logged_in'])) {
+        return false;
+    }
+
+    $pdo = forum_get_pdo();
+    if ($pdo) {
+        try {
+            $pdo->prepare("DELETE FROM `forum_answers` WHERE `id` = ?")->execute([$answerId]);
+        } catch (Throwable $e) {
+            error_log("Error deleting answer from MySQL: " . $e->getMessage());
+        }
+    }
+
     $data = get_forum_data();
     if (!isset($data['answers'][$answerId])) return false;
 
@@ -1505,7 +2824,7 @@ function forum_get_stats(): array {
     $verifiedClinicians = count(array_filter($users, fn($u) => !empty($u['isVerifiedClinician'])));
     $bannedUsers = count(array_filter($users, fn($u) => !empty($u['isBanned'])));
 
-    // Breakdown per 5 core categories
+    // Breakdown per 8 core categories
     $categories = forum_get_categories();
     $categoryBreakdown = [];
     foreach ($categories as $c) {
@@ -1515,7 +2834,8 @@ function forum_get_stats(): array {
             'name_en' => $c['name_en'],
             'color' => $c['color'],
             'icon' => $c['icon'],
-            'count' => $c['questionCount'] ?? 0
+            'count' => $c['questionCount'] ?? 0,
+            'subBoards' => $c['subBoards'] ?? []
         ];
     }
 
@@ -2080,6 +3400,183 @@ function forum_send_event_broadcast_email(array $eventQuestion, array $allUsers,
     ]);
 
     return $results;
+}
+
+/**
+ * Check action rate limit by IP (sliding 1-hour window)
+ */
+function forum_check_rate_limit(string $actionKey, int $maxPerHour, ?string $ip = null): bool {
+    $ip = $ip ?: ($_SERVER['REMOTE_ADDR'] ?? '127.0.0.1');
+    $ipHash = hash('sha256', $ip . '_njap_rate');
+    $now = time();
+    $cutoff = $now - 3600;
+
+    $file = dirname(__DIR__) . '/data/rate_limits.json';
+    $data = [];
+    if (file_exists($file)) {
+        $content = @file_get_contents($file);
+        if ($content) {
+            $data = json_decode($content, true) ?: [];
+        }
+    }
+
+    if (!isset($data[$actionKey])) {
+        $data[$actionKey] = [];
+    }
+
+    $history = array_filter($data[$actionKey][$ipHash] ?? [], fn($t) => $t > $cutoff);
+
+    if (count($history) >= $maxPerHour) {
+        return false;
+    }
+
+    $history[] = $now;
+    $data[$actionKey][$ipHash] = array_values($history);
+
+    // Prune stale IP records
+    if (count($data[$actionKey]) > 500) {
+        foreach ($data[$actionKey] as $k => $times) {
+            $cleaned = array_filter($times, fn($t) => $t > $cutoff);
+            if (empty($cleaned)) {
+                unset($data[$actionKey][$k]);
+            } else {
+                $data[$actionKey][$k] = array_values($cleaned);
+            }
+        }
+    }
+
+    @file_put_contents($file, json_encode($data, JSON_UNESCAPED_UNICODE));
+    return true;
+}
+
+/**
+ * Add a new report for a marketplace listing
+ */
+function forum_add_report(string $listingId, string $reason, string $details, ?string $reporterContact = null, ?string $ip = null): array {
+    $data = get_forum_data();
+    if (!isset($data['reports']) || !is_array($data['reports'])) {
+        $data['reports'] = [];
+    }
+
+    $reportId = 'rep_' . bin2hex(random_bytes(6));
+    $hashedIp = hash('sha256', ($ip ?: ($_SERVER['REMOTE_ADDR'] ?? '127.0.0.1')) . '_salt_njap');
+    $now = date('c');
+
+    $report = [
+        'id' => $reportId,
+        'listingId' => $listingId,
+        'reason' => trim($reason),
+        'details' => trim($details),
+        'reporterContact' => $reporterContact ? trim($reporterContact) : null,
+        'hashedIp' => $hashedIp,
+        'status' => 'pending', // 'pending' (미처리) or 'dismissed' (처리완료)
+        'createdAt' => $now
+    ];
+
+    $data['reports'][$reportId] = $report;
+    save_forum_data($data);
+    return $report;
+}
+
+/**
+ * Get reports grouped by listing with report count and latest details
+ * Sorted by report count descending, then latest report date
+ */
+function forum_get_reported_listings(): array {
+    $data = get_forum_data();
+    $reports = $data['reports'] ?? [];
+    $questions = $data['questions'] ?? [];
+
+    $grouped = [];
+    foreach ($reports as $r) {
+        $lId = $r['listingId'] ?? '';
+        if (!$lId) continue;
+        if (!isset($grouped[$lId])) {
+            $q = $questions[$lId] ?? null;
+            $grouped[$lId] = [
+                'listingId' => $lId,
+                'listingTitle' => $q['title'] ?? '(삭제된 게시글)',
+                'authorId' => $q['authorId'] ?? '',
+                'authorName' => $q['authorName'] ?? '',
+                'reportCount' => 0,
+                'latestReason' => '',
+                'latestDate' => '',
+                'status' => 'dismissed',
+                'reports' => []
+            ];
+        }
+        $grouped[$lId]['reports'][] = $r;
+        $grouped[$lId]['reportCount']++;
+        if (empty($grouped[$lId]['latestDate']) || strcmp($r['createdAt'], $grouped[$lId]['latestDate']) > 0) {
+            $grouped[$lId]['latestDate'] = $r['createdAt'];
+            $grouped[$lId]['latestReason'] = $r['reason'] ?? '';
+        }
+        if (($r['status'] ?? 'pending') === 'pending') {
+            $grouped[$lId]['status'] = 'pending';
+        }
+    }
+
+    $list = array_values($grouped);
+    usort($list, function($a, $b) {
+        if ($a['reportCount'] !== $b['reportCount']) {
+            return $b['reportCount'] - $a['reportCount'];
+        }
+        return strcmp($b['latestDate'], $a['latestDate']);
+    });
+
+    return $list;
+}
+
+/**
+ * Get map of unresolved report counts keyed by listingId
+ */
+function forum_get_unresolved_report_counts(): array {
+    $data = get_forum_data();
+    $counts = [];
+    foreach (($data['reports'] ?? []) as $r) {
+        if (($r['status'] ?? 'pending') === 'pending') {
+            $lId = $r['listingId'] ?? '';
+            if ($lId) {
+                $counts[$lId] = ($counts[$lId] ?? 0) + 1;
+            }
+        }
+    }
+    return $counts;
+}
+
+/**
+ * Dismiss (clear) all reports for a listing
+ */
+function forum_dismiss_reports(string $listingId): bool {
+    $data = get_forum_data();
+    if (empty($data['reports'])) return true;
+
+    $changed = false;
+    foreach ($data['reports'] as $id => $r) {
+        if (($r['listingId'] ?? '') === $listingId) {
+            $data['reports'][$id]['status'] = 'dismissed';
+            $changed = true;
+        }
+    }
+    if ($changed) {
+        return save_forum_data($data);
+    }
+    return true;
+}
+
+/**
+ * Suspend member
+ */
+function forum_suspend_user(string $userId): bool {
+    $data = get_forum_data();
+    if (empty($userId)) return false;
+    if (isset($data['users'][$userId])) {
+        $data['users'][$userId]['isBanned'] = true;
+        $data['users'][$userId]['status'] = 'suspended';
+        $data['users'][$userId]['suspendedAt'] = date('c');
+        return save_forum_data($data);
+    }
+    return false;
 }
 
 

@@ -230,6 +230,9 @@ function render_forum_header(string $searchQuery = '', ?array $currentSpecialty 
           <a href="/forum?specialty=events" class="px-3 py-1.5 rounded-lg whitespace-nowrap transition-all <?= ($catId === 'events') ? 'bg-white text-[#1B6FA8] font-black shadow-xs' : 'text-white/90 hover:text-white hover:bg-white/15' ?>">
             <span>이벤트</span>
           </a>
+          <a href="/forum?specialty=clubs" class="px-3 py-1.5 rounded-lg whitespace-nowrap transition-all <?= ($catId === 'clubs') ? 'bg-white text-[#1B6FA8] font-black shadow-xs' : 'text-white/90 hover:text-white hover:bg-white/15' ?>">
+            <span>동호회/동문회</span>
+          </a>
         </div>
 
         <!-- Quick Post Button on Right of Category Bar -->
@@ -368,7 +371,7 @@ function render_forum_sidebar(array $categories, string $activeSpecialty = '', s
 
       <!-- Divider -->
       <div class="pt-1.5 border-t border-slate-200/80">
-        <span class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider block px-1">8대 커뮤니티 게시판</span>
+        <span class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider block px-1">9대 커뮤니티 게시판</span>
       </div>
 
       <!-- 8 Top Categories & Sub-Boards -->
@@ -1142,6 +1145,8 @@ function render_forum_footer() {
             <li><a class="hover:text-white transition-colors" href="/forum?specialty=jobs">구인 / 구직</a></li>
             <li><a class="hover:text-white transition-colors" href="/forum?specialty=food">맛집 탐방</a></li>
             <li><a class="hover:text-white transition-colors" href="/forum?specialty=columns">전문가 칼럼</a></li>
+            <li><a class="hover:text-white transition-colors" href="/forum?specialty=events">이벤트</a></li>
+            <li><a class="hover:text-white transition-colors" href="/forum?specialty=clubs">동호회/동문회</a></li>
           </ul>
         </div>
         <div>

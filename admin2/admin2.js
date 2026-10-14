@@ -27,10 +27,12 @@ function switchTab(tabId) {
 
   if (tabId === 'dashboard') loadDashboardStats();
   if (tabId === 'questions') loadQuestionsTable();
+  if (tabId === 'reported-listings') loadReportedListingsTable();
   if (tabId === 'answers') loadAnswersTable();
   if (tabId === 'users') loadUsersTable();
   if (tabId === 'events') loadEventsSection();
   if (tabId === 'specialties') loadSpecialtiesGrid();
+  if (tabId === 'featured-ads') loadFeaturedAdsTable();
   if (tabId === 'settings') loadSettingsTab();
 }
 
@@ -53,10 +55,31 @@ async function loadDashboardStats() {
     document.getElementById('stat-flagged-questions').innerText = (data.flaggedQuestions + (data.flaggedAnswers ?? 0));
     document.getElementById('stat-hidden-questions').innerText = data.hiddenQuestions ?? 0;
 
+    // Check reported listings badge
+    fetch('/api/forum_admin.php?action=reported_listings')
+      .then(r => r.json())
+      .then(rj => {
+        if (rj.success && Array.isArray(rj.data)) {
+          const pending = rj.data.filter(it => it.status === 'pending').reduce((sum, it) => sum + (it.reportCount || 0), 0);
+          const navBadge = document.getElementById('badge-nav-reports');
+          if (navBadge) {
+            if (pending > 0) {
+              navBadge.innerText = pending;
+              navBadge.classList.remove('hidden');
+            } else {
+              navBadge.classList.add('hidden');
+            }
+          }
+        }
+      }).catch(() => {});
+
     allCategories = data.categories || [];
     allSubSpecialties = data.subSpecialties || [];
     allSpecialties = allCategories;
     currentDisclaimer = data.disclaimer || '본 포럼의 정보는 교육 및 일반 정보 제공 목적이며 전문 진료를 대체하지 않습니다';
+
+    // Populate category filter dropdown for questions table
+    populateCategoryFilterDropdown();
 
     // Populate Disclaimer input if on settings page
     const discInput = document.getElementById('setting-disclaimer-input');
@@ -103,6 +126,28 @@ async function loadDashboardStats() {
   }
 }
 
+// Helper to populate category filter dropdown
+function populateCategoryFilterDropdown() {
+  const sel = document.getElementById('q-filter-specialty');
+  if (!sel || !Array.isArray(allCategories) || allCategories.length === 0) return;
+  const currentVal = sel.value || 'all';
+
+  let optionsHtml = '<option value="all">전체 카테고리 &amp; 서브게시판</option>';
+  allCategories.forEach(cat => {
+    optionsHtml += `<optgroup label="${escapeHtml(cat.name_ko)}">`;
+    optionsHtml += `<option value="${escapeHtml(cat.id)}">[전체] ${escapeHtml(cat.name_ko)}</option>`;
+    const subs = cat.subBoards || [];
+    subs.forEach(s => {
+      optionsHtml += `<option value="${escapeHtml(s.id)}">↳ ${escapeHtml(s.name_ko)}</option>`;
+    });
+    optionsHtml += '</optgroup>';
+  });
+  sel.innerHTML = optionsHtml;
+  if (currentVal && currentVal !== 'all') {
+    sel.value = currentVal;
+  }
+}
+
 // 2. Load Questions Table
 let qSearchTimeout = null;
 function debounceQuestionsSearch() {
@@ -129,32 +174,12 @@ async function loadQuestionsTable() {
     }
 
     allQuestions = json.data || [];
+    const unresolvedReportsMap = json.unresolved_reports || {};
 
-    // Populate specialty filter dropdown if empty
+    // Ensure category dropdown is populated
     const sel = document.getElementById('q-filter-specialty');
     if (sel && sel.options.length <= 1) {
-      if (allCategories.length > 0) {
-        const catGroup = document.createElement('optgroup');
-        catGroup.label = '5대 핵심 오픈 포럼';
-        allCategories.forEach(cat => {
-          const opt = document.createElement('option');
-          opt.value = cat.id;
-          opt.innerText = cat.name_ko;
-          catGroup.appendChild(opt);
-        });
-        sel.appendChild(catGroup);
-      }
-      if (allSubSpecialties.length > 0) {
-        const subGroup = document.createElement('optgroup');
-        subGroup.label = '의학포럼 19대 전문 진료과목';
-        allSubSpecialties.forEach(sub => {
-          const opt = document.createElement('option');
-          opt.value = sub.id;
-          opt.innerText = '↳ ' + sub.name_ko;
-          subGroup.appendChild(opt);
-        });
-        sel.appendChild(subGroup);
-      }
+      populateCategoryFilterDropdown();
     }
 
     if (allQuestions.length === 0) {
@@ -164,12 +189,17 @@ async function loadQuestionsTable() {
 
     tbody.innerHTML = allQuestions.map(q => {
       const cat = q.category || q.specialty || {};
-      const sub = q.subSpecialty || null;
+      const sub = q.subBoard || q.subSpecialty || null;
       const statusPill = (q.status === 'active')
         ? `<span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-full text-[10px] font-bold">공개</span>`
         : (q.status === 'flagged')
         ? `<span class="bg-red-500/20 text-red-400 border border-red-500/30 px-2 py-0.5 rounded-full text-[10px] font-bold">신고됨</span>`
         : `<span class="bg-slate-700 text-slate-400 px-2 py-0.5 rounded-full text-[10px] font-bold">숨김</span>`;
+
+      const unresolvedCount = unresolvedReportsMap[q.id] || 0;
+      const reportBadge = unresolvedCount > 0 
+        ? `<span class="inline-flex items-center gap-1 text-[10px] bg-red-600/20 text-red-400 border border-red-500/30 px-1.5 py-0.5 rounded-full font-bold shrink-0 ml-1.5" title="미처리 신고 ${unresolvedCount}건"><svg class="w-2.5 h-2.5 text-red-500 fill-current shrink-0" viewBox="0 0 24 24"><path d="M4 2v20h2v-7h14l-2-6.5L20 2H4z"/></svg>신고 ${unresolvedCount}건</span>` 
+        : '';
 
       return `
         <tr class="hover:bg-slate-700/30 transition-colors">
@@ -183,13 +213,16 @@ async function loadQuestionsTable() {
             </div>
           </td>
           <td class="py-3.5 px-4">
-            <div class="font-bold text-white max-w-md truncate hover:text-blue-300 cursor-pointer" onclick='openQModal(${JSON.stringify(q).replace(/'/g, "&#39;")})'>
-              ${escapeHtml(q.title)}
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <span class="font-bold text-white max-w-md truncate hover:text-blue-300 cursor-pointer" onclick='openQModal(${JSON.stringify(q).replace(/'/g, "&#39;")})'>
+                ${escapeHtml(q.title)}
+              </span>
+              ${reportBadge}
             </div>
           </td>
           <td class="py-3.5 px-4 whitespace-nowrap">
             <div class="flex items-center gap-2">
-              <img src="${q.authorAvatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&q=80'}" class="w-5 h-5 rounded-full object-cover">
+              <img src="${(q.authorAvatar && !q.authorAvatar.includes('unsplash')) ? q.authorAvatar : '/assets/avatars/avatar_01.svg'}" class="w-5 h-5 rounded-full object-cover">
               <span class="text-slate-300">${escapeHtml(q.authorName || '익명')}</span>
               ${q.authorBadge ? '<span class="text-[9px] bg-emerald-600 text-white font-bold px-1 rounded">의료진</span>' : ''}
             </div>
@@ -271,6 +304,160 @@ async function deleteQuestion(id) {
       alert(json.error || '삭제 실패');
     }
   } catch(e) {
+    alert('오류가 발생했습니다.');
+  }
+}
+
+// 2.5 Load Reported Listings Table
+async function loadReportedListingsTable() {
+  const tbody = document.getElementById('reported-listings-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = `<tr><td colspan="7" class="py-8 text-center text-slate-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i>신고된 게시글 목록 로딩 중...</td></tr>`;
+
+  try {
+    const res = await fetch('/api/forum_admin.php?action=reported_listings');
+    const json = await res.json();
+    if (!json.success) {
+      tbody.innerHTML = `<tr><td colspan="7" class="py-8 text-center text-red-400">데이터 로드 실패</td></tr>`;
+      return;
+    }
+
+    const items = json.data || [];
+
+    // Update badge in nav if any pending reports
+    const pendingTotal = items.filter(it => it.status === 'pending').reduce((sum, it) => sum + (it.reportCount || 0), 0);
+    const navBadge = document.getElementById('badge-nav-reports');
+    if (navBadge) {
+      if (pendingTotal > 0) {
+        navBadge.innerText = pendingTotal;
+        navBadge.classList.remove('hidden');
+      } else {
+        navBadge.classList.add('hidden');
+      }
+    }
+
+    if (items.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="7" class="py-8 text-center text-slate-500">접수된 신고 내역이 없습니다.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = items.map(item => {
+      const isPending = item.status === 'pending';
+      const statusPill = isPending
+        ? `<span class="bg-red-500/20 text-red-400 border border-red-500/30 px-2 py-0.5 rounded-full text-[10px] font-bold">미처리</span>`
+        : `<span class="bg-slate-700 text-slate-400 px-2 py-0.5 rounded-full text-[10px] font-bold">처리완료</span>`;
+
+      const listingUrl = `/ko/forum/topic/${encodeURIComponent(item.listingId)}`;
+
+      return `
+        <tr class="hover:bg-slate-700/30 transition-colors">
+          <td class="py-3.5 px-4 text-center">
+            <svg class="w-4 h-4 text-red-500 fill-current inline-block" viewBox="0 0 24 24"><path d="M4 2v20h2v-7h14l-2-6.5L20 2H4z"/></svg>
+          </td>
+          <td class="py-3.5 px-4">
+            <a href="${listingUrl}" target="_blank" class="font-bold text-white hover:text-blue-300 transition-colors inline-flex items-center gap-1">
+              <span>${escapeHtml(item.listingTitle)}</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-slate-400"></i>
+            </a>
+            ${item.authorName ? `<div class="text-[11px] text-slate-400 mt-0.5">작성자: ${escapeHtml(item.authorName)}</div>` : ''}
+          </td>
+          <td class="py-3.5 px-4 text-center font-bold text-red-400">
+            ${item.reportCount ?? 1}건
+          </td>
+          <td class="py-3.5 px-4 text-slate-200">
+            <span class="bg-slate-900 px-2 py-1 rounded text-xs border border-slate-700">${escapeHtml(item.latestReason || '기타')}</span>
+          </td>
+          <td class="py-3.5 px-4 text-slate-400 text-xs whitespace-nowrap">
+            ${escapeHtml((item.latestDate || '').substring(0, 19))}
+          </td>
+          <td class="py-3.5 px-4 text-center whitespace-nowrap">
+            ${statusPill}
+          </td>
+          <td class="py-3.5 px-4 whitespace-nowrap text-right">
+            <div class="flex items-center justify-end gap-1.5">
+              <button onclick="dismissReports('${escapeHtml(item.listingId)}')" class="px-2.5 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-semibold transition-all cursor-pointer" title="신고 기각 (처리 완료로 변경)">
+                <span>기각</span>
+              </button>
+              <button onclick="deleteListingFromReports('${escapeHtml(item.listingId)}')" class="px-2.5 py-1.5 rounded-lg bg-red-500/20 hover:bg-red-600 text-red-300 hover:text-white border border-red-500/40 text-xs font-bold transition-all cursor-pointer" title="게시글 영구 삭제">
+                <span>게시글 삭제</span>
+              </button>
+              ${item.authorId ? `
+              <button onclick="suspendMember('${escapeHtml(item.authorId)}', '${escapeHtml(item.authorName || '회원')}')" class="px-2.5 py-1.5 rounded-lg bg-purple-500/20 hover:bg-purple-600 text-purple-300 hover:text-white border border-purple-500/40 text-xs font-bold transition-all cursor-pointer" title="작성자 계정 이용 제한">
+                <span>회원 이용제한</span>
+              </button>
+              ` : ''}
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  } catch(e) {
+    tbody.innerHTML = `<tr><td colspan="7" class="py-8 text-center text-red-400">서버 통신 오류</td></tr>`;
+  }
+}
+
+// Dismiss Reports
+async function dismissReports(listingId) {
+  if (!confirm('이 게시글에 대한 신고를 기각(처리 완료)하시겠습니까?')) return;
+  try {
+    const res = await fetch('/api/forum_admin.php?action=dismiss_reports', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ listing_id: listingId })
+    });
+    const json = await res.json();
+    if (json.success) {
+      alert('신고가 기각(처리 완료)되었습니다.');
+      loadReportedListingsTable();
+      loadQuestionsTable();
+    } else {
+      alert(json.error || '처리 실패');
+    }
+  } catch (e) {
+    alert('오류가 발생했습니다.');
+  }
+}
+
+// Delete Listing From Reports
+async function deleteListingFromReports(listingId) {
+  if (!confirm('신고된 게시글을 영구 삭제하시겠습니까?\n이 작업은 취소할 수 없습니다.')) return;
+  try {
+    const res = await fetch('/api/forum_admin.php?action=delete_question', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: listingId })
+    });
+    const json = await res.json();
+    if (json.success) {
+      alert('게시글이 삭제되었습니다.');
+      loadReportedListingsTable();
+      loadQuestionsTable();
+    } else {
+      alert(json.error || '삭제 실패');
+    }
+  } catch (e) {
+    alert('오류가 발생했습니다.');
+  }
+}
+
+// Suspend Member
+async function suspendMember(userId, name) {
+  if (!confirm(`회원 [${name}]의 이용을 영구 제한(정지)하시겠습니까?`)) return;
+  try {
+    const res = await fetch('/api/forum_admin.php?action=suspend_user', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user_id: userId })
+    });
+    const json = await res.json();
+    if (json.success) {
+      alert('해당 회원의 이용이 제한되었습니다.');
+      loadReportedListingsTable();
+      loadQuestionsTable();
+    } else {
+      alert(json.error || '처리 실패');
+    }
+  } catch (e) {
     alert('오류가 발생했습니다.');
   }
 }
@@ -506,20 +693,23 @@ async function loadUsersTable() {
       if (docEmails.length === 0) {
         docEmailsList.innerHTML = `<p class="col-span-full text-xs text-slate-500 py-3 text-center">등록된 전문의 Gmail이 없습니다. 위 입력창에서 의사 Gmail을 등록해 주세요.</p>`;
       } else {
-        docEmailsList.innerHTML = docEmails.map(d => `
+        docEmailsList.innerHTML = docEmails.map(d => {
+          const bLabel = d.badge_label || d.title || '전문의';
+          return `
           <div class="bg-slate-900/90 border border-slate-700/80 rounded-2xl p-3 flex items-center justify-between gap-3 shadow-xs">
             <div class="min-w-0 flex-1">
-              <div class="flex items-center gap-1.5">
-                <i class="fa-solid fa-stethoscope text-emerald-400 text-xs shrink-0"></i>
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="text-[10px] px-2 py-0.5 rounded font-extrabold bg-[#1B6FA8]/20 text-[#38BDF8] border border-[#1B6FA8]/40">${escapeHtml(bLabel)}</span>
                 <span class="text-xs font-bold text-white truncate font-mono">${escapeHtml(d.email)}</span>
               </div>
-              <p class="text-[11px] text-emerald-300/90 truncate mt-0.5">${escapeHtml(d.title || '전문의 (MD)')}</p>
+              <p class="text-[11px] text-slate-400 truncate mt-1">${escapeHtml(d.title || bLabel)}</p>
             </div>
-            <button onclick="removeDoctorEmail('${escapeHtml(d.email)}')" class="shrink-0 text-slate-400 hover:text-red-400 p-1.5 rounded-lg hover:bg-slate-800 transition-colors" title="전문의 등록 삭제">
+            <button onclick="removeDoctorEmail('${escapeHtml(d.email)}')" class="shrink-0 text-slate-400 hover:text-red-400 p-1.5 rounded-lg hover:bg-slate-800 transition-colors cursor-pointer" title="전문가 등록 삭제">
               <i class="fa-solid fa-trash-can text-xs"></i>
             </button>
           </div>
-        `).join('');
+        `;
+        }).join('');
       }
     }
 
@@ -532,12 +722,13 @@ async function loadUsersTable() {
       tbody.innerHTML = allUsers.map(u => {
         const isClinician = Boolean(u.isVerifiedClinician);
         const isBanned = Boolean(u.isBanned);
+        const badgeLabel = u.badgeLabel || u.clinicianTitle || '인증 전문의';
 
         return `
           <tr class="hover:bg-slate-700/30 transition-colors">
             <td class="py-3.5 px-4 whitespace-nowrap">
               <div class="flex items-center gap-2.5">
-                <img src="${u.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&q=80'}" class="w-8 h-8 rounded-full object-cover border border-slate-700">
+                <img src="${(u.avatar && !u.avatar.includes('unsplash')) ? u.avatar : '/assets/avatars/avatar_01.svg'}" class="w-8 h-8 rounded-full object-cover border border-slate-700">
                 <div>
                   <span class="font-bold text-white text-xs block">${escapeHtml(u.name || '회원')}</span>
                   <span class="text-[10px] text-slate-500 font-mono">ID: ${escapeHtml(u.id)}</span>
@@ -549,7 +740,7 @@ async function loadUsersTable() {
             </td>
             <td class="py-3.5 px-4 whitespace-nowrap">
               ${isClinician 
-                ? '<span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[11px] font-extrabold px-2.5 py-1 rounded-full"><i class="fa-solid fa-circle-check mr-1"></i>인증 전문의</span>'
+                ? `<span class="bg-[#1B6FA8]/20 text-[#38BDF8] border border-[#1B6FA8]/40 text-[11px] font-extrabold px-2.5 py-1 rounded-full"><i class="fa-solid fa-circle-check mr-1"></i>${escapeHtml(badgeLabel)}</span>`
                 : '<span class="bg-slate-800 text-slate-400 border border-slate-700 text-[11px] font-medium px-2.5 py-1 rounded-full">일반 회원</span>'
               }
             </td>
@@ -564,13 +755,17 @@ async function loadUsersTable() {
             </td>
             <td class="py-3.5 px-4 whitespace-nowrap text-right space-x-1.5">
               ${isClinician 
-                ? `<button onclick="toggleVerifiedClinician('${u.id}', false)" class="px-3 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold">배지 해제</button>`
-                : `<button onclick="promptClinicianBadge('${u.id}', '${escapeHtml(u.name)}')" class="px-3 py-1 rounded-xl bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-300 border border-emerald-500/40 text-xs font-semibold">전문의 배지 부여</button>`
+                ? `<button onclick="toggleVerifiedClinician('${u.id}', false)" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold cursor-pointer">배지 해제</button>`
+                : `<button onclick="promptClinicianBadge('${u.id}', '${escapeHtml(u.name)}')" class="px-2.5 py-1 rounded-xl bg-blue-600/30 hover:bg-blue-600/50 text-[#38BDF8] border border-blue-500/40 text-xs font-semibold cursor-pointer">전문가 배지 부여</button>`
               }
               ${isBanned 
-                ? `<button onclick="toggleBanUser('${u.id}', false)" class="px-3 py-1 rounded-xl bg-slate-700 hover:bg-slate-600 text-slate-300 text-xs font-semibold">정지 해제</button>`
-                : `<button onclick="toggleBanUser('${u.id}', true)" class="px-3 py-1 rounded-xl bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/30 text-xs font-semibold">계정 차단</button>`
+                ? `<button onclick="toggleBanUser('${u.id}', false)" class="px-2.5 py-1 rounded-xl bg-slate-700 hover:bg-slate-600 text-slate-300 text-xs font-semibold cursor-pointer">정지 해제</button>`
+                : `<button onclick="toggleBanUser('${u.id}', true)" class="px-2.5 py-1 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 text-xs font-semibold cursor-pointer">계정 차단</button>`
               }
+              <button onclick="deleteUser('${u.id}', '${escapeHtml(u.name || '회원')}')" class="px-2.5 py-1 rounded-xl bg-rose-500/20 hover:bg-rose-500/35 text-rose-300 border border-rose-500/40 text-xs font-semibold cursor-pointer transition-colors inline-flex items-center gap-1" title="회원 영구 삭제">
+                <i class="fa-solid fa-trash-can text-[10px]"></i>
+                <span>회원 삭제</span>
+              </button>
             </td>
           </tr>
         `;
@@ -581,18 +776,20 @@ async function loadUsersTable() {
   }
 }
 
-// Add Doctor Gmail Submission
+// Add Doctor / Expert Gmail Submission
 async function handleAddDoctorEmail(e) {
   e.preventDefault();
   const emailInput = document.getElementById('doc-email-input');
   const titleInput = document.getElementById('doc-title-input');
+  const badgeTypeInput = document.getElementById('doc-badge-type');
   const btn = document.getElementById('btn-add-doctor');
 
   const email = emailInput?.value.trim() || '';
-  const title = titleInput?.value.trim() || '전문의 (MD)';
+  const title = titleInput?.value.trim() || '';
+  const badgeType = badgeTypeInput?.value || 'doctor';
 
   if (!email) {
-    alert('전문의 Gmail 주소를 입력해주세요.');
+    alert('전문가 Gmail 주소를 입력해주세요.');
     return;
   }
 
@@ -602,7 +799,7 @@ async function handleAddDoctorEmail(e) {
     const res = await fetch('/api/forum_admin.php?action=add_doctor_email', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, title: title })
+      body: JSON.stringify({ email: email, title: title, badge_type: badgeType })
     });
     const json = await res.json();
     if (json.success) {
@@ -610,7 +807,7 @@ async function handleAddDoctorEmail(e) {
       if (titleInput) titleInput.value = '';
       loadUsersTable();
       loadDashboardStats();
-      alert(json.message || '전문의 Gmail이 등록되었습니다.');
+      alert(json.message || '전문가 Gmail이 등록되었습니다.');
     } else {
       alert(json.error || '등록에 실패했습니다.');
     }
@@ -682,67 +879,255 @@ async function toggleBanUser(userId, isBanned) {
   } catch(e) {}
 }
 
-// 5. Load 5 Core Categories & 19 Medical Sub-Specialties Grid
-function loadSpecialtiesGrid() {
+async function deleteUser(userId, userName) {
+  if (!confirm(`'${userName}' 회원을 완전히 영구 삭제하시겠습니까?\n해당 회원의 등록 정보 및 전문가 권한이 삭제되며 복구할 수 없습니다.`)) return;
+
+  try {
+    const res = await fetch('/api/forum_admin.php?action=delete_user', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId: userId })
+    });
+    const json = await res.json();
+    if (json.success) {
+      alert(json.message || '회원이 성공적으로 삭제되었습니다.');
+      loadUsersTable();
+      loadDashboardStats();
+    } else {
+      alert(json.error || '회원 삭제에 실패했습니다.');
+    }
+  } catch(err) {
+    alert('오류가 발생했습니다: ' + err.message);
+  }
+}
+
+// 5. Load 8 Categories Tree & Board Settings Grid
+async function loadSpecialtiesGrid() {
   const container = document.getElementById('specialties-full-grid');
   if (!container) return;
+  container.innerHTML = '<div class="py-12 text-center text-slate-400"><i class="fa-solid fa-spinner fa-spin mr-2"></i>9대 카테고리 트리 및 게시판 설정 불러오는 중...</div>';
 
-  let html = `
-    <div class="col-span-full mb-2">
-      <h3 class="text-sm font-extrabold text-blue-400 flex items-center gap-2 mb-1">
-        <i class="fa-solid fa-layer-group"></i>
-        <span>5대 핵심 오픈 포럼 카테고리 (5 Core Categories)</span>
-      </h3>
-      <p class="text-xs text-slate-400">커뮤니티 단순화 및 SEO 최적화를 위해 통합된 5대 핵심 카테고리입니다.</p>
-    </div>
-  `;
+  try {
+    const res = await fetch('/api/forum_admin.php?action=board_settings');
+    const json = await res.json();
+    if (!json.success || !json.data) {
+      container.innerHTML = '<div class="p-6 text-center text-red-400">데이터 로드에 실패했습니다.</div>';
+      return;
+    }
 
-  if (allCategories.length > 0) {
-    html += allCategories.map(cat => `
-      <div class="bg-slate-800/90 border border-slate-700/90 rounded-2xl p-5 relative overflow-hidden" style="border-left: 4px solid ${cat.color || '#3b82f6'};">
-        <div class="flex items-center gap-3 mb-3">
-          <div class="w-11 h-11 rounded-xl flex items-center justify-center text-lg text-white shadow" style="background-color: ${cat.color}">
-            <i class="fa-solid ${cat.icon || 'fa-layer-group'}"></i>
-          </div>
+    const { categories, subBoards, settings } = json.data;
+
+    let html = `
+      <div class="bg-gradient-to-r from-blue-950/60 to-slate-900 border border-blue-900/40 rounded-3xl p-5 mb-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h3 class="font-bold text-white text-sm">${escapeHtml(cat.name_ko)}</h3>
-            <p class="text-xs text-slate-400 font-mono">${escapeHtml(cat.name_en || '')}</p>
+            <div class="text-xs font-bold text-blue-400 uppercase tracking-wider mb-1">A1 Specification · Category Tree</div>
+            <h3 class="text-base font-extrabold text-white">9대 커뮤니티 카테고리 트리 &amp; 서브게시판 관제</h3>
+            <p class="text-xs text-slate-300 mt-1 leading-relaxed">
+              의료관련(허브) · 자유게시판 · 마켓플레이스 · 서비스 · 구직 · 맛집 · 전문가 칼럼 · 이벤트 · 동호회/동문회 구조 및 게시판별 사진 썸네일, 정렬 탭, 작성 권한, 검토 큐를 관리합니다.
+            </p>
           </div>
-          <span class="ml-auto text-xs font-extrabold px-2.5 py-1 rounded-full bg-slate-900 border border-slate-700 text-blue-400">
-            ${cat.questionCount ?? (cat.count ?? 0)}건
-          </span>
+          <a href="/forum" target="_blank" class="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center gap-1.5 transition-all self-start sm:self-auto shadow-sm">
+            <span>포럼 메인 확인</span>
+            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+          </a>
         </div>
-        <p class="text-xs text-slate-300 leading-relaxed">${escapeHtml(cat.description || '')}</p>
       </div>
-    `).join('');
-  }
+      <div class="space-y-6">
+    `;
 
-  html += `
-    <div class="col-span-full mt-6 mb-2 pt-6 border-t border-slate-700">
-      <h3 class="text-sm font-extrabold text-cyan-400 flex items-center gap-2 mb-1">
-        <i class="fa-solid fa-stethoscope"></i>
-        <span>의학포럼 19대 세부 전문 진료과목 (19 Sub-Specialties)</span>
-      </h3>
-      <p class="text-xs text-slate-400">사용자가 '의학포럼'을 열었을 때 상단에 표시되는 19개 진료과 서브 리스트입니다.</p>
-    </div>
-  `;
+    categories.forEach(cat => {
+      const cId = cat.id;
+      const bSettings = (settings && settings[cId]) ? settings[cId] : {
+        thumbnailsEnabled: (cId === 'market' || cId === 'food' || cId === 'community' || cId === 'events' || cId === 'wanted' || cId === 'clubs'),
+        sortTabsEnabled: true,
+        postingRole: (cId === 'columns' ? 'expert_only' : (cId === 'events' ? 'admin_only' : 'all')),
+        moderationQueue: true
+      };
 
-  if (allSubSpecialties.length > 0) {
-    html += allSubSpecialties.map(sub => `
-      <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-3.5 flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl flex items-center justify-center text-sm shrink-0" style="background-color: ${sub.color}22; color: ${sub.color}">
-          <i class="fa-solid ${sub.icon || 'fa-stethoscope'}"></i>
+      const subs = (subBoards && subBoards[cId]) ? subBoards[cId] : (cat.subBoards || []);
+      const hasSubs = subs.length > 0;
+
+      html += `
+        <div class="bg-slate-800/90 border border-slate-700/80 rounded-3xl p-6 shadow-md transition-all hover:border-slate-600" style="border-left: 5px solid ${cat.color || '#3b82f6'};">
+          <!-- Category Header -->
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-5 border-b border-slate-700/60">
+            <div class="flex items-center gap-3.5">
+              <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-xl text-white shadow-md shrink-0" style="background-color: ${cat.color || '#3b82f6'};">
+                <i class="fa-solid ${cat.icon || 'fa-layer-group'}"></i>
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="text-base font-bold text-white">${escapeHtml(cat.name_ko)}</h3>
+                  <span class="text-xs px-2 py-0.5 rounded-md font-mono bg-slate-900 text-slate-400 border border-slate-700">${cat.slug}</span>
+                  ${cat.isHub ? '<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30">의료 Hub</span>' : ''}
+                </div>
+                <p class="text-xs text-slate-300 mt-1">${escapeHtml(cat.description || '')}</p>
+              </div>
+            </div>
+            
+            <div class="flex items-center gap-2.5 self-start lg:self-auto shrink-0">
+              <span class="text-xs font-extrabold px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-blue-400">
+                게시물: <strong class="text-white">${cat.questionCount ?? 0}</strong>건
+              </span>
+              <a href="/forum?category=${encodeURIComponent(cat.slug || cat.id)}" target="_blank" class="px-3 py-1.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-semibold flex items-center gap-1 transition-colors">
+                <span>보드 이동</span>
+                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Board Settings Bar -->
+          <div class="mt-4 pt-1 bg-slate-900/60 rounded-2xl p-4 border border-slate-800">
+            <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+              <i class="fa-solid fa-sliders text-blue-400"></i>
+              <span>[${escapeHtml(cat.name_ko)}] 게시판 운영 설정</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 items-end">
+              <!-- Setting 1: Thumbnails -->
+              <label class="flex items-center gap-2.5 p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 cursor-pointer hover:bg-slate-800">
+                <input type="checkbox" id="setting-thumb-${cId}" ${bSettings.thumbnailsEnabled ? 'checked' : ''} class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 bg-slate-900 border-slate-700">
+                <div class="text-xs text-slate-200">
+                  <span class="font-bold block text-white text-[11px]">📷 사진 썸네일</span>
+                  <span class="text-[10px] text-slate-400">${cId === 'market' ? '부동산/렌트 필수' : '포토 카드 노출'}</span>
+                </div>
+              </label>
+
+              <!-- Setting 2: Sort Tabs -->
+              <label class="flex items-center gap-2.5 p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 cursor-pointer hover:bg-slate-800">
+                <input type="checkbox" id="setting-sort-${cId}" ${bSettings.sortTabsEnabled ? 'checked' : ''} class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 bg-slate-900 border-slate-700">
+                <div class="text-xs text-slate-200">
+                  <span class="font-bold block text-white text-[11px]">📊 정렬 탭 활성화</span>
+                  <span class="text-[10px] text-slate-400">조회/공감/댓글순</span>
+                </div>
+              </label>
+
+              <!-- Setting 3: Posting Role -->
+              <div class="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60">
+                <span class="font-bold block text-white text-[11px] mb-1">✍️ 글 작성 권한</span>
+                <select id="setting-role-${cId}" class="w-full bg-slate-900 border border-slate-700 text-slate-200 rounded-lg px-2 py-1 text-[11px] focus:outline-none focus:border-blue-500">
+                  <option value="all" ${bSettings.postingRole === 'all' ? 'selected' : ''}>모든 회원 (Open)</option>
+                  <option value="expert_only" ${bSettings.postingRole === 'expert_only' ? 'selected' : ''}>인증 전문가만 (Verified)</option>
+                  <option value="admin_only" ${bSettings.postingRole === 'admin_only' ? 'selected' : ''}>운영진 전용 (Admin)</option>
+                </select>
+              </div>
+
+              <!-- Setting 4: Moderation Queue -->
+              <label class="flex items-center gap-2.5 p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 cursor-pointer hover:bg-slate-800">
+                <input type="checkbox" id="setting-mod-${cId}" ${bSettings.moderationQueue ? 'checked' : ''} class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 bg-slate-900 border-slate-700">
+                <div class="text-xs text-slate-200">
+                  <span class="font-bold block text-white text-[11px]">🛡️ 검토 큐 가동</span>
+                  <span class="text-[10px] text-slate-400">신고 및 숨김 관리</span>
+                </div>
+              </label>
+
+              <!-- Action: Save Settings -->
+              <div>
+                <button type="button" id="btn-save-board-${cId}" onclick="saveBoardSettings('${cId}')" class="w-full py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition-all shadow-sm flex items-center justify-center gap-1.5 cursor-pointer">
+                  <i class="fa-solid fa-floppy-disk"></i>
+                  <span>설정 저장</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-boards Tree (if any) -->
+          ${hasSubs ? `
+            <div class="mt-4 pt-3">
+              <div class="text-xs font-bold text-slate-300 mb-2.5 flex items-center gap-2">
+                <i class="fa-solid fa-folder-tree text-cyan-400"></i>
+                <span>세부 서브게시판 (Sub-boards) — ${subs.length}개</span>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                ${subs.map(sub => `
+                  <div class="bg-slate-900/90 border border-slate-800/90 rounded-xl p-3 flex items-center justify-between gap-2.5">
+                    <div class="min-w-0 flex-1">
+                      <div class="flex items-center gap-2">
+                        <i class="fa-solid ${sub.icon || 'fa-hashtag'} text-xs text-slate-400"></i>
+                        <span class="text-xs font-bold text-white truncate">${escapeHtml(sub.name_ko)}</span>
+                      </div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="text-[10px] text-slate-500 font-mono truncate">${escapeHtml(sub.slug || sub.id)}</span>
+                        ${sub.hasThumbnails ? '<span class="text-[9px] font-bold text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-1.5 rounded">포토</span>' : ''}
+                        ${sub.expertRole ? `<span class="text-[9px] font-bold text-amber-400 bg-amber-950/60 border border-amber-800/60 px-1.5 rounded">${escapeHtml(sub.expertRole)} 전문</span>` : ''}
+                      </div>
+                    </div>
+                    <div class="flex items-center gap-2 shrink-0">
+                      <span class="text-xs font-extrabold text-cyan-400">${sub.questionCount ?? 0}건</span>
+                      <a href="/forum?category=${encodeURIComponent(cat.slug || cat.id)}&sub=${encodeURIComponent(sub.slug || sub.id)}" target="_blank" class="text-slate-400 hover:text-white p-1 rounded hover:bg-slate-800 transition-colors" title="서브게시판 바로가기">
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i>
+                      </a>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          ` : `
+            <div class="mt-3 text-[11px] text-slate-500 flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-info"></i>
+              <span>단일 독립 게시판 (서브게시판 없이 직접 포스팅)</span>
+            </div>
+          `}
         </div>
-        <div class="min-w-0 flex-1">
-          <h4 class="text-xs font-bold text-white truncate">${escapeHtml(sub.name_ko)}</h4>
-          <span class="text-[10px] text-slate-400 font-mono truncate block">${escapeHtml(sub.name_en || '')}</span>
-        </div>
-        <span class="text-xs font-bold text-cyan-400 shrink-0">${sub.questionCount ?? 0}건</span>
-      </div>
-    `).join('');
-  }
+      `;
+    });
 
-  container.innerHTML = html;
+    html += '</div>';
+    container.innerHTML = html;
+
+  } catch(e) {
+    container.innerHTML = '<div class="p-6 text-center text-red-400">데이터 로드 중 오류가 발생했습니다.</div>';
+  }
+}
+
+// Save individual board settings
+async function saveBoardSettings(boardId) {
+  const thumbEl = document.getElementById(`setting-thumb-${boardId}`);
+  const sortEl = document.getElementById(`setting-sort-${boardId}`);
+  const roleEl = document.getElementById(`setting-role-${boardId}`);
+  const modEl = document.getElementById(`setting-mod-${boardId}`);
+  const btnEl = document.getElementById(`btn-save-board-${boardId}`);
+
+  const payload = {
+    thumbnailsEnabled: thumbEl ? thumbEl.checked : false,
+    sortTabsEnabled: sortEl ? sortEl.checked : true,
+    postingRole: roleEl ? roleEl.value : 'all',
+    moderationQueue: modEl ? modEl.checked : true
+  };
+
+  try {
+    if (btnEl) {
+      btnEl.disabled = true;
+      btnEl.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 저장 중...';
+    }
+    const res = await fetch('/api/forum_admin.php?action=update_board_settings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ boardId: boardId, settings: payload })
+    });
+    const json = await res.json();
+    if (json.success) {
+      if (btnEl) {
+        btnEl.innerHTML = '<i class="fa-solid fa-check text-emerald-300"></i> 저장됨!';
+        setTimeout(() => {
+          btnEl.disabled = false;
+          btnEl.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> 설정 저장';
+        }, 1500);
+      }
+    } else {
+      alert(json.error || '설정 저장 실패');
+      if (btnEl) {
+        btnEl.disabled = false;
+        btnEl.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> 설정 저장';
+      }
+    }
+  } catch(e) {
+    alert('오류가 발생했습니다.');
+    if (btnEl) {
+      btnEl.disabled = false;
+      btnEl.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> 설정 저장';
+    }
+  }
 }
 
 // Settings Tab: Clinical Disclaimer Management
@@ -799,8 +1184,8 @@ let currentModalQuestion = null;
 function openQModal(q) {
   currentModalQuestion = q;
   const cat = q.category || q.specialty || {};
-  const sub = q.subSpecialty || null;
-  const currentSpecialtyId = q.subSpecialtyId || q.specialtyId || cat.id || '';
+  const sub = q.subBoard || q.subSpecialty || null;
+  const currentSpecialtyId = q.subBoardId || q.subSpecialtyId || q.specialtyId || cat.id || '';
 
   const specialtyBadge = document.getElementById('modal-q-specialty');
   if (specialtyBadge) {
@@ -817,18 +1202,15 @@ function openQModal(q) {
   if (sel) {
     let optionsHtml = '';
     if (allCategories.length > 0) {
-      optionsHtml += '<optgroup label="5대 핵심 카테고리">';
       allCategories.forEach(c => {
-        optionsHtml += `<option value="${c.id}" ${c.id === currentSpecialtyId ? 'selected' : ''}>${escapeHtml(c.name_ko)} (${escapeHtml(c.name_en || c.id)})</option>`;
+        optionsHtml += `<optgroup label="${escapeHtml(c.name_ko)}">`;
+        optionsHtml += `<option value="${c.id}" ${c.id === currentSpecialtyId ? 'selected' : ''}>[전체] ${escapeHtml(c.name_ko)}</option>`;
+        const subs = c.subBoards || [];
+        subs.forEach(s => {
+          optionsHtml += `<option value="${s.id}" ${s.id === currentSpecialtyId ? 'selected' : ''}>↳ ${escapeHtml(s.name_ko)}</option>`;
+        });
+        optionsHtml += '</optgroup>';
       });
-      optionsHtml += '</optgroup>';
-    }
-    if (allSubSpecialties.length > 0) {
-      optionsHtml += '<optgroup label="의학포럼 19대 전문 진료과목">';
-      allSubSpecialties.forEach(s => {
-        optionsHtml += `<option value="${s.id}" ${s.id === currentSpecialtyId ? 'selected' : ''}>↳ ${escapeHtml(s.name_ko)} (${escapeHtml(s.name_en || s.id)})</option>`;
-      });
-      optionsHtml += '</optgroup>';
     }
     sel.innerHTML = optionsHtml;
     sel.value = currentSpecialtyId;
@@ -948,14 +1330,39 @@ async function saveQuestionSpecialty() {
     }
 
     // Find new category or sub-specialty info
-    const matched = allCategories.find(sp => sp.id === newSpecialtyId) || allSubSpecialties.find(sp => sp.id === newSpecialtyId);
+    let matched = allCategories.find(sp => sp.id === newSpecialtyId);
+    let matchedSub = null;
+    let matchedParent = null;
+    if (matched) {
+      matchedParent = matched;
+    } else {
+      for (const c of allCategories) {
+        const s = (c.subBoards || []).find(sb => sb.id === newSpecialtyId);
+        if (s) {
+          matchedSub = s;
+          matchedParent = c;
+          matched = { ...s, color: c.color || '#3b82f6' };
+          break;
+        }
+      }
+    }
+    if (!matched) {
+      matched = allSubSpecialties.find(sp => sp.id === newSpecialtyId);
+    }
+
     if (matched) {
       currentModalQuestion.specialtyId = newSpecialtyId;
       currentModalQuestion.specialty = matched;
+      if (matchedSub && matchedParent) {
+        currentModalQuestion.categoryId = matchedParent.id;
+        currentModalQuestion.subBoardId = matchedSub.id;
+        currentModalQuestion.category = matchedParent;
+        currentModalQuestion.subBoard = matchedSub;
+      }
 
       const badge = document.getElementById('modal-q-specialty');
       if (badge) {
-        badge.innerText = matched.name_ko;
+        badge.innerText = (matchedParent && matchedSub) ? `${matchedParent.name_ko} > ${matchedSub.name_ko}` : (matched.name_ko || '게시판');
         badge.style.backgroundColor = (matched.color || '#3b82f6') + '22';
         badge.style.color = matched.color || '#3b82f6';
         badge.style.borderColor = (matched.color || '#3b82f6') + '44';
@@ -972,7 +1379,7 @@ async function saveQuestionSpecialty() {
 
     // Refresh questions table and overview stats in background
     loadQuestionsTable();
-    loadForumStats();
+    loadDashboardStats();
   } catch (err) {
     console.error('Error updating question specialty:', err);
     alert('서버 통신 중 오류가 발생했습니다.');
@@ -1223,6 +1630,134 @@ async function handleDeleteEvent(id) {
   } catch(err) {
     alert('삭제 통신 오류가 발생했습니다.');
   }
+}
+
+// 8. Featured Services & Partner Ads Management
+async function loadFeaturedAdsTable() {
+  const tbody = document.getElementById('featured-ads-tbody');
+  if (tbody) tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i>추천 서비스 광고 목록 불러오는 중...</td></tr>`;
+
+  try {
+    const res = await fetch('/api/forum_admin.php?action=featured_ads');
+    const json = await res.json();
+    if (!json.success) return;
+
+    const ads = json.data || [];
+    if (tbody) {
+      if (ads.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-500">등록된 추천 서비스/광고가 없습니다.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = ads.map(a => {
+        const isActive = a.active === undefined || Boolean(a.active);
+        const thumb = a.image || 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=300&q=80';
+
+        return `
+          <tr class="hover:bg-slate-700/30 transition-colors">
+            <td class="py-3 px-4 whitespace-nowrap">
+              <img src="${escapeHtml(thumb)}" class="w-16 h-10 object-cover rounded-lg border border-slate-700 bg-slate-900" alt="광고">
+            </td>
+            <td class="py-3 px-4">
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-500/20 text-[#38BDF8] border border-blue-500/30 mr-1.5">${escapeHtml(a.badge || '추천 파트너')}</span>
+              <span class="text-xs font-bold text-white block mt-1">${escapeHtml(a.title || '')}</span>
+            </td>
+            <td class="py-3 px-4 text-xs text-slate-300 max-w-xs">
+              <p class="truncate text-slate-300">${escapeHtml(a.desc || '')}</p>
+              ${a.price ? `<span class="text-[10px] text-sky-300 font-bold bg-sky-950/60 px-1.5 py-0.5 rounded border border-sky-800/50 mt-1 inline-block">${escapeHtml(a.price)}</span>` : ''}
+            </td>
+            <td class="py-3 px-4 text-xs text-slate-300 whitespace-nowrap">
+              <div>${escapeHtml(a.location || 'NJ')}</div>
+              <div class="text-[11px] text-slate-400 font-mono">${escapeHtml(a.phone || '-')}</div>
+            </td>
+            <td class="py-3 px-4 whitespace-nowrap text-center">
+              <button onclick="toggleFeaturedAd('${escapeHtml(a.id)}', ${!isActive})" class="px-2.5 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer ${isActive ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-slate-800 text-slate-500 border border-slate-700'}">
+                ${isActive ? '노출중' : '숨김'}
+              </button>
+            </td>
+            <td class="py-3 px-4 whitespace-nowrap text-right">
+              <button onclick="deleteFeaturedAd('${escapeHtml(a.id)}')" class="text-slate-400 hover:text-red-400 p-2 rounded-lg hover:bg-slate-800 transition-colors cursor-pointer" title="광고 삭제">
+                <i class="fa-solid fa-trash-can text-xs"></i>
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+  } catch(e) {
+    if (tbody) tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-red-400">데이터를 불러오지 못했습니다.</td></tr>`;
+  }
+}
+
+async function handleAddFeaturedAd(e) {
+  e.preventDefault();
+  const badge = document.getElementById('ad-badge-input')?.value.trim() || '추천 파트너';
+  const title = document.getElementById('ad-title-input')?.value.trim() || '';
+  const price = document.getElementById('ad-price-input')?.value.trim() || '';
+  const desc = document.getElementById('ad-desc-input')?.value.trim() || '';
+  const location = document.getElementById('ad-location-input')?.value.trim() || 'NJ';
+  const phone = document.getElementById('ad-phone-input')?.value.trim() || '';
+  const url = document.getElementById('ad-url-input')?.value.trim() || '';
+  const image = document.getElementById('ad-image-input')?.value.trim() || '';
+
+  if (!title) {
+    alert('광고 상호명/제목을 입력해주세요.');
+    return;
+  }
+
+  const btn = document.getElementById('btn-add-featured-ad');
+  if (btn) btn.disabled = true;
+
+  try {
+    const res = await fetch('/api/forum_admin.php?action=save_featured_ad', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        badge, title, price, desc, location, phone, url, image, active: true
+      })
+    });
+    const json = await res.json();
+    if (json.success) {
+      document.getElementById('add-featured-ad-form')?.reset();
+      loadFeaturedAdsTable();
+      alert('새 추천 서비스 파트너가 성공적으로 등록되었습니다.');
+    } else {
+      alert(json.error || '등록 실패');
+    }
+  } catch(err) {
+    alert('오류가 발생했습니다.');
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
+
+async function toggleFeaturedAd(id, active) {
+  try {
+    const res = await fetch('/api/forum_admin.php?action=toggle_featured_ad', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, active })
+    });
+    const json = await res.json();
+    if (json.success) {
+      loadFeaturedAdsTable();
+    }
+  } catch(e) {}
+}
+
+async function deleteFeaturedAd(id) {
+  if (!confirm('이 추천 서비스 광고를 삭제하시겠습니까?')) return;
+  try {
+    const res = await fetch('/api/forum_admin.php?action=delete_featured_ad', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id })
+    });
+    const json = await res.json();
+    if (json.success) {
+      loadFeaturedAdsTable();
+    }
+  } catch(e) {}
 }
 
 document.addEventListener('DOMContentLoaded', () => {
