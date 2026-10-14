@@ -97,17 +97,26 @@ function populateSelects() {
     modalCat.innerHTML += `<option value="${c}">${c}</option>`;
   });
 
-  // Town dropdowns
+  // Town filter & modal datalist
   const filterTown = document.getElementById('admin-town-filter');
-  const modalTown = document.getElementById('p-town');
+  const allTowns = Array.from(new Set([
+    ...townsList,
+    ...currentPartners.map(p => p.town).filter(Boolean)
+  ])).sort();
 
-  filterTown.innerHTML = '<option value="">모든 지역 (11개)</option>';
-  modalTown.innerHTML = '<option value="">지역 선택</option>';
+  if (filterTown) {
+    const currentVal = filterTown.value;
+    filterTown.innerHTML = '<option value="">모든 지역 (전체)</option>';
+    allTowns.forEach(t => {
+      filterTown.innerHTML += `<option value="${t}">${t}</option>`;
+    });
+    if (currentVal) filterTown.value = currentVal;
+  }
 
-  townsList.forEach(t => {
-    filterTown.innerHTML += `<option value="${t}">${t}</option>`;
-    modalTown.innerHTML += `<option value="${t}">${t}</option>`;
-  });
+  const townSuggestions = document.getElementById('p-town-suggestions');
+  if (townSuggestions) {
+    townSuggestions.innerHTML = allTowns.map(t => `<option value="${t}"></option>`).join('');
+  }
 }
 
 function renderPartnersTable() {
@@ -193,7 +202,7 @@ function openPartnerModal() {
   document.getElementById('p-name').value = '';
   document.getElementById('p-is-sample').value = '가상 상호';
   document.getElementById('p-category').value = categoriesList[0] || '';
-  document.getElementById('p-town').value = townsList[0] || '';
+  document.getElementById('p-town').value = '';
   document.getElementById('p-image-url').value = '';
   document.getElementById('p-img-preview').innerHTML = '<i class="fa-solid fa-image text-2xl text-slate-500"></i>';
   document.getElementById('p-intro').value = '';
@@ -306,7 +315,12 @@ async function handleSavePartner(e) {
   const name = document.getElementById('p-name').value.trim();
   const isSample = document.getElementById('p-is-sample').value.trim();
   const category = document.getElementById('p-category').value;
-  const town = document.getElementById('p-town').value;
+  const town = document.getElementById('p-town').value.trim();
+  if (!town) {
+    alert('지역 (Town)을 입력해 주세요.');
+    btn.disabled = false;
+    return;
+  }
   const imageUrl = document.getElementById('p-image-url').value.trim();
   const intro = document.getElementById('p-intro').value.trim();
   const tagsStr = document.getElementById('p-tags').value.trim();

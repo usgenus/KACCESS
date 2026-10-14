@@ -179,7 +179,7 @@ if (!empty($_SESSION['admin3_needs_pw_change'])) {
           <!-- Town Filter -->
           <select id="admin-town-filter" onchange="renderPartnersTable()"
                   class="px-3 py-2 bg-slate-800/90 border border-slate-700 rounded-xl text-xs font-semibold text-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-            <option value="">모든 지역 (11개)</option>
+            <option value="">모든 지역 (전체)</option>
           </select>
         </div>
       </div>
@@ -298,10 +298,9 @@ if (!empty($_SESSION['admin3_needs_pw_change'])) {
           </div>
           <div>
             <label class="block text-xs font-bold text-slate-300 mb-1.5">지역 (Town) <span class="text-red-400">*필수</span></label>
-            <select id="p-town" required
-                    class="w-full px-3 py-2 bg-slate-800/90 border border-slate-700 rounded-xl text-xs font-semibold text-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-              <!-- populated by JS -->
-            </select>
+            <input type="text" id="p-town" required list="p-town-suggestions" placeholder="예: Fort Lee, Palisades Park, Closter 등 직접 입력"
+                   class="w-full px-3 py-2 bg-slate-800/90 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+            <datalist id="p-town-suggestions"></datalist>
           </div>
         </div>
 

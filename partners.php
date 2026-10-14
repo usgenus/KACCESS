@@ -388,7 +388,13 @@ $initialCount = count($partners);
                 <div class="space-y-1.5">
                   <!-- Town -->
                   <div class="text-[10px] font-bold text-slate-400 uppercase tracking-tight">
-                    <?= htmlspecialchars($p['town']) ?>, NJ
+                    <?php
+                      $tDisplay = trim($p['town'] ?? '');
+                      if ($tDisplay && !preg_match('/,\s*[A-Z]{2}$/i', $tDisplay)) {
+                          $tDisplay .= ', NJ';
+                      }
+                    ?>
+                    <?= htmlspecialchars($tDisplay) ?>
                   </div>
 
                   <!-- Business Name (Direct Full Page Click) -->

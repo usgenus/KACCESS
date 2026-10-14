@@ -276,9 +276,9 @@ if ($action === 'save_partner' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode(['success' => false, 'error' => '유효한 12개 카테고리 중 하나를 선택해주세요.']);
         exit;
     }
-    if (!in_array($town, $validTowns)) {
+    if (!$town) {
         http_response_code(400);
-        echo json_encode(['success' => false, 'error' => '유효한 11개 지역 중 하나를 선택해주세요.']);
+        echo json_encode(['success' => false, 'error' => '지역(Town)을 입력해주세요.']);
         exit;
     }
     if ($contactMethod !== 'kakao' && $contactMethod !== 'email') {
