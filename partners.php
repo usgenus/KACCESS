@@ -354,9 +354,6 @@ $initialCount = count($partners);
         <div class="border-b border-slate-200 pb-4">
           <span class="text-xs font-black tracking-widest text-brand-forest uppercase mb-1 block">PARTNER DIRECTORY</span>
           <h2 class="text-2xl sm:text-3xl font-black text-black tracking-tight">분야별 파트너</h2>
-          <p class="text-xs sm:text-sm text-slate-500 font-normal mt-1">
-            이름만 나열하지 않고, 지역·전문 분야·콘텐츠 활동을 한눈에 비교하도록 구성했습니다.
-          </p>
         </div>
 
         <!-- Partner Cards Grid (5 in a row on desktop, half the size) -->
