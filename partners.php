@@ -723,13 +723,13 @@ $initialCount = count($partners);
     function resetSlideTimer() {
       clearInterval(slideInterval);
       if (totalSlides > 1) {
-        slideInterval = setInterval(nextSlide, 5500);
+        slideInterval = setInterval(nextSlide, 4000);
       }
     }
 
-    // Initialize Carousel
+    // Initialize Carousel (Auto-rotates every 4 seconds)
     if (totalSlides > 1) {
-      slideInterval = setInterval(nextSlide, 5500);
+      slideInterval = setInterval(nextSlide, 4000);
       const container = document.getElementById('hero-carousel-container');
       if (container) {
         container.addEventListener('mouseenter', () => clearInterval(slideInterval));
