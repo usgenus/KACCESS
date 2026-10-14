@@ -317,39 +317,15 @@ $initialCount = count($partners);
       
       <!-- Search & Filters Bar (Search Box + Town Dropdown + 12 Category Chips) -->
       <section class="space-y-4 pt-2">
-        <!-- Search Input & Town Dropdown Row -->
-        <div class="grid grid-cols-1 sm:grid-cols-12 gap-3">
-          <!-- Search Field -->
-          <div class="sm:col-span-8 lg:col-span-9 relative">
-            <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
-              <i class="fa-solid fa-magnifying-glass text-sm"></i>
-            </span>
-            <input type="text" id="filter-search" oninput="applyFilters()" placeholder="파트너명, 진료과, 서비스로 검색" class="w-full pl-11 pr-4 py-3.5 rounded-xl border border-slate-200 bg-white text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-brand-forest focus:border-brand-forest transition-all shadow-xs" />
-            <button id="search-clear-btn" onclick="clearSearch()" class="hidden absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-slate-600">
-              <i class="fa-solid fa-xmark text-sm"></i>
-            </button>
-          </div>
-
-          <!-- Town Dropdown -->
-          <div class="sm:col-span-4 lg:col-span-3 relative">
-            <select id="filter-town" onchange="applyFilters()" class="w-full pl-4 pr-10 py-3.5 rounded-xl border border-slate-200 bg-white text-slate-800 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-forest focus:border-brand-forest transition-all shadow-xs appearance-none cursor-pointer">
-              <option value="">지역 선택 (전체)</option>
-              <option value="Fort Lee">Fort Lee</option>
-              <option value="Palisades Park">Palisades Park</option>
-              <option value="Leonia">Leonia</option>
-              <option value="Englewood">Englewood</option>
-              <option value="Englewood Cliffs">Englewood Cliffs</option>
-              <option value="Ridgefield">Ridgefield</option>
-              <option value="Ridgefield Park">Ridgefield Park</option>
-              <option value="Teaneck">Teaneck</option>
-              <option value="Hackensack">Hackensack</option>
-              <option value="Flushing">Flushing</option>
-              <option value="Bayside">Bayside</option>
-            </select>
-            <span class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
-              <i class="fa-solid fa-chevron-down text-xs"></i>
-            </span>
-          </div>
+        <!-- Search Input Row -->
+        <div class="relative w-full">
+          <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+            <i class="fa-solid fa-magnifying-glass text-sm"></i>
+          </span>
+          <input type="text" id="filter-search" oninput="applyFilters()" placeholder="파트너명, 진료과, 서비스로 검색" class="w-full pl-11 pr-4 py-3.5 rounded-xl border border-slate-200 bg-white text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-brand-forest focus:border-brand-forest transition-all shadow-xs" />
+          <button id="search-clear-btn" onclick="clearSearch()" class="hidden absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-slate-600">
+            <i class="fa-solid fa-xmark text-sm"></i>
+          </button>
         </div>
 
         <!-- 12 Category Chips (+ 전체) -->
@@ -830,14 +806,12 @@ $initialCount = count($partners);
         else b.classList.remove('active-pill');
       });
       document.getElementById('filter-search').value = '';
-      document.getElementById('filter-town').value = '';
       document.getElementById('search-clear-btn').classList.add('hidden');
       applyFilters();
     }
 
     function applyFilters() {
       const searchVal = (document.getElementById('filter-search').value || '').trim().toLowerCase();
-      const townVal = (document.getElementById('filter-town').value || '').trim().toLowerCase();
       const clearBtn = document.getElementById('search-clear-btn');
       if (searchVal) clearBtn.classList.remove('hidden');
       else clearBtn.classList.add('hidden');
@@ -852,10 +826,9 @@ $initialCount = count($partners);
         const cIntro = (card.getAttribute('data-intro') || '').trim().toLowerCase();
 
         const matchCat = (selectedCategory === 'all' || cCat === selectedCategory);
-        const matchTown = (!townVal || cTown === townVal);
         const matchSearch = (!searchVal || cName.includes(searchVal) || cIntro.includes(searchVal) || cCat.toLowerCase().includes(searchVal) || cTown.includes(searchVal));
 
-        if (matchCat && matchTown && matchSearch) {
+        if (matchCat && matchSearch) {
           card.classList.remove('hidden');
           visibleCount++;
         } else {
