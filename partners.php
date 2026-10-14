@@ -644,7 +644,7 @@ $initialCount = count($partners);
         </div>
 
         <div class="pt-2">
-          <button type="submit" class="w-full py-3 rounded-xl bg-brand-orange hover:bg-brand-orangeDark text-white font-bold text-sm tracking-tight shadow-md transition-all active:scale-95 cursor-pointer">
+          <button type="submit" id="inq-submit-btn" class="w-full py-3 rounded-xl bg-brand-orange hover:bg-brand-orangeDark text-white font-bold text-sm tracking-tight shadow-md transition-all active:scale-95 cursor-pointer">
             제휴 신청 접수하기
           </button>
         </div>
@@ -904,11 +904,107 @@ $initialCount = count($partners);
       if (e.target === this) closeInquiryModal();
     });
 
-    function handleInquirySubmit(e) {
+    async function handleInquirySubmit(e) {
       e.preventDefault();
-      const bName = document.getElementById('inq-business').value;
-      alert(`[제휴 신청 접수 완료]\n\n상호명: ${bName}\n파트너 제휴 신청이 접수되었습니다. 담당자가 확인 후 신속히 안내해 드리겠습니다.`);
-      closeInquiryModal();
+      const submitBtn = document.getElementById('inq-submit-btn') || e.target.querySelector('button[type="submit"]');
+      const originalBtnText = submitBtn ? submitBtn.innerHTML : '제휴 신청 접수하기';
+
+      const business = (document.getElementById('inq-business').value || '').trim();
+      const name = (document.getElementById('inq-name').value || '').trim();
+      const phone = (document.getElementById('inq-phone').value || '').trim();
+      const category = (document.getElementById('inq-category').value || '').trim();
+      const message = (document.getElementById('inq-message').value || '').trim();
+
+      if (!business || !name || !phone || !category) {
+        alert('상호명, 담당자 성함, 연락처, 업종/분야를 모두 입력해주세요.');
+        return;
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="inline-block animate-spin mr-2">⏳</span> 신청 접수 및 이메일 전송 중...';
+      }
+
+      try {
+        // 1. Submit to primary server API (/api/contact.php) which stores in CMS & emails njaccessportal@gmail.com
+        const payload = {
+          businessName: business,
+          name: name,
+          phone: phone,
+          category: category,
+          message: message || `파트너 등록 및 제휴 문의 신청 (${category})`,
+          type: 'partner',
+          contactMethod: 'phone'
+        };
+
+        const res = await fetch('/api/contact.php?action=submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        // 2. Dual-dispatch via FormSubmit to guarantee 100% email inbox delivery to njaccessportal@gmail.com
+        try {
+          fetch('https://formsubmit.co/ajax/njaccessportal@gmail.com', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+              _subject: `[NJ Access Portal] 파트너 등록 및 제휴 문의: ${business} (${name})`,
+              상호명: business,
+              담당자성함: name,
+              연락처: phone,
+              업종분야: category,
+              문의내용: message || '파트너 등록 및 제휴 희망 신청 (상세 메시지 없음)',
+              접수페이지: '뉴저지 파트너즈 (njaccessportal.com/partners)'
+            })
+          }).catch(e => console.warn('FormSubmit dual-dispatch warning:', e));
+        } catch (fsErr) {
+          console.warn('FormSubmit trigger warning:', fsErr);
+        }
+
+        if (data && data.success) {
+          alert(`[제휴 신청 접수 완료]\n\n상호명: ${business}\n담당자: ${name} (${phone})\n\n신청 내용이 njaccessportal@gmail.com으로 안전하게 전송되었습니다.\n담당자가 확인 후 신속히 안내해 드리겠습니다. 감사합니다!`);
+          document.getElementById('inquiry-form').reset();
+          closeInquiryModal();
+        } else {
+          alert((data && data.error) ? data.error : '접수 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+        }
+      } catch (err) {
+        console.error('Inquiry submit error:', err);
+        // Fallback directly via FormSubmit
+        try {
+          await fetch('https://formsubmit.co/ajax/njaccessportal@gmail.com', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+              _subject: `[NJ Access Portal] 파트너 등록 및 제휴 문의: ${business} (${name})`,
+              상호명: business,
+              담당자성함: name,
+              연락처: phone,
+              업종분야: category,
+              문의내용: message || '파트너 등록 및 제휴 희망 신청',
+              접수페이지: '뉴저지 파트너즈 (njaccessportal.com/partners)'
+            })
+          });
+          alert(`[제휴 신청 접수 완료]\n\n상호명: ${business}\n담당자: ${name}\n\n신청 내용이 njaccessportal@gmail.com으로 전송되었습니다. 담당자가 확인 후 신속히 안내해 드리겠습니다.`);
+          document.getElementById('inquiry-form').reset();
+          closeInquiryModal();
+        } catch (fallbackErr) {
+          alert('접수 전송 중 오류가 발생했습니다. njaccessportal@gmail.com으로 직접 문의해 주시기 바랍니다.');
+        }
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnText;
+        }
+      }
     }
 
     // --- ESC Key Handler for Modals ---

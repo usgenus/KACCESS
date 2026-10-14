@@ -2,6 +2,8 @@
  * Healthcare Access Portal - Admin CMS Client Script
  */
 
+const DEFAULT_BANNER_MSG = '의료접근포탈: "비영리기관(한인 커뮤니티센터)들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료시스템 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스"';
+
 let state = {
   billboards: [],
   billboards2: [],
@@ -9,6 +11,9 @@ let state = {
   posts: [],
   media: [],
   inquiries: [],
+  settings: {
+    scrollingBanner: DEFAULT_BANNER_MSG
+  },
   categories: { news: [], videos: [], billboards: [], billboards2: [] },
   videoFilter: '전체',
   postFilter: '전체',
@@ -78,12 +83,13 @@ function switchTab(tabName) {
 async function fetchAllData() {
   try {
     const t = Date.now();
-    const [bRes, b2Res, vRes, pRes, inqRes] = await Promise.all([
+    const [bRes, b2Res, vRes, pRes, inqRes, setRes] = await Promise.all([
       fetch(`/api/billboards.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false })),
       fetch(`/api/billboards2.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false })),
       fetch(`/api/videos.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false })),
       fetch(`/api/posts.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false })),
-      fetch(`/api/contact.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false }))
+      fetch(`/api/contact.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false })),
+      fetch(`/api/settings.php?_t=${t}`, { cache: 'no-store' }).then(r => r.json()).catch(() => ({ success: false }))
     ]);
 
     if (bRes.success) {
@@ -110,13 +116,257 @@ async function fetchAllData() {
       state.inquiries = inqRes.data || [];
       renderInquiries();
     }
+    if (setRes && setRes.success && setRes.data) {
+      state.settings = setRes.data;
+    }
+    renderBannerSettings();
 
     updateDashboard();
+    fetchPushScheduleStatus();
   } catch (err) {
     console.error('Error fetching data:', err);
     showToast('데이터를 불러오는 중 오류가 발생했습니다.', false);
   }
 }
+
+// =========================================================
+// SCROLLING MARQUEE BANNER SETTINGS
+// =========================================================
+function renderBannerSettings() {
+  const banner = (state.settings && state.settings.scrollingBanner) 
+    ? state.settings.scrollingBanner 
+    : DEFAULT_BANNER_MSG;
+
+  const inputEl = document.getElementById('input-banner-message');
+  const modalInputEl = document.getElementById('modal-input-banner-message');
+  const countEl = document.getElementById('banner-char-count');
+  const modalCountEl = document.getElementById('modal-banner-char-count');
+
+  if (inputEl) inputEl.value = banner;
+  if (modalInputEl) modalInputEl.value = banner;
+  if (countEl) countEl.textContent = `${banner.length}자`;
+  if (modalCountEl) modalCountEl.textContent = `${banner.length}자`;
+
+  renderBannerPreview(banner);
+}
+
+function renderBannerPreview(text) {
+  const clean = text ? text.trim() : DEFAULT_BANNER_MSG;
+  let html = '';
+  for (let i = 0; i < 6; i++) {
+    html += `<span class="inline-block font-sans text-xs text-white/90 tracking-wide px-8 marquee-item">` +
+      `<span class="opacity-60 mr-3 text-amber-400">✦</span>${escapeHtml(clean)}<span class="opacity-60 ml-3 text-amber-400">✦</span>` +
+    `</span>`;
+  }
+
+  const track1 = document.getElementById('admin-banner-preview-track');
+  const track2 = document.getElementById('modal-banner-preview-track');
+  if (track1) track1.innerHTML = html;
+  if (track2) track2.innerHTML = html;
+}
+
+function handleBannerInput(val) {
+  const modalInputEl = document.getElementById('modal-input-banner-message');
+  if (modalInputEl && modalInputEl.value !== val) modalInputEl.value = val;
+
+  const countEl = document.getElementById('banner-char-count');
+  const modalCountEl = document.getElementById('modal-banner-char-count');
+  if (countEl) countEl.textContent = `${val.length}자`;
+  if (modalCountEl) modalCountEl.textContent = `${val.length}자`;
+
+  renderBannerPreview(val);
+}
+window.handleBannerInput = handleBannerInput;
+
+function handleBannerModalInput(val) {
+  const inputEl = document.getElementById('input-banner-message');
+  if (inputEl && inputEl.value !== val) inputEl.value = val;
+
+  const countEl = document.getElementById('banner-char-count');
+  const modalCountEl = document.getElementById('modal-banner-char-count');
+  if (countEl) countEl.textContent = `${val.length}자`;
+  if (modalCountEl) modalCountEl.textContent = `${val.length}자`;
+
+  renderBannerPreview(val);
+}
+window.handleBannerModalInput = handleBannerModalInput;
+
+function openBannerModal() {
+  const banner = (state.settings && state.settings.scrollingBanner) 
+    ? state.settings.scrollingBanner 
+    : DEFAULT_BANNER_MSG;
+  const modalInputEl = document.getElementById('modal-input-banner-message');
+  const inputEl = document.getElementById('input-banner-message');
+  if (modalInputEl) modalInputEl.value = (inputEl && inputEl.value) ? inputEl.value : banner;
+  renderBannerPreview(modalInputEl ? modalInputEl.value : banner);
+
+  const modal = document.getElementById('modal-banner');
+  if (modal) modal.classList.remove('hidden');
+}
+window.openBannerModal = openBannerModal;
+
+function resetBannerToDefault() {
+  const inputEl = document.getElementById('input-banner-message');
+  const modalInputEl = document.getElementById('modal-input-banner-message');
+  if (inputEl) inputEl.value = DEFAULT_BANNER_MSG;
+  if (modalInputEl) modalInputEl.value = DEFAULT_BANNER_MSG;
+
+  const countEl = document.getElementById('banner-char-count');
+  const modalCountEl = document.getElementById('modal-banner-char-count');
+  if (countEl) countEl.textContent = `${DEFAULT_BANNER_MSG.length}자`;
+  if (modalCountEl) modalCountEl.textContent = `${DEFAULT_BANNER_MSG.length}자`;
+
+  renderBannerPreview(DEFAULT_BANNER_MSG);
+  showToast('기본 문구로 복원되었습니다. "문구 저장하기"를 누르면 웹사이트에 즉시 반영됩니다.');
+}
+window.resetBannerToDefault = resetBannerToDefault;
+
+async function saveBannerSetting() {
+  const inputEl = document.getElementById('input-banner-message');
+  const modalInputEl = document.getElementById('modal-input-banner-message');
+  const newBanner = (inputEl && inputEl.value ? inputEl.value : (modalInputEl ? modalInputEl.value : '')).trim();
+
+  const btn1 = document.getElementById('btn-save-banner');
+  const btn2 = document.getElementById('modal-btn-save-banner');
+  if (btn1) { btn1.disabled = true; btn1.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>저장 중...</span>'; }
+  if (btn2) { btn2.disabled = true; btn2.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>저장 중...</span>'; }
+
+  try {
+    const res = await fetch('/api/settings.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ scrollingBanner: newBanner })
+    });
+    const json = await res.json();
+    if (json.success) {
+      if (!state.settings) state.settings = {};
+      state.settings.scrollingBanner = json.data.scrollingBanner || newBanner;
+      renderBannerSettings();
+      showToast('상단 롤링 배너 문구가 성공적으로 저장되어 사이트에 즉시 반영되었습니다.', true);
+      setTimeout(() => {
+        closeModal('modal-banner');
+      }, 400);
+    } else {
+      showToast(json.error || '저장 중 오류가 발생했습니다.', false);
+    }
+  } catch (err) {
+    console.error('Error saving banner setting:', err);
+    showToast('서버 연결 중 오류가 발생했습니다.', false);
+  } finally {
+    if (btn1) { btn1.disabled = false; btn1.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> <span>문구 저장하기</span>'; }
+    if (btn2) { btn2.disabled = false; btn2.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> <span>저장하기</span>'; }
+  }
+}
+window.saveBannerSetting = saveBannerSetting;
+
+
+// =========================================================
+// SCHEDULED PUSH NOTIFICATIONS (월/목 10AM 정기 알림)
+// =========================================================
+async function fetchPushScheduleStatus(showToastOnSuccess = false) {
+  try {
+    const res = await fetch(`/api/cron_push.php?action=status&_t=${Date.now()}`, { cache: 'no-store' });
+    const json = await res.json();
+
+    if (json.success) {
+      const pendingCount = json.pendingPostsCount || 0;
+      const countEl = document.getElementById('push-pending-count');
+      const detailEl = document.getElementById('push-pending-detail');
+      const lastSentEl = document.getElementById('push-last-sent');
+      const subsEl = document.getElementById('push-subscribers-count');
+      const listContainer = document.getElementById('push-pending-list-container');
+      const itemsContainer = document.getElementById('push-pending-items');
+
+      if (countEl) countEl.textContent = `${pendingCount}건`;
+      if (detailEl) {
+        detailEl.textContent = pendingCount > 0
+          ? `${pendingCount}개 새 기사가 다음 월/목 10:00 AM(EDT)에 발송 대기 중입니다.`
+          : '현재 발송 대기 중인 신규 기사가 없습니다.';
+      }
+      if (lastSentEl) {
+        lastSentEl.textContent = json.lastSentAt ? json.lastSentAt.substring(0, 16) : '아직 발송 이력 없음';
+      }
+      if (subsEl) {
+        const subCount = json.totalSubscribers != null ? json.totalSubscribers : json.subscribersCount;
+        subsEl.textContent = subCount != null ? subCount : '0';
+      }
+
+      if (listContainer && itemsContainer) {
+        if (pendingCount > 0 && Array.isArray(json.pendingPosts)) {
+          listContainer.classList.remove('hidden');
+          itemsContainer.innerHTML = json.pendingPosts.map(p => `
+            <div class="flex items-center justify-between p-2 rounded-xl bg-slate-900 border border-slate-700/60 text-xs">
+              <div class="flex items-center gap-2 truncate">
+                <span class="px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 text-[10px] font-bold shrink-0">대기</span>
+                <span class="text-white truncate font-medium">${escapeHtml(p.title || '제목 없음')}</span>
+              </div>
+              <span class="text-[11px] text-slate-400 shrink-0 ml-2">${escapeHtml(p.date || '')}</span>
+            </div>
+          `).join('');
+        } else {
+          listContainer.classList.add('hidden');
+          itemsContainer.innerHTML = '';
+        }
+      }
+
+      if (showToastOnSuccess) {
+        showToast('푸시 알림 스케줄 상태를 새로고침했습니다.');
+      }
+    }
+  } catch (err) {
+    console.error('Error fetching push schedule status:', err);
+    if (showToastOnSuccess) {
+      showToast('푸시 상태 확인 중 오류가 발생했습니다.', false);
+    }
+  }
+}
+window.fetchPushScheduleStatus = fetchPushScheduleStatus;
+
+async function handleManualPushSend() {
+  const confirmed = confirm(
+    '대기 중인 신규 기사를 구독자들에게 지금 즉시 수동 발송하시겠습니까?\n\n' +
+    '※ 정기 스케줄(월·목 10:00 AM)을 기다리지 않고 즉시 Web Push를 전송합니다.\n' +
+    '※ 대기 중인 기사가 없는 경우 발송되지 않습니다.'
+  );
+  if (!confirmed) return;
+
+  const btn = document.getElementById('btn-manual-push');
+  const originalHtml = btn ? btn.innerHTML : '';
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>발송 처리 중...</span>';
+  }
+
+  try {
+    const res = await fetch('/api/cron_push.php?action=send_now', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({})
+    });
+    const json = await res.json();
+
+    if (json.success) {
+      if (json.skipped) {
+        showToast(json.message || '발송할 신규 기사가 없습니다.', false);
+      } else {
+        showToast(json.message || '신규 기사 푸시 알림이 발송되었습니다.', true);
+      }
+      fetchPushScheduleStatus(false);
+    } else {
+      showToast(json.error || '푸시 발송 중 오류가 발생했습니다.', false);
+    }
+  } catch (err) {
+    console.error('Error triggering manual push:', err);
+    showToast('서버 통신 중 오류가 발생했습니다.', false);
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = originalHtml;
+    }
+  }
+}
+window.handleManualPushSend = handleManualPushSend;
+
 
 // Logout
 async function handleLogout() {
@@ -945,17 +1195,23 @@ function handleExposureCheckboxChange(input) {
   const currentId = document.getElementById('post-id')?.value || null;
   const posts = state.posts || [];
 
+  let topCount = 0;
   let liveCount = 0;
   let doctorCount = 0;
   let reportCount = 0;
 
   posts.forEach(p => {
     if (currentId && (p.id === currentId || (p.slug && p.slug === currentId))) return;
+    if (p.isTopStory === true || p.isTopStory === 'true' || p.isTopStory === 1 || p.isTopStory === '1') topCount++;
     if (p.isLiveUpdate === true || p.isLiveUpdate === 'true' || p.isLiveUpdate === 1 || p.isLiveUpdate === '1') liveCount++;
     if (p.isDoctorColumn === true || p.isDoctorColumn === 'true' || p.isDoctorColumn === 1 || p.isDoctorColumn === '1') doctorCount++;
     if (p.isPolicyReport === true || p.isPolicyReport === 'true' || p.isPolicyReport === 1 || p.isPolicyReport === '1') reportCount++;
   });
 
+  if (input.id === 'post-topstory-input' && input.checked && topCount >= 1) {
+    input.checked = false;
+    showToast('TOP STORY 헤드라인은 최대 1개만 설정 가능합니다.', false);
+  }
   if (input.id === 'post-liveupdate-input' && input.checked && liveCount >= 6) {
     input.checked = false;
     showToast('실시간 주요 뉴스 슬롯이 최대 6개로 꽉 찼습니다.', false);
@@ -994,6 +1250,7 @@ function updateExposureCheckboxLimits(currentEditingPostId) {
   const posts = state.posts || [];
   
   // Count how many OTHER posts currently have each flag checked
+  let topCount = 0;
   let liveCount = 0;
   let doctorCount = 0;
   let reportCount = 0;
@@ -1001,6 +1258,9 @@ function updateExposureCheckboxLimits(currentEditingPostId) {
   posts.forEach(p => {
     if (currentEditingPostId && (p.id === currentEditingPostId || (p.slug && p.slug === currentEditingPostId))) return;
     
+    if (p.isTopStory === true || p.isTopStory === 'true' || p.isTopStory === 1 || p.isTopStory === '1') {
+      topCount++;
+    }
     if (p.isLiveUpdate === true || p.isLiveUpdate === 'true' || p.isLiveUpdate === 1 || p.isLiveUpdate === '1') {
       liveCount++;
     }
@@ -1012,12 +1272,33 @@ function updateExposureCheckboxLimits(currentEditingPostId) {
     }
   });
 
+  const topInput = document.getElementById('post-topstory-input');
+  const topLabel = document.querySelector('label[for="post-topstory-input"]');
   const liveInput = document.getElementById('post-liveupdate-input');
   const liveLabel = document.querySelector('label[for="post-liveupdate-input"]');
   const doctorInput = document.getElementById('post-doctorcolumn-input');
   const doctorLabel = document.querySelector('label[for="post-doctorcolumn-input"]');
   const reportInput = document.getElementById('post-policyreport-input');
   const reportLabel = document.querySelector('label[for="post-policyreport-input"]');
+
+  // TOP STORY 헤드라인 (Max 1)
+  if (topInput && topLabel) {
+    if (topCount >= 1 && !topInput.checked) {
+      topInput.checked = false;
+      topInput.disabled = true;
+      topInput.parentElement.classList.add('opacity-40', 'cursor-not-allowed');
+      topLabel.innerHTML = '🔥 TOP STORY 헤드라인 <span class="text-xs text-amber-400 font-bold block sm:inline">(최대 1개: 설정됨)</span>';
+    } else if (topCount >= 1 && topInput.checked) {
+      topInput.disabled = false;
+      topInput.parentElement.classList.remove('opacity-40', 'cursor-not-allowed');
+      topLabel.innerHTML = '🔥 TOP STORY 헤드라인 <span class="text-xs text-amber-400 font-bold">(1/1개)</span>';
+    } else {
+      topInput.disabled = false;
+      topInput.parentElement.classList.remove('opacity-40', 'cursor-not-allowed');
+      const currentVal = topInput.checked ? topCount + 1 : topCount;
+      topLabel.innerHTML = '🔥 TOP STORY 헤드라인 <span class="text-xs text-amber-400 font-bold">(' + currentVal + '/1개)</span>';
+    }
+  }
 
   // 실시간 주요 뉴스 (Max 6)
   if (liveInput && liveLabel) {
@@ -2084,6 +2365,7 @@ function renderInquiries() {
     const q = state.inquirySearch;
     filtered = filtered.filter(i => {
       return (
+        (i.businessName && i.businessName.toLowerCase().includes(q)) ||
         (i.name && i.name.toLowerCase().includes(q)) ||
         (i.email && i.email.toLowerCase().includes(q)) ||
         (i.phone && i.phone.toLowerCase().includes(q)) ||
@@ -2129,8 +2411,14 @@ function renderInquiries() {
             inq.category === '메디케어 상담' ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30' :
             inq.category === 'ACA 오바마케어' ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30' :
             inq.category === '의료비 지원' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' :
+            inq.businessName ? 'bg-orange-500/20 text-orange-300 border border-orange-500/30' :
             'bg-amber-500/20 text-amber-300 border border-amber-500/30'
           }">${escapeHtml(inq.category || '문의')}</span>
+
+          ${inq.businessName ? `
+          <span class="px-2 py-0.5 rounded-lg text-[10px] font-bold shrink-0 bg-orange-500/20 text-orange-300 border border-orange-500/30">
+            🏢 ${escapeHtml(inq.businessName)}
+          </span>` : ''}
 
           <!-- Name -->
           <span class="inquiry-title-text font-bold text-sm text-white shrink-0">
@@ -2184,6 +2472,11 @@ function renderInquiries() {
       <div class="border-t border-slate-700/70 bg-slate-900/70 p-5 space-y-4">
         <!-- Details Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+          ${inq.businessName ? `
+          <div class="bg-slate-800/80 p-3 rounded-xl border border-slate-700/60">
+            <span class="text-slate-400 text-[11px] block mb-0.5">상호명 (비즈니스)</span>
+            <span class="font-bold text-orange-400 text-sm">${escapeHtml(inq.businessName)}</span>
+          </div>` : ''}
           <div class="bg-slate-800/80 p-3 rounded-xl border border-slate-700/60">
             <span class="text-slate-400 text-[11px] block mb-0.5">성함</span>
             <span class="font-bold text-white text-sm">${escapeHtml(inq.name)}</span>
