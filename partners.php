@@ -540,13 +540,7 @@ $initialCount = count($partners);
         </div>
       </section>
 
-      <!-- Sub-footer Disclaimer Bar -->
-      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400 border-t border-slate-200 pt-4 pb-2">
-        <p>페이지 구조·광고 노출·콘텐츠 연결 방식 제안용</p>
-        <div class="inline-flex items-center px-3 py-1 rounded-full bg-slate-100 text-slate-500 font-medium">
-          목업 · 모든 상호/인물/후기는 샘플 데이터
-        </div>
-      </div>
+
 
     </div>
 
