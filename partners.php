@@ -203,9 +203,6 @@ $initialCount = count($partners);
           <img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-4 h-4 rounded-xs shrink-0 object-contain" />
           <span>1:1 상담</span>
         </a>
-        <a href="/admin3" class="text-xs font-bold text-slate-400 hover:text-brand-forest transition-colors px-2 py-1.5 rounded-lg border border-slate-200 hover:border-brand-forest" title="파트너즈 CMS 관리자 로그인">
-          <i class="fa-solid fa-lock text-[10px] mr-1"></i>CMS
-        </a>
         <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg hover:bg-slate-100 transition-colors" aria-label="메뉴 열기">
           <i class="fa-solid fa-bars text-xl text-slate-800"></i>
         </button>
