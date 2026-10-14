@@ -1464,14 +1464,14 @@ html, body {
             <span class="text-[14px] leading-tight font-semibold text-slate-800 group-hover:text-brand-blue transition-colors">뉴저지 한인광장</span>
             <span class="text-[10px] leading-tight font-medium text-slate-400 group-hover:text-brand-blue/80 transition-colors">Market place</span>
           </a>
+          <a class="nav-link pb-0.5 flex flex-col items-center justify-center leading-tight text-center cursor-pointer group" href="/partners">
+            <span class="text-[14px] leading-tight font-semibold text-slate-800 group-hover:text-brand-blue transition-colors">뉴저지 파트너즈</span>
+            <span class="text-[10px] leading-tight font-medium text-slate-400 group-hover:text-brand-blue/80 transition-colors">NJ Partners</span>
+          </a>
           <a class="nav-link pb-0.5 flex flex-col items-center justify-center leading-tight text-center cursor-pointer group" href="/resource-center">
             <span class="text-[12px] leading-tight font-bold text-black group-hover:text-brand-blue transition-colors">의료 &amp; 커뮤니티</span>
             <span class="text-[13px] leading-tight font-bold text-slate-700 group-hover:text-brand-blue transition-colors">정보센터</span>
             <span class="text-[10px] leading-tight font-medium text-slate-400 group-hover:text-brand-blue/80 transition-colors">Resource Center</span>
-          </a>
-          <a class="nav-link pb-0.5 flex flex-col items-center justify-center leading-tight text-center cursor-pointer group" href="/partners">
-            <span class="text-[14px] leading-tight font-semibold text-slate-800 group-hover:text-brand-blue transition-colors">뉴저지 파트너즈</span>
-            <span class="text-[10px] leading-tight font-medium text-slate-400 group-hover:text-brand-blue/80 transition-colors">NJ Partners</span>
           </a>
           <a class="nav-link pb-0.5 flex flex-col items-center justify-center leading-tight text-center cursor-pointer group" href="/about">
             <span class="text-[14px] leading-tight font-semibold text-slate-800 group-hover:text-brand-blue transition-colors">의료접근센터</span>
@@ -1527,6 +1527,17 @@ html, body {
         </div>
         <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
+      <!-- 뉴저지 파트너즈 -->
+      <a href="/partners" class="flex items-center justify-between py-2.5 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+          <div class="flex flex-col text-left leading-tight">
+            <span class="text-[15px] font-bold text-slate-800">뉴저지 파트너즈</span>
+            <span class="text-[10.5px] font-medium text-slate-400">NJ Partners</span>
+          </div>
+        </div>
+        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
 
       <!-- 4. 의료&커뮤니티 정보센터 -->
       <a href="/resource-center" class="flex items-center justify-between py-2.5 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
@@ -1536,18 +1547,6 @@ html, body {
             <span class="text-[13px] font-bold text-black">의료 &amp; 커뮤니티</span>
             <span class="text-[13px] font-semibold text-[#475569]">정보센터</span>
             <span class="text-[10.5px] font-medium text-slate-400">Resource Center</span>
-          </div>
-        </div>
-        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-      </a>
-
-      <!-- 5. 뉴저지 파트너즈 -->
-      <a href="/partners" class="flex items-center justify-between py-2.5 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
-        <div class="flex items-center gap-3">
-          <svg class="w-5 h-5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
-          <div class="flex flex-col text-left leading-tight">
-            <span class="text-[15px] font-bold text-slate-800">뉴저지 파트너즈</span>
-            <span class="text-[10.5px] font-medium text-slate-400">NJ Partners</span>
           </div>
         </div>
         <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>

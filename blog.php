@@ -23,10 +23,19 @@ function normalize_news_category($cat) {
 
 $categories = ['전체', '의료칼럼', 'recall(리콜)', 'health&wellness', '의료보험', '한인건강 특집', '한인커뮤니티 뉴스', '의학뉴스'];
 
-// Filter published posts
-$publishedPosts = array_values(array_filter($posts, function($p) {
-    return ($p['status'] ?? 'published') === 'published';
-}));
+// Filter published posts and deduplicate by base slug / title
+$publishedPosts = [];
+$seenPostKeys = [];
+foreach ($posts as $p) {
+    if (($p['status'] ?? 'published') !== 'published') continue;
+    $pSlug = trim($p['slug'] ?? ($p['id'] ?? ''));
+    $baseSlug = preg_replace('/-\d+$/', '', $pSlug);
+    $pTitle = trim($p['title'] ?? '');
+    $dedupKey = $baseSlug ?: $pTitle;
+    if ($dedupKey && isset($seenPostKeys[$dedupKey])) continue;
+    if ($dedupKey) $seenPostKeys[$dedupKey] = true;
+    $publishedPosts[] = $p;
+}
 
 foreach ($publishedPosts as &$pRef) {
     $pRef['category'] = normalize_news_category($pRef['category'] ?? '');
@@ -38,23 +47,23 @@ unset($pRef);
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>건강 의료 뉴스 · Health News | 뉴저지 의료접근센터 · NJ Healthcare Access Center</title>
-  <meta name="description" content="뉴저지 의료접근센터(NJ Healthcare Access Center) 건강 의료 뉴스. 최신 미국 의료 정보, 메디케어 및 ACA 건강보험 규정, 전문의 칼럼, FDA 약물 리콜 및 의학 연구 소식을 한국어로 제공합니다." />
-  <meta name="keywords" content="nj healthcare access portal, nj healthcare access center, healthcare access center, 뉴저지 의료접근센터, 의료접근, 의료접근센터, 건강 의료 뉴스, 의사칼럼, FDA 리콜, 메디케어 뉴스, 한인 건강 뉴스" />
+  <title>한인 의료 접근센터 (Healthcare Access Center) 건강 뉴스 · 의사 칼럼 | NJAP</title>
+  <meta name="description" content="한인 의료 접근센터(Healthcare Access Center) &amp; 한인 포털(Korean Portal) 건강 뉴스. 한인 의료접근센터, 한인 의료, 한인 의사, 한인 병원 칼럼 및 의료정보센터(의료점보센터 / Healthcare Resource Center), 뉴저지 한인포럼·한인광장, 메디케어 &amp; ACA 소식." />
+  <meta name="keywords" content="한인 의료 접근센터, 한인 의료접근센터, 한인의료접근센터, 뉴저지 한인 의료 접근센터, healthcare access center, 한인포럼, 뉴저지 한인포럼, 한인광장, 뉴저지 한인광장, 의료점보센터, 의료정보센터, 의료접근센터, korean portal, healthcare resource center, 한인 의료, 한인 의사, 한인 병원, nj healthcare access portal, nj healthcare access center, 건강 의료 뉴스, 의사칼럼, FDA 리콜, 메디케어 뉴스, 한인 건강 뉴스" />
   <link rel="canonical" href="https://njaccessportal.com/blog" />
 
   <!-- OpenGraph / Social Media -->
-  <meta property="og:site_name" content="NJ Access Portal · 뉴저지 한인 의료접근포털" />
+  <meta property="og:site_name" content="한인 의료 접근센터 · Healthcare Access Center · NJAP" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://njaccessportal.com/blog" />
-  <meta property="og:title" content="건강 의료 뉴스 · Health News | 뉴저지 의료접근센터 (NJ Healthcare Access Center)" />
-  <meta property="og:description" content="최신 미국 의료 정보, 메디케어 업데이트, 의사 칼럼 및 건강 연구 뉴스를 한국어로 제공합니다." />
+  <meta property="og:title" content="한인 의료 접근센터 (Healthcare Access Center) 건강 뉴스 · Health News | NJ Access Portal" />
+  <meta property="og:description" content="한인 의료 접근센터(Healthcare Access Center) - 한인 의료, 한인 의사, 한인 병원 칼럼 및 의료정보센터(Healthcare Resource Center), 한인포럼·한인광장 건강 소식." />
   <meta property="og:image" content="https://njaccessportal.com/logo-icon.svg" />
 
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="건강 의료 뉴스 · Health News | 뉴저지 의료접근센터" />
-  <meta name="twitter:description" content="최신 미국 의료 정보, 메디케어 업데이트, 의사 칼럼 및 건강 연구 뉴스를 한국어로 제공합니다." />
+  <meta name="twitter:title" content="한인 의료 접근센터 (Healthcare Access Center) 건강 뉴스 · Health News | NJ Access Portal" />
+  <meta name="twitter:description" content="한인 의료 접근센터(Healthcare Access Center) - 한인 의료, 한인 의사, 한인 병원 칼럼 및 의료정보센터(Healthcare Resource Center), 한인포럼·한인광장 건강 소식." />
   <meta name="twitter:image" content="https://njaccessportal.com/logo-icon.svg" />
 
   <!-- Schema.org JSON-LD Structured Data -->
@@ -62,18 +71,48 @@ unset($pRef);
   {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    "name": "건강 의료 뉴스 · Health News | 뉴저지 의료접근센터",
-    "description": "최신 미국 의료 정보, 메디케어 업데이트, 의사 칼럼 및 건강 연구 뉴스를 한국어로 제공합니다.",
+    "name": "한인 의료 접근센터 건강 뉴스 · Health News | Healthcare Access Center",
+    "description": "한인 의료 접근센터(Healthcare Access Center) - 한인 의료, 한인 의사, 한인 병원 칼럼 및 의료정보센터(Healthcare Resource Center), 한인포럼·한인광장 건강 소식.",
     "url": "https://njaccessportal.com/blog",
     "isPartOf": {
       "@type": "WebSite",
-      "name": "뉴저지 의료접근센터 · NJ Healthcare Access Center",
+      "name": "한인 의료 접근센터 (Healthcare Access Center) · NJ Access Portal",
       "url": "https://njaccessportal.com/"
     },
+    "keywords": [
+      "한인포럼",
+      "뉴저지 한인포럼",
+      "한인광장",
+      "뉴저지 한인광장",
+      "의료점보센터",
+      "의료정보센터",
+      "의료접근센터",
+      "healthcare access center",
+      "korean portal",
+      "healthcare resource center",
+      "한인 의료",
+      "한인 의사",
+      "한인 병원"
+    ],
     "publisher": {
       "@type": "MedicalOrganization",
       "name": "뉴저지 의료접근센터 (NJ Healthcare Access Center)",
-      "alternateName": ["NJ Access Portal", "Healthcare Access Center", "의료접근센터", "의료접근"],
+      "alternateName": [
+        "한인포럼",
+        "뉴저지 한인포럼",
+        "한인광장",
+        "뉴저지 한인광장",
+        "의료점보센터",
+        "의료정보센터",
+        "의료접근센터",
+        "healthcare access center",
+        "korean portal",
+        "healthcare resource center",
+        "한인 의료",
+        "한인 의사",
+        "한인 병원",
+        "NJ Access Portal"
+      ],
       "url": "https://njaccessportal.com"
     }
   }
@@ -103,7 +142,7 @@ unset($pRef);
       display: inline-flex !important;
       white-space: nowrap !important;
       will-change: transform;
-      animation: marqueeScroll 35s linear infinite !important;
+      animation: marqueeScroll 58s linear infinite !important;
     }
     .marquee-track:hover {
       animation-play-state: paused;
@@ -267,10 +306,15 @@ unset($pRef);
 
   <!-- Top Marquee Banner -->
   <div class="fixed top-0 left-0 right-0 z-50 h-[45px] overflow-hidden flex items-center" style="background:#000000">
-    <div class="marquee-track whitespace-nowrap">
-      <?php for ($i = 0; $i < 6; $i++): ?>
-        <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12">
-          <span class="opacity-60 mr-3">✦</span>의료접근포탈: &quot;비영리기관(한인 커뮤니티센터)들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료시스템 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot;<span class="opacity-60 ml-3">✦</span>
+    <div class="marquee-track whitespace-nowrap" id="top-marquee-track">
+      <?php 
+        $bannerMsg = !empty($db['settings']['scrollingBanner']) 
+          ? $db['settings']['scrollingBanner'] 
+          : '의료접근포탈: "비영리기관(한인 커뮤니티센터)들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료시스템 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스"';
+        for ($i = 0; $i < 6; $i++): 
+      ?>
+        <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12 marquee-item">
+          <span class="opacity-60 mr-3">✦</span><?php echo htmlspecialchars($bannerMsg, ENT_QUOTES, 'UTF-8'); ?><span class="opacity-60 ml-3">✦</span>
         </span>
       <?php endfor; ?>
     </div>
@@ -280,9 +324,9 @@ unset($pRef);
   <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/80 backdrop-blur-sm" style="top:45px">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
-        <a class="flex items-center cursor-pointer njap-brand-link flex-shrink-0 group" href="/" onclick="navigateToHome(event); return false;" title="NJ Access Portal · 뉴저지 한인 의료접근포털">
-          <svg class="h-8 sm:h-10 md:h-11 w-auto object-contain transition-transform group-hover:scale-102" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NJ Access Portal · 뉴저지 한인 의료접근포털" style="overflow: visible;">
-            <title>NJ Access Portal · 뉴저지 한인 의료접근포털</title>
+        <a class="flex items-center cursor-pointer njap-brand-link flex-shrink-0 group" href="/" onclick="navigateToHome(event); return false;" title="NJ Access Portal · 뉴저지 한인 포털">
+          <svg class="h-8 sm:h-10 md:h-11 w-auto object-contain transition-transform group-hover:scale-102" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NJ Access Portal · 뉴저지 한인 포털" style="overflow: visible;">
+            <title>NJ Access Portal · 뉴저지 한인 포털</title>
             <!-- Icon Mark (Door + Key + NJAP) -->
             <g transform="translate(4, 2) scale(0.56)" stroke-linecap="round" stroke-linejoin="round">
               <!-- Door Frame & NJAP Text -->
@@ -310,22 +354,35 @@ unset($pRef);
               <text x="64" y="27" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="18" font-weight="900" fill="#0B192C" letter-spacing="-0.5">NJ Access Portal</text>
             </g>
             <g class="njap-nav-text-sub">
-              <text x="64" y="44" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="10.5" font-weight="600" fill="#64748B" letter-spacing="0.2">뉴저지 한인 의료접근포털</text>
+              <text x="64" y="44" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="10.5" font-weight="600" fill="#64748B" letter-spacing="0.2">뉴저지 한인 포털</text>
             </g>
           </svg>
         </a>
-        <div class="hidden md:flex items-center" style="display: flex; align-items: center; gap: 26px;">
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue cursor-pointer" href="/" onclick="navigateToHome(event); return false;">홈</a>
-          <a class="nav-link pb-0.5 font-bold text-brand-blue" href="/blog">뉴스</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/forum">커뮤니티 포럼</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue flex flex-col items-center justify-center leading-tight text-center" href="/resource-center">
-            <span class="text-[12px] leading-tight font-semibold">의료&amp;커뮤니티</span>
-            <span class="text-[14px] leading-tight font-bold">정보센터</span>
+        <div class="hidden md:flex items-center" style="display: flex; align-items: center; gap: 40px;">
+          <a class="nav-link pb-0.5 flex flex-col items-center justify-center leading-tight text-center cursor-pointer group" href="/" onclick="navigateToHome(event); return false;">
+            <span class="text-[14px] leading-tight font-semibold text-slate-800 group-hover:text-brand-blue transition-colors">홈</span>
+            <span class="text-[10px] leading-tight font-medium text-slate-400 group-hover:text-brand-blue/80 transition-colors">Home</span>
           </a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/about">의료 접근센터</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue flex flex-col items-center justify-center leading-tight group" href="/engine" target="_self" title="Universal Access Engine (Marketing Client)">
-            <span class="text-[13.5px] font-bold text-slate-800 group-hover:text-brand-blue tracking-tight">Engine</span>
-            <span class="text-[9px] font-semibold text-slate-400 group-hover:text-brand-blue tracking-tighter -mt-0.5">Marketing Client</span>
+          <a class="nav-link pb-0.5 flex flex-col items-center justify-center leading-tight text-center cursor-pointer group" href="/blog">
+            <span class="text-[14px] leading-tight font-bold text-brand-blue group-hover:text-brand-blue transition-colors">뉴스</span>
+            <span class="text-[10px] leading-tight font-medium text-brand-blue/80 group-hover:text-brand-blue transition-colors">News</span>
+          </a>
+          <a class="nav-link pb-0.5 flex flex-col items-center justify-center leading-tight text-center cursor-pointer group" href="/forum">
+            <span class="text-[14px] leading-tight font-semibold text-slate-800 group-hover:text-brand-blue transition-colors">뉴저지 한인광장</span>
+            <span class="text-[10px] leading-tight font-medium text-slate-400 group-hover:text-brand-blue/80 transition-colors">Market place</span>
+          </a>
+          <a class="nav-link pb-0.5 flex flex-col items-center justify-center leading-tight text-center cursor-pointer group" href="/partners">
+            <span class="text-[14px] leading-tight font-semibold text-slate-800 group-hover:text-brand-blue transition-colors">뉴저지 파트너즈</span>
+            <span class="text-[10px] leading-tight font-medium text-slate-400 group-hover:text-brand-blue/80 transition-colors">NJ Partners</span>
+          </a>
+          <a class="nav-link pb-0.5 flex flex-col items-center justify-center leading-tight text-center cursor-pointer group" href="/resource-center">
+            <span class="text-[12px] leading-tight font-bold text-black group-hover:text-brand-blue transition-colors">의료 &amp; 커뮤니티</span>
+            <span class="text-[13px] leading-tight font-bold text-slate-700 group-hover:text-brand-blue transition-colors">정보센터</span>
+            <span class="text-[10px] leading-tight font-medium text-slate-400 group-hover:text-brand-blue/80 transition-colors">Resource Center</span>
+          </a>
+          <a class="nav-link pb-0.5 flex flex-col items-center justify-center leading-tight text-center cursor-pointer group" href="/about">
+            <span class="text-[14px] leading-tight font-semibold text-slate-800 group-hover:text-brand-blue transition-colors">의료접근센터</span>
+            <span class="text-[10px] leading-tight font-medium text-slate-400 group-hover:text-brand-blue/80 transition-colors">Healthcare Access Center</span>
           </a>
         </div>
         <div class="flex items-center gap-3">
@@ -341,62 +398,74 @@ unset($pRef);
         </div>
       </div>
     </div>
-                                                <div id="mobile-menu-dropdown" class="md:hidden overflow-hidden transition-all duration-300 max-h-0 opacity-0 bg-white/98 backdrop-blur-md border-t border-brand-border px-4 py-3 flex flex-col gap-1" style="-webkit-overflow-scrolling: touch;">
+    <div id="mobile-menu-dropdown" class="md:hidden overflow-hidden transition-all duration-300 max-h-0 opacity-0 bg-white/98 backdrop-blur-md border-t border-brand-border px-4 py-3 flex flex-col gap-1" style="-webkit-overflow-scrolling: touch;">
       <!-- 1. 홈 -->
-      <a href="/" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/" class="flex items-center justify-between py-2.5 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-          <span class="text-[15px]">홈</span>
+          <div class="flex flex-col text-left leading-tight">
+            <span class="text-[15px] font-bold text-slate-800">홈</span>
+            <span class="text-[10.5px] font-medium text-slate-400">Home</span>
+          </div>
         </div>
         <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
 
       <!-- 2. 뉴스 -->
-      <a href="/blog" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-bold text-brand-blue bg-blue-50/70">
+      <a href="/blog" class="flex items-center justify-between py-2.5 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-bold text-brand-blue bg-blue-50/70">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-brand-blue shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
-          <span class="text-[15px]">뉴스</span>
+          <div class="flex flex-col text-left leading-tight">
+            <span class="text-[15px] font-bold text-brand-blue">뉴스</span>
+            <span class="text-[10.5px] font-medium text-brand-blue/80">News</span>
+          </div>
         </div>
         <svg class="w-4 h-4 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
 
-      <!-- 2.5. 커뮤니티 포럼 -->
-      <a href="/forum" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <!-- 2.5. 뉴저지 한인 광장 -->
+      <a href="/forum" class="flex items-center justify-between py-2.5 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>
-          <span class="text-[15px]">커뮤니티 포럼</span>
+          <div class="flex flex-col text-left leading-tight">
+            <span class="text-[15px] font-bold text-slate-800">뉴저지 한인광장</span>
+            <span class="text-[10.5px] font-medium text-slate-400">Market place</span>
+          </div>
+        </div>
+        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+      <!-- 뉴저지 파트너즈 -->
+      <a href="/partners" class="flex items-center justify-between py-2.5 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+          <div class="flex flex-col text-left leading-tight">
+            <span class="text-[15px] font-bold text-slate-800">뉴저지 파트너즈</span>
+            <span class="text-[10.5px] font-medium text-slate-400">NJ Partners</span>
+          </div>
         </div>
         <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
 
       <!-- 4. 의료&커뮤니티 정보센터 -->
-      <a href="/resource-center" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/resource-center" class="flex items-center justify-between py-2.5 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
           <div class="flex flex-col text-left leading-tight">
-            <span class="text-[12px] text-slate-500 font-medium">의료&amp;커뮤니티</span>
-            <span class="text-[15px] font-bold text-slate-800">정보센터</span>
+            <span class="text-[13px] font-bold text-black">의료 &amp; 커뮤니티</span>
+            <span class="text-[13px] font-semibold text-[#475569]">정보센터</span>
+            <span class="text-[10.5px] font-medium text-slate-400">Resource Center</span>
           </div>
         </div>
         <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
 
       <!-- 6. 의료 접근센터 -->
-      <a href="/about" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/about" class="flex items-center justify-between py-2.5 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          <span class="text-[15px]">의료 접근센터</span>
-        </div>
-        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-      </a>
-
-      <!-- 7. Engine (Marketing Client) -->
-      <a href="/engine" target="_self" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
-        <div class="flex items-center gap-3">
-          <svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-          <div class="flex flex-col text-left">
-            <span class="text-[15px] font-bold text-slate-800">Engine</span>
-            <span class="text-[10px] font-semibold text-slate-400 leading-none">Marketing Client</span>
+          <div class="flex flex-col text-left leading-tight">
+            <span class="text-[15px] font-bold text-slate-800">의료접근센터</span>
+            <span class="text-[10.5px] font-medium text-slate-400">Healthcare Access Center</span>
           </div>
         </div>
         <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
@@ -498,9 +567,29 @@ unset($pRef);
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-10">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
         <div class="lg:col-span-2">
-          <a class="inline-flex items-center mb-4 group cursor-pointer njap-brand-link" href="/" onclick="navigateToHome(event); return false;" title="NJ Access Portal · 뉴저지 한인 의료접근포털">
-            <img src="/logo-white.png" alt="NJ Access Portal · 뉴저지 한인 의료접근포털" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
-          </a>
+          <div class="engine-logo-row flex items-center gap-3.5 sm:gap-4 mb-4 flex-wrap">
+            <a class="inline-flex items-center group cursor-pointer njap-brand-link" href="/" onclick="navigateToHome(event); return false;" title="NJ Access Portal · 뉴저지 한인 포털">
+              <svg class="h-9 sm:h-10 w-auto object-contain transition-transform group-hover:scale-105" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NJ Access Portal · 뉴저지 한인 포털"><title>NJ Access Portal · 뉴저지 한인 포털</title><g transform="translate(4, 2) scale(0.56)" stroke-linecap="round" stroke-linejoin="round"><g stroke="#FFFFFF"><line x1="20" y1="12" x2="20" y2="88" stroke-width="3.5" /><rect x="25" y="12" width="55" height="76" rx="2" stroke-width="4" fill="none" /><polyline points="25,16 52,25 52,36" stroke-width="3.5" /><text x="52.5" y="81" font-family="'Times New Roman', serif" font-size="13.5" font-weight="900" letter-spacing="1.5" fill="#FFFFFF" stroke="none" text-anchor="middle">NJAP</text></g><path d="M 43,45 A 7,7 0 1,1 53,45 L 56,64 L 40,64 Z" stroke="#EF4444" stroke-width="3.5" fill="none" /><circle cx="74" cy="45" r="6.5" stroke="#EF4444" stroke-width="3.5" fill="none" /><line x1="47" y1="45" x2="67.5" y2="45" stroke="#EF4444" stroke-width="3.5" /><line x1="49" y1="45" x2="49" y2="49" stroke="#EF4444" stroke-width="3.5" /><line x1="53" y1="45" x2="53" y2="48" stroke="#EF4444" stroke-width="3" /></g><text x="64" y="27" font-family="Pretendard, system-ui, -apple-system, sans-serif" font-size="18" font-weight="900" fill="#FFFFFF" letter-spacing="-0.5">NJ Access Portal</text><text x="64" y="44" font-family="Pretendard, system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="600" fill="#94A3B8" letter-spacing="0.2">뉴저지 한인 포털</text></svg>
+            </a>
+            <!-- Highly Visible Engine Button Next to Logo -->
+            <a href="/engine" target="_self" class="engine-footer-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl text-white font-extrabold text-sm tracking-wide shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer" style="background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 50%, #0284C7 100%) !important; color: #ffffff !important; border: 1.5px solid #38BDF8 !important; box-shadow: 0 4px 18px rgba(56, 189, 248, 0.35) !important; text-decoration: none !important;" title="Universal Access Engine 포트폴리오 바로가기">
+              <svg class="w-4 h-4 text-cyan-200" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/></svg>
+              <span style="color: #ffffff !important; font-weight: 800; letter-spacing: 0.02em;">Engine</span>
+              <svg class="w-3.5 h-3.5 text-cyan-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+
+          <!-- Engine B2B Callout Box -->
+          <div class="engine-footer-card mb-5 p-3.5 sm:p-4 rounded-xl border border-sky-500/30 text-xs leading-relaxed max-w-sm shadow-md" style="background: rgba(15, 23, 42, 0.75) !important;">
+            <div class="font-bold flex items-start gap-1.5 mb-1.5" style="color: #ffffff !important;">
+              <span class="engine-footer-badge font-extrabold" style="color: #38BDF8 !important;">Engine:</span>
+              <span style="color: #F1F5F9 !important;">For Hospitals, Physician group and Insurance Company.</span>
+            </div>
+            <div class="engine-footer-text" style="color: #94A3B8 !important; font-size: 12px;">
+              Contact us at <a href="mailto:NJACCESSPORTAL@GMAIL.COM" class="engine-footer-mail underline font-bold transition-colors" style="color: #38BDF8 !important;">NJACCESSPORTAL@GMAIL.COM</a> to access our portfolio.
+            </div>
+          </div>
+
           <p class="text-sm text-white/60 font-sans leading-relaxed max-w-xs mb-6">뉴저지 한인 커뮤니티를 위한 의료 접근 및 건강 정보 포털. 메디케어, ACA, 의료 상담을 한국어로 제공합니다.</p>
         </div>
         <div>
@@ -509,7 +598,7 @@ unset($pRef);
             <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200 cursor-pointer" href="/" onclick="navigateToHome(event); return false;">홈</a></li>
             <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/about">의료 접근센터</a></li>
             <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/blog">건강 뉴스</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/forum">커뮤니티 포럼</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/forum">뉴저지 한인 광장</a></li>
           </ul>
         </div>
         <div>

@@ -326,11 +326,12 @@ if (!empty($_SESSION['admin3_needs_pw_change'])) {
                     class="w-full px-3 py-2 bg-slate-800/90 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"></textarea>
         </div>
 
-        <!-- Mini-site URL -->
+        <!-- Linked Full Website URL -->
         <div>
-          <label class="block text-xs font-bold text-slate-300 mb-1.5">미니사이트 URL (미입력 시 '미니사이트 연결 예정' 슬롯 안내)</label>
-          <input type="url" id="p-minisite-url" placeholder="https://..."
+          <label class="block text-xs font-bold text-slate-300 mb-1.5">연결 웹사이트 주소 (Full Webpage URL)</label>
+          <input type="text" id="p-minisite-url" placeholder="https://... 또는 /partners/... (자세히보기 클릭 시 이동할 전체 웹페이지 링크)"
                  class="w-full px-3 py-2 bg-slate-800/90 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+          <p class="text-[11px] text-slate-400 mt-1">새 사이트는 CMS 대신 직접 전체 웹페이지로 제작되므로, 자세히보기 클릭 시 이동할 웹사이트 링크를 입력합니다.</p>
         </div>
 
         <!-- Contact Method Selector (카카오톡 OR 이메일) -->

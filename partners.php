@@ -100,6 +100,7 @@ $initialCount = count($partners);
       font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
     }
     .hide-scrollbar::-webkit-scrollbar {
       display: none;
@@ -125,24 +126,38 @@ $initialCount = count($partners);
 <body class="bg-[#FAFBF9] text-[#191919] min-h-screen flex flex-col selection:bg-emerald-600 selection:text-white">
 
   <!-- ===================================================================
-       1. Top Global Navigation Header
+       1. Top Global Navigation Header (Matches Exact Site Logo & Menu Order)
        =================================================================== -->
   <header class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-      <!-- Logo -->
-      <a href="/" class="flex items-center gap-2.5 group">
-        <svg class="h-12 w-auto overflow-visible select-none" viewBox="0 0 240 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g class="njap-nav-door-frame">
-            <rect x="6" y="8" width="46" height="50" rx="23" stroke="#0B192C" stroke-width="4" fill="#FFFFFF" />
-            <path d="M 6 31 A 23 23 0 0 1 52 31 L 52 58 L 6 58 Z" fill="#F8FAFC" />
-            <circle cx="16" cy="33" r="3" fill="#DC2626" />
+      
+      <!-- Brand Logo (Exact official SVG from index.php) -->
+      <a class="flex items-center cursor-pointer njap-brand-link flex-shrink-0 group" href="/" title="NJ Access Portal · 뉴저지 한인 포털">
+        <svg class="h-9 sm:h-10 md:h-11 w-auto object-contain transition-transform group-hover:scale-102" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NJ Access Portal · 뉴저지 한인 포털" style="overflow: visible;">
+          <title>NJ Access Portal · 뉴저지 한인 포털</title>
+          <!-- Icon Mark (Door + Key + NJAP) -->
+          <g transform="translate(4, 2) scale(0.56)" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Door Frame & NJAP Text -->
+            <g class="njap-nav-door" stroke="#1E3A8A">
+              <line x1="20" y1="12" x2="20" y2="88" stroke-width="3.5" />
+              <rect x="25" y="12" width="55" height="76" rx="2" stroke-width="4" fill="none" />
+              <polyline points="25,16 52,25 52,36" stroke-width="3.5" />
+              <text x="52.5" y="81" font-family="'Times New Roman', serif" font-size="13.5" font-weight="900" letter-spacing="1.5" fill="#1E3A8A" stroke="none" text-anchor="middle">NJAP</text>
+            </g>
+            
+            <!-- Keyhole -->
+            <path class="njap-nav-keyhole" d="M 43,45 A 7,7 0 1,1 53,45 L 56,64 L 40,64 Z" stroke="#DC2626" stroke-width="3.5" fill="none" />
+            
+            <!-- Key: enters from right side into the door -->
             <g class="njap-nav-key">
               <circle cx="74" cy="45" r="6.5" stroke="#DC2626" stroke-width="3.5" fill="none" />
               <line x1="47" y1="45" x2="67.5" y2="45" stroke="#DC2626" stroke-width="3.5" />
-              <line x1="49" y1="45" x2="49" y2="49" stroke="#DC2626" stroke-width="3.5" />
+              <line x1="49" y1="49" x2="49" y2="49" stroke="#DC2626" stroke-width="3.5" />
               <line x1="53" y1="45" x2="53" y2="48" stroke="#DC2626" stroke-width="3" />
             </g>
           </g>
+
+          <!-- Typography: slides in from right after key enters -->
           <g class="njap-nav-text-main">
             <text x="64" y="27" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="18" font-weight="900" fill="#0B192C" letter-spacing="-0.5">NJ Access Portal</text>
           </g>
@@ -152,7 +167,7 @@ $initialCount = count($partners);
         </svg>
       </a>
 
-      <!-- Desktop Nav -->
+      <!-- Desktop Nav (Ordered: 홈 -> 뉴스 -> 뉴저지 한인광장 -> 뉴저지 파트너즈 -> 정보센터 -> 의료접근센터) -->
       <nav class="hidden md:flex items-center gap-8 lg:gap-10">
         <a class="nav-link flex flex-col items-center justify-center leading-tight group" href="/">
           <span class="text-[14px] font-semibold text-slate-700 group-hover:text-brand-forest transition-colors">홈</span>
@@ -166,14 +181,15 @@ $initialCount = count($partners);
           <span class="text-[14px] font-semibold text-slate-700 group-hover:text-brand-forest transition-colors">뉴저지 한인광장</span>
           <span class="text-[10px] font-medium text-slate-400 group-hover:text-brand-forest/80 transition-colors">Market place</span>
         </a>
-        <a class="nav-link flex flex-col items-center justify-center leading-tight group" href="/resource-center">
-          <span class="text-[14px] font-semibold text-slate-700 group-hover:text-brand-forest transition-colors">의료 &amp; 커뮤니티</span>
-          <span class="text-[10px] font-medium text-slate-400 group-hover:text-brand-forest/80 transition-colors">Resource Center</span>
-        </a>
+        <!-- Right after Market place: 뉴저지 파트너즈 -->
         <a class="nav-link flex flex-col items-center justify-center leading-tight group relative py-1" href="/partners">
           <span class="text-[14px] font-black text-brand-forest">뉴저지 파트너즈</span>
           <span class="text-[10px] font-bold text-brand-forest/80">NJ Partners</span>
           <span class="absolute -bottom-1 left-0 right-0 h-0.5 bg-brand-forest rounded-full"></span>
+        </a>
+        <a class="nav-link flex flex-col items-center justify-center leading-tight group" href="/resource-center">
+          <span class="text-[14px] font-semibold text-slate-700 group-hover:text-brand-forest transition-colors">의료 &amp; 커뮤니티</span>
+          <span class="text-[10px] font-medium text-slate-400 group-hover:text-brand-forest/80 transition-colors">Resource Center</span>
         </a>
         <a class="nav-link flex flex-col items-center justify-center leading-tight group" href="/about">
           <span class="text-[14px] font-semibold text-slate-700 group-hover:text-brand-forest transition-colors">의료접근센터</span>
@@ -196,13 +212,13 @@ $initialCount = count($partners);
       </div>
     </div>
 
-    <!-- Mobile Menu Drawer -->
+    <!-- Mobile Menu Drawer (Ordered: 홈 -> 뉴스 -> 뉴저지 한인광장 -> 뉴저지 파트너즈 -> 정보센터 -> 의료접근센터) -->
     <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-2">
       <a href="/" class="block py-2 text-sm font-semibold text-slate-800 hover:text-brand-forest">홈 (Home)</a>
       <a href="/blog" class="block py-2 text-sm font-semibold text-slate-800 hover:text-brand-forest">뉴스 (News)</a>
       <a href="/forum" class="block py-2 text-sm font-semibold text-slate-800 hover:text-brand-forest">뉴저지 한인광장 (Market place)</a>
-      <a href="/resource-center" class="block py-2 text-sm font-semibold text-slate-800 hover:text-brand-forest">의료 &amp; 커뮤니티 정보센터</a>
       <a href="/partners" class="block py-2 text-sm font-black text-brand-forest bg-emerald-50 rounded-lg px-2">뉴저지 파트너즈 (NJ Partners)</a>
+      <a href="/resource-center" class="block py-2 text-sm font-semibold text-slate-800 hover:text-brand-forest">의료 &amp; 커뮤니티 정보센터</a>
       <a href="/about" class="block py-2 text-sm font-semibold text-slate-800 hover:text-brand-forest">의료접근센터</a>
       <div class="pt-3">
         <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-[#FEE500] text-[#191919] font-bold text-sm">
@@ -216,14 +232,13 @@ $initialCount = count($partners);
   <div class="h-20"></div>
 
   <!-- ===================================================================
-       2. Hero Header Section (Matches Mockup Exactly)
+       2. Page Main Body
        =================================================================== -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 space-y-12">
+  <main class="flex-1 w-full flex flex-col">
     
-    <!-- Title & Statement Row -->
-    <section class="relative pt-2 pb-4">
+    <!-- Top Title Section (Inside max-w-7xl) -->
+    <section class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-6">
       <div class="max-w-3xl">
-        <!-- Big Bold Title -->
         <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black text-black tracking-tight leading-[1.08] mb-4">
           뉴저지<br>파트너즈
         </h1>
@@ -234,64 +249,60 @@ $initialCount = count($partners);
     </section>
 
     <!-- ===================================================================
-         3. Hero Carousel Banner (Matches Mockup: 50% Photo / 50% Forest Green)
+         3. Fully Panoramic Edge-to-Edge Hero Carousel Banner
+         (Covering end-to-end horizontally across full screen width)
          =================================================================== -->
-    <section id="hero-carousel-container" class="relative rounded-[28px] overflow-hidden shadow-2xl bg-brand-forest group min-h-[380px] sm:min-h-[420px] lg:min-h-[440px]">
-      <div id="hero-slides-wrapper" class="relative w-full h-full min-h-[380px] sm:min-h-[420px] lg:min-h-[440px]">
+    <section id="hero-carousel-container" class="relative w-full bg-brand-forest group min-h-[420px] sm:min-h-[480px] lg:min-h-[520px] overflow-hidden select-none" style="width: 100vw; max-width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;">
+      <div id="hero-slides-wrapper" class="relative w-full h-full min-h-[420px] sm:min-h-[480px] lg:min-h-[520px]">
         <?php foreach ($slides as $idx => $s): ?>
           <div class="hero-slide absolute inset-0 w-full h-full flex flex-col lg:flex-row transition-opacity duration-700 <?= $idx === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none' ?>" data-slide-index="<?= $idx ?>">
             
-            <!-- Left Side: Image (50%) -->
-            <div class="w-full lg:w-1/2 h-56 sm:h-72 lg:h-full relative overflow-hidden bg-slate-900">
+            <!-- Left Side: Panoramic Photo (50% on desktop, full on mobile) -->
+            <div class="w-full lg:w-1/2 h-64 sm:h-80 lg:h-full relative overflow-hidden bg-slate-900">
               <img src="<?= htmlspecialchars($s['imageUrl']) ?>" alt="<?= htmlspecialchars($s['title']) ?>" class="w-full h-full object-cover object-center transform scale-100 hover:scale-105 transition-transform duration-700" />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent lg:hidden"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent lg:hidden"></div>
             </div>
 
             <!-- Right Side: Dark Forest Green (#0D4B37) -->
-            <div class="w-full lg:w-1/2 flex-1 p-6 sm:p-10 lg:p-12 flex flex-col justify-between bg-brand-forest text-white relative">
-              <div class="space-y-4 max-w-xl">
+            <div class="w-full lg:w-1/2 flex-1 p-6 sm:p-12 lg:p-16 flex flex-col justify-between bg-brand-forest text-white relative">
+              <div class="space-y-4 lg:space-y-6 max-w-xl">
                 <!-- Pill Tag -->
                 <div>
-                  <span class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#E6F4EA] text-brand-forest tracking-tight shadow-xs">
+                  <span class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-semibold bg-[#E6F4EA] text-brand-forest tracking-tight shadow-xs">
                     <?= htmlspecialchars($s['tag'] ?: '프리미엄 샘플 · 가상 상호') ?>
                   </span>
                 </div>
 
                 <!-- Big Title -->
-                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-snug">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-snug">
                   <?= htmlspecialchars($s['title']) ?>
                 </h2>
 
                 <!-- Subtitle -->
-                <p class="text-sm sm:text-base text-emerald-100/90 font-normal leading-relaxed line-clamp-3">
+                <p class="text-base sm:text-lg text-emerald-100/90 font-normal leading-relaxed line-clamp-3">
                   <?= htmlspecialchars($s['subtitle']) ?>
                 </p>
 
-                <!-- Action Button -->
+                <!-- Action Button (Direct Link) -->
                 <div class="pt-2">
-                  <a href="<?= htmlspecialchars($s['buttonLink'] ?: '#partner-hospital-1') ?>" onclick="handleHeroButtonClick(event, '<?= htmlspecialchars($s['buttonLink']) ?>')" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-brand-forest hover:bg-emerald-50 font-bold text-sm shadow-md hover:shadow-lg transition-all active:scale-95 cursor-pointer">
-                    <span><?= htmlspecialchars($s['buttonText'] ?: '자세히 보기 →') ?></span>
+                  <a href="<?= htmlspecialchars($s['buttonLink'] ?: '#') ?>" onclick="handleHeroButtonClick(event, '<?= htmlspecialchars($s['buttonLink']) ?>')" class="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-brand-forest hover:bg-emerald-50 font-bold text-sm sm:text-base shadow-md hover:shadow-lg transition-all active:scale-95 cursor-pointer">
+                    <span><?= htmlspecialchars($s['buttonText'] ?: '자세히보기 →') ?></span>
                   </a>
                 </div>
               </div>
 
               <!-- Carousel Navigation Controls at Bottom Right -->
               <div class="pt-6 flex items-center justify-end gap-3 z-20">
-                <!-- Prev Button -->
-                <button type="button" onclick="prevSlide()" class="w-10 h-10 rounded-full border border-white/30 hover:border-white hover:bg-white/10 text-white flex items-center justify-center transition-all cursor-pointer" aria-label="이전 슬라이드">
-                  <i class="fa-solid fa-arrow-left text-xs"></i>
+                <button type="button" onclick="prevSlide()" class="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-white/30 hover:border-white hover:bg-white/10 text-white flex items-center justify-center transition-all cursor-pointer" aria-label="이전 슬라이드">
+                  <i class="fa-solid fa-arrow-left text-xs sm:text-sm"></i>
                 </button>
-
-                <!-- Indicator Pills -->
-                <div class="flex items-center gap-2 px-1">
+                <div class="flex items-center gap-2 px-2">
                   <?php for ($i = 0; $i < count($slides); $i++): ?>
                     <button type="button" onclick="goToSlide(<?= $i ?>)" class="carousel-dot transition-all duration-300 rounded-full h-2 <?= $i === 0 ? 'w-8 bg-white' : 'w-2 bg-white/40 hover:bg-white/70' ?>" aria-label="슬라이드 <?= $i + 1 ?>"></button>
                   <?php endfor; ?>
                 </div>
-
-                <!-- Next Button -->
-                <button type="button" onclick="nextSlide()" class="w-10 h-10 rounded-full border border-white/30 hover:border-white hover:bg-white/10 text-white flex items-center justify-center transition-all cursor-pointer" aria-label="다음 슬라이드">
-                  <i class="fa-solid fa-arrow-right text-xs"></i>
+                <button type="button" onclick="nextSlide()" class="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-white/30 hover:border-white hover:bg-white/10 text-white flex items-center justify-center transition-all cursor-pointer" aria-label="다음 슬라이드">
+                  <i class="fa-solid fa-arrow-right text-xs sm:text-sm"></i>
                 </button>
               </div>
 
@@ -303,346 +314,280 @@ $initialCount = count($partners);
     </section>
 
     <!-- ===================================================================
-         4. Search & Filters Bar (Matches Mockup: Search Box + Town Dropdown + 12 Category Chips)
+         4. Filters, Partner Directory & Content Sections (Inside max-w-7xl)
          =================================================================== -->
-    <section class="space-y-4 pt-2">
-      <!-- Search Input & Town Dropdown Row -->
-      <div class="grid grid-cols-1 sm:grid-cols-12 gap-3">
-        <!-- Search Field -->
-        <div class="sm:col-span-8 lg:col-span-9 relative">
-          <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
-            <i class="fa-solid fa-magnifying-glass text-sm"></i>
-          </span>
-          <input type="text" id="filter-search" oninput="applyFilters()" placeholder="파트너명, 진료과, 서비스로 검색" class="w-full pl-11 pr-4 py-3.5 rounded-xl border border-slate-200 bg-white text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-brand-forest focus:border-brand-forest transition-all shadow-xs" />
-          <button id="search-clear-btn" onclick="clearSearch()" class="hidden absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-slate-600">
-            <i class="fa-solid fa-xmark text-sm"></i>
+    <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+      
+      <!-- Search & Filters Bar (Search Box + Town Dropdown + 12 Category Chips) -->
+      <section class="space-y-4 pt-2">
+        <!-- Search Input & Town Dropdown Row -->
+        <div class="grid grid-cols-1 sm:grid-cols-12 gap-3">
+          <!-- Search Field -->
+          <div class="sm:col-span-8 lg:col-span-9 relative">
+            <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+              <i class="fa-solid fa-magnifying-glass text-sm"></i>
+            </span>
+            <input type="text" id="filter-search" oninput="applyFilters()" placeholder="파트너명, 진료과, 서비스로 검색" class="w-full pl-11 pr-4 py-3.5 rounded-xl border border-slate-200 bg-white text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-brand-forest focus:border-brand-forest transition-all shadow-xs" />
+            <button id="search-clear-btn" onclick="clearSearch()" class="hidden absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-slate-600">
+              <i class="fa-solid fa-xmark text-sm"></i>
+            </button>
+          </div>
+
+          <!-- Town Dropdown -->
+          <div class="sm:col-span-4 lg:col-span-3 relative">
+            <select id="filter-town" onchange="applyFilters()" class="w-full pl-4 pr-10 py-3.5 rounded-xl border border-slate-200 bg-white text-slate-800 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-forest focus:border-brand-forest transition-all shadow-xs appearance-none cursor-pointer">
+              <option value="">지역 선택 (전체)</option>
+              <option value="Fort Lee">Fort Lee</option>
+              <option value="Palisades Park">Palisades Park</option>
+              <option value="Leonia">Leonia</option>
+              <option value="Englewood">Englewood</option>
+              <option value="Englewood Cliffs">Englewood Cliffs</option>
+              <option value="Ridgefield">Ridgefield</option>
+              <option value="Ridgefield Park">Ridgefield Park</option>
+              <option value="Teaneck">Teaneck</option>
+              <option value="Hackensack">Hackensack</option>
+              <option value="Flushing">Flushing</option>
+              <option value="Bayside">Bayside</option>
+            </select>
+            <span class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
+              <i class="fa-solid fa-chevron-down text-xs"></i>
+            </span>
+          </div>
+        </div>
+
+        <!-- 12 Category Chips (+ 전체) -->
+        <div class="flex items-center gap-2 overflow-x-auto hide-scrollbar pb-1 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0 flex-nowrap sm:flex-wrap">
+          <button type="button" onclick="selectCategory('all', this)" class="category-chip active-pill px-4 py-2 rounded-full text-xs sm:text-sm font-semibold border border-slate-200 bg-white text-slate-700 hover:border-brand-forest transition-all shrink-0 cursor-pointer shadow-xs">
+            전체
           </button>
+          <?php
+            $categoryList = [
+              '종합병원', '의원·클리닉', '약국', '물리치료·재활',
+              '보험·브로커', '시니어 케어', '커뮤니티 센터', '학원/교육',
+              '식당', '자동차', '쇼핑', '법률·회계·부동산'
+            ];
+            foreach ($categoryList as $cat):
+          ?>
+            <button type="button" onclick="selectCategory('<?= $cat ?>', this)" class="category-chip px-4 py-2 rounded-full text-xs sm:text-sm font-semibold border border-slate-200 bg-white text-slate-700 hover:border-brand-forest transition-all shrink-0 cursor-pointer shadow-xs">
+              <?= $cat ?>
+            </button>
+          <?php endforeach; ?>
+        </div>
+      </section>
+
+      <!-- Partner Directory Section -->
+      <section class="space-y-6 pt-4">
+        <!-- Section Header -->
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-4">
+          <div>
+            <span class="text-xs font-black tracking-widest text-brand-forest uppercase mb-1 block">PARTNER DIRECTORY</span>
+            <h2 class="text-2xl sm:text-3xl font-black text-black tracking-tight">분야별 파트너</h2>
+            <p class="text-xs sm:text-sm text-slate-500 font-normal mt-1">
+              이름만 나열하지 않고, 지역·전문 분야·콘텐츠 활동을 한눈에 비교하도록 구성했습니다.
+            </p>
+          </div>
+          <div class="text-right">
+            <span class="inline-flex items-center px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-bold">
+              <span id="partner-count" class="text-brand-forest font-black mr-1"><?= $initialCount ?></span>개의 파트너
+            </span>
+          </div>
         </div>
 
-        <!-- Town Dropdown -->
-        <div class="sm:col-span-4 lg:col-span-3 relative">
-          <select id="filter-town" onchange="applyFilters()" class="w-full pl-4 pr-10 py-3.5 rounded-xl border border-slate-200 bg-white text-slate-800 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-forest focus:border-brand-forest transition-all shadow-xs appearance-none cursor-pointer">
-            <option value="">지역 선택 (전체)</option>
-            <option value="Fort Lee">Fort Lee</option>
-            <option value="Palisades Park">Palisades Park</option>
-            <option value="Leonia">Leonia</option>
-            <option value="Englewood">Englewood</option>
-            <option value="Englewood Cliffs">Englewood Cliffs</option>
-            <option value="Ridgefield">Ridgefield</option>
-            <option value="Ridgefield Park">Ridgefield Park</option>
-            <option value="Teaneck">Teaneck</option>
-            <option value="Hackensack">Hackensack</option>
-            <option value="Flushing">Flushing</option>
-            <option value="Bayside">Bayside</option>
-          </select>
-          <span class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
-            <i class="fa-solid fa-chevron-down text-xs"></i>
-          </span>
-        </div>
-      </div>
-
-      <!-- 12 Category Chips (+ 전체) -->
-      <div class="flex items-center gap-2 overflow-x-auto hide-scrollbar pb-1 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0 flex-nowrap sm:flex-wrap">
-        <button type="button" onclick="selectCategory('all', this)" class="category-chip active-pill px-4 py-2 rounded-full text-xs sm:text-sm font-semibold border border-slate-200 bg-white text-slate-700 hover:border-brand-forest transition-all shrink-0 cursor-pointer shadow-xs">
-          전체
-        </button>
-        <?php
-          $categoryList = [
-            '종합병원', '의원·클리닉', '약국', '물리치료·재활',
-            '보험·브로커', '시니어 케어', '커뮤니티 센터', '학원/교육',
-            '식당', '자동차', '쇼핑', '법률·회계·부동산'
-          ];
-          foreach ($categoryList as $cat):
-        ?>
-          <button type="button" onclick="selectCategory('<?= $cat ?>', this)" class="category-chip px-4 py-2 rounded-full text-xs sm:text-sm font-semibold border border-slate-200 bg-white text-slate-700 hover:border-brand-forest transition-all shrink-0 cursor-pointer shadow-xs">
-            <?= $cat ?>
-          </button>
-        <?php endforeach; ?>
-      </div>
-    </section>
-
-    <!-- ===================================================================
-         5. Partner Directory Section (Matches Mockup: Header + 3 Column Cards)
-         =================================================================== -->
-    <section class="space-y-6 pt-4">
-      <!-- Section Header -->
-      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-4">
-        <div>
-          <span class="text-xs font-black tracking-widest text-brand-forest uppercase mb-1 block">PARTNER DIRECTORY</span>
-          <h2 class="text-2xl sm:text-3xl font-black text-black tracking-tight">분야별 파트너</h2>
-          <p class="text-xs sm:text-sm text-slate-500 font-normal mt-1">
-            이름만 나열하지 않고, 지역·전문 분야·콘텐츠 활동을 한눈에 비교하도록 구성했습니다.
-          </p>
-        </div>
-        <div class="text-right">
-          <span class="inline-flex items-center px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-bold">
-            <span id="partner-count" class="text-brand-forest font-black mr-1"><?= $initialCount ?></span>개의 파트너
-          </span>
-        </div>
-      </div>
-
-      <!-- Partner Cards Grid -->
-      <div id="partner-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <?php foreach ($partners as $p): ?>
-          <article class="partner-card bg-white rounded-2xl border border-slate-200 hover:border-slate-300 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden group" data-category="<?= htmlspecialchars($p['category']) ?>" data-town="<?= htmlspecialchars($p['town']) ?>" data-name="<?= htmlspecialchars($p['name']) ?>" data-intro="<?= htmlspecialchars($p['intro']) ?>" data-id="<?= htmlspecialchars($p['id']) ?>">
-            
-            <!-- Image Area -->
-            <div class="relative w-full h-48 sm:h-52 bg-slate-100 overflow-hidden cursor-pointer" onclick="openPartnerDetail('<?= htmlspecialchars($p['id']) ?>')">
-              <img src="<?= htmlspecialchars($p['imageUrl']) ?>" alt="<?= htmlspecialchars($p['name']) ?>" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+        <!-- Partner Cards Grid -->
+        <div id="partner-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <?php foreach ($partners as $p): ?>
+            <article class="partner-card bg-white rounded-2xl border border-slate-200 hover:border-slate-300 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden group" data-category="<?= htmlspecialchars($p['category']) ?>" data-town="<?= htmlspecialchars($p['town']) ?>" data-name="<?= htmlspecialchars($p['name']) ?>" data-intro="<?= htmlspecialchars($p['intro']) ?>" data-id="<?= htmlspecialchars($p['id']) ?>">
               
-              <!-- Top-Left Category Badge -->
-              <div class="absolute top-3 left-3">
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-[#E6F4EA] text-brand-forest shadow-xs">
-                  <?= htmlspecialchars($p['category']) ?>
-                </span>
-              </div>
-
-              <!-- Bottom-Right Sample Badge -->
-              <div class="absolute bottom-3 right-3">
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-black/60 text-white backdrop-blur-xs">
-                  <?= htmlspecialchars($p['isSample'] ?: '가상 상호') ?>
-                </span>
-              </div>
-            </div>
-
-            <!-- Card Body -->
-            <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
-              <div class="space-y-2">
-                <!-- Town -->
-                <div class="text-xs font-bold text-slate-400 uppercase tracking-tight">
-                  <?= htmlspecialchars($p['town']) ?>, NJ
+              <!-- Image Area (Direct Full Page Click) -->
+              <div class="relative w-full h-48 sm:h-52 bg-slate-100 overflow-hidden cursor-pointer" onclick="handleCardClick('<?= htmlspecialchars($p['id']) ?>', '<?= htmlspecialchars($p['minisiteUrl']) ?>')">
+                <img src="<?= htmlspecialchars($p['imageUrl']) ?>" alt="<?= htmlspecialchars($p['name']) ?>" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                
+                <!-- Top-Left Category Badge -->
+                <div class="absolute top-3 left-3">
+                  <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-[#E6F4EA] text-brand-forest shadow-xs">
+                    <?= htmlspecialchars($p['category']) ?>
+                  </span>
                 </div>
 
-                <!-- Business Name -->
-                <h3 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight group-hover:text-brand-forest transition-colors cursor-pointer" onclick="openPartnerDetail('<?= htmlspecialchars($p['id']) ?>')">
-                  <?= htmlspecialchars($p['name']) ?>
-                </h3>
+                <!-- Bottom-Right Sample Badge -->
+                <div class="absolute bottom-3 right-3">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-black/60 text-white backdrop-blur-xs">
+                    <?= htmlspecialchars($p['isSample'] ?: '가상 상호') ?>
+                  </span>
+                </div>
+              </div>
 
-                <!-- Intro -->
-                <p class="text-xs sm:text-sm text-slate-600 font-normal leading-relaxed line-clamp-2">
-                  <?= htmlspecialchars($p['intro']) ?>
-                </p>
-
-                <!-- Tags -->
-                <?php if (!empty($p['tags'])): ?>
-                  <div class="flex flex-wrap gap-1.5 pt-1">
-                    <?php foreach ($p['tags'] as $tag): ?>
-                      <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-[11px] font-medium bg-slate-100 text-slate-600">
-                        <?= htmlspecialchars($tag) ?>
-                      </span>
-                    <?php endforeach; ?>
+              <!-- Card Body -->
+              <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+                <div class="space-y-2">
+                  <!-- Town -->
+                  <div class="text-xs font-bold text-slate-400 uppercase tracking-tight">
+                    <?= htmlspecialchars($p['town']) ?>, NJ
                   </div>
-                <?php endif; ?>
-              </div>
 
-              <!-- Action Buttons Row (Matches Mockup) -->
-              <div class="pt-2 grid grid-cols-2 gap-2 border-t border-slate-100">
-                <!-- Minisite / Detail Button -->
-                <button type="button" onclick="openPartnerDetail('<?= htmlspecialchars($p['id']) ?>')" class="w-full py-2.5 px-3 rounded-xl bg-brand-forest hover:bg-brand-forestDark text-white font-bold text-xs sm:text-sm tracking-tight transition-all active:scale-95 shadow-xs flex items-center justify-center gap-1 cursor-pointer">
-                  <span>자세히보기</span>
-                </button>
+                  <!-- Business Name (Direct Full Page Click) -->
+                  <h3 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight group-hover:text-brand-forest transition-colors cursor-pointer" onclick="handleCardClick('<?= htmlspecialchars($p['id']) ?>', '<?= htmlspecialchars($p['minisiteUrl']) ?>')">
+                    <?= htmlspecialchars($p['name']) ?>
+                  </h3>
 
-                <!-- Contact Button (KakaoTalk OR Email) -->
-                <?php if (($p['contactMethod'] ?? 'kakao') === 'email'): ?>
-                  <a href="mailto:<?= htmlspecialchars($p['email'] ?: 'contact@njaccessportal.com') ?>?subject=<?= urlencode('[' . $p['name'] . ' 문의] NJ Access Portal 파트너즈 연결') ?>" class="w-full py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-black text-white font-bold text-xs sm:text-sm tracking-tight transition-all active:scale-95 shadow-xs flex items-center justify-center gap-1.5 cursor-pointer">
-                    <i class="fa-solid fa-envelope text-xs"></i>
-                    <span>이메일 문의</span>
+                  <!-- Intro -->
+                  <p class="text-xs sm:text-sm text-slate-600 font-normal leading-relaxed line-clamp-2">
+                    <?= htmlspecialchars($p['intro']) ?>
+                  </p>
+
+                  <!-- Tags -->
+                  <?php if (!empty($p['tags'])): ?>
+                    <div class="flex flex-wrap gap-1.5 pt-1">
+                      <?php foreach ($p['tags'] as $tag): ?>
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-[11px] font-medium bg-slate-100 text-slate-600">
+                          <?= htmlspecialchars($tag) ?>
+                        </span>
+                      <?php endforeach; ?>
+                    </div>
+                  <?php endif; ?>
+                </div>
+
+                <!-- Action Buttons Row -->
+                <div class="pt-2 grid grid-cols-2 gap-2 border-t border-slate-100">
+                  <!-- Full Webpage Direct Link Button -->
+                  <a href="<?= !empty($p['minisiteUrl']) ? htmlspecialchars($p['minisiteUrl']) : 'javascript:void(0)' ?>" 
+                     onclick="handleDetailClick(event, '<?= htmlspecialchars($p['name']) ?>', '<?= htmlspecialchars($p['minisiteUrl']) ?>')" 
+                     <?= !empty($p['minisiteUrl']) ? 'target="_blank" rel="noopener noreferrer"' : '' ?> 
+                     class="w-full py-2.5 px-3 rounded-xl bg-brand-forest hover:bg-brand-forestDark text-white font-bold text-xs sm:text-sm tracking-tight transition-all active:scale-95 shadow-xs flex items-center justify-center gap-1 cursor-pointer">
+                    <span>자세히보기</span>
                   </a>
-                <?php else: ?>
-                  <button type="button" onclick="handleKakaoChat('<?= htmlspecialchars($p['id']) ?>', '<?= htmlspecialchars($p['kakaoChannelId']) ?>')" class="w-full py-2.5 px-3 rounded-xl bg-[#FEE500] hover:bg-[#FDD835] text-[#191919] font-bold text-xs sm:text-sm tracking-tight transition-all active:scale-95 shadow-xs flex items-center justify-center gap-1.5 cursor-pointer">
-                    <img src="/kakaotalk-icon.png" alt="Kakao" class="w-3.5 h-3.5 rounded-xs object-contain" />
-                    <span>카카오톡 상담</span>
-                  </button>
-                <?php endif; ?>
+
+                  <!-- Contact Button (KakaoTalk OR Email) -->
+                  <?php if (($p['contactMethod'] ?? 'kakao') === 'email'): ?>
+                    <a href="mailto:<?= htmlspecialchars($p['email'] ?: 'contact@njaccessportal.com') ?>?subject=<?= urlencode('[' . $p['name'] . ' 문의] NJ Access Portal 파트너즈 연결') ?>" class="w-full py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-black text-white font-bold text-xs sm:text-sm tracking-tight transition-all active:scale-95 shadow-xs flex items-center justify-center gap-1.5 cursor-pointer">
+                      <i class="fa-solid fa-envelope text-xs"></i>
+                      <span>이메일 문의</span>
+                    </a>
+                  <?php else: ?>
+                    <button type="button" onclick="handleKakaoChat('<?= htmlspecialchars($p['id']) ?>', '<?= htmlspecialchars($p['kakaoChannelId']) ?>')" class="w-full py-2.5 px-3 rounded-xl bg-[#FEE500] hover:bg-[#FDD835] text-[#191919] font-bold text-xs sm:text-sm tracking-tight transition-all active:scale-95 shadow-xs flex items-center justify-center gap-1.5 cursor-pointer">
+                      <img src="/kakaotalk-icon.png" alt="Kakao" class="w-3.5 h-3.5 rounded-xs object-contain" />
+                      <span>카카오톡 상담</span>
+                    </button>
+                  <?php endif; ?>
+                </div>
+
               </div>
 
-            </div>
-
-          </article>
-        <?php endforeach; ?>
-      </div>
-
-      <!-- Empty State -->
-      <div id="no-partners-msg" class="hidden text-center py-16 bg-white rounded-2xl border border-dashed border-slate-300">
-        <div class="w-16 h-16 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-3 text-2xl">
-          <i class="fa-solid fa-magnifying-glass"></i>
+            </article>
+          <?php endforeach; ?>
         </div>
-        <h3 class="text-base font-bold text-slate-800">일치하는 파트너가 없습니다</h3>
-        <p class="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
-          선택하신 카테고리 또는 검색 조건에 부합하는 파트너를 찾지 못했습니다. 다른 조건으로 다시 검색해 보세요.
-        </p>
-        <button type="button" onclick="resetAllFilters()" class="mt-4 px-4 py-2 rounded-xl bg-brand-forest text-white font-bold text-xs hover:bg-brand-forestDark transition-all">
-          필터 초기화
-        </button>
-      </div>
-    </section>
 
-    <!-- ===================================================================
-         6. Display Strategy Section (Matches Mockup Exactly: 01, 02, 03 Cards)
-         =================================================================== -->
-    <section class="bg-[#F4F7F5] rounded-3xl p-6 sm:p-10 lg:p-12 border border-slate-200/80">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-        <!-- Left Column: Strategy Text -->
-        <div class="lg:col-span-5 space-y-3">
-          <span class="text-xs font-black tracking-widest text-brand-forest uppercase">DISPLAY STRATEGY</span>
-          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-black tracking-tight leading-tight">
-            같은 목록 안에서도<br>노출의 깊이를 다르게
-          </h2>
-          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal pt-2">
-            모든 파트너를 공정하게 찾을 수 있게 하되, 유료 광고는 “더 큰 로고”가 아니라 더 풍부한 콘텐츠와 더 강한 연결로 차별화하는 구조입니다.
+        <!-- Empty State -->
+        <div id="no-partners-msg" class="hidden text-center py-16 bg-white rounded-2xl border border-dashed border-slate-300">
+          <div class="w-16 h-16 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-3 text-2xl">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
+          <h3 class="text-base font-bold text-slate-800">일치하는 파트너가 없습니다</h3>
+          <p class="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
+            선택하신 카테고리 또는 검색 조건에 부합하는 파트너를 찾지 못했습니다. 다른 조건으로 다시 검색해 보세요.
           </p>
-        </div>
-
-        <!-- Right Column: 01, 02, 03 White Cards -->
-        <div class="lg:col-span-7 space-y-3.5">
-          <!-- Card 01 -->
-          <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/80 shadow-xs flex items-center justify-between gap-4">
-            <div class="flex items-center gap-4 sm:gap-6">
-              <span class="text-2xl sm:text-3xl font-black text-brand-forest font-serif">01</span>
-              <div>
-                <h3 class="text-sm sm:text-base font-bold text-slate-900 tracking-tight">기본 등록</h3>
-                <p class="text-xs text-slate-500 mt-0.5">카테고리·지역 검색, 소개, 연락처</p>
-              </div>
-            </div>
-            <div>
-              <span class="text-xs font-bold text-brand-orange px-2.5 py-1 rounded-md bg-orange-50">발견</span>
-            </div>
-          </div>
-
-          <!-- Card 02 -->
-          <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/80 shadow-xs flex items-center justify-between gap-4">
-            <div class="flex items-center gap-4 sm:gap-6">
-              <span class="text-2xl sm:text-3xl font-black text-brand-forest font-serif">02</span>
-              <div>
-                <h3 class="text-sm sm:text-base font-bold text-slate-900 tracking-tight">콘텐츠 파트너</h3>
-                <p class="text-xs text-slate-500 mt-0.5">전문가 칼럼·뉴스·영상 자동 연결</p>
-              </div>
-            </div>
-            <div>
-              <span class="text-xs font-bold text-brand-orange px-2.5 py-1 rounded-md bg-orange-50">신뢰</span>
-            </div>
-          </div>
-
-          <!-- Card 03 -->
-          <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/80 shadow-xs flex items-center justify-between gap-4">
-            <div class="flex items-center gap-4 sm:gap-6">
-              <span class="text-2xl sm:text-3xl font-black text-brand-forest font-serif">03</span>
-              <div>
-                <h3 class="text-sm sm:text-base font-bold text-slate-900 tracking-tight">프리미엄 스포트라이트</h3>
-                <p class="text-xs text-slate-500 mt-0.5">상단 대형 노출 + 완성형 미니 웹사이트</p>
-              </div>
-            </div>
-            <div>
-              <span class="text-xs font-bold text-brand-orange px-2.5 py-1 rounded-md bg-orange-50">전환</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================================================================
-         7. "파트너 되기" CTA Banner (Matches Mockup: Warm Terracotta #E65127)
-         =================================================================== -->
-    <section class="bg-brand-orange rounded-3xl p-6 sm:p-10 lg:p-12 text-white shadow-xl relative overflow-hidden">
-      <!-- Decorative light swirl -->
-      <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
-
-      <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div class="space-y-2 max-w-2xl">
-          <span class="text-xs font-black tracking-widest text-white/80 uppercase">PARTNER WITH US</span>
-          <h2 class="text-3xl sm:text-4xl font-black text-white tracking-tight">파트너 되기</h2>
-          <p class="text-xs sm:text-sm text-white/90 leading-relaxed font-normal">
-            기본 디렉터리 등록부터 전문가 칼럼, 영상 제작, 프리미엄 미니사이트까지 목적에 맞게 협업할 수 있습니다.
-          </p>
-        </div>
-
-        <div>
-          <button type="button" onclick="openPartnerInquiryModal()" class="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-white text-brand-orange hover:bg-orange-50 font-bold text-sm sm:text-base tracking-tight shadow-md hover:shadow-lg transition-all active:scale-95 whitespace-nowrap cursor-pointer">
-            <span>파트너 문의하기 ➔</span>
+          <button type="button" onclick="resetAllFilters()" class="mt-4 px-4 py-2 rounded-xl bg-brand-forest text-white font-bold text-xs hover:bg-brand-forestDark transition-all">
+            필터 초기화
           </button>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Sub-footer Disclaimer Bar (Matches Mockup) -->
-    <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400 border-t border-slate-200 pt-4 pb-2">
-      <p>페이지 구조·광고 노출·콘텐츠 연결 방식 제안용</p>
-      <div class="inline-flex items-center px-3 py-1 rounded-full bg-slate-100 text-slate-500 font-medium">
-        목업 · 모든 상호/인물/후기는 샘플 데이터
+      <!-- Display Strategy Section (01, 02, 03 Cards) -->
+      <section class="bg-[#F4F7F5] rounded-3xl p-6 sm:p-10 lg:p-12 border border-slate-200/80">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <!-- Left Column -->
+          <div class="lg:col-span-5 space-y-3">
+            <span class="text-xs font-black tracking-widest text-brand-forest uppercase">DISPLAY STRATEGY</span>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-black tracking-tight leading-tight">
+              같은 목록 안에서도<br>노출의 깊이를 다르게
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal pt-2">
+              모든 파트너를 공정하게 찾을 수 있게 하되, 유료 광고는 “더 큰 로고”가 아니라 더 풍부한 콘텐츠와 더 강한 연결로 차별화하는 구조입니다.
+            </p>
+          </div>
+
+          <!-- Right Column -->
+          <div class="lg:col-span-7 space-y-3.5">
+            <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/80 shadow-xs flex items-center justify-between gap-4">
+              <div class="flex items-center gap-4 sm:gap-6">
+                <span class="text-2xl sm:text-3xl font-black text-brand-forest font-serif">01</span>
+                <div>
+                  <h3 class="text-sm sm:text-base font-bold text-slate-900 tracking-tight">기본 등록</h3>
+                  <p class="text-xs text-slate-500 mt-0.5">카테고리·지역 검색, 소개, 연락처</p>
+                </div>
+              </div>
+              <div>
+                <span class="text-xs font-bold text-brand-orange px-2.5 py-1 rounded-md bg-orange-50">발견</span>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/80 shadow-xs flex items-center justify-between gap-4">
+              <div class="flex items-center gap-4 sm:gap-6">
+                <span class="text-2xl sm:text-3xl font-black text-brand-forest font-serif">02</span>
+                <div>
+                  <h3 class="text-sm sm:text-base font-bold text-slate-900 tracking-tight">콘텐츠 파트너</h3>
+                  <p class="text-xs text-slate-500 mt-0.5">전문가 칼럼·뉴스·영상 자동 연결</p>
+                </div>
+              </div>
+              <div>
+                <span class="text-xs font-bold text-brand-orange px-2.5 py-1 rounded-md bg-orange-50">신뢰</span>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/80 shadow-xs flex items-center justify-between gap-4">
+              <div class="flex items-center gap-4 sm:gap-6">
+                <span class="text-2xl sm:text-3xl font-black text-brand-forest font-serif">03</span>
+                <div>
+                  <h3 class="text-sm sm:text-base font-bold text-slate-900 tracking-tight">프리미엄 스포트라이트</h3>
+                  <p class="text-xs text-slate-500 mt-0.5">상단 대형 노출 + 완성형 미니 웹사이트</p>
+                </div>
+              </div>
+              <div>
+                <span class="text-xs font-bold text-brand-orange px-2.5 py-1 rounded-md bg-orange-50">전환</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- "파트너 되기" CTA Banner -->
+      <section class="bg-brand-orange rounded-3xl p-6 sm:p-10 lg:p-12 text-white shadow-xl relative overflow-hidden">
+        <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div class="space-y-2 max-w-2xl">
+            <span class="text-xs font-black tracking-widest text-white/80 uppercase">PARTNER WITH US</span>
+            <h2 class="text-3xl sm:text-4xl font-black text-white tracking-tight">파트너 되기</h2>
+            <p class="text-xs sm:text-sm text-white/90 leading-relaxed font-normal">
+              기본 디렉터리 등록부터 전문가 칼럼, 영상 제작, 프리미엄 미니사이트까지 목적에 맞게 협업할 수 있습니다.
+            </p>
+          </div>
+
+          <div>
+            <button type="button" onclick="openPartnerInquiryModal()" class="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-white text-brand-orange hover:bg-orange-50 font-bold text-sm sm:text-base tracking-tight shadow-md hover:shadow-lg transition-all active:scale-95 whitespace-nowrap cursor-pointer">
+              <span>파트너 문의하기 ➔</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sub-footer Disclaimer Bar -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400 border-t border-slate-200 pt-4 pb-2">
+        <p>페이지 구조·광고 노출·콘텐츠 연결 방식 제안용</p>
+        <div class="inline-flex items-center px-3 py-1 rounded-full bg-slate-100 text-slate-500 font-medium">
+          목업 · 모든 상호/인물/후기는 샘플 데이터
+        </div>
       </div>
+
     </div>
 
   </main>
 
   <!-- ===================================================================
-       8. Partner Detail Placeholder Modal (Requirement 5)
-       =================================================================== -->
-  <div id="partner-modal" class="hidden fixed inset-0 z-50 modal-backdrop-blur bg-black/60 items-center justify-center p-4 overflow-y-auto">
-    <div class="bg-white rounded-3xl max-w-xl w-full overflow-hidden shadow-2xl border border-slate-200 relative my-8 animate-in fade-in zoom-in-95 duration-200">
-      
-      <!-- Close Button -->
-      <button type="button" onclick="closePartnerModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center z-20 transition-all cursor-pointer" aria-label="닫기">
-        <i class="fa-solid fa-xmark text-sm"></i>
-      </button>
-
-      <!-- Modal Hero Image -->
-      <div class="relative h-56 sm:h-64 w-full bg-slate-900">
-        <img id="m-image" src="" alt="" class="w-full h-full object-cover" />
-        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-        <div class="absolute bottom-4 left-6 right-6">
-          <div class="flex items-center gap-2 mb-1.5">
-            <span id="m-category" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#E6F4EA] text-brand-forest"></span>
-            <span id="m-town" class="text-xs font-bold text-white/90"></span>
-          </div>
-          <h2 id="m-name" class="text-2xl sm:text-3xl font-black text-white tracking-tight"></h2>
-        </div>
-      </div>
-
-      <!-- Modal Body -->
-      <div class="p-6 sm:p-8 space-y-6">
-        <!-- Intro & Full Content -->
-        <div class="space-y-3">
-          <p id="m-intro" class="text-sm font-bold text-slate-800 leading-relaxed"></p>
-          <div id="m-content" class="text-xs sm:text-sm text-slate-600 leading-relaxed space-y-2 whitespace-pre-line border-t border-slate-100 pt-3"></div>
-        </div>
-
-        <!-- Tags -->
-        <div id="m-tags" class="flex flex-wrap gap-1.5 pt-1"></div>
-
-        <!-- Reserved Slot: 미니사이트 연결 예정 (Requirement 5) -->
-        <div id="m-minisite-container" class="rounded-2xl border-2 border-dashed border-emerald-300 bg-emerald-50/50 p-5 text-center space-y-2">
-          <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-brand-forest text-white text-lg mb-1">
-            <i class="fa-solid fa-laptop-code"></i>
-          </div>
-          <h4 class="text-sm font-bold text-brand-forest">미니사이트 연결 예정</h4>
-          <p class="text-xs text-slate-600 max-w-md mx-auto leading-relaxed">
-            해당 파트너사의 상세 진료/서비스 정보, 전문의 칼럼, 안내 영상 및 예약 시스템이 연결될 전용 미니사이트 공간입니다.
-          </p>
-          <div id="m-minisite-link-box" class="pt-2 hidden">
-            <a id="m-minisite-link" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-forest hover:bg-brand-forestDark text-white font-bold text-xs tracking-tight transition-all">
-              <span>미니사이트 바로가기</span>
-              <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-            </a>
-          </div>
-        </div>
-
-        <!-- Contact Action Button -->
-        <div id="m-contact-container" class="pt-2">
-          <!-- Dynamically populated button -->
-        </div>
-
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ===================================================================
-       9. Partner Inquiry Modal (for "파트너 되기" CTA)
+       5. Partner Inquiry Modal (for "파트너 되기" CTA)
        =================================================================== -->
   <div id="inquiry-modal" class="hidden fixed inset-0 z-50 modal-backdrop-blur bg-black/60 items-center justify-center p-4 overflow-y-auto">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-200 relative my-8 animate-in fade-in zoom-in-95 duration-200">
-      
-      <!-- Close Button -->
       <button type="button" onclick="closeInquiryModal()" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-all cursor-pointer" aria-label="닫기">
         <i class="fa-solid fa-xmark text-sm"></i>
       </button>
@@ -708,7 +653,7 @@ $initialCount = count($partners);
   </div>
 
   <!-- ===================================================================
-       10. Official Global Footer
+       6. Official Global Footer
        =================================================================== -->
   <footer class="bg-brand-dark text-white border-t border-slate-800 mt-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
@@ -723,9 +668,9 @@ $initialCount = count($partners);
           <p class="text-xs font-semibold uppercase tracking-widest text-white/40 mb-4">주요 메뉴</p>
           <ul class="space-y-2 text-xs text-white/60">
             <li><a href="/" class="hover:text-white transition-colors">홈 (Home)</a></li>
+            <li><a href="/forum" class="hover:text-white transition-colors">뉴저지 한인 광장</a></li>
             <li><a href="/partners" class="hover:text-white font-bold text-emerald-400 transition-colors">뉴저지 파트너즈</a></li>
             <li><a href="/blog" class="hover:text-white transition-colors">건강 뉴스</a></li>
-            <li><a href="/forum" class="hover:text-white transition-colors">뉴저지 한인 광장</a></li>
           </ul>
         </div>
         <div>
@@ -759,7 +704,7 @@ $initialCount = count($partners);
   </footer>
 
   <!-- ===================================================================
-       11. Client-Side State, Filter Logic, Carousel & Kakao SDK Controller
+       7. Client-Side State, Filter Logic, Carousel & Direct Webpage Navigation
        =================================================================== -->
   <script>
     // Embedded SSR Data Store
@@ -837,11 +782,38 @@ $initialCount = count($partners);
     }
 
     function handleHeroButtonClick(e, link) {
-      if (!link || link === '#') return;
+      if (!link || link === '#' || link === 'javascript:void(0)') {
+        e.preventDefault();
+        return;
+      }
       if (link.startsWith('#partner-')) {
         e.preventDefault();
         const pId = link.replace('#', '');
-        openPartnerDetail(pId);
+        const p = rawPartnersData.find(item => item.id === pId);
+        if (p) {
+          handleCardClick(p.id, p.minisiteUrl);
+        }
+      }
+    }
+
+    // --- Direct Full Webpage Navigation (NO POPUP) ---
+    function handleCardClick(partnerId, url) {
+      if (url && url.trim() !== '' && url.trim() !== '#' && url.trim() !== 'javascript:void(0)') {
+        const targetUrl = url.trim();
+        if (targetUrl.startsWith('http://') || targetUrl.startsWith('https://')) {
+          window.open(targetUrl, '_blank', 'noopener,noreferrer');
+        } else {
+          window.location.href = targetUrl;
+        }
+      } else {
+        alert('해당 파트너사의 상세 웹사이트가 준비 중입니다.\n관리자 CMS(/admin3)에서 연결 웹사이트 주소(URL)를 등록하시면 클릭 시 해당 전체 웹페이지로 직접 이동합니다.');
+      }
+    }
+
+    function handleDetailClick(e, partnerName, url) {
+      if (!url || url.trim() === '' || url.trim() === '#' || url.trim() === 'javascript:void(0)') {
+        e.preventDefault();
+        alert(`[${partnerName}]\n상세 웹사이트가 준비 중입니다.\n관리자 CMS(/admin3)에서 연결 웹사이트 주소(URL)를 등록하시면 클릭 시 해당 전체 웹페이지로 직접 이동합니다.`);
       }
     }
 
@@ -892,13 +864,8 @@ $initialCount = count($partners);
         const cName = (card.getAttribute('data-name') || '').trim().toLowerCase();
         const cIntro = (card.getAttribute('data-intro') || '').trim().toLowerCase();
 
-        // 1. Category check
         const matchCat = (selectedCategory === 'all' || cCat === selectedCategory);
-
-        // 2. Town check
         const matchTown = (!townVal || cTown === townVal);
-
-        // 3. Search query check
         const matchSearch = (!searchVal || cName.includes(searchVal) || cIntro.includes(searchVal) || cCat.toLowerCase().includes(searchVal) || cTown.includes(searchVal));
 
         if (matchCat && matchTown && matchSearch) {
@@ -917,77 +884,6 @@ $initialCount = count($partners);
         emptyState.classList.add('hidden');
       }
     }
-
-    // --- Partner Detail Placeholder Modal Controller ---
-    function openPartnerDetail(partnerId) {
-      const p = rawPartnersData.find(item => item.id === partnerId);
-      if (!p) return;
-
-      document.getElementById('m-image').src = p.imageUrl || '/uploads/images/partners/partner_hospital.jpg';
-      document.getElementById('m-name').textContent = p.name || '';
-      document.getElementById('m-category').textContent = p.category || '';
-      document.getElementById('m-town').textContent = (p.town ? p.town + ', NJ' : '');
-      document.getElementById('m-intro').textContent = p.intro || '';
-      document.getElementById('m-content').textContent = p.content || p.intro || '';
-
-      // Tags
-      const tagsBox = document.getElementById('m-tags');
-      tagsBox.innerHTML = '';
-      if (p.tags && Array.isArray(p.tags)) {
-        p.tags.forEach(t => {
-          const span = document.createElement('span');
-          span.className = 'inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 text-slate-700';
-          span.textContent = t;
-          tagsBox.appendChild(span);
-        });
-      }
-
-      // Reserved Minisite Slot (Requirement 5)
-      const minisiteLinkBox = document.getElementById('m-minisite-link-box');
-      const minisiteLink = document.getElementById('m-minisite-link');
-      if (p.minisiteUrl && p.minisiteUrl.trim() !== '') {
-        minisiteLink.href = p.minisiteUrl.trim();
-        minisiteLinkBox.classList.remove('hidden');
-      } else {
-        minisiteLinkBox.classList.add('hidden');
-      }
-
-      // Contact Action Button
-      const contactBox = document.getElementById('m-contact-container');
-      contactBox.innerHTML = '';
-      if (p.contactMethod === 'email') {
-        const email = p.email || 'contact@njaccessportal.com';
-        contactBox.innerHTML = `
-          <a href="mailto:${email}?subject=${encodeURIComponent('[' + p.name + ' 문의] NJ Access Portal 파트너즈 연결')}" class="w-full py-3.5 px-4 rounded-xl bg-slate-900 hover:bg-black text-white font-bold text-sm tracking-tight transition-all active:scale-95 shadow-md flex items-center justify-center gap-2 cursor-pointer">
-            <i class="fa-solid fa-envelope"></i>
-            <span>이메일로 문의하기 (${email})</span>
-          </a>
-        `;
-      } else {
-        contactBox.innerHTML = `
-          <button type="button" onclick="handleKakaoChat('${p.id}', '${p.kakaoChannelId || ''}')" class="w-full py-3.5 px-4 rounded-xl bg-[#FEE500] hover:bg-[#FDD835] text-[#191919] font-bold text-sm tracking-tight transition-all active:scale-95 shadow-md flex items-center justify-center gap-2 cursor-pointer">
-            <img src="/kakaotalk-icon.png" alt="Kakao" class="w-4 h-4 rounded-xs" />
-            <span>카카오톡 1:1 상담 바로가기</span>
-          </button>
-        `;
-      }
-
-      const modal = document.getElementById('partner-modal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closePartnerModal() {
-      const modal = document.getElementById('partner-modal');
-      modal.classList.remove('flex');
-      modal.classList.add('hidden');
-      document.body.style.overflow = '';
-    }
-
-    document.getElementById('partner-modal').addEventListener('click', function(e) {
-      if (e.target === this) closePartnerModal();
-    });
 
     // --- Partner Inquiry Modal ---
     function openPartnerInquiryModal() {
@@ -1018,19 +914,15 @@ $initialCount = count($partners);
     // --- ESC Key Handler for Modals ---
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
-        closePartnerModal();
         closeInquiryModal();
       }
     });
 
-    // --- Per-Partner KakaoTalk Business Connection (Requirement 5 & 6) ---
-    // Button behavior: load Kakao JS SDK once; on click, call Kakao.Channel.chat({ channelPublicId }).
-    // If the SDK fails or no key exists, fallback to plain link https://pf.kakao.com/{channelPublicId}/chat.
+    // --- Per-Partner KakaoTalk Business Connection ---
     async function handleKakaoChat(partnerId, fallbackChannelId) {
       let channelId = fallbackChannelId ? fallbackChannelId.replace(/^@/, '') : '';
 
       try {
-        // Resolve channel link server-side (never exposes API keys)
         const res = await fetch(`/api/partner_chat.php?id=${encodeURIComponent(partnerId)}`);
         if (res.ok) {
           const data = await res.json();
@@ -1047,7 +939,6 @@ $initialCount = count($partners);
         return;
       }
 
-      // Try Kakao JS SDK if initialized
       const directUrl = `https://pf.kakao.com/${channelId}/chat`;
       try {
         if (typeof Kakao !== 'undefined' && Kakao.Channel && Kakao.isInitialized && Kakao.isInitialized()) {
@@ -1060,7 +951,6 @@ $initialCount = count($partners);
         console.warn('Kakao SDK chat failed, falling back to direct link:', sdkErr);
       }
 
-      // Standard fallback link
       window.open(directUrl, '_blank', 'noopener,noreferrer');
     }
   </script>
