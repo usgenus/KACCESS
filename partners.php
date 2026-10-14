@@ -657,7 +657,7 @@ $initialCount = count($partners);
        =================================================================== -->
   <footer class="bg-brand-dark text-white border-t border-slate-800 mt-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div>
           <p class="text-base font-bold text-white mb-2">NJ Access Portal</p>
           <p class="text-xs text-white/50 leading-relaxed">
@@ -681,16 +681,6 @@ $initialCount = count($partners);
             <li><a href="/calculator" class="hover:text-white transition-colors">보조금 자격 계산기</a></li>
             <li><a href="/about" class="hover:text-white transition-colors">의료접근센터 소개</a></li>
           </ul>
-        </div>
-        <div>
-          <p class="text-xs font-semibold uppercase tracking-widest text-white/40 mb-4">파트너 및 문의</p>
-          <div class="space-y-2 text-xs text-white/60">
-            <p>파트너 제휴: <a href="mailto:contact@njaccessportal.com" class="text-emerald-400 hover:underline">contact@njaccessportal.com</a></p>
-            <p>1:1 카카오톡 상담 운영 중</p>
-            <a href="/admin3" class="inline-block mt-2 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-[11px] font-bold text-emerald-400 border border-slate-700">
-              <i class="fa-solid fa-lock text-[10px] mr-1"></i>파트너즈 CMS 로그인
-            </a>
-          </div>
         </div>
       </div>
 
