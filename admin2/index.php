@@ -106,6 +106,10 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
           <i class="fa-solid fa-calendar-star"></i>
           <span>이벤트 관리</span>
         </button>
+        <button onclick="switchTab('club-rooms')" id="nav-club-rooms" class="tab-btn px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 text-purple-400 hover:text-purple-300">
+          <i class="fa-solid fa-people-roof"></i>
+          <span>동호회/동문회 룸</span>
+        </button>
         <button onclick="switchTab('specialties')" id="nav-specialties" class="tab-btn px-3 py-2 rounded-xl transition-all flex items-center gap-1.5">
           <i class="fa-solid fa-layer-group"></i>
           <span>9대 카테고리 &amp; 게시판</span>
@@ -145,6 +149,7 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
       <button onclick="switchTab('answers')" id="nav-m-answers" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg">답변 관리</button>
       <button onclick="switchTab('users')" id="nav-m-users" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg">전문가 &amp; 회원</button>
       <button onclick="switchTab('events')" id="nav-m-events" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-rose-400">이벤트 관리</button>
+      <button onclick="switchTab('club-rooms')" id="nav-m-club-rooms" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-purple-400">동호회/동문회 룸</button>
       <button onclick="switchTab('specialties')" id="nav-m-specialties" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg">9대 카테고리 &amp; 게시판</button>
       <button onclick="switchTab('featured-ads')" id="nav-m-featured-ads" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-sky-400">추천 서비스 &amp; 광고</button>
       <button onclick="switchTab('settings')" id="nav-m-settings" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-blue-400">한인 광장 설정</button>
@@ -652,6 +657,79 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
               </tr>
             </thead>
             <tbody id="events-tbody" class="divide-y divide-slate-700/60 font-medium">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 6.5: CLUB ROOMS MODERATION (동호회/동문회 룸 관리) -->
+    <section id="tab-club-rooms" class="tab-pane hidden space-y-6">
+      <div class="flex items-center justify-between flex-wrap gap-4">
+        <div>
+          <h2 class="text-xl font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-people-roof text-purple-400"></i>
+            <span>동호회 / 동문회 룸 통합 관제 &amp; 제재(Flagged) 관리</span>
+          </h2>
+          <p class="text-xs text-slate-400 mt-1">
+            방장들이 개설한 모든 동호회/동문회 미니 룸을 실시간 모니터링하고, 가이드라인 위반 시 즉시 <strong>제재 및 폐쇄(Flagged)</strong> 처리합니다.
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="/forum?specialty=clubs" target="_blank" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-700 text-purple-300 border border-slate-700 text-xs font-bold transition-colors inline-flex items-center gap-1.5 shadow-sm">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            <span>동호회 룸 라운지 바로가기</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Moderation Policy Alert Box -->
+      <div class="p-4 rounded-2xl bg-purple-950/40 border border-purple-800/40 text-xs text-purple-200 flex items-start gap-3">
+        <i class="fa-solid fa-shield-halved text-purple-400 text-base mt-0.5 shrink-0"></i>
+        <div class="space-y-1">
+          <p class="font-bold text-purple-100">📌 동호회 룸 제재(Flagged) 정책 안내:</p>
+          <p>
+            관리자가 위반 룸을 [폐쇄 / Flag 처리]하면 해당 룸 페이지 상단에 
+            <span class="text-amber-300 font-mono font-bold">"You are flagged, contact njaccessportal@gmail.com"</span> 
+            경고창이 즉시 노출되며, 글쓰기 및 소통이 자동 차단됩니다. 사유가 소명되면 언제든지 [정상 복구]할 수 있습니다.
+          </p>
+        </div>
+      </div>
+
+      <!-- Club Rooms Table Container -->
+      <div class="bg-slate-800/80 border border-slate-700/80 rounded-3xl p-6 shadow-xl space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-list text-purple-400"></i>
+              <span>개설된 동호회/동문회 룸 목록</span>
+            </h3>
+            <span id="club-rooms-count" class="text-xs font-mono bg-purple-900/60 text-purple-300 px-2 py-0.5 rounded-full">0개</span>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <input type="text" id="club-room-search" placeholder="룸 이름, 방장 검색..." oninput="handleClubRoomSearch(this.value)" class="text-xs bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-purple-500 w-48 sm:w-60">
+            <button onclick="loadClubRooms()" class="p-2 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-xl text-xs transition" title="새로고침">
+              <i class="fa-solid fa-rotate-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs text-slate-300">
+            <thead class="bg-slate-900/90 text-slate-400 uppercase font-bold text-[11px] border-b border-slate-700">
+              <tr>
+                <th class="py-3 px-3 w-16">배너</th>
+                <th class="py-3 px-4">룸 명칭 &amp; 소개</th>
+                <th class="py-3 px-3">분류 / 지역</th>
+                <th class="py-3 px-4">👑 방장 (연락처)</th>
+                <th class="py-3 px-3 text-center">게시글/조회</th>
+                <th class="py-3 px-3 text-center">상태</th>
+                <th class="py-3 px-4 text-right">관리 조치</th>
+              </tr>
+            </thead>
+            <tbody id="club-rooms-tbody" class="divide-y divide-slate-700/60 font-medium">
               <!-- Rendered via JS -->
             </tbody>
           </table>

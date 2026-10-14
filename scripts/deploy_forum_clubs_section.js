@@ -64,12 +64,17 @@ async function uploadFile(relPath) {
 const files = [
   'api/forum_db.php',
   'ko/api/forum_db.php',
-  'forum/components.php',
-  'ko/forum/components.php',
+  'api/forum.php',
+  'ko/api/forum.php',
+  'api/forum_admin.php',
+  'ko/api/forum_admin.php',
+  'forum/club.php',
+  'ko/forum/club.php',
   'forum/index.php',
   'ko/forum/index.php',
   'admin2/index.php',
-  'admin2/admin2.js'
+  'admin2/admin2.js',
+  '.htaccess'
 ];
 
 async function main() {

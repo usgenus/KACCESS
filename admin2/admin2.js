@@ -31,6 +31,7 @@ function switchTab(tabId) {
   if (tabId === 'answers') loadAnswersTable();
   if (tabId === 'users') loadUsersTable();
   if (tabId === 'events') loadEventsSection();
+  if (tabId === 'club-rooms') loadClubRooms();
   if (tabId === 'specialties') loadSpecialtiesGrid();
   if (tabId === 'featured-ads') loadFeaturedAdsTable();
   if (tabId === 'settings') loadSettingsTab();
@@ -1758,6 +1759,198 @@ async function deleteFeaturedAd(id) {
       loadFeaturedAdsTable();
     }
   } catch(e) {}
+// -------------------------------------------------------------
+// CLUB ROOMS MODERATION (동호회/동문회 룸 통합 관제)
+// -------------------------------------------------------------
+let allClubRooms = [];
+
+async function loadClubRooms() {
+  const tbody = document.getElementById('club-rooms-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = '<tr><td colspan="7" class="py-8 text-center text-slate-400"><i class="fa-solid fa-spinner fa-spin mr-2"></i>동호회/동문회 룸 목록을 불러오는 중...</td></tr>';
+
+  try {
+    const res = await fetch('/api/forum_admin.php?action=club_rooms');
+    const json = await res.json();
+    if (!json.success || !json.data) {
+      tbody.innerHTML = '<tr><td colspan="7" class="py-8 text-center text-slate-500">등록된 동호회 룸이 없습니다.</td></tr>';
+      return;
+    }
+
+    allClubRooms = json.data;
+    renderClubRooms(allClubRooms);
+  } catch (err) {
+    tbody.innerHTML = '<tr><td colspan="7" class="py-8 text-center text-red-400">데이터 로드 실패: ' + err.message + '</td></tr>';
+  }
+}
+
+function handleClubRoomSearch(query) {
+  const q = query.trim().toLowerCase();
+  if (!q) {
+    renderClubRooms(allClubRooms);
+    return;
+  }
+  const filtered = allClubRooms.filter(r => 
+    (r.name && r.name.toLowerCase().includes(q)) ||
+    (r.leader_name && r.leader_name.toLowerCase().includes(q)) ||
+    (r.location && r.location.toLowerCase().includes(q)) ||
+    (r.type && r.type.toLowerCase().includes(q))
+  );
+  renderClubRooms(filtered);
+}
+
+function renderClubRooms(rooms) {
+  const tbody = document.getElementById('club-rooms-tbody');
+  const countEl = document.getElementById('club-rooms-count');
+  if (countEl) countEl.innerText = `${rooms.length}개`;
+  if (!tbody) return;
+
+  if (rooms.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" class="py-8 text-center text-slate-500">해당 조건의 동호회 룸이 없습니다.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = rooms.map(room => {
+    const isClosed = (room.status === 'closed');
+    const banner = room.banner_url || '';
+    const color = room.theme_color || '#7C3AED';
+    const emblem = room.emblem || 'fa-users';
+
+    return `
+      <tr class="hover:bg-slate-750/50 transition-colors ${isClosed ? 'bg-red-950/20' : ''}">
+        <!-- Banner Thumbnail -->
+        <td class="py-3 px-3">
+          <div class="w-12 h-12 rounded-xl overflow-hidden flex items-center justify-center text-white text-base shadow-xs" style="background: ${banner ? `url('${banner}') center/cover` : `linear-gradient(135deg, ${color}, #0F2342)`}">
+            <i class="fa-solid ${emblem}"></i>
+          </div>
+        </td>
+
+        <!-- Room Name & Intro -->
+        <td class="py-3 px-4 min-w-[200px]">
+          <div class="flex items-center gap-2">
+            <a href="/forum/club.php?id=${encodeURIComponent(room.id)}" target="_blank" class="font-bold text-white hover:text-purple-400 transition flex items-center gap-1.5">
+              <span>${escapeHtml(room.name)}</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-slate-500"></i>
+            </a>
+          </div>
+          <p class="text-[11px] text-slate-400 line-clamp-1 mt-0.5">${escapeHtml(room.one_liner || room.description || '')}</p>
+        </td>
+
+        <!-- Type / Location -->
+        <td class="py-3 px-3 whitespace-nowrap">
+          <span class="inline-block px-2 py-0.5 rounded-md text-[10px] font-bold bg-purple-900/40 text-purple-300 border border-purple-700/50 mb-1">
+            ${escapeHtml(room.type || '일반')}
+          </span>
+          <div class="text-[11px] text-slate-400 flex items-center gap-1">
+            <i class="fa-solid fa-location-dot text-red-400 text-[10px]"></i>
+            <span>${escapeHtml(room.location || '뉴저지')}</span>
+          </div>
+        </td>
+
+        <!-- Leader Info -->
+        <td class="py-3 px-4 whitespace-nowrap">
+          <div class="flex items-center gap-1.5 font-bold text-amber-300 text-xs">
+            <i class="fa-solid fa-crown text-[10px]"></i>
+            <span>${escapeHtml(room.leader_name || '방장')}</span>
+          </div>
+          <div class="text-[11px] text-slate-400 font-mono mt-0.5">
+            ${escapeHtml(room.leader_contact || '-')}
+          </div>
+        </td>
+
+        <!-- Post / Views -->
+        <td class="py-3 px-3 text-center whitespace-nowrap font-mono text-xs">
+          <span class="text-white font-bold">${room.post_count ?? 0}</span>
+          <span class="text-slate-500"> / </span>
+          <span class="text-slate-400">${room.view_count ?? 0}</span>
+        </td>
+
+        <!-- Status -->
+        <td class="py-3 px-3 text-center whitespace-nowrap">
+          ${isClosed 
+            ? '<span class="inline-block px-2.5 py-1 rounded-full text-[10px] font-black bg-red-900/60 text-red-300 border border-red-700/80">제재/폐쇄됨 (Flagged)</span>' 
+            : '<span class="inline-block px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-900/40 text-emerald-300 border border-emerald-700/60">정상 운영 중</span>'}
+        </td>
+
+        <!-- Actions -->
+        <td class="py-3 px-4 text-right whitespace-nowrap">
+          <div class="flex items-center justify-end gap-1.5">
+            <a href="/forum/club.php?id=${encodeURIComponent(room.id)}" target="_blank" class="px-2.5 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-semibold transition" title="룸 페이지 보기">
+              <i class="fa-solid fa-eye"></i>
+            </a>
+
+            ${isClosed ? `
+              <button onclick="toggleClubRoomStatus('${room.id}', 'active')" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition flex items-center gap-1 shadow-sm cursor-pointer" title="제재 해제 및 복구">
+                <i class="fa-solid fa-check"></i>
+                <span>정상 복구</span>
+              </button>
+            ` : `
+              <button onclick="toggleClubRoomStatus('${room.id}', 'closed')" class="px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white text-xs font-bold transition flex items-center gap-1 shadow-sm cursor-pointer" title="운영 위반 제재 및 룸 폐쇄">
+                <i class="fa-solid fa-ban"></i>
+                <span>폐쇄 / Flag</span>
+              </button>
+            `}
+
+            <button onclick="deleteClubRoom('${room.id}', '${escapeHtml(room.name)}')" class="p-1.5 rounded-lg bg-slate-700 hover:bg-red-700 text-slate-300 hover:text-white text-xs transition cursor-pointer" title="영구 삭제">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+async function toggleClubRoomStatus(roomId, newStatus) {
+  let closeReason = '';
+  if (newStatus === 'closed') {
+    closeReason = prompt('이 룸을 제재(Flagged) 및 폐쇄하는 사유를 입력하세요 (이용자에게 노출됩니다):', '운영 정책 위반으로 제재(Flagged) 처리되었습니다. 문의: njaccessportal@gmail.com');
+    if (closeReason === null) return;
+  } else {
+    if (!confirm('이 룸의 제재를 해제하고 정상 운영 상태로 복구하시겠습니까?')) return;
+  }
+
+  try {
+    const res = await fetch('/api/forum_admin.php?action=toggle_club_room_status', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        room_id: roomId,
+        status: newStatus,
+        close_reason: closeReason
+      })
+    });
+    const json = await res.json();
+    if (json.success) {
+      alert(json.message);
+      loadClubRooms();
+    } else {
+      alert(json.error || '상태 변경에 실패했습니다.');
+    }
+  } catch (err) {
+    alert('통신 오류가 발생했습니다.');
+  }
+}
+
+async function deleteClubRoom(roomId, roomName) {
+  if (!confirm(`[주의] "${roomName}" 룸과 룸 내부의 모든 게시글을 영구 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.`)) return;
+
+  try {
+    const res = await fetch('/api/forum_admin.php?action=delete_club_room', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ room_id: roomId })
+    });
+    const json = await res.json();
+    if (json.success) {
+      alert(json.message);
+      loadClubRooms();
+    } else {
+      alert(json.error || '삭제 실패');
+    }
+  } catch (err) {
+    alert('삭제 통신 오류가 발생했습니다.');
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {

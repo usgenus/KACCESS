@@ -76,6 +76,7 @@ RewriteRule ^forum/?$ forum/index.php [L]
 RewriteRule ^forum/ask/?$ forum/ask.php [L]
 RewriteRule ^forum/category/([^/]+)/?$ forum/index.php?specialty=$1 [L]
 RewriteRule ^forum/topic/([^/]+)/?$ forum/topic.php?id=$1 [L]
+RewriteRule ^forum/club/([^/]+)/?$ forum/club.php?id=$1 [L]
 
 RewriteRule ^blog/?$ blog.php [L]
 RewriteRule ^blog/([^/]+)/?$ blog-post.php?slug=$1 [L]

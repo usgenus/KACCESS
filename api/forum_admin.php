@@ -52,7 +52,19 @@ if ($method === 'GET') {
         $search = trim($_GET['search'] ?? ($_GET['q'] ?? ''));
 
         $questions = forum_get_questions($specialty, 'latest', $search, $status);
-        echo json_encode(['success' => true, 'data' => $questions]);
+        $unresolvedReports = forum_get_unresolved_report_counts();
+        echo json_encode([
+            'success' => true,
+            'data' => $questions,
+            'unresolved_reports' => $unresolvedReports
+        ]);
+        exit;
+    }
+
+    // 2.5 Fetch reported listings for dedicated CMS tab
+    if ($action === 'reported_listings') {
+        $reported = forum_get_reported_listings();
+        echo json_encode(['success' => true, 'data' => $reported]);
         exit;
     }
 
@@ -134,12 +146,120 @@ if ($method === 'GET') {
         echo json_encode(['success' => true, 'data' => array_values($events)]);
         exit;
     }
+
+    // 6.5 Fetch club rooms list
+    if ($action === 'club_rooms') {
+        $search = trim($_GET['search'] ?? ($_GET['q'] ?? ''));
+        $status = trim($_GET['status'] ?? 'all');
+        $type = trim($_GET['type'] ?? '');
+        $rooms = forum_get_club_rooms($type ?: null, $search, $status);
+        echo json_encode(['success' => true, 'data' => $rooms]);
+        exit;
+    }
+
+    // 7. Fetch categories tree & board settings
+    if ($action === 'board_settings' || $action === 'categories_tree') {
+        $categories = forum_get_categories();
+        $subBoards = forum_get_sub_boards();
+        $settings = forum_get_board_settings();
+        echo json_encode([
+            'success' => true,
+            'data' => [
+                'categories' => $categories,
+                'subBoards' => $subBoards,
+                'settings' => $settings
+            ]
+        ]);
+        exit;
+    }
+
+    // 8. Fetch featured ads
+    if ($action === 'featured_ads') {
+        $ads = forum_get_featured_ads(false);
+        echo json_encode(['success' => true, 'data' => $ads]);
+        exit;
+    }
 }
 
 // -------------------------------------------------------------
 // POST: Moderation Commands
 // -------------------------------------------------------------
 if ($method === 'POST') {
+    // 0.0 Update Board Settings
+    if ($action === 'update_board_settings') {
+        $boardId = trim($input['boardId'] ?? ($input['board_id'] ?? ''));
+        $settings = $input['settings'] ?? [];
+        if (empty($boardId) || !is_array($settings)) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => '보드 ID와 설정값을 확인해주세요.']);
+            exit;
+        }
+        $res = forum_update_board_settings($boardId, $settings);
+        echo json_encode(['success' => $res, 'message' => '게시판 설정이 업데이트되었습니다.']);
+        exit;
+    }
+
+    // 0.01 Move Question / Change category & sub-board
+    if ($action === 'move_question' || $action === 'update_question_category') {
+        $id = trim($input['id'] ?? '');
+        $categoryId = trim($input['categoryId'] ?? ($input['category_id'] ?? ($input['specialty_id'] ?? '')));
+        $subBoardId = trim($input['subBoardId'] ?? ($input['sub_board_id'] ?? '')) ?: null;
+
+        if (empty($id) || empty($categoryId)) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => '게시물 ID와 카테고리를 지정해주세요.']);
+            exit;
+        }
+
+        $res = forum_update_question_specialty($id, $categoryId, $subBoardId);
+        echo json_encode(['success' => $res, 'message' => '게시물이 성공적으로 이동되었습니다.']);
+        exit;
+    }
+
+    // 0.02 Moderate Club Room (Close/Flag or Re-open)
+    if ($action === 'toggle_club_room_status') {
+        $roomId = trim($input['room_id'] ?? ($input['roomId'] ?? ''));
+        $status = trim($input['status'] ?? 'closed');
+        $closeReason = trim($input['close_reason'] ?? '운영 정책 위반으로 제재(Flagged) 처리되었습니다. 문의: njaccessportal@gmail.com');
+        if (!$roomId) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => '룸 ID가 필요합니다.']);
+            exit;
+        }
+        $updated = forum_set_club_room_status($roomId, $status, $closeReason);
+        if (!$updated) {
+            http_response_code(404);
+            echo json_encode(['success' => false, 'error' => '해당 룸을 찾을 수 없습니다.']);
+            exit;
+        }
+        echo json_encode([
+            'success' => true,
+            'message' => ($status === 'closed' ? '룸이 제재(Flagged) 및 폐쇄 처리되었습니다.' : '룸 제재가 해제되고 정상 복구되었습니다.'),
+            'data' => $updated
+        ]);
+        exit;
+    }
+
+    // 0.03 Delete Club Room
+    if ($action === 'delete_club_room') {
+        $roomId = trim($input['room_id'] ?? ($input['roomId'] ?? ''));
+        if (!$roomId) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => '룸 ID가 필요합니다.']);
+            exit;
+        }
+        $deleted = forum_delete_club_room($roomId);
+        if (!$deleted) {
+            http_response_code(404);
+            echo json_encode(['success' => false, 'error' => '해당 룸을 찾을 수 없습니다.']);
+            exit;
+        }
+        echo json_encode([
+            'success' => true,
+            'message' => '룸 및 소속 게시물이 영구 삭제되었습니다.'
+        ]);
+        exit;
+    }
     // 0. Upload Event Poster (JPEG, PNG, WEBP)
     if ($action === 'upload_poster') {
         if (empty($_FILES['poster']) && empty($_FILES['file'])) {
@@ -284,6 +404,32 @@ if ($method === 'POST') {
         exit;
     }
 
+    // 2.1 Dismiss Reports (Clears reported status for listing)
+    if ($action === 'dismiss_reports') {
+        $listingId = trim($input['listing_id'] ?? ($input['id'] ?? ''));
+        if (!$listingId) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => '게시글 ID가 필요합니다.']);
+            exit;
+        }
+        $res = forum_dismiss_reports($listingId);
+        echo json_encode(['success' => true, 'message' => '신고가 성공적으로 기각(처리 완료)되었습니다.']);
+        exit;
+    }
+
+    // 2.2 Suspend Member
+    if ($action === 'suspend_user') {
+        $userId = trim($input['user_id'] ?? ($input['id'] ?? ''));
+        if (!$userId) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => '회원 ID가 필요합니다.']);
+            exit;
+        }
+        $res = forum_suspend_user($userId);
+        echo json_encode(['success' => true, 'message' => '해당 회원의 이용이 제한되었습니다.']);
+        exit;
+    }
+
     // 3. Moderate Answer (toggle status: active / hidden / flagged)
     if ($action === 'moderate_answer') {
         $id = trim($input['id'] ?? '');
@@ -335,10 +481,28 @@ if ($method === 'POST') {
         exit;
     }
 
-    // 7. Doctor Gmail Management: Register Doctor Gmail for Automatic Badge
-    if ($action === 'add_doctor_email') {
+    // 6.1 User Management: Permanently Delete User
+    if ($action === 'delete_user') {
+        $userId = trim($input['userId'] ?? ($input['id'] ?? ''));
+        if (empty($userId)) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => '삭제할 회원 ID를 지정해주세요.']);
+            exit;
+        }
+
+        $res = forum_delete_user($userId);
+        echo json_encode([
+            'success' => $res,
+            'message' => $res ? '회원이 성공적으로 영구 삭제되었습니다.' : '회원 삭제에 실패했습니다.'
+        ]);
+        exit;
+    }
+
+    // 7. Expert Management: Register Expert Gmail with Badge Type Choice
+    if ($action === 'add_doctor_email' || $action === 'add_expert_email') {
         $email = trim($input['email'] ?? '');
-        $title = trim($input['title'] ?? '전문의 (MD)');
+        $title = trim($input['title'] ?? '');
+        $badgeType = trim($input['badge_type'] ?? ($input['badgeType'] ?? 'doctor'));
 
         if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
             http_response_code(400);
@@ -346,16 +510,17 @@ if ($method === 'POST') {
             exit;
         }
 
-        $res = forum_add_doctor_email($email, $title);
+        $res = forum_add_doctor_email($email, $title, $badgeType);
+        $bInfo = forum_get_badge_info($badgeType);
         echo json_encode([
             'success' => $res,
-            'message' => "'{$email}' 주소가 전문의로 등록되었습니다. 해당 계정 로그인 시 의사 배지가 자동 부여됩니다."
+            'message' => "'{$email}' 주소가 [{$bInfo['label']}] 전문가로 등록되었습니다. 해당 계정 로그인 시 공인 배지가 자동 부여됩니다."
         ]);
         exit;
     }
 
-    // 8. Doctor Gmail Management: Remove Doctor Gmail
-    if ($action === 'remove_doctor_email') {
+    // 8. Doctor / Expert Gmail Management: Remove Registered Email
+    if ($action === 'remove_doctor_email' || $action === 'remove_expert_email') {
         $email = trim($input['email'] ?? '');
         if (empty($email)) {
             http_response_code(400);
@@ -366,8 +531,36 @@ if ($method === 'POST') {
         $res = forum_remove_doctor_email($email);
         echo json_encode([
             'success' => $res,
-            'message' => "'{$email}' 전문의 배지 등록이 취소/삭제되었습니다."
+            'message' => "'{$email}' 전문가 배지 등록이 취소/삭제되었습니다."
         ]);
+        exit;
+    }
+
+    // 9. Featured Services & Ads Management
+    if ($action === 'save_featured_ad') {
+        $ad = $input['ad'] ?? $input;
+        if (empty($ad['title'])) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => '서비스/광고 제목을 입력해주세요.']);
+            exit;
+        }
+        $res = forum_save_featured_ad($ad);
+        echo json_encode(['success' => $res, 'message' => '추천 서비스/광고가 저장되었습니다.']);
+        exit;
+    }
+
+    if ($action === 'toggle_featured_ad') {
+        $id = trim($input['id'] ?? '');
+        $active = !empty($input['active']);
+        $res = forum_toggle_featured_ad($id, $active);
+        echo json_encode(['success' => $res, 'message' => '광고 노출 상태가 변경되었습니다.']);
+        exit;
+    }
+
+    if ($action === 'delete_featured_ad') {
+        $id = trim($input['id'] ?? '');
+        $res = forum_delete_featured_ad($id);
+        echo json_encode(['success' => $res, 'message' => '추천 서비스/광고가 삭제되었습니다.']);
         exit;
     }
 }

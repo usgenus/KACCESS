@@ -3577,4 +3577,478 @@ function forum_suspend_user(string $userId): bool {
     return false;
 }
 
+/**
+ * ------------------------------------------------------------------
+ * 동호회/동문회 룸 (Club & Alumni Rooms) Core Module
+ * ------------------------------------------------------------------
+ */
+
+/**
+ * Return default seed club rooms
+ */
+function forum_get_default_club_rooms(): array {
+    return [
+        'club_golf_nj' => [
+            'id' => 'club_golf_nj',
+            'name' => '뉴저지 한인 버겐 골프클럽 (NJ Bergen Golf Club)',
+            'type' => 'sports',
+            'type_ko' => '취미/스포츠',
+            'location' => '뉴저지 버겐카운티 및 인근 코스',
+            'leader_name' => '골프매니아 (김진우)',
+            'leader_contact' => 'njgolf@gmail.com',
+            'leader_pin' => '1234',
+            'description' => '뉴저지 버겐카운티 및 인근 골프 코스 주말 라운딩, 스크린 번개 및 초보 골퍼 환영 모임입니다. 매월 정기 월례회와 매너 있는 친목 라운딩을 함께 합니다.',
+            'banner_url' => '/uploads/images/hero_slide_hospital_bill.jpg',
+            'theme_color' => '#059669',
+            'emblem' => 'fa-golf-ball-tee',
+            'welcome_msg' => '버겐 골프클럽에 오신 것을 환영합니다! 주말 라운딩 조편성 및 실시간 번개 모임에 부담 없이 참여하세요.',
+            'kakao_link' => 'https://open.kakao.com/o/sample1',
+            'status' => 'active',
+            'flag_reason' => '',
+            'view_count' => 142,
+            'post_count' => 2,
+            'created_at' => '2026-09-15T10:00:00-04:00',
+            'updated_at' => '2026-10-13T10:00:00-04:00'
+        ],
+        'club_korea_univ' => [
+            'id' => 'club_korea_univ',
+            'name' => '재미 뉴욕/뉴저지 고려대학교 교우회',
+            'type' => 'alumni',
+            'type_ko' => '대학/고교 동문회',
+            'location' => '뉴욕 & 뉴저지 전역 (버겐카운티 중심)',
+            'leader_name' => '호랑이 (이동훈)',
+            'leader_contact' => 'korea_nj@alumni.org',
+            'leader_pin' => '1234',
+            'description' => '고려대학교 재미 동문들의 따뜻한 친목 네트워크 및 신년 하례회, 고연전 공동 응원, 동문 차세대 멘토링 프로그램을 활발히 운영하고 있습니다.',
+            'banner_url' => '/uploads/images/access.jpg',
+            'theme_color' => '#DC2626',
+            'emblem' => 'fa-graduation-cap',
+            'welcome_msg' => '선후배 교우님들의 많은 관심과 참여 바랍니다. 뉴저지 거주 동문 환영합니다!',
+            'kakao_link' => 'https://open.kakao.com/o/sample2',
+            'status' => 'active',
+            'flag_reason' => '',
+            'view_count' => 98,
+            'post_count' => 1,
+            'created_at' => '2026-09-20T14:30:00-04:00',
+            'updated_at' => '2026-10-12T16:00:00-04:00'
+        ],
+        'club_hiking_palisades' => [
+            'id' => 'club_hiking_palisades',
+            'name' => '팰리세이즈 주말 등산 & 하이킹 클럽',
+            'type' => 'sports',
+            'type_ko' => '취미/스포츠',
+            'location' => '팰팍, 포트리, 베어마운틴, 델라웨어 워터갭',
+            'leader_name' => '산사랑 (박성민)',
+            'leader_contact' => 'njhikers@gmail.com',
+            'leader_pin' => '1234',
+            'description' => '뉴저지 팰리세이즈 인터스테이트 파크, 베어마운틴 등 주말 아침 가벼운 힐링 트레킹 & 하이킹 모임! 남녀노소 누구나 가볍게 걷고 힐링하는 친목 클럽입니다.',
+            'banner_url' => '/uploads/images/resources/nj_courts_legal_portal.jpg',
+            'theme_color' => '#16A34A',
+            'emblem' => 'fa-mountain-sun',
+            'welcome_msg' => '맑은 공기와 건강한 땀방울을 함께 나눌 뉴저지 이웃들을 환영합니다.',
+            'kakao_link' => '',
+            'status' => 'active',
+            'flag_reason' => '',
+            'view_count' => 85,
+            'post_count' => 0,
+            'created_at' => '2026-09-28T09:15:00-04:00',
+            'updated_at' => '2026-10-11T12:00:00-04:00'
+        ],
+        'club_fortlee_moms' => [
+            'id' => 'club_fortlee_moms',
+            'name' => '포트리·팰팍 맘 & 아이들 육아 소모임',
+            'type' => 'social',
+            'type_ko' => '친목/소모임',
+            'location' => '포트리 & 팰리세이즈팍',
+            'leader_name' => '지우맘 (최현정)',
+            'leader_contact' => 'fortleemoms@gmail.com',
+            'leader_pin' => '1234',
+            'description' => '버겐카운티 유치원/초등학교 정보, 방과후 학원 공유, 주말 플레이데이트 및 따뜻한 육아 꿀팁 나눔 모임입니다.',
+            'banner_url' => '/uploads/images/resources/bergen_senior_services_portal.jpg',
+            'theme_color' => '#EC4899',
+            'emblem' => 'fa-heart',
+            'welcome_msg' => '미국 생활 속 육아 고민과 일상의 행복을 함께 나누어요!',
+            'kakao_link' => '',
+            'status' => 'active',
+            'flag_reason' => '',
+            'view_count' => 110,
+            'post_count' => 0,
+            'created_at' => '2026-10-01T11:00:00-04:00',
+            'updated_at' => '2026-10-13T14:00:00-04:00'
+        ]
+    ];
+}
+
+/**
+ * Get all club rooms with filtering and search
+ */
+function forum_get_club_rooms(?string $type = null, ?string $search = null, ?string $status = 'active'): array {
+    $data = get_forum_data();
+    if (!isset($data['club_rooms']) || !is_array($data['club_rooms']) || empty($data['club_rooms'])) {
+        $data['club_rooms'] = forum_get_default_club_rooms();
+        save_forum_data($data);
+    }
+
+    $rooms = array_values($data['club_rooms']);
+
+    // Count posts in each room dynamically
+    $questions = $data['questions'] ?? [];
+    $roomPostCounts = [];
+    foreach ($questions as $q) {
+        if (!empty($q['roomId']) && ($q['status'] ?? 'active') === 'active') {
+            $rId = $q['roomId'];
+            $roomPostCounts[$rId] = ($roomPostCounts[$rId] ?? 0) + 1;
+        }
+    }
+
+    foreach ($rooms as &$r) {
+        $rId = $r['id'];
+        $r['post_count'] = $roomPostCounts[$rId] ?? ($r['post_count'] ?? 0);
+    }
+    unset($r);
+
+    if (!empty($type) && $type !== 'all') {
+        $rooms = array_filter($rooms, fn($r) => ($r['type'] ?? '') === $type || ($r['type_ko'] ?? '') === $type);
+    }
+
+    if (!empty($status) && $status !== 'all') {
+        $rooms = array_filter($rooms, fn($r) => ($r['status'] ?? 'active') === $status);
+    }
+
+    if (!empty($search)) {
+        $needle = mb_strtolower(trim($search));
+        $rooms = array_filter($rooms, function($r) use ($needle) {
+            $haystack = mb_strtolower(($r['name'] ?? '') . ' ' . ($r['description'] ?? '') . ' ' . ($r['location'] ?? '') . ' ' . ($r['leader_name'] ?? ''));
+            return mb_strpos($haystack, $needle) !== false;
+        });
+    }
+
+    usort($rooms, function($a, $b) {
+        if (($a['status'] ?? 'active') !== ($b['status'] ?? 'active')) {
+            return ($a['status'] ?? 'active') === 'active' ? -1 : 1;
+        }
+        return strcmp($b['created_at'] ?? '', $a['created_at'] ?? '');
+    });
+
+    return array_values($rooms);
+}
+
+/**
+ * Get single club room by ID
+ */
+function forum_get_club_room(string $roomId): ?array {
+    $data = get_forum_data();
+    if (!isset($data['club_rooms']) || empty($data['club_rooms'])) {
+        $data['club_rooms'] = forum_get_default_club_rooms();
+        save_forum_data($data);
+    }
+
+    $room = $data['club_rooms'][$roomId] ?? null;
+    if (!$room) {
+        foreach ($data['club_rooms'] as $id => $r) {
+            if (strcasecmp($id, $roomId) === 0 || strcasecmp($r['name'] ?? '', $roomId) === 0) {
+                $room = $r;
+                break;
+            }
+        }
+    }
+
+    if (!$room) return null;
+
+    $questions = $data['questions'] ?? [];
+    $pCount = 0;
+    foreach ($questions as $q) {
+        if (($q['roomId'] ?? '') === $room['id'] && ($q['status'] ?? 'active') === 'active') {
+            $pCount++;
+        }
+    }
+    $room['post_count'] = max($pCount, $room['post_count'] ?? 0);
+
+    return $room;
+}
+
+/**
+ * Create a new club room
+ */
+function forum_create_club_room(array $roomData): array {
+    $data = get_forum_data();
+    if (!isset($data['club_rooms']) || !is_array($data['club_rooms'])) {
+        $data['club_rooms'] = forum_get_default_club_rooms();
+    }
+
+    $name = trim($roomData['name'] ?? '');
+    $leaderName = trim($roomData['leader_name'] ?? ($roomData['author_name'] ?? '방장'));
+    $description = trim($roomData['description'] ?? '');
+
+    if (mb_strlen($name) < 2) {
+        throw new InvalidArgumentException('동호회/동문회 이름을 2자 이상 입력해주세요.');
+    }
+    if (mb_strlen($leaderName) < 1) {
+        throw new InvalidArgumentException('방장 닉네임을 입력해주세요.');
+    }
+
+    $id = 'club_' . bin2hex(random_bytes(5));
+    $type = trim($roomData['type'] ?? 'hobby');
+    $typeMap = [
+        'alumni' => '대학/고교 동문회',
+        'sports' => '취미/스포츠',
+        'hobby' => '취미/소모임',
+        'social' => '친목/소모임',
+        'culture' => '문화/예술',
+        'biz' => '전문직/비즈니스',
+        'other' => '기타 모임'
+    ];
+    $typeKo = $roomData['type_ko'] ?? ($typeMap[$type] ?? '친목/소모임');
+
+    $room = [
+        'id' => $id,
+        'name' => $name,
+        'type' => $type,
+        'type_ko' => $typeKo,
+        'location' => trim($roomData['location'] ?? '뉴저지 전역'),
+        'leader_name' => $leaderName,
+        'leader_contact' => trim($roomData['leader_contact'] ?? ''),
+        'leader_pin' => trim($roomData['leader_pin'] ?? '1234'),
+        'description' => $description,
+        'banner_url' => trim($roomData['banner_url'] ?? ''),
+        'theme_color' => trim($roomData['theme_color'] ?? '#1B6FA8'),
+        'emblem' => trim($roomData['emblem'] ?? 'fa-users'),
+        'welcome_msg' => trim($roomData['welcome_msg'] ?? '새로 오신 회원님들을 환영합니다!'),
+        'kakao_link' => trim($roomData['kakao_link'] ?? ''),
+        'status' => 'active',
+        'flag_reason' => '',
+        'view_count' => 0,
+        'post_count' => 0,
+        'created_at' => date('c'),
+        'updated_at' => date('c')
+    ];
+
+    $data['club_rooms'][$id] = $room;
+    save_forum_data($data);
+    return $room;
+}
+
+/**
+ * Update room status (Flag / Close or Re-open)
+ */
+function forum_set_club_room_status(string $roomId, string $status, ?string $reason = null): bool {
+    $data = get_forum_data();
+    if (!isset($data['club_rooms']) || !isset($data['club_rooms'][$roomId])) {
+        return false;
+    }
+
+    $data['club_rooms'][$roomId]['status'] = $status;
+    if ($status === 'closed') {
+        $data['club_rooms'][$roomId]['flag_reason'] = $reason ?: '운영 정책 위반 및 이용약관 위반에 따른 관리자 제재 조치';
+    } else {
+        $data['club_rooms'][$roomId]['flag_reason'] = '';
+    }
+    $data['club_rooms'][$roomId]['updated_at'] = date('c');
+
+    return save_forum_data($data);
+}
+
+/**
+ * Delete a club room
+ */
+function forum_delete_club_room(string $roomId): bool {
+    $data = get_forum_data();
+    if (!isset($data['club_rooms']) || !isset($data['club_rooms'][$roomId])) {
+        return false;
+    }
+
+    unset($data['club_rooms'][$roomId]);
+    return save_forum_data($data);
+}
+
+/**
+ * Get posts inside a club room
+ */
+function forum_get_club_posts(string $roomId, ?string $tag = null, ?string $search = null, int $limit = 50): array {
+    $data = get_forum_data();
+    $questions = $data['questions'] ?? [];
+
+    $roomPosts = [];
+    foreach ($questions as $q) {
+        if (($q['roomId'] ?? '') === $roomId && ($q['status'] ?? 'active') === 'active') {
+            if ($tag && $tag !== 'all' && ($q['roomTag'] ?? '') !== $tag) {
+                continue;
+            }
+            if (!empty($search)) {
+                $needle = mb_strtolower(trim($search));
+                $haystack = mb_strtolower(($q['title'] ?? '') . ' ' . ($q['body'] ?? '') . ' ' . ($q['authorName'] ?? ''));
+                if (mb_strpos($haystack, $needle) === false) {
+                    continue;
+                }
+            }
+            $roomPosts[] = $q;
+        }
+    }
+
+    if (empty($roomPosts)) {
+        $seedPosts = forum_get_seed_club_posts($roomId);
+        if (!empty($seedPosts)) {
+            foreach ($seedPosts as $sp) {
+                $data['questions'][$sp['id']] = $sp;
+                $roomPosts[] = $sp;
+            }
+            save_forum_data($data);
+        }
+    }
+
+    usort($roomPosts, function($a, $b) {
+        if (!empty($a['isPinned']) !== !empty($b['isPinned'])) {
+            return !empty($a['isPinned']) ? -1 : 1;
+        }
+        return strcmp($b['createdAt'] ?? '', $a['createdAt'] ?? '');
+    });
+
+    return array_slice($roomPosts, 0, $limit);
+}
+
+/**
+ * Seed initial posts for seed rooms
+ */
+function forum_get_seed_club_posts(string $roomId): array {
+    if ($roomId === 'club_golf_nj') {
+        return [
+            [
+                'id' => 'post_golf_1',
+                'roomId' => 'club_golf_nj',
+                'specialtyId' => 'clubs',
+                'categoryId' => 'clubs',
+                'isRoomPost' => true,
+                'roomTag' => '공지',
+                'isPinned' => true,
+                'isLeader' => true,
+                'title' => '[공지] 이번 주말 크리스탈 스프링스 정기 라운딩 조편성 안내',
+                'body' => "안녕하세요, 버겐 골프클럽 회원 여러분!\r\n\r\n이번 주 일요일 오전 8시 크리스탈 스프링스(Crystal Springs) 정기 라운딩 조편성이 완료되었습니다.\r\n참가 신청하신 분들은 티오프 30분 전까지 클럽하우스 앞으로 모여주시기 바랍니다.\r\n\r\n카풀이나 기타 문의사항은 본 게시글에 댓글 남겨주세요!",
+                'authorName' => '골프매니아 (김진우)',
+                'isVerifiedClinician' => false,
+                'status' => 'active',
+                'viewCount' => 84,
+                'replyCount' => 4,
+                'likeCount' => 12,
+                'images' => ['/uploads/images/hero_slide_hospital_bill.jpg'],
+                'createdAt' => '2026-10-10T11:20:00-04:00'
+            ],
+            [
+                'id' => 'post_golf_2',
+                'roomId' => 'club_golf_nj',
+                'specialtyId' => 'clubs',
+                'categoryId' => 'clubs',
+                'isRoomPost' => true,
+                'roomTag' => '정모/후기',
+                'isPinned' => false,
+                'isLeader' => false,
+                'title' => '[정모후기] 지난 주 팰리세이즈 가을 라운딩 사진 및 스코어 공유합니다',
+                'body' => "날씨가 너무 쾌청해서 최고의 라운딩이었습니다! 참석해주신 동호회 회원님들 모두 수고 많으셨습니다. 다음 달 월례회에서도 뵙겠습니다.",
+                'authorName' => '버디찬스 (정준호)',
+                'status' => 'active',
+                'viewCount' => 52,
+                'replyCount' => 2,
+                'likeCount' => 7,
+                'images' => [],
+                'createdAt' => '2026-10-12T15:10:00-04:00'
+            ]
+        ];
+    }
+    if ($roomId === 'club_korea_univ') {
+        return [
+            [
+                'id' => 'post_ku_1',
+                'roomId' => 'club_korea_univ',
+                'specialtyId' => 'clubs',
+                'categoryId' => 'clubs',
+                'isRoomPost' => true,
+                'roomTag' => '공지',
+                'isPinned' => true,
+                'isLeader' => true,
+                'title' => '[공지] 2026 하반기 뉴저지 교우 가족 친선 모임 및 멘토링의 밤',
+                'body' => "친애하는 재미 뉴욕/뉴저지 교우 여러분 안녕하십니까.\r\n2026년 가을을 맞이하여 교우 가족 친선 모임 및 차세대 동문 멘토링 행사를 포트리에서 개최합니다.\r\n선후배 교우님들의 많은 성원 부탁드립니다.",
+                'authorName' => '호랑이 (이동훈)',
+                'status' => 'active',
+                'viewCount' => 67,
+                'replyCount' => 3,
+                'likeCount' => 9,
+                'images' => [],
+                'createdAt' => '2026-10-09T18:00:00-04:00'
+            ]
+        ];
+    }
+    return [];
+}
+
+/**
+ * Add a post inside a club room
+ */
+function forum_add_club_post(string $roomId, array $postData): array {
+    $room = forum_get_club_room($roomId);
+    if (!$room) {
+        throw new InvalidArgumentException('존재하지 않는 동호회/동문회 룸입니다.');
+    }
+    if (($room['status'] ?? 'active') === 'closed') {
+        throw new RuntimeException('해당 룸은 운영정책 위반으로 제재(Flagged) 처리되어 글 작성이 제한됩니다.');
+    }
+
+    $title = trim($postData['title'] ?? '');
+    $body = trim($postData['body'] ?? '');
+    $authorName = trim($postData['author_name'] ?? '동호회 회원');
+    $tag = trim($postData['tag'] ?? '자유');
+    $isLeader = !empty($postData['is_leader']);
+    $pin = trim($postData['pin'] ?? '');
+
+    if ($isLeader && !empty($room['leader_pin'])) {
+        if ($pin !== $room['leader_pin'] && empty($_SESSION['cms_logged_in'])) {
+            $isLeader = false;
+        }
+    }
+
+    if (mb_strlen($title) < 2) {
+        throw new InvalidArgumentException('제목을 2자 이상 입력해주세요.');
+    }
+    if (mb_strlen($body) < 2) {
+        throw new InvalidArgumentException('내용을 2자 이상 입력해주세요.');
+    }
+
+    $data = get_forum_data();
+    $postId = 'post_' . bin2hex(random_bytes(6));
+    $images = $postData['images'] ?? [];
+    if (is_string($images)) {
+        $images = json_decode($images, true) ?: [$images];
+    }
+
+    $post = [
+        'id' => $postId,
+        'roomId' => $roomId,
+        'specialtyId' => 'clubs',
+        'categoryId' => 'clubs',
+        'subBoardId' => null,
+        'isRoomPost' => true,
+        'roomTag' => $tag,
+        'isPinned' => ($tag === '공지' && $isLeader),
+        'isLeader' => $isLeader,
+        'title' => $title,
+        'body' => $body,
+        'authorName' => $authorName . ($isLeader ? ' (방장)' : ''),
+        'status' => 'active',
+        'viewCount' => 0,
+        'replyCount' => 0,
+        'likeCount' => 0,
+        'images' => $images,
+        'createdAt' => date('c'),
+        'updatedAt' => date('c')
+    ];
+
+    $data['questions'][$postId] = $post;
+    if (isset($data['club_rooms'][$roomId])) {
+        $data['club_rooms'][$roomId]['post_count'] = ($data['club_rooms'][$roomId]['post_count'] ?? 0) + 1;
+        $data['club_rooms'][$roomId]['updated_at'] = date('c');
+    }
+
+    save_forum_data($data);
+    return $post;
+}
+
+
 
