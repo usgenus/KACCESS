@@ -432,7 +432,7 @@ $initialCount = count($partners);
                   <?php else: ?>
                     <button type="button" onclick="handleKakaoChat('<?= htmlspecialchars($p['id']) ?>', '<?= htmlspecialchars($p['kakaoChannelId']) ?>')" class="w-full py-1.5 px-1.5 rounded-lg bg-[#FEE500] hover:bg-[#FDD835] text-[#191919] font-bold text-[11px] tracking-tight transition-all active:scale-95 shadow-xs flex items-center justify-center gap-1 text-center whitespace-nowrap cursor-pointer">
                       <img src="/kakaotalk-icon.png" alt="Kakao" class="w-3 h-3 rounded-xs object-contain" />
-                      <span>카카오톡</span>
+                      <span>카톡으로 문의</span>
                     </button>
                   <?php endif; ?>
                 </div>
