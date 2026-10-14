@@ -439,7 +439,7 @@ $initialCount = count($partners);
               <div class="pt-2 grid grid-cols-2 gap-2 border-t border-slate-100">
                 <!-- Minisite / Detail Button -->
                 <button type="button" onclick="openPartnerDetail('<?= htmlspecialchars($p['id']) ?>')" class="w-full py-2.5 px-3 rounded-xl bg-brand-forest hover:bg-brand-forestDark text-white font-bold text-xs sm:text-sm tracking-tight transition-all active:scale-95 shadow-xs flex items-center justify-center gap-1 cursor-pointer">
-                  <span>미니사이트 보기</span>
+                  <span>자세히보기</span>
                 </button>
 
                 <!-- Contact Button (KakaoTalk OR Email) -->
