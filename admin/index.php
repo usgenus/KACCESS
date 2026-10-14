@@ -426,10 +426,10 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
         <div>
           <div class="flex items-center gap-2">
             <span class="p-2 bg-blue-500/10 text-blue-400 rounded-xl text-lg"><i class="fa-solid fa-panorama"></i></span>
-            <h1 class="text-xl sm:text-2xl font-extrabold text-white">히어로 6대 서비스 빌보드 &amp; 대화면 비디오 관리 (Hero Billboard)</h1>
+            <h1 class="text-xl sm:text-2xl font-extrabold text-white">히어로 8대 서비스 빌보드 &amp; 대화면 비디오 관리 (Hero Billboard)</h1>
           </div>
           <p class="text-xs sm:text-sm text-slate-400 mt-1 leading-relaxed">
-            홈페이지 <strong>최상단 대화면 비디오 &amp; 6대 서비스 빌보드</strong>를 관리합니다. <strong>슬라이드 1의 영상은 첫 화면의 대화면 메인 비디오로 자동 연동</strong>되며, 첫 화면 재생 후 6개 정보 슬라이드 빌보드로 축소 전환됩니다. 6개 슬라이드 전체의 제목, 설명 문구, 미디어, 버튼 링크를 편집할 수 있습니다.
+            홈페이지 <strong>최상단 대화면 비디오 &amp; 8대 서비스 빌보드</strong>를 관리합니다. <strong>슬라이드 1의 영상은 첫 화면의 대화면 메인 비디오로 자동 연동</strong>되며, 첫 화면 재생 후 8개 정보 슬라이드 빌보드로 축소 전환됩니다. 8개 슬라이드 전체의 제목, 설명 문구, 미디어, 버튼 링크를 편집할 수 있습니다.
           </p>
         </div>
         <button onclick="openBillboardModal()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-3 rounded-2xl transition-all flex items-center gap-2 text-xs shadow-lg shadow-blue-600/30 whitespace-nowrap self-start sm:self-auto">

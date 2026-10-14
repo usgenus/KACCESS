@@ -4,27 +4,39 @@ require_once __DIR__ . '/components.php';
 
 $id = trim($_GET['id'] ?? '');
 if (!$id) {
-    header('Location: /ko/forum');
+    header('Location: /forum');
     exit;
 }
 
 $question = forum_get_question($id, true);
 if (!$question || (($question['status'] ?? '') === 'hidden')) {
-    header('Location: /ko/forum');
+    header('Location: /forum');
     exit;
 }
 
 $categories = forum_get_categories();
-$specialties = $categories;
-$category = $question['category'] ?? null;
-$subSpecialty = $question['subSpecialty'] ?? null;
+$catInfo = forum_map_specialty_to_category($question['specialtyId'] ?? '', $question['subBoardId'] ?? null);
+$category = forum_get_category_by_id($catInfo['categoryId']) ?: forum_get_category_by_id('community');
+$allSubs = forum_get_sub_boards();
+$subBoard = null;
+if (!empty($catInfo['subBoardId']) && !empty($allSubs[$catInfo['categoryId']])) {
+    foreach ($allSubs[$catInfo['categoryId']] as $sb) {
+        if ($sb['id'] === $catInfo['subBoardId']) {
+            $subBoard = $sb;
+            break;
+        }
+    }
+}
+$subSpecialty = !empty($catInfo['subSpecialtyId']) ? forum_get_sub_specialty_by_id($catInfo['subSpecialtyId']) : null;
 $specialty = $category;
 
-$relatedQuestions = forum_get_questions($category['id'] ?? '', 'popular', '', 'active', $subSpecialty['id'] ?? '');
+$relatedQuestions = forum_get_questions($category['id'] ?? '', 'popular', '', 'active', $catInfo['subBoardId'] ?? '');
 $relatedQuestions = array_values(array_filter($relatedQuestions, fn($q) => $q['id'] !== $id));
 $relatedQuestions = array_slice($relatedQuestions, 0, 4);
 
 $isQuestionClinician = !empty($question['authorBadge']) && str_contains($question['authorBadge'], 'Clinician');
+$isProfessionalCategory = in_array($question['category'] ?? '', ['medical', 'columns']) || !empty($question['isProfessionalListing']);
+$answersHeadingTitle = $isProfessionalCategory ? '전문가 답변' : '댓글';
 
 $cleanBodyText = preg_replace('/\s+/', ' ', trim(strip_tags($question['body'])));
 $cleanTitleText = trim(strip_tags($question['title']));
@@ -51,7 +63,8 @@ foreach ($activeAnswers as $ans) {
         'author' => [
             '@type' => 'Person',
             'name' => $ans['authorName'] ?? '답변자',
-            'jobTitle' => $isClin ? ($ans['clinicianTitle'] ?? '공인 전문의') : '포럼 참여자'
+            'jobTitle' => $isClin ? ($ans['clinicianTitle'] ?? '공인 전문의') : '포럼 참여자',
+            'url' => $topicUrl . '#ans-' . urlencode($ans['id'])
         ]
     ];
     if ($isClin && !$acceptedAnswerObj) {
@@ -72,7 +85,8 @@ $questionEntity = [
     'dateModified' => $modDate,
     'author' => [
         '@type' => 'Person',
-        'name' => $question['authorName'] ?? '포럼 회원'
+        'name' => $question['authorName'] ?? '포럼 회원',
+        'url' => $topicUrl
     ]
 ];
 if ($acceptedAnswerObj) {
@@ -96,7 +110,7 @@ $breadcrumbList = [
         [
             '@type' => 'ListItem',
             'position' => 2,
-            'name' => '커뮤니티 포럼',
+            'name' => '뉴저지 한인 광장',
             'item' => 'https://njaccessportal.com/forum'
         ]
     ]
@@ -136,7 +150,28 @@ $forumPostingSchema = [
     'mainEntityOfPage' => $topicUrl,
     'author' => [
         '@type' => 'Person',
-        'name' => $question['authorName'] ?? '포럼 회원'
+        'name' => $question['authorName'] ?? '포럼 회원',
+        'url' => $topicUrl
+    ],
+    'keywords' => [
+        '한인포럼',
+        '뉴저지 한인포럼',
+        '한인광장',
+        '뉴저지 한인광장',
+        '의료점보센터',
+        '의료정보센터',
+        '의료접근센터',
+        'healthcare access center',
+        'korean portal',
+        'healthcare resource center',
+        '한인 의료',
+        '한인 의사',
+        '한인 병원'
+    ],
+    'publisher' => [
+        '@type' => 'Organization',
+        'name' => '뉴저지 한인포럼 · 뉴저지 한인광장 (NJ Access Portal)',
+        'url' => 'https://njaccessportal.com/forum'
     ],
     'interactionStatistic' => [
         [
@@ -157,20 +192,17 @@ $forumPostingSchema = [
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?= htmlspecialchars($cleanTitleText) ?> | NJAP 헬스케어 포럼</title>
+  <title><?= htmlspecialchars($cleanTitleText) ?> | 한인 의료 접근센터 (Healthcare Access Center)</title>
   <meta name="description" content="<?= htmlspecialchars($seoDesc) ?>" />
-  <meta name="keywords" content="<?= htmlspecialchars($category['name_ko'] ?? '건강 Q&A') ?>, <?= htmlspecialchars($subSpecialty['name_ko'] ?? '') ?>, 건강 포럼, 뉴저지 한인 병원 후기, 메디케어, 메디케이드, 뉴저지 의료접근센터" />
+  <meta name="keywords" content="<?= htmlspecialchars($category['name_ko'] ?? '건강 Q&A') ?>, <?= htmlspecialchars($subSpecialty['name_ko'] ?? '') ?>, 한인 의료 접근센터, 한인 의료접근센터, 한인의료접근센터, 뉴저지 한인 의료 접근센터, 한인포럼, 뉴저지 한인포럼, 한인광장, 뉴저지 한인광장, 의료정보센터, 의료점보센터, 의료접근센터, healthcare access center, korean portal, healthcare resource center, 한인 의료, 한인 의사, 한인 병원, 건강 포럼, 뉴저지 한인 병원 후기, 메디케어, 메디케이드" />
   
   <!-- Directives for Googlebot & Web Crawlers -->
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <link rel="canonical" href="https://njaccessportal.com/forum/topic/<?= htmlspecialchars($id) ?>" />
-" />
-" />
-" />
 
   <!-- OpenGraph / Social Media -->
-  <meta property="og:site_name" content="NJAP 헬스케어 포럼 · 뉴저지 의료접근센터" />
+  <meta property="og:site_name" content="한인 의료 접근센터 · Healthcare Access Center · 뉴저지 한인포럼" />
   <meta property="og:type" content="article" />
   <meta property="og:title" content="<?= htmlspecialchars($cleanTitleText) ?>" />
   <meta property="og:description" content="<?= htmlspecialchars($seoDesc) ?>" />
@@ -287,6 +319,14 @@ $forumPostingSchema = [
     .touch-target {
       min-height: 48px;
     }
+    /* Compact Author Spacing for Maximum Content Visibility (1 line spacing default) */
+    .prose.whitespace-pre-line {
+      margin-top: 0 !important;
+      padding-top: 0 !important;
+    }
+    .prose.whitespace-pre-line > *:first-child {
+      margin-top: 0 !important;
+    }
   </style>
 </head>
 <body class="bg-[#F8FAFC] text-slate-900 font-sans antialiased min-h-screen flex flex-col selection:bg-blue-600 selection:text-white">
@@ -302,25 +342,28 @@ $forumPostingSchema = [
 
     <!-- Main Content Area -->
     <main class="flex-1 min-w-0 p-4 sm:p-6 lg:p-8">
-      
-      <!-- Mandatory Clinical Disclaimer Banner -->
-      <?php render_forum_disclaimer_banner(); ?>
 
       <!-- Top Breadcrumbs & Back Bar -->
       <div class="flex items-center justify-between gap-4 mb-4 text-xs sm:text-sm font-bold text-slate-500 flex-wrap">
         <div class="flex items-center gap-2 flex-wrap">
-          <a href="/forum" class="hover:text-blue-600 transition-colors">포럼 홈</a>
+          <a href="/forum" class="hover:text-[#1B6FA8] transition-colors">포럼 홈</a>
           <span class="text-slate-300">/</span>
-          <a href="/forum?specialty=<?= urlencode($category['id'] ?? '') ?>&view=topics" 
-             class="hover:text-blue-600 transition-colors">
+          <a href="/forum?specialty=<?= urlencode($category['id'] ?? '') ?>" 
+             class="hover:text-[#1B6FA8] transition-colors">
             <?= htmlspecialchars($category['name_ko'] ?? '게시판') ?>
           </a>
+          <?php if (!empty($subBoard)): ?>
+            <span class="text-slate-300">/</span>
+            <a href="/forum?specialty=<?= urlencode($category['id'] ?? '') ?>&sub=<?= urlencode($subBoard['id']) ?>"
+               class="text-[#1B6FA8] hover:underline transition-colors">
+              <?= htmlspecialchars($subBoard['name_ko']) ?>
+            </a>
+          <?php endif; ?>
           <?php if (!empty($subSpecialty)): ?>
             <span class="text-slate-300">/</span>
-            <a href="/forum?specialty=medical_health&sub=<?= urlencode($subSpecialty['id']) ?>&view=topics"
-               class="text-blue-600 hover:text-blue-800 transition-colors">
+            <span class="text-slate-600 font-medium">
               <?= htmlspecialchars($subSpecialty['name_ko']) ?>
-            </a>
+            </span>
           <?php endif; ?>
         </div>
         <span class="text-slate-400 font-normal">
@@ -332,23 +375,29 @@ $forumPostingSchema = [
       <div class="mb-6">
         <div class="flex items-center gap-2 mb-2.5 flex-wrap">
           <?php if ($category): ?>
-            <a href="/forum?specialty=<?= urlencode($category['id']) ?>&view=topics" 
-               class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-xl border bg-white text-slate-800 shadow-2xs hover:border-blue-400 transition-colors">
+            <a href="/forum?specialty=<?= urlencode($category['id']) ?>" 
+               class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-xl border bg-white text-slate-800 shadow-2xs hover:border-[#1B6FA8] transition-colors">
               <span><?= htmlspecialchars($category['name_ko']) ?></span>
             </a>
           <?php endif; ?>
 
-          <?php if (!empty($subSpecialty)): ?>
-            <a href="/forum?specialty=medical_health&sub=<?= urlencode($subSpecialty['id']) ?>&view=topics"
-               class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-xl border border-blue-200 bg-blue-50 text-blue-800 shadow-2xs hover:bg-blue-100 transition-colors">
-              <span><?= htmlspecialchars($subSpecialty['name_ko']) ?></span>
+          <?php if (!empty($subBoard)): ?>
+            <a href="/forum?specialty=<?= urlencode($category['id']) ?>&sub=<?= urlencode($subBoard['id']) ?>"
+               class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-xl border border-blue-200 bg-blue-50 text-[#1B6FA8] shadow-2xs hover:bg-blue-100 transition-colors">
+              <span><?= htmlspecialchars($subBoard['name_ko']) ?></span>
             </a>
+          <?php endif; ?>
+
+          <?php if (!empty($subSpecialty)): ?>
+            <span class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-xl border border-slate-200 bg-slate-100 text-slate-700">
+              <span><?= htmlspecialchars($subSpecialty['name_ko']) ?></span>
+            </span>
           <?php endif; ?>
 
           <?php if (!empty($question['tags'])): ?>
             <?php foreach ($question['tags'] as $tag): ?>
-              <a href="/forum?specialty=<?= urlencode($category['id'] ?? '') ?>&q=<?= urlencode($tag) ?>&view=topics" 
-                 class="text-xs bg-slate-100 hover:bg-blue-50 hover:text-blue-700 text-slate-600 px-2.5 py-1 rounded-lg border border-slate-200/80 transition-colors font-medium">
+              <a href="/forum?specialty=<?= urlencode($category['id'] ?? '') ?>&q=<?= urlencode($tag) ?>" 
+                 class="text-xs bg-slate-100 hover:bg-blue-50 hover:text-[#1B6FA8] text-slate-600 px-2.5 py-1 rounded-lg border border-slate-200/80 transition-colors font-medium">
                 #<?= htmlspecialchars($tag) ?>
               </a>
             <?php endforeach; ?>
@@ -358,6 +407,189 @@ $forumPostingSchema = [
         <h1 class="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 tracking-tight leading-snug">
           <?= htmlspecialchars($question['title'] ?? '') ?>
         </h1>
+
+        <?php 
+          $isMarket = ($question['categoryId'] ?? '') === 'market';
+          $isWanted = ($question['categoryId'] ?? '') === 'wanted';
+          $isEvents = ($question['categoryId'] ?? '') === 'events';
+          $hasLocation = !empty($question['location']);
+          
+          $hasRating = isset($question['rating']) && $question['rating'] !== null && $question['rating'] !== '';
+          if (!$hasRating && (in_array($question['categoryId'] ?? '', ['food', 'restaurants']) || ($question['subBoardId'] ?? '') === 'medical_reviews' || strpos($question['title'] ?? '', '후기') !== false)) {
+              $hasRating = true;
+              $question['rating'] = 9.5;
+          }
+          $ratingVal = $hasRating ? floatval($question['rating']) : null;
+          if ($ratingVal !== null) {
+              $ratingVal = max(0, min(10, $ratingVal)); // 0 to 10 scale
+          }
+        ?>
+
+        <?php if ($isMarket || $isWanted): ?>
+          <?php if ($isWanted): ?>
+            <!-- Wanted Top Banner: Dedicated Service Liability & Precautions Banner -->
+            <div class="mt-4 p-4 rounded-2xl bg-teal-50/90 border border-teal-200/90 text-xs text-teal-950 leading-relaxed shadow-2xs">
+              <div class="flex items-center justify-between gap-2 mb-1.5 flex-wrap">
+                <div class="flex items-center gap-1.5 font-black text-teal-950 text-xs sm:text-sm">
+                  <i class="fa-solid fa-shield-halved text-teal-600"></i>
+                  <span>생활·교육·커뮤니티 서비스 이용 주의 및 면책 안내</span>
+                </div>
+                <button type="button" onclick="openServiceDisclaimerModal()" class="text-[11px] font-bold text-teal-800 underline hover:text-black cursor-pointer">
+                  서비스 약관 및 면책 안내 전문 보기 →
+                </button>
+              </div>
+              <p class="text-teal-900 text-xs leading-relaxed">
+                뉴저지 한인 광장 서비스는 회원 상호 간 맞춤 생활 도움, 과외·교육, 심부름 및 커뮤니티 소통을 위한 자율 정보 공간입니다. NJ Access Portal은 서비스의 당사자 또는 고용주가 아니며, 업무 조건·자격·안전을 보증하지 않습니다. 당사자 간 계약 불이행, 금전 거래, 사고, 분쟁, 손해에 대해 당사는 법적 책임을 지지 않습니다.
+              </p>
+            </div>
+          <?php else: ?>
+            <!-- Marketplace Top Banner: Compact Liability Disclaimer -->
+            <div class="mt-4 p-3.5 rounded-2xl bg-amber-50/90 border border-amber-200/90 text-xs text-amber-900 leading-relaxed shadow-2xs">
+              <div class="flex items-center justify-between gap-2 mb-1">
+                <div class="flex items-center gap-1.5 font-black text-amber-950 text-xs">
+                  <i class="fa-solid fa-triangle-exclamation text-amber-600"></i>
+                  <span>거래 주의 안내</span>
+                </div>
+                <button type="button" onclick="openMarketDisclaimerModal()" class="text-[11px] font-bold text-amber-900 underline hover:text-black cursor-pointer">
+                  약관 및 면책 안내 전문 보기
+                </button>
+              </div>
+              <p>
+                뉴저지 한인 광장 중고거래는 회원 간 직거래를 위한 게시판입니다. NJ Access Portal은 거래의 당사자가 아니며, 게시글의 진위·상품 상태·거래 안전을 보증하지 않습니다. 금전 거래, 사기, 분쟁, 손해에 대해 당사는 책임을 지지 않습니다.
+              </p>
+            </div>
+          <?php endif; ?>
+
+          <!-- Unified Specs & Contact Bar (Everything in One Space) -->
+          <?php
+            $rawMethods = $question['contactMethods'] ?? ($question['contact_methods'] ?? ['email']);
+            if (is_string($rawMethods)) {
+              $decodedMethods = json_decode($rawMethods, true);
+              $rawMethods = is_array($decodedMethods) ? $decodedMethods : explode(',', $rawMethods);
+            }
+            $activeMethods = is_array($rawMethods) ? array_map('trim', $rawMethods) : ['email'];
+            if (empty($activeMethods)) $activeMethods = ['email'];
+            
+            $isPhoneVisible = !empty($question['phoneVisible']) && !empty($question['contactPhone']);
+            $rawPhone = $isPhoneVisible ? trim((string)$question['contactPhone']) : '';
+            $telDigits = preg_replace('/[^\d\+]/', '', $rawPhone);
+          ?>
+          <div class="mt-3 p-3.5 sm:p-4 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4">
+            <!-- Left: Specs (Location, Price, Condition) -->
+            <div class="flex items-center gap-4 sm:gap-6 flex-wrap text-xs sm:text-sm">
+              <?php if ($hasLocation): ?>
+                <div class="flex items-center gap-1.5">
+                  <span class="text-slate-400 text-xs font-bold">위치:</span>
+                  <span class="font-extrabold text-slate-800 flex items-center gap-1">
+                    <i class="fa-solid fa-location-dot text-red-500 text-xs"></i>
+                    <?= htmlspecialchars($question['location']) ?>
+                  </span>
+                </div>
+              <?php endif; ?>
+
+              <?php if (!empty($question['price'])): ?>
+                <div class="flex items-baseline gap-1.5">
+                  <span class="<?= $isWanted ? 'text-teal-700' : 'text-slate-400' ?> text-xs font-bold"><?= $isWanted ? '희망 보수 / 예산:' : '가격:' ?></span>
+                  <span class="font-black text-base <?= $isWanted ? 'text-teal-800' : 'text-[#1B6FA8]' ?>"><?= htmlspecialchars($question['price']) ?></span>
+                </div>
+              <?php endif; ?>
+
+              <?php if (!empty($question['itemCondition'])): ?>
+                <div class="flex items-baseline gap-1.5">
+                  <span class="<?= $isWanted ? 'text-teal-700' : 'text-slate-400' ?> text-xs font-bold"><?= $isWanted ? '희망 일정 / 조건:' : '상태 / 조건:' ?></span>
+                  <span class="font-bold text-slate-700"><?= htmlspecialchars($question['itemCondition']) ?></span>
+                </div>
+              <?php endif; ?>
+            </div>
+
+            <!-- Right: Contact / Reply Buttons -->
+            <div class="flex items-center gap-2 flex-wrap shrink-0 pt-2.5 md:pt-0 border-t md:border-t-0 border-slate-100">
+              <!-- 1. 전화 걸기 (전화 활성화 & 번호공개 시에만 노출) -->
+              <?php if (in_array('tel', $activeMethods) && $isPhoneVisible && !empty($telDigits)): ?>
+                <a href="tel:<?= htmlspecialchars($telDigits) ?>" 
+                   class="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs sm:text-sm shadow-xs transition-colors">
+                  <i class="fa-solid fa-phone text-xs"></i>
+                  <span>전화 걸기</span>
+                </a>
+              <?php endif; ?>
+
+              <!-- 2. 문자 보내기 (문자 활성화 & 번호공개 시에만 노출) -->
+              <?php if (in_array('sms', $activeMethods) && $isPhoneVisible && !empty($telDigits)): ?>
+                <a href="sms:<?= htmlspecialchars($telDigits) ?>" 
+                   class="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-xs sm:text-sm shadow-xs transition-colors">
+                  <i class="fa-solid fa-comment-sms text-xs"></i>
+                  <span>문자 보내기</span>
+                </a>
+              <?php endif; ?>
+
+              <!-- 3. 이메일 보내기 (모달을 통해 안전 발송, 이메일 주소 비노출) -->
+              <?php if (in_array('email', $activeMethods)): ?>
+                <button type="button" onclick="openMarketEmailModal()" 
+                        class="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#1B6FA8] hover:bg-[#155A8A] text-white font-extrabold text-xs sm:text-sm shadow-xs transition-colors cursor-pointer">
+                  <i class="fa-solid fa-envelope text-xs"></i>
+                  <span>이메일 보내기</span>
+                </button>
+              <?php endif; ?>
+
+              <!-- 4. 신고하기 (모든 리스팅 상시 노출) -->
+              <button type="button" onclick="openMarketReportModal()" 
+                      class="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl border border-red-200 bg-red-50 hover:bg-red-100 text-red-700 font-extrabold text-xs sm:text-sm shadow-2xs transition-colors cursor-pointer"
+                      title="허위 매물 또는 사기 의심 신고">
+                <i class="fa-solid fa-flag text-red-600 text-xs"></i>
+                <span>신고하기</span>
+              </button>
+            </div>
+          </div>
+        <?php elseif ($hasLocation || $ratingVal !== null || ($isEvents && !empty($question['price']))): ?>
+          <!-- Other Boards Specs Bar (Food, Events, Reviews, etc.) -->
+          <div class="mt-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200/90 flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm">
+            <div class="flex items-center gap-5 sm:gap-6 flex-wrap">
+              <?php if ($hasLocation): ?>
+                <div class="flex items-center gap-1.5">
+                  <span class="text-slate-400 text-xs font-bold">위치:</span>
+                  <span class="font-extrabold text-slate-800 flex items-center gap-1">
+                    <i class="fa-solid fa-location-dot text-red-500"></i>
+                    <?= htmlspecialchars($question['location']) ?>
+                  </span>
+                </div>
+              <?php endif; ?>
+
+              <?php if ($ratingVal !== null): ?>
+                <div class="flex items-center gap-2">
+                  <span class="text-slate-400 text-xs font-bold">만족도 평점:</span>
+                  <div class="flex items-center gap-1.5">
+                    <div class="flex items-center text-amber-400 text-xs tracking-tight" title="<?= number_format($ratingVal, 1) ?> / 10점 (10점 최고 ⭐ / 0점 최악)">
+                      <?php for ($s = 1; $s <= 10; $s++): ?>
+                        <?php if ($s <= floor($ratingVal)): ?>
+                          <i class="fa-solid fa-star"></i>
+                        <?php elseif ($s - 0.5 <= $ratingVal): ?>
+                          <i class="fa-solid fa-star-half-stroke"></i>
+                        <?php else: ?>
+                          <i class="fa-regular fa-star text-slate-300"></i>
+                        <?php endif; ?>
+                      <?php endfor; ?>
+                    </div>
+                    <span class="font-black text-amber-600 text-xs sm:text-sm">
+                      <?= number_format($ratingVal, ($ratingVal == intval($ratingVal) ? 0 : 1)) ?><span class="text-slate-400 text-[11px] font-normal"> / 10점</span>
+                    </span>
+                    <?php if ($ratingVal >= 9.5): ?>
+                      <span class="text-[10px] bg-amber-100 text-amber-800 font-extrabold px-1.5 py-0.5 rounded">최고 (Best)</span>
+                    <?php elseif ($ratingVal <= 2.0): ?>
+                      <span class="text-[10px] bg-slate-200 text-slate-600 font-extrabold px-1.5 py-0.5 rounded">최악 (Worst)</span>
+                    <?php endif; ?>
+                  </div>
+                </div>
+              <?php endif; ?>
+
+              <?php if ($isEvents && !empty($question['price'])): ?>
+                <div>
+                  <span class="text-slate-400 text-[11px] block font-bold">참가비</span>
+                  <span class="font-bold text-sm text-slate-800"><?= htmlspecialchars($question['price']) ?></span>
+                </div>
+              <?php endif; ?>
+            </div>
+          </div>
+        <?php endif; ?>
       </div>
 
       <!-- Two-Column Thread Grid (Main Posts + Right Sidebar on Desktop) -->
@@ -370,48 +602,57 @@ $forumPostingSchema = [
           <article class="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/90 shadow-2xs relative">
             
             <!-- Author Header -->
-            <div class="flex items-center justify-between gap-4 pb-4 mb-5 border-b border-slate-100">
+            <div class="flex items-center justify-between gap-4 pb-2 mb-2.5 border-b border-slate-100">
               <div class="flex items-center gap-3">
-                <img src="<?= htmlspecialchars($question['authorAvatar'] ?: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&q=80') ?>" 
+                <img src="<?= htmlspecialchars(forum_sanitize_avatar($question['authorAvatar'] ?? '', $question['authorName'] ?? '', $question['authorBadge'] ?? '')) ?>" 
                      alt="<?= htmlspecialchars($question['authorName'] ?? '작성자') ?>" 
-                     class="w-10 h-10 rounded-full object-cover border border-slate-200" />
+                     class="w-9 h-9 rounded-full object-cover border border-slate-200" />
                 <div>
-                  <div class="font-bold text-sm text-slate-900 flex items-center gap-1.5">
+                  <div class="font-bold text-sm text-slate-900 flex items-center gap-1.5 leading-tight">
                     <span><?= htmlspecialchars($question['authorName'] ?? '익명') ?></span>
                     <?php if ($isQuestionClinician): ?>
-                      <span class="text-[10px] bg-emerald-600 text-white font-extrabold px-1.5 py-0.2 rounded-full">전문의</span>
+                      <span class="text-[10px] bg-[#1B6FA8] text-white font-extrabold px-2 py-0.5 rounded-full"><?= htmlspecialchars($question['authorBadgeLabel'] ?? '공인 전문가') ?></span>
                     <?php endif; ?>
                   </div>
-                  <p class="text-xs text-slate-400"><?= date('Y-m-d H:i', strtotime($question['createdAt'] ?? 'now')) ?></p>
+                  <p class="text-xs text-slate-400 mt-0.5 leading-none"><?= date('Y-m-d H:i', strtotime($question['createdAt'] ?? 'now')) ?></p>
                 </div>
               </div>
 
-              <div class="text-right text-xs text-slate-400">
+              <div class="text-right text-xs text-slate-400 font-mono">
                 <span>#1</span>
               </div>
             </div>
 
             <!-- Question Body -->
-            <div class="prose prose-slate max-w-none text-slate-800 text-sm sm:text-base leading-relaxed whitespace-pre-line font-sans mb-4">
-              <?= htmlspecialchars($question['body'] ?? '') ?>
-            </div>
+            <div class="prose prose-slate max-w-none text-slate-800 text-sm sm:text-base leading-relaxed whitespace-pre-line font-sans mb-4 mt-0 pt-0"><?= htmlspecialchars(preg_replace('/^[\r\n\s]+/', '', $question['body'] ?? '')) ?></div>
 
             <!-- Attached Video Display -->
-            <?php if (!empty($question['videoUrl'])): 
-              $videoUrl = $question['videoUrl'];
-              $ytId = '';
-              if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts|live)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i', $videoUrl, $m)) {
-                $ytId = $m[1];
+            <?php 
+              $videoUrl = $question['videoUrl'] ?? '';
+              // Also auto-detect YouTube link in body if videoUrl is not explicitly set
+              if (empty($videoUrl) && !empty($question['body'])) {
+                if (preg_match('/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\s]+\/.+\/|(?:v|e(?:mbed)?|shorts|live)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i', $question['body'], $bm)) {
+                  $videoUrl = $bm[0];
+                }
               }
+              if (!empty($videoUrl)): 
+                $ytId = '';
+                if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts|live)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i', $videoUrl, $m)) {
+                  $ytId = $m[1];
+                }
             ?>
-              <div class="mt-4 mb-4">
+              <div class="mt-5 mb-5 p-3.5 sm:p-4 rounded-2xl border border-slate-200 bg-slate-50/70">
+                <div class="flex items-center gap-2 mb-2.5 text-xs font-bold text-slate-800">
+                  <i class="fa-brands fa-youtube text-red-600 text-base"></i>
+                  <span>동영상 재생</span>
+                </div>
                 <?php if ($ytId): ?>
-                  <div class="relative w-full aspect-video rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-black">
-                    <iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/<?= htmlspecialchars($ytId) ?>" title="비디오 플레이어" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                  <div class="relative w-full aspect-video rounded-xl overflow-hidden border border-slate-300 shadow-sm bg-black">
+                    <iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/<?= htmlspecialchars($ytId) ?>" title="YouTube 비디오 플레이어" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                   </div>
                 <?php else: ?>
-                  <a href="<?= htmlspecialchars($videoUrl) ?>" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-3.5 rounded-2xl border border-red-200 bg-red-50/50 hover:bg-red-50 transition-all text-slate-800 group">
-                    <div class="w-10 h-10 rounded-xl bg-red-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                  <a href="<?= htmlspecialchars($videoUrl) ?>" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-3.5 rounded-xl border border-red-200 bg-red-50/50 hover:bg-red-50 transition-all text-slate-800 group">
+                    <div class="w-10 h-10 rounded-lg bg-red-600 text-white flex items-center justify-center shrink-0 shadow-xs">
                       <i class="fa-solid fa-play"></i>
                     </div>
                     <div class="flex-1 min-w-0">
@@ -456,7 +697,7 @@ $forumPostingSchema = [
                   <?php if (count($question['images']) > 1): ?>
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-3">
                       <?php for ($i = 1; $i < count($question['images']); $i++): ?>
-                        <a href="<?= htmlspecialchars($question['images'][$i]) ?>" target="_blank" class="block rounded-xl overflow-hidden border border-slate-200 aspect-video hover:opacity-90 bg-slate-100">
+                        <a href="<?= htmlspecialchars($question['images'][$i]) ?>" data-lightbox class="block rounded-xl overflow-hidden border border-slate-200 aspect-video hover:opacity-90 bg-slate-100 cursor-zoom-in">
                           <img src="<?= htmlspecialchars($question['images'][$i]) ?>" class="w-full h-full object-cover" alt="추가 이미지" />
                         </a>
                       <?php endfor; ?>
@@ -466,7 +707,7 @@ $forumPostingSchema = [
                   <!-- Attached Photos Grid -->
                   <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
                     <?php foreach ($question['images'] as $qImg): ?>
-                      <a href="<?= htmlspecialchars($qImg) ?>" target="_blank" class="block rounded-xl overflow-hidden border border-slate-200 aspect-video hover:opacity-90 bg-slate-100 shadow-2xs group relative">
+                      <a href="<?= htmlspecialchars($qImg) ?>" data-lightbox class="block rounded-xl overflow-hidden border border-slate-200 aspect-video hover:opacity-90 bg-slate-100 shadow-2xs group relative cursor-zoom-in">
                         <img src="<?= htmlspecialchars($qImg) ?>" class="w-full h-full object-cover" alt="첨부 사진" />
                         <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-bold gap-1">
                           <span>확대</span>
@@ -478,16 +719,22 @@ $forumPostingSchema = [
               </div>
             <?php endif; ?>
 
-            <!-- Bottom Action Row -->
+            <!-- Bottom Action Row: Like / 공감, Views, Reply Link -->
             <div class="flex items-center justify-between pt-4 border-t border-slate-100 text-xs text-slate-500">
-              <div class="flex items-center gap-2">
+              <div class="flex items-center gap-3">
+                <button type="button" onclick="handleQuestionLike('<?= htmlspecialchars($question['id']) ?>')" id="btn-q-like" 
+                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-rose-200 bg-rose-50/70 hover:bg-rose-100 text-rose-600 font-bold transition-all cursor-pointer shadow-2xs">
+                  <i class="fa-solid fa-heart text-rose-500"></i>
+                  <span>공감</span>
+                  <span id="q-like-count" class="font-mono"><?= (int)($question['likeCount'] ?? ($question['upvotes'] ?? 0)) ?></span>
+                </button>
                 <span class="text-slate-400">
                   <?= (int)($question['viewCount'] ?? 0) ?>회 조회
                 </span>
               </div>
               <div class="flex items-center gap-2">
-                <a href="#reply-section" class="font-bold text-blue-600 hover:text-blue-800">
-                  답변 작성하기 →
+                <a href="#reply-section" class="font-bold text-[#1B6FA8] hover:underline">
+                  답변 / 댓글 작성하기 →
                 </a>
               </div>
             </div>
@@ -496,18 +743,36 @@ $forumPostingSchema = [
           <!-- Answers Section Header -->
           <div class="flex items-center justify-between pt-2">
             <h2 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
-              <span>전문의 &amp; 커뮤니티 답변</span>
+              <span><?= htmlspecialchars($answersHeadingTitle) ?></span>
               <span class="text-xs font-extrabold bg-blue-100 text-blue-800 px-2.5 py-0.5 rounded-full">
                 <?= count($question['answers'] ?? []) ?>
               </span>
             </h2>
           </div>
 
+          <?php if ($isWanted): ?>
+            <!-- Wanted Service Safety Callout -->
+            <div class="p-4 rounded-2xl bg-teal-50/70 border border-teal-200/90 text-xs text-teal-950 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-xl bg-teal-100 text-teal-800 flex items-center justify-center font-bold text-sm shrink-0">
+                  <i class="fa-solid fa-handshake-angle"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-teal-950 text-xs sm:text-sm">서비스 의뢰 및 거래 안전 안내</h4>
+                  <p class="text-[11px] text-teal-800/90 mt-0.5">선입금 지양, 작업 조건 사전 합의, 신원 확인을 권장합니다. 당사는 회원 간 거래·고용의 당사자가 아닙니다.</p>
+                </div>
+              </div>
+              <button type="button" onclick="openServiceDisclaimerModal()" class="text-xs font-bold text-teal-800 hover:text-teal-950 underline shrink-0 cursor-pointer self-start sm:self-auto">
+                약관 및 면책 전문 보기 →
+              </button>
+            </div>
+          <?php endif; ?>
+
           <!-- Chronological Answers Stream -->
           <?php if (empty($question['answers'])): ?>
             <div class="bg-white rounded-2xl p-8 text-center border border-slate-200/90 shadow-2xs">
               <p class="text-xs text-slate-600 font-bold mb-1">아직 등록된 답변이 없습니다.</p>
-              <p class="text-[11px] text-slate-400">첫 번째 전문의 답변 또는 경험담을 남겨주세요!</p>
+              <p class="text-[11px] text-slate-400">첫 번째 <?= $isProfessionalCategory ? '전문가 답변' : '댓글' ?>을 남겨주세요!</p>
             </div>
           <?php else: ?>
             <div class="space-y-4">
@@ -515,32 +780,33 @@ $forumPostingSchema = [
               $ansIndex = 1;
               foreach ($question['answers'] as $ans): 
                 $ansIndex++;
-                $isClinician = !empty($ans['authorBadge']) && str_contains($ans['authorBadge'], 'Clinician');
+                $isClinician = !empty($ans['authorBadge']) && (str_contains($ans['authorBadge'], 'Clinician') || str_contains($ans['authorBadge'], 'Expert') || !empty($ans['authorBadgeLabel']));
+                $badgeText = $ans['authorBadgeLabel'] ?? ($isClinician ? '공인 전문가' : '');
                 $hasUpvoted = !empty($ans['hasUpvoted']);
               ?>
-                <article class="bg-white rounded-2xl p-6 border <?= $isClinician ? 'border-emerald-300 ring-2 ring-emerald-500/10 shadow-xs' : 'border-slate-200/90 shadow-2xs' ?> relative">
+                <article class="bg-white rounded-2xl p-6 border <?= $isClinician ? 'border-blue-300 ring-2 ring-blue-500/10 shadow-xs' : 'border-slate-200/90 shadow-2xs' ?> relative">
                   
                   <?php if ($isClinician): ?>
                     <!-- Verified Clinician Top Accent Ribbon -->
-                    <div class="flex items-center gap-2 mb-3 bg-emerald-50 text-emerald-800 px-3 py-1 rounded-lg text-xs font-bold border border-emerald-200 inline-flex">
-                      <span>NJAP 공인 의료 전문가 인증 답변 (Verified Clinician)</span>
+                    <div class="flex items-center gap-2 mb-3 bg-blue-50 text-[#1B6FA8] px-3 py-1 rounded-lg text-xs font-bold border border-blue-200 inline-flex">
+                      <span>NJAP 공인 전문가 인증 답변 (Verified Professional)</span>
                     </div>
                   <?php endif; ?>
 
                   <!-- Answer Author Header -->
-                  <div class="flex items-center justify-between gap-4 mb-4">
+                  <div class="flex items-center justify-between gap-4 pb-2 mb-2.5 border-b border-slate-100/80">
                     <div class="flex items-center gap-3">
-                      <img src="<?= htmlspecialchars($ans['authorAvatar'] ?: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&q=80') ?>" 
+                      <img src="<?= htmlspecialchars(forum_sanitize_avatar($ans['authorAvatar'] ?? '', $ans['authorName'] ?? '', $ans['authorBadge'] ?? '')) ?>" 
                            alt="<?= htmlspecialchars($ans['authorName'] ?? '답변자') ?>" 
-                           class="w-10 h-10 rounded-full object-cover border <?= $isClinician ? 'border-emerald-500 ring-2 ring-emerald-400/30' : 'border-slate-200' ?>" />
+                           class="w-9 h-9 rounded-full object-cover border <?= $isClinician ? 'border-[#1B6FA8] ring-2 ring-blue-400/30' : 'border-slate-200' ?>" />
                       <div>
-                        <div class="font-bold text-sm text-slate-900 flex items-center gap-2">
+                        <div class="font-bold text-sm text-slate-900 flex items-center gap-2 leading-tight">
                           <span><?= htmlspecialchars($ans['authorName'] ?? '사용자') ?></span>
-                          <?php if ($isClinician): ?>
-                            <span class="text-[10px] bg-emerald-600 text-white font-extrabold px-1.5 py-0.2 rounded-full">전문의</span>
+                          <?php if ($isClinician && !empty($badgeText)): ?>
+                            <span class="text-[10px] bg-[#1B6FA8] text-white font-extrabold px-2 py-0.5 rounded-full"><?= htmlspecialchars($badgeText) ?></span>
                           <?php endif; ?>
                         </div>
-                        <p class="text-xs text-slate-400"><?= date('Y-m-d H:i', strtotime($ans['createdAt'] ?? 'now')) ?></p>
+                        <p class="text-xs text-slate-400 mt-0.5 leading-none"><?= date('Y-m-d H:i', strtotime($ans['createdAt'] ?? 'now')) ?></p>
                       </div>
                     </div>
 
@@ -557,15 +823,13 @@ $forumPostingSchema = [
                   </div>
 
                   <!-- Answer Body -->
-                  <div class="prose prose-slate max-w-none text-slate-800 text-sm leading-relaxed whitespace-pre-line">
-                    <?= htmlspecialchars($ans['body'] ?? '') ?>
-                  </div>
+                  <div class="prose prose-slate max-w-none text-slate-800 text-sm leading-relaxed whitespace-pre-line mt-0 pt-0"><?= htmlspecialchars(preg_replace('/^[\r\n\s]+/', '', $ans['body'] ?? '')) ?></div>
 
                   <!-- Answer Attached Images -->
                   <?php if (!empty($ans['images'])): ?>
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-3 mb-1">
                       <?php foreach ($ans['images'] as $aImg): ?>
-                        <a href="<?= htmlspecialchars($aImg) ?>" target="_blank" class="block rounded-lg overflow-hidden border border-slate-200 aspect-video hover:opacity-90 bg-slate-100 relative group">
+                        <a href="<?= htmlspecialchars($aImg) ?>" data-lightbox class="block rounded-lg overflow-hidden border border-slate-200 aspect-video hover:opacity-90 bg-slate-100 relative group cursor-zoom-in">
                           <img src="<?= htmlspecialchars($aImg) ?>" class="w-full h-full object-cover" alt="답변 첨부 이미지" />
                           <div class="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-[11px] font-bold">
                             <span>원본보기</span>
@@ -602,6 +866,8 @@ $forumPostingSchema = [
                   placeholder="예: 홍길동, 또는 전문의 성함 및 진료과"
                   class="w-full p-3 rounded-xl border border-slate-200 text-xs font-medium text-slate-900 focus:outline-none focus:border-blue-600" />
               </div>
+
+              <?php render_avatar_picker('reply'); ?>
 
               <textarea id="reply-body" name="body" rows="4" required
                 placeholder="의학적 소견, 경험담, 또는 조언을 상세히 적어주세요..." 
@@ -656,11 +922,11 @@ $forumPostingSchema = [
             <div>
               <span class="block text-[11px] font-bold text-slate-500 mb-2">참여 의료진 &amp; 회원</span>
               <div class="flex items-center gap-1.5 flex-wrap">
-                <img src="<?= htmlspecialchars($question['authorAvatar'] ?: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&q=80') ?>" 
+                <img src="<?= htmlspecialchars(forum_sanitize_avatar($question['authorAvatar'] ?? '', $question['authorName'] ?? '', $question['authorBadge'] ?? '')) ?>" 
                      title="<?= htmlspecialchars($question['authorName'] ?? '질문자') ?>"
                      class="w-7 h-7 rounded-full object-cover border border-slate-200" />
                 <?php foreach (($question['answers'] ?? []) as $a): ?>
-                  <img src="<?= htmlspecialchars($a['authorAvatar'] ?: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&q=80') ?>" 
+                  <img src="<?= htmlspecialchars(forum_sanitize_avatar($a['authorAvatar'] ?? '', $a['authorName'] ?? '', $a['authorBadge'] ?? '')) ?>" 
                        title="<?= htmlspecialchars($a['authorName'] ?? '답변자') ?>"
                        class="w-7 h-7 rounded-full object-cover border <?= !empty($a['authorBadge']) ? 'border-emerald-500' : 'border-slate-200' ?>" />
                 <?php endforeach; ?>
@@ -703,6 +969,9 @@ $forumPostingSchema = [
 
       </div>
 
+      <!-- Section Specific Safety & Policy Disclaimer Strip (At bottom of site) -->
+      <?php render_forum_disclaimer_banner('mt-8', $question['categoryId'] ?? 'community'); ?>
+
     </main>
   </div>
 
@@ -714,6 +983,7 @@ $forumPostingSchema = [
 
   <!-- Shared Auth & Sidebar Controller Scripts -->
   <?php render_forum_auth_scripts(); ?>
+  <?php render_image_lightbox(); ?>
 
   <script>
     function syncAuthorFields() {
@@ -747,6 +1017,12 @@ $forumPostingSchema = [
     async function handleReplyImageSelect(input) {
       const files = Array.from(input.files || []);
       if (!files.length) return;
+
+      if (!currentUser) {
+        openGoogleAuthModal();
+        input.value = '';
+        return;
+      }
 
       if (replyUploadedImages.length + files.length > 5) {
         alert('이미지는 최대 5장까지 첨부할 수 있습니다.');
@@ -817,7 +1093,7 @@ $forumPostingSchema = [
         return;
       }
 
-      const body = document.getElementById('reply-body').value.trim();
+      const body = (document.getElementById('reply-body')?.value || '').trim().replace(/^[\r\n\s]+/, '');
       const authorName = document.getElementById('reply-author-name')?.value.trim() || '';
       if (!body) return;
 
@@ -832,6 +1108,7 @@ $forumPostingSchema = [
           body: JSON.stringify({
             question_id: '<?= htmlspecialchars($question['id']) ?>',
             author_name: authorName,
+            author_avatar: (typeof getForumAvatar === 'function') ? getForumAvatar('reply') : '',
             body: body,
             images: replyUploadedImages
           })
@@ -839,6 +1116,10 @@ $forumPostingSchema = [
         const data = await res.json();
         if (data.success) {
           window.location.reload();
+        } else if (res.status === 401 || data.require_auth) {
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> 답변 등록하기';
+          openGoogleAuthModal();
         } else {
           alert(data.error || '답변 등록에 실패했습니다.');
           btn.disabled = false;
@@ -881,6 +1162,256 @@ $forumPostingSchema = [
         }
       } catch(e) {}
     }
+
+    async function handleQuestionLike(qId) {
+      try {
+        const res = await fetch('/api/forum.php?action=toggle_like', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question_id: qId })
+        });
+        const data = await res.json();
+        if (data.success && typeof data.likeCount !== 'undefined') {
+          const countEl = document.getElementById('q-like-count');
+          if (countEl) countEl.innerText = data.likeCount;
+        }
+      } catch(e) {}
+    }
+
+    // Marketplace Contact & Report Modal Logic
+    function openMarketEmailModal() {
+      document.getElementById('market-email-modal')?.classList.remove('hidden');
+    }
+    function closeMarketEmailModal() {
+      document.getElementById('market-email-modal')?.classList.add('hidden');
+    }
+    function openMarketReportModal() {
+      document.getElementById('market-report-modal')?.classList.remove('hidden');
+    }
+    function closeMarketReportModal() {
+      document.getElementById('market-report-modal')?.classList.add('hidden');
+    }
+
+    async function handleMarketEmailSubmit(e) {
+      e.preventDefault();
+      const listingId = document.getElementById('market_email_listing_id')?.value;
+      const hp = document.getElementById('market_email_hp')?.value;
+      if (hp) return; // bot honeypot
+
+      const name = document.getElementById('market_sender_name')?.value.trim();
+      const email = document.getElementById('market_sender_email')?.value.trim();
+      const message = document.getElementById('market_email_message')?.value.trim();
+
+      if (!name || !email || !message) {
+        alert('모든 필수 항목을 입력해 주세요.');
+        return;
+      }
+
+      const btn = document.getElementById('btn-submit-market-email');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-xs"></i> 전송 중...';
+
+      try {
+        const res = await fetch('/api/forum.php?action=market_contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            listing_id: listingId,
+            sender_name: name,
+            sender_email: email,
+            message: message,
+            hp: hp
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          alert('판매자에게 문의 메일이 안전하게 전송되었습니다.');
+          closeMarketEmailModal();
+          document.getElementById('market-email-form')?.reset();
+        } else {
+          alert(data.error || '메시지 전송에 실패했습니다.');
+        }
+      } catch (err) {
+        alert('통신 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-paper-plane text-xs"></i> <span>메시지 전송</span>';
+      }
+    }
+
+    async function handleMarketReportSubmit(e) {
+      e.preventDefault();
+      const listingId = document.getElementById('market_report_listing_id')?.value;
+      const hp = document.getElementById('market_report_hp')?.value;
+      if (hp) return; // bot honeypot
+
+      const reason = document.getElementById('market_report_reason')?.value;
+      const details = document.getElementById('market_report_details')?.value.trim();
+      const contact = document.getElementById('market_report_contact')?.value.trim();
+
+      if (!reason || !details) {
+        alert('신고 사유와 상세 내용을 입력해 주세요.');
+        return;
+      }
+
+      const btn = document.getElementById('btn-submit-market-report');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-xs"></i> 접수 중...';
+
+      try {
+        const res = await fetch('/api/forum.php?action=report_listing', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            listing_id: listingId,
+            reason: reason,
+            details: details,
+            reporter_contact: contact,
+            hp: hp
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          alert('신고가 접수되었습니다. 운영진이 신속히 확인하여 조치하겠습니다.');
+          closeMarketReportModal();
+          document.getElementById('market-report-form')?.reset();
+        } else {
+          alert(data.error || '신고 접수에 실패했습니다.');
+        }
+      } catch (err) {
+        alert('통신 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-flag text-xs"></i> <span>신고 접수</span>';
+      }
+    }
   </script>
+
+  <!-- Marketplace Contact Email Modal (Craigslist Privacy Relay) -->
+  <div id="market-email-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-7 shadow-2xl border border-slate-200 max-h-[92vh] overflow-y-auto">
+      <div class="flex items-center justify-between pb-3.5 border-b border-slate-100 mb-4">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-blue-50 text-[#1B6FA8] flex items-center justify-center">
+            <i class="fa-solid fa-envelope text-sm"></i>
+          </div>
+          <h3 class="text-base sm:text-lg font-black text-slate-900"><?= $isWanted ? '요청자에게 이메일 보내기' : '판매자에게 이메일 보내기' ?></h3>
+        </div>
+        <button type="button" onclick="closeMarketEmailModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center text-sm transition-colors cursor-pointer">✕</button>
+      </div>
+
+      <div class="p-3 bg-blue-50/70 rounded-xl text-xs text-blue-900 leading-relaxed mb-4 flex items-start gap-2">
+        <i class="fa-solid fa-shield-halved text-[#1B6FA8] mt-0.5 shrink-0"></i>
+        <span><?= $isWanted ? '요청자의 이메일 주소는 비공개로 보호되며, 작성하신 문의 내용이 안전하게 전달됩니다.' : '판매자의 이메일 주소는 비공개로 보호되며, 작성하신 문의 내용이 안전하게 전달됩니다.' ?></span>
+      </div>
+
+      <form id="market-email-form" onsubmit="handleMarketEmailSubmit(event)" class="space-y-4">
+        <input type="hidden" id="market_email_listing_id" value="<?= htmlspecialchars((string)($question['id'] ?? '')) ?>">
+        <!-- Honeypot -->
+        <div style="display:none !important;" aria-hidden="true">
+          <input type="text" id="market_email_hp" name="hp_phone_fake" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div>
+          <label for="market_sender_name" class="block text-xs font-bold text-slate-800 mb-1">
+            이름 <span class="text-red-500">*</span>
+          </label>
+          <input type="text" id="market_sender_name" required placeholder="본인 성함 또는 닉네임"
+                 class="w-full p-2.5 rounded-xl border border-slate-300 text-xs sm:text-sm font-sans text-slate-900 focus:outline-none focus:border-[#1B6FA8]">
+        </div>
+
+        <div>
+          <label for="market_sender_email" class="block text-xs font-bold text-slate-800 mb-1">
+            내 이메일 <span class="text-red-500">*</span> <span class="text-[11px] font-normal text-slate-500">(판매자가 답장할 주소)</span>
+          </label>
+          <input type="email" id="market_sender_email" required placeholder="답변 받으실 이메일 주소"
+                 class="w-full p-2.5 rounded-xl border border-slate-300 text-xs sm:text-sm font-sans text-slate-900 focus:outline-none focus:border-[#1B6FA8]">
+        </div>
+
+        <div>
+          <label for="market_email_message" class="block text-xs font-bold text-slate-800 mb-1">
+            메시지 <span class="text-red-500">*</span>
+          </label>
+          <textarea id="market_email_message" rows="4" required placeholder="구매 희망 내용, 거래 희망 장소 및 시간 등을 적어주세요."
+                    class="w-full p-3 rounded-xl border border-slate-300 text-xs sm:text-sm font-sans text-slate-900 focus:outline-none focus:border-[#1B6FA8] resize-none"></textarea>
+        </div>
+
+        <div class="pt-2 flex items-center justify-end gap-2.5">
+          <button type="button" onclick="closeMarketEmailModal()" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs sm:text-sm font-bold transition-colors cursor-pointer">
+            취소
+          </button>
+          <button type="submit" id="btn-submit-market-email" class="px-5 py-2.5 rounded-xl bg-[#1B6FA8] hover:bg-[#155A8A] text-white text-xs sm:text-sm font-black shadow-xs transition-colors flex items-center gap-2 cursor-pointer">
+            <i class="fa-solid fa-paper-plane text-xs"></i>
+            <span>메시지 전송</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Marketplace Listing Report Modal -->
+  <div id="market-report-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-7 shadow-2xl border border-slate-200 max-h-[92vh] overflow-y-auto">
+      <div class="flex items-center justify-between pb-3.5 border-b border-slate-100 mb-4">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-red-50 text-red-600 flex items-center justify-center">
+            <i class="fa-solid fa-flag text-sm"></i>
+          </div>
+          <h3 class="text-base sm:text-lg font-black text-slate-900">게시글 신고하기</h3>
+        </div>
+        <button type="button" onclick="closeMarketReportModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center text-sm transition-colors cursor-pointer">✕</button>
+      </div>
+
+      <p class="text-xs text-slate-600 leading-relaxed mb-4">
+        사기 의심 또는 허위 매물 등의 불법·부정 게시글을 운영진에게 제보해 주시면 즉시 검토 후 조치합니다.
+      </p>
+
+      <form id="market-report-form" onsubmit="handleMarketReportSubmit(event)" class="space-y-4">
+        <input type="hidden" id="market_report_listing_id" value="<?= htmlspecialchars((string)($question['id'] ?? '')) ?>">
+        <!-- Honeypot -->
+        <div style="display:none !important;" aria-hidden="true">
+          <input type="text" id="market_report_hp" name="hp_name_fake" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div>
+          <label for="market_report_reason" class="block text-xs font-bold text-slate-800 mb-1">
+            신고 사유 <span class="text-red-500">*</span>
+          </label>
+          <select id="market_report_reason" required class="w-full p-2.5 rounded-xl border border-slate-300 text-xs sm:text-sm font-sans text-slate-900 focus:outline-none focus:border-red-500 bg-white">
+            <option value="사기 의심">사기 의심 (선입금 요구, 시세 조작 등)</option>
+            <option value="허위 매물">허위 매물 (실물 없음, 허위 정보)</option>
+            <option value="부적절한 내용">부적절한 내용 (욕설, 음란, 비방)</option>
+            <option value="기타">기타</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="market_report_details" class="block text-xs font-bold text-slate-800 mb-1">
+            상세 내용 <span class="text-red-500">*</span>
+          </label>
+          <textarea id="market_report_details" rows="4" required placeholder="구체적인 정황이나 사유를 적어주세요."
+                    class="w-full p-3 rounded-xl border border-slate-300 text-xs sm:text-sm font-sans text-slate-900 focus:outline-none focus:border-red-500 resize-none"></textarea>
+        </div>
+
+        <div>
+          <label for="market_report_contact" class="block text-xs font-bold text-slate-800 mb-1">
+            연락처 (선택) <span class="text-[11px] font-normal text-slate-500">(이메일 또는 전화번호)</span>
+          </label>
+          <input type="text" id="market_report_contact" placeholder="추가 확인이 필요한 경우 연락받으실 수단"
+                 class="w-full p-2.5 rounded-xl border border-slate-300 text-xs sm:text-sm font-sans text-slate-900 focus:outline-none focus:border-[#1B6FA8]">
+        </div>
+
+        <div class="pt-2 flex items-center justify-end gap-2.5">
+          <button type="button" onclick="closeMarketReportModal()" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs sm:text-sm font-bold transition-colors cursor-pointer">
+            취소
+          </button>
+          <button type="submit" id="btn-submit-market-report" class="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs sm:text-sm font-black shadow-xs transition-colors flex items-center gap-2 cursor-pointer">
+            <i class="fa-solid fa-flag text-xs"></i>
+            <span>신고 접수</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 </body>
 </html>

@@ -2051,7 +2051,7 @@ function forum_add_question(
     $newQ = [
         'id' => $id,
         'title' => trim($title),
-        'body' => trim($body),
+        'body' => preg_replace('/^[\r\n\s]+/', '', trim($body)),
         'specialtyId' => $specialtyId,
         'categoryId' => $finalCatId,
         'subBoardId' => $finalSubBoardId,
@@ -2160,7 +2160,7 @@ function forum_add_answer(string $questionId, string $body, array $user, ?string
         'authorName' => $authorName,
         'authorAvatar' => $finalAvatar,
         'authorBadge' => $isClinician ? 'Verified Clinician' : null,
-        'body' => trim($body),
+        'body' => preg_replace('/^[\r\n\s]+/', '', trim($body)),
         'images' => $cleanImages,
         'upvotes' => 0,
         'upvotedBy' => [],
@@ -3992,7 +3992,7 @@ function forum_add_club_post(string $roomId, array $postData): array {
     }
 
     $title = trim($postData['title'] ?? '');
-    $body = trim($postData['body'] ?? '');
+    $body = preg_replace('/^[\r\n\s]+/', '', trim($postData['body'] ?? ''));
     $authorName = trim($postData['author_name'] ?? '동호회 회원');
     $tag = trim($postData['tag'] ?? '자유');
     $isLeader = !empty($postData['is_leader']);

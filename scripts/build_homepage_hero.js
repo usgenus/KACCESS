@@ -88,6 +88,34 @@ const defaultSixSlides = [
     secondaryLinkText: '맞춤 매칭',
     caption: '2026 복지 혜택 자격 계산기',
     isMainVideo: false
+  },
+  {
+    order: 7,
+    category: '동호회/동문회',
+    title: '동호회/동문회 모임',
+    subtitle: '뉴저지 한인 취미·스포츠 클럽, 대학·고교 동문회, 소모임 전용 미니 룸. 우리 모임만의 커뮤니티 공간을 직접 개설하고 회원들과 자유롭게 소통해보세요.',
+    mediaType: 'image',
+    mediaUrl: '/uploads/images/hero_slide_clubs.jpg',
+    linkUrl: '/forum?specialty=clubs',
+    linkText: '동호회 둘러보기 →',
+    secondaryLinkUrl: '/forum?specialty=clubs',
+    secondaryLinkText: '룸 만들기',
+    caption: '동호회/동문회 소모임 룸',
+    isMainVideo: false
+  },
+  {
+    order: 8,
+    category: '뉴저지 파트너즈',
+    title: '뉴저지 파트너즈',
+    subtitle: '신뢰하는 뉴저지 비지네스를 만나보세요. 병원, 의사, 식당, 쇼핑에서 맛집까지.',
+    mediaType: 'image',
+    mediaUrl: '/uploads/images/hero_slide_partners.jpg',
+    linkUrl: '/partners',
+    linkText: '파트너즈 보기 →',
+    secondaryLinkUrl: '/partners',
+    secondaryLinkText: '입점 문의',
+    caption: '신뢰하는 뉴저지 비즈니스',
+    isMainVideo: false
   }
 ];
 
@@ -100,7 +128,7 @@ ${JSON.stringify(defaultSixSlides, null, 2)}
 JSON
         , true);
         $sixSlides = [];
-        for ($i = 1; $i <= 6; $i++) {
+        for ($i = 1; $i <= 8; $i++) {
             $def = $defaultSix[$i - 1];
             $matched = null;
             if (!empty($activeBillboards)) {
@@ -344,10 +372,7 @@ JSON
           .hero-slide {
             transition: opacity 350ms cubic-bezier(0.16, 1, 0.3, 1), transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
           }
-          .hero-tabs-grid {
-            display: grid;
-            grid-template-columns: repeat(6, minmax(0, 1fr));
-            gap: 8px;
+          .hero-tabs-grid { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 6px;
             width: 100%;
           }
           @media (max-width: 960px) {
@@ -367,9 +392,7 @@ JSON
               flex: 0 0 135px;
             }
           }
-          .hero-tab-item {
-            text-align: left;
-            padding: 8px 12px;
+          .hero-tab-item { text-align: left; padding: 8px 9px;
             border-radius: 10px;
             transition: all 0.2s ease;
             cursor: pointer;
@@ -395,8 +418,7 @@ JSON
           .hero-tab-item[aria-selected="true"] .hero-tab-sub {
             color: #7FC8C0;
           }
-          .hero-tab-title {
-            font-size: 13px;
+          .hero-tab-title { font-size: 12.5px;
             font-weight: 700;
             color: rgba(255, 255, 255, 0.65);
             white-space: nowrap;
@@ -455,7 +477,7 @@ JSON
             <!-- Left Column: Content Panels (Only active slide visible) -->
             <div class="order-1 lg:order-1 lg:col-span-7 flex flex-col justify-center relative min-h-[240px] sm:min-h-[260px]">
               
-              <?php for ($idx = 1; $idx <= 6; $idx++): 
+              <?php for ($idx = 1; $idx <= 8; $idx++): 
                 $s = $sixSlides[$idx];
                 $isActive = ($idx === 1);
               ?>
@@ -502,7 +524,7 @@ JSON
             <!-- Right Column: Visual Card with Caption -->
             <div class="order-2 lg:order-2 lg:col-span-5 flex justify-center w-full">
               <div class="hero-card-container">
-                <?php for ($idx = 1; $idx <= 6; $idx++):
+                <?php for ($idx = 1; $idx <= 8; $idx++):
                   $s = $sixSlides[$idx];
                   $isActive = ($idx === 1);
                   $mUrl = $s['mediaUrl'] ?? '';
@@ -522,7 +544,7 @@ JSON
                     <?= htmlspecialchars($sixSlides[1]['caption'] ?? $sixSlides[1]['title'] ?? 'NJ ACCESS PORTAL') ?>
                   </span>
                   <span class="hero-card-caption-num">
-                    <span id="hero-visual-num">01</span> / 06
+                    <span id="hero-visual-num">01</span> / 08
                   </span>
                 </div>
               </div>
@@ -533,7 +555,7 @@ JSON
           <!-- Bottom: Highlight Tab Bar (6 tabs) -->
           <div class="mt-6 pt-3 border-t border-white/10 w-full">
             <div role="tablist" aria-label="NJ Access Portal 서비스 하이라이트" class="hero-tabs-grid">
-              <?php for ($idx = 1; $idx <= 6; $idx++):
+              <?php for ($idx = 1; $idx <= 8; $idx++):
                 $s = $sixSlides[$idx];
                 $isActive = ($idx === 1);
               ?>
@@ -562,7 +584,7 @@ JSON
 
             var sixSlides = <?= json_encode(array_values($sixSlides), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
             var currentSlide = 1;
-            var totalSlides = 6;
+            var totalSlides = 8;
             var rotateTimer = null;
             var isTransitioned = false;
             var isPaused = false;
@@ -797,7 +819,7 @@ JSON
 
               cmsList.forEach(function(item, idx) {
                 var slideNum = item.order || (idx + 1);
-                if (slideNum < 1 || slideNum > 6) return;
+                if (slideNum < 1 || slideNum > 8) return;
 
                 // Update badge
                 var badge = document.getElementById('hero-slide' + slideNum + '-badge-text');
@@ -982,14 +1004,14 @@ function updateStaticIndexHTML() {
           .hero-card-caption-text { color: #ffffff; font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 80%; }
           .hero-card-caption-num { color: rgba(255, 255, 255, 0.7); font-size: 11px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-weight: 600; white-space: nowrap; }
           .hero-slide { transition: opacity 350ms cubic-bezier(0.16, 1, 0.3, 1), transform 350ms cubic-bezier(0.16, 1, 0.3, 1); }
-          .hero-tabs-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; width: 100%; }
+          .hero-tabs-grid { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 6px; width: 100%; }
           @media (max-width: 960px) { .hero-tabs-grid { display: flex; overflow-x: auto; gap: 8px; padding-bottom: 4px; margin-left: -16px; margin-right: -16px; padding-left: 16px; padding-right: 16px; scrollbar-width: none; -webkit-overflow-scrolling: touch; } .hero-tab-item { flex: 0 0 135px; } }
-          .hero-tab-item { text-align: left; padding: 8px 12px; border-radius: 10px; transition: all 0.2s ease; cursor: pointer; background: transparent; border: none; outline: none; }
+          .hero-tab-item { text-align: left; padding: 8px 9px; border-radius: 10px; transition: all 0.2s ease; cursor: pointer; background: transparent; border: none; outline: none; }
           .hero-tab-item:hover { background: rgba(255, 255, 255, 0.05); }
           .hero-tab-item[aria-selected="true"] { background: rgba(255, 255, 255, 0.08); }
           .hero-tab-sub { font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(255, 255, 255, 0.45); display: block; margin-bottom: 2px; }
           .hero-tab-item[aria-selected="true"] .hero-tab-sub { color: #7FC8C0; }
-          .hero-tab-title { font-size: 13px; font-weight: 700; color: rgba(255, 255, 255, 0.65); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+          .hero-tab-title { font-size: 12.5px; font-weight: 700; color: rgba(255, 255, 255, 0.65); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
           .hero-tab-item[aria-selected="true"] .hero-tab-title { color: #ffffff; }
           .hero-tab-bar { height: 3px; border-radius: 9999px; margin-top: 6px; background: transparent; transition: all 0.3s ease; }
           .hero-tab-item[aria-selected="true"] .hero-tab-bar { background: linear-gradient(90deg, #7FC8C0, #4FA3D1); box-shadow: 0 0 10px rgba(127, 200, 192, 0.85); }
@@ -1033,7 +1055,7 @@ function updateStaticIndexHTML() {
                 ${visualsHTML}
                 <div class="hero-card-caption-bar">
                   <span id="hero-visual-caption" class="hero-card-caption-text">NJ ACCESS PORTAL</span>
-                  <span class="hero-card-caption-num"><span id="hero-visual-num">01</span> / 06</span>
+                  <span class="hero-card-caption-num"><span id="hero-visual-num">01</span> / 08</span>
                 </div>
               </div>
             </div>
@@ -1060,7 +1082,7 @@ function updateStaticIndexHTML() {
 
             var sixSlides = ${JSON.stringify(defaultSixSlides)};
             var currentSlide = 1;
-            var totalSlides = 6;
+            var totalSlides = 8;
             var rotateTimer = null;
             var isTransitioned = false;
             var isPaused = false;

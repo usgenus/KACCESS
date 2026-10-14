@@ -1584,7 +1584,7 @@ html, body {
   <main class="flex-1">
     <div class="flex flex-col bg-[#F3F3F5] min-h-screen text-[#111111] font-sans">
       
-                                                                                                            <!-- 1. Two-Phase Homepage Hero: Clean Big Video Intro -> 6-Service Rotating Billboard (Shrinks Vertically by 35% on Transition) -->
+                                                                                                                  <!-- 1. Two-Phase Homepage Hero: Clean Big Video Intro -> 6-Service Rotating Billboard (Shrinks Vertically by 35% on Transition) -->
       <?php
         // Prepare CMS 6-Slide Billboard Data for Dynamic Rendering
         $defaultSix = json_decode(<<<'JSON'
@@ -1672,12 +1672,40 @@ html, body {
     "secondaryLinkText": "맞춤 매칭",
     "caption": "2026 복지 혜택 자격 계산기",
     "isMainVideo": false
+  },
+  {
+    "order": 7,
+    "category": "동호회/동문회",
+    "title": "동호회/동문회 모임",
+    "subtitle": "뉴저지 한인 취미·스포츠 클럽, 대학·고교 동문회, 소모임 전용 미니 룸. 우리 모임만의 커뮤니티 공간을 직접 개설하고 회원들과 자유롭게 소통해보세요.",
+    "mediaType": "image",
+    "mediaUrl": "/uploads/images/hero_slide_clubs.jpg",
+    "linkUrl": "/forum?specialty=clubs",
+    "linkText": "동호회 둘러보기 →",
+    "secondaryLinkUrl": "/forum?specialty=clubs",
+    "secondaryLinkText": "룸 만들기",
+    "caption": "동호회/동문회 소모임 룸",
+    "isMainVideo": false
+  },
+  {
+    "order": 8,
+    "category": "뉴저지 파트너즈",
+    "title": "뉴저지 파트너즈",
+    "subtitle": "신뢰하는 뉴저지 비지네스를 만나보세요. 병원, 의사, 식당, 쇼핑에서 맛집까지.",
+    "mediaType": "image",
+    "mediaUrl": "/uploads/images/hero_slide_partners.jpg",
+    "linkUrl": "/partners",
+    "linkText": "파트너즈 보기 →",
+    "secondaryLinkUrl": "/partners",
+    "secondaryLinkText": "입점 문의",
+    "caption": "신뢰하는 뉴저지 비즈니스",
+    "isMainVideo": false
   }
 ]
 JSON
         , true);
         $sixSlides = [];
-        for ($i = 1; $i <= 6; $i++) {
+        for ($i = 1; $i <= 8; $i++) {
             $def = $defaultSix[$i - 1];
             $matched = null;
             if (!empty($activeBillboards)) {
@@ -1921,10 +1949,7 @@ JSON
           .hero-slide {
             transition: opacity 350ms cubic-bezier(0.16, 1, 0.3, 1), transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
           }
-          .hero-tabs-grid {
-            display: grid;
-            grid-template-columns: repeat(6, minmax(0, 1fr));
-            gap: 8px;
+          .hero-tabs-grid { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 6px;
             width: 100%;
           }
           @media (max-width: 960px) {
@@ -1944,9 +1969,7 @@ JSON
               flex: 0 0 135px;
             }
           }
-          .hero-tab-item {
-            text-align: left;
-            padding: 8px 12px;
+          .hero-tab-item { text-align: left; padding: 8px 9px;
             border-radius: 10px;
             transition: all 0.2s ease;
             cursor: pointer;
@@ -1972,8 +1995,7 @@ JSON
           .hero-tab-item[aria-selected="true"] .hero-tab-sub {
             color: #7FC8C0;
           }
-          .hero-tab-title {
-            font-size: 13px;
+          .hero-tab-title { font-size: 12.5px;
             font-weight: 700;
             color: rgba(255, 255, 255, 0.65);
             white-space: nowrap;
@@ -1995,57 +2017,6 @@ JSON
             background: linear-gradient(90deg, #7FC8C0, #4FA3D1);
             box-shadow: 0 0 10px rgba(127, 200, 192, 0.85);
           }
-          #hero-video-scroll-indicator {
-            position: absolute !important;
-            top: 20px !important;
-            left: 50% !important;
-            transform: translateX(-50%) !important;
-            bottom: auto !important;
-            right: auto !important;
-            z-index: 40 !important;
-            background: #ffffff !important;
-            color: #000000 !important;
-            border: 1.5px solid rgba(0, 0, 0, 0.15) !important;
-            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.28) !important;
-            border-radius: 9999px !important;
-            padding: 7px 16px !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            gap: 7px !important;
-            white-space: nowrap !important;
-            cursor: pointer !important;
-            pointer-events: auto !important;
-            font-size: 13px !important;
-            font-weight: 800 !important;
-            letter-spacing: -0.2px !important;
-            transition: transform 0.2s ease, box-shadow 0.2s ease !important;
-          }
-          #hero-video-scroll-indicator * {
-            color: #000000 !important;
-            stroke: #000000 !important;
-          }
-          #hero-video-scroll-indicator:hover {
-            transform: translateX(-50%) scale(1.04) !important;
-            box-shadow: 0 6px 22px rgba(0, 0, 0, 0.35) !important;
-          }
-          @media (max-width: 640px) {
-            #hero-video-scroll-indicator {
-              top: 14px !important;
-              left: 50% !important;
-              transform: translateX(-50%) !important;
-              bottom: auto !important;
-              right: auto !important;
-              padding: 5px 12px !important;
-              font-size: 11px !important;
-            }
-            #hero-video-scroll-indicator:hover {
-              transform: translateX(-50%) scale(1.04) !important;
-            }
-            #hero-video-scroll-indicator svg {
-              width: 12px !important;
-              height: 12px !important;
-            }
-          }
         </style>
 
         <!-- Ambient radial glow overlay for visual depth -->
@@ -2053,7 +2024,7 @@ JSON
         <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(circle at 20% 80%, rgba(127, 200, 192, 0.1) 0%, transparent 50%); z-index: 1;"></div>
 
         <!-- PHASE 1: Clean Cinematic Video Intro Layer (Click anywhere or scroll to shrink to billboard) -->
-        <div id="hero-video-phase" class="absolute inset-0 w-full h-full z-30 transition-opacity duration-500 overflow-hidden bg-slate-950 flex items-center justify-center cursor-pointer" onclick="if(window.njapHeroTransition)window.njapHeroTransition()">
+        <div id="hero-video-phase" class="absolute inset-0 w-full h-full z-30 transition-opacity duration-500 overflow-hidden bg-slate-950 flex items-center justify-center cursor-pointer" onclick="if(window.njapHeroTransition)window.njapHeroTransition()" title="화면을 클릭하거나 스크롤하면 서비스 슬라이드로 이동합니다">
           <video id="hero-intro-video" 
                  class="w-full h-full object-cover cursor-pointer" 
                  autoplay 
@@ -2067,14 +2038,10 @@ JSON
           </video>
           <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-slate-950/30 pointer-events-none"></div>
 
-          <!-- Top-Center Scroll / Click Indicator -->
-          <div id="hero-video-scroll-indicator" 
-               class="hero-video-scroll-btn"
-               onclick="event.stopPropagation(); if(window.njapHeroTransition)window.njapHeroTransition();">
-            <svg style="width: 15px; height: 15px; color: #000000 !important; stroke: #000000 !important; flex-shrink: 0;" class="animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
-            </svg>
-            <span style="color: #000000 !important; font-weight: 800 !important; font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif !important;">클릭 또는 스크롤하여 바로보기</span>
+          <!-- Subtle Scroll / Click Indicator -->
+          <div class="absolute bottom-5 right-6 text-white/70 text-xs font-medium flex items-center gap-1.5 pointer-events-none hidden sm:flex bg-slate-950/40 backdrop-blur-sm px-3.5 py-1.5 rounded-full border border-white/15 shadow-lg">
+            <svg class="w-3.5 h-3.5 animate-bounce text-[#7FC8C0]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+            <span>클릭 또는 스크롤하여 바로보기</span>
           </div>
         </div>
 
@@ -2087,7 +2054,7 @@ JSON
             <!-- Left Column: Content Panels (Only active slide visible) -->
             <div class="order-1 lg:order-1 lg:col-span-7 flex flex-col justify-center relative min-h-[240px] sm:min-h-[260px]">
               
-              <?php for ($idx = 1; $idx <= 6; $idx++): 
+              <?php for ($idx = 1; $idx <= 8; $idx++): 
                 $s = $sixSlides[$idx];
                 $isActive = ($idx === 1);
               ?>
@@ -2134,7 +2101,7 @@ JSON
             <!-- Right Column: Visual Card with Caption -->
             <div class="order-2 lg:order-2 lg:col-span-5 flex justify-center w-full">
               <div class="hero-card-container">
-                <?php for ($idx = 1; $idx <= 6; $idx++):
+                <?php for ($idx = 1; $idx <= 8; $idx++):
                   $s = $sixSlides[$idx];
                   $isActive = ($idx === 1);
                   $mUrl = $s['mediaUrl'] ?? '';
@@ -2154,7 +2121,7 @@ JSON
                     <?= htmlspecialchars($sixSlides[1]['caption'] ?? $sixSlides[1]['title'] ?? 'NJ ACCESS PORTAL') ?>
                   </span>
                   <span class="hero-card-caption-num">
-                    <span id="hero-visual-num">01</span> / 06
+                    <span id="hero-visual-num">01</span> / 08
                   </span>
                 </div>
               </div>
@@ -2165,7 +2132,7 @@ JSON
           <!-- Bottom: Highlight Tab Bar (6 tabs) -->
           <div class="mt-6 pt-3 border-t border-white/10 w-full">
             <div role="tablist" aria-label="NJ Access Portal 서비스 하이라이트" class="hero-tabs-grid">
-              <?php for ($idx = 1; $idx <= 6; $idx++):
+              <?php for ($idx = 1; $idx <= 8; $idx++):
                 $s = $sixSlides[$idx];
                 $isActive = ($idx === 1);
               ?>
@@ -2194,7 +2161,7 @@ JSON
 
             var sixSlides = <?= json_encode(array_values($sixSlides), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
             var currentSlide = 1;
-            var totalSlides = 6;
+            var totalSlides = 8;
             var rotateTimer = null;
             var isTransitioned = false;
             var isPaused = false;
@@ -2212,7 +2179,7 @@ JSON
               heroSection.classList.add('hero-phase-billboard');
 
               // Cross-fade
-              if (videoPhase) { videoPhase.style.opacity = '0'; videoPhase.style.pointerEvents = 'none'; }
+              if (videoPhase) videoPhase.style.opacity = '0';
               if (billboardPhase) {
                 billboardPhase.style.opacity = '1';
                 billboardPhase.style.pointerEvents = 'auto';
@@ -2429,7 +2396,7 @@ JSON
 
               cmsList.forEach(function(item, idx) {
                 var slideNum = item.order || (idx + 1);
-                if (slideNum < 1 || slideNum > 6) return;
+                if (slideNum < 1 || slideNum > 8) return;
 
                 // Update badge
                 var badge = document.getElementById('hero-slide' + slideNum + '-badge-text');

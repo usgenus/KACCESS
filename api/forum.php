@@ -464,7 +464,7 @@ if ($method === 'POST') {
     // 1. Submit a thread (Frictionless: 3 taps from forum home)
     if ($action === 'ask' || $action === 'create_thread') {
         $title = trim($input['title'] ?? '');
-        $body = trim($input['body'] ?? '');
+        $body = preg_replace('/^[\r\n\s]+/', '', trim($input['body'] ?? ''));
         $specialtyId = trim($input['specialty_id'] ?? ($input['specialtyId'] ?? ($input['category_id'] ?? 'community')));
         $subBoardId = trim($input['sub_board_id'] ?? ($input['subBoardId'] ?? ($input['sub_specialty_id'] ?? ($input['subSpecialtyId'] ?? '')))) ?: null;
         $price = trim($input['price'] ?? '');
@@ -578,7 +578,7 @@ if ($method === 'POST') {
     // 2. Submit an answer / reply
     if ($action === 'reply' || $action === 'answer') {
         $questionId = trim($input['question_id'] ?? ($input['questionId'] ?? ''));
-        $body = trim($input['body'] ?? '');
+        $body = preg_replace('/^[\r\n\s]+/', '', trim($input['body'] ?? ''));
         $authorName = trim($input['author_name'] ?? ($input['name'] ?? ($input['nickname'] ?? '')));
 
         if (!$questionId) {

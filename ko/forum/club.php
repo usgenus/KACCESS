@@ -221,9 +221,7 @@ $emblem = $room['emblem'] ?? 'fa-users';
             </span>
             <span>방장 환영 인사 & 공지</span>
           </div>
-          <div class="text-xs text-slate-600 leading-relaxed whitespace-pre-line bg-slate-50 p-3.5 rounded-xl border border-slate-100 mb-4">
-            <?= htmlspecialchars($room['notice'] ?: ($room['description'] ?: '회원 여러분 환영합니다! 활발하고 매너 있는 모임 활동을 부탁드립니다.')) ?>
-          </div>
+          <div class="text-xs text-slate-600 leading-relaxed whitespace-pre-line bg-slate-50 p-3.5 rounded-xl border border-slate-100 mb-4"><?= htmlspecialchars(trim($room['notice'] ?: ($room['description'] ?: '회원 여러분 환영합니다! 활발하고 매너 있는 모임 활동을 부탁드립니다.'))) ?></div>
 
           <div class="pt-3 border-t border-slate-100 space-y-2 text-xs text-slate-600">
             <div class="flex justify-between">
