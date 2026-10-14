@@ -3,11 +3,56 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>뉴저지 한인 의료정보센터 (Healthcare Resource Center) | 자격확인 계산기 · 커뮤니티 리소스 · 메디케어 &amp; ACA</title>
-  <meta name="description" content="뉴저지 한인을 위한 원스톱 의료정보센터: 2026/2027 복지 자격확인 계산기, 포트리·팰팍 등 타운별 시니어 아파트 및 서민 주택, 8대 분야 커뮤니티 리소스, 2026 메디케어 &amp; ACA 완전 가이드." />
-  <meta name="keywords" content="의료정보센터, 뉴저지 시니어 아파트, 메디케어 계산기, 커뮤니티 리소스, GetCoveredNJ, NJ FamilyCare, 버겐카운티 복지, PAAD, Senior Freeze, Stay NJ" />
+  <title>한인 의료 접근센터 &amp; 의료정보센터 (Healthcare Access Center &amp; Resource Center) | NJAP</title>
+  <meta name="description" content="한인 의료 접근센터(Healthcare Access Center) &amp; 의료정보센터(Healthcare Resource Center / 의료점보센터) - 한인 의료, 한인 의사, 한인 병원 연결 및 뉴저지 한인포럼·한인광장 복지 안내. 2026/2027 복지 자격확인 계산기, 시니어 아파트, 8대 분야 커뮤니티 리소스, 메디케어 &amp; ACA 완전 가이드." />
+  <meta name="keywords" content="한인 의료 접근센터, 한인 의료접근센터, 한인의료접근센터, 뉴저지 한인 의료 접근센터, healthcare access center, 한인포럼, 뉴저지 한인포럼, 한인광장, 뉴저지 한인광장, 의료정보센터, 의료점보센터, 의료접근센터, korean portal, healthcare resource center, 한인 의료, 한인 의사, 한인 병원, 뉴저지 시니어 아파트, 메디케어 계산기, 커뮤니티 리소스, GetCoveredNJ, NJ FamilyCare, 버겐카운티 복지, PAAD, Senior Freeze, Stay NJ" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <link rel="canonical" href="https://njaccessportal.com/resource-center" />
+
+  <!-- OpenGraph -->
+  <meta property="og:site_name" content="한인 의료 접근센터 · Healthcare Access Center · NJAP" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://njaccessportal.com/resource-center" />
+  <meta property="og:title" content="한인 의료 접근센터 &amp; 의료정보센터 (Healthcare Access Center &amp; Resource Center) | NJ Access Portal" />
+  <meta property="og:description" content="한인 의료 접근센터 &amp; 의료정보센터: 한인 의료, 한인 의사, 한인 병원, 뉴저지 한인포럼·한인광장, 복지 자격확인 계산기 및 메디케어·ACA 가이드." />
+  <meta property="og:image" content="https://njaccessportal.com/logo-icon.svg" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="한인 의료 접근센터 &amp; 의료정보센터 (Healthcare Access Center &amp; Resource Center) | NJ Access Portal" />
+  <meta name="twitter:description" content="한인 의료 접근센터 &amp; 의료정보센터: 한인 의료, 한인 의사, 한인 병원, 뉴저지 한인포럼·한인광장, 복지 자격확인 계산기 및 메디케어·ACA 가이드." />
+  <meta property="twitter:image" content="https://njaccessportal.com/logo-icon.svg" />
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "한인 의료 접근센터 &amp; 의료정보센터 (Healthcare Access Center &amp; Resource Center)",
+    "description": "한인 의료 접근센터 및 의료정보센터: 한인 의료, 한인 의사, 한인 병원, 뉴저지 한인포럼·한인광장, 복지 자격확인 계산기 및 커뮤니티 리소스.",
+    "url": "https://njaccessportal.com/resource-center",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "한인 의료 접근센터 (Healthcare Access Center) · NJ Access Portal",
+      "url": "https://njaccessportal.com/"
+    },
+    "keywords": [
+      "한인포럼",
+      "뉴저지 한인포럼",
+      "한인광장",
+      "뉴저지 한인광장",
+      "의료점보센터",
+      "의료정보센터",
+      "의료접근센터",
+      "healthcare access center",
+      "korean portal",
+      "healthcare resource center",
+      "한인 의료",
+      "한인 의사",
+      "한인 병원"
+    ]
+  }
+  </script>
 
   <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
   <link rel="icon" href="/favicon.ico?v=2" sizes="16x16 32x32 48x48" type="image/x-icon" />
@@ -244,16 +289,180 @@
     }
     .rc-hero-tabs-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 12px;
       width: 100%;
     }
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) {
+      .rc-hero-tabs-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+      }
+    }
+    @media (max-width: 640px) {
       .rc-hero-tabs-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 8px;
       }
     }
+
+    /* 5th Tab: Healthcare Cost-Saving Tips Styles */
+    .rc-tip-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 1.25rem;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      align-self: start;
+      width: 100%;
+    }
+    .rc-tip-card:hover {
+      border-color: #3b82f6;
+      box-shadow: 0 8px 20px -4px rgba(37, 99, 235, 0.12);
+      transform: translateY(-2px);
+    }
+    .rc-tip-card.is-expanded {
+      border-color: #2563eb;
+      box-shadow: 0 10px 25px -4px rgba(37, 99, 235, 0.16);
+      background: #fafcfe;
+    }
+    .rc-tip-pill {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2.5px 8.5px;
+      border-radius: 9999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #dbeafe;
+      display: inline-block;
+    }
+    .rc-tip-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.35;
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .rc-tip-desc {
+      font-size: 12.5px;
+      color: #475569;
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 0.75rem;
+    }
+    .rc-tip-card.is-expanded .rc-tip-desc {
+      display: none;
+    }
+    .rc-tip-detail {
+      display: none;
+      font-size: 13px;
+      color: #334155;
+      line-height: 1.65;
+      padding-top: 0.75rem;
+      margin-top: 0.5rem;
+      border-top: 1px solid #e2e8f0;
+    }
+    .rc-tip-card.is-expanded .rc-tip-detail {
+      display: block;
+      animation: rcFadeIn 0.2s ease-in;
+    }
+    .rc-tip-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 0.75rem;
+      border-top: 1px solid #f1f5f9;
+      font-size: 12px;
+      font-weight: 700;
+      color: #2563eb;
+    }
+    .rc-tip-card.is-expanded .rc-tip-footer {
+      border-top-color: #e2e8f0;
+      margin-top: 0.75rem;
+    }
+    .rc-tip-link-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      background: #f0fdf4;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
+      font-size: 11.5px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+    .rc-tip-link-badge:hover {
+      background: #dcfce7;
+      transform: translateY(-1px);
+    }
+
+    /* Tips Section Group Titles & Audio Player */
+    .rc-tips-group-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid #e2e8f0;
+    }
+    .rc-tips-group-title.group-rx {
+      border-bottom-color: rgba(16, 185, 129, 0.4);
+    }
+    .rc-tips-group-title.group-hospital {
+      border-bottom-color: rgba(37, 99, 235, 0.4);
+    }
+    .rc-tips-group-title.group-nj {
+      border-bottom-color: rgba(99, 102, 241, 0.4);
+    }
+    .rc-tips-group-text {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .rc-tips-group-badge {
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      border: 1px solid;
+    }
+    .rc-tip-audio-btn {
+      white-space: nowrap !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 4px !important;
+      font-size: 11px !important;
+      font-weight: 700 !important;
+      padding: 3.5px 8.5px !important;
+      line-height: 1.2 !important;
+      border-radius: 8px !important;
+      flex-shrink: 0 !important;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .rc-tip-audio-btn:hover {
+      transform: translateY(-1px);
+    }
+    .rc-tip-audio-btn.is-playing {
+      background: #fef2f2 !important;
+      color: #dc2626 !important;
+      border-color: #fca5a5 !important;
+      box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.25) !important;
+    }
+
     .hero-tab-item {
       text-align: left;
       padding: 12px 16px;
@@ -1797,6 +2006,10 @@
             <span class="text-[13px] leading-tight font-bold text-slate-700 group-hover:text-brand-blue transition-colors">정보센터</span>
             <span class="text-[10px] leading-tight font-medium text-brand-blue/80 transition-colors">Resource Center</span>
           </a>
+          <a class="nav-link pb-0.5 flex flex-col items-center justify-center leading-tight text-center cursor-pointer group" href="/partners">
+            <span class="text-[14px] leading-tight font-semibold text-slate-800 group-hover:text-brand-blue transition-colors">뉴저지 파트너즈</span>
+            <span class="text-[10px] leading-tight font-medium text-slate-400 group-hover:text-brand-blue/80 transition-colors">NJ Partners</span>
+          </a>
           <a class="nav-link pb-0.5 flex flex-col items-center justify-center leading-tight text-center cursor-pointer group" href="/about">
             <span class="text-[14px] leading-tight font-semibold text-slate-800 group-hover:text-brand-blue transition-colors">의료접근센터</span>
             <span class="text-[10px] leading-tight font-medium text-slate-400 group-hover:text-brand-blue/80 transition-colors">Healthcare Access Center</span>
@@ -1867,6 +2080,18 @@
         <svg class="w-4 h-4 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
 
+      <!-- 5. 뉴저지 파트너즈 -->
+      <a href="/partners" class="flex items-center justify-between py-2.5 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+          <div class="flex flex-col text-left leading-tight">
+            <span class="text-[15px] font-bold text-slate-800">뉴저지 파트너즈</span>
+            <span class="text-[10.5px] font-medium text-slate-400">NJ Partners</span>
+          </div>
+        </div>
+        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+
       <!-- 6. 의료 접근센터 -->
       <a href="/about" class="flex items-center justify-between py-2.5 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
@@ -1893,17 +2118,10 @@
 
       <div class="relative w-full z-10 flex flex-col justify-between py-6 sm:py-9 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         
-                <!-- Header row inside billboard (Badge & Centered Global Search) -->
-        <div class="relative w-full flex flex-col sm:flex-row items-center justify-between gap-4 mb-7">
-          <div class="shrink-0">
-            <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-blue-500/25 text-blue-200 border border-blue-400/40 backdrop-blur-md shadow-xs">
-              <span class="w-2 h-2 rounded-full bg-[#7FC8C0] animate-pulse"></span>
-              2026/2027 New Jersey Official Knowledge Hub
-            </span>
-          </div>
-
+                <!-- Header row inside billboard (Centered Global Search) -->
+        <div class="relative w-full flex justify-center items-center mb-6">
           <!-- Centered, Prominent Global Search Button in the Top Area of the Hero Section -->
-          <div class="sm:absolute sm:left-1/2 sm:-translate-x-1/2 z-20 flex justify-center w-full sm:w-auto">
+          <div class="z-20 flex justify-center w-full sm:w-auto">
             <button type="button" onclick="openSearchModal()" 
                     class="inline-flex items-center justify-center gap-2.5 px-5 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-slate-900 border border-sky-400 shadow-[0_4px_16px_rgba(0,0,0,0.25)] hover:bg-slate-50 hover:border-sky-400 hover:shadow-[0_6px_22px_rgba(56,189,248,0.4)] hover:scale-[1.02] transition-all cursor-pointer select-none backdrop-blur-md"
                     style="background: #ffffff !important; color: #0f172a !important; border: 1.5px solid #38bdf8 !important; box-shadow: 0 4px 18px rgba(0,0,0,0.25) !important;"
@@ -1913,9 +2131,6 @@
               <span class="px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 text-[10px] sm:text-xs font-mono font-bold border border-slate-200">⌘K</span>
             </button>
           </div>
-
-          <!-- Right placeholder spacer on desktop for balance -->
-          <div class="hidden sm:block shrink-0 w-[240px]"></div>
         </div>
 
         <!-- Middle Row: Left Content Slide Panels & Right Visual Card -->
@@ -1939,14 +2154,6 @@
               <p class="hero-main-desc">
                 NJ FamilyCare(메디케이드), 시니어 동결세(Senior Freeze), PAAD 의약품 지원, SNAP 푸드스탬프 자격을 가구원 수와 월 소득에 맞춰 즉시 자동 산출합니다.
               </p>
-              <div class="hero-btn-row">
-                <button type="button" onclick="window.rcHeroTabClick('calculator', false)" class="hero-btn-primary">
-                  <span>계산기 시작하기</span>
-                </button>
-                <button type="button" onclick="window.rcHeroTabClick('calculator', false)" class="hero-btn-white">
-                  <span>수혜 기준표 보기</span>
-                </button>
-              </div>
             </div>
 
             <!-- SLIDE 02: 커뮤니티 리소스 -->
@@ -1962,16 +2169,10 @@
                 <span class="hero-gradient-accent">검증된 뉴저지 커뮤니티 리소스</span>
               </div>
               <p class="hero-main-desc">
-                포트리·팰팍 타운별 시니어 아파트, 공과금 감면, 푸드뱅크 등 80개 핵심 복지 가이드를 <strong>오디오가이드로 쉽게 이해 하시도록 도와드립니다.</strong> 복잡한 신청 규정을 음성으로 편안하게 들으면서 확인해 보세요.
+                포트리·팰팍 타운별 시니어 아파트, 공과금 감면, 푸드뱅크 등 80개 핵심 복지 가이드 —
+                <span class="block my-1.5 font-bold text-[#FDE047]" style="color: #FDE047 !important;">오디오 가이드의 설명을 들으시면서 더욱더 쉽게 이해하세요.</span>
+                복잡한 자격 요건과 신청 규정도 음성으로 편안하게 들으면서 확인해 보세요.
               </p>
-              <div class="hero-btn-row">
-                <button type="button" onclick="window.rcHeroTabClick('resources', false)" class="hero-btn-primary">
-                  <span>🎧 오디오가이드로 리소스 보기</span>
-                </button>
-                <button type="button" onclick="window.rcHeroJumpHousing()" class="hero-btn-white">
-                  <span>타운별 시니어 아파트</span>
-                </button>
-              </div>
             </div>
 
             <!-- SLIDE 03: 메디케어 & ACA -->
@@ -1989,14 +2190,6 @@
               <p class="hero-main-desc">
                 인플레이션 감축법(IRA) 파트 D 약값 상한제 $2,100, 파트 B 표준 보험료 $202.90, 오리지널 vs 어드밴티지 맞춤 선택 전략과 저소득층 보조(Extra Help)를 확인하세요.
               </p>
-              <div class="hero-btn-row">
-                <button type="button" onclick="window.rcHeroTabClick('medicare', false)" class="hero-btn-primary">
-                  <span>메디케어 가이드 읽기</span>
-                </button>
-                <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="hero-btn-kakao">
-                  <span>카카오톡 1:1 상담</span>
-                </a>
-              </div>
             </div>
 
             <!-- SLIDE 04: 시니어 -->
@@ -2014,14 +2207,23 @@
               <p class="hero-main-desc">
                 HUD 202 독립 시니어 아파트, PAAD $5 약값 상한제, PPP 가족 간병인 유급 지원, 65세 이상 재산세 동결(Senior Freeze) 및 성인 데이케어까지 한눈에 확인하세요.
               </p>
-              <div class="hero-btn-row">
-                <button type="button" onclick="window.rcHeroTabClick('senior', false)" class="hero-btn-primary">
-                  <span>시니어 리소스 둘러보기</span>
-                </button>
-                <button type="button" onclick="window.rcHeroTabClick('senior', false)" class="hero-btn-white">
-                  <span>시니어 6대 분야별 보기</span>
-                </button>
+            </div>
+
+            <!-- SLIDE 05: 의료비 실전 팁 -->
+            <div id="rc-hero-slide-5" class="hero-slide hidden opacity-0 translate-y-3" data-slide="5">
+              <div>
+                <span class="hero-pill-badge">
+                  <span class="w-2 h-2 rounded-full bg-[#7FC8C0] animate-pulse"></span>
+                  PRACTICAL COST-SAVING TIPS
+                </span>
               </div>
+              <div class="hero-main-title">
+                의료비 절약<br>
+                <span class="hero-gradient-accent">실전 팁</span>
+              </div>
+              <p class="hero-main-desc">
+                보험이 없어도, 영어가 불편해도 — 처방약 할인부터 병원비 협상, 뉴저지 지원 프로그램까지 바로 써먹는 팁을 모았습니다.
+              </p>
             </div>
 
           </div>
@@ -2034,6 +2236,7 @@
               <img id="rc-hero-visual-2" src="/uploads/images/hero_slide_2.jpg" alt="시니어 주거 및 커뮤니티 리소스" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
               <img id="rc-hero-visual-3" src="/uploads/images/hero_slide_1.jpg" alt="2026 메디케어 및 ACA 완벽 가이드" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
               <img id="rc-hero-visual-4" src="/uploads/images/hero_slide_3.jpg" alt="뉴저지 시니어 복지 및 생활 리소스" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
+              <img id="rc-hero-visual-5" src="/uploads/images/hero_slide_hospital_bill.jpg" alt="의료비 절약 실전 팁 - 병원비 청구서" loading="lazy" class="hero-visual-img" style="opacity: 0; transform: scale(1.02); z-index: 1;" />
               
               <!-- Bottom Caption Bar -->
               <div class="hero-card-caption-bar">
@@ -2041,7 +2244,7 @@
                   2026 연방 빈곤선(FPL) 기준 실시간 자동 판정
                 </span>
                 <span class="hero-card-caption-num">
-                  <span id="rc-hero-visual-num">01</span> / 04
+                  <span id="rc-hero-visual-num">01</span> / 05
                 </span>
               </div>
             </div>
@@ -2049,7 +2252,7 @@
 
         </div>
 
-        <!-- Bottom: The 4 Button Relative Slide Navigator (Role tablist matching index.php billboard style) -->
+        <!-- Bottom: The 5 Button Relative Slide Navigator (Role tablist matching index.php billboard style) -->
         <div class="mt-6 pt-3 sm:pt-4 border-t border-white/10 w-full">
           <div role="tablist" aria-label="의료정보센터 주요 서비스 하이라이트" class="rc-hero-tabs-grid">
             
@@ -2078,6 +2281,13 @@
             <button role="tab" id="rc-billboard-tab-4" aria-controls="rc-hero-slide-4" aria-selected="false" tabindex="-1" onclick="window.rcHeroTabClick('senior', false)" class="hero-tab-item rc-hero-tab" data-slide="4" data-tab="senior">
               <span class="hero-tab-sub">04</span>
               <span class="hero-tab-title">시니어</span>
+              <div class="hero-tab-bar"></div>
+            </button>
+
+            <!-- Button 5: 의료비 실전 팁 -->
+            <button role="tab" id="rc-billboard-tab-5" aria-controls="rc-hero-slide-5" aria-selected="false" tabindex="-1" onclick="window.rcHeroTabClick('tips', false)" class="hero-tab-item rc-hero-tab" data-slide="5" data-tab="tips">
+              <span class="hero-tab-sub">05</span>
+              <span class="hero-tab-title">의료비 실전 팁</span>
               <div class="hero-tab-bar"></div>
             </button>
 
@@ -3599,6 +3809,593 @@
 
       </section>
 
+      <!-- ========================================================
+           TAB 5: PRACTICAL COST-SAVING TIPS VIEW
+           ======================================================== -->
+      <section id="tab-view-tips" class="rc-tab-view hidden">
+        <div class="mb-8">
+          <span class="text-xs font-bold uppercase tracking-widest text-blue-600 block mb-1">HEALTHCARE COST NAVIGATION</span>
+          <h2 class="text-2xl sm:text-3xl font-serif font-bold text-slate-900">
+            의료비 절약 실전 팁 (뉴저지 한인용)
+          </h2>
+          <p class="text-sm text-slate-600 mt-1 max-w-3xl leading-relaxed">
+            건강보험이 없거나 높은 디덕터블과 코페이로 병원 치료나 처방약 조제가 망설여지시나요? 처방약 할인 쿠폰부터 병원비 청구서 항목 분석과 현금 할인 협상 요령, 뉴저지 주정부 법정 지원 제도까지 즉시 적용할 수 있는 실전 노하우를 정리했습니다.
+          </p>
+
+          <!-- VibeVoice Voice Persona Selector for Health Tips -->
+          <div class="flex flex-wrap items-center justify-between gap-3 p-3.5 mt-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs">
+            <div class="flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-blue-50 text-[#1B6FA8] flex items-center justify-center text-sm font-bold shadow-2xs">🎙️</span>
+              <div>
+                <span class="text-xs font-black text-slate-900 flex items-center gap-1.5">
+                  <span>VibeVoice AI 음성 오디오 가이드</span>
+                  <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-100">Bilingual 1.5B</span>
+                </span>
+                <p class="text-[11px] text-slate-500">원하시는 내레이터 음성을 선택하여 절약 수칙과 건강 가이드를 들으실 수 있습니다.</p>
+              </div>
+            </div>
+            <div class="inline-flex items-center gap-1 p-1 rounded-xl bg-slate-100 border border-slate-200/90">
+              <button type="button" id="rc-tip-voice-male" onclick="window.setTipVoice('ko_male')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-white text-[#1B6FA8] shadow-2xs border border-blue-100 cursor-pointer flex items-center gap-1.5">
+                <span>👨</span><span>남성 내레이터</span><span class="text-[10px] text-blue-500 font-normal">(신뢰감)</span>
+              </button>
+              <button type="button" id="rc-tip-voice-female" onclick="window.setTipVoice('ko_female')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all text-slate-600 hover:text-slate-900 cursor-pointer flex items-center gap-1.5">
+                <span>👩</span><span>여성 내레이터</span><span class="text-[10px] text-blue-500 font-normal">(따뜻함)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- GROUP 1: 처방약 할인 -->
+        <div class="mb-10">
+          <div class="rc-tips-group-title group-rx">
+            <span class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-800 font-extrabold text-sm inline-flex items-center justify-center shadow-2xs">01</span>
+            <h3 class="rc-tips-group-text text-emerald-950 flex items-center gap-2">
+              <span class="text-emerald-700 font-extrabold">처방약 할인</span>
+              <span class="rc-tips-group-badge bg-emerald-100 text-emerald-800 border-emerald-300">3개 팁</span>
+            </h3>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 items-start">
+
+            <!-- Tip 1 -->
+            <div class="rc-tip-card group" onclick="window.toggleTipCard(this)">
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-2">
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="rc-tip-pill">처방약 쿠폰</span>
+                    <span class="text-[11px] font-bold text-slate-400">약국 현장 할인</span>
+                  </div>
+                  <button type="button" onclick="event.stopPropagation(); window.toggleTipAudio('tip-1', this);" class="rc-tip-audio-btn flex-shrink-0 text-xs px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold border border-blue-200 inline-flex items-center gap-1.5 shadow-2xs transition-all cursor-pointer" data-tip-id="tip-1" title="오디오 가이드 듣기">
+                    <svg class="w-3.5 h-3.5 rc-tip-icon-play" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <svg class="w-3.5 h-3.5 rc-tip-icon-stop hidden" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clip-rule="evenodd"/></svg>
+                    <span class="rc-tip-audio-text">오디오 가이드</span>
+                  </button>
+                </div>
+                <h4 class="rc-tip-title group-hover:text-blue-600 transition-colors">
+                  GoodRx·SingleCare 처방약 쿠폰
+                </h4>
+                <p class="rc-tip-desc">
+                  가입 없이 무료로 쓰는 처방약 할인 쿠폰. 사이트·앱에서 약 이름과 우편번호를 입력하면 근처 약국 가격을 비교해주고, 쿠폰을 약국 카운터에 보여주면 최대 80%까지 할인됩니다. 보험 코페이보다 쌀 때가 많습니다.
+                </p>
+                <div class="rc-tip-detail">
+                  <p class="mb-2.5">
+                    회원가입이나 연회비 없이 누구나 즉시 무료로 이용할 수 있는 디지털 처방약 할인 쿠폰 프로그램입니다. 스마트폰 앱이나 웹사이트에서 처방받은 약의 영문 성분명과 거주지 우편번호(ZIP code)를 입력하면 CVS, Walgreens, Walmart, Costco 등 인근 약국별 실시간 조제 가격을 비교할 수 있습니다.
+                  </p>
+                  <p class="mb-3">
+                    가장 저렴한 약국의 모바일 쿠폰 화면을 조제 카운터 직원에게 제시하면 즉시 최대 80%까지 할인된 현금 가격으로 조제받을 수 있습니다. 상용 건강보험의 높은 디덕터블이나 코페이보다 오히려 저렴한 경우가 흔합니다.
+                  </p>
+                  <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 text-xs text-amber-900 leading-relaxed mb-3">
+                    <strong>주의 사항:</strong> 연방 메디케어 및 메디케이드 등 정부 보험과는 동시 중복 적용이 불가능합니다. 약국별 할인 가격은 수시로 변동되므로 조제 전 확인하세요.
+                  </div>
+                  <div class="flex items-center justify-between flex-wrap gap-2 pt-2 border-t border-slate-100">
+                    <a href="https://www.goodrx.com" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();" class="rc-tip-link-badge">
+                      <span>GoodRx 공식 사이트 열기</span>
+                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    </a>
+                    <button type="button" onclick="event.stopPropagation(); window.toggleTipCard(this);" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 cursor-pointer">
+                      <span>닫기</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="rc-tip-footer">
+                <span class="rc-tip-toggle-text">상세보기</span>
+                <span class="text-xs">&rarr;</span>
+              </div>
+            </div>
+
+            <!-- Tip 2 -->
+            <div class="rc-tip-card group" onclick="window.toggleTipCard(this)">
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-2">
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="rc-tip-pill">온라인 약국</span>
+                    <span class="text-[11px] font-bold text-slate-400">원가 공개제</span>
+                  </div>
+                  <button type="button" onclick="event.stopPropagation(); window.toggleTipAudio('tip-2', this);" class="rc-tip-audio-btn flex-shrink-0 text-xs px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold border border-blue-200 inline-flex items-center gap-1.5 shadow-2xs transition-all cursor-pointer" data-tip-id="tip-2" title="오디오 가이드 듣기">
+                    <svg class="w-3.5 h-3.5 rc-tip-icon-play" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <svg class="w-3.5 h-3.5 rc-tip-icon-stop hidden" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clip-rule="evenodd"/></svg>
+                    <span class="rc-tip-audio-text">오디오 가이드</span>
+                  </button>
+                </div>
+                <h4 class="rc-tip-title group-hover:text-blue-600 transition-colors">
+                  Cost Plus Drugs 온라인 약국
+                </h4>
+                <p class="rc-tip-desc">
+                  원가에 15% 고정 마진만 붙이는 투명한 가격의 온라인 약국. 보험 없이 이용 가능하고, 만성질환으로 오래 먹는 제네릭 약에 특히 유리합니다. 배송 기간을 감안해 미리 주문하세요.
+                </p>
+                <div class="rc-tip-detail">
+                  <p class="mb-2.5">
+                    마크 큐반(Mark Cuban)이 설립한 온라인 약국으로, 제약사 원가에 정확히 15%의 마진과 기본 조제비 $3, 배송비만 더하는 투명 정가제를 운영합니다. 중간 유통업자(PBM)의 폭리를 배제하여 시중 약국보다 파격적으로 저렴합니다.
+                  </p>
+                  <p class="mb-3">
+                    건강보험 없이 누구나 이용할 수 있으며, 고혈압, 당뇨, 고지혈증 등 평생 복용해야 하는 제네릭(복제약) 처방약의 경우 3개월분 단위로 주문 시 일반 약국 대비 수백 달러를 아낄 수 있습니다.
+                  </p>
+                  <div class="p-3 bg-blue-50 rounded-xl border border-blue-200 text-xs text-blue-900 leading-relaxed mb-3">
+                    <strong>이용 요령:</strong> 담당 의사에게 처방전을 'Mark Cuban Cost Plus Drug Company'로 온라인 전송해 달라고 요청한 후 자택으로 택배 수령합니다. 우편 배송에 5~10일 소요되므로 약이 떨어지기 전 1~2주 여유 있게 주문하세요.
+                  </div>
+                  <div class="flex items-center justify-between flex-wrap gap-2 pt-2 border-t border-slate-100">
+                    <a href="https://costplusdrugs.com" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();" class="rc-tip-link-badge">
+                      <span>Cost Plus Drugs 공식 사이트 열기</span>
+                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    </a>
+                    <button type="button" onclick="event.stopPropagation(); window.toggleTipCard(this);" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 cursor-pointer">
+                      <span>닫기</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="rc-tip-footer">
+                <span class="rc-tip-toggle-text">상세보기</span>
+                <span class="text-xs">&rarr;</span>
+              </div>
+            </div>
+
+            <!-- Tip 3 -->
+            <div class="rc-tip-card group" onclick="window.toggleTipCard(this)">
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-2">
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="rc-tip-pill">비영리 지원</span>
+                    <span class="text-[11px] font-bold text-slate-400">무료 약 검색</span>
+                  </div>
+                  <button type="button" onclick="event.stopPropagation(); window.toggleTipAudio('tip-3', this);" class="rc-tip-audio-btn flex-shrink-0 text-xs px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold border border-blue-200 inline-flex items-center gap-1.5 shadow-2xs transition-all cursor-pointer" data-tip-id="tip-3" title="오디오 가이드 듣기">
+                    <svg class="w-3.5 h-3.5 rc-tip-icon-play" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <svg class="w-3.5 h-3.5 rc-tip-icon-stop hidden" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clip-rule="evenodd"/></svg>
+                    <span class="rc-tip-audio-text">오디오 가이드</span>
+                  </button>
+                </div>
+                <h4 class="rc-tip-title group-hover:text-blue-600 transition-colors">
+                  NeedyMeds 처방약 지원 포털
+                </h4>
+                <p class="rc-tip-desc">
+                  처방약 지원 전문 비영리 단체. 제약사가 직접 운영하는 무료 약 프로그램(PAP) 검색, 무료 처방약 할인카드, 전국 14,000곳 이상의 무료·저렴 진료소 찾기를 제공합니다. 헬프라인 1-800-503-6897.
+                </p>
+                <div class="rc-tip-detail">
+                  <p class="mb-2.5">
+                    처방약 비용 부담으로 치료를 중단하는 환자가 없도록 지원하는 미국 최대 비영리 정보 포털입니다. 다국적 제약사들이 자체 기금으로 저소득 환자에게 고가 오리지널 의약품을 100% 무료 제공하는 '환자 지원 프로그램(Patient Assistance Programs, PAP)'을 한곳에서 검색할 수 있습니다.
+                  </p>
+                  <p class="mb-3">
+                    소득이 낮고 보험 혜택이 부족한 경우 본인이 복용 중인 약을 검색하면 신청 서식과 지원 자격 요건을 즉시 안내받을 수 있습니다. 또한 전국 14,000곳 이상의 무료·저비용 커뮤니티 클리닉 정보도 제공합니다.
+                  </p>
+                  <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-emerald-900 leading-relaxed mb-3">
+                    <strong>추천 연락처:</strong> 온라인 검색이 어려우신 어르신은 한국어 통역을 요청할 수 있는 NeedyMeds 무료 헬프라인(1-800-503-6897)으로 전화하여 안내를 받으실 수 있습니다. 약값이 부담되면 가장 먼저 검색해 볼 곳입니다.
+                  </div>
+                  <div class="flex items-center justify-between flex-wrap gap-2 pt-2 border-t border-slate-100">
+                    <a href="https://www.needymeds.org" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();" class="rc-tip-link-badge">
+                      <span>NeedyMeds 공식 사이트 열기</span>
+                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    </a>
+                    <button type="button" onclick="event.stopPropagation(); window.toggleTipCard(this);" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 cursor-pointer">
+                      <span>닫기</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="rc-tip-footer">
+                <span class="rc-tip-toggle-text">상세보기</span>
+                <span class="text-xs">&rarr;</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- GROUP 2: 병원비 협상 -->
+        <div class="mb-10">
+          <div class="rc-tips-group-title group-hospital">
+            <span class="w-7 h-7 rounded-lg bg-blue-100 text-blue-800 font-extrabold text-sm inline-flex items-center justify-center shadow-2xs">02</span>
+            <h3 class="rc-tips-group-text text-blue-950 flex items-center gap-2">
+              <span class="text-blue-700 font-extrabold">병원비 협상</span>
+              <span class="rc-tips-group-badge bg-blue-100 text-blue-800 border-blue-300">4개 팁</span>
+            </h3>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 items-start">
+
+            <!-- Tip 4 -->
+            <div class="rc-tip-card group" onclick="window.toggleTipCard(this)">
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-2">
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="rc-tip-pill">비보험 현금 할인</span>
+                    <span class="text-[11px] font-bold text-slate-400">20~40% 감면</span>
+                  </div>
+                  <button type="button" onclick="event.stopPropagation(); window.toggleTipAudio('tip-4', this);" class="rc-tip-audio-btn flex-shrink-0 text-xs px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold border border-blue-200 inline-flex items-center gap-1.5 shadow-2xs transition-all cursor-pointer" data-tip-id="tip-4" title="오디오 가이드 듣기">
+                    <svg class="w-3.5 h-3.5 rc-tip-icon-play" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <svg class="w-3.5 h-3.5 rc-tip-icon-stop hidden" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clip-rule="evenodd"/></svg>
+                    <span class="rc-tip-audio-text">오디오 가이드</span>
+                  </button>
+                </div>
+                <h4 class="rc-tip-title group-hover:text-blue-600 transition-colors">
+                  셀프페이 할인 요청 (Self-Pay)
+                </h4>
+                <p class="rc-tip-desc">
+                  보험이 없을 때 접수·수납 창구에서 "self-pay discount"를 요청하세요. 20~40% 할인이 흔합니다. 진료 전에 서면 견적(estimate)을 받아 두세요.
+                </p>
+                <div class="rc-tip-detail">
+                  <p class="mb-2.5">
+                    건강보험이 없거나 비보험 진료를 받을 때, 병원 접수창구나 수납처에 반드시 <strong>"I am uninsured, do you offer a self-pay discount?"</strong>라고 요청하세요.
+                  </p>
+                  <p class="mb-3">
+                    미국 대다수 병원과 검사 센터는 복잡한 보험 청구 수수료와 미수금 위험을 피하기 위해 현금 자비 결제 환자에게 20%에서 최대 40% 이상의 정률 할인을 기본 제공합니다.
+                  </p>
+                  <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-700 leading-relaxed mb-3">
+                    <strong>실전 요령:</strong> 비응급 검사(MRI, 초음파, 대장내시경 등)는 진료를 받기 전 원무과에 서면 사전 견적서(Good Faith Estimate)를 요청하여 받아 두셔야 나중에 과도한 청구를 막을 수 있습니다.
+                  </div>
+                  <div class="flex justify-end pt-2 border-t border-slate-100">
+                    <button type="button" onclick="event.stopPropagation(); window.toggleTipCard(this);" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 cursor-pointer">
+                      <span>닫기</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="rc-tip-footer">
+                <span class="rc-tip-toggle-text">상세보기</span>
+                <span class="text-xs">&rarr;</span>
+              </div>
+            </div>
+
+            <!-- Tip 5 -->
+            <div class="rc-tip-card group" onclick="window.toggleTipCard(this)">
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-2">
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="rc-tip-pill">수가 기준 협상</span>
+                    <span class="text-[11px] font-bold text-slate-400">공식 수가 기준</span>
+                  </div>
+                  <button type="button" onclick="event.stopPropagation(); window.toggleTipAudio('tip-5', this);" class="rc-tip-audio-btn flex-shrink-0 text-xs px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold border border-blue-200 inline-flex items-center gap-1.5 shadow-2xs transition-all cursor-pointer" data-tip-id="tip-5" title="오디오 가이드 듣기">
+                    <svg class="w-3.5 h-3.5 rc-tip-icon-play" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <svg class="w-3.5 h-3.5 rc-tip-icon-stop hidden" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clip-rule="evenodd"/></svg>
+                    <span class="rc-tip-audio-text">오디오 가이드</span>
+                  </button>
+                </div>
+                <h4 class="rc-tip-title group-hover:text-blue-600 transition-colors">
+                  메디케어 수가 기준 현금가 문의
+                </h4>
+                <p class="rc-tip-desc">
+                  "Medicare rate로 현금 결제하면 얼마인가요?"라고 물어보세요. 병원이 내부 기준으로 갖고 있는 수가를 협상 출발점으로 삼을 수 있습니다.
+                </p>
+                <div class="rc-tip-detail">
+                  <p class="mb-2.5">
+                    병원 청구액이 지나치게 높게 나왔거나 시술 비용을 협상할 때, 원무과(Billing Office)에 <strong>"What is the Medicare reimbursement rate for this service if I pay cash?"</strong>라고 물어보세요.
+                  </p>
+                  <p class="mb-3">
+                    미국 병원의 공식 정가표(Chargemaster)는 부풀려져 있지만, 연방정부가 정한 메디케어 수가는 병원이 실제로 인정하는 가장 합리적인 기준 금액입니다. 병원은 메디케어 수가의 110%~130% 수준으로 현금 일시불 합의를 수용하는 경우가 많으므로 강력한 협상 출발점이 됩니다.
+                  </p>
+                  <div class="flex justify-end pt-2 border-t border-slate-100">
+                    <button type="button" onclick="event.stopPropagation(); window.toggleTipCard(this);" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 cursor-pointer">
+                      <span>닫기</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="rc-tip-footer">
+                <span class="rc-tip-toggle-text">상세보기</span>
+                <span class="text-xs">&rarr;</span>
+              </div>
+            </div>
+
+            <!-- Tip 6 -->
+            <div class="rc-tip-card group" onclick="window.toggleTipCard(this)">
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-2">
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="rc-tip-pill">청구서 정밀 검토</span>
+                    <span class="text-[11px] font-bold text-slate-400">오류 확인</span>
+                  </div>
+                  <button type="button" onclick="event.stopPropagation(); window.toggleTipAudio('tip-6', this);" class="rc-tip-audio-btn flex-shrink-0 text-xs px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold border border-blue-200 inline-flex items-center gap-1.5 shadow-2xs transition-all cursor-pointer" data-tip-id="tip-6" title="오디오 가이드 듣기">
+                    <svg class="w-3.5 h-3.5 rc-tip-icon-play" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <svg class="w-3.5 h-3.5 rc-tip-icon-stop hidden" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clip-rule="evenodd"/></svg>
+                    <span class="rc-tip-audio-text">오디오 가이드</span>
+                  </button>
+                </div>
+                <h4 class="rc-tip-title group-hover:text-blue-600 transition-colors">
+                  아이템화 청구서(Itemized Bill) 요청
+                </h4>
+                <p class="rc-tip-desc">
+                  의료 청구서 오류는 흔합니다. 항목별 내역서를 받아 중복 청구·오류를 확인하고 이의를 제기하세요. 금액만 적힌 요약 청구서로 결제하지 마세요.
+                </p>
+                <div class="rc-tip-detail">
+                  <p class="mb-2.5">
+                    총액만 적힌 요약 청구서(Summary Bill)를 받으면 즉시 결제하지 마시고, 원무과에 <strong>"Please send me an itemized bill with all procedure and CPT codes"</strong>라고 요청하세요.
+                  </p>
+                  <p class="mb-3">
+                    미국 의료 청구서의 상당수에서 실제로 받지 않은 검사, 취소된 약품의 이중 청구, 단순 진료에 대한 과다 코드(Upcoding) 오류가 발생합니다. 항목별 상세 내역을 요구하는 것만으로도 병원 측에서 오류를 검토하여 수백 달러 이상 금액을 스스로 깎아주는 사례가 많습니다.
+                  </p>
+                  <div class="flex justify-end pt-2 border-t border-slate-100">
+                    <button type="button" onclick="event.stopPropagation(); window.toggleTipCard(this);" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 cursor-pointer">
+                      <span>닫기</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="rc-tip-footer">
+                <span class="rc-tip-toggle-text">상세보기</span>
+                <span class="text-xs">&rarr;</span>
+              </div>
+            </div>
+
+            <!-- Tip 7 -->
+            <div class="rc-tip-card group" onclick="window.toggleTipCard(this)">
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-2">
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="rc-tip-pill">무이자 분납</span>
+                    <span class="text-[11px] font-bold text-slate-400">신용도 보호</span>
+                  </div>
+                  <button type="button" onclick="event.stopPropagation(); window.toggleTipAudio('tip-7', this);" class="rc-tip-audio-btn flex-shrink-0 text-xs px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold border border-blue-200 inline-flex items-center gap-1.5 shadow-2xs transition-all cursor-pointer" data-tip-id="tip-7" title="오디오 가이드 듣기">
+                    <svg class="w-3.5 h-3.5 rc-tip-icon-play" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <svg class="w-3.5 h-3.5 rc-tip-icon-stop hidden" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clip-rule="evenodd"/></svg>
+                    <span class="rc-tip-audio-text">오디오 가이드</span>
+                  </button>
+                </div>
+                <h4 class="rc-tip-title group-hover:text-blue-600 transition-colors">
+                  무이자 분할 납부 (Payment Plan)
+                </h4>
+                <p class="rc-tip-desc">
+                  한 번에 내기 어려우면 billing office에 payment plan을 요청하세요. 이자 없는 분할 납부가 관행인 경우가 많습니다. 연체되기 전에 미리 신청하세요.
+                </p>
+                <div class="rc-tip-detail">
+                  <p class="mb-2.5">
+                    청구된 병원비를 한 번에 감당하기 어려울 때는 방치하지 마시고 청구서 마감일 전에 병원 Billing Office에 연락하여 <strong>무이자 분할 납부(Interest-free Payment Plan)</strong>를 신청하세요.
+                  </p>
+                  <p class="mb-3">
+                    대다수 종합병원과 의료 법인은 월 $50~$100씩 환자의 지불 여력에 맞춰 12~36개월 동안 이자 없이 나누어 낼 수 있도록 승인해 줍니다. 분할 납부 협약을 맺고 성실히 납부하면 추심 업체(Collection agency)로 이첩되는 것을 합법적으로 방지하고 크레딧 점수를 안전하게 지킬 수 있습니다.
+                  </p>
+                  <div class="flex justify-end pt-2 border-t border-slate-100">
+                    <button type="button" onclick="event.stopPropagation(); window.toggleTipCard(this);" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 cursor-pointer">
+                      <span>닫기</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="rc-tip-footer">
+                <span class="rc-tip-toggle-text">상세보기</span>
+                <span class="text-xs">&rarr;</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- GROUP 3: NJ 지원 · 똑똑한 이용 -->
+        <div class="mb-10">
+          <div class="rc-tips-group-title group-nj">
+            <span class="w-7 h-7 rounded-lg bg-indigo-100 text-indigo-800 font-extrabold text-sm inline-flex items-center justify-center shadow-2xs">03</span>
+            <h3 class="rc-tips-group-text text-indigo-950 flex items-center gap-2">
+              <span class="text-indigo-700 font-extrabold">NJ 지원 · 똑똑한 이용</span>
+              <span class="rc-tips-group-badge bg-indigo-100 text-indigo-800 border-indigo-300">4개 팁</span>
+            </h3>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 items-start">
+
+            <!-- Tip 8 -->
+            <div class="rc-tip-card group" onclick="window.toggleTipCard(this)">
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-2">
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="rc-tip-pill">주정부 법정 복지</span>
+                    <span class="text-[11px] font-bold text-slate-400">최대 100% 무료</span>
+                  </div>
+                  <button type="button" onclick="event.stopPropagation(); window.toggleTipAudio('tip-8', this);" class="rc-tip-audio-btn flex-shrink-0 text-xs px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold border border-blue-200 inline-flex items-center gap-1.5 shadow-2xs transition-all cursor-pointer" data-tip-id="tip-8" title="오디오 가이드 듣기">
+                    <svg class="w-3.5 h-3.5 rc-tip-icon-play" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <svg class="w-3.5 h-3.5 rc-tip-icon-stop hidden" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clip-rule="evenodd"/></svg>
+                    <span class="rc-tip-audio-text">오디오 가이드</span>
+                  </button>
+                </div>
+                <h4 class="rc-tip-title group-hover:text-blue-600 transition-colors">
+                  NJ Charity Care (병원비 지원)
+                </h4>
+                <p class="rc-tip-desc">
+                  뉴저지 모든 급성기 병원은 주법에 따라 무상·할인 진료를 제공할 의무가 있습니다. 2026년 기준 1인 연소득 $31,920 이하면 전액 지원, 치료 후 1년 이내 신청 가능합니다.
+                </p>
+                <div class="rc-tip-detail">
+                  <p class="mb-2.5">
+                    뉴저지 주의 모든 급성기 종합병원(Acute Care Hospitals)은 주법에 따라 지불 능력이 없는 주민에게 필수 입원 및 외래 진료를 무료 또는 대폭 할인해 주어야 할 의무가 있는 법정 제도입니다.
+                  </p>
+                  <p class="mb-2">
+                    <strong>2026년 소득 기준:</strong><br>
+                    • 1인 가구 연 $31,920 이하: 병원비 <strong>100% 전액 지원 (무료)</strong><br>
+                    • 1인 가구 연 $47,880 이하: 부분 할인 감면 지원<br>
+                    • 4인 가구 기준 연 $66,000 이하 100% 전액 지원, $99,000 이하 부분 지원
+                  </p>
+                  <p class="mb-3 text-xs text-slate-600">
+                    자산 기준은 1인 $7,500, 가족 $15,000(거주 주택과 주 차량 제외)이며, 시민권·이민 신분과 전혀 무관하게 신청할 수 있습니다. 진료를 받은 날로부터 1년 이내에 신청서류를 제출하면 소급 적용됩니다.
+                  </p>
+                  <div class="flex items-center justify-between flex-wrap gap-2 pt-2 border-t border-slate-100">
+                    <button type="button" onclick="event.stopPropagation(); window.rcHeroTabClick('resources', true); window.filterByCategory('charity-care');" class="rc-tip-link-badge">
+                      <span>커뮤니티 리소스 자선진료 가이드 &rarr;</span>
+                    </button>
+                    <button type="button" onclick="event.stopPropagation(); window.toggleTipCard(this);" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 cursor-pointer">
+                      <span>닫기</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="rc-tip-footer">
+                <span class="rc-tip-toggle-text">상세보기</span>
+                <span class="text-xs">&rarr;</span>
+              </div>
+            </div>
+
+            <!-- Tip 9 -->
+            <div class="rc-tip-card group" onclick="window.toggleTipCard(this)">
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-2">
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="rc-tip-pill">슬라이딩 스케일</span>
+                    <span class="text-[11px] font-bold text-slate-400">지역 보건소</span>
+                  </div>
+                  <button type="button" onclick="event.stopPropagation(); window.toggleTipAudio('tip-9', this);" class="rc-tip-audio-btn flex-shrink-0 text-xs px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold border border-blue-200 inline-flex items-center gap-1.5 shadow-2xs transition-all cursor-pointer" data-tip-id="tip-9" title="오디오 가이드 듣기">
+                    <svg class="w-3.5 h-3.5 rc-tip-icon-play" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <svg class="w-3.5 h-3.5 rc-tip-icon-stop hidden" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clip-rule="evenodd"/></svg>
+                    <span class="rc-tip-audio-text">오디오 가이드</span>
+                  </button>
+                </div>
+                <h4 class="rc-tip-title group-hover:text-blue-600 transition-colors">
+                  FQHC 지역 공공 보건소
+                </h4>
+                <p class="rc-tip-desc">
+                  소득에 따라 진료비를 깎아주는 sliding scale 진료소. 보험이 없어도 저렴하게 진료와 처방을 받을 수 있습니다. NeedyMeds에서 집 근처를 검색하세요.
+                </p>
+                <div class="rc-tip-detail">
+                  <p class="mb-2.5">
+                    연방정부 지원을 받는 지역 보건소(Federally Qualified Health Centers)는 환자의 보험 유무나 지불 능력과 상관없이 포괄적인 1차 진료를 제공하는 필수 공공 의료 기관입니다.
+                  </p>
+                  <p class="mb-3">
+                    소득 수준에 비례해 진료비를 차등 적용하는 슬라이딩 스케일(Sliding Fee Scale)을 운영하므로, 무보험자라도 $20~$30대의 저렴한 비용으로 일반 진료, 혈액 검사, 치과 및 처방전을 발급받을 수 있습니다.
+                  </p>
+                  <div class="flex items-center justify-between flex-wrap gap-2 pt-2 border-t border-slate-100">
+                    <a href="https://www.needymeds.org" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();" class="rc-tip-link-badge">
+                      <span>집 근처 진료소 검색하기</span>
+                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    </a>
+                    <button type="button" onclick="event.stopPropagation(); window.toggleTipCard(this);" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 cursor-pointer">
+                      <span>닫기</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="rc-tip-footer">
+                <span class="rc-tip-toggle-text">상세보기</span>
+                <span class="text-xs">&rarr;</span>
+              </div>
+            </div>
+
+            <!-- Tip 10 -->
+            <div class="rc-tip-card group" onclick="window.toggleTipCard(this)">
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-2">
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="rc-tip-pill">긴급 복지 직통</span>
+                    <span class="text-[11px] font-bold text-slate-400">한국어 통역</span>
+                  </div>
+                  <button type="button" onclick="event.stopPropagation(); window.toggleTipAudio('tip-10', this);" class="rc-tip-audio-btn flex-shrink-0 text-xs px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold border border-blue-200 inline-flex items-center gap-1.5 shadow-2xs transition-all cursor-pointer" data-tip-id="tip-10" title="오디오 가이드 듣기">
+                    <svg class="w-3.5 h-3.5 rc-tip-icon-play" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <svg class="w-3.5 h-3.5 rc-tip-icon-stop hidden" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clip-rule="evenodd"/></svg>
+                    <span class="rc-tip-audio-text">오디오 가이드</span>
+                  </button>
+                </div>
+                <h4 class="rc-tip-title group-hover:text-blue-600 transition-colors">
+                  NJ 211 공공 복지 안내
+                </h4>
+                <p class="rc-tip-desc">
+                  전화 211번으로 지역 의료·복지 자원을 연결해 줍니다. 한국어 통역 연결도 가능합니다. 무료 클리닉, 긴급 주거, 식료품 지원을 원스톱 안내받으세요.
+                </p>
+                <div class="rc-tip-detail">
+                  <p class="mb-2.5">
+                    전화기에서 <strong>2-1-1</strong>을 누르면 24시간 연중무휴 뉴저지 전역의 무료·저비용 의료 기관, 식료품 푸드뱅크, 공과금 감면 지원, 긴급 임대료 보조 자원을 연결해 주는 주정부 공인 핫라인입니다.
+                  </p>
+                  <p class="mb-3">
+                    안내원이 응대할 때 <strong>"Korean, please"</strong>라고 요청하시면 즉시 3자 한국어 전문 통역사가 연결되어 거주하시는 타운 근처의 이용 가능한 복지 프로그램을 무료로 안내받으실 수 있습니다.
+                  </p>
+                  <div class="flex items-center justify-between flex-wrap gap-2 pt-2 border-t border-slate-100">
+                    <a href="https://www.nj211.org" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();" class="rc-tip-link-badge">
+                      <span>NJ 211 공식 사이트 열기</span>
+                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    </a>
+                    <button type="button" onclick="event.stopPropagation(); window.toggleTipCard(this);" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 cursor-pointer">
+                      <span>닫기</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="rc-tip-footer">
+                <span class="rc-tip-toggle-text">상세보기</span>
+                <span class="text-xs">&rarr;</span>
+              </div>
+            </div>
+
+            <!-- Tip 11 -->
+            <div class="rc-tip-card group" onclick="window.toggleTipCard(this)">
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-2">
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="rc-tip-pill">비응급 진료 대안</span>
+                    <span class="text-[11px] font-bold text-slate-400">비용 1/5 수준</span>
+                  </div>
+                  <button type="button" onclick="event.stopPropagation(); window.toggleTipAudio('tip-11', this);" class="rc-tip-audio-btn flex-shrink-0 text-xs px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold border border-blue-200 inline-flex items-center gap-1.5 shadow-2xs transition-all cursor-pointer" data-tip-id="tip-11" title="오디오 가이드 듣기">
+                    <svg class="w-3.5 h-3.5 rc-tip-icon-play" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <svg class="w-3.5 h-3.5 rc-tip-icon-stop hidden" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clip-rule="evenodd"/></svg>
+                    <span class="rc-tip-audio-text">오디오 가이드</span>
+                  </button>
+                </div>
+                <h4 class="rc-tip-title group-hover:text-blue-600 transition-colors">
+                  응급실 대신 Urgent Care 이용
+                </h4>
+                <p class="rc-tip-desc">
+                  생명이 위급하지 않다면 urgent care를 이용하세요. 응급실 비용의 5분의 1에서 10분의 1 수준입니다. 미리 가까운 곳을 알아두세요.
+                </p>
+                <div class="rc-tip-detail">
+                  <p class="mb-2.5">
+                    흉통, 심한 호흡곤란, 뇌졸중 의심, 대량 출혈 등 생명이 위급한 상황이 아니라면 병원 응급실(Emergency Room) 대신 인근의 <strong>Urgent Care 클리닉</strong>을 이용하는 것이 현명합니다.
+                  </p>
+                  <p class="mb-3">
+                    일반 응급실은 시설 이용료만으로도 수천 달러가 청구되지만, Urgent Care는 단순 봉합, 감기·독감, 가벼운 화상 및 엑스레이 검사 등을 $150~$250 안팎의 합리적인 정액 현금가로 신속하게 치료받을 수 있습니다. 거주지 주변의 야간·주말 진료 Urgent Care 위치를 미리 확인해 두세요.
+                  </p>
+                  <div class="flex justify-end pt-2 border-t border-slate-100">
+                    <button type="button" onclick="event.stopPropagation(); window.toggleTipCard(this);" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 cursor-pointer">
+                      <span>닫기</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="rc-tip-footer">
+                <span class="rc-tip-toggle-text">상세보기</span>
+                <span class="text-xs">&rarr;</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="mt-8 mb-8 p-4 rounded-xl bg-slate-100/80 border border-slate-200 text-center">
+          <p class="text-xs text-slate-500 leading-relaxed">
+            안내된 가격·정책은 변동될 수 있으니 이용 전 해당 기관에 직접 확인하세요. 본 정보는 일반적인 안내이며 재정·법률 조언이 아닙니다.
+          </p>
+        </div>
+
+        <!-- Kakao CTA Card -->
+        <div class="rounded-2xl p-6 sm:p-8 text-white shadow-xl" style="background: linear-gradient(135deg, #071322 0%, #0F2342 55%, #1B2A4A 100%) !important;">
+          <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div>
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-sky-400/20 text-sky-300 border border-sky-400/30 mb-2">
+                1:1 무료 맞춤 안내
+              </span>
+              <h3 class="text-xl font-bold text-white mb-2" style="color: #ffffff !important;">병원비가 걱정되세요? 한국어로 편하게 물어보세요</h3>
+              <p class="text-xs text-slate-300 max-w-2xl leading-relaxed" style="color: #cbd5e1 !important;">
+                병원비 청구서가 너무 많이 나왔거나, 자선 진료(Charity Care) 신청 자격과 서류 준비, 분할 납부 협상 요령이 궁금하시다면 카카오톡으로 언제든 편하게 질문해 주세요.
+              </p>
+            </div>
+            <a href="http://pf.kakao.com/_hdxmxaX/chat" target="_blank" rel="noopener noreferrer" class="hero-btn-kakao shrink-0">
+              <img src="/kakaotalk-icon.png" alt="KakaoTalk" class="w-5 h-5 rounded shrink-0 object-contain" />
+              <span>카카오톡 1:1 상담</span>
+            </a>
+          </div>
+        </div>
+
+      </section>
+
     </div>
   </main>
 
@@ -3665,6 +4462,7 @@
             <li><a href="/resource-center#resources" class="hover:text-white" style="color: #94a3b8 !important;">커뮤니티 리소스 &amp; 시니어 주택</a></li>
             <li><a href="/resource-center#medicare" class="hover:text-white" style="color: #94a3b8 !important;">2026 메디케어 &amp; ACA 완전 가이드</a></li>
             <li><a href="/resource-center#senior" class="hover:text-white" style="color: #94a3b8 !important;">뉴저지 시니어 복지 가이드</a></li>
+            <li><a href="/resource-center#tips" class="hover:text-white" style="color: #94a3b8 !important;">의료비 절약 실전 팁</a></li>
             <li><a href="/forum" class="hover:text-white" style="color: #94a3b8 !important;">뉴저지 한인 광장 Q&amp;A</a></li>
           </ul>
         </div>
@@ -3686,9 +4484,9 @@
 
   <!-- Scripts -->
   <script src="/data/resource_center_data.js?v=20261004_clean_contact_v2"></script>
-  <script src="/data/resource_audio_manifest.js?v=20261008_v1"></script>
+  <script src="/data/resource_audio_manifest.js?v=20261009_v2"></script>
   <script src="/js/resource_calculator.js?v=20261004_medicare_aca_v1"></script>
-  <script src="/js/resource_center.js?v=20261008_audio_guide_v1"></script>
+  <script src="/js/resource_center.js?v=20261009_v3_notitle"></script>
   <script src="/js/fixes.js?v=8.1.0"></script>
 </body>
 </html>

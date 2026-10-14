@@ -13,6 +13,16 @@ if ($uri === '/' || $uri === '/index.php' || $uri === '/index.html') {
     exit;
 }
 
+if (preg_match('#^/admin3/?$#', $uri)) {
+    require __DIR__ . '/admin3/index.php';
+    exit;
+}
+
+if (preg_match('#^/partners/?$#', $uri)) {
+    require __DIR__ . '/partners.php';
+    exit;
+}
+
 if (preg_match('#^/admin2/?$#', $uri)) {
     require __DIR__ . '/admin2/index.php';
     exit;

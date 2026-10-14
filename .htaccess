@@ -62,6 +62,15 @@ RewriteRule ^ko/(.*)$ /$1 [R=301,L]
 # 2. Clean routes for portal pages
 RewriteRule ^admin/?$ admin/index.php [L]
 RewriteRule ^admin2/?$ admin2/index.php [L]
+RewriteRule ^admin3/?$ admin3/index.php [L]
+RewriteRule ^partners/?$ partners.php [L]
+
+# 301 Redirects for Legacy Forum Boards
+RewriteRule ^forum/category/hospital_reviews/?$ /forum?specialty=medical&sub=medical_reviews [R=301,L]
+RewriteRule ^forum/category/bills_insurance/?$ /forum?specialty=medical&sub=medical_billing [R=301,L]
+RewriteRule ^forum/category/medical_health/?$ /forum?specialty=medical&sub=medical_qa [R=301,L]
+RewriteRule ^forum/category/general_community/?$ /forum?specialty=community [R=301,L]
+RewriteRule ^forum/category/announcements/?$ /forum?specialty=events [R=301,L]
 
 RewriteRule ^forum/?$ forum/index.php [L]
 RewriteRule ^forum/ask/?$ forum/ask.php [L]

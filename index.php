@@ -5,6 +5,33 @@
  */
 require_once __DIR__ . '/api/db.php';
 require_once __DIR__ . '/api/forum_db.php';
+require_once __DIR__ . '/forum/components.php';
+
+if (!function_exists('get_home_category_badge')) {
+    function get_home_category_badge($catId) {
+        switch ($catId) {
+            case 'medical':
+                return ['label' => '의료', 'class' => 'text-[#1B6FA8] bg-blue-50 border-blue-200'];
+            case 'community':
+                return ['label' => '자유', 'class' => 'text-slate-700 bg-slate-100 border-slate-200'];
+            case 'food':
+                return ['label' => '맛집', 'class' => 'text-amber-700 bg-amber-50 border-amber-200'];
+            case 'market':
+                return ['label' => '마켓', 'class' => 'text-emerald-700 bg-emerald-50 border-emerald-200'];
+            case 'wanted':
+            case 'services':
+                return ['label' => '서비스', 'class' => 'text-teal-700 bg-teal-50 border-teal-200'];
+            case 'jobs':
+                return ['label' => '구직', 'class' => 'text-purple-700 bg-purple-50 border-purple-200'];
+            case 'columns':
+                return ['label' => '칼럼', 'class' => 'text-cyan-700 bg-cyan-50 border-cyan-200'];
+            case 'events':
+                return ['label' => '행사', 'class' => 'text-rose-700 bg-rose-50 border-rose-200'];
+            default:
+                return ['label' => '소통', 'class' => 'text-slate-600 bg-slate-100 border-slate-200'];
+        }
+    }
+}
 
 $db = get_db_data();
 $billboards = $db['billboards'] ?? [];
@@ -12,8 +39,24 @@ $billboards2 = $db['billboards2'] ?? [];
 $videos = $db['videos'] ?? [];
 $posts = $db['posts'] ?? [];
 
-$forumQuestions = array_slice(forum_get_questions('', 'latest', '', 'active'), 0, 4);
-$forumSpecialties = forum_get_specialties();
+$forumCategories = forum_get_categories();
+$allHomeQuestions = forum_get_questions('', 'latest', '', 'active');
+$homeLatestThreads = array_values(array_filter($allHomeQuestions, function($q) {
+    $cat = $q['categoryId'] ?? ($q['specialtyId'] ?? '');
+    return $cat !== 'market';
+}));
+$homeLatestThreads = array_slice(!empty($homeLatestThreads) ? $homeLatestThreads : $allHomeQuestions, 0, 4);
+$homeMedicalThreads = array_slice(forum_get_questions('medical', 'latest', '', 'active'), 0, 4);
+$homeCommunityThreads = array_slice(forum_get_questions('community', 'latest', '', 'active'), 0, 4);
+$homeFoodThreads = array_slice(forum_get_questions('food', 'latest', '', 'active'), 0, 4);
+$homeWantedThreads = array_slice(forum_get_questions('wanted', 'latest', '', 'active'), 0, 4);
+$homeJobsThreads = array_slice(forum_get_questions('jobs', 'latest', '', 'active'), 0, 4);
+
+$marketQuestions = forum_get_questions('market', 'latest', '', 'active');
+$homeMarketThumbnails = array_values(array_filter($marketQuestions, function($q) {
+    return !empty($q['images']) && count($q['images']) > 0;
+}));
+$homeMarketThumbnails = array_slice(!empty($homeMarketThumbnails) ? $homeMarketThumbnails : $marketQuestions, 0, 4);
 
 // Filter active billboards and sort by order
 $activeBillboards = array_values(array_filter($billboards, function($b) {
@@ -58,7 +101,7 @@ $doctorPosts = array_values(array_filter($posts, function($p) {
     return !empty($p['isDoctorColumn']) && $p['isDoctorColumn'] !== 'false' && $p['isDoctorColumn'] !== false && $p['isDoctorColumn'] !== 0 && $p['isDoctorColumn'] !== '0';
 }));
 
-// Find Top Story (strictly isTopStory === true)
+// Find Top Story (strictly single post with isTopStory === true)
 $topStory = null;
 foreach ($posts as $p) {
     if (!empty($p['isTopStory']) && $p['isTopStory'] !== 'false' && $p['isTopStory'] !== false && $p['isTopStory'] !== 0 && $p['isTopStory'] !== '0') {
@@ -66,7 +109,6 @@ foreach ($posts as $p) {
         break;
     }
 }
-// If no explicit top story, fall back to newest live update post
 if (!$topStory) {
     foreach ($posts as $p) {
         if (!empty($p['isLiveUpdate']) && $p['isLiveUpdate'] !== 'false' && $p['isLiveUpdate'] !== false && $p['isLiveUpdate'] !== 0 && $p['isLiveUpdate'] !== '0') {
@@ -78,10 +120,11 @@ if (!$topStory) {
 if (!$topStory && !empty($posts)) {
     $topStory = $posts[0];
 }
+$topStoryId = $topStory ? (string)$topStory['id'] : '';
 
-// 2. Middle Column: 실시간 주요 뉴스 (Live Updates - Strictly only posts with isLiveUpdate === true, Max 6)
-$latestNews = array_values(array_filter($posts, function($p) use ($topStory) {
-    if ($topStory && (string)$p['id'] === (string)$topStory['id']) {
+// 2. Middle Column: 실시간 주요 뉴스 (Live Updates - Strictly only posts with isLiveUpdate === true, Max 6, excluding top story)
+$latestNews = array_values(array_filter($posts, function($p) use ($topStoryId) {
+    if ($topStoryId && (string)$p['id'] === $topStoryId) {
         return false;
     }
     $isLive = !empty($p['isLiveUpdate']) && $p['isLiveUpdate'] !== 'false' && $p['isLiveUpdate'] !== false && $p['isLiveUpdate'] !== 0 && $p['isLiveUpdate'] !== '0';
@@ -125,24 +168,24 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="google-site-verification" content="xmtfJH3AZyW8W9Do_yQyWBZBlmmTET-VSke-GzY2PPs" />
-  <title>뉴저지 의료접근센터 · 주요 병원 네트워크 및 한인 의료 지원 | NJAP</title>
-  <meta name="description" content="뉴저지 의료접근센터(NJ Healthcare Access Center) - 잉글우드 병원(Englewood Health), 홀리네임 병원(Holy Name Medical Center), 해켄색 메리디안 헬스(HUMC), 밸리 병원(The Valley Hospital), 파스카크 밸리(HMH), RWJBarnabas 등 뉴저지 주요 의료 기관 정보와 한인 환자 프로그램, 한국어 통역, 메디케어, ACA 건강보험, 자선진료(Charity Care) 지원 포털." />
-  <meta name="keywords" content="의료접근센터, 의료접근포털, 뉴저지 의료접근센터, 뉴저지 주요 병원, Englewood Health, 잉글우드 병원, Holy Name Medical Center, 홀리네임 병원, 코리안 메디컬 프로그램, Hackensack Meridian Health, 해켄색 메리디안 헬스, Hackensack University Medical Center, HUMC, The Valley Hospital, 밸리 병원, HMH Pascack Valley Medical Center, 파스카크 밸리, RWJBarnabas Health, RWJ바나바스 헬스 네트워크, 버겐카운티 병원, 한인 통역 병원, 뉴저지 한인 병원 후기, 메디케어, ACA 오바마케어, 자선진료, charity care" />
+  <title>한인 의료 접근센터 (Healthcare Access Center) · 뉴저지 의료접근포털 | NJAP</title>
+  <meta name="description" content="한인 의료 접근센터(Healthcare Access Center) &amp; 한인 포털(Korean Portal) - 한인 의료접근센터, 한인 의료, 한인 의사, 한인 병원 연결 및 의료정보센터(의료점보센터 / Healthcare Resource Center). 뉴저지 한인포럼·한인광장 커뮤니티, 잉글우드·홀리네임·해켄색 병원 네트워크, 메디케어, ACA 건강보험, 자선진료(Charity Care) 무료 상담." />
+  <meta name="keywords" content="한인 의료 접근센터, 한인 의료접근센터, 한인의료접근센터, 뉴저지 한인 의료 접근센터, healthcare access center, 한인포럼, 뉴저지 한인포럼, 한인광장, 뉴저지 한인광장, 의료점보센터, 의료정보센터, 의료접근센터, korean portal, healthcare resource center, 한인 의료, 한인 의사, 한인 병원, 뉴저지 의료접근센터, 의료접근포털, 뉴저지 주요 병원, Englewood Health, 잉글우드 병원, Holy Name Medical Center, 홀리네임 병원, 코리안 메디컬 프로그램, Hackensack Meridian Health, 해켄색 메리디안 헬스, Hackensack University Medical Center, HUMC, The Valley Hospital, 밸리 병원, HMH Pascack Valley Medical Center, 파스카크 밸리, RWJBarnabas Health, RWJ바나바스 헬스 네트워크, 버겐카운티 병원, 한인 통역 병원, 뉴저지 한인 병원 후기, 메디케어, ACA 오바마케어, 자선진료, charity care" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <link rel="canonical" href="https://njaccessportal.com/" />
 
   <!-- OpenGraph / Social Media -->
-  <meta property="og:site_name" content="NJ Access Portal · 뉴저지 한인 의료접근포털" />
+  <meta property="og:site_name" content="한인 의료 접근센터 · Healthcare Access Center · NJAP" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://njaccessportal.com/" />
-  <meta property="og:title" content="뉴저지 의료접근센터 · 의료접근포털 | NJ Healthcare Access Center &amp; Portal" />
-  <meta property="og:description" content="뉴저지 의료접근센터 (NJ Healthcare Access Center / Portal / NJ Korean Outreach) - 뉴저지 한인 커뮤니티를 위한 무료 의료 접근, 메디케어, ACA, 자선진료, 무료 암검진 및 건강 상담 포털." />
+  <meta property="og:title" content="한인 의료 접근센터 (Healthcare Access Center) · 뉴저지 의료접근포털 | NJ Access Portal" />
+  <meta property="og:description" content="한인 의료 접근센터(Healthcare Access Center) &amp; 한인 포털(Korean Portal) - 한인 의료접근센터, 한인 의료, 한인 의사, 한인 병원, 의료정보센터(Healthcare Resource Center), 뉴저지 한인포럼·한인광장, 메디케어 &amp; ACA 무료 의료 네비게이션." />
   <meta property="og:image" content="<?= htmlspecialchars(!empty($topStory['coverImage']) ? $topStory['coverImage'] : 'https://njaccessportal.com/logo-icon.svg') ?>" />
 
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="뉴저지 의료접근센터 · 의료접근포털 | NJ Healthcare Access Center" />
-  <meta name="twitter:description" content="뉴저지 한인을 위한 무료 프리미엄 의료 접근·네비게이션 서비스 및 한인 아웃리치 (NJ Access Portal · 뉴저지 한인 의료접근포털)" />
+  <meta name="twitter:title" content="한인 의료 접근센터 (Healthcare Access Center) · 뉴저지 의료접근포털" />
+  <meta name="twitter:description" content="한인 의료 접근센터(Healthcare Access Center) &amp; 한인 포털(Korean Portal) - 한인 의료접근센터, 한인 의료, 한인 의사, 한인 병원, 의료정보센터(Healthcare Resource Center), 뉴저지 한인포럼·한인광장, 메디케어 &amp; ACA 무료 의료 네비게이션." />
   <meta name="twitter:image" content="<?= htmlspecialchars(!empty($topStory['coverImage']) ? $topStory['coverImage'] : 'https://njaccessportal.com/logo-icon.svg') ?>" />
 
   <!-- Schema.org JSON-LD Structured Data for Google Search & AI Search -->
@@ -154,20 +197,57 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
         "@type": "WebSite",
         "@id": "https://njaccessportal.com/#website",
         "url": "https://njaccessportal.com/",
-        "name": "뉴저지 의료접근센터 · 의료접근포털 (NJ Healthcare Access Center & Portal)",
+        "name": "한인 의료 접근센터 (Healthcare Access Center) · NJ Access Portal",
         "alternateName": [
+          "한인 의료 접근센터",
+          "한인 의료접근센터",
+          "한인의료접근센터",
+          "뉴저지 한인 의료 접근센터",
+          "Healthcare Access Center",
+          "NJ Healthcare Access Center",
+          "Healthcare Access Portal",
           "의료접근센터",
+          "뉴저지 의료접근센터",
+          "NJ Access Portal",
+          "NJAP",
+          "한인포럼",
+          "뉴저지 한인포럼",
+          "한인광장",
+          "뉴저지 한인광장",
+          "의료점보센터",
+          "의료정보센터",
+          "의료접근센터",
+          "healthcare access center",
+          "korean portal",
+          "healthcare resource center",
+          "한인 의료",
+          "한인 의사",
+          "한인 병원",
           "의료접근포털",
           "뉴저지 의료접근센터",
           "뉴저지 의료접근포털",
           "nj korean outreach",
           "뉴저지 한인 아웃리치",
-          "Healthcare Access Center",
           "Healthcare Access Portal",
           "NJ Healthcare Access Center",
           "NJ Access Portal",
           "의료접근",
           "패밀리터치 헬스케어 액세스 센터"
+        ],
+        "keywords": [
+          "한인포럼",
+          "뉴저지 한인포럼",
+          "한인광장",
+          "뉴저지 한인광장",
+          "의료점보센터",
+          "의료정보센터",
+          "의료접근센터",
+          "healthcare access center",
+          "korean portal",
+          "healthcare resource center",
+          "한인 의료",
+          "한인 의사",
+          "한인 병원"
         ],
         "description": "뉴저지 한인 동포를 위한 무료 프리미엄 의료 접근 및 건강 네비게이션 서비스 포털 (NJ Korean Outreach Hub)",
         "inLanguage": ["ko", "en"],
@@ -180,15 +260,50 @@ $playlistVideos = array_slice($activeVideos, 0, 7);
       {
         "@type": "MedicalOrganization",
         "@id": "https://njaccessportal.com/#organization",
-        "name": "뉴저지 의료접근센터 (NJ Healthcare Access Center & Portal)",
+        "name": "한인 의료 접근센터 (Healthcare Access Center) · NJ Access Portal",
         "alternateName": [
+          "한인 의료 접근센터",
+          "한인 의료접근센터",
+          "한인의료접근센터",
+          "뉴저지 한인 의료 접근센터",
+          "Healthcare Access Center",
+          "NJ Healthcare Access Center",
+          "Healthcare Access Portal",
           "의료접근센터",
+          "뉴저지 의료접근센터",
+          "한인포럼",
+          "뉴저지 한인포럼",
+          "한인광장",
+          "뉴저지 한인광장",
+          "의료점보센터",
+          "의료정보센터",
+          "의료접근센터",
+          "healthcare access center",
+          "korean portal",
+          "healthcare resource center",
+          "한인 의료",
+          "한인 의사",
+          "한인 병원",
           "의료접근포털",
           "뉴저지 의료접근포털",
-          "Healthcare Access Center",
           "NJ Access Portal",
           "NJ Korean Outreach",
           "뉴저지 한인 아웃리치"
+        ],
+        "keywords": [
+          "한인포럼",
+          "뉴저지 한인포럼",
+          "한인광장",
+          "뉴저지 한인광장",
+          "의료점보센터",
+          "의료정보센터",
+          "의료접근센터",
+          "healthcare access center",
+          "korean portal",
+          "healthcare resource center",
+          "한인 의료",
+          "한인 의사",
+          "한인 병원"
         ],
         "url": "https://njaccessportal.com",
         "logo": "https://njaccessportal.com/logo-icon.svg",
@@ -486,7 +601,7 @@ html, body {
       display: inline-flex !important;
       white-space: nowrap !important;
       will-change: transform;
-      animation: marqueeScroll 35s linear infinite !important;
+      animation: marqueeScroll 58s linear infinite !important;
     }
     .marquee-track:hover {
       animation-play-state: paused;
@@ -500,7 +615,7 @@ html, body {
     .h-\[45px\] {
       height: 45px !important;
     }
-    #gallery-billboard-section, #gallery-billboard2-section, #medical-videos-section, .billboard-section {
+    #homepage-hero-billboard-section, #gallery-billboard-section, #gallery-billboard2-section, #medical-videos-section, .billboard-section {
       width: 100vw !important;
       max-width: 100vw !important;
       position: relative !important;
@@ -618,7 +733,11 @@ html, body {
       background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.55) 100%) !important;
     }
 
-    /* Hide Safari's native 'tap to play' overlay */
+    /* Hide browser default 'tap to play' overlays */
+    #hero-intro-video::-webkit-media-controls,
+    #hero-intro-video::-webkit-media-controls-panel,
+    #hero-intro-video::-webkit-media-controls-play-button,
+    #hero-intro-video::-webkit-media-controls-start-playback-button,
     #billboard-active-video::-webkit-media-controls,
     #billboard-active-video::-webkit-media-controls-panel,
     #billboard-active-video::-webkit-media-controls-play-button,
@@ -663,7 +782,7 @@ html, body {
         display: grid !important;
         grid-template-columns: 2.0fr 1.05fr 0.58fr !important;
         gap: 1.75rem !important;
-        align-items: start !important;
+        align-items: stretch !important;
       }
       .news-col-left {
         border-right: 1px solid #e5e7eb !important;
@@ -1280,10 +1399,15 @@ html, body {
 
   <!-- Top Marquee Banner -->
   <div class="fixed top-0 left-0 right-0 z-50 overflow-hidden flex items-center" style="height: 45px; background:#000000">
-    <div class="marquee-track whitespace-nowrap">
-      <?php for ($i = 0; $i < 6; $i++): ?>
-        <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12">
-          <span class="opacity-60 mr-3">✦</span>의료접근포탈: &quot;비영리기관(한인 커뮤니티센터)들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료시스템 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스&quot;<span class="opacity-60 ml-3">✦</span>
+    <div class="marquee-track whitespace-nowrap" id="top-marquee-track">
+      <?php 
+        $bannerMsg = !empty($db['settings']['scrollingBanner']) 
+          ? $db['settings']['scrollingBanner'] 
+          : '의료접근포탈: "비영리기관(한인 커뮤니티센터)들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료시스템 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스"';
+        for ($i = 0; $i < 6; $i++): 
+      ?>
+        <span class="inline-block font-sans text-xs text-white/90 tracking-wide px-12 marquee-item">
+          <span class="opacity-60 mr-3">✦</span><?php echo htmlspecialchars($bannerMsg, ENT_QUOTES, 'UTF-8'); ?><span class="opacity-60 ml-3">✦</span>
         </span>
       <?php endfor; ?>
     </div>
@@ -1293,9 +1417,9 @@ html, body {
   <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/80 backdrop-blur-sm" style="top:45px">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
-        <a class="flex items-center cursor-pointer njap-brand-link flex-shrink-0 group" href="/" onclick="navigateToHome(event); return false;" title="NJ Access Portal · 뉴저지 한인 의료접근포털">
-          <svg class="h-8 sm:h-10 md:h-11 w-auto object-contain transition-transform group-hover:scale-102" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NJ Access Portal · 뉴저지 한인 의료접근포털" style="overflow: visible;">
-            <title>NJ Access Portal · 뉴저지 한인 의료접근포털</title>
+        <a class="flex items-center cursor-pointer njap-brand-link flex-shrink-0 group" href="/" onclick="navigateToHome(event); return false;" title="NJ Access Portal · 뉴저지 한인 포털">
+          <svg class="h-8 sm:h-10 md:h-11 w-auto object-contain transition-transform group-hover:scale-102" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NJ Access Portal · 뉴저지 한인 포털" style="overflow: visible;">
+            <title>NJ Access Portal · 뉴저지 한인 포털</title>
             <!-- Icon Mark (Door + Key + NJAP) -->
             <g transform="translate(4, 2) scale(0.56)" stroke-linecap="round" stroke-linejoin="round">
               <!-- Door Frame & NJAP Text -->
@@ -1323,22 +1447,35 @@ html, body {
               <text x="64" y="27" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="18" font-weight="900" fill="#0B192C" letter-spacing="-0.5">NJ Access Portal</text>
             </g>
             <g class="njap-nav-text-sub">
-              <text x="64" y="44" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="10.5" font-weight="600" fill="#64748B" letter-spacing="0.2">뉴저지 한인 의료접근포털</text>
+              <text x="64" y="44" font-family="Pretendard, -apple-system, system-ui, sans-serif" font-size="10.5" font-weight="600" fill="#64748B" letter-spacing="0.2">뉴저지 한인 포털</text>
             </g>
           </svg>
         </a>
-        <div class="hidden md:flex items-center" style="display: flex; align-items: center; gap: 26px;">
-          <a class="nav-link pb-0.5 font-bold text-brand-blue cursor-pointer" href="/" onclick="navigateToHome(event); return false;">홈</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/blog">뉴스</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/forum">커뮤니티 포럼</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue flex flex-col items-center justify-center leading-tight text-center" href="/resource-center">
-            <span class="text-[12px] leading-tight font-semibold">의료&amp;커뮤니티</span>
-            <span class="text-[14px] leading-tight font-bold">정보센터</span>
+        <div class="hidden md:flex items-center" style="display: flex; align-items: center; gap: 40px;">
+          <a class="nav-link pb-0.5 flex flex-col items-center justify-center leading-tight text-center cursor-pointer group" href="/" onclick="navigateToHome(event); return false;">
+            <span class="text-[14px] leading-tight font-bold text-brand-blue group-hover:text-brand-blue transition-colors">홈</span>
+            <span class="text-[10px] leading-tight font-medium text-brand-blue/80 group-hover:text-brand-blue transition-colors">Home</span>
           </a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue" href="/about">의료 접근센터</a>
-          <a class="nav-link pb-0.5 font-medium text-slate-700 hover:text-brand-blue flex flex-col items-center justify-center leading-tight group" href="/engine" target="_self" title="Universal Access Engine (Marketing Client)">
-            <span class="text-[13.5px] font-bold text-slate-800 group-hover:text-brand-blue tracking-tight">Engine</span>
-            <span class="text-[9px] font-semibold text-slate-400 group-hover:text-brand-blue tracking-tighter -mt-0.5">Marketing Client</span>
+          <a class="nav-link pb-0.5 flex flex-col items-center justify-center leading-tight text-center cursor-pointer group" href="/blog">
+            <span class="text-[14px] leading-tight font-semibold text-slate-800 group-hover:text-brand-blue transition-colors">뉴스</span>
+            <span class="text-[10px] leading-tight font-medium text-slate-400 group-hover:text-brand-blue/80 transition-colors">News</span>
+          </a>
+          <a class="nav-link pb-0.5 flex flex-col items-center justify-center leading-tight text-center cursor-pointer group" href="/forum">
+            <span class="text-[14px] leading-tight font-semibold text-slate-800 group-hover:text-brand-blue transition-colors">뉴저지 한인광장</span>
+            <span class="text-[10px] leading-tight font-medium text-slate-400 group-hover:text-brand-blue/80 transition-colors">Market place</span>
+          </a>
+          <a class="nav-link pb-0.5 flex flex-col items-center justify-center leading-tight text-center cursor-pointer group" href="/resource-center">
+            <span class="text-[12px] leading-tight font-bold text-black group-hover:text-brand-blue transition-colors">의료 &amp; 커뮤니티</span>
+            <span class="text-[13px] leading-tight font-bold text-slate-700 group-hover:text-brand-blue transition-colors">정보센터</span>
+            <span class="text-[10px] leading-tight font-medium text-slate-400 group-hover:text-brand-blue/80 transition-colors">Resource Center</span>
+          </a>
+          <a class="nav-link pb-0.5 flex flex-col items-center justify-center leading-tight text-center cursor-pointer group" href="/partners">
+            <span class="text-[14px] leading-tight font-semibold text-slate-800 group-hover:text-brand-blue transition-colors">뉴저지 파트너즈</span>
+            <span class="text-[10px] leading-tight font-medium text-slate-400 group-hover:text-brand-blue/80 transition-colors">NJ Partners</span>
+          </a>
+          <a class="nav-link pb-0.5 flex flex-col items-center justify-center leading-tight text-center cursor-pointer group" href="/about">
+            <span class="text-[14px] leading-tight font-semibold text-slate-800 group-hover:text-brand-blue transition-colors">의료접근센터</span>
+            <span class="text-[10px] leading-tight font-medium text-slate-400 group-hover:text-brand-blue/80 transition-colors">Healthcare Access Center</span>
           </a>
         </div>
         <div class="flex items-center gap-2 sm:gap-3">
@@ -1354,65 +1491,77 @@ html, body {
         </div>
       </div>
     </div>
-                                                <div id="mobile-menu-dropdown" class="md:hidden overflow-hidden transition-all duration-300 max-h-0 opacity-0 bg-white/98 backdrop-blur-md border-t border-brand-border px-4 py-3 flex flex-col gap-1" style="-webkit-overflow-scrolling: touch;">
+    <div id="mobile-menu-dropdown" class="md:hidden overflow-hidden transition-all duration-300 max-h-0 opacity-0 bg-white/98 backdrop-blur-md border-t border-brand-border px-4 py-3 flex flex-col gap-1" style="-webkit-overflow-scrolling: touch;">
       <!-- 1. 홈 -->
-      <a href="/" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-bold text-brand-blue bg-blue-50/70">
+      <a href="/" class="flex items-center justify-between py-2.5 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-bold text-brand-blue bg-blue-50/70">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-brand-blue shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-          <span class="text-[15px]">홈</span>
+          <div class="flex flex-col text-left leading-tight">
+            <span class="text-[15px] font-bold text-brand-blue">홈</span>
+            <span class="text-[10.5px] font-medium text-brand-blue/80">Home</span>
+          </div>
         </div>
         <svg class="w-4 h-4 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
 
       <!-- 2. 뉴스 -->
-      <a href="/blog" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/blog" class="flex items-center justify-between py-2.5 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
-          <span class="text-[15px]">뉴스</span>
+          <div class="flex flex-col text-left leading-tight">
+            <span class="text-[15px] font-bold text-slate-800">뉴스</span>
+            <span class="text-[10.5px] font-medium text-slate-400">News</span>
+          </div>
         </div>
         <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
 
-      <!-- 2.5. 커뮤니티 포럼 -->
-      <a href="/forum" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <!-- 2.5. 뉴저지 한인 광장 -->
+      <a href="/forum" class="flex items-center justify-between py-2.5 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>
-          <span class="text-[15px]">커뮤니티 포럼</span>
+          <div class="flex flex-col text-left leading-tight">
+            <span class="text-[15px] font-bold text-slate-800">뉴저지 한인광장</span>
+            <span class="text-[10.5px] font-medium text-slate-400">Market place</span>
+          </div>
         </div>
         <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
 
       <!-- 4. 의료&커뮤니티 정보센터 -->
-      <a href="/resource-center" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/resource-center" class="flex items-center justify-between py-2.5 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
           <div class="flex flex-col text-left leading-tight">
-            <span class="text-[12px] text-slate-500 font-medium">의료&amp;커뮤니티</span>
-            <span class="text-[15px] font-bold text-slate-800">정보센터</span>
+            <span class="text-[13px] font-bold text-black">의료 &amp; 커뮤니티</span>
+            <span class="text-[13px] font-semibold text-[#475569]">정보센터</span>
+            <span class="text-[10.5px] font-medium text-slate-400">Resource Center</span>
+          </div>
+        </div>
+        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+
+      <!-- 5. 뉴저지 파트너즈 -->
+      <a href="/partners" class="flex items-center justify-between py-2.5 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+          <div class="flex flex-col text-left leading-tight">
+            <span class="text-[15px] font-bold text-slate-800">뉴저지 파트너즈</span>
+            <span class="text-[10.5px] font-medium text-slate-400">NJ Partners</span>
           </div>
         </div>
         <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
 
       <!-- 6. 의료 접근센터 -->
-      <a href="/about" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
+      <a href="/about" class="flex items-center justify-between py-2.5 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          <span class="text-[15px]">의료 접근센터</span>
-        </div>
-        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-      </a>
-
-      <!-- 7. Engine (Marketing Client) -->
-      <a href="/engine" target="_self" class="flex items-center justify-between py-3 px-3.5 rounded-xl transition-colors border-b border-slate-100 font-semibold text-slate-800 hover:text-brand-blue hover:bg-slate-50">
-        <div class="flex items-center gap-3">
-          <svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-          <div class="flex flex-col text-left">
-            <span class="text-[15px] font-bold text-slate-800">Engine</span>
-            <span class="text-[10px] font-semibold text-slate-400 leading-none">Marketing Client</span>
+          <div class="flex flex-col text-left leading-tight">
+            <span class="text-[15px] font-bold text-slate-800">의료접근센터</span>
+            <span class="text-[10.5px] font-medium text-slate-400">Healthcare Access Center</span>
           </div>
         </div>
-        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </a>
 
       <!-- 카카오톡 1:1 상담 바로가기 -->
@@ -1436,7 +1585,7 @@ html, body {
   <main class="flex-1">
     <div class="flex flex-col bg-[#F3F3F5] min-h-screen text-[#111111] font-sans">
       
-                                                                                          <!-- 1. Two-Phase Homepage Hero: Clean Big Video Intro -> 6-Service Rotating Billboard (Shrinks Vertically by 35% on Transition) -->
+                                                                                                            <!-- 1. Two-Phase Homepage Hero: Clean Big Video Intro -> 6-Service Rotating Billboard (Shrinks Vertically by 35% on Transition) -->
       <?php
         // Prepare CMS 6-Slide Billboard Data for Dynamic Rendering
         $defaultSix = json_decode(<<<'JSON'
@@ -1847,6 +1996,57 @@ JSON
             background: linear-gradient(90deg, #7FC8C0, #4FA3D1);
             box-shadow: 0 0 10px rgba(127, 200, 192, 0.85);
           }
+          #hero-video-scroll-indicator {
+            position: absolute !important;
+            top: 20px !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            bottom: auto !important;
+            right: auto !important;
+            z-index: 40 !important;
+            background: #ffffff !important;
+            color: #000000 !important;
+            border: 1.5px solid rgba(0, 0, 0, 0.15) !important;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.28) !important;
+            border-radius: 9999px !important;
+            padding: 7px 16px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 7px !important;
+            white-space: nowrap !important;
+            cursor: pointer !important;
+            pointer-events: auto !important;
+            font-size: 13px !important;
+            font-weight: 800 !important;
+            letter-spacing: -0.2px !important;
+            transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+          }
+          #hero-video-scroll-indicator * {
+            color: #000000 !important;
+            stroke: #000000 !important;
+          }
+          #hero-video-scroll-indicator:hover {
+            transform: translateX(-50%) scale(1.04) !important;
+            box-shadow: 0 6px 22px rgba(0, 0, 0, 0.35) !important;
+          }
+          @media (max-width: 640px) {
+            #hero-video-scroll-indicator {
+              top: 14px !important;
+              left: 50% !important;
+              transform: translateX(-50%) !important;
+              bottom: auto !important;
+              right: auto !important;
+              padding: 5px 12px !important;
+              font-size: 11px !important;
+            }
+            #hero-video-scroll-indicator:hover {
+              transform: translateX(-50%) scale(1.04) !important;
+            }
+            #hero-video-scroll-indicator svg {
+              width: 12px !important;
+              height: 12px !important;
+            }
+          }
         </style>
 
         <!-- Ambient radial glow overlay for visual depth -->
@@ -1854,7 +2054,7 @@ JSON
         <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(circle at 20% 80%, rgba(127, 200, 192, 0.1) 0%, transparent 50%); z-index: 1;"></div>
 
         <!-- PHASE 1: Clean Cinematic Video Intro Layer (Click anywhere or scroll to shrink to billboard) -->
-        <div id="hero-video-phase" class="absolute inset-0 w-full h-full z-30 transition-opacity duration-500 overflow-hidden bg-slate-950 flex items-center justify-center cursor-pointer" onclick="if(window.njapHeroTransition)window.njapHeroTransition()" title="화면을 클릭하거나 스크롤하면 서비스 슬라이드로 이동합니다">
+        <div id="hero-video-phase" class="absolute inset-0 w-full h-full z-30 transition-opacity duration-500 overflow-hidden bg-slate-950 flex items-center justify-center cursor-pointer" onclick="if(window.njapHeroTransition)window.njapHeroTransition()">
           <video id="hero-intro-video" 
                  class="w-full h-full object-cover cursor-pointer" 
                  autoplay 
@@ -1868,10 +2068,14 @@ JSON
           </video>
           <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-slate-950/30 pointer-events-none"></div>
 
-          <!-- Subtle Scroll / Click Indicator -->
-          <div class="absolute bottom-5 right-6 text-white/70 text-xs font-medium flex items-center gap-1.5 pointer-events-none hidden sm:flex bg-slate-950/40 backdrop-blur-sm px-3.5 py-1.5 rounded-full border border-white/15 shadow-lg">
-            <svg class="w-3.5 h-3.5 animate-bounce text-[#7FC8C0]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
-            <span>클릭 또는 스크롤하여 바로보기</span>
+          <!-- Top-Center Scroll / Click Indicator -->
+          <div id="hero-video-scroll-indicator" 
+               class="hero-video-scroll-btn"
+               onclick="event.stopPropagation(); if(window.njapHeroTransition)window.njapHeroTransition();">
+            <svg style="width: 15px; height: 15px; color: #000000 !important; stroke: #000000 !important; flex-shrink: 0;" class="animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+            </svg>
+            <span style="color: #000000 !important; font-weight: 800 !important; font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif !important;">클릭 또는 스크롤하여 바로보기</span>
           </div>
         </div>
 
@@ -2009,7 +2213,7 @@ JSON
               heroSection.classList.add('hero-phase-billboard');
 
               // Cross-fade
-              if (videoPhase) videoPhase.style.opacity = '0';
+              if (videoPhase) { videoPhase.style.opacity = '0'; videoPhase.style.pointerEvents = 'none'; }
               if (billboardPhase) {
                 billboardPhase.style.opacity = '1';
                 billboardPhase.style.pointerEvents = 'auto';
@@ -2305,7 +2509,7 @@ JSON
           <div class="news-layout-3col items-start">
             
             <!-- Column 1 (Left): Top Story -->
-            <?php if ($topStory): 
+            <?php if (!empty($topStory)): 
               $summaryPoints = $topStory['summaryPoints'] ?? [];
               if (is_string($summaryPoints)) {
                   $trimmed = trim($summaryPoints);
@@ -2334,12 +2538,11 @@ JSON
               } else {
                   $summaryPoints = [];
               }
-              // Extract from post content if summaryPoints field is empty
               if (empty($summaryPoints) && !empty($topStory['content'])) {
                   if (preg_match('/(?:핵심\s*요약|요약|Key\s*Points)[:\s\*\#]+([\s\S]*?)(?=\n\s*(?:권장|출처|주요|참고|\#\#|$))/u', $topStory['content'], $matches)) {
                       $lines = explode("\n", trim($matches[1]));
                       foreach ($lines as $line) {
-                          $cleaned = trim(preg_replace('/^[•\-\*\d\.\)\s]+/', '', $line));
+                          $cleaned = trim(preg_replace('/^[•\-\-\d\.\)\s]+/', '', $line));
                           if ($cleaned !== '' && mb_strlen($cleaned) > 5) {
                               $summaryPoints[] = $cleaned;
                           }
@@ -2356,7 +2559,7 @@ JSON
                   <span class="text-xs text-gray-400">·</span>
                   <span class="text-xs sm:text-sm text-gray-500 whitespace-nowrap"><?= htmlspecialchars($topStory['date'] ?: date('Y-m-d')) ?></span>
                 </div>
-                <h2 class="font-serif font-black text-2xl sm:text-3xl lg:text-4xl text-gray-950 leading-tight mb-3 tracking-tight group-hover:text-brand-blue transition-colors">
+                <h2 class="font-serif font-black text-2xl sm:text-3xl lg:text-4xl text-gray-950 leading-tight mb-3 tracking-tight group-hover:text-brand-blue transition-colors line-clamp-2">
                   <?= htmlspecialchars($topStory['title'] ?? '') ?>
                 </h2>
                 <div class="relative w-full aspect-[16/10] overflow-hidden mb-2.5 bg-gray-100 shadow-xs rounded-sm">
@@ -2364,7 +2567,7 @@ JSON
                     alt="<?= htmlspecialchars($topStory['title'] ?? '') ?>" 
                     class="object-cover group-hover:scale-102 transition-transform duration-500 w-full h-full">
                 </div>
-                <p class="text-xs text-gray-400 mb-2 font-sans font-medium">특별 기획: <?= htmlspecialchars($topStory['title'] ?? '') ?></p>
+                <p class="text-xs text-gray-400 mb-2 font-sans font-medium truncate">특별 기획: <?= htmlspecialchars($topStory['title'] ?? '') ?></p>
                 <p class="text-gray-800 text-sm sm:text-base leading-relaxed mb-4 line-clamp-3 font-serif">
                   <?= htmlspecialchars($topStory['excerpt'] ?? '') ?>
                 </p>
@@ -2382,7 +2585,7 @@ JSON
                 </ul>
               </div>
               <?php endif; ?>
-              <div class="flex items-center justify-between text-xs sm:text-sm text-gray-500 pt-2.5 border-t border-gray-100">
+              <div class="flex items-center justify-between text-xs sm:text-sm text-gray-500 pt-2.5 border-t border-gray-100 mt-auto">
                 <div class="flex items-center gap-2">
                   <span class="font-black text-gray-950 whitespace-nowrap"><?= htmlspecialchars($topStory['author'] ?? '편집부') ?></span>
                   <span>·</span>
@@ -2499,69 +2702,616 @@ JSON
           </div>
         </section>
 
-        <!-- 4.1. Medical Forum Community Section (Directly Accessible Right After News Section) -->
+        <!-- 4.1. Community Forum Section (Real-Time Live Postings & Marketplace) -->
         <section id="medical-forum-section" class="my-10" style="margin-top: 40px; margin-bottom: 40px;">
-          <div class="rounded-3xl relative overflow-hidden"
-               style="background: #f1f5f9 !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important; border-radius: 24px !important; padding: 32px !important; box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.04) !important; position: relative !important; overflow: hidden !important;">
-            <div class="absolute -right-20 -bottom-20 w-80 h-80 rounded-full blur-3xl pointer-events-none" style="background: rgba(37, 99, 235, 0.05) !important;"></div>
+          <style>
+            .home-forum-wrapper {
+              background: #ffffff;
+              border: 1px solid #e2e8f0;
+              border-radius: 1.25rem;
+              padding: 24px 28px;
+              box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
+            }
+            .home-forum-grid {
+              display: grid !important;
+              grid-template-columns: 1fr 1fr !important;
+              gap: 28px !important;
+            }
+            @media (max-width: 960px) {
+              .home-forum-grid {
+                grid-template-columns: 1fr !important;
+                gap: 24px !important;
+              }
+            }
+            .hftab-btn {
+              padding: 0.25rem 0.6rem;
+              font-size: 0.75rem;
+              font-weight: 700;
+              border-radius: 0.375rem;
+              color: #64748b;
+              transition: all 0.15s ease;
+              cursor: pointer;
+              background: transparent;
+              border: none;
+            }
+            .hftab-btn:hover {
+              color: #1B6FA8;
+              background-color: #f1f5f9;
+            }
+            .hftab-btn.active {
+              color: #ffffff;
+              background-color: #1B6FA8;
+            }
+            .home-post-card {
+              display: flex !important;
+              align-items: center !important;
+              justify-content: space-between !important;
+              gap: 12px !important;
+              background: #ffffff !important;
+              border: 1px solid #cbd5e1 !important;
+              border-radius: 12px !important;
+              padding: 12px 16px !important;
+              margin-bottom: 10px !important;
+              text-decoration: none !important;
+              transition: all 0.15s ease !important;
+            }
+            .home-post-card:last-child {
+              margin-bottom: 0 !important;
+            }
+            .home-post-card:hover {
+              border-color: #1B6FA8 !important;
+              background-color: #fcfdfe !important;
+              box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05) !important;
+            }
+            .home-post-main {
+              min-width: 0 !important;
+              flex: 1 1 auto !important;
+            }
+            .home-post-title {
+              font-size: 14px !important;
+              font-weight: 700 !important;
+              color: #0f172a !important;
+              line-height: 1.35 !important;
+              margin: 0 0 5px 0 !important;
+              white-space: nowrap !important;
+              overflow: hidden !important;
+              text-overflow: ellipsis !important;
+            }
+            .home-post-card:hover .home-post-title {
+              color: #1B6FA8 !important;
+            }
+            .home-post-meta {
+              display: flex !important;
+              align-items: center !important;
+              gap: 6px !important;
+              font-size: 11.5px !important;
+              color: #64748b !important;
+            }
+            .home-post-right {
+              flex-shrink: 0 !important;
+            }
+            .home-post-replies {
+              display: inline-block !important;
+              background: #f1f5f9 !important;
+              color: #475569 !important;
+              padding: 4px 10px !important;
+              border-radius: 8px !important;
+              font-size: 11.5px !important;
+              font-weight: 700 !important;
+              white-space: nowrap !important;
+            }
+            .home-post-card:hover .home-post-replies {
+              background: #eff6ff !important;
+              color: #1B6FA8 !important;
+            }
 
-            <!-- Top Header & Community Illustration (Side-by-Side Flex Layout) -->
-            <div style="display: flex !important; flex-direction: row !important; align-items: center !important; justify-content: space-between !important; gap: 28px !important; border-bottom: 1px solid #cbd5e1 !important; padding-bottom: 24px !important; flex-wrap: wrap !important;">
-              <div style="flex: 1 1 380px !important; min-width: 280px !important;">
-                <div style="display: inline-flex !important; align-items: center !important; gap: 8px !important; background: #e2e8f0 !important; border: 1px solid #cbd5e1 !important; color: #1e3a8a !important; padding: 5px 14px !important; border-radius: 9999px !important; font-size: 12px !important; font-weight: 700 !important; margin-bottom: 10px !important; width: fit-content !important;">
-                  <i class="fa-solid fa-comments" style="color: #2563eb !important;"></i>
-                  <span>NJAP 메디컬 포럼 &amp; 전문의 Q&amp;A</span>
+            /* 2x2 Marketplace Cards */
+            .home-mkt-grid {
+              display: grid !important;
+              grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+              gap: 12px !important;
+            }
+            .home-mkt-card {
+              display: flex !important;
+              flex-direction: column !important;
+              background: #ffffff !important;
+              border: 1px solid #cbd5e1 !important;
+              border-radius: 12px !important;
+              overflow: hidden !important;
+              text-decoration: none !important;
+              transition: all 0.15s ease !important;
+            }
+            .home-mkt-card:hover {
+              border-color: #1B6FA8 !important;
+              box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08) !important;
+              transform: translateY(-1px);
+            }
+            .home-mkt-img-wrap {
+              position: relative !important;
+              width: 100% !important;
+              height: 110px !important;
+              background: #f1f5f9 !important;
+              overflow: hidden !important;
+            }
+            .home-mkt-img-wrap img {
+              width: 100% !important;
+              height: 100% !important;
+              object-fit: cover !important;
+              display: block !important;
+            }
+            .home-mkt-price-badge {
+              position: absolute !important;
+              bottom: 6px !important;
+              left: 6px !important;
+              background: rgba(15, 23, 42, 0.85) !important;
+              color: #ffffff !important;
+              font-size: 11px !important;
+              font-weight: 800 !important;
+              padding: 2px 7px !important;
+              border-radius: 4px !important;
+              line-height: 1.2 !important;
+              letter-spacing: -0.01em !important;
+              backdrop-filter: blur(2px) !important;
+            }
+            .home-mkt-body {
+              padding: 8px 10px !important;
+              display: flex !important;
+              flex-direction: column !important;
+              flex: 1 !important;
+            }
+            .home-mkt-title {
+              font-size: 12px !important;
+              font-weight: 700 !important;
+              color: #0f172a !important;
+              line-height: 1.35 !important;
+              margin: 0 0 4px 0 !important;
+              display: -webkit-box !important;
+              -webkit-line-clamp: 2 !important;
+              -webkit-box-orient: vertical !important;
+              overflow: hidden !important;
+            }
+            .home-mkt-card:hover .home-mkt-title {
+              color: #1B6FA8 !important;
+            }
+            .home-mkt-meta {
+              font-size: 10.5px !important;
+              color: #94a3b8 !important;
+              display: flex !important;
+              align-items: center !important;
+              justify-content: space-between !important;
+              margin-top: auto !important;
+            }
+            .home-forum-header-title {
+              font-size: 26px !important;
+              font-weight: 900 !important;
+              color: #0f172a !important;
+              line-height: 1.25 !important;
+              letter-spacing: -0.02em !important;
+              margin: 0 !important;
+            }
+          </style>
+
+          <div class="home-forum-wrapper">
+            
+            <!-- Top Header & Actions -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#f0f7fc] text-[#1B6FA8] border border-[#bae0f7] mb-1.5">
+                  NJ Access Portal
                 </div>
-                <h2 style="color: #0f172a !important; margin: 4px 0 6px 0 !important; font-size: 26px !important; font-weight: 800 !important; letter-spacing: -0.02em !important; line-height: 1.3 !important;">
-                  <span>뉴저지 의료/정보 나눔 포럼</span>
+                <h2 class="home-forum-header-title text-xl sm:text-2xl tracking-tight" style="font-weight: 900 !important; font-size: 26px !important; color: #0f172a !important; line-height: 1.25 !important; letter-spacing: -0.02em !important;">
+                  뉴저지 한인 광장
                 </h2>
-                <p style="color: #475569 !important; font-size: 14px !important; line-height: 1.6 !important; margin: 0 0 18px 0 !important; font-weight: 500 !important;">
-                  서로 묻고 답하며 함께 성장하는 커뮤니티 공간입니다.
+                <p class="text-xs sm:text-sm text-slate-500 mt-1">
+                  병원 후기, 보험 Q&amp;A부터 부동산·렌트, 중고거래, 구인구직, 맛집, 전문가 칼럼까지 편안하게 소통하세요.
                 </p>
-
-                <div style="display: flex !important; align-items: center !important; gap: 12px !important; flex-wrap: wrap !important;">
-                  <a href="/forum/ask" 
-                     style="display: inline-flex !important; align-items: center !important; gap: 8px !important; background: #2563eb !important; color: #ffffff !important; padding: 10px 20px !important; border-radius: 12px !important; font-size: 13.5px !important; font-weight: 700 !important; text-decoration: none !important; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25) !important; transition: all 0.2s ease !important;">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                    <span>질문/정보 공유</span>
-                  </a>
-                  <a href="/forum" 
-                     style="display: inline-flex !important; align-items: center !important; gap: 6px !important; background: #ffffff !important; color: #0f172a !important; border: 1.5px solid #cbd5e1 !important; padding: 9px 18px !important; border-radius: 12px !important; font-size: 13.5px !important; font-weight: 700 !important; text-decoration: none !important; box-shadow: 0 2px 6px rgba(0,0,0,0.04) !important; transition: all 0.2s ease !important;">
-                    <span>포럼 전체보기 →</span>
-                  </a>
-                </div>
               </div>
 
-              <!-- Right Side: Community Illustration (Larger & Prominent) -->
-              <div style="flex: 1 1 520px !important; max-width: 600px !important; min-width: 280px !important; display: flex !important; justify-content: center !important; align-items: center !important;">
-                <img src="/uploads/images/forum_community_banner.jpg" 
-                     alt="뉴저지 의료/정보 나눔 커뮤니티" 
-                     style="width: 100% !important; height: auto !important; max-height: 290px !important; object-fit: contain !important; border-radius: 20px !important; border: 1px solid #cbd5e1 !important; background: #ffffff !important; padding: 8px !important; box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08) !important;">
+              <div class="shrink-0">
+                <a href="/forum/ask" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-800 bg-[#f1f5f9] hover:bg-slate-200 transition-colors border border-slate-200">
+                  <i class="fa-solid fa-pen text-xs text-[#1B6FA8]"></i>
+                  <span>글쓰기</span>
+                </a>
               </div>
             </div>
 
-            <!-- 5 Core Categories Quick Navigation Bar (Bottom of Section) -->
-            <div style="padding-top: 22px !important;">
-              <div class="flex items-center justify-between mb-2.5">
-                <span class="text-[11px] font-bold uppercase tracking-wider flex items-center gap-1.5" style="color: #475569 !important;">
-                  <i class="fa-solid fa-layer-group text-blue-600" style="color: #2563eb !important;"></i>
-                  <span>뉴저지 5대 핵심 헬스케어 포럼 바로가기</span>
-                </span>
-                <span class="text-[11px] font-medium" style="color: #64748b !important;">5대 핵심 오픈 게시판</span>
-              </div>
-              <div class="flex flex-wrap items-center gap-2 text-xs font-bold">
-                <?php foreach ($forumSpecialties as $fsp): ?>
-                  <a href="/forum?specialty=<?= urlencode($fsp['id']) ?>" 
-                     class="px-2.5 py-1.5 rounded-lg transition-all flex items-center gap-1.5 shadow-2xs hover:shadow-xs"
-                     style="background: #ffffff !important; color: #1e293b !important; border: 1px solid #cbd5e1 !important; padding: 6px 12px !important; border-radius: 10px !important; text-decoration: none !important; font-size: 12px !important; font-weight: 700 !important; box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;">
-                    <span class="w-2 h-2 rounded-full shrink-0" style="background-color: <?= htmlspecialchars($fsp['color']) ?>"></span>
-                    <span><?= htmlspecialchars($fsp['name_ko']) ?></span>
+            <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 18px 0 20px 0;">
+
+            <!-- Two-Column Layout: Left Live Postings + Right 2x2 Marketplace -->
+            <div class="home-forum-grid">
+              
+              <!-- Left Column: 실시간 최신글 & 소통 Q&A (Interactive Sub-Tabs) -->
+              <div class="space-y-3 min-w-0">
+                
+                <div class="flex items-center justify-between pb-2 border-b border-slate-100 flex-wrap gap-2">
+                  <div class="flex items-center gap-2">
+                    <span class="text-sm font-extrabold text-slate-900">[병원/의원 추천 및 소통 Q&amp;A]</span>
+                    <div class="flex items-center gap-0.5 overflow-x-auto">
+                      <button type="button" onclick="switchHomeForumTab('all')" id="hftab-all" class="hftab-btn active">전체 최신</button>
+                      <button type="button" onclick="switchHomeForumTab('medical')" id="hftab-medical" class="hftab-btn">의료·건강</button>
+                      <button type="button" onclick="switchHomeForumTab('community')" id="hftab-community" class="hftab-btn">자유</button>
+                      <button type="button" onclick="switchHomeForumTab('wanted')" id="hftab-wanted" class="hftab-btn">서비스</button>
+                      <button type="button" onclick="switchHomeForumTab('food')" id="hftab-food" class="hftab-btn">맛집</button>
+                      <button type="button" onclick="switchHomeForumTab('jobs')" id="hftab-jobs" class="hftab-btn">구직</button>
+                    </div>
+                  </div>
+
+                  <a href="/forum" id="hftab-more-link" class="text-xs font-bold text-slate-500 hover:text-[#1B6FA8] shrink-0">
+                    더보기 +
                   </a>
-                <?php endforeach; ?>
+                </div>
+
+                <!-- Pane: 전체 최신글 -->
+                <div id="hfpane-all" class="hfpane space-y-2.5">
+                  <?php foreach ($homeLatestThreads as $t): 
+                    $catId = $t['categoryId'] ?? ($t['specialtyId'] ?? '');
+                    $badge = get_home_category_badge($catId);
+                    $hasPhotos = !empty($t['images']) && count($t['images']) > 0;
+                    $isNew = !empty($t['createdAt']) && (time() - strtotime($t['createdAt']) < 86400 * 3);
+                    $dateText = !empty($t['createdAt']) ? date('m.d', strtotime($t['createdAt'])) : '';
+                  ?>
+                    <a href="/forum/topic/<?= htmlspecialchars($t['id']) ?>" class="home-post-card group">
+                      <div class="home-post-main">
+                        <h4 class="home-post-title">
+                          <?= htmlspecialchars($t['title']) ?>
+                        </h4>
+                        <div class="home-post-meta">
+                          <span class="text-[10px] font-bold px-1.5 py-0.2 rounded border shrink-0 <?= $badge['class'] ?>">
+                            <?= $badge['label'] ?>
+                          </span>
+                          <span class="truncate max-w-[85px]"><?= htmlspecialchars($t['authorName'] ?? '이웃') ?></span>
+                          <span>•</span>
+                          <span class="font-mono"><?= $dateText ?></span>
+                          <?php if ($isNew): ?>
+                            <span class="inline-flex items-center justify-center w-3 h-3 text-[8.5px] font-bold text-white bg-amber-400 rounded-xs" title="새 글">N</span>
+                          <?php endif; ?>
+                          <?php if ($hasPhotos): ?>
+                            <span class="text-slate-400 text-xs" title="사진 첨부"><i class="fa-regular fa-image"></i></span>
+                          <?php endif; ?>
+                        </div>
+                      </div>
+                      <div class="home-post-right">
+                        <span class="home-post-replies">
+                          댓글 <?= (int)($t['replyCount'] ?? 0) ?>
+                        </span>
+                      </div>
+                    </a>
+                  <?php endforeach; ?>
+                </div>
+
+                <!-- Pane: 의료·건강 최신글 -->
+                <div id="hfpane-medical" class="hfpane space-y-2.5 hidden">
+                  <?php foreach ($homeMedicalThreads as $t): 
+                    $isNew = !empty($t['createdAt']) && (time() - strtotime($t['createdAt']) < 86400 * 3);
+                    $dateText = !empty($t['createdAt']) ? date('m.d', strtotime($t['createdAt'])) : '';
+                  ?>
+                    <a href="/forum/topic/<?= htmlspecialchars($t['id']) ?>" class="home-post-card group">
+                      <div class="home-post-main">
+                        <h4 class="home-post-title">
+                          <?= htmlspecialchars($t['title']) ?>
+                        </h4>
+                        <div class="home-post-meta">
+                          <span class="text-[10px] font-bold px-1.5 py-0.2 rounded border shrink-0 text-[#1B6FA8] bg-blue-50 border-blue-200">
+                            의료
+                          </span>
+                          <span class="truncate max-w-[85px]"><?= htmlspecialchars($t['authorName'] ?? '이웃') ?></span>
+                          <span>•</span>
+                          <span class="font-mono"><?= $dateText ?></span>
+                          <?php if ($isNew): ?>
+                            <span class="inline-flex items-center justify-center w-3 h-3 text-[8.5px] font-bold text-white bg-amber-400 rounded-xs">N</span>
+                          <?php endif; ?>
+                        </div>
+                      </div>
+                      <div class="home-post-right">
+                        <span class="home-post-replies">
+                          댓글 <?= (int)($t['replyCount'] ?? 0) ?>
+                        </span>
+                      </div>
+                    </a>
+                  <?php endforeach; ?>
+                </div>
+
+                <!-- Pane: 자유게시판 최신글 -->
+                <div id="hfpane-community" class="hfpane space-y-2.5 hidden">
+                  <?php foreach ($homeCommunityThreads as $t): 
+                    $dateText = !empty($t['createdAt']) ? date('m.d', strtotime($t['createdAt'])) : '';
+                  ?>
+                    <a href="/forum/topic/<?= htmlspecialchars($t['id']) ?>" class="home-post-card group">
+                      <div class="home-post-main">
+                        <h4 class="home-post-title">
+                          <?= htmlspecialchars($t['title']) ?>
+                        </h4>
+                        <div class="home-post-meta">
+                          <span class="text-[10px] font-bold px-1.5 py-0.2 rounded border shrink-0 text-slate-700 bg-slate-100 border-slate-200">
+                            자유
+                          </span>
+                          <span class="truncate max-w-[85px]"><?= htmlspecialchars($t['authorName'] ?? '이웃') ?></span>
+                          <span>•</span>
+                          <span class="font-mono"><?= $dateText ?></span>
+                        </div>
+                      </div>
+                      <div class="home-post-right">
+                        <span class="home-post-replies">
+                          댓글 <?= (int)($t['replyCount'] ?? 0) ?>
+                        </span>
+                      </div>
+                    </a>
+                  <?php endforeach; ?>
+                </div>
+
+                <!-- Pane: 맛집 최신글 -->
+                <div id="hfpane-food" class="hfpane space-y-2.5 hidden">
+                  <?php foreach ($homeFoodThreads as $t): 
+                    $dateText = !empty($t['createdAt']) ? date('m.d', strtotime($t['createdAt'])) : '';
+                  ?>
+                    <a href="/forum/topic/<?= htmlspecialchars($t['id']) ?>" class="home-post-card group">
+                      <div class="home-post-main">
+                        <h4 class="home-post-title">
+                          <?= htmlspecialchars($t['title']) ?>
+                        </h4>
+                        <div class="home-post-meta">
+                          <span class="text-[10px] font-bold px-1.5 py-0.2 rounded border shrink-0 text-amber-700 bg-amber-50 border-amber-200">
+                            맛집
+                          </span>
+                          <span class="truncate max-w-[85px]"><?= htmlspecialchars($t['authorName'] ?? '이웃') ?></span>
+                          <span>•</span>
+                          <span class="font-mono"><?= $dateText ?></span>
+                        </div>
+                      </div>
+                      <div class="home-post-right">
+                        <span class="home-post-replies">
+                          댓글 <?= (int)($t['replyCount'] ?? 0) ?>
+                        </span>
+                      </div>
+                    </a>
+                  <?php endforeach; ?>
+                </div>
+
+                <!-- Pane: 구해요 최신글 -->
+                <div id="hfpane-wanted" class="hfpane space-y-2.5 hidden">
+                  <?php foreach ($homeWantedThreads as $t): 
+                    $dateText = !empty($t['createdAt']) ? date('m.d', strtotime($t['createdAt'])) : '';
+                  ?>
+                    <a href="/forum/topic/<?= htmlspecialchars($t['id']) ?>" class="home-post-card group">
+                      <div class="home-post-main">
+                        <h4 class="home-post-title">
+                          <?= htmlspecialchars($t['title']) ?>
+                        </h4>
+                        <div class="home-post-meta">
+                          <span class="text-[10px] font-bold px-1.5 py-0.2 rounded border shrink-0 text-teal-700 bg-teal-50 border-teal-200">
+                            구해요
+                          </span>
+                          <span class="truncate max-w-[85px]"><?= htmlspecialchars($t['authorName'] ?? '이웃') ?></span>
+                          <span>•</span>
+                          <span class="font-mono"><?= $dateText ?></span>
+                        </div>
+                      </div>
+                      <div class="home-post-right">
+                        <span class="home-post-replies">
+                          댓글 <?= (int)($t['replyCount'] ?? 0) ?>
+                        </span>
+                      </div>
+                    </a>
+                  <?php endforeach; ?>
+                </div>
+
+                <!-- Pane: 구직 최신글 -->
+                <div id="hfpane-jobs" class="hfpane space-y-2.5 hidden">
+                  <?php foreach ($homeJobsThreads as $t): 
+                    $dateText = !empty($t['createdAt']) ? date('m.d', strtotime($t['createdAt'])) : '';
+                  ?>
+                    <a href="/forum/topic/<?= htmlspecialchars($t['id']) ?>" class="home-post-card group">
+                      <div class="home-post-main">
+                        <h4 class="home-post-title">
+                          <?= htmlspecialchars($t['title']) ?>
+                        </h4>
+                        <div class="home-post-meta">
+                          <span class="text-[10px] font-bold px-1.5 py-0.2 rounded border shrink-0 text-purple-700 bg-purple-50 border-purple-200">
+                            구직
+                          </span>
+                          <span class="truncate max-w-[85px]"><?= htmlspecialchars($t['authorName'] ?? '이웃') ?></span>
+                          <span>•</span>
+                          <span class="font-mono"><?= $dateText ?></span>
+                        </div>
+                      </div>
+                      <div class="home-post-right">
+                        <span class="home-post-replies">
+                          댓글 <?= (int)($t['replyCount'] ?? 0) ?>
+                        </span>
+                      </div>
+                    </a>
+                  <?php endforeach; ?>
+                </div>
+
               </div>
+
+              <!-- Right Column: [부동산·렌트 & 중고거래 매물] (2x2 Grid) -->
+              <div class="space-y-3 min-w-0">
+                <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+                  <h3 class="text-sm font-extrabold text-slate-900 tracking-tight">
+                    [부동산·렌트 &amp; 중고거래 매물]
+                  </h3>
+                  <a href="/forum?specialty=market" class="text-xs font-bold text-slate-500 hover:text-[#1B6FA8]">
+                    매물 전체보기 +
+                  </a>
+                </div>
+
+                <!-- 4 Real-time Marketplace Cards (2x2 Grid) with Uniform 110px Image & Bottom-Left Price Badge -->
+                <div id="home-mkt-container" class="home-mkt-grid">
+                  <?php foreach ($homeMarketThumbnails as $mkt): 
+                    $thumbImg = !empty($mkt['images'][0]) ? $mkt['images'][0] : 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=600&q=80';
+                    $tagLabel = forum_get_item_bracket_tag($mkt, 'market');
+                  ?>
+                    <a href="/forum/topic/<?= htmlspecialchars($mkt['id']) ?>" class="home-mkt-card group">
+                      <div class="home-mkt-img-wrap">
+                        <img src="<?= htmlspecialchars($thumbImg) ?>" alt="매물사진" loading="lazy">
+                        <?php if (!empty($mkt['price'])): ?>
+                          <span class="home-mkt-price-badge">
+                            <?= htmlspecialchars($mkt['price']) ?>
+                          </span>
+                        <?php endif; ?>
+                      </div>
+                      <div class="home-mkt-body">
+                        <h4 class="home-mkt-title">
+                          [<?= htmlspecialchars($tagLabel) ?>] <?= htmlspecialchars($mkt['title']) ?>
+                        </h4>
+                        <div class="home-mkt-meta">
+                          <span class="truncate max-w-[80px]"><?= htmlspecialchars($mkt['location'] ?? 'NJ') ?></span>
+                          <span class="font-mono">댓글 <?= (int)($mkt['replyCount'] ?? 0) ?></span>
+                        </div>
+                      </div>
+                    </a>
+                  <?php endforeach; ?>
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- 8 Community Categories Quick Links Bar (Bottom of Section) -->
+            <div class="pt-4 mt-4 border-t border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="text-xs font-bold text-slate-600 shrink-0">
+                  8대 커뮤니티 게시판 바로가기
+                </span>
+                <div class="flex flex-wrap items-center gap-1.5 text-xs font-bold">
+                  <a href="/forum?specialty=medical" class="px-2.5 py-1 rounded-lg bg-blue-50 text-[#1B6FA8] hover:bg-blue-100 transition-colors border border-blue-200">
+                    • 의료관련
+                  </a>
+                  <a href="/forum?specialty=community" class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors border border-slate-200">
+                    • 자유게시판
+                  </a>
+                  <a href="/forum?specialty=events" class="px-2.5 py-1 rounded-lg bg-rose-50 text-rose-700 hover:bg-rose-100 transition-colors border border-rose-200">
+                    • 이벤트
+                  </a>
+                  <a href="/forum?specialty=market" class="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition-colors border border-emerald-200">
+                    • 중고거래
+                  </a>
+                  <a href="/forum?specialty=wanted" class="px-2.5 py-1 rounded-lg bg-teal-50 text-teal-700 hover:bg-teal-100 transition-colors border border-teal-200">
+                    • 구해요
+                  </a>
+                  <a href="/forum?specialty=jobs" class="px-2.5 py-1 rounded-lg bg-purple-50 text-purple-700 hover:bg-purple-100 transition-colors border border-purple-200">
+                    • 구직
+                  </a>
+                  <a href="/forum?specialty=food" class="px-2.5 py-1 rounded-lg bg-amber-50 text-amber-700 hover:bg-amber-100 transition-colors border border-amber-200">
+                    • 맛집
+                  </a>
+                  <a href="/forum?specialty=columns" class="px-2.5 py-1 rounded-lg bg-cyan-50 text-cyan-700 hover:bg-cyan-100 transition-colors border border-cyan-200">
+                    • 전문가 칼럼
+                  </a>
+                </div>
+              </div>
+
+              <span class="text-xs text-slate-400 font-medium">
+                자유로운 이웃 소통 공간
+              </span>
             </div>
 
           </div>
+
+          <script>
+            function switchHomeForumTab(tabId) {
+              document.querySelectorAll('.hftab-btn').forEach(btn => btn.classList.remove('active'));
+              document.querySelectorAll('.hfpane').forEach(p => p.classList.add('hidden'));
+
+              const activeBtn = document.getElementById('hftab-' + tabId);
+              const activePane = document.getElementById('hfpane-' + tabId);
+
+              if (activeBtn) activeBtn.classList.add('active');
+              if (activePane) activePane.classList.remove('hidden');
+
+              const moreLink = document.getElementById('hftab-more-link');
+              if (moreLink) {
+                if (tabId === 'all') moreLink.href = '/forum';
+                else moreLink.href = '/forum?specialty=' + tabId;
+              }
+            }
+
+            // Real-time background sync: if forum was updated in another window or background, refresh front page listing
+            (function() {
+              let lastThreadId = '<?= !empty($homeLatestThreads[0]['id']) ? $homeLatestThreads[0]['id'] : '' ?>';
+              
+              function checkLatestForumUpdates() {
+                fetch('/api/forum.php?sort=latest&limit=8')
+                  .then(r => r.json())
+                  .then(res => {
+                    if (res && res.success && Array.isArray(res.data) && res.data.length > 0) {
+                      const newestId = res.data[0].id;
+                      if (newestId && newestId !== lastThreadId) {
+                        lastThreadId = newestId;
+                        renderHomeForumDynamicList(res.data);
+                      }
+                    }
+                  })
+                  .catch(() => {});
+              }
+
+              function renderHomeForumDynamicList(items) {
+                const pane = document.getElementById('hfpane-all');
+                if (!pane) return;
+
+                const badgeMap = {
+                  'medical': { label: '의료', class: 'text-[#1B6FA8] bg-blue-50 border-blue-200' },
+                  'community': { label: '자유', class: 'text-slate-700 bg-slate-100 border-slate-200' },
+                  'food': { label: '맛집', class: 'text-amber-700 bg-amber-50 border-amber-200' },
+                  'wanted': { label: '구해요', class: 'text-teal-700 bg-teal-50 border-teal-200' },
+                  'market': { label: '마켓', class: 'text-emerald-700 bg-emerald-50 border-emerald-200' },
+                  'jobs': { label: '구직', class: 'text-purple-700 bg-purple-50 border-purple-200' },
+                  'columns': { label: '칼럼', class: 'text-cyan-700 bg-cyan-50 border-cyan-200' },
+                  'events': { label: '행사', class: 'text-rose-700 bg-rose-50 border-rose-200' }
+                };
+
+                // Filter out market from discussions list if there are other discussions
+                const discussions = items.filter(t => (t.categoryId || t.specialtyId) !== 'market');
+                const displayItems = (discussions.length >= 4 ? discussions : items).slice(0, 4);
+
+                let html = '';
+                displayItems.forEach(t => {
+                  const cat = t.categoryId || t.specialtyId || '';
+                  const b = badgeMap[cat] || { label: '소통', class: 'text-slate-600 bg-slate-100 border-slate-200' };
+                  const hasPhotos = t.images && t.images.length > 0;
+                  const replyCount = parseInt(t.replyCount || 0);
+                  const isNew = true;
+                  const dateStr = t.createdAt ? (new Date(t.createdAt).getMonth() + 1 + '.' + new Date(t.createdAt).getDate()) : '';
+
+                  html += `
+                    <a href="/forum/topic/${encodeURIComponent(t.id)}" class="home-post-card group">
+                      <div class="home-post-main">
+                        <h4 class="home-post-title">${escapeHtml(t.title)}</h4>
+                        <div class="home-post-meta">
+                          <span class="text-[10px] font-bold px-1.5 py-0.2 rounded border shrink-0 ${b.class}">${b.label}</span>
+                          <span class="truncate max-w-[85px]">${escapeHtml(t.authorName || '이웃')}</span>
+                          <span>•</span>
+                          <span class="font-mono">${dateStr}</span>
+                          ${isNew ? '<span class="inline-flex items-center justify-center w-3 h-3 text-[8.5px] font-bold text-white bg-amber-400 rounded-xs" title="새 글">N</span>' : ''}
+                          ${hasPhotos ? '<span class="text-slate-400 text-xs" title="사진 첨부"><i class="fa-regular fa-image"></i></span>' : ''}
+                        </div>
+                      </div>
+                      <div class="home-post-right">
+                        <span class="home-post-replies">댓글 ${replyCount}</span>
+                      </div>
+                    </a>
+                  `;
+                });
+
+                pane.innerHTML = html;
+              }
+
+              function escapeHtml(str) {
+                if (!str) return '';
+                return str.replace(/[&<>"']/g, function(m) {
+                  return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
+                });
+              }
+
+              // Check on tab focus or every 20 seconds
+              window.addEventListener('focus', checkLatestForumUpdates);
+              document.addEventListener('visibilitychange', function() {
+                if (!document.hidden) checkLatestForumUpdates();
+              });
+              setInterval(checkLatestForumUpdates, 20000);
+            })();
+          </script>
         </section>
 
         <!-- 4.5. 100vw Panoramic Billboard 2 Section (Right Above One-Stop Coverage & Patient Services Center) -->
@@ -2572,40 +3322,88 @@ JSON
               $isVid2 = ($b2['mediaType'] ?? '') === 'video' || (isset($b2['mediaUrl']) && (str_ends_with($b2['mediaUrl'], '.mp4') || str_ends_with($b2['mediaUrl'], '.webm')));
             ?>
           <div class="relative w-full overflow-hidden bg-slate-950 select-none group" style="height: clamp(300px, 38.32vw, 624px); min-height: 300px; max-height: 624px; width: 100%; position: relative; overflow: hidden;">
-            <a href="<?= htmlspecialchars($b2['linkUrl'] ?? '/about#contact') ?>" class="block absolute inset-0 w-full h-full cursor-pointer select-none" title="<?= htmlspecialchars($b2['title'] ?? '') ?>" onclick="var v=this.querySelector('video');if(v&&v.paused){event.preventDefault();event.stopPropagation();v.defaultMuted=true;v.muted=true;v.play();return false;}">
+            <a href="<?= htmlspecialchars($b2['linkUrl'] ?? '/about#contact') ?>" class="block absolute inset-0 w-full h-full cursor-pointer select-none" title="<?= htmlspecialchars($b2['title'] ?? '') ?>" id="billboard2-link" onclick="var v=this.querySelector('video');if(v&&v.paused){v.defaultMuted=true;v.muted=true;v.volume=0;v.playsInline=true;v.play().catch(function(){});event.preventDefault();return false;}">
               <div class="absolute inset-0 w-full h-full overflow-hidden" style="position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1;">
                 <?php if ($isVid2): ?>
                   <video id="billboard2-active-video" 
                          class="w-full h-full object-cover" 
-                         muted 
-                         autoplay 
-                         <?= count($activeBillboards2) <= 1 ? 'loop' : '' ?> 
-                         playsinline 
-                         webkit-playsinline 
+                         src="<?= htmlspecialchars($b2['mediaUrl']) ?>"
+                         muted="" 
+                         autoplay="" 
+                         <?= count($activeBillboards2) <= 1 ? 'loop=""' : '' ?> 
+                         playsinline="" 
+                         webkit-playsinline="" 
                          preload="auto"
-                         style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center;">
+                         style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; pointer-events: auto;">
                     <source src="<?= htmlspecialchars($b2['mediaUrl']) ?>" type="video/mp4">
                   </video>
+                  <div id="billboard2-play-overlay" class="absolute inset-0 flex items-center justify-center transition-opacity duration-300 pointer-events-none" style="z-index: 5; display: none;">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-black/60 backdrop-blur-md border border-white/30 flex items-center justify-center text-white shadow-2xl transition-transform active:scale-95">
+                      <svg class="w-8 h-8 sm:w-10 sm:h-10 fill-current translate-x-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    </div>
+                  </div>
                   <script>
                     (function(){
                       var v = document.getElementById('billboard2-active-video');
+                      var ov = document.getElementById('billboard2-play-overlay');
                       if (!v) return;
                       v.defaultMuted = true;
                       v.muted = true;
                       v.volume = 0;
                       v.playsInline = true;
-                      var triggerPlay = function() {
+                      v.autoplay = true;
+
+                      function syncOverlay() {
+                        if (!ov) return;
                         if (v.paused) {
-                          var p = v.play();
-                          if (p && p.catch) p.catch(function(){});
+                          ov.style.display = 'flex';
+                          ov.style.opacity = '1';
+                        } else {
+                          ov.style.opacity = '0';
+                          setTimeout(function() { if (!v.paused) ov.style.display = 'none'; }, 250);
+                        }
+                      }
+
+                      var triggerPlay = function() {
+                        v.defaultMuted = true;
+                        v.muted = true;
+                        v.volume = 0;
+                        v.playsInline = true;
+                        var p = v.play();
+                        if (p && p.catch) {
+                          p.catch(function(){
+                            syncOverlay();
+                          });
                         }
                       };
+
+                      v.addEventListener('play', syncOverlay);
+                      v.addEventListener('playing', syncOverlay);
+                      v.addEventListener('pause', syncOverlay);
+
                       if (v.readyState >= 2) {
                         triggerPlay();
                       } else {
                         v.addEventListener('canplay', triggerPlay, { once: true });
                         v.addEventListener('loadeddata', triggerPlay, { once: true });
                       }
+
+                      // Passive touch unlock for Firefox Mobile
+                      var bbContainer = document.getElementById('gallery-billboard2-container');
+                      if (bbContainer) {
+                        var passiveTapUnlock = function() {
+                          if (v.paused) {
+                            v.defaultMuted = true;
+                            v.muted = true;
+                            v.volume = 0;
+                            v.playsInline = true;
+                            v.play().catch(function(){});
+                          }
+                        };
+                        bbContainer.addEventListener('touchstart', passiveTapUnlock, { capture: true, passive: true });
+                        bbContainer.addEventListener('pointerdown', passiveTapUnlock, { capture: true, passive: true });
+                      }
+
                       v.addEventListener('ended', function() {
                         if (typeof window.cmsNextBillboard2 === 'function') {
                           window.cmsNextBillboard2();
@@ -3181,7 +3979,7 @@ JSON
 
               <!-- Quick Link to Forum Reviews -->
               <div class="shrink-0 flex items-center gap-3">
-                <a href="/forum?specialty=hospital_reviews&view=topics" 
+                <a href="/forum?specialty=medical&sub=medical_reviews&view=topics" 
                    class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs sm:text-sm shadow-sm transition-all hover:shadow-md"
                    style="background-color: #059669 !important; color: #ffffff !important;">
                   <i class="fa-solid fa-comments"></i>
@@ -3259,10 +4057,10 @@ JSON
 
                   <!-- Hashtags -->
                   <div class="flex flex-wrap gap-1.5 mb-4">
-                    <a href="/forum?specialty=hospital_reviews&q=Englewood&view=topics" class="px-2 py-0.5 rounded-md bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold text-[11px] transition-colors">#잉글우드병원</a>
-                    <a href="/forum?specialty=hospital_reviews&q=한인의료프로그램&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#한인의료프로그램</a>
-                    <a href="/forum?specialty=hospital_reviews&q=통역&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#한국어통역상주</a>
-                    <a href="/forum?specialty=hospital_reviews&q=자선진료&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#자선진료</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=Englewood&view=topics" class="px-2 py-0.5 rounded-md bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold text-[11px] transition-colors">#잉글우드병원</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=한인의료프로그램&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#한인의료프로그램</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=통역&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#한국어통역상주</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=자선진료&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#자선진료</a>
                   </div>
 
                   <!-- Contact Details -->
@@ -3287,7 +4085,7 @@ JSON
                     <span>공식 웹사이트</span>
                     <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                   </a>
-                  <a href="/forum?specialty=hospital_reviews&q=Englewood&view=topics" 
+                  <a href="/forum?specialty=medical&sub=medical_reviews&q=Englewood&view=topics" 
                      class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 font-extrabold text-xs transition-colors">
                     <i class="fa-regular fa-comment-dots text-xs"></i>
                     <span>후기 &amp; 질문</span>
@@ -3342,10 +4140,10 @@ JSON
 
                   <!-- Hashtags -->
                   <div class="flex flex-wrap gap-1.5 mb-4">
-                    <a href="/forum?specialty=hospital_reviews&q=HolyName&view=topics" class="px-2 py-0.5 rounded-md bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-[11px] transition-colors">#홀리네임병원</a>
-                    <a href="/forum?specialty=hospital_reviews&q=KMP&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#코리안메디컬프로그램</a>
-                    <a href="/forum?specialty=hospital_reviews&q=통역&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#한국어통역상주</a>
-                    <a href="/forum?specialty=hospital_reviews&q=자선진료&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#자선진료</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=HolyName&view=topics" class="px-2 py-0.5 rounded-md bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-[11px] transition-colors">#홀리네임병원</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=KMP&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#코리안메디컬프로그램</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=통역&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#한국어통역상주</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=자선진료&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#자선진료</a>
                   </div>
 
                   <!-- Contact Details -->
@@ -3370,7 +4168,7 @@ JSON
                     <span>공식 웹사이트</span>
                     <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                   </a>
-                  <a href="/forum?specialty=hospital_reviews&q=HolyName&view=topics" 
+                  <a href="/forum?specialty=medical&sub=medical_reviews&q=HolyName&view=topics" 
                      class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-extrabold text-xs transition-colors">
                     <i class="fa-regular fa-comment-dots text-xs"></i>
                     <span>후기 &amp; 질문</span>
@@ -3425,10 +4223,10 @@ JSON
 
                   <!-- Hashtags -->
                   <div class="flex flex-wrap gap-1.5 mb-4">
-                    <a href="/forum?specialty=hospital_reviews&q=Hackensack&view=topics" class="px-2 py-0.5 rounded-md bg-indigo-50 hover:bg-indigo-100 text-indigo-800 font-bold text-[11px] transition-colors">#해켄색대학병원</a>
-                    <a href="/forum?specialty=hospital_reviews&q=HUMC&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#HUMC</a>
-                    <a href="/forum?specialty=hospital_reviews&q=존더러암센터&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#존더러암센터</a>
-                    <a href="/forum?specialty=hospital_reviews&q=24시간통역&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#24시간한국어통역</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=Hackensack&view=topics" class="px-2 py-0.5 rounded-md bg-indigo-50 hover:bg-indigo-100 text-indigo-800 font-bold text-[11px] transition-colors">#해켄색대학병원</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=HUMC&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#HUMC</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=존더러암센터&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#존더러암센터</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=24시간통역&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#24시간한국어통역</a>
                   </div>
 
                   <!-- Contact Details -->
@@ -3453,7 +4251,7 @@ JSON
                     <span>공식 웹사이트</span>
                     <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                   </a>
-                  <a href="/forum?specialty=hospital_reviews&q=Hackensack&view=topics" 
+                  <a href="/forum?specialty=medical&sub=medical_reviews&q=Hackensack&view=topics" 
                      class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-800 font-extrabold text-xs transition-colors">
                     <i class="fa-regular fa-comment-dots text-xs"></i>
                     <span>후기 &amp; 질문</span>
@@ -3508,10 +4306,10 @@ JSON
 
                   <!-- Hashtags -->
                   <div class="flex flex-wrap gap-1.5 mb-4">
-                    <a href="/forum?specialty=hospital_reviews&q=Valley&view=topics" class="px-2 py-0.5 rounded-md bg-sky-50 hover:bg-sky-100 text-sky-800 font-bold text-[11px] transition-colors">#밸리병원</a>
-                    <a href="/forum?specialty=hospital_reviews&q=TheValleyHospital&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#TheValleyHospital</a>
-                    <a href="/forum?specialty=hospital_reviews&q=패러머스신축&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#패러머스신축</a>
-                    <a href="/forum?specialty=hospital_reviews&q=1인실&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#전병실1인실</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=Valley&view=topics" class="px-2 py-0.5 rounded-md bg-sky-50 hover:bg-sky-100 text-sky-800 font-bold text-[11px] transition-colors">#밸리병원</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=TheValleyHospital&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#TheValleyHospital</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=패러머스신축&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#패러머스신축</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=1인실&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#전병실1인실</a>
                   </div>
 
                   <!-- Contact Details -->
@@ -3536,7 +4334,7 @@ JSON
                     <span>공식 웹사이트</span>
                     <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                   </a>
-                  <a href="/forum?specialty=hospital_reviews&q=Valley&view=topics" 
+                  <a href="/forum?specialty=medical&sub=medical_reviews&q=Valley&view=topics" 
                      class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-800 font-extrabold text-xs transition-colors">
                     <i class="fa-regular fa-comment-dots text-xs"></i>
                     <span>후기 &amp; 질문</span>
@@ -3591,10 +4389,10 @@ JSON
 
                   <!-- Hashtags -->
                   <div class="flex flex-wrap gap-1.5 mb-4">
-                    <a href="/forum?specialty=hospital_reviews&q=BergenNewBridge&view=topics" class="px-2 py-0.5 rounded-md bg-cyan-50 hover:bg-cyan-100 text-cyan-800 font-bold text-[11px] transition-colors">#버겐뉴브릿지</a>
-                    <a href="/forum?specialty=hospital_reviews&q=구버겐리저널&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#구버겐리저널</a>
-                    <a href="/forum?specialty=hospital_reviews&q=시니어너싱홈&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#시니어너싱홈</a>
-                    <a href="/forum?specialty=hospital_reviews&q=정신건강&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#정신건강치료</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=BergenNewBridge&view=topics" class="px-2 py-0.5 rounded-md bg-cyan-50 hover:bg-cyan-100 text-cyan-800 font-bold text-[11px] transition-colors">#버겐뉴브릿지</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=구버겐리저널&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#구버겐리저널</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=시니어너싱홈&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#시니어너싱홈</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=정신건강&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#정신건강치료</a>
                   </div>
 
                   <!-- Contact Details -->
@@ -3619,7 +4417,7 @@ JSON
                     <span>공식 웹사이트</span>
                     <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                   </a>
-                  <a href="/forum?specialty=hospital_reviews&q=BergenNewBridge&view=topics" 
+                  <a href="/forum?specialty=medical&sub=medical_reviews&q=BergenNewBridge&view=topics" 
                      class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-cyan-50 hover:bg-cyan-100 text-cyan-800 font-extrabold text-xs transition-colors">
                     <i class="fa-regular fa-comment-dots text-xs"></i>
                     <span>후기 &amp; 질문</span>
@@ -3674,10 +4472,10 @@ JSON
 
                   <!-- Hashtags -->
                   <div class="flex flex-wrap gap-1.5 mb-4">
-                    <a href="/forum?specialty=hospital_reviews&q=Palisades&view=topics" class="px-2 py-0.5 rounded-md bg-blue-50 hover:bg-blue-100 text-blue-800 font-bold text-[11px] transition-colors">#팰리세이즈병원</a>
-                    <a href="/forum?specialty=hospital_reviews&q=에지워터인근&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#에지워터인근</a>
-                    <a href="/forum?specialty=hospital_reviews&q=클리프사이드파크&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#클리프사이드파크</a>
-                    <a href="/forum?specialty=hospital_reviews&q=응급실&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#강변응급실</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=Palisades&view=topics" class="px-2 py-0.5 rounded-md bg-blue-50 hover:bg-blue-100 text-blue-800 font-bold text-[11px] transition-colors">#팰리세이즈병원</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=에지워터인근&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#에지워터인근</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=클리프사이드파크&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#클리프사이드파크</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=응급실&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#강변응급실</a>
                   </div>
 
                   <!-- Contact Details -->
@@ -3702,7 +4500,7 @@ JSON
                     <span>공식 웹사이트</span>
                     <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                   </a>
-                  <a href="/forum?specialty=hospital_reviews&q=Palisades&view=topics" 
+                  <a href="/forum?specialty=medical&sub=medical_reviews&q=Palisades&view=topics" 
                      class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-800 font-extrabold text-xs transition-colors">
                     <i class="fa-regular fa-comment-dots text-xs"></i>
                     <span>후기 &amp; 질문</span>
@@ -3757,10 +4555,10 @@ JSON
 
                   <!-- Hashtags -->
                   <div class="flex flex-wrap gap-1.5 mb-4">
-                    <a href="/forum?specialty=hospital_reviews&q=Pascack&view=topics" class="px-2 py-0.5 rounded-md bg-teal-50 hover:bg-teal-100 text-teal-800 font-bold text-[11px] transition-colors">#파스카크밸리</a>
-                    <a href="/forum?specialty=hospital_reviews&q=PascackValley&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#PascackValley</a>
-                    <a href="/forum?specialty=hospital_reviews&q=신속응급실&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#신속응급실</a>
-                    <a href="/forum?specialty=hospital_reviews&q=관절수술&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#관절치환수술</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=Pascack&view=topics" class="px-2 py-0.5 rounded-md bg-teal-50 hover:bg-teal-100 text-teal-800 font-bold text-[11px] transition-colors">#파스카크밸리</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=PascackValley&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#PascackValley</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=신속응급실&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#신속응급실</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=관절수술&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#관절치환수술</a>
                   </div>
 
                   <!-- Contact Details -->
@@ -3785,7 +4583,7 @@ JSON
                     <span>공식 웹사이트</span>
                     <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                   </a>
-                  <a href="/forum?specialty=hospital_reviews&q=Pascack&view=topics" 
+                  <a href="/forum?specialty=medical&sub=medical_reviews&q=Pascack&view=topics" 
                      class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-teal-50 hover:bg-teal-100 text-teal-800 font-extrabold text-xs transition-colors">
                     <i class="fa-regular fa-comment-dots text-xs"></i>
                     <span>후기 &amp; 질문</span>
@@ -3840,10 +4638,10 @@ JSON
 
                   <!-- Hashtags -->
                   <div class="flex flex-wrap gap-1.5 mb-4">
-                    <a href="/forum?specialty=hospital_reviews&q=RWJ&view=topics" class="px-2 py-0.5 rounded-md bg-rose-50 hover:bg-rose-100 text-rose-800 font-bold text-[11px] transition-colors">#RWJBarnabas</a>
-                    <a href="/forum?specialty=hospital_reviews&q=러트거스헬스&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#러트거스헬스</a>
-                    <a href="/forum?specialty=hospital_reviews&q=쿠퍼맨바나바스&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#화상센터</a>
-                    <a href="/forum?specialty=hospital_reviews&q=장기이식&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#장기이식센터</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=RWJ&view=topics" class="px-2 py-0.5 rounded-md bg-rose-50 hover:bg-rose-100 text-rose-800 font-bold text-[11px] transition-colors">#RWJBarnabas</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=러트거스헬스&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#러트거스헬스</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=쿠퍼맨바나바스&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#화상센터</a>
+                    <a href="/forum?specialty=medical&sub=medical_reviews&q=장기이식&view=topics" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] transition-colors">#장기이식센터</a>
                   </div>
 
                   <!-- Contact Details -->
@@ -3868,7 +4666,7 @@ JSON
                     <span>공식 웹사이트</span>
                     <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                   </a>
-                  <a href="/forum?specialty=hospital_reviews&q=RWJ&view=topics" 
+                  <a href="/forum?specialty=medical&sub=medical_reviews&q=RWJ&view=topics" 
                      class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-800 font-extrabold text-xs transition-colors">
                     <i class="fa-regular fa-comment-dots text-xs"></i>
                     <span>후기 &amp; 질문</span>
@@ -3910,19 +4708,38 @@ JSON
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-10">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
         <div class="lg:col-span-2">
-          <a class="inline-flex items-center mb-4 group cursor-pointer njap-brand-link" href="/" onclick="navigateToHome(event); return false;" title="NJ Access Portal · 뉴저지 한인 의료접근포털">
-            <img src="/logo-white.png" alt="NJ Access Portal · 뉴저지 한인 의료접근포털" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
-          </a>
-          <p class="text-sm text-white/60 font-sans leading-relaxed max-w-xs mb-6">뉴저지 한인 커뮤니티를 위한 의료 접근 및 건강 정보 포털. 메디케어, ACA, 의료 상담을 한국어로 제공합니다.</p>
+          <div class="engine-logo-row flex items-center gap-3.5 sm:gap-4 mb-4 flex-wrap">
+            <a class="inline-flex items-center group cursor-pointer njap-brand-link" href="/" onclick="navigateToHome(event); return false;" title="NJ Access Portal · 뉴저지 한인 포털">
+              <svg class="h-9 sm:h-10 w-auto object-contain transition-transform group-hover:scale-105" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NJ Access Portal · 뉴저지 한인 포털"><title>NJ Access Portal · 뉴저지 한인 포털</title><g transform="translate(4, 2) scale(0.56)" stroke-linecap="round" stroke-linejoin="round"><g stroke="#FFFFFF"><line x1="20" y1="12" x2="20" y2="88" stroke-width="3.5" /><rect x="25" y="12" width="55" height="76" rx="2" stroke-width="4" fill="none" /><polyline points="25,16 52,25 52,36" stroke-width="3.5" /><text x="52.5" y="81" font-family="'Times New Roman', serif" font-size="13.5" font-weight="900" letter-spacing="1.5" fill="#FFFFFF" stroke="none" text-anchor="middle">NJAP</text></g><path d="M 43,45 A 7,7 0 1,1 53,45 L 56,64 L 40,64 Z" stroke="#EF4444" stroke-width="3.5" fill="none" /><circle cx="74" cy="45" r="6.5" stroke="#EF4444" stroke-width="3.5" fill="none" /><line x1="47" y1="45" x2="67.5" y2="45" stroke="#EF4444" stroke-width="3.5" /><line x1="49" y1="45" x2="49" y2="49" stroke="#EF4444" stroke-width="3.5" /><line x1="53" y1="45" x2="53" y2="48" stroke="#EF4444" stroke-width="3" /></g><text x="64" y="27" font-family="Pretendard, system-ui, -apple-system, sans-serif" font-size="18" font-weight="900" fill="#FFFFFF" letter-spacing="-0.5">NJ Access Portal</text><text x="64" y="44" font-family="Pretendard, system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="600" fill="#94A3B8" letter-spacing="0.2">뉴저지 한인 포털</text></svg>
+            </a>
+            <!-- Highly Visible Engine Button Next to Logo -->
+            <a href="/engine" target="_self" class="engine-footer-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl text-white font-extrabold text-sm tracking-wide shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer" style="background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 50%, #0284C7 100%) !important; color: #ffffff !important; border: 1.5px solid #38BDF8 !important; box-shadow: 0 4px 18px rgba(56, 189, 248, 0.35) !important; text-decoration: none !important;" title="Universal Access Engine 포트폴리오 바로가기">
+              <svg class="w-4 h-4 text-cyan-200" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/></svg>
+              <span style="color: #ffffff !important; font-weight: 800; letter-spacing: 0.02em;">Engine</span>
+              <svg class="w-3.5 h-3.5 text-cyan-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+
+          <!-- Engine B2B Callout Box -->
+          <div class="engine-footer-card mb-5 p-3.5 sm:p-4 rounded-xl border border-sky-500/30 text-xs leading-relaxed max-w-sm shadow-md" style="background: rgba(15, 23, 42, 0.75) !important;">
+            <div class="font-bold flex items-start gap-1.5 mb-1.5" style="color: #ffffff !important;">
+              <span class="engine-footer-badge font-extrabold" style="color: #38BDF8 !important;">Engine:</span>
+              <span style="color: #F1F5F9 !important;">For Hospitals, Physician group and Insurance Company.</span>
+            </div>
+            <div class="engine-footer-text" style="color: #94A3B8 !important; font-size: 12px;">
+              Contact us at <a href="mailto:NJACCESSPORTAL@GMAIL.COM" class="engine-footer-mail underline font-bold transition-colors" style="color: #38BDF8 !important;">NJACCESSPORTAL@GMAIL.COM</a> to access our portfolio.
+            </div>
+          </div>
+
+          <p class="text-sm text-white/60 font-sans leading-relaxed max-w-xs mb-6">뉴저지 의료접근센터(Healthcare Access Center) &amp; 한인 포털(Korean Portal). 한인 의료·한인 의사·한인 병원 연계 및 의료정보센터(Healthcare Resource Center). 뉴저지 한인포럼과 뉴저지 한인광장을 아우르는 통합 복지 플랫폼.</p>
         </div>
         <div>
           <p class="text-xs font-sans font-semibold uppercase tracking-widest text-white/40 mb-4">정보</p>
           <ul class="space-y-2.5">
             <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200 cursor-pointer" href="/" onclick="navigateToHome(event); return false;">홈</a></li>
             <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/about">의료 접근센터</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200 inline-flex items-center gap-1.5" href="/engine" target="_self">Engine <span class="text-[10px] text-white/40 font-normal">Marketing Client</span></a></li>
             <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/blog">건강 뉴스</a></li>
-            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/forum">커뮤니티 포럼</a></li>
+            <li><a class="text-sm font-sans text-white/60 hover:text-white transition-colors duration-200" href="/forum">뉴저지 한인 광장</a></li>
           </ul>
         </div>
         <div>
@@ -3947,7 +4764,7 @@ JSON
         <div class="text-xs font-sans text-white/30 max-w-2xl leading-relaxed">
           <span class="font-semibold text-white/40">⚠ 의료 면책 조항:</span> 이 웹사이트의 정보는 교육 목적으로만 제공됩니다. 의료 결정은 반드시 자격을 갖춘 의료 전문가와 상담하십시오.
         </div>
-        <p class="text-xs font-sans text-white/30 whitespace-nowrap">© 2026 NJ Access Portal · 뉴저지 한인 의료접근센터</p>
+        <p class="text-xs font-sans text-white/30 whitespace-nowrap">© 2026 NJ Access Portal · 뉴저지 의료접근센터 · Korean Portal</p>
       </div>
     </div>
   </footer>
@@ -4021,7 +4838,7 @@ JSON
 
     // 2. Global Section Slide-in on Scroll (Excludes Top Billboard)
     document.addEventListener('DOMContentLoaded', function() {
-      var targets = document.querySelectorAll('main section:not(#gallery-billboard-section):not(#gallery-billboard2-section):not(#medical-videos-section), main article, #homepage-top-story-box, #homepage-latest-news-box, #homepage-doctor-columns-box, #homepage-reports-grid');
+      var targets = document.querySelectorAll('main section:not(#homepage-hero-billboard-section):not(#gallery-billboard-section):not(#gallery-billboard2-section):not(#medical-videos-section), main article, #homepage-top-story-box, #homepage-latest-news-box, #homepage-doctor-columns-box, #homepage-reports-grid');
       if ('IntersectionObserver' in window) {
         var observer = new IntersectionObserver(function(entries) {
           entries.forEach(function(entry) {
