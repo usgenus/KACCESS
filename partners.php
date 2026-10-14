@@ -351,19 +351,12 @@ $initialCount = count($partners);
       <!-- Partner Directory Section -->
       <section class="space-y-6 pt-4">
         <!-- Section Header -->
-        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-4">
-          <div>
-            <span class="text-xs font-black tracking-widest text-brand-forest uppercase mb-1 block">PARTNER DIRECTORY</span>
-            <h2 class="text-2xl sm:text-3xl font-black text-black tracking-tight">분야별 파트너</h2>
-            <p class="text-xs sm:text-sm text-slate-500 font-normal mt-1">
-              이름만 나열하지 않고, 지역·전문 분야·콘텐츠 활동을 한눈에 비교하도록 구성했습니다.
-            </p>
-          </div>
-          <div class="text-right">
-            <span class="inline-flex items-center px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-bold">
-              <span id="partner-count" class="text-brand-forest font-black mr-1"><?= $initialCount ?></span>개의 파트너
-            </span>
-          </div>
+        <div class="border-b border-slate-200 pb-4">
+          <span class="text-xs font-black tracking-widest text-brand-forest uppercase mb-1 block">PARTNER DIRECTORY</span>
+          <h2 class="text-2xl sm:text-3xl font-black text-black tracking-tight">분야별 파트너</h2>
+          <p class="text-xs sm:text-sm text-slate-500 font-normal mt-1">
+            이름만 나열하지 않고, 지역·전문 분야·콘텐츠 활동을 한눈에 비교하도록 구성했습니다.
+          </p>
         </div>
 
         <!-- Partner Cards Grid (5 in a row on desktop, half the size) -->
@@ -836,7 +829,8 @@ $initialCount = count($partners);
         }
       });
 
-      document.getElementById('partner-count').textContent = visibleCount;
+      const countEl = document.getElementById('partner-count');
+      if (countEl) countEl.textContent = visibleCount;
       const emptyState = document.getElementById('no-partners-msg');
       if (visibleCount === 0) {
         emptyState.classList.remove('hidden');
