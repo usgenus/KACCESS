@@ -12,7 +12,7 @@ $db = get_db_data();
 $posts = $db['posts'] ?? [];
 
 // Canonical news categories
-$canonicalCats = ['의료칼럼', 'recall(리콜)', 'health&wellness', '의료보험', '한인건강 특집', '한인커뮤니티 뉴스', '의학뉴스'];
+$canonicalCats = ['의료칼럼', 'recall(리콜)', 'health&wellness', '의료보험', '한인건강 특집', '한인커뮤니티 뉴스', '뉴저지 뉴스', '의학뉴스'];
 
 function normalize_news_category($cat) {
     $c = trim($cat ?? '');
@@ -24,8 +24,9 @@ function normalize_news_category($cat) {
     if ($c === '의료보험' || $c === 'Medicare & ACA' || mb_strpos($lower, 'medicare') !== false || mb_strpos($lower, '보험') !== false) return '의료보험';
     if ($c === '한인건강 특집' || mb_strpos($lower, '한인건강') !== false || mb_strpos($lower, '특집') !== false) return '한인건강 특집';
     if ($c === '한인커뮤니티 뉴스' || mb_strpos($lower, '한인커뮤니티') !== false || mb_strpos($lower, '커뮤니티') !== false) return '한인커뮤니티 뉴스';
+    if ($c === '뉴저지 뉴스' || mb_strpos($lower, '뉴저지') !== false) return '뉴저지 뉴스';
     if ($c === '의학뉴스' || mb_strpos($lower, '의학뉴스') !== false || mb_strpos($lower, '의학') !== false) return '의학뉴스';
-    return in_array($c, ['의료칼럼', 'recall(리콜)', 'health&wellness', '의료보험', '한인건강 특집', '한인커뮤니티 뉴스', '의학뉴스']) ? $c : '의료칼럼';
+    return in_array($c, ['의료칼럼', 'recall(리콜)', 'health&wellness', '의료보험', '한인건강 특집', '한인커뮤니티 뉴스', '뉴저지 뉴스', '의학뉴스']) ? $c : '의료칼럼';
 }
 
 // Helper to make clean slug supporting Korean and English
@@ -142,7 +143,7 @@ if ($method === 'GET') {
     });
 
     // Canonical news categories
-    $canonicalCats = ['의료칼럼', 'recall(리콜)', 'health&wellness', '의료보험', '한인건강 특집', '한인커뮤니티 뉴스', '의학뉴스'];
+    $canonicalCats = ['의료칼럼', 'recall(리콜)', 'health&wellness', '의료보험', '한인건강 특집', '한인커뮤니티 뉴스', '뉴저지 뉴스', '의학뉴스'];
 
     // Normalize category for all output posts
     foreach ($result as &$rItem) {
@@ -242,7 +243,7 @@ if ($method === 'POST') {
         'createdAt' => date('Y-m-d H:i:s')
     ];
 
-    // If new item is top story, reset others if desired
+    // If new item is top story, unmark all other posts (max 1 top story)
     if ($newItem['isTopStory']) {
         foreach ($posts as &$p) {
             $p['isTopStory'] = false;
@@ -259,19 +260,11 @@ if ($method === 'POST') {
 
     if (function_exists('fastcgi_finish_request')) {
         send_json_and_continue(['success' => true, 'message' => '기사가 등록되었습니다.', 'data' => $newItem]);
-        // Background audio & push after client response is finished
+        // Background audio generation (push notifications are scheduled for Mon & Thu 10am)
         @generate_post_audio_file($newItem['slug'], $newItem['title'], $newItem['excerpt'], $newItem['content']);
-        if (($newItem['status'] ?? 'published') === 'published') {
-            require_once __DIR__ . '/push_notify.php';
-            @send_new_post_notification($newItem);
-        }
         exit;
     } else {
         @generate_post_audio_file($newItem['slug'], $newItem['title'], $newItem['excerpt'], $newItem['content']);
-        if (($newItem['status'] ?? 'published') === 'published') {
-            require_once __DIR__ . '/push_notify.php';
-            @send_new_post_notification($newItem);
-        }
         send_json(['success' => true, 'message' => '기사가 등록되었습니다.', 'data' => $newItem]);
     }
 }
@@ -284,11 +277,11 @@ if ($method === 'PUT') {
     }
 
     $found = false;
-    $isTop = !empty($input['isTopStory']);
+    $isTop = !empty($input['isTopStory']) && ($input['isTopStory'] === true || $input['isTopStory'] === 'true' || $input['isTopStory'] === 1 || $input['isTopStory'] === '1');
 
     if ($isTop) {
         foreach ($posts as &$p) {
-            if ($p['id'] !== $id) {
+            if ((string)$p['id'] !== (string)$id && (!isset($p['slug']) || (string)$p['slug'] !== (string)$id)) {
                 $p['isTopStory'] = false;
             }
         }

@@ -78,8 +78,8 @@ function get_db_data($forceCloud = false): array {
         }
     }
 
-    // Auto-seed persistent storage from local mirror if persistent file does not exist yet
-    if (!file_exists(PERSISTENT_DATA_FILE) && file_exists(DATA_FILE)) {
+    // Auto-seed persistent storage from local mirror ONLY if persistent storage does not exist yet
+    if (file_exists(DATA_FILE) && !file_exists(PERSISTENT_DATA_FILE)) {
         $pDir = dirname(PERSISTENT_DATA_FILE);
         if (!is_dir($pDir)) { @mkdir($pDir, 0777, true); @chmod($pDir, 0777); }
         @copy(DATA_FILE, PERSISTENT_DATA_FILE);
@@ -109,6 +109,11 @@ function get_db_data($forceCloud = false): array {
                 if (is_dir(dirname($koDataFile)) && (!file_exists($koDataFile) || filesize($koDataFile) !== strlen($content))) {
                     @file_put_contents($koDataFile, $content, LOCK_EX);
                 }
+                if (!isset($data['settings']) || !is_array($data['settings'])) {
+                    $data['settings'] = [
+                        'scrollingBanner' => '의료접근포탈: "비영리기관(한인 커뮤니티센터)들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료시스템 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스"'
+                    ];
+                }
                 return $data;
             }
         }
@@ -124,7 +129,7 @@ function get_db_data($forceCloud = false): array {
             $catRows = $supabase->selectAll('categories') ?: [];
             
             $categories = [
-                'news' => ['의료칼럼', 'recall(리콜)', 'health&wellness', '의료보험', '한인건강 특집', '한인커뮤니티 뉴스', '의학뉴스'],
+                'news' => ['의료칼럼', 'recall(리콜)', 'health&wellness', '의료보험', '한인건강 특집', '한인커뮤니티 뉴스', '뉴저지 뉴스', '의학뉴스'],
                 'videos' => ['전체', '만성질환 & 당뇨', '심장 & 혈관', '뇌신경 & 치매', '암 예방 & 검진', '감염병 & 백신', '건강검진 & 의료정보'],
                 'billboards' => ['SPECIAL CAMPAIGN', 'MEDICARE UPDATE', 'PATIENT SUPPORT', 'HEALTH WEBINAR']
             ];
@@ -188,6 +193,11 @@ function get_db_data($forceCloud = false): array {
         if ($content) {
             $data = json_decode($content, true);
             if (is_array($data)) {
+                if (!isset($data['settings']) || !is_array($data['settings'])) {
+                    $data['settings'] = [
+                        'scrollingBanner' => '의료접근포탈: "비영리기관(한인 커뮤니티센터)들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료시스템 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스"'
+                    ];
+                }
                 return $data;
             }
         }
@@ -199,8 +209,11 @@ function get_db_data($forceCloud = false): array {
         'billboards2' => [],
         'videos' => [],
         'posts' => [],
+        'settings' => [
+            'scrollingBanner' => '의료접근포탈: "비영리기관(한인 커뮤니티센터)들의 의료관련 정보서비스의 한계를 넘어, 최고의 의료시스템 전문가들이 제공하는 언어와 문화의 장벽 없이, 분야별 최고 전문가가 함께하는 무료 프리미엄 의료 접근·네비게이션 서비스"'
+        ],
         'categories' => [
-            'news' => ['의료칼럼', 'recall(리콜)', 'health&wellness', '의료보험', '한인건강 특집', '한인커뮤니티 뉴스', '의학뉴스'],
+            'news' => ['의료칼럼', 'recall(리콜)', 'health&wellness', '의료보험', '한인건강 특집', '한인커뮤니티 뉴스', '뉴저지 뉴스', '의학뉴스'],
             'videos' => ['전체', '만성질환 & 당뇨', '심장 & 혈관', '뇌신경 & 치매', '암 예방 & 검진', '감염병 & 백신', '건강검진 & 의료정보'],
             'billboards' => ['SPECIAL CAMPAIGN', 'MEDICARE UPDATE', 'PATIENT SUPPORT', 'HEALTH WEBINAR'],
             'billboards2' => ['SPECIAL CAMPAIGN', 'MEDICARE UPDATE', 'PATIENT SUPPORT', 'HEALTH WEBINAR']

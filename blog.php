@@ -17,11 +17,12 @@ function normalize_news_category($cat) {
     if ($c === '의료보험' || $c === 'Medicare & ACA' || mb_strpos($lower, 'medicare') !== false || mb_strpos($lower, '보험') !== false) return '의료보험';
     if ($c === '한인건강 특집' || mb_strpos($lower, '한인건강') !== false || mb_strpos($lower, '특집') !== false) return '한인건강 특집';
     if ($c === '한인커뮤니티 뉴스' || mb_strpos($lower, '한인커뮤니티') !== false || mb_strpos($lower, '커뮤니티') !== false) return '한인커뮤니티 뉴스';
+    if ($c === '뉴저지 뉴스' || mb_strpos($lower, '뉴저지') !== false) return '뉴저지 뉴스';
     if ($c === '의학뉴스' || mb_strpos($lower, '의학뉴스') !== false || mb_strpos($lower, '의학') !== false) return '의학뉴스';
-    return in_array($c, ['의료칼럼', 'recall(리콜)', 'health&wellness', '의료보험', '한인건강 특집', '한인커뮤니티 뉴스', '의학뉴스']) ? $c : '의료칼럼';
+    return in_array($c, ['의료칼럼', 'recall(리콜)', 'health&wellness', '의료보험', '한인건강 특집', '한인커뮤니티 뉴스', '뉴저지 뉴스', '의학뉴스']) ? $c : '의료칼럼';
 }
 
-$categories = ['전체', '의료칼럼', 'recall(리콜)', 'health&wellness', '의료보험', '한인건강 특집', '한인커뮤니티 뉴스', '의학뉴스'];
+$categories = ['전체', '의료칼럼', 'recall(리콜)', 'health&wellness', '의료보험', '한인건강 특집', '한인커뮤니티 뉴스', '뉴저지 뉴스', '의학뉴스'];
 
 // Filter published posts and deduplicate by base slug / title
 $publishedPosts = [];
@@ -649,6 +650,7 @@ unset($pRef);
       if (c.indexOf('의료보험') !== -1 || c.indexOf('medicare') !== -1 || c.indexOf('aca') !== -1 || c.indexOf('보험') !== -1) return '의료보험';
       if (c.indexOf('한인건강') !== -1 || c.indexOf('특집') !== -1) return '한인건강 특집';
       if (c.indexOf('한인커뮤니티') !== -1 || c.indexOf('커뮤니티') !== -1) return '한인커뮤니티 뉴스';
+      if (c.indexOf('뉴저지') !== -1) return '뉴저지 뉴스';
       if (c.indexOf('의학뉴스') !== -1 || c.indexOf('의학') !== -1) return '의학뉴스';
       return c;
     }

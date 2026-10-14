@@ -52,31 +52,6 @@ function db_sanitize_summary_points($summaryPoints) {
  * @return array
  */
 function get_db_data($forceCloud = false): array {
-    $siteLang = defined('SITE_LANG') ? SITE_LANG : ((isset($_GET['lang']) && strtolower($_GET['lang']) === 'en') ? 'en' : 'ko');
-    if ($siteLang === 'en') {
-        $pEn = defined('PERSISTENT_ROOT') ? (PERSISTENT_ROOT . '/content_en.json') : '';
-        $lEn = __DIR__ . '/../data/content_en.json';
-        if ($pEn && !file_exists($pEn) && file_exists($lEn)) {
-            $pDir = dirname($pEn);
-            if (!is_dir($pDir)) { @mkdir($pDir, 0777, true); @chmod($pDir, 0777); }
-            @copy($lEn, $pEn);
-            @chmod($pEn, 0666);
-        }
-        if ($pEn && file_exists($pEn)) {
-            $c = @file_get_contents($pEn);
-            if ($c) {
-                $d = json_decode($c, true);
-                if (is_array($d) && !empty($d['posts'])) return $d;
-            }
-        }
-        if (file_exists($lEn)) {
-            $c = @file_get_contents($lEn);
-            if ($c) {
-                $d = json_decode($c, true);
-                if (is_array($d) && !empty($d['posts'])) return $d;
-            }
-        }
-    }
 
     // Auto-seed persistent storage from local mirror ONLY if persistent storage does not exist yet
     if (file_exists(DATA_FILE) && !file_exists(PERSISTENT_DATA_FILE)) {
@@ -124,7 +99,7 @@ function get_db_data($forceCloud = false): array {
             $catRows = $supabase->selectAll('categories') ?: [];
             
             $categories = [
-                'news' => ['의료칼럼', 'recall(리콜)', 'health&wellness', '의료보험', '한인건강 특집', '한인커뮤니티 뉴스', '의학뉴스'],
+                'news' => ['의료칼럼', 'recall(리콜)', 'health&wellness', '의료보험', '한인건강 특집', '한인커뮤니티 뉴스', '뉴저지 뉴스', '의학뉴스'],
                 'videos' => ['전체', '만성질환 & 당뇨', '심장 & 혈관', '뇌신경 & 치매', '암 예방 & 검진', '감염병 & 백신', '건강검진 & 의료정보'],
                 'billboards' => ['SPECIAL CAMPAIGN', 'MEDICARE UPDATE', 'PATIENT SUPPORT', 'HEALTH WEBINAR']
             ];
@@ -200,7 +175,7 @@ function get_db_data($forceCloud = false): array {
         'videos' => [],
         'posts' => [],
         'categories' => [
-            'news' => ['의료칼럼', 'recall(리콜)', 'health&wellness', '의료보험', '한인건강 특집', '한인커뮤니티 뉴스', '의학뉴스'],
+            'news' => ['의료칼럼', 'recall(리콜)', 'health&wellness', '의료보험', '한인건강 특집', '한인커뮤니티 뉴스', '뉴저지 뉴스', '의학뉴스'],
             'videos' => ['전체', '만성질환 & 당뇨', '심장 & 혈관', '뇌신경 & 치매', '암 예방 & 검진', '감염병 & 백신', '건강검진 & 의료정보'],
             'billboards' => ['SPECIAL CAMPAIGN', 'MEDICARE UPDATE', 'PATIENT SUPPORT', 'HEALTH WEBINAR'],
             'billboards2' => ['SPECIAL CAMPAIGN', 'MEDICARE UPDATE', 'PATIENT SUPPORT', 'HEALTH WEBINAR']

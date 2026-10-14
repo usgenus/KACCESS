@@ -90,10 +90,18 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
           <i class="fa-solid fa-photo-film"></i>
           <span>미디어</span>
         </button>
+        <button onclick="openBannerModal()" id="nav-banner" class="tab-btn px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 text-amber-300 hover:text-amber-200">
+          <i class="fa-solid fa-bullhorn text-amber-400"></i>
+          <span>롤링 배너</span>
+        </button>
       </nav>
 
       <!-- Right Action Tools -->
       <div class="flex items-center gap-3">
+        <a href="/admin2/" class="text-xs font-semibold bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 shadow-sm" title="뉴저지 한인 광장 CMS로 이동">
+          <i class="fa-solid fa-comments text-blue-400"></i>
+          <span class="hidden sm:inline">한인 광장 CMS (/admin2)</span>
+        </a>
         <a href="/" target="_blank" class="text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-3.5 py-2 rounded-xl transition-all flex items-center gap-1.5 shadow-sm">
           <span>사이트 보기</span>
           <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-slate-400"></i>
@@ -114,6 +122,7 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
       <button onclick="switchTab('posts')" id="nav-m-posts" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg">건강 뉴스</button>
       <button onclick="switchTab('inquiries')" id="nav-m-inquiries" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-amber-300">문의/상담</button>
       <button onclick="switchTab('media')" id="nav-m-media" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg">미디어</button>
+      <button onclick="openBannerModal()" id="nav-m-banner" class="mobile-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-amber-300">롤링 배너</button>
     </div>
   </header>
 
@@ -258,6 +267,14 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
               </span>
               <span>→</span>
             </button>
+
+            <button onclick="openBannerModal()" class="w-full bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-slate-950 font-bold p-3.5 rounded-2xl transition-all flex items-center justify-between text-xs shadow-md">
+              <span class="flex items-center gap-2">
+                <i class="fa-solid fa-bullhorn text-sm"></i>
+                <span>상단 롤링 배너 문구 수정</span>
+              </span>
+              <span>→</span>
+            </button>
           </div>
         </div>
 
@@ -275,6 +292,128 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
               <div class="text-center py-8 text-slate-500 text-xs">데이터 로딩 중...</div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <!-- Scrolling Banner Message Edit Section -->
+      <div class="bg-slate-800/80 border border-slate-700/80 rounded-3xl p-6 sm:p-8 shadow-sm space-y-5" id="banner-settings-card">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-700 pb-4">
+          <div>
+            <div class="flex items-center gap-2.5">
+              <span class="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-base">
+                <i class="fa-solid fa-bullhorn"></i>
+              </span>
+              <h2 class="text-base sm:text-lg font-bold text-white tracking-tight">상단 롤링 배너 문구 관리 (Scrolling Marquee Banner)</h2>
+            </div>
+            <p class="text-xs text-slate-400 mt-1">
+              홈페이지 최상단에 흐르는 실시간 공지/슬로건 문구를 실시간으로 수정하고 발행합니다.
+            </p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="resetBannerToDefault()" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold border border-slate-700 transition-all flex items-center gap-1.5">
+              <i class="fa-solid fa-arrow-rotate-left text-slate-400"></i>
+              <span>기본 문구로 복원</span>
+            </button>
+            <button type="button" onclick="saveBannerSetting()" id="btn-save-banner" class="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold shadow-lg shadow-amber-500/20 transition-all flex items-center gap-1.5">
+              <i class="fa-solid fa-floppy-disk"></i>
+              <span>문구 저장하기</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Live Scrolling Preview in CMS -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-slate-400 font-semibold flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              실시간 스크롤 미리보기 (감속 40% 적용 · 58초 주기)
+            </span>
+            <span class="text-[11px] text-slate-500">실제 웹사이트 표시 형태</span>
+          </div>
+          <div class="w-full bg-black rounded-xl overflow-hidden py-3 border border-slate-700/60 flex items-center">
+            <div class="marquee-track whitespace-nowrap" id="admin-banner-preview-track" style="animation: marqueeScroll 58s linear infinite !important; display: inline-flex !important;">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Textarea input -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <label for="input-banner-message" class="text-slate-300 font-bold flex items-center gap-1.5">
+              <span>배너 문구 입력</span>
+              <span class="text-slate-500 font-normal">(양쪽 ✦ 기호는 시스템이 자동으로 추가합니다)</span>
+            </label>
+            <span id="banner-char-count" class="text-[11px] text-slate-500 font-mono">0자</span>
+          </div>
+          <textarea id="input-banner-message" rows="3" oninput="handleBannerInput(this.value)" placeholder="상단에 스크롤될 배너 문구를 입력하세요..."
+            class="w-full bg-slate-900 border border-slate-700 rounded-2xl p-4 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 transition-all leading-relaxed"></textarea>
+        </div>
+      </div>
+
+      <!-- Scheduled Push Notification Schedule Section -->
+      <div class="bg-slate-800/80 border border-slate-700/80 rounded-3xl p-6 sm:p-8 shadow-sm space-y-5" id="push-schedule-card">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-700 pb-4">
+          <div>
+            <div class="flex items-center gap-2.5">
+              <span class="w-9 h-9 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-base">
+                <i class="fa-solid fa-clock"></i>
+              </span>
+              <h2 class="text-base sm:text-lg font-bold text-white tracking-tight">정기 푸시 알림 스케줄 (Scheduled Push Notification)</h2>
+            </div>
+            <p class="text-xs text-slate-400 mt-1">
+              신규 기사 업로드 시 즉시 발송되지 않으며, <strong>매주 월요일 10:00 AM &amp; 목요일 10:00 AM (미국 동부 시간)</strong>에 신규 기사가 있을 때만 구독자에게 자동 발송됩니다.
+            </p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="fetchPushScheduleStatus(true)" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold border border-slate-700 transition-all flex items-center gap-1.5">
+              <i class="fa-solid fa-rotate text-purple-400"></i>
+              <span>상태 새로고침</span>
+            </button>
+            <button type="button" onclick="handleManualPushSend()" id="btn-manual-push" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold shadow-lg shadow-purple-600/20 transition-all flex items-center gap-1.5">
+              <i class="fa-solid fa-paper-plane"></i>
+              <span>지금 수동 즉시 발송</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Status Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+          <div class="bg-slate-900/60 p-4 rounded-2xl border border-slate-800 space-y-1">
+            <span class="text-slate-400">발송 스케줄 규칙</span>
+            <div class="text-white font-bold flex items-center gap-1.5">
+              <i class="fa-regular fa-calendar-check text-purple-400"></i>
+              <span>월요일 10am · 목요일 10am (EDT/EST)</span>
+            </div>
+            <p class="text-[11px] text-slate-500">신규 기사가 있는 경우에만 자동 전송</p>
+          </div>
+
+          <div class="bg-slate-900/60 p-4 rounded-2xl border border-slate-800 space-y-1">
+            <span class="text-slate-400">다음 발송 대기 중인 신규 기사</span>
+            <div class="text-amber-400 font-extrabold text-base flex items-center gap-1.5">
+              <i class="fa-solid fa-layer-group text-sm"></i>
+              <span id="push-pending-count">0건</span>
+            </div>
+            <p class="text-[11px] text-slate-500" id="push-pending-detail">새로 발행된 기사가 여기에 대기합니다</p>
+          </div>
+
+          <div class="bg-slate-900/60 p-4 rounded-2xl border border-slate-800 space-y-1">
+            <span class="text-slate-400">최근 정기 발송 일시 / 구독자</span>
+            <div class="text-emerald-400 font-bold flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-check text-xs"></i>
+              <span id="push-last-sent">-</span>
+            </div>
+            <p class="text-[11px] text-slate-500">등록된 웹 푸시 구독자: <span id="push-subscribers-count" class="text-slate-300 font-bold">-</span>명</p>
+          </div>
+        </div>
+
+        <!-- Pending Posts Preview List -->
+        <div id="push-pending-list-container" class="space-y-2 hidden">
+          <div class="text-xs font-bold text-slate-300 flex items-center gap-1.5">
+            <i class="fa-solid fa-inbox text-amber-400"></i>
+            <span>다음 스케줄에 발송될 대기 기사 목록:</span>
+          </div>
+          <div id="push-pending-items" class="space-y-1.5 max-h-40 overflow-y-auto pr-1"></div>
         </div>
       </div>
     </section>
@@ -876,6 +1015,7 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
               <option value="의료보험">
               <option value="한인건강 특집">
               <option value="한인커뮤니티 뉴스">
+              <option value="뉴저지 뉴스">
               <option value="의학뉴스">
               <option value="약국">
               <option value="한의학">
@@ -888,6 +1028,7 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
               <button type="button" onclick="selectPostCategory('의료보험')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all cursor-pointer">🛡️ 의료보험</button>
               <button type="button" onclick="selectPostCategory('한인건강 특집')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all cursor-pointer">🇰🇷 한인건강 특집</button>
               <button type="button" onclick="selectPostCategory('한인커뮤니티 뉴스')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all cursor-pointer">📢 한인커뮤니티 뉴스</button>
+              <button type="button" onclick="selectPostCategory('뉴저지 뉴스')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all cursor-pointer">🏙️ 뉴저지 뉴스</button>
               <button type="button" onclick="selectPostCategory('의학뉴스')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white transition-all cursor-pointer">🔬 의학뉴스</button>
               <button type="button" onclick="selectPostCategory('약국')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-teal-900/40 text-teal-300 border border-teal-700/60 hover:bg-teal-700 hover:text-white transition-all cursor-pointer">💊 약국</button>
               <button type="button" onclick="selectPostCategory('한의학')" class="px-2.5 py-1 rounded-lg text-xs font-medium bg-amber-900/40 text-amber-300 border border-amber-700/60 hover:bg-amber-700 hover:text-white transition-all cursor-pointer">🌿 한의학</button>
@@ -1031,7 +1172,7 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
           </div>
           <div class="flex items-center gap-2">
             <input type="checkbox" id="post-topstory-input" name="isTopStory" onchange="handleExposureCheckboxChange(this)" class="w-4 h-4 rounded text-amber-500 bg-slate-800 border-slate-700 cursor-pointer">
-            <label for="post-topstory-input" class="font-bold text-amber-400 text-xs sm:text-sm cursor-pointer select-none">🔥 TOP STORY 헤드라인</label>
+            <label for="post-topstory-input" class="font-bold text-amber-400 text-xs sm:text-sm cursor-pointer select-none">🔥 TOP STORY 헤드라인 (최대 1개)</label>
           </div>
           <div class="flex items-center gap-2">
             <input type="checkbox" id="post-liveupdate-input" name="isLiveUpdate" onchange="handleExposureCheckboxChange(this)" class="w-4 h-4 rounded text-blue-500 bg-slate-800 border-slate-700 cursor-pointer">
@@ -1091,6 +1232,58 @@ if (empty($_SESSION['cms_logged_in']) || $_SESSION['cms_logged_in'] !== true) {
         <button type="button" onclick="confirmInsertPhotoBox()" class="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg shadow-emerald-600/30 flex items-center gap-1.5">
           <i class="fa-solid fa-check"></i> <span>본문 위치에 사진 박스 삽입</span>
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Scrolling Banner Edit -->
+  <div id="modal-banner" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 modal-backdrop">
+    <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl space-y-5 my-8 max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+        <h3 class="text-lg font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-bullhorn text-amber-400"></i>
+          <span>상단 롤링 배너 문구 수정 (Scrolling Marquee Banner)</span>
+        </h3>
+        <button type="button" onclick="closeModal('modal-banner')" class="text-slate-400 hover:text-white text-lg">✕</button>
+      </div>
+
+      <!-- Live Preview inside modal -->
+      <div class="space-y-2 text-xs">
+        <span class="text-slate-400 font-semibold flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          실시간 스크롤 미리보기 (감속 40% 적용 · 58초 주기)
+        </span>
+        <div class="w-full bg-black rounded-xl overflow-hidden py-3 border border-slate-800 flex items-center">
+          <div class="marquee-track whitespace-nowrap" id="modal-banner-preview-track" style="animation: marqueeScroll 58s linear infinite !important; display: inline-flex !important;">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-2 text-xs">
+        <div class="flex items-center justify-between">
+          <label class="text-slate-300 font-bold flex items-center gap-1.5">
+            <span>배너 문구</span>
+            <span class="text-slate-500 font-normal">(양쪽 ✦ 기호는 시스템이 자동으로 추가합니다)</span>
+          </label>
+          <span id="modal-banner-char-count" class="text-slate-500 font-mono">0자</span>
+        </div>
+        <textarea id="modal-input-banner-message" rows="4" oninput="handleBannerModalInput(this.value)" placeholder="상단에 스크롤될 배너 문구를 입력하세요..."
+          class="w-full bg-slate-950 border border-slate-700 rounded-2xl p-4 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 transition-all leading-relaxed"></textarea>
+      </div>
+
+      <div class="flex items-center justify-between pt-4 border-t border-slate-800 text-xs">
+        <button type="button" onclick="resetBannerToDefault()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold border border-slate-700 transition-all flex items-center gap-1.5">
+          <i class="fa-solid fa-arrow-rotate-left text-slate-400"></i>
+          <span>기본값 복원</span>
+        </button>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="closeModal('modal-banner')" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold">취소</button>
+          <button type="button" onclick="saveBannerSetting()" id="modal-btn-save-banner" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold shadow-lg shadow-amber-500/20 transition-all flex items-center gap-1.5">
+            <i class="fa-solid fa-floppy-disk"></i>
+            <span>저장하기</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
